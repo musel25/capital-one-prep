@@ -49,6 +49,6 @@ Interfaces: consumes plan JSON; model exports date selection, state validation, 
 Files: scripts/deploy.sh, README.md, docs/usage.md.
 - [ ] Validate all content links/lab IDs and all intended exercise failure/pass pairs.
 - [ ] Independent review; fix material findings and rerun affected checks.
-- [ ] Deploy immutable static release at /capital-one/ with config backup and rollback; verify existing /grind/ and /api/health.
+- [ ] Deploy immutable static release at /grind/capital-one/ with config backup and rollback; verify existing /grind/ and /api/health.
 - [ ] Save local launchers and explain how to begin tomorrow and ask for attempt review.
 - [ ] Commit and push deployment/docs; verify clean tracked state.
