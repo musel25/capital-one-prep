@@ -32,7 +32,9 @@ import {
   STORAGE_KEY,
   validateState,
 } from "./model";
-import { CopyButton, kindLabels, Markdown, TaskDialog } from "./TaskDialog";
+import { kindLabels, TaskDialog } from "./TaskDialog";
+import { Tutorial } from "./Tutorial";
+type View = "agenda" | "resources" | "behavioral" | "guide";
 const plan = planData as Plan;
 const all = plan.days.flatMap((d) => d.blocks);
 const ids = all.map((b) => b.id);
@@ -81,9 +83,14 @@ export default function App() {
           today,
         ),
   );
-  const [view, setView] = useState<
-    "agenda" | "resources" | "behavioral" | "guide"
-  >("agenda");
+  const [view, setView] = useState<View>(() => {
+    const requested = new URLSearchParams(location.search).get("view");
+    return requested === "guide" ||
+      requested === "resources" ||
+      requested === "behavioral"
+      ? requested
+      : "agenda";
+  });
   const [task, setTask] = useState<Block | null>(null);
   const [notice, setNotice] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
@@ -146,7 +153,15 @@ export default function App() {
     setSelected(index);
     setView("agenda");
     const url = new URL(location.href);
+    url.searchParams.delete("view");
     url.searchParams.set("day", plan.days[index].date);
+    history.replaceState(null, "", url);
+  }
+  function showView(next: View) {
+    setView(next);
+    const url = new URL(location.href);
+    if (next === "agenda") url.searchParams.delete("view");
+    else url.searchParams.set("view", next);
     history.replaceState(null, "", url);
   }
   async function importFile(file?: File) {
@@ -288,21 +303,21 @@ export default function App() {
         <nav className="secondary-nav" aria-label="Recursos">
           <button
             className={view === "behavioral" ? "active" : ""}
-            onClick={() => setView("behavioral")}
+            onClick={() => showView("behavioral")}
           >
             <MessageCircle size={17} /> Mi práctica behavioral
           </button>
           <button
             className={view === "resources" ? "active" : ""}
-            onClick={() => setView("resources")}
+            onClick={() => showView("resources")}
           >
             <BookOpen size={17} /> Fuentes y contexto
           </button>
           <button
             className={view === "guide" ? "active" : ""}
-            onClick={() => setView("guide")}
+            onClick={() => showView("guide")}
           >
-            <HelpCircle size={17} /> Cómo practicar
+            <HelpCircle size={17} /> Empieza aquí · Tutorial
           </button>
         </nav>
         <div className="sidebar-footer">
@@ -437,6 +452,21 @@ export default function App() {
                 </span>
               </div>
             )}
+            <div className="tutorial-banner">
+              <div>
+                <strong>Tu recorrido: página → editor → revisión</strong>
+                <p>
+                  Guía rápida, ejemplo del primer ejercicio y cómo guardar tu
+                  trabajo.
+                </p>
+              </div>
+              <button
+                className="button secondary small"
+                onClick={() => showView("guide")}
+              >
+                <HelpCircle size={16} /> Ver tutorial
+              </button>
+            </div>
             <div className="day-layout">
               <section className="agenda">
                 <div className="agenda-top">
@@ -666,15 +696,7 @@ export default function App() {
             )}
           </section>
         ) : (
-          <section className="resource-page">
-            <p className="date-heading">Página guía + editor local</p>
-            <h1>Cómo practicar</h1>
-            <Markdown>{`## 1. Abre tu espacio local\n\nEl repositorio está en \`/home/musel/Github/capital-one-prep\`. Abre una terminal allí.\n\n\`\`\`bash\nuv sync\nuv run python scripts/practice.py list\n\`\`\`\n\n## 2. Crea un intento nuevo\n\nCada bloque técnico tiene comandos para sus dos tareas. Por ejemplo:\n\n\`\`\`bash\nuv run python scripts/practice.py start d01-bug\n\`\`\`\n\nEl comando te devuelve una carpeta nueva dentro de \`attempts/\`. Ábrela en tu editor y sigue su README. El enunciado y los comandos de ejecución están dentro. Los intentos anteriores se conservan.\n\n## 3. Trabaja y explica\n\nUsa un agente en las tareas que lo permiten. Pídele que investigue el problema, revisa su hipótesis, limita el cambio y comprueba el resultado. No necesitas entender todos los archivos antes de empezar. Las dos tareas parten de copias independientes.\n\nEn los casos, predice resultados y escribe tu razonamiento **sin ejecutar código**. Guarda la predicción antes de abrir la explicación. Las reglas de cada caso son ficticias.\n\n## 4. Comprueba y pide revisión\n\nDesde la raíz, ejecuta el verificador con la ruta de tu intento:\n\n\`\`\`bash\nuv run python scripts/practice.py check attempts/TU-CARPETA\n\`\`\`\n\nAnota qué pasó y lo que no se pudo comprobar. Puedes decirme: «Revisa mi intento en attempts/…». Leeré tus cambios y podré ejecutar sus pruebas. La página registra tu autoevaluación; no puede observar los tests de tu editor.\n\nSi te atascas, conserva el intento, pide una pista y registra la ayuda. Para volver a empezar, usa otra vez \`start\`; nunca necesitas borrar tu solución anterior.\n\n## 5. Conserva tus notas\n\nEl progreso se guarda **en este navegador**, sin sincronización entre dispositivos. Usa Exportar y guarda el JSON en \`private/\` para tener un respaldo o compartirlo conmigo. Usa Importar para continuar en otro navegador. Tus notas y carpetas privadas no se suben a GitHub.\n\nLas cuatro horas incluyen la revisión indicada en cada bloque. Las pausas son aparte. No se acumulan repasos automáticamente.\n\n## Sobre este material\n\nPreparación independiente para TDP México. No es material oficial de Capital One ni una promesa de preguntas concretas. Practica con las herramientas indicadas en el ejercicio; durante la entrevista real sigue las reglas del entrevistador.`}</Markdown>
-            <div className="command-row">
-              <code>cd /home/musel/Github/capital-one-prep</code>
-              <CopyButton text="cd /home/musel/Github/capital-one-prep" />
-            </div>
-          </section>
+          <Tutorial firstDay={plan.days[0]} openFirstDay={() => selectDay(0)} />
         )}
         <footer className="page-footer">
           Capital One Prep · Preparación independiente · Material ficticio para

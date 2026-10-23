@@ -6,6 +6,8 @@ The daily page provides the agenda. Code is practiced in your own editor, with i
 
 **Open the planner:** [timer.musel.dev/grind/capital-one/](https://timer.musel.dev/grind/capital-one/)
 
+**First visit?** Open [Empieza aquí: the website walkthrough](https://timer.musel.dev/grind/capital-one/?view=guide) for the daily workflow, a complete first-exercise example, timer controls, and progress backups.
+
 ## Start practicing
 
 ```bash

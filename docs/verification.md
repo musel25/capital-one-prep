@@ -14,3 +14,11 @@ Recorded October 22, 2026, America/Tijuana. Published code: `f95bcf6f2c73`.
 The interface interaction checks use JSDOM. They do not establish visual layout or real-browser compatibility: the available computer-use tool returned no browsers, so desktop/mobile screenshot inspection was unavailable. A successful build and passing checks are evidence about this training workspace, not a guarantee of interview readiness or confirmation of interview tool permissions.
 
 The release initially needed privileged creation of its own static directories. A subsequent HTTP check reached an old Nginx worker immediately after graceful reload; rollback restored the prior configuration. The script now prepares directories with the deployment user's ownership and retries the new route during worker replacement. The final release passed its checks without changing the previous Grind Recall release.
+
+## Tutorial and pre-start recheck
+
+The requested website overview adds a persistent **Empieza aquí** link and a direct `?view=guide` URL. It explains the page/editor/review workflow, independent attempts, phase timers, case predictions, behavioral practice and private backups.
+
+Fresh checks passed: 24 Python tests, 11 frontend tests and the production build. The added navigation test verifies that opening the tutorial, returning to day one and reloading preserve existing saved practice. Independent review found no material issues in the tutorial or navigation.
+
+A temporary day-one attempt was created through the CLI. Its `uv venv`, `uv sync --frozen`, startup tests and actual Uvicorn server all succeeded. HTTP checks reached the app, documentation, transaction endpoint and JavaScript asset. The unchanged starter returned the expected unmet-contract result. The temporary server and workspace were removed; existing learner attempts were untouched. Real-browser visual inspection remained unavailable because the computer-use tool returned no browsers.

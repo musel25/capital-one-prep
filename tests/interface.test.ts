@@ -48,6 +48,30 @@ const user = userEvent.setup({ document: dom.window.document });
 afterEach(() => {
   cleanup();
   localStorage.clear();
+  history.replaceState(null, "", "/grind/capital-one/?day=2026-10-23");
+});
+
+test("tutorial deep link returns to day one without changing saved practice", async () => {
+  const id = plan.days[0].blocks[0].id;
+  const raw = JSON.stringify(
+    replaceProgress(freshState(), id, { notes: "Keep my actual practice." }),
+  );
+  localStorage.setItem(STORAGE_KEY, raw);
+  history.replaceState(null, "", "/grind/capital-one/?view=guide");
+  const mounted = render(createElement(App));
+  assert.ok(screen.getByRole("heading", { name: "Empieza aquí" }));
+  await user.click(screen.getByRole("button", { name: "Abrir el día 1" }));
+  assert.equal(new URLSearchParams(location.search).get("day"), "2026-10-23");
+  assert.equal(new URLSearchParams(location.search).has("view"), false);
+  assert.ok(screen.getByRole("heading", { name: plan.days[0].title }));
+  assert.equal(localStorage.getItem(STORAGE_KEY), raw);
+  mounted.unmount();
+  render(createElement(App));
+  assert.ok(screen.getByRole("heading", { name: plan.days[0].title }));
+  await user.click(screen.getByRole("button", { name: "Ver tutorial" }));
+  assert.equal(new URLSearchParams(location.search).get("view"), "guide");
+  assert.ok(screen.getByRole("heading", { name: "Empieza aquí" }));
+  assert.equal(localStorage.getItem(STORAGE_KEY), raw);
 });
 
 test("case review needs saved prediction and finished attempt; closing preserves a draft", async () => {
