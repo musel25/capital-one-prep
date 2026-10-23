@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Cedar Wallet</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><main><p>FICTIONAL LOCAL PRACTICE</p><h1>Cedar Wallet</h1><p>No credentials, real accounts or network banking services.</p>
+<h2>Accounts</h2><ul id="accounts"></ul>
+<h2>Move money</h2><form id="transfer"><label>From <select name="source"><option>checking</option><option>savings</option></select></label><label>To <select name="target"><option>savings</option><option>checking</option></select></label><label>Amount in cents <input name="amount" type="number" min="1" value="500"></label><button>Transfer</button></form><p id="message" role="status"></p>
+<h2>Transactions</h2><form id="filters"><label>Category <input name="category" placeholder="groceries"></label><button>Load</button></form><pre id="transactions"></pre><a href="/docs">Interactive API docs</a></main><script src="/static/app.js"></script></body></html>
