@@ -59,7 +59,9 @@ ln -sfn "$release" "${current}.next"
 mv -Tf "${current}.next" "$current"
 sudo nginx -t
 sudo systemctl reload nginx
-curl -fsS https://timer.musel.dev/grind/capital-one/ | grep -Fq '<title>Capital One Prep'
+# A graceful reload can briefly serve the old worker's location table.
+curl -fsS --retry 6 --retry-all-errors --retry-delay 1 --max-time 10 \
+  https://timer.musel.dev/grind/capital-one/ | grep -Fq '<title>Capital One Prep'
 curl -fsS https://timer.musel.dev/grind/ >/dev/null
 curl -fsS https://timer.musel.dev/api/health | grep -Fq '"ok":true'
 trap - ERR
