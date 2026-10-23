@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.env
+.env.*
+attempts/*
+!attempts/.gitkeep
+private/*
+!private/.gitkeep
+.superpowers/
+.worktrees/
+*.log
+.DS_Store
