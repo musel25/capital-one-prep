@@ -1,0 +1,15 @@
+{
+  "id": "external-gilded-rose",
+  "repository": "https://github.com/emilybache/GildedRose-Refactoring-Kata",
+  "commit": "d6407909c73b2ba61bfa7568af0d9bdce1902fd5",
+  "retrieved": "2026-10-22",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2015 @emilybache",
+  "scope": "Selected unmodified files, not a full checkout. Local instructions, checks and reference extension are separate.",
+  "files": [
+    {"path": "license.txt", "git_blob_sha": "1eebd817be439e733426772372d37720e2e83215"},
+    {"path": "GildedRoseRequirements.md", "git_blob_sha": "36a925cadabe84e7085f43bef178ef9625b07010"},
+    {"path": "python/gilded_rose.py", "git_blob_sha": "4f21ea6486e4dd1ad46ddbf9849f00994a9e1fc3"},
+    {"path": "python/texttest_fixture.py", "git_blob_sha": "8f7e4940766aae479b594745e53f07ab3516ba43"}
+  ]
+}
