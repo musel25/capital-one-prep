@@ -10,7 +10,11 @@ commit=$(git rev-parse --short=12 HEAD)
 release="/var/www/capital-one-prep/releases/${commit}-$(date -u +%Y%m%dT%H%M%S)"
 npm test
 npm run build
-ssh -o BatchMode=yes my-vps "mkdir -p '$release'"
+ssh -o BatchMode=yes my-vps bash -s -- "$release" <<'PREPARE'
+set -euo pipefail
+sudo -n install -d -m 755 -o "$(id -un)" -g "$(id -gn)" \
+  /var/www/capital-one-prep /var/www/capital-one-prep/releases "$1"
+PREPARE
 rsync -az --chmod=D755,F644 dist/ "my-vps:$release/"
 ssh -o BatchMode=yes my-vps bash -s -- "$release" <<'REMOTE'
 set -euo pipefail
