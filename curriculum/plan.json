@@ -3,7 +3,7 @@
   "startDate": "2026-10-23",
   "endDate": "2026-11-01",
   "timezone": "America/Tijuana",
-  "dailyMinutes": 240,
+  "dailyMinutes": 225,
   "days": [
     {
       "date": "2026-10-23",
@@ -234,41 +234,6 @@
             "original-practice"
           ],
           "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d01-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement ordered_ids(rows). Each row has unique string id, integer minute and state. Keep only posted rows; return IDs sorted by (minute,id), ascending. Do not mutate rows or row dicts.\n\nInput: [{'id':'b','minute':5,'state':'posted'},{'id':'a','minute':5,'state':'posted'},{'id':'c','minute':1,'state':'pending'},{'id':'d','minute':2,'state':'posted'}]. Test empty input, tied minutes, and preservation of the original list order and row dictionaries.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d01-python.py.\n"
-        },
-        {
-          "id": "d01-reflection",
-          "title": "Establecer línea de base",
-          "kind": "reflection",
-          "minutes": 15,
-          "summary": "Cerrar el día con evidencia guardada y una mejora concreta.",
-          "content": "## Cierre de 15 minutos\n1. **5 min — Evidencia:** Anota el tiempo hasta reproducir el bug, una frontera que omitiste en el caso y una frase conductual demasiado vaga. Define qué señal concreta mejorará mañana: por ejemplo, describir el invariante antes de editar.\n2. **5 min — Registro:** marca cada bloque como completado de forma independiente, asistido o incompleto según lo que realmente ocurrió. Guarda rutas de intentos, resultados de check y predicciones; no uses un porcentaje como medida de preparación.\n3. **5 min — Respaldo y siguiente acción:** exporta el progreso del planner a `private/` o a una carpeta local de respaldo. Abre el siguiente día y escribe una sola acción inicial. Las tareas pendientes quedan visibles pero no se suman automáticamente al horario. Si hoy terminó el plan, guarda una pregunta específica para revisión.\n\nPara pedir ayuda útil: “Revisa el intento en [ruta exacta]. Esperaba [resultado]; observé [salida]. No modifiques mi solución todavía: señala la primera divergencia con el contrato y dame una pista.” Para revisión conductual, comparte solo la historia que quieras revisar.",
-          "deliverables": [
-            "Registro de ayuda y resultado real por bloque.",
-            "Una observación específica vinculada a una entrada, diff, respuesta o estado.",
-            "Export local de progreso y una siguiente acción concreta."
-          ],
-          "rubric": [
-            "No llamas terminado a un intento que no se verificó.",
-            "La mejora elegida se puede observar mañana; “practicar más” no basta.",
-            "Se conservan intentos originales y datos privados fuera de archivos públicos."
-          ],
-          "phases": [
-            {
-              "title": "Evidencia",
-              "minutes": 5
-            },
-            {
-              "title": "Registrar",
-              "minutes": 5
-            },
-            {
-              "title": "Respaldar y preparar",
-              "minutes": 5
-            }
-          ],
-          "sources": [
-            "original-practice"
-          ]
         }
       ]
     },
@@ -508,41 +473,6 @@
             "leetcode-two-sum"
           ],
           "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d02-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement deltas(transfers) returning a dict of net cents per account. Each tuple is (source,target,amount); amounts are positive ints, source != target. Include accounts even if their final net is zero. Input [('A','B',30),('B','C',10),('C','A',10)]. No mutation. Test empty input, an account with zero net change, and two transfers in the same direction.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d02-python.py.\n"
-        },
-        {
-          "id": "d02-reflection",
-          "title": "Estado y evidencia",
-          "kind": "reflection",
-          "minutes": 15,
-          "summary": "Cerrar el día con evidencia guardada y una mejora concreta.",
-          "content": "## Cierre de 15 minutos\n1. **5 min — Evidencia:** Comprueba si alguna explicación usó “funciona” sin citar una entrada y una salida observadas. Sustitúyela por evidencia. Anota un estado que debe permanecer idéntico después de un rechazo.\n2. **5 min — Registro:** marca cada bloque como completado de forma independiente, asistido o incompleto según lo que realmente ocurrió. Guarda rutas de intentos, resultados de check y predicciones; no uses un porcentaje como medida de preparación.\n3. **5 min — Respaldo y siguiente acción:** exporta el progreso del planner a `private/` o a una carpeta local de respaldo. Abre el siguiente día y escribe una sola acción inicial. Las tareas pendientes quedan visibles pero no se suman automáticamente al horario. Si hoy terminó el plan, guarda una pregunta específica para revisión.\n\nPara pedir ayuda útil: “Revisa el intento en [ruta exacta]. Esperaba [resultado]; observé [salida]. No modifiques mi solución todavía: señala la primera divergencia con el contrato y dame una pista.” Para revisión conductual, comparte solo la historia que quieras revisar.",
-          "deliverables": [
-            "Registro de ayuda y resultado real por bloque.",
-            "Una observación específica vinculada a una entrada, diff, respuesta o estado.",
-            "Export local de progreso y una siguiente acción concreta."
-          ],
-          "rubric": [
-            "No llamas terminado a un intento que no se verificó.",
-            "La mejora elegida se puede observar mañana; “practicar más” no basta.",
-            "Se conservan intentos originales y datos privados fuera de archivos públicos."
-          ],
-          "phases": [
-            {
-              "title": "Evidencia",
-              "minutes": 5
-            },
-            {
-              "title": "Registrar",
-              "minutes": 5
-            },
-            {
-              "title": "Respaldar y preparar",
-              "minutes": 5
-            }
-          ],
-          "sources": [
-            "original-practice"
-          ]
         }
       ]
     },
@@ -782,41 +712,6 @@
             "leetcode-valid-anagram"
           ],
           "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d03-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement reward(amount_cents, rate_bps, remaining_cents) for nonnegative integers. Raw reward=floor(amount_cents*rate_bps/10000); return min(raw,remaining). No floats. Predict reward(999,250,20), reward(39,250,100), reward(40,250,100), reward(10000,250,0). Explain basis points in one sentence.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d03-python.py.\n"
-        },
-        {
-          "id": "d03-reflection",
-          "title": "Unidades y fronteras",
-          "kind": "reflection",
-          "minutes": 15,
-          "summary": "Cerrar el día con evidencia guardada y una mejora concreta.",
-          "content": "## Cierre de 15 minutos\n1. **5 min — Evidencia:** Revisa una operación de dinero: cantidad, tasa, redondeo y cap. Escribe la frontera exacta que falló o que comprobaste. Marca cualquier resultado cuyo número no puedas reconstruir.\n2. **5 min — Registro:** marca cada bloque como completado de forma independiente, asistido o incompleto según lo que realmente ocurrió. Guarda rutas de intentos, resultados de check y predicciones; no uses un porcentaje como medida de preparación.\n3. **5 min — Respaldo y siguiente acción:** exporta el progreso del planner a `private/` o a una carpeta local de respaldo. Abre el siguiente día y escribe una sola acción inicial. Las tareas pendientes quedan visibles pero no se suman automáticamente al horario. Si hoy terminó el plan, guarda una pregunta específica para revisión.\n\nPara pedir ayuda útil: “Revisa el intento en [ruta exacta]. Esperaba [resultado]; observé [salida]. No modifiques mi solución todavía: señala la primera divergencia con el contrato y dame una pista.” Para revisión conductual, comparte solo la historia que quieras revisar.",
-          "deliverables": [
-            "Registro de ayuda y resultado real por bloque.",
-            "Una observación específica vinculada a una entrada, diff, respuesta o estado.",
-            "Export local de progreso y una siguiente acción concreta."
-          ],
-          "rubric": [
-            "No llamas terminado a un intento que no se verificó.",
-            "La mejora elegida se puede observar mañana; “practicar más” no basta.",
-            "Se conservan intentos originales y datos privados fuera de archivos públicos."
-          ],
-          "phases": [
-            {
-              "title": "Evidencia",
-              "minutes": 5
-            },
-            {
-              "title": "Registrar",
-              "minutes": 5
-            },
-            {
-              "title": "Respaldar y preparar",
-              "minutes": 5
-            }
-          ],
-          "sources": [
-            "original-practice"
-          ]
         }
       ]
     },
@@ -1054,41 +949,6 @@
             "original-practice"
           ],
           "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d04-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement slice_page(values,offset,limit) for offset>=0, limit>0 returning {'items':list,'total':int,'next':int|None}. next is offset+len(items) only if unreturned elements remain. Input values=['x','y','z','w'], (offset,limit)=(0,2),(2,2),(4,2),(9,2). Do not modify values.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d04-python.py.\n"
-        },
-        {
-          "id": "d04-reflection",
-          "title": "Leer contratos completos",
-          "kind": "reflection",
-          "minutes": 15,
-          "summary": "Cerrar el día con evidencia guardada y una mejora concreta.",
-          "content": "## Cierre de 15 minutos\n1. **5 min — Evidencia:** Lista una diferencia entre datos completos, filtrados y paginados. Revisa si tu explicación de complejidad contó la ordenación. Decide un checklist de tres pasos para la próxima tarea.\n2. **5 min — Registro:** marca cada bloque como completado de forma independiente, asistido o incompleto según lo que realmente ocurrió. Guarda rutas de intentos, resultados de check y predicciones; no uses un porcentaje como medida de preparación.\n3. **5 min — Respaldo y siguiente acción:** exporta el progreso del planner a `private/` o a una carpeta local de respaldo. Abre el siguiente día y escribe una sola acción inicial. Las tareas pendientes quedan visibles pero no se suman automáticamente al horario. Si hoy terminó el plan, guarda una pregunta específica para revisión.\n\nPara pedir ayuda útil: “Revisa el intento en [ruta exacta]. Esperaba [resultado]; observé [salida]. No modifiques mi solución todavía: señala la primera divergencia con el contrato y dame una pista.” Para revisión conductual, comparte solo la historia que quieras revisar.",
-          "deliverables": [
-            "Registro de ayuda y resultado real por bloque.",
-            "Una observación específica vinculada a una entrada, diff, respuesta o estado.",
-            "Export local de progreso y una siguiente acción concreta."
-          ],
-          "rubric": [
-            "No llamas terminado a un intento que no se verificó.",
-            "La mejora elegida se puede observar mañana; “practicar más” no basta.",
-            "Se conservan intentos originales y datos privados fuera de archivos públicos."
-          ],
-          "phases": [
-            {
-              "title": "Evidencia",
-              "minutes": 5
-            },
-            {
-              "title": "Registrar",
-              "minutes": 5
-            },
-            {
-              "title": "Respaldar y preparar",
-              "minutes": 5
-            }
-          ],
-          "sources": [
-            "original-practice"
-          ]
         }
       ]
     },
@@ -1328,41 +1188,6 @@
             "leetcode-group-anagrams"
           ],
           "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d05-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement net_totals(purchases,refunds). purchases is [(id,category,cents)] with unique IDs. refunds is [(purchase_id,cents)] with valid IDs; all refunds here are posted. Return category sums minus refunds. Input purchases=[('a','food',800),('b','food',200),('c','travel',900)], refunds=[('a',300),('a',100)]. Preserve zero categories. Do not mutate.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d05-python.py.\n"
-        },
-        {
-          "id": "d05-reflection",
-          "title": "Conservación",
-          "kind": "reflection",
-          "minutes": 15,
-          "summary": "Cerrar el día con evidencia guardada y una mejora concreta.",
-          "content": "## Cierre de 15 minutos\n1. **5 min — Evidencia:** Reconcilia una suma: compras menos reembolsos, o saldos antes/después. Señala si una prueba feliz ocultaba dos errores compensados. Guarda el menor contraejemplo.\n2. **5 min — Registro:** marca cada bloque como completado de forma independiente, asistido o incompleto según lo que realmente ocurrió. Guarda rutas de intentos, resultados de check y predicciones; no uses un porcentaje como medida de preparación.\n3. **5 min — Respaldo y siguiente acción:** exporta el progreso del planner a `private/` o a una carpeta local de respaldo. Abre el siguiente día y escribe una sola acción inicial. Las tareas pendientes quedan visibles pero no se suman automáticamente al horario. Si hoy terminó el plan, guarda una pregunta específica para revisión.\n\nPara pedir ayuda útil: “Revisa el intento en [ruta exacta]. Esperaba [resultado]; observé [salida]. No modifiques mi solución todavía: señala la primera divergencia con el contrato y dame una pista.” Para revisión conductual, comparte solo la historia que quieras revisar.",
-          "deliverables": [
-            "Registro de ayuda y resultado real por bloque.",
-            "Una observación específica vinculada a una entrada, diff, respuesta o estado.",
-            "Export local de progreso y una siguiente acción concreta."
-          ],
-          "rubric": [
-            "No llamas terminado a un intento que no se verificó.",
-            "La mejora elegida se puede observar mañana; “practicar más” no basta.",
-            "Se conservan intentos originales y datos privados fuera de archivos públicos."
-          ],
-          "phases": [
-            {
-              "title": "Evidencia",
-              "minutes": 5
-            },
-            {
-              "title": "Registrar",
-              "minutes": 5
-            },
-            {
-              "title": "Respaldar y preparar",
-              "minutes": 5
-            }
-          ],
-          "sources": [
-            "original-practice"
-          ]
         }
       ]
     },
@@ -1600,41 +1425,6 @@
             "original-practice"
           ],
           "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d06-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement parse_cents(text). Accept a string of one or more ASCII digits, optionally '.' followed by exactly two ASCII digits; no signs, spaces, commas or exponent. Leading zeros allowed. Return integer cents; any invalid input including non-string raises ValueError. Examples: '12','12.30','001.05','0.00','1.2','-1',' 2',True. Use standard library only.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d06-python.py.\n"
-        },
-        {
-          "id": "d06-reflection",
-          "title": "Cruzar capas",
-          "kind": "reflection",
-          "minutes": 15,
-          "summary": "Cerrar el día con evidencia guardada y una mejora concreta.",
-          "content": "## Cierre de 15 minutos\n1. **5 min — Evidencia:** Dibuja en cinco líneas el recorrido UI → payload → validación → regla → UI. Identifica qué capa dio la primera evidencia y dónde se evitó una conversión silenciosa.\n2. **5 min — Registro:** marca cada bloque como completado de forma independiente, asistido o incompleto según lo que realmente ocurrió. Guarda rutas de intentos, resultados de check y predicciones; no uses un porcentaje como medida de preparación.\n3. **5 min — Respaldo y siguiente acción:** exporta el progreso del planner a `private/` o a una carpeta local de respaldo. Abre el siguiente día y escribe una sola acción inicial. Las tareas pendientes quedan visibles pero no se suman automáticamente al horario. Si hoy terminó el plan, guarda una pregunta específica para revisión.\n\nPara pedir ayuda útil: “Revisa el intento en [ruta exacta]. Esperaba [resultado]; observé [salida]. No modifiques mi solución todavía: señala la primera divergencia con el contrato y dame una pista.” Para revisión conductual, comparte solo la historia que quieras revisar.",
-          "deliverables": [
-            "Registro de ayuda y resultado real por bloque.",
-            "Una observación específica vinculada a una entrada, diff, respuesta o estado.",
-            "Export local de progreso y una siguiente acción concreta."
-          ],
-          "rubric": [
-            "No llamas terminado a un intento que no se verificó.",
-            "La mejora elegida se puede observar mañana; “practicar más” no basta.",
-            "Se conservan intentos originales y datos privados fuera de archivos públicos."
-          ],
-          "phases": [
-            {
-              "title": "Evidencia",
-              "minutes": 5
-            },
-            {
-              "title": "Registrar",
-              "minutes": 5
-            },
-            {
-              "title": "Respaldar y preparar",
-              "minutes": 5
-            }
-          ],
-          "sources": [
-            "original-practice"
-          ]
         }
       ]
     },
@@ -1874,41 +1664,6 @@
             "leetcode-top-k"
           ],
           "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d07-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement unique_events(events), each dict has id and amount_cents. Return first occurrences in input order. Same id/same amount is ignored; same id/different amount raises ValueError. Do not mutate or partially return on conflict. No other fields. Input [{'id':'k','amount_cents':10},{'id':'k','amount_cents':10},{'id':'m','amount_cents':20}]. Then change the second amount to 11. Explain why deduplication alone is not a durable payment transaction.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d07-python.py.\n"
-        },
-        {
-          "id": "d07-reflection",
-          "title": "Controlar al agente",
-          "kind": "reflection",
-          "minutes": 15,
-          "summary": "Cerrar el día con evidencia guardada y una mejora concreta.",
-          "content": "## Cierre de 15 minutos\n1. **5 min — Evidencia:** Elige una sugerencia de IA aceptada o rechazada y escribe la evidencia que justificó tu decisión. Si no la verificaste, marca asistido/incompleto y concreta la prueba faltante.\n2. **5 min — Registro:** marca cada bloque como completado de forma independiente, asistido o incompleto según lo que realmente ocurrió. Guarda rutas de intentos, resultados de check y predicciones; no uses un porcentaje como medida de preparación.\n3. **5 min — Respaldo y siguiente acción:** exporta el progreso del planner a `private/` o a una carpeta local de respaldo. Abre el siguiente día y escribe una sola acción inicial. Las tareas pendientes quedan visibles pero no se suman automáticamente al horario. Si hoy terminó el plan, guarda una pregunta específica para revisión.\n\nPara pedir ayuda útil: “Revisa el intento en [ruta exacta]. Esperaba [resultado]; observé [salida]. No modifiques mi solución todavía: señala la primera divergencia con el contrato y dame una pista.” Para revisión conductual, comparte solo la historia que quieras revisar.",
-          "deliverables": [
-            "Registro de ayuda y resultado real por bloque.",
-            "Una observación específica vinculada a una entrada, diff, respuesta o estado.",
-            "Export local de progreso y una siguiente acción concreta."
-          ],
-          "rubric": [
-            "No llamas terminado a un intento que no se verificó.",
-            "La mejora elegida se puede observar mañana; “practicar más” no basta.",
-            "Se conservan intentos originales y datos privados fuera de archivos públicos."
-          ],
-          "phases": [
-            {
-              "title": "Evidencia",
-              "minutes": 5
-            },
-            {
-              "title": "Registrar",
-              "minutes": 5
-            },
-            {
-              "title": "Respaldar y preparar",
-              "minutes": 5
-            }
-          ],
-          "sources": [
-            "original-practice"
-          ]
         }
       ]
     },
@@ -2139,41 +1894,6 @@
             "original-practice"
           ],
           "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d08-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement merge_windows(windows). Each tuple (start,end) represents a half-open interval with start<end. Return sorted merged intervals; overlap or touching endpoints should merge. Input [(8,10),(1,3),(3,5),(9,12),(15,16)]. No mutation. Test empty input, a contained interval, identical windows, and a one-unit gap. Work independently for the first 15 minutes.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d08-python.py.\n"
-        },
-        {
-          "id": "d08-reflection",
-          "title": "Auditar el mock A",
-          "kind": "reflection",
-          "minutes": 15,
-          "summary": "Cerrar el día con evidencia guardada y una mejora concreta.",
-          "content": "## Cierre de 15 minutos\n1. **5 min — Evidencia:** Registra por separado entrega en tiempo, corrección observada, calidad de explicación y ayuda usada. Escoge dos errores para tratar mañana dentro de su horario; no agregues horas ni arrastres tareas automáticamente.\n2. **5 min — Registro:** marca cada bloque como completado de forma independiente, asistido o incompleto según lo que realmente ocurrió. Guarda rutas de intentos, resultados de check y predicciones; no uses un porcentaje como medida de preparación.\n3. **5 min — Respaldo y siguiente acción:** exporta el progreso del planner a `private/` o a una carpeta local de respaldo. Abre el siguiente día y escribe una sola acción inicial. Las tareas pendientes quedan visibles pero no se suman automáticamente al horario. Si hoy terminó el plan, guarda una pregunta específica para revisión.\n\nPara pedir ayuda útil: “Revisa el intento en [ruta exacta]. Esperaba [resultado]; observé [salida]. No modifiques mi solución todavía: señala la primera divergencia con el contrato y dame una pista.” Para revisión conductual, comparte solo la historia que quieras revisar.",
-          "deliverables": [
-            "Registro de ayuda y resultado real por bloque.",
-            "Una observación específica vinculada a una entrada, diff, respuesta o estado.",
-            "Export local de progreso y una siguiente acción concreta."
-          ],
-          "rubric": [
-            "No llamas terminado a un intento que no se verificó.",
-            "La mejora elegida se puede observar mañana; “practicar más” no basta.",
-            "Se conservan intentos originales y datos privados fuera de archivos públicos."
-          ],
-          "phases": [
-            {
-              "title": "Evidencia",
-              "minutes": 5
-            },
-            {
-              "title": "Registrar",
-              "minutes": 5
-            },
-            {
-              "title": "Respaldar y preparar",
-              "minutes": 5
-            }
-          ],
-          "sources": [
-            "original-practice"
-          ]
         }
       ]
     },
@@ -2410,41 +2130,6 @@
             "original-practice"
           ],
           "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d09-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement first_at_least(values,target) for ascending sorted integer values, duplicates allowed. Return the first index with value>=target, or len(values) if none. Use binary search, no library bisect for this drill. Input [2,4,4,9] with targets 1, 4, 5, 10. Explain the [lo,hi) invariant and why equality moves hi.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d09-python.py.\n"
-        },
-        {
-          "id": "d09-reflection",
-          "title": "Últimos ajustes y logística",
-          "kind": "reflection",
-          "minutes": 15,
-          "summary": "Cerrar el día con evidencia guardada y una mejora concreta.",
-          "content": "## Cierre de 15 minutos\n1. **5 min — Evidencia:** Elige una única regla que recordarás al comenzar cada ronda. Comprueba que puedes abrir editor, iniciar una copia y localizar instrucciones sin buscar. Consulta tu invitación real para horario, zona y herramientas autorizadas; el plan no lo confirma.\n2. **5 min — Registro:** marca cada bloque como completado de forma independiente, asistido o incompleto según lo que realmente ocurrió. Guarda rutas de intentos, resultados de check y predicciones; no uses un porcentaje como medida de preparación.\n3. **5 min — Respaldo y siguiente acción:** exporta el progreso del planner a `private/` o a una carpeta local de respaldo. Abre el siguiente día y escribe una sola acción inicial. Las tareas pendientes quedan visibles pero no se suman automáticamente al horario. Si hoy terminó el plan, guarda una pregunta específica para revisión.\n\nPara pedir ayuda útil: “Revisa el intento en [ruta exacta]. Esperaba [resultado]; observé [salida]. No modifiques mi solución todavía: señala la primera divergencia con el contrato y dame una pista.” Para revisión conductual, comparte solo la historia que quieras revisar.",
-          "deliverables": [
-            "Registro de ayuda y resultado real por bloque.",
-            "Una observación específica vinculada a una entrada, diff, respuesta o estado.",
-            "Export local de progreso y una siguiente acción concreta."
-          ],
-          "rubric": [
-            "No llamas terminado a un intento que no se verificó.",
-            "La mejora elegida se puede observar mañana; “practicar más” no basta.",
-            "Se conservan intentos originales y datos privados fuera de archivos públicos."
-          ],
-          "phases": [
-            {
-              "title": "Evidencia",
-              "minutes": 5
-            },
-            {
-              "title": "Registrar",
-              "minutes": 5
-            },
-            {
-              "title": "Respaldar y preparar",
-              "minutes": 5
-            }
-          ],
-          "sources": [
-            "original-practice"
-          ]
         }
       ]
     },
@@ -2675,41 +2360,6 @@
             "original-practice"
           ],
           "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d10-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement apply_deltas(stock,changes), stock maps product to nonnegative integer units; changes is [(product,signed_delta)] with existing products. Aggregate all changes per product; validate the final result is nonnegative, then return a new dict. If any final value is negative raise ValueError; stock remains unchanged. Input stock={'a':2,'b':1}, changes=[('a',-3),('a',2),('b',-1)]. Also test [('a',-3)] and []. Intermediate negative totals are allowed because only final atomic state matters.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d10-python.py.\n"
-        },
-        {
-          "id": "d10-reflection",
-          "title": "Cierre con evidencia y plan realista",
-          "kind": "reflection",
-          "minutes": 15,
-          "summary": "Cerrar el día con evidencia guardada y una mejora concreta.",
-          "content": "## Cierre de 15 minutos\n1. **5 min — Evidencia:** Resume qué hiciste de forma independiente, dónde necesitaste ayuda y qué quedó incompleto. Conserva ambos mocks y tus notas. Prepara dos preguntas sobre puntos concretos de tus intentos para pedir revisión; completar el calendario no prueba preparación suficiente.\n2. **5 min — Registro:** marca cada bloque como completado de forma independiente, asistido o incompleto según lo que realmente ocurrió. Guarda rutas de intentos, resultados de check y predicciones; no uses un porcentaje como medida de preparación.\n3. **5 min — Respaldo y siguiente acción:** exporta el progreso del planner a `private/` o a una carpeta local de respaldo. Abre el siguiente día y escribe una sola acción inicial. Las tareas pendientes quedan visibles pero no se suman automáticamente al horario. Si hoy terminó el plan, guarda una pregunta específica para revisión.\n\nPara pedir ayuda útil: “Revisa el intento en [ruta exacta]. Esperaba [resultado]; observé [salida]. No modifiques mi solución todavía: señala la primera divergencia con el contrato y dame una pista.” Para revisión conductual, comparte solo la historia que quieras revisar.",
-          "deliverables": [
-            "Registro de ayuda y resultado real por bloque.",
-            "Una observación específica vinculada a una entrada, diff, respuesta o estado.",
-            "Export local de progreso y una siguiente acción concreta."
-          ],
-          "rubric": [
-            "No llamas terminado a un intento que no se verificó.",
-            "La mejora elegida se puede observar mañana; “practicar más” no basta.",
-            "Se conservan intentos originales y datos privados fuera de archivos públicos."
-          ],
-          "phases": [
-            {
-              "title": "Evidencia",
-              "minutes": 5
-            },
-            {
-              "title": "Registrar",
-              "minutes": 5
-            },
-            {
-              "title": "Respaldar y preparar",
-              "minutes": 5
-            }
-          ],
-          "sources": [
-            "original-practice"
-          ]
         }
       ]
     }
@@ -2799,5 +2449,17 @@
       "level": "official",
       "note": "Enunciado oficial de LeetCode, consultado el 22-10-2026. Alternativa de30 min para repasar patrones; no evidencia del contenido de una entrevista de Capital One ni del historial personal del candidato."
     }
+  ],
+  "archivedBlockIds": [
+    "d01-reflection",
+    "d02-reflection",
+    "d03-reflection",
+    "d04-reflection",
+    "d05-reflection",
+    "d06-reflection",
+    "d07-reflection",
+    "d08-reflection",
+    "d09-reflection",
+    "d10-reflection"
   ]
 }

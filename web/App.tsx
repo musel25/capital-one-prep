@@ -37,7 +37,8 @@ import { Tutorial } from "./Tutorial";
 type View = "agenda" | "resources" | "behavioral" | "guide";
 const plan = planData as Plan;
 const all = plan.days.flatMap((d) => d.blocks);
-const ids = all.map((b) => b.id);
+// Accept old closing notes in stored state and backups without scheduling them.
+const ids = [...all.map((b) => b.id), ...(plan.archivedBlockIds ?? [])];
 const done = (p?: Progress) => p?.status === "done" || p?.status === "assisted";
 function read() {
   try {
@@ -228,6 +229,7 @@ export default function App() {
     }
   }
   const day = plan.days[selected];
+  const dayMinutes = day.blocks.reduce((n, b) => n + b.minutes, 0);
   const count = day.blocks.filter((b) => done(state.tasks[b.id])).length;
   const completedMinutes = day.blocks
     .filter((b) => done(state.tasks[b.id]))
@@ -239,7 +241,7 @@ export default function App() {
     .flatMap((d) => d.blocks)
     .filter((b) => !done(state.tasks[b.id]));
   const running = Object.entries(state.tasks).find(
-    ([, p]) => p.timer?.startedAt,
+    ([id, p]) => p.timer?.startedAt && all.some((b) => b.id === id),
   );
   const kindIcon = (b: Block) =>
     b.kind === "technical" ? (
@@ -269,7 +271,9 @@ export default function App() {
           <span>
             23 oct – 1 nov, 2026
             <br />
-            <strong>10 días · 4 horas al día</strong>
+            <strong>
+              10 días · {formatDuration(plan.dailyMinutes)} al día
+            </strong>
           </span>
         </div>
         <nav aria-label="Días de preparación" className="day-nav">
@@ -472,7 +476,8 @@ export default function App() {
                 <div className="agenda-top">
                   <h2>Tu agenda</h2>
                   <span>
-                    <Clock3 size={15} /> 4 h de trabajo · pausas aparte
+                    <Clock3 size={15} /> {formatDuration(dayMinutes)} de trabajo
+                    · pausas aparte
                   </span>
                 </div>
                 <div className="agenda-list">
@@ -545,7 +550,10 @@ export default function App() {
                     <strong>
                       {count} de {day.blocks.length} bloques
                     </strong>
-                    <span>{formatDuration(completedMinutes)} / 4 h</span>
+                    <span>
+                      {formatDuration(completedMinutes)} /{" "}
+                      {formatDuration(dayMinutes)}
+                    </span>
                   </div>
                   <progress max={day.blocks.length} value={count} />
                   <p>

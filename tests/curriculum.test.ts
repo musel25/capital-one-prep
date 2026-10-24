@@ -5,10 +5,10 @@ import type { Plan } from "../web/types";
 const plan = JSON.parse(
   readFileSync(new URL("../curriculum/plan.json", import.meta.url), "utf8"),
 ) as Plan;
-test("all ten days have exactly four hours and complete actionable content", () => {
+test("all ten days have four actionable blocks totaling 225 minutes", () => {
   assert.equal(plan.days.length, 10);
   assert.equal(plan.timezone, "America/Tijuana");
-  assert.equal(plan.dailyMinutes, 240);
+  assert.equal(plan.dailyMinutes, 225);
   const blockIds = new Set<string>();
   const labIds = new Set<string>();
   const sources = new Set(plan.sources.map((s) => s.id));
@@ -20,8 +20,13 @@ test("all ten days have exactly four hours and complete actionable content", () 
     assert.equal(day.date, expected);
     assert.equal(
       day.blocks.reduce((n, b) => n + b.minutes, 0),
-      240,
+      225,
       day.date,
+    );
+    assert.equal(day.blocks.length, 4);
+    assert.deepEqual(
+      day.blocks.map((b) => b.kind),
+      ["technical", "case", "behavioral", "python"],
     );
     for (const b of day.blocks) {
       assert.ok(!blockIds.has(b.id));

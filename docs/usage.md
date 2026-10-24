@@ -1,6 +1,6 @@
 # Tu espacio de preparación
 
-Abre [Capital One Prep](https://timer.musel.dev/grind/capital-one/). El calendario elige la fecha de Tijuana entre el 23 de octubre y el 1 de noviembre de 2026. Antes del inicio abre el día 1; después del final conserva el día 10. Puedes elegir cualquier fecha. Cada día tiene exactamente 240 minutos de trabajo; toma pausas aparte.
+Abre [Capital One Prep](https://timer.musel.dev/grind/capital-one/). El calendario elige la fecha de Tijuana entre el 23 de octubre y el 1 de noviembre de 2026. Antes del inicio abre el día 1; después del final conserva el día 10. Puedes elegir cualquier fecha. Cada día tiene exactamente 225 minutos de trabajo; toma pausas aparte.
 
 Para una primera visita, abre [Empieza aquí](https://timer.musel.dev/grind/capital-one/?view=guide), disponible también en el menú y mediante «Ver tutorial» en la agenda. Resume el recorrido página → editor → revisión y contiene un ejemplo completo del primer ejercicio.
 
@@ -33,7 +33,11 @@ El día 9 añade código real de Gilded Rose. Usa su comando específico `uv run
 
 En los casos, interpreta las reglas, predice resultados y explica tu corrección sin ejecutar el código. Guarda la predicción y marca el intento terminado antes de abrir la explicación. La solución se oculta para evitar spoilers casuales; no es un control de acceso. No pidas al agente que resuelva el caso antes de tu intento.
 
-Para behavioral, [las plantillas](../behavioral/story-templates.md) están vacías deliberadamente. Usa experiencias ciertas, aportación individual y resultados que puedas defender. Practica preguntas de seguimiento; no memorices respuestas inventadas.
+Para behavioral, la guía está dentro de cada bloque: elige un proyecto real y un episodio, contesta en el orden indicado y practica las repreguntas en inglés. Puedes responder en «Mi intento y revisión»; no necesitas abrir las plantillas del repositorio. No inventes historias.
+
+En Python, pulsa «Copiar prompt» y pégalo en tu agente local para crear un archivo con función pendiente y pruebas. El prompt incluye el contrato completo y exige conservar intentos anteriores. Implementa tú la función y ejecuta el archivo con `uv run python` desde la raíz.
+
+Cada día tiene cuatro bloques, sin «Cierre y reflexión». Registra resultados dentro de cada ejercicio. Los antiguos registros de cierre se conservan en los respaldos; ya no cuentan para el progreso ni aparecen en la agenda.
 
 ## Guardar el progreso
 

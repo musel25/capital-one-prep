@@ -1,6 +1,6 @@
 # Capital One Prep
 
-A ten-day preparation workspace for Capital One TDP Mexico, October 23–November 1, 2026. Four hours each day: AI-assisted debugging and feature work, technical business cases, behavioral practice, and targeted Python exercises.
+A ten-day preparation workspace for Capital One TDP Mexico, October 23–November 1, 2026. Three hours and forty-five minutes each day: AI-assisted debugging and feature work, technical business cases, behavioral practice, and targeted Python exercises.
 
 The daily page provides the agenda. Code is practiced in your own editor, with independent attempt folders that preserve your work. Instructions are in Spanish; interview practice is in English.
 
@@ -18,7 +18,7 @@ uv run python scripts/practice.py start d01-bug
 
 Open the newly printed directory in your editor and read its README. It includes the startup commands and the exact task. Run `start` again for a fresh attempt; it never overwrites previous work. To check a solution, run `uv run python scripts/practice.py check attempts/YOUR-ATTEMPT` from the repository root.
 
-The schedule has 50 blocks across ten days, including 20 independent debugging/feature tasks, ten technical cases, behavioral questions with follow-ups, and Python practice. Four LeetCode alternatives fit inside the existing time allocation. The site includes phase timers, checklists, notes, and gated case explanations.
+The schedule has 40 blocks across ten days, including 20 independent debugging/feature tasks, ten technical cases, behavioral questions with follow-ups, and Python practice. Four LeetCode alternatives fit inside the existing time allocation. The site includes phase timers, checklists, notes, and gated case explanations. Behavioral blocks include project-based worksheets. Python blocks include copyable prompts for creating local starters and tests without solutions. There is no separate closing block.
 
 The 20 application tasks are **original training exercises**. Day 9 also uses a real, unmodified Python snapshot from [Gilded Rose](external/README.md), pinned to an upstream commit with its MIT license. Sources distinguish official platform documentation, candidate accounts, and constructed practice. None confirms your specific interview's tool permissions or timing.
 

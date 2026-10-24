@@ -88,12 +88,15 @@ export function Tutorial({
           La página registra tu autoevaluación: no lee tu editor ni detecta tus
           tests. Usar el agente permitido es parte del lab; «con pistas» se
           refiere a ayuda adicional o a consultar la solución. Los bloques por
-          repetir siguen pendientes y no se añaden automáticamente a las cuatro
-          horas del siguiente día.
+          repetir siguen pendientes y no se añaden automáticamente a la agenda
+          del siguiente día.
         </p>
       </div>
 
-      <h2 className="tutorial-heading">Tu primer día: 4 horas</h2>
+      <h2 className="tutorial-heading">
+        Tu primer día:{" "}
+        {formatDuration(firstDay.blocks.reduce((n, b) => n + b.minutes, 0))}
+      </h2>
       <ul className="tutorial-agenda">
         {firstDay.blocks.map((block) => (
           <li key={block.id}>
@@ -158,9 +161,10 @@ En “Mi intento y revisión”, guarda la ruta, las pruebas y tu explicación. 
       <details className="tutorial-detail">
         <summary>Cómo trabajar los casos, behavioral y Python</summary>
         <Markdown>{`- **Business case:** razona sin ejecutar código ni pedir la respuesta a la IA. Habla en inglés, aplica las reglas, predice resultados y explica los defectos. En “Mi intento y revisión”, guarda tu predicción, termina el intento y después pulsa “He terminado: abrir explicación”.
-- **Behavioral:** prepara experiencias reales con situación, responsabilidad, acciones propias y resultado. Practica la respuesta en voz alta y las repreguntas; usa las notas para hechos y decisiones, no para inventar una historia.
-- **Python / LeetCode:** sigue el ejercicio indicado sin IA, salvo que el bloque diga otra cosa. En los días con una alternativa LeetCode, elige esa alternativa o el ejercicio original dentro del mismo tiempo.
-- **Cierre:** registra evidencia y la siguiente mejora concreta. Exporta tu progreso; los bloques incompletos se conservan sin ampliar automáticamente el día siguiente.`}</Markdown>
+- **Behavioral:** la guía está dentro del bloque. Elige un proyecto real y un episodio, sigue las preguntas en orden y escribe en “Mi intento y revisión”. Practica en inglés; no necesitas abrir un archivo externo.
+- **Python / LeetCode:** pulsa “Copiar prompt” para pedir al agente local un starter y pruebas sin solución. Implementa tú la función y ejecuta el comando uv indicado. Si eliges una alternativa LeetCode, sustituye el ejercicio original dentro del mismo tiempo.
+
+Registra el resultado dentro de cada bloque. No hay un bloque adicional de cierre; puedes exportar el progreso cuando quieras.`}</Markdown>
       </details>
 
       <details className="tutorial-detail">

@@ -77,6 +77,61 @@ test("Python setup prompt can be copied with the full contract without changing 
   assert.equal(saves, 0);
 });
 
+test("removed closing blocks stay in saved progress without appearing in the agenda or timers", async () => {
+  const old = replaceProgress(freshState(), "d01-reflection", {
+    notes: "Keep this older closing note.",
+    status: "done",
+    timer: {
+      elapsed: 0,
+      startedAt: Date.now(),
+      duration: 900,
+      phase: "Old closing",
+    },
+  });
+  const raw = JSON.stringify(old);
+  localStorage.setItem(STORAGE_KEY, raw);
+  render(createElement(App));
+  assert.equal(screen.queryByRole("alert"), null);
+  assert.ok(
+    screen.queryByText("Cierre y reflexión") === null,
+    "Closing block must not appear",
+  );
+  assert.ok(
+    screen.queryByRole("button", { name: /Temporizador activo/ }) === null,
+    "Archived timers must not appear",
+  );
+  assert.ok(screen.getByText("0 / 40 bloques"));
+  assert.ok(screen.getByText("0 min / 3 h 45 min"));
+  assert.equal(localStorage.getItem(STORAGE_KEY), raw);
+  await user.click(screen.getByRole("button", { name: "Empezar bloque" }));
+  await user.click(screen.getByRole("button", { name: "Iniciar" }));
+  assert.equal(
+    JSON.parse(localStorage.getItem(STORAGE_KEY)!).tasks["d01-reflection"]
+      .notes,
+    "Keep this older closing note.",
+  );
+});
+
+test("older backups with closing notes can still be imported", async () => {
+  const old = replaceProgress(freshState(), "d10-reflection", {
+    notes: "Old final notes.",
+  });
+  render(createElement(App));
+  await act(async () => {
+    fireEvent.change(screen.getByLabelText("Importar progreso"), {
+      target: {
+        files: [{ size: 1000, text: async () => JSON.stringify(old) }],
+      },
+    });
+  });
+  assert.equal(screen.queryByRole("alert"), null);
+  assert.equal(
+    JSON.parse(localStorage.getItem(STORAGE_KEY)!).tasks["d10-reflection"]
+      .notes,
+    "Old final notes.",
+  );
+});
+
 test("tutorial deep link returns to day one without changing saved practice", async () => {
   const id = plan.days[0].blocks[0].id;
   const raw = JSON.stringify(

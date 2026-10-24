@@ -37,6 +37,7 @@ export type Plan = {
   endDate: string;
   timezone: string;
   dailyMinutes: number;
+  archivedBlockIds?: string[];
   days: Day[];
   sources: Source[];
 };
