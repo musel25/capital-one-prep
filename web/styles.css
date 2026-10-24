@@ -1226,6 +1226,11 @@ progress::-moz-progress-bar {
   margin-bottom: 10px;
   cursor: pointer;
 }
+.completion-details summary {
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--muted);
+}
 .task-sources a {
   display: flex;
   gap: 6px;

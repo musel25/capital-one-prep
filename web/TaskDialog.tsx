@@ -177,10 +177,8 @@ export function TaskDialog({
             </span>
             <h2>{block.title}</h2>
             <p>
-              {formatDuration(block.minutes)} de práctica ·{" "}
-              {block.kind === "case"
-                ? "Primero razona sin ejecutar código"
-                : "Sigue el enunciado y registra la evidencia"}
+              {formatDuration(block.minutes)} de práctica
+              {block.kind === "case" && " · Sin ejecutar código"}
             </p>
           </div>
           <button
@@ -275,10 +273,9 @@ export function TaskDialog({
                     <Terminal size={18} /> Abre el ejercicio en tu editor
                   </h3>
                   <p>
-                    Desde <code>/home/musel/Github/capital-one-prep</code>, crea
-                    una copia nueva para cada tarea. El comando muestra la
-                    carpeta que debes abrir; su README explica cómo ejecutar la
-                    aplicación.
+                    Ejecuta desde{" "}
+                    <code>/home/musel/Github/capital-one-prep</code>. Abre la
+                    carpeta devuelta y lee su README.
                   </p>
                   {block.labs.map((id) => (
                     <div key={id} className="command-row">
@@ -289,8 +286,8 @@ export function TaskDialog({
                     </div>
                   ))}
                   <p className="muted">
-                    Conserva el primer intento. Para la segunda tarea usa su
-                    comando de inicio; no reutilices la copia anterior.
+                    Bug y feature usan copias distintas. Para continuar un
+                    intento, abre su carpeta existente.
                   </p>
                 </section>
               )}
@@ -299,9 +296,8 @@ export function TaskDialog({
                 <section className="local-work">
                   <h3>Preparar el ejercicio local</h3>
                   <p>
-                    Copia este prompt y pégalo en tu agente local, con este
-                    repositorio abierto. Crea el archivo y las pruebas; tú
-                    implementas la función. La página no ejecuta Python.
+                    Pégalo en tu agente local: preparará la función vacía, las
+                    pruebas y el comando para ejecutarlas.
                   </p>
                   <CopyButton
                     text={block.setupPrompt}
@@ -328,24 +324,21 @@ export function TaskDialog({
                 </section>
               )}
               {block.kind !== "behavioral" && (
-                <section className="section">
-                  <h3>Qué debes entregar</h3>
+                <details className="section completion-details">
+                  <summary>Al terminar</summary>
                   <ul>
                     {block.deliverables.map((d, i) => (
                       <li key={i}>{d}</li>
                     ))}
                   </ul>
-                </section>
+                </details>
               )}
               {!!block.hints?.length && (
                 <section className="section">
                   <h3>
                     <Lightbulb size={18} /> Pistas opcionales
                   </h3>
-                  <p className="muted">
-                    Intenta primero. Usar pistas queda reflejado al elegir el
-                    resultado.
-                  </p>
+                  <p className="muted">Abre una si te atascas.</p>
                   {block.hints.map((hint, i) => (
                     <details key={i} className="hint">
                       <summary>
@@ -397,10 +390,7 @@ export function TaskDialog({
               )}
               <section className="section">
                 <h3>Comprueba tu trabajo</h3>
-                <p className="muted">
-                  Marca únicamente lo que puedes demostrar. Esta lista es una
-                  autoevaluación.
-                </p>
+                <p className="muted">Marca lo que comprobaste.</p>
                 <div className="checklist">
                   {block.rubric.map((r, i) => {
                     const key = `rubric-${i}`;
@@ -446,8 +436,7 @@ export function TaskDialog({
                   </p>
                 )}
                 <p className="muted">
-                  Guardado en este navegador. Exporta el progreso para tener una
-                  copia o compartirlo conmigo desde private/.
+                  Guardado en este navegador. Usa «Exportar» para respaldarlo.
                 </p>
               </section>
               {!!block.labs?.length && (
@@ -461,9 +450,7 @@ export function TaskDialog({
                     uv run python scripts/practice.py check attempts/TU-CARPETA
                   </code>
                   <p>
-                    El verificador comprueba comportamiento; la página no
-                    observa ni certifica la ejecución. Para revisarlo conmigo:
-                    «Revisa mi intento en attempts/…».
+                    Guarda aquí el resultado; la página no ejecuta tu código.
                   </p>
                 </div>
               )}
@@ -489,9 +476,7 @@ export function TaskDialog({
                   </label>
                 </div>
                 <p className="muted">
-                  Usar el agente permitido forma parte del ejercicio. «Con
-                  pistas» significa que necesitaste ayuda adicional o viste la
-                  solución.
+                  «Con pistas» indica ayuda adicional o consulta de la solución.
                 </p>
                 <div className="result-buttons">
                   <button

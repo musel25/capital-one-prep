@@ -19,79 +19,23 @@ export function Tutorial({
       <p className="date-heading">Tu recorrido en 2 minutos</p>
       <h1>Empieza aquí</h1>
       <p className="day-focus">
-        La página organiza la práctica. Tú escribes el código en tu editor y
-        vuelves aquí para registrar lo que hiciste.
+        Elige un ejercicio. Practica en tu editor o en voz alta y guarda el
+        resultado.
       </p>
-      <div className="workflow-overview" aria-label="Recorrido de una tarea">
-        <span>
-          <strong>1. Página</strong> Lee el objetivo y los tiempos
-        </span>
-        <span aria-hidden="true">→</span>
-        <span>
-          <strong>2. Editor</strong> Investiga, cambia y prueba
-        </span>
-        <span aria-hidden="true">→</span>
-        <span>
-          <strong>3. Página</strong> Explica y guarda el resultado
-        </span>
-      </div>
-
-      <h2>Así usas cada bloque</h2>
       <ol className="tutorial-steps">
         <li>
-          <strong>Elige el día y pulsa «Empezar bloque».</strong>
-          <p>
-            Lee «Enunciado y recursos», las reglas y «Qué debes entregar». Sigue
-            los bloques en orden; la siguiente tarea pendiente aparece en «Tu
-            siguiente paso».
-          </p>
+          <strong>Abre el bloque del día.</strong> Lee el enunciado y usa su
+          comando o prompt para preparar el ejercicio.
         </li>
         <li>
-          <strong>Si hay código, crea tu copia local.</strong>
-          <p>
-            Copia el comando del bloque, ejecútalo en una terminal y abre la
-            carpeta que devuelve. Su README contiene el ticket y los comandos.
-            Cada bug y cada feature parten de una copia independiente.
-          </p>
+          <strong>Practica.</strong> El reloj es opcional. Cerrar el ejercicio
+          no lo pausa; usa «Pausar» para detenerlo.
         </li>
         <li>
-          <strong>Selecciona la fase del reloj y pulsa «Iniciar».</strong>
-          <p>
-            Elige la siguiente fase manualmente cuando termines. Cerrar el
-            ejercicio no pausa el reloj; usa «Pausar» para una pausa. Llegar a
-            cero no cambia de fase ni marca la tarea como completada.
-          </p>
-        </li>
-        <li>
-          <strong>Comprueba tu trabajo y explícalo en voz alta.</strong>
-          <p>
-            En los labs, ejecuta tus pruebas y después el verificador indicado.
-            Explica en inglés el síntoma, la causa, el cambio y la evidencia. Si
-            te atascas, conserva tu intento, usa una pista y registra qué falta
-            dentro del tiempo del bloque.
-          </p>
-        </li>
-        <li>
-          <strong>Vuelve a «Mi intento y revisión».</strong>
-          <p>
-            Anota la ruta, resultados y minutos reales; marca solo lo que
-            comprobaste. Elige «Completado», «Completado con pistas» o «Necesito
-            otro intento». Al terminar el día, usa «Exportar» y guarda el JSON
-            en <code>private/</code>.
-          </p>
+          <strong>Guarda tus notas.</strong> En «Mi intento y revisión»,
+          registra el resultado. «Exportar» descarga un respaldo.
         </li>
       </ol>
-
-      <div className="callout">
-        <strong>Qué significa el progreso</strong>
-        <p>
-          La página registra tu autoevaluación: no lee tu editor ni detecta tus
-          tests. Usar el agente permitido es parte del lab; «con pistas» se
-          refiere a ayuda adicional o a consultar la solución. Los bloques por
-          repetir siguen pendientes y no se añaden automáticamente a la agenda
-          del siguiente día.
-        </p>
-      </div>
 
       <h2 className="tutorial-heading">
         Tu primer día:{" "}
@@ -105,10 +49,7 @@ export function Tutorial({
           </li>
         ))}
       </ul>
-      <p className="muted">
-        Las pausas son aparte. Esta guía es una referencia; no añade otra tarea
-        al calendario.
-      </p>
+      <p className="muted">Las pausas son aparte.</p>
       <button className="button primary tutorial-start" onClick={openFirstDay}>
         <Play size={16} /> Abrir el día 1
       </button>

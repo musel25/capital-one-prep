@@ -363,7 +363,7 @@ export default function App() {
       <main className="main">
         <header className="topbar">
           <div>
-            <span className="status-dot" /> Tu espacio de preparación{" "}
+            <span className="status-dot" /> Plan de práctica{" "}
             <span className="topbar-sub">TDP México 2027</span>
           </div>
           <a href="https://timer.musel.dev/grind/">
@@ -458,11 +458,8 @@ export default function App() {
             )}
             <div className="tutorial-banner">
               <div>
-                <strong>Tu recorrido: página → editor → revisión</strong>
-                <p>
-                  Guía rápida, ejemplo del primer ejercicio y cómo guardar tu
-                  trabajo.
-                </p>
+                <strong>¿Primera vez aquí?</strong>
+                <p>Cómo abrir los ejercicios y guardar tu progreso.</p>
               </div>
               <button
                 className="button secondary small"
@@ -528,7 +525,7 @@ export default function App() {
                   <p>
                     {next
                       ? next.kind === "technical"
-                        ? "Abre el enunciado y crea tu copia local. Investiga, verifica y explica cada decisión."
+                        ? "Abre el ejercicio para empezar."
                         : next.summary
                       : "Guarda una copia de tu progreso y descansa. Los resultados describen tu práctica, no garantizan el resultado de la entrevista."}
                   </p>
@@ -569,16 +566,6 @@ export default function App() {
                       {totalDone} / {all.length} bloques
                     </strong>
                   </div>
-                </section>
-                <section className="practice-note">
-                  <h3>
-                    <MessageCircle size={17} /> Practica en voz alta
-                  </h3>
-                  <p>
-                    “What did I observe? Why this change? What evidence shows it
-                    works?”
-                  </p>
-                  <span>El razonamiento forma parte del ejercicio.</span>
                 </section>
               </aside>
             </div>
