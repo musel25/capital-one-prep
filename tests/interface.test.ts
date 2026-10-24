@@ -222,6 +222,7 @@ test("daily task notes, checklist and running timer restore after remount", asyn
     screen.getByLabelText("Notas, evidencia y preguntas pendientes"),
     "My local test evidence.",
   );
+  await user.click(screen.getByText("Comprobar mi trabajo"));
   await user.click(screen.getAllByRole("checkbox")[0]);
   const before = JSON.parse(localStorage.getItem(STORAGE_KEY)!);
   assert.equal(before.tasks[technical.id].notes, "My local test evidence.");
@@ -242,6 +243,7 @@ test("daily task notes, checklist and running timer restore after remount", asyn
     ).value,
     "My local test evidence.",
   );
+  await user.click(screen.getByText("Comprobar mi trabajo"));
   assert.equal(
     (screen.getAllByRole("checkbox")[0] as HTMLInputElement).checked,
     true,

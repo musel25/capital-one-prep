@@ -8,7 +8,7 @@
     {
       "date": "2026-10-23",
       "title": "Leer, reproducir y explicar",
-      "focus": "Primera línea de base: conocer una aplicación, separar bug de feature y narrar evidencia.",
+      "focus": "Ordena movimientos, combina filtros y explica tus cambios.",
       "blocks": [
         {
           "id": "d01-technical",
@@ -234,7 +234,7 @@
     {
       "date": "2026-10-24",
       "title": "Transferencias e invariantes",
-      "focus": "Evitar estado parcial y explicar acciones propias dentro de un equipo.",
+      "focus": "Transferencias, historial y pedir ayuda en un proyecto.",
       "blocks": [
         {
           "id": "d02-technical",
@@ -461,7 +461,7 @@
     {
       "date": "2026-10-25",
       "title": "Dinero, redondeo y presupuesto",
-      "focus": "Aplicar reglas numéricas exactas y defender decisiones en un desacuerdo.",
+      "focus": "Recompensas, redondeo y decisiones en equipo.",
       "blocks": [
         {
           "id": "d03-technical",
@@ -688,7 +688,7 @@
     {
       "date": "2026-10-26",
       "title": "Páginas, filtros y metadatos",
-      "focus": "Trazar datos a través de selección, orden y presentación.",
+      "focus": "Filtros, paginación y metadatos.",
       "blocks": [
         {
           "id": "d04-technical",
@@ -913,7 +913,7 @@
     {
       "date": "2026-10-27",
       "title": "Reembolsos y agregaciones",
-      "focus": "Conservar sumas y atribuir cada efecto a su entidad original.",
+      "focus": "Reembolsos, gasto neto y cómo responder a un error.",
       "blocks": [
         {
           "id": "d05-technical",
@@ -1140,7 +1140,7 @@
     {
       "date": "2026-10-28",
       "title": "Seguir el contrato de extremo a extremo",
-      "focus": "Reconocer fallos entre UI y API; respuestas claras bajo ambigüedad.",
+      "focus": "Contratos entre API y pantalla, y requisitos poco claros.",
       "blocks": [
         {
           "id": "d06-technical",
@@ -1366,7 +1366,7 @@
     {
       "date": "2026-10-29",
       "title": "IA con criterio y recuperación",
-      "focus": "Verificar cambios propuestos por IA y diseñar reintentos seguros.",
+      "focus": "Reintentos seguros y revisión de código generado por IA.",
       "blocks": [
         {
           "id": "d07-technical",
@@ -1593,7 +1593,7 @@
     {
       "date": "2026-10-30",
       "title": "Mock A: medir el proceso completo",
-      "focus": "Dos tareas nuevas, caso original y tres historias sin consultar guiones.",
+      "focus": "Simulacro: dos tareas, un caso y tres historias.",
       "blocks": [
         {
           "id": "d08-technical",
@@ -1816,7 +1816,7 @@
     {
       "date": "2026-10-31",
       "title": "Repositorio real y reparación focalizada",
-      "focus": "Leer código real de Gilded Rose; corregir fronteras y debilidades vistas.",
+      "focus": "Código de Gilded Rose, promociones y prioridades.",
       "blocks": [
         {
           "id": "d09-technical",
@@ -2040,7 +2040,7 @@
     {
       "date": "2026-11-01",
       "title": "Mock B: trabajar con reglas nuevas",
-      "focus": "Mock de inventario, nueva extensión y cierre basado en evidencia.",
+      "focus": "Simulacro final: inventario, reservas y tres historias.",
       "blocks": [
         {
           "id": "d10-technical",
@@ -2268,84 +2268,84 @@
       "title": "CodeSignal: Agentic Interviewing",
       "url": "https://support.codesignal.com/hc/en-us/articles/38841637349015-How-can-I-use-Agentic-Interviewing-in-my-recruiting-process",
       "level": "official",
-      "note": "Documentación de la plataforma, consultada el 22-10-2026: permite preguntas con agentes y revisión del trabajo generado. No confirma que esta invitación use esa modalidad, agente o duración."
+      "note": "Documentación de CodeSignal sobre preguntas con agentes. Consultada el 22-10-2026; no confirma la modalidad de tu entrevista."
     },
     {
       "id": "codesignal-copilot",
       "title": "CodeSignal: AI Co-Pilot for Interview",
       "url": "https://support.codesignal.com/hc/en-us/articles/38064497347863-AI-Co-Pilot-for-Interview",
       "level": "official",
-      "note": "Documenta Cosmo, configuración por entrevista y registro de conversaciones. Cosmo y un agente de programación son modalidades distintas; comprueba las herramientas autorizadas en tu invitación."
+      "note": "Describe Cosmo y su configuración por entrevista. Cosmo y un agente de programación son modalidades distintas."
     },
     {
       "id": "tdp-agentic-report",
       "title": "Relato de candidato: TDP Associate February 2027 Power Day",
       "url": "https://www.reddit.com/r/csMajors/comments/1x24s16/capital_one_tdp_associate_february_2027_power_day/",
       "level": "testimony",
-      "note": "Testimonio anónimo, consultado el 22-10-2026. Describe 20 minutos de bug + 5 de discusión, reinicio, 20 de feature + 5 de discusión, y caso sin ejecución. Es la base de esta simulación, no una promesa sobre tu entrevista."
+      "note": "Relato anónimo consultado el 22-10-2026: bug y feature en rondas de 20 + 5 minutos, y caso sin ejecución. Referencia de esta práctica."
     },
     {
       "id": "tdp-case-report",
       "title": "Relato de candidato: TDP Power Day Experience",
       "url": "https://www.reddit.com/r/csMajors/comments/1hd4k8c/capital_one_tdp_power_day_experience/",
       "level": "testimony",
-      "note": "Un relato de 2024 describe negocio → lectura/trazado → cambio de código, y preguntas conductuales con repreguntas. Puede variar por equipo, país y cohorte."
+      "note": "Relato de 2024: discusión de negocio, trazado, cambios de código y preguntas conductuales. El formato puede variar."
     },
     {
       "id": "tdp-mexico-report",
       "title": "Taro: experiencia TDP en México, 5 de junio de 2025",
       "url": "https://www.jointaro.com/interviews/companies/capital-one/experiences/tdp-software-engineer-mexico-june-5-2025-no-offer-positive-65827e7e/",
       "level": "testimony",
-      "note": "Una sola experiencia menciona colaboración con otro equipo. Sirve para construir una repregunta, no para estimar probabilidades ni afirmar un formato universal."
+      "note": "Experiencia individual en México que menciona colaboración con otro equipo."
     },
     {
       "id": "gildedrose",
       "title": "Gilded Rose Refactoring Kata",
       "url": "https://github.com/emilybache/GildedRose-Refactoring-Kata",
       "level": "repository",
-      "note": "Repositorio público real. El día 9 usa una copia de su código Python fijada a d6407909c73b2ba61bfa7568af0d9bdce1902fd5; la extensión/coach de este plan es práctica. Kata pequeña, no una entrevista oficial ni una app de producción grande."
+      "note": "Kata pública usada el día 9, fijada al commit d6407909c73b2ba61bfa7568af0d9bdce1902fd5. La extensión y sus pruebas son de este plan."
     },
     {
       "id": "fastapi-template",
       "title": "Full Stack FastAPI Template",
       "url": "https://github.com/fastapi/full-stack-fastapi-template",
       "level": "repository",
-      "note": "Referencia opcional para explorar una aplicación con capas de API y UI. No es un repositorio oficial de preparación de Capital One y no hace falta instalarlo para este plan."
+      "note": "Ejemplo opcional de API y UI. No necesitas instalarlo para estos ejercicios."
     },
     {
       "id": "original-practice",
       "title": "Ejercicios originales de este repositorio",
       "url": "https://github.com/musel25/capital-one-prep",
       "level": "practice",
-      "note": "Casos, datos y contratos creados para practicar. Ninguna solución, rúbrica o puntuación predice una oferta. Los mocks usan variantes nuevas, no los ejemplos de tarjetas virtuales o transacciones ya vistos."
+      "note": "Ejercicios ficticios creados para este plan; no son preguntas oficiales ni predicen un resultado de entrevista."
     },
     {
       "id": "leetcode-two-sum",
       "title": "LeetCode: 1. Two Sum",
       "url": "https://leetcode.com/problems/two-sum/",
       "level": "official",
-      "note": "Enunciado oficial de LeetCode, consultado el 22-10-2026. Alternativa de30 min para repasar patrones; no evidencia del contenido de una entrevista de Capital One ni del historial personal del candidato."
+      "note": "Enunciado oficial de LeetCode, consultado el 22-10-2026. Alternativa de 30 minutos; no es una pregunta confirmada de entrevista."
     },
     {
       "id": "leetcode-valid-anagram",
       "title": "LeetCode: 242. Valid Anagram",
       "url": "https://leetcode.com/problems/valid-anagram/",
       "level": "official",
-      "note": "Enunciado oficial de LeetCode, consultado el 22-10-2026. Alternativa de30 min para repasar patrones; no evidencia del contenido de una entrevista de Capital One ni del historial personal del candidato."
+      "note": "Enunciado oficial de LeetCode, consultado el 22-10-2026. Alternativa de 30 minutos; no es una pregunta confirmada de entrevista."
     },
     {
       "id": "leetcode-group-anagrams",
       "title": "LeetCode: 49. Group Anagrams",
       "url": "https://leetcode.com/problems/group-anagrams/",
       "level": "official",
-      "note": "Enunciado oficial de LeetCode, consultado el 22-10-2026. Alternativa de30 min para repasar patrones; no evidencia del contenido de una entrevista de Capital One ni del historial personal del candidato."
+      "note": "Enunciado oficial de LeetCode, consultado el 22-10-2026. Alternativa de 30 minutos; no es una pregunta confirmada de entrevista."
     },
     {
       "id": "leetcode-top-k",
       "title": "LeetCode: 347. Top K Frequent Elements",
       "url": "https://leetcode.com/problems/top-k-frequent-elements/",
       "level": "official",
-      "note": "Enunciado oficial de LeetCode, consultado el 22-10-2026. Alternativa de30 min para repasar patrones; no evidencia del contenido de una entrevista de Capital One ni del historial personal del candidato."
+      "note": "Enunciado oficial de LeetCode, consultado el 22-10-2026. Alternativa de 30 minutos; no es una pregunta confirmada de entrevista."
     }
   ],
   "archivedBlockIds": [

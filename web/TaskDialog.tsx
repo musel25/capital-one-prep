@@ -360,9 +360,8 @@ export function TaskDialog({
                 <section className="section">
                   <h3>Mi predicción, antes de ejecutar</h3>
                   <p>
-                    Escribe las salidas esperadas, la regla que justifica cada
-                    una y los cambios que propondrías. Guarda tu respuesta antes
-                    de revisar la solución.
+                    Anota la salida actual, la deseada y tu corrección antes de
+                    abrir la solución.
                   </p>
                   <textarea
                     rows={7}
@@ -388,8 +387,8 @@ export function TaskDialog({
                   </button>
                 </section>
               )}
-              <section className="section">
-                <h3>Comprueba tu trabajo</h3>
+              <details className="section completion-details">
+                <summary>Comprobar mi trabajo</summary>
                 <p className="muted">Marca lo que comprobaste.</p>
                 <div className="checklist">
                   {block.rubric.map((r, i) => {
@@ -412,13 +411,14 @@ export function TaskDialog({
                     );
                   })}
                 </div>
-              </section>
+              </details>
               <section className="section">
                 <label className="field-label" htmlFor="task-notes">
-                  Notas, evidencia y preguntas pendientes
+                  Notas
                 </label>
                 <textarea
                   id="task-notes"
+                  aria-label="Notas, evidencia y preguntas pendientes"
                   value={notes}
                   onChange={(e) => {
                     setNotes(e.target.value);
@@ -426,7 +426,7 @@ export function TaskDialog({
                   }}
                   rows={6}
                   maxLength={30000}
-                  placeholder="Ruta de mi intento, tests ejecutados, resultado, decisiones, lo que todavía no comprobé…"
+                  placeholder="Tu respuesta, resultados o dudas…"
                 />
                 {notesChanged && (
                   <p className="alert" role="alert">
@@ -512,7 +512,7 @@ export function TaskDialog({
                     <>
                       <p>
                         {block.kind === "case"
-                          ? "Termina el intento y guarda tu predicción para abrir la explicación. En un simulacro, espera a finalizar la ronda."
+                          ? "Guarda tu predicción y termina el intento para abrir la explicación."
                           : "Termina el intento antes de consultar la explicación."}
                       </p>
                       <button
@@ -529,10 +529,6 @@ export function TaskDialog({
                     </>
                   ) : (
                     <>
-                      <p className="muted">
-                        Explicación consultada. Para medir tu progreso, el
-                        siguiente intento debe usar una variante nueva.
-                      </p>
                       <Markdown>{block.solution}</Markdown>
                     </>
                   )}

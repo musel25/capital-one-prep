@@ -521,13 +521,13 @@ export default function App() {
                   <span className="panel-label">
                     {next ? "Tu siguiente paso" : "Día completado"}
                   </span>
-                  <h2>{next ? next.title : "Buen trabajo por hoy."}</h2>
+                  <h2>{next ? next.title : "Terminaste los bloques de hoy"}</h2>
                   <p>
                     {next
                       ? next.kind === "technical"
                         ? "Abre el ejercicio para empezar."
                         : next.summary
-                      : "Guarda una copia de tu progreso y descansa. Los resultados describen tu práctica, no garantizan el resultado de la entrevista."}
+                      : "Puedes exportar tu progreso para guardar una copia."}
                   </p>
                   {next && (
                     <button
@@ -587,10 +587,7 @@ export default function App() {
                   {previous.length} bloques anteriores pendientes{" "}
                   <ChevronRight size={16} />
                 </summary>
-                <p>
-                  Se conservan aquí; no se añaden automáticamente a las cuatro
-                  horas de hoy.
-                </p>
+                <p>Puedes retomarlos cuando quieras.</p>
                 <div>
                   {previous.map((b) => (
                     <button key={b.id} onClick={() => setTask(b)}>
@@ -621,17 +618,11 @@ export default function App() {
           </>
         ) : view === "resources" ? (
           <section className="resource-page">
-            <p className="date-heading">Investigar con contexto</p>
             <h1>Fuentes y formato</h1>
             <p className="day-focus">
-              Los testimonios orientan la práctica. Tu invitación y las
-              instrucciones del entrevistador determinan el formato real.
+              Documentación, testimonios y material de práctica. Confirma el
+              formato y las herramientas de tu entrevista en tu invitación.
             </p>
-            <div className="callout">
-              El formato de 20 minutos + 5 de explicación es una referencia de
-              entrenamiento. La herramienta, el lenguaje y los tiempos de tu
-              convocatoria aún no están confirmados.
-            </div>
             {plan.sources.map((s) => (
               <article className="source-row" key={s.id}>
                 <span className={`source-level ${s.level}`}>
@@ -656,7 +647,6 @@ export default function App() {
           </section>
         ) : view === "behavioral" ? (
           <section className="resource-page">
-            <p className="date-heading">Hechos, decisiones y resultados</p>
             <h1>Tu práctica behavioral</h1>
             <p className="day-focus">
               Elige un día y responde sus preguntas en inglés con ejemplos de
@@ -677,7 +667,7 @@ export default function App() {
                       <span>
                         {state.tasks[b.id]?.notes
                           ? "Tienes notas guardadas"
-                          : "Abrir preguntas y preparar mi historia"}
+                          : "Abrir preguntas"}
                       </span>
                     </span>
                     <ChevronRight size={18} />
