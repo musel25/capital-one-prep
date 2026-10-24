@@ -140,15 +140,13 @@
         },
         {
           "id": "d01-behavioral",
-          "title": "Construir ocho espacios para historias reales",
+          "title": "Equipo y aprender algo nuevo",
           "kind": "behavioral",
           "minutes": 45,
-          "summary": "Empieza por tus proyectos reales, elige episodios y responde las preguntas en orden. Escribe aquí tus notas y practica en inglés.",
-          "content": "## 1. Elige un proyecto y un episodio real\n\nNo necesitas abrir otro archivo: usa esta guía y escribe en **Mi intento y revisión → Notas, evidencia y preguntas pendientes**. Se guarda en este navegador; puedes exportarlo. Si prefieres tu editor, conserva tus respuestas en `private/behavioral.md` sin sobrescribir lo que ya tengas.\n\nAntes de responder una pregunta, anota:\n\n- **Proyecto:** nombre y contexto real (académico, personal, investigación, voluntariado o empleo).\n- **Objetivo:** qué construías o qué intentabas conseguir, y para quién.\n- **Tu responsabilidad:** qué hiciste tú y qué hicieron otras personas o herramientas.\n- **Episodio:** un momento concreto, no un resumen de todo el proyecto.\n- **Evidencia:** resultado observado o recuerdo que puedas explicar; marca lo desconocido como no verificado.\n\nUn proyecto puede aportar varias historias; no necesitas ocho proyectos. Para una historia de equipo, elige colaboración con personas. No inventes un equipo, una cifra o un resultado para llenar un espacio. Si no hay ejemplo, déjalo pendiente.\n\n## 2. Selección de hoy\n\nElige hasta tres proyectos reales. Asigna un título factual a los ocho temas de abajo; deja vacíos los que no tengan un ejemplo. Hoy desarrolla solo S1 (equipo) y S5 (aprender rápido), con una respuesta oral por historia. No escribas ocho ensayos.\n\n### Inventario breve, no ocho ensayos\n\n| Tema | Qué episodio buscar | Qué anotar |\n|---|---|---|\n| S1 Equipo | Una entrega difícil con otras personas | Proyecto + momento + tu responsabilidad |\n| S2 Desacuerdo | Dos enfoques distintos y cómo se decidió | Proyecto + decisión discutida |\n| S3 Pedir ayuda | Un bloqueo y conocimiento fuera del grupo | Proyecto + a quién pediste ayuda |\n| S4 Cambiar una práctica | Algo que propusiste mejorar | Proyecto + práctica concreta |\n| S5 Aprender rápido | Algo desconocido necesario para una entrega | Proyecto + qué aprendiste y para qué |\n| S6 Error | Un error tuyo y tu respuesta | Proyecto + error real |\n| S7 IA | Una tarea con IA que verificaste | Proyecto + comprobación tuya |\n| S8 Ambigüedad | Un requisito o prioridad poco claro | Proyecto + incertidumbre |\n\n## 3. Esquema de respuesta — English\n\nUse short factual notes. Answer these in order for each chosen episode:\n\n1. **Context:** What project was this, who was it for, and what were you trying to deliver?\n2. **Challenge:** What specific constraint, uncertainty, or difficulty mattered?\n3. **Ownership:** What did you personally own? What did others own?\n4. **Actions:** What did you do first, next, and last? Why? Which alternative did you consider?\n5. **Result:** What happened, and what evidence did you observe? What remains unknown?\n6. **Reflection:** What would you do differently now, and why?\n\nKeep the context brief (15–20 seconds). Spend most of the answer on your actions and decisions. A concrete qualitative result is enough when no reliable number exists.\n\n## 4. Preguntas de hoy, ligadas a tus proyectos\n\n### S1 — Trabajo en equipo\n\nElige un episodio real con un entregable compartido. Separa tu contribución de la del equipo; explica dependencias y una decisión que tomaste tú.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you helped a team deliver a difficult project.\n\n**Follow-up questions:**\n\n- What did you own personally?\n- Which dependency put delivery at risk?\n- What did another teammate contribute?\n- How did you know the team had succeeded?\n\n### S5 — Aprender con poco contexto\n\nDefine lo desconocido y el plazo real. Explica cómo elegiste fuentes, verificaste comprensión y aplicaste lo aprendido a una entrega observable.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you had to learn something unfamiliar quickly.\n\n**Follow-up questions:**\n\n- How did you decide what not to learn?\n- How did you test your understanding?\n- Who or what corrected a misunderstanding?\n- What could you do independently afterward?\n\n## 5. Practica y registra en este bloque\n\nSigue las fases del temporizador. Habla en inglés sin memorizar un ensayo; responde las repreguntas sobre el mismo episodio. Una respuesta factual puede ser corta. Fuera de los mocks, practica las dos historias indicadas (si solo hay una nueva, usa otra historia real para la segunda). En los mocks, responde las tres preguntas del bloque sin leer tus notas.\n\nEn **Mi intento y revisión**, deja: proyecto y episodio, esquema factual, qué respuestas orales hiciste, respuestas a cuatro repreguntas y una frase vaga que corregiste. Distingue hechos, dudas y ayuda usada. Si no tienes una historia o no practicaste en voz alta, registra ese pendiente.\n\n### Opcional: presentación de 60 segundos\n\n**Interview question:** Give me a 60-second introduction focused on what you have actually built and what you want to learn next.\n\nOrder: current context → one real project and your contribution → one concrete skill demonstrated → what you want to learn next. This introduction does not replace the two stories.",
+          "summary": "Hoy practica cómo contribuiste a un equipo y cómo aprendiste algo nuevo.",
+          "content": "Elige ejemplos de tus proyectos reales y responde en inglés, en este orden. Si no tienes un ejemplo, déjalo pendiente. Puedes escribir unas notas en **Mi intento y revisión** antes de hablar.",
           "deliverables": [
-            "Esquema factual privado de las historias indicadas; huecos marcados como no verificados.",
-            "Al menos dos respuestas orales en inglés y respuestas a cuatro repreguntas (tres historias completas en mocks).",
-            "Una revisión específica basada en una frase vaga, falta de evidencia o atribución confusa."
+            "Respuestas a las preguntas de hoy, basadas en experiencias reales."
           ],
           "rubric": [
             "La respuesta responde a la pregunta concreta en 90–120 segundos sin leer un ensayo.",
@@ -157,29 +155,25 @@
             "Nombras una decisión, su razón y una alternativa; evitas generalidades como “we communicated well”."
           ],
           "prompts": [
-            "Tell me about a time you helped a team deliver a difficult project.",
-            "Tell me about a time you had to learn something unfamiliar quickly."
+            "Tell me about a difficult project you worked on with other people.",
+            "What did you personally do, and why?",
+            "What was the outcome?",
+            "Tell me about something unfamiliar you had to learn for a project.",
+            "How did you learn it and check your understanding?",
+            "What could you do independently afterward?"
           ],
           "phases": [
             {
-              "title": "Inventario factual",
+              "title": "Elegir ejemplos",
               "minutes": 10
             },
             {
-              "title": "Dos esquemas de hechos",
-              "minutes": 12
+              "title": "Responder en voz alta",
+              "minutes": 25
             },
             {
-              "title": "Dos respuestas orales",
-              "minutes": 6
-            },
-            {
-              "title": "Repreguntas",
+              "title": "Practicar repreguntas",
               "minutes": 10
-            },
-            {
-              "title": "Revisar y guardar",
-              "minutes": 7
             }
           ],
           "sources": [
@@ -372,15 +366,13 @@
         },
         {
           "id": "d02-behavioral",
-          "title": "Equipo y pedir ayuda sin perder responsabilidad",
+          "title": "Pedir ayuda",
           "kind": "behavioral",
           "minutes": 45,
-          "summary": "Empieza por tus proyectos reales, elige episodios y responde las preguntas en orden. Escribe aquí tus notas y practica en inglés.",
-          "content": "## 1. Elige un proyecto y un episodio real\n\nNo necesitas abrir otro archivo: usa esta guía y escribe en **Mi intento y revisión → Notas, evidencia y preguntas pendientes**. Se guarda en este navegador; puedes exportarlo. Si prefieres tu editor, conserva tus respuestas en `private/behavioral.md` sin sobrescribir lo que ya tengas.\n\nAntes de responder una pregunta, anota:\n\n- **Proyecto:** nombre y contexto real (académico, personal, investigación, voluntariado o empleo).\n- **Objetivo:** qué construías o qué intentabas conseguir, y para quién.\n- **Tu responsabilidad:** qué hiciste tú y qué hicieron otras personas o herramientas.\n- **Episodio:** un momento concreto, no un resumen de todo el proyecto.\n- **Evidencia:** resultado observado o recuerdo que puedas explicar; marca lo desconocido como no verificado.\n\nUn proyecto puede aportar varias historias; no necesitas ocho proyectos. Para una historia de equipo, elige colaboración con personas. No inventes un equipo, una cifra o un resultado para llenar un espacio. Si no hay ejemplo, déjalo pendiente.\n\n## 2. Selección de hoy\n\nCompleta S3 y contrástala con S1. Escribe la solicitud de ayuda que realmente hiciste o describe fielmente su contenido; identifica qué trabajo hiciste antes y después. Ensaya una respuesta de 2 minutos por historia y dos repreguntas por cada una.\n\n## 3. Esquema de respuesta — English\n\nUse short factual notes. Answer these in order for each chosen episode:\n\n1. **Context:** What project was this, who was it for, and what were you trying to deliver?\n2. **Challenge:** What specific constraint, uncertainty, or difficulty mattered?\n3. **Ownership:** What did you personally own? What did others own?\n4. **Actions:** What did you do first, next, and last? Why? Which alternative did you consider?\n5. **Result:** What happened, and what evidence did you observe? What remains unknown?\n6. **Reflection:** What would you do differently now, and why?\n\nKeep the context brief (15–20 seconds). Spend most of the answer on your actions and decisions. A concrete qualitative result is enough when no reliable number exists.\n\n## 4. Preguntas de hoy, ligadas a tus proyectos\n\n### S1 — Trabajo en equipo\n\nElige un episodio real con un entregable compartido. Separa tu contribución de la del equipo; explica dependencias y una decisión que tomaste tú.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you helped a team deliver a difficult project.\n\n**Follow-up questions:**\n\n- What did you own personally?\n- Which dependency put delivery at risk?\n- What did another teammate contribute?\n- How did you know the team had succeeded?\n\n### S3 — Pedir ayuda a otro equipo\n\nSi no existe experiencia entre equipos, usa un episodio real de ayuda externa al grupo y declara su escala. No conviertas a un compañero en “otro departamento”.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you asked another team for expertise your team lacked.\n\n**Follow-up questions:**\n\n- How did you recognize you needed help?\n- What had you tried before asking?\n- How did you make the request easy to act on?\n- How did you share the knowledge afterward?\n\n## 5. Practica y registra en este bloque\n\nSigue las fases del temporizador. Habla en inglés sin memorizar un ensayo; responde las repreguntas sobre el mismo episodio. Una respuesta factual puede ser corta. Fuera de los mocks, practica las dos historias indicadas (si solo hay una nueva, usa otra historia real para la segunda). En los mocks, responde las tres preguntas del bloque sin leer tus notas.\n\nEn **Mi intento y revisión**, deja: proyecto y episodio, esquema factual, qué respuestas orales hiciste, respuestas a cuatro repreguntas y una frase vaga que corregiste. Distingue hechos, dudas y ayuda usada. Si no tienes una historia o no practicaste en voz alta, registra ese pendiente.",
+          "summary": "Hoy practica cuándo y cómo pediste ayuda sin dejar de hacerte cargo de tu tarea.",
+          "content": "Elige ejemplos de tus proyectos reales y responde en inglés, en este orden. Si no tienes un ejemplo, déjalo pendiente. Puedes escribir unas notas en **Mi intento y revisión** antes de hablar.",
           "deliverables": [
-            "Esquema factual privado de las historias indicadas; huecos marcados como no verificados.",
-            "Al menos dos respuestas orales en inglés y respuestas a cuatro repreguntas (tres historias completas en mocks).",
-            "Una revisión específica basada en una frase vaga, falta de evidencia o atribución confusa."
+            "Respuestas a las preguntas de hoy, basadas en experiencias reales."
           ],
           "rubric": [
             "La respuesta responde a la pregunta concreta en 90–120 segundos sin leer un ensayo.",
@@ -389,34 +381,24 @@
             "Nombras una decisión, su razón y una alternativa; evitas generalidades como “we communicated well”."
           ],
           "prompts": [
-            "Tell me about a time you needed help from another team.",
-            "How did you avoid shifting your responsibility to them?",
-            "What did you contribute after receiving their advice?"
+            "Tell me about a project where you got stuck and needed someone else’s expertise.",
+            "What had you tried before asking for help?",
+            "Who did you ask, and how did you explain what you needed?",
+            "What work did you do after receiving their help?",
+            "What was the outcome?"
           ],
           "phases": [
             {
-              "title": "Seleccionar",
-              "minutes": 5
-            },
-            {
-              "title": "Verificar hechos",
-              "minutes": 8
-            },
-            {
-              "title": "Responder y escuchar",
+              "title": "Elegir ejemplos",
               "minutes": 10
             },
             {
-              "title": "Repreguntas",
+              "title": "Responder en voz alta",
+              "minutes": 25
+            },
+            {
+              "title": "Practicar repreguntas",
               "minutes": 10
-            },
-            {
-              "title": "Revisar y repetir",
-              "minutes": 7
-            },
-            {
-              "title": "Guardar",
-              "minutes": 5
             }
           ],
           "sources": [
@@ -611,15 +593,13 @@
         },
         {
           "id": "d03-behavioral",
-          "title": "Desacuerdo: razones, escucha y decisión",
+          "title": "Resolver un desacuerdo",
           "kind": "behavioral",
           "minutes": 45,
-          "summary": "Empieza por tus proyectos reales, elige episodios y responde las preguntas en orden. Escribe aquí tus notas y practica en inglés.",
-          "content": "## 1. Elige un proyecto y un episodio real\n\nNo necesitas abrir otro archivo: usa esta guía y escribe en **Mi intento y revisión → Notas, evidencia y preguntas pendientes**. Se guarda en este navegador; puedes exportarlo. Si prefieres tu editor, conserva tus respuestas en `private/behavioral.md` sin sobrescribir lo que ya tengas.\n\nAntes de responder una pregunta, anota:\n\n- **Proyecto:** nombre y contexto real (académico, personal, investigación, voluntariado o empleo).\n- **Objetivo:** qué construías o qué intentabas conseguir, y para quién.\n- **Tu responsabilidad:** qué hiciste tú y qué hicieron otras personas o herramientas.\n- **Episodio:** un momento concreto, no un resumen de todo el proyecto.\n- **Evidencia:** resultado observado o recuerdo que puedas explicar; marca lo desconocido como no verificado.\n\nUn proyecto puede aportar varias historias; no necesitas ocho proyectos. Para una historia de equipo, elige colaboración con personas. No inventes un equipo, una cifra o un resultado para llenar un espacio. Si no hay ejemplo, déjalo pendiente.\n\n## 2. Selección de hoy\n\nCompleta S2. Escribe dos frases que representen justamente la posición de la otra persona. Graba una respuesta de 2 minutos; escucha y elimina calificativos que juzguen a la persona. Ensaya qué dirías si el entrevistador concluyera que la otra opción era mejor.\n\n## 3. Esquema de respuesta — English\n\nUse short factual notes. Answer these in order for each chosen episode:\n\n1. **Context:** What project was this, who was it for, and what were you trying to deliver?\n2. **Challenge:** What specific constraint, uncertainty, or difficulty mattered?\n3. **Ownership:** What did you personally own? What did others own?\n4. **Actions:** What did you do first, next, and last? Why? Which alternative did you consider?\n5. **Result:** What happened, and what evidence did you observe? What remains unknown?\n6. **Reflection:** What would you do differently now, and why?\n\nKeep the context brief (15–20 seconds). Spend most of the answer on your actions and decisions. A concrete qualitative result is enough when no reliable number exists.\n\n## 4. Preguntas de hoy, ligadas a tus proyectos\n\n### S2 — Desacuerdo\n\nUn desacuerdo real sobre enfoque, prioridad o criterios; no necesitas un conflicto dramático. Describe ambas posiciones de forma razonable y la evidencia usada para decidir.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a disagreement with a teammate and how you handled it.\n\n**Follow-up questions:**\n\n- Why was the other person’s position reasonable?\n- What did you say in the first conversation?\n- Did you change your mind about anything?\n- What happened to the working relationship afterward?\n\n## 5. Practica y registra en este bloque\n\nSigue las fases del temporizador. Habla en inglés sin memorizar un ensayo; responde las repreguntas sobre el mismo episodio. Una respuesta factual puede ser corta. Fuera de los mocks, practica las dos historias indicadas (si solo hay una nueva, usa otra historia real para la segunda). En los mocks, responde las tres preguntas del bloque sin leer tus notas.\n\nEn **Mi intento y revisión**, deja: proyecto y episodio, esquema factual, qué respuestas orales hiciste, respuestas a cuatro repreguntas y una frase vaga que corregiste. Distingue hechos, dudas y ayuda usada. Si no tienes una historia o no practicaste en voz alta, registra ese pendiente.",
+          "summary": "Hoy practica un desacuerdo real sobre una decisión de proyecto.",
+          "content": "Elige ejemplos de tus proyectos reales y responde en inglés, en este orden. Si no tienes un ejemplo, déjalo pendiente. Puedes escribir unas notas en **Mi intento y revisión** antes de hablar.",
           "deliverables": [
-            "Esquema factual privado de las historias indicadas; huecos marcados como no verificados.",
-            "Al menos dos respuestas orales en inglés y respuestas a cuatro repreguntas (tres historias completas en mocks).",
-            "Una revisión específica basada en una frase vaga, falta de evidencia o atribución confusa."
+            "Respuestas a las preguntas de hoy, basadas en experiencias reales."
           ],
           "rubric": [
             "La respuesta responde a la pregunta concreta en 90–120 segundos sin leer un ensayo.",
@@ -629,33 +609,23 @@
           ],
           "prompts": [
             "Tell me about a disagreement over a technical approach.",
-            "What evidence changed the discussion?",
-            "What would you do if the team chose the approach you opposed?"
+            "What did each person propose, and why was their position reasonable?",
+            "What did you say or do to move the discussion forward?",
+            "What evidence helped the team decide?",
+            "What was decided, and what would you do differently now?"
           ],
           "phases": [
             {
-              "title": "Seleccionar",
-              "minutes": 5
-            },
-            {
-              "title": "Verificar hechos",
-              "minutes": 8
-            },
-            {
-              "title": "Responder y escuchar",
+              "title": "Elegir ejemplos",
               "minutes": 10
             },
             {
-              "title": "Repreguntas",
+              "title": "Responder en voz alta",
+              "minutes": 25
+            },
+            {
+              "title": "Practicar repreguntas",
               "minutes": 10
-            },
-            {
-              "title": "Revisar y repetir",
-              "minutes": 7
-            },
-            {
-              "title": "Guardar",
-              "minutes": 5
             }
           ],
           "sources": [
@@ -850,15 +820,13 @@
         },
         {
           "id": "d04-behavioral",
-          "title": "Cuestionar una práctica con evidencia",
+          "title": "Mejorar una forma de trabajar",
           "kind": "behavioral",
           "minutes": 45,
-          "summary": "Empieza por tus proyectos reales, elige episodios y responde las preguntas en orden. Escribe aquí tus notas y practica en inglés.",
-          "content": "## 1. Elige un proyecto y un episodio real\n\nNo necesitas abrir otro archivo: usa esta guía y escribe en **Mi intento y revisión → Notas, evidencia y preguntas pendientes**. Se guarda en este navegador; puedes exportarlo. Si prefieres tu editor, conserva tus respuestas en `private/behavioral.md` sin sobrescribir lo que ya tengas.\n\nAntes de responder una pregunta, anota:\n\n- **Proyecto:** nombre y contexto real (académico, personal, investigación, voluntariado o empleo).\n- **Objetivo:** qué construías o qué intentabas conseguir, y para quién.\n- **Tu responsabilidad:** qué hiciste tú y qué hicieron otras personas o herramientas.\n- **Episodio:** un momento concreto, no un resumen de todo el proyecto.\n- **Evidencia:** resultado observado o recuerdo que puedas explicar; marca lo desconocido como no verificado.\n\nUn proyecto puede aportar varias historias; no necesitas ocho proyectos. Para una historia de equipo, elige colaboración con personas. No inventes un equipo, una cifra o un resultado para llenar un espacio. Si no hay ejemplo, déjalo pendiente.\n\n## 2. Selección de hoy\n\nCompleta S4. Explica por qué la práctica anterior tenía sentido al principio. Describe el problema observado y una prueba o comparación real. Si no hubo adopción, dilo; proponer una mejora y lograr que se adopte son resultados distintos.\n\n## 3. Esquema de respuesta — English\n\nUse short factual notes. Answer these in order for each chosen episode:\n\n1. **Context:** What project was this, who was it for, and what were you trying to deliver?\n2. **Challenge:** What specific constraint, uncertainty, or difficulty mattered?\n3. **Ownership:** What did you personally own? What did others own?\n4. **Actions:** What did you do first, next, and last? Why? Which alternative did you consider?\n5. **Result:** What happened, and what evidence did you observe? What remains unknown?\n6. **Reflection:** What would you do differently now, and why?\n\nKeep the context brief (15–20 seconds). Spend most of the answer on your actions and decisions. A concrete qualitative result is enough when no reliable number exists.\n\n## 4. Preguntas de hoy, ligadas a tus proyectos\n\n### S4 — Cuestionar una práctica\n\nIdentifica la práctica concreta, el problema observado, quién debía aceptar el cambio y una prueba pequeña. No inventes impacto económico o consenso.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you challenged an existing way of working.\n\n**Follow-up questions:**\n\n- Why had the old process existed?\n- What risk did your proposal introduce?\n- How did you persuade someone who disagreed?\n- What would you keep from the original approach?\n\n## 5. Practica y registra en este bloque\n\nSigue las fases del temporizador. Habla en inglés sin memorizar un ensayo; responde las repreguntas sobre el mismo episodio. Una respuesta factual puede ser corta. Fuera de los mocks, practica las dos historias indicadas (si solo hay una nueva, usa otra historia real para la segunda). En los mocks, responde las tres preguntas del bloque sin leer tus notas.\n\nEn **Mi intento y revisión**, deja: proyecto y episodio, esquema factual, qué respuestas orales hiciste, respuestas a cuatro repreguntas y una frase vaga que corregiste. Distingue hechos, dudas y ayuda usada. Si no tienes una historia o no practicaste en voz alta, registra ese pendiente.",
+          "summary": "Hoy practica una mejora que propusiste en uno de tus proyectos.",
+          "content": "Elige ejemplos de tus proyectos reales y responde en inglés, en este orden. Si no tienes un ejemplo, déjalo pendiente. Puedes escribir unas notas en **Mi intento y revisión** antes de hablar.",
           "deliverables": [
-            "Esquema factual privado de las historias indicadas; huecos marcados como no verificados.",
-            "Al menos dos respuestas orales en inglés y respuestas a cuatro repreguntas (tres historias completas en mocks).",
-            "Una revisión específica basada en una frase vaga, falta de evidencia o atribución confusa."
+            "Respuestas a las preguntas de hoy, basadas en experiencias reales."
           ],
           "rubric": [
             "La respuesta responde a la pregunta concreta en 90–120 segundos sin leer un ensayo.",
@@ -867,34 +835,24 @@
             "Nombras una decisión, su razón y una alternativa; evitas generalidades como “we communicated well”."
           ],
           "prompts": [
-            "Tell me about a time you challenged the status quo.",
-            "How did you know the existing process was a problem?",
-            "What was the smallest change you could test?"
+            "Tell me about a time you proposed changing how a team worked.",
+            "What problem did you observe, and why had the old approach existed?",
+            "What change did you propose, and what risk did it introduce?",
+            "How did you test the idea or get feedback?",
+            "Was it adopted? What actually happened?"
           ],
           "phases": [
             {
-              "title": "Seleccionar",
-              "minutes": 5
-            },
-            {
-              "title": "Verificar hechos",
-              "minutes": 8
-            },
-            {
-              "title": "Responder y escuchar",
+              "title": "Elegir ejemplos",
               "minutes": 10
             },
             {
-              "title": "Repreguntas",
+              "title": "Responder en voz alta",
+              "minutes": 25
+            },
+            {
+              "title": "Practicar repreguntas",
               "minutes": 10
-            },
-            {
-              "title": "Revisar y repetir",
-              "minutes": 7
-            },
-            {
-              "title": "Guardar",
-              "minutes": 5
             }
           ],
           "sources": [
@@ -1087,15 +1045,13 @@
         },
         {
           "id": "d05-behavioral",
-          "title": "Error propio y recuperación concreta",
+          "title": "Un error y cómo respondiste",
           "kind": "behavioral",
           "minutes": 45,
-          "summary": "Empieza por tus proyectos reales, elige episodios y responde las preguntas en orden. Escribe aquí tus notas y practica en inglés.",
-          "content": "## 1. Elige un proyecto y un episodio real\n\nNo necesitas abrir otro archivo: usa esta guía y escribe en **Mi intento y revisión → Notas, evidencia y preguntas pendientes**. Se guarda en este navegador; puedes exportarlo. Si prefieres tu editor, conserva tus respuestas en `private/behavioral.md` sin sobrescribir lo que ya tengas.\n\nAntes de responder una pregunta, anota:\n\n- **Proyecto:** nombre y contexto real (académico, personal, investigación, voluntariado o empleo).\n- **Objetivo:** qué construías o qué intentabas conseguir, y para quién.\n- **Tu responsabilidad:** qué hiciste tú y qué hicieron otras personas o herramientas.\n- **Episodio:** un momento concreto, no un resumen de todo el proyecto.\n- **Evidencia:** resultado observado o recuerdo que puedas explicar; marca lo desconocido como no verificado.\n\nUn proyecto puede aportar varias historias; no necesitas ocho proyectos. Para una historia de equipo, elige colaboración con personas. No inventes un equipo, una cifra o un resultado para llenar un espacio. Si no hay ejemplo, déjalo pendiente.\n\n## 2. Selección de hoy\n\nCompleta S6. Dibuja una línea de tiempo detección → comunicación → reparación → prevención. Diferencia consecuencias observadas de daños hipotéticos. Ensaya una respuesta sin culpar al equipo ni afirmar que nunca volvió a pasar si no tienes evidencia.\n\n## 3. Esquema de respuesta — English\n\nUse short factual notes. Answer these in order for each chosen episode:\n\n1. **Context:** What project was this, who was it for, and what were you trying to deliver?\n2. **Challenge:** What specific constraint, uncertainty, or difficulty mattered?\n3. **Ownership:** What did you personally own? What did others own?\n4. **Actions:** What did you do first, next, and last? Why? Which alternative did you consider?\n5. **Result:** What happened, and what evidence did you observe? What remains unknown?\n6. **Reflection:** What would you do differently now, and why?\n\nKeep the context brief (15–20 seconds). Spend most of the answer on your actions and decisions. A concrete qualitative result is enough when no reliable number exists.\n\n## 4. Preguntas de hoy, ligadas a tus proyectos\n\n### S6 — Error y recuperación\n\nSelecciona un error propio real, limitado y explicable. No elijas una falsa debilidad. Relata detección, comunicación, reparación y cambio posterior que sí haya ocurrido.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a mistake you made and how you responded.\n\n**Follow-up questions:**\n\n- When did you first know something was wrong?\n- Who did you tell, and when?\n- What was the actual impact?\n- What evidence shows the prevention step helped?\n\n## 5. Practica y registra en este bloque\n\nSigue las fases del temporizador. Habla en inglés sin memorizar un ensayo; responde las repreguntas sobre el mismo episodio. Una respuesta factual puede ser corta. Fuera de los mocks, practica las dos historias indicadas (si solo hay una nueva, usa otra historia real para la segunda). En los mocks, responde las tres preguntas del bloque sin leer tus notas.\n\nEn **Mi intento y revisión**, deja: proyecto y episodio, esquema factual, qué respuestas orales hiciste, respuestas a cuatro repreguntas y una frase vaga que corregiste. Distingue hechos, dudas y ayuda usada. Si no tienes una historia o no practicaste en voz alta, registra ese pendiente.",
+          "summary": "Hoy practica un error tuyo y las acciones que tomaste después.",
+          "content": "Elige ejemplos de tus proyectos reales y responde en inglés, en este orden. Si no tienes un ejemplo, déjalo pendiente. Puedes escribir unas notas en **Mi intento y revisión** antes de hablar.",
           "deliverables": [
-            "Esquema factual privado de las historias indicadas; huecos marcados como no verificados.",
-            "Al menos dos respuestas orales en inglés y respuestas a cuatro repreguntas (tres historias completas en mocks).",
-            "Una revisión específica basada en una frase vaga, falta de evidencia o atribución confusa."
+            "Respuestas a las preguntas de hoy, basadas en experiencias reales."
           ],
           "rubric": [
             "La respuesta responde a la pregunta concreta en 90–120 segundos sin leer un ensayo.",
@@ -1104,34 +1060,24 @@
             "Nombras una decisión, su razón y una alternativa; evitas generalidades como “we communicated well”."
           ],
           "prompts": [
-            "Tell me about a mistake you made.",
-            "What would you have done differently before the error occurred?",
-            "How did you restore trust after it happened?"
+            "Tell me about a mistake you made in a project.",
+            "How did you notice it, and what was the actual impact?",
+            "Who did you tell, and what did you say?",
+            "What did you do to repair it?",
+            "What changed afterward to help prevent a repeat?"
           ],
           "phases": [
             {
-              "title": "Seleccionar",
-              "minutes": 5
-            },
-            {
-              "title": "Verificar hechos",
-              "minutes": 8
-            },
-            {
-              "title": "Responder y escuchar",
+              "title": "Elegir ejemplos",
               "minutes": 10
             },
             {
-              "title": "Repreguntas",
+              "title": "Responder en voz alta",
+              "minutes": 25
+            },
+            {
+              "title": "Practicar repreguntas",
               "minutes": 10
-            },
-            {
-              "title": "Revisar y repetir",
-              "minutes": 7
-            },
-            {
-              "title": "Guardar",
-              "minutes": 5
             }
           ],
           "sources": [
@@ -1326,15 +1272,13 @@
         },
         {
           "id": "d06-behavioral",
-          "title": "Aprender y manejar ambigüedad",
+          "title": "Aprender con requisitos poco claros",
           "kind": "behavioral",
           "minutes": 45,
-          "summary": "Empieza por tus proyectos reales, elige episodios y responde las preguntas en orden. Escribe aquí tus notas y practica en inglés.",
-          "content": "## 1. Elige un proyecto y un episodio real\n\nNo necesitas abrir otro archivo: usa esta guía y escribe en **Mi intento y revisión → Notas, evidencia y preguntas pendientes**. Se guarda en este navegador; puedes exportarlo. Si prefieres tu editor, conserva tus respuestas en `private/behavioral.md` sin sobrescribir lo que ya tengas.\n\nAntes de responder una pregunta, anota:\n\n- **Proyecto:** nombre y contexto real (académico, personal, investigación, voluntariado o empleo).\n- **Objetivo:** qué construías o qué intentabas conseguir, y para quién.\n- **Tu responsabilidad:** qué hiciste tú y qué hicieron otras personas o herramientas.\n- **Episodio:** un momento concreto, no un resumen de todo el proyecto.\n- **Evidencia:** resultado observado o recuerdo que puedas explicar; marca lo desconocido como no verificado.\n\nUn proyecto puede aportar varias historias; no necesitas ocho proyectos. Para una historia de equipo, elige colaboración con personas. No inventes un equipo, una cifra o un resultado para llenar un espacio. Si no hay ejemplo, déjalo pendiente.\n\n## 2. Selección de hoy\n\nCompleta S8 y revisa S5. Identifica una decisión que tomaste bajo incertidumbre y qué información podía cambiarla. Alterna las preguntas sin usar la misma historia automáticamente; elige la que mejor responde al verbo de la pregunta.\n\n## 3. Esquema de respuesta — English\n\nUse short factual notes. Answer these in order for each chosen episode:\n\n1. **Context:** What project was this, who was it for, and what were you trying to deliver?\n2. **Challenge:** What specific constraint, uncertainty, or difficulty mattered?\n3. **Ownership:** What did you personally own? What did others own?\n4. **Actions:** What did you do first, next, and last? Why? Which alternative did you consider?\n5. **Result:** What happened, and what evidence did you observe? What remains unknown?\n6. **Reflection:** What would you do differently now, and why?\n\nKeep the context brief (15–20 seconds). Spend most of the answer on your actions and decisions. A concrete qualitative result is enough when no reliable number exists.\n\n## 4. Preguntas de hoy, ligadas a tus proyectos\n\n### S5 — Aprender con poco contexto\n\nDefine lo desconocido y el plazo real. Explica cómo elegiste fuentes, verificaste comprensión y aplicaste lo aprendido a una entrega observable.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you had to learn something unfamiliar quickly.\n\n**Follow-up questions:**\n\n- How did you decide what not to learn?\n- How did you test your understanding?\n- Who or what corrected a misunderstanding?\n- What could you do independently afterward?\n\n### S8 — Ambigüedad y prioridades\n\nDescribe una ambigüedad concreta, las preguntas que hiciste, una decisión reversible y cómo alineaste expectativas. No transformes una sugerencia en liderazgo de un equipo si no lo fue.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you had to make progress with unclear requirements or competing priorities.\n\n**Follow-up questions:**\n\n- Which assumption was riskiest?\n- Who had authority to choose the priority?\n- What did you defer, and why?\n- How did you communicate what would not be delivered?\n\n## 5. Practica y registra en este bloque\n\nSigue las fases del temporizador. Habla en inglés sin memorizar un ensayo; responde las repreguntas sobre el mismo episodio. Una respuesta factual puede ser corta. Fuera de los mocks, practica las dos historias indicadas (si solo hay una nueva, usa otra historia real para la segunda). En los mocks, responde las tres preguntas del bloque sin leer tus notas.\n\nEn **Mi intento y revisión**, deja: proyecto y episodio, esquema factual, qué respuestas orales hiciste, respuestas a cuatro repreguntas y una frase vaga que corregiste. Distingue hechos, dudas y ayuda usada. Si no tienes una historia o no practicaste en voz alta, registra ese pendiente.",
+          "summary": "Hoy practica cómo avanzaste cuando te faltaba conocimiento o claridad.",
+          "content": "Elige ejemplos de tus proyectos reales y responde en inglés, en este orden. Si no tienes un ejemplo, déjalo pendiente. Puedes escribir unas notas en **Mi intento y revisión** antes de hablar.",
           "deliverables": [
-            "Esquema factual privado de las historias indicadas; huecos marcados como no verificados.",
-            "Al menos dos respuestas orales en inglés y respuestas a cuatro repreguntas (tres historias completas en mocks).",
-            "Una revisión específica basada en una frase vaga, falta de evidencia o atribución confusa."
+            "Respuestas a las preguntas de hoy, basadas en experiencias reales."
           ],
           "rubric": [
             "La respuesta responde a la pregunta concreta en 90–120 segundos sin leer un ensayo.",
@@ -1344,33 +1288,24 @@
           ],
           "prompts": [
             "Tell me about a time you learned a tool under a deadline.",
-            "Tell me about a time requirements were unclear.",
-            "What did you deliberately leave out, and how did you explain that?"
+            "How did you decide what to learn first and what to leave out?",
+            "How did you verify you could use it correctly?",
+            "Tell me about a project where the requirements were unclear.",
+            "Which assumption did you clarify first, and with whom?",
+            "What did you deliver, and what remained unresolved?"
           ],
           "phases": [
             {
-              "title": "Seleccionar",
-              "minutes": 5
-            },
-            {
-              "title": "Verificar hechos",
-              "minutes": 8
-            },
-            {
-              "title": "Responder y escuchar",
+              "title": "Elegir ejemplos",
               "minutes": 10
             },
             {
-              "title": "Repreguntas",
+              "title": "Responder en voz alta",
+              "minutes": 25
+            },
+            {
+              "title": "Practicar repreguntas",
               "minutes": 10
-            },
-            {
-              "title": "Revisar y repetir",
-              "minutes": 7
-            },
-            {
-              "title": "Guardar",
-              "minutes": 5
             }
           ],
           "sources": [
@@ -1563,15 +1498,13 @@
         },
         {
           "id": "d07-behavioral",
-          "title": "IA: criterio propio, pruebas y límites",
+          "title": "Usar IA con criterio propio",
           "kind": "behavioral",
           "minutes": 45,
-          "summary": "Empieza por tus proyectos reales, elige episodios y responde las preguntas en orden. Escribe aquí tus notas y practica en inglés.",
-          "content": "## 1. Elige un proyecto y un episodio real\n\nNo necesitas abrir otro archivo: usa esta guía y escribe en **Mi intento y revisión → Notas, evidencia y preguntas pendientes**. Se guarda en este navegador; puedes exportarlo. Si prefieres tu editor, conserva tus respuestas en `private/behavioral.md` sin sobrescribir lo que ya tengas.\n\nAntes de responder una pregunta, anota:\n\n- **Proyecto:** nombre y contexto real (académico, personal, investigación, voluntariado o empleo).\n- **Objetivo:** qué construías o qué intentabas conseguir, y para quién.\n- **Tu responsabilidad:** qué hiciste tú y qué hicieron otras personas o herramientas.\n- **Episodio:** un momento concreto, no un resumen de todo el proyecto.\n- **Evidencia:** resultado observado o recuerdo que puedas explicar; marca lo desconocido como no verificado.\n\nUn proyecto puede aportar varias historias; no necesitas ocho proyectos. Para una historia de equipo, elige colaboración con personas. No inventes un equipo, una cifra o un resultado para llenar un espacio. Si no hay ejemplo, déjalo pendiente.\n\n## 2. Selección de hoy\n\nCompleta S7 con experiencia real. Puedes usar el lab de hoy si lo presentas como práctica de entrevista. Conserva un prompt concreto, una propuesta revisada y una prueba; evita listas genéricas de herramientas. Prepara también una respuesta corta sobre cuándo trabajarías sin IA.\n\n## 3. Esquema de respuesta — English\n\nUse short factual notes. Answer these in order for each chosen episode:\n\n1. **Context:** What project was this, who was it for, and what were you trying to deliver?\n2. **Challenge:** What specific constraint, uncertainty, or difficulty mattered?\n3. **Ownership:** What did you personally own? What did others own?\n4. **Actions:** What did you do first, next, and last? Why? Which alternative did you consider?\n5. **Result:** What happened, and what evidence did you observe? What remains unknown?\n6. **Reflection:** What would you do differently now, and why?\n\nKeep the context brief (15–20 seconds). Spend most of the answer on your actions and decisions. A concrete qualitative result is enough when no reliable number exists.\n\n## 4. Preguntas de hoy, ligadas a tus proyectos\n\n### S7 — Uso responsable de IA\n\nUn uso real y sus límites: qué contexto diste, qué aceptaste/rechazaste y qué comprobaste tú. Si no tienes un episodio anterior útil, puedes describir explícitamente un ejercicio de este plan como práctica, nunca como trabajo profesional.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you used AI to help with a technical task and how you verified the result.\n\n**Follow-up questions:**\n\n- What did the tool get wrong or leave uncertain?\n- What did you verify without trusting the generated explanation?\n- What information did you avoid sharing?\n- When would you decide not to use AI?\n\n## 5. Practica y registra en este bloque\n\nSigue las fases del temporizador. Habla en inglés sin memorizar un ensayo; responde las repreguntas sobre el mismo episodio. Una respuesta factual puede ser corta. Fuera de los mocks, practica las dos historias indicadas (si solo hay una nueva, usa otra historia real para la segunda). En los mocks, responde las tres preguntas del bloque sin leer tus notas.\n\nEn **Mi intento y revisión**, deja: proyecto y episodio, esquema factual, qué respuestas orales hiciste, respuestas a cuatro repreguntas y una frase vaga que corregiste. Distingue hechos, dudas y ayuda usada. Si no tienes una historia o no practicaste en voz alta, registra ese pendiente.",
+          "summary": "Hoy practica un uso real de IA y cómo comprobaste su trabajo.",
+          "content": "Elige ejemplos de tus proyectos reales y responde en inglés, en este orden. Si no tienes un ejemplo, déjalo pendiente. Puedes escribir unas notas en **Mi intento y revisión** antes de hablar.",
           "deliverables": [
-            "Esquema factual privado de las historias indicadas; huecos marcados como no verificados.",
-            "Al menos dos respuestas orales en inglés y respuestas a cuatro repreguntas (tres historias completas en mocks).",
-            "Una revisión específica basada en una frase vaga, falta de evidencia o atribución confusa."
+            "Respuestas a las preguntas de hoy, basadas en experiencias reales."
           ],
           "rubric": [
             "La respuesta responde a la pregunta concreta en 90–120 segundos sin leer un ensayo.",
@@ -1580,34 +1513,24 @@
             "Nombras una decisión, su razón y una alternativa; evitas generalidades como “we communicated well”."
           ],
           "prompts": [
-            "How do you use AI in your engineering workflow?",
-            "Describe an AI suggestion you did not accept and why.",
-            "How do you check a change when the model says all tests pass?"
+            "Tell me about a technical task where you used AI.",
+            "What did you ask the tool to do, and what did you do yourself?",
+            "What suggestion did you question or reject, and why?",
+            "How did you verify the result beyond reading the AI’s explanation?",
+            "What remained uncertain, and when would you work without AI?"
           ],
           "phases": [
             {
-              "title": "Seleccionar",
-              "minutes": 5
-            },
-            {
-              "title": "Verificar hechos",
-              "minutes": 8
-            },
-            {
-              "title": "Responder y escuchar",
+              "title": "Elegir ejemplos",
               "minutes": 10
             },
             {
-              "title": "Repreguntas",
+              "title": "Responder en voz alta",
+              "minutes": 25
+            },
+            {
+              "title": "Practicar repreguntas",
               "minutes": 10
-            },
-            {
-              "title": "Revisar y repetir",
-              "minutes": 7
-            },
-            {
-              "title": "Guardar",
-              "minutes": 5
             }
           ],
           "sources": [
@@ -1799,15 +1722,13 @@
         },
         {
           "id": "d08-behavioral",
-          "title": "Mock conductual A: tres preguntas sin guion",
+          "title": "Simulacro: ayuda, desacuerdo y error",
           "kind": "behavioral",
           "minutes": 45,
-          "summary": "Empieza por tus proyectos reales, elige episodios y responde las preguntas en orden. Escribe aquí tus notas y practica en inglés.",
-          "content": "## 1. Simulacro sin leer respuestas\n\nEscucha o lee una pregunta y elige un episodio real que responda a ella. Cierra tus notas durante cada respuesta; usa la guía de abajo solo después para revisar. Las respuestas se registran en **Mi intento y revisión → Notas, evidencia y preguntas pendientes** y permanecen en este navegador.\n\n## 2. Selección de hoy\n\nCierra tus historias. Contesta las tres preguntas en inglés, 2 minutos cada respuesta, 6 minutos de repreguntas y 2 minutos de puntuación por historia. Usa las repreguntas del banco sin preparar un texto completo. Graba si te resulta útil; después identifica dos frases vagas y sustitúyelas por hechos.\n\n## 3. Esquema de respuesta — English\n\nUse short factual notes. Answer these in order for each chosen episode:\n\n1. **Context:** What project was this, who was it for, and what were you trying to deliver?\n2. **Challenge:** What specific constraint, uncertainty, or difficulty mattered?\n3. **Ownership:** What did you personally own? What did others own?\n4. **Actions:** What did you do first, next, and last? Why? Which alternative did you consider?\n5. **Result:** What happened, and what evidence did you observe? What remains unknown?\n6. **Reflection:** What would you do differently now, and why?\n\nKeep the context brief (15–20 seconds). Spend most of the answer on your actions and decisions. A concrete qualitative result is enough when no reliable number exists.\n\n## 4. Preguntas de hoy, ligadas a tus proyectos\n\n### S3 — Pedir ayuda a otro equipo\n\nSi no existe experiencia entre equipos, usa un episodio real de ayuda externa al grupo y declara su escala. No conviertas a un compañero en “otro departamento”.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you asked another team for expertise your team lacked.\n\n**Follow-up questions:**\n\n- How did you recognize you needed help?\n- What had you tried before asking?\n- How did you make the request easy to act on?\n- How did you share the knowledge afterward?\n\n### S2 — Desacuerdo\n\nUn desacuerdo real sobre enfoque, prioridad o criterios; no necesitas un conflicto dramático. Describe ambas posiciones de forma razonable y la evidencia usada para decidir.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a disagreement with a teammate and how you handled it.\n\n**Follow-up questions:**\n\n- Why was the other person’s position reasonable?\n- What did you say in the first conversation?\n- Did you change your mind about anything?\n- What happened to the working relationship afterward?\n\n### S6 — Error y recuperación\n\nSelecciona un error propio real, limitado y explicable. No elijas una falsa debilidad. Relata detección, comunicación, reparación y cambio posterior que sí haya ocurrido.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a mistake you made and how you responded.\n\n**Follow-up questions:**\n\n- When did you first know something was wrong?\n- Who did you tell, and when?\n- What was the actual impact?\n- What evidence shows the prevention step helped?\n\n## 5. Practica y registra en este bloque\n\nSigue las fases del temporizador. Habla en inglés sin memorizar un ensayo; responde las repreguntas sobre el mismo episodio. Una respuesta factual puede ser corta. Fuera de los mocks, practica las dos historias indicadas (si solo hay una nueva, usa otra historia real para la segunda). En los mocks, responde las tres preguntas del bloque sin leer tus notas.\n\nEn **Mi intento y revisión**, deja: proyecto y episodio, esquema factual, qué respuestas orales hiciste, respuestas a cuatro repreguntas y una frase vaga que corregiste. Distingue hechos, dudas y ayuda usada. Si no tienes una historia o no practicaste en voz alta, registra ese pendiente.",
+          "summary": "Hoy responde estas preguntas sin leer tus notas; las preguntas pares son repreguntas.",
+          "content": "Elige ejemplos de tus proyectos reales y responde en inglés, en este orden. Si no tienes un ejemplo, déjalo pendiente. Puedes escribir unas notas en **Mi intento y revisión** antes de hablar.",
           "deliverables": [
-            "Esquema factual privado de las historias indicadas; huecos marcados como no verificados.",
-            "Al menos dos respuestas orales en inglés y respuestas a cuatro repreguntas (tres historias completas en mocks).",
-            "Una revisión específica basada en una frase vaga, falta de evidencia o atribución confusa."
+            "Respuestas a las preguntas de hoy, basadas en experiencias reales."
           ],
           "rubric": [
             "La respuesta responde a la pregunta concreta en 90–120 segundos sin leer un ensayo.",
@@ -1816,29 +1737,24 @@
             "Nombras una decisión, su razón y una alternativa; evitas generalidades como “we communicated well”."
           ],
           "prompts": [
-            "Tell me about a time you asked another group for help.",
-            "Tell me about a disagreement you handled poorly or would handle differently now.",
-            "Tell me about a mistake and how you communicated it."
+            "Tell me about a time you asked another group or person for help.",
+            "What did you contribute after receiving their advice?",
+            "Tell me about a disagreement you would handle differently now.",
+            "Why was the other person’s position reasonable?",
+            "Tell me about a mistake and how you communicated it.",
+            "What was the actual impact, and how did you respond?"
           ],
           "phases": [
             {
-              "title": "Preparar grabación y cerrar notas",
-              "minutes": 5
-            },
-            {
-              "title": "Historia 1 + follow-ups + score",
+              "title": "Elegir ejemplos",
               "minutes": 10
             },
             {
-              "title": "Historia 2 + follow-ups + score",
-              "minutes": 10
+              "title": "Responder en voz alta",
+              "minutes": 25
             },
             {
-              "title": "Historia 3 + follow-ups + score",
-              "minutes": 10
-            },
-            {
-              "title": "Feedback y revisión factual",
+              "title": "Practicar repreguntas",
               "minutes": 10
             }
           ],
@@ -2031,15 +1947,13 @@
         },
         {
           "id": "d09-behavioral",
-          "title": "Reparar debilidades observadas, no memorizar",
+          "title": "Influir y elegir prioridades",
           "kind": "behavioral",
           "minutes": 45,
-          "summary": "Empieza por tus proyectos reales, elige episodios y responde las preguntas en orden. Escribe aquí tus notas y practica en inglés.",
-          "content": "## 1. Elige un proyecto y un episodio real\n\nNo necesitas abrir otro archivo: usa esta guía y escribe en **Mi intento y revisión → Notas, evidencia y preguntas pendientes**. Se guarda en este navegador; puedes exportarlo. Si prefieres tu editor, conserva tus respuestas en `private/behavioral.md` sin sobrescribir lo que ya tengas.\n\nAntes de responder una pregunta, anota:\n\n- **Proyecto:** nombre y contexto real (académico, personal, investigación, voluntariado o empleo).\n- **Objetivo:** qué construías o qué intentabas conseguir, y para quién.\n- **Tu responsabilidad:** qué hiciste tú y qué hicieron otras personas o herramientas.\n- **Episodio:** un momento concreto, no un resumen de todo el proyecto.\n- **Evidencia:** resultado observado o recuerdo que puedas explicar; marca lo desconocido como no verificado.\n\nUn proyecto puede aportar varias historias; no necesitas ocho proyectos. Para una historia de equipo, elige colaboración con personas. No inventes un equipo, una cifra o un resultado para llenar un espacio. Si no hay ejemplo, déjalo pendiente.\n\n## 2. Selección de hoy\n\nSelecciona las dos respuestas peor sostenidas del mock A por evidencia y claridad, no por impresión. En 8 minutos corrige hechos faltantes. Responde las preguntas de hoy con historias reales; si no encajan, di qué ejemplo cercano sí tienes. Haz una segunda toma sin leer.\n\n## 3. Esquema de respuesta — English\n\nUse short factual notes. Answer these in order for each chosen episode:\n\n1. **Context:** What project was this, who was it for, and what were you trying to deliver?\n2. **Challenge:** What specific constraint, uncertainty, or difficulty mattered?\n3. **Ownership:** What did you personally own? What did others own?\n4. **Actions:** What did you do first, next, and last? Why? Which alternative did you consider?\n5. **Result:** What happened, and what evidence did you observe? What remains unknown?\n6. **Reflection:** What would you do differently now, and why?\n\nKeep the context brief (15–20 seconds). Spend most of the answer on your actions and decisions. A concrete qualitative result is enough when no reliable number exists.\n\n## 4. Preguntas de hoy, ligadas a tus proyectos\n\n### S4 — Cuestionar una práctica\n\nIdentifica la práctica concreta, el problema observado, quién debía aceptar el cambio y una prueba pequeña. No inventes impacto económico o consenso.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you challenged an existing way of working.\n\n**Follow-up questions:**\n\n- Why had the old process existed?\n- What risk did your proposal introduce?\n- How did you persuade someone who disagreed?\n- What would you keep from the original approach?\n\n### S8 — Ambigüedad y prioridades\n\nDescribe una ambigüedad concreta, las preguntas que hiciste, una decisión reversible y cómo alineaste expectativas. No transformes una sugerencia en liderazgo de un equipo si no lo fue.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you had to make progress with unclear requirements or competing priorities.\n\n**Follow-up questions:**\n\n- Which assumption was riskiest?\n- Who had authority to choose the priority?\n- What did you defer, and why?\n- How did you communicate what would not be delivered?\n\n### S7 — Uso responsable de IA\n\nUn uso real y sus límites: qué contexto diste, qué aceptaste/rechazaste y qué comprobaste tú. Si no tienes un episodio anterior útil, puedes describir explícitamente un ejercicio de este plan como práctica, nunca como trabajo profesional.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you used AI to help with a technical task and how you verified the result.\n\n**Follow-up questions:**\n\n- What did the tool get wrong or leave uncertain?\n- What did you verify without trusting the generated explanation?\n- What information did you avoid sharing?\n- When would you decide not to use AI?\n\n## 5. Practica y registra en este bloque\n\nSigue las fases del temporizador. Habla en inglés sin memorizar un ensayo; responde las repreguntas sobre el mismo episodio. Una respuesta factual puede ser corta. Fuera de los mocks, practica las dos historias indicadas (si solo hay una nueva, usa otra historia real para la segunda). En los mocks, responde las tres preguntas del bloque sin leer tus notas.\n\nEn **Mi intento y revisión**, deja: proyecto y episodio, esquema factual, qué respuestas orales hiciste, respuestas a cuatro repreguntas y una frase vaga que corregiste. Distingue hechos, dudas y ayuda usada. Si no tienes una historia o no practicaste en voz alta, registra ese pendiente.",
+          "summary": "Hoy practica cómo influiste en una decisión y elegiste entre prioridades.",
+          "content": "Elige ejemplos de tus proyectos reales y responde en inglés, en este orden. Si no tienes un ejemplo, déjalo pendiente. Puedes escribir unas notas en **Mi intento y revisión** antes de hablar.",
           "deliverables": [
-            "Esquema factual privado de las historias indicadas; huecos marcados como no verificados.",
-            "Al menos dos respuestas orales en inglés y respuestas a cuatro repreguntas (tres historias completas en mocks).",
-            "Una revisión específica basada en una frase vaga, falta de evidencia o atribución confusa."
+            "Respuestas a las preguntas de hoy, basadas en experiencias reales."
           ],
           "rubric": [
             "La respuesta responde a la pregunta concreta en 90–120 segundos sin leer un ensayo.",
@@ -2049,33 +1963,23 @@
           ],
           "prompts": [
             "Tell me about a time you had to influence someone without authority.",
-            "How did you decide between speed and correctness?",
-            "What would your teammate say you could improve?"
+            "What mattered to that person, and how did you address it?",
+            "Tell me about a decision involving a tradeoff between speed and correctness.",
+            "What did you choose, and what evidence supported that choice?",
+            "What would a teammate say you could improve? Give a concrete example."
           ],
           "phases": [
             {
-              "title": "Seleccionar",
-              "minutes": 5
-            },
-            {
-              "title": "Verificar hechos",
-              "minutes": 8
-            },
-            {
-              "title": "Responder y escuchar",
+              "title": "Elegir ejemplos",
               "minutes": 10
             },
             {
-              "title": "Repreguntas",
+              "title": "Responder en voz alta",
+              "minutes": 25
+            },
+            {
+              "title": "Practicar repreguntas",
               "minutes": 10
-            },
-            {
-              "title": "Revisar y repetir",
-              "minutes": 7
-            },
-            {
-              "title": "Guardar",
-              "minutes": 5
             }
           ],
           "sources": [
@@ -2265,15 +2169,13 @@
         },
         {
           "id": "d10-behavioral",
-          "title": "Mock conductual B y preguntas al entrevistador",
+          "title": "Simulacro: mejora, incertidumbre e IA",
           "kind": "behavioral",
           "minutes": 45,
-          "summary": "Empieza por tus proyectos reales, elige episodios y responde las preguntas en orden. Escribe aquí tus notas y practica en inglés.",
-          "content": "## 1. Simulacro sin leer respuestas\n\nEscucha o lee una pregunta y elige un episodio real que responda a ella. Cierra tus notas durante cada respuesta; usa la guía de abajo solo después para revisar. Las respuestas se registran en **Mi intento y revisión → Notas, evidencia y preguntas pendientes** y permanecen en este navegador.\n\n## 2. Selección de hoy\n\nCierra el banco. Responde las tres preguntas con 2 minutos de historia y 6 de follow-ups por cada una; usa 2 minutos para anotar evidencia. Termina con dos preguntas al entrevistador sobre trabajo, aprendizaje o revisión técnica, formuladas sin asumir su proceso.\n\n## 3. Esquema de respuesta — English\n\nUse short factual notes. Answer these in order for each chosen episode:\n\n1. **Context:** What project was this, who was it for, and what were you trying to deliver?\n2. **Challenge:** What specific constraint, uncertainty, or difficulty mattered?\n3. **Ownership:** What did you personally own? What did others own?\n4. **Actions:** What did you do first, next, and last? Why? Which alternative did you consider?\n5. **Result:** What happened, and what evidence did you observe? What remains unknown?\n6. **Reflection:** What would you do differently now, and why?\n\nKeep the context brief (15–20 seconds). Spend most of the answer on your actions and decisions. A concrete qualitative result is enough when no reliable number exists.\n\n## 4. Preguntas de hoy, ligadas a tus proyectos\n\n### S1 — Trabajo en equipo\n\nElige un episodio real con un entregable compartido. Separa tu contribución de la del equipo; explica dependencias y una decisión que tomaste tú.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you helped a team deliver a difficult project.\n\n**Follow-up questions:**\n\n- What did you own personally?\n- Which dependency put delivery at risk?\n- What did another teammate contribute?\n- How did you know the team had succeeded?\n\n### S4 — Cuestionar una práctica\n\nIdentifica la práctica concreta, el problema observado, quién debía aceptar el cambio y una prueba pequeña. No inventes impacto económico o consenso.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you challenged an existing way of working.\n\n**Follow-up questions:**\n\n- Why had the old process existed?\n- What risk did your proposal introduce?\n- How did you persuade someone who disagreed?\n- What would you keep from the original approach?\n\n### S7 — Uso responsable de IA\n\nUn uso real y sus límites: qué contexto diste, qué aceptaste/rechazaste y qué comprobaste tú. Si no tienes un episodio anterior útil, puedes describir explícitamente un ejercicio de este plan como práctica, nunca como trabajo profesional.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you used AI to help with a technical task and how you verified the result.\n\n**Follow-up questions:**\n\n- What did the tool get wrong or leave uncertain?\n- What did you verify without trusting the generated explanation?\n- What information did you avoid sharing?\n- When would you decide not to use AI?\n\n### S8 — Ambigüedad y prioridades\n\nDescribe una ambigüedad concreta, las preguntas que hiciste, una decisión reversible y cómo alineaste expectativas. No transformes una sugerencia en liderazgo de un equipo si no lo fue.\n\n**Elige:** [mi proyecto] → [episodio concreto].\n\n**Interview question:** Tell me about a time you had to make progress with unclear requirements or competing priorities.\n\n**Follow-up questions:**\n\n- Which assumption was riskiest?\n- Who had authority to choose the priority?\n- What did you defer, and why?\n- How did you communicate what would not be delivered?\n\n## 5. Practica y registra en este bloque\n\nSigue las fases del temporizador. Habla en inglés sin memorizar un ensayo; responde las repreguntas sobre el mismo episodio. Una respuesta factual puede ser corta. Fuera de los mocks, practica las dos historias indicadas (si solo hay una nueva, usa otra historia real para la segunda). En los mocks, responde las tres preguntas del bloque sin leer tus notas.\n\nEn **Mi intento y revisión**, deja: proyecto y episodio, esquema factual, qué respuestas orales hiciste, respuestas a cuatro repreguntas y una frase vaga que corregiste. Distingue hechos, dudas y ayuda usada. Si no tienes una historia o no practicaste en voz alta, registra ese pendiente.",
+          "summary": "Hoy combina tres historias sin leer tus notas y prepara una pregunta para el entrevistador.",
+          "content": "Elige ejemplos de tus proyectos reales y responde en inglés, en este orden. Si no tienes un ejemplo, déjalo pendiente. Puedes escribir unas notas en **Mi intento y revisión** antes de hablar.",
           "deliverables": [
-            "Esquema factual privado de las historias indicadas; huecos marcados como no verificados.",
-            "Al menos dos respuestas orales en inglés y respuestas a cuatro repreguntas (tres historias completas en mocks).",
-            "Una revisión específica basada en una frase vaga, falta de evidencia o atribución confusa."
+            "Respuestas a las preguntas de hoy, basadas en experiencias reales."
           ],
           "rubric": [
             "La respuesta responde a la pregunta concreta en 90–120 segundos sin leer un ensayo.",
@@ -2283,28 +2185,24 @@
           ],
           "prompts": [
             "Tell me about a time you improved how a team worked.",
+            "What did you personally change, and what was the outcome?",
             "Tell me about a decision you made with incomplete information.",
-            "Tell me about a time you used AI and had to verify its output."
+            "Which assumption was riskiest, and how did you handle it?",
+            "Tell me about a time you used AI and had to verify its output.",
+            "What did you verify yourself, and what did you find?",
+            "What would you like to ask the interviewer about the team or the work?"
           ],
           "phases": [
             {
-              "title": "Preparar y cerrar notas",
-              "minutes": 5
-            },
-            {
-              "title": "Historia 1 + follow-ups + score",
+              "title": "Elegir ejemplos",
               "minutes": 10
             },
             {
-              "title": "Historia 2 + follow-ups + score",
-              "minutes": 10
+              "title": "Responder en voz alta",
+              "minutes": 25
             },
             {
-              "title": "Historia 3 + follow-ups + score",
-              "minutes": 10
-            },
-            {
-              "title": "Feedback y dos preguntas propias",
+              "title": "Practicar repreguntas",
               "minutes": 10
             }
           ],

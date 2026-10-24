@@ -672,14 +672,9 @@ export default function App() {
             <p className="date-heading">Hechos, decisiones y resultados</p>
             <h1>Tu práctica behavioral</h1>
             <p className="day-focus">
-              Construye seis a ocho historias reales y adapta su énfasis a la
-              pregunta. Las notas se guardan solo en este navegador.
+              Elige un día y responde sus preguntas en inglés con ejemplos de
+              tus proyectos. Cada día practica un tema distinto.
             </p>
-            <div className="callout">
-              No inventes conflictos, resultados ni cifras. Si no recuerdas un
-              detalle, déjalo pendiente. Practica una respuesta de unos dos
-              minutos y después preguntas de seguimiento.
-            </div>
             {plan.days.flatMap((d) =>
               d.blocks
                 .filter((b) => b.kind === "behavioral")

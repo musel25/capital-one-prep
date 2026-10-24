@@ -315,22 +315,28 @@ export function TaskDialog({
               )}
               {!!block.prompts?.length && (
                 <section className="section">
-                  <h3>Preguntas para practicar en voz alta</h3>
-                  <ul className="prompt-list">
+                  <h3>
+                    {block.kind === "behavioral"
+                      ? "Preguntas de hoy"
+                      : "Preguntas para practicar en voz alta"}
+                  </h3>
+                  <ol className="prompt-list">
                     {block.prompts.map((q, i) => (
                       <li key={i}>{q}</li>
+                    ))}
+                  </ol>
+                </section>
+              )}
+              {block.kind !== "behavioral" && (
+                <section className="section">
+                  <h3>Qué debes entregar</h3>
+                  <ul>
+                    {block.deliverables.map((d, i) => (
+                      <li key={i}>{d}</li>
                     ))}
                   </ul>
                 </section>
               )}
-              <section className="section">
-                <h3>Qué debes entregar</h3>
-                <ul>
-                  {block.deliverables.map((d, i) => (
-                    <li key={i}>{d}</li>
-                  ))}
-                </ul>
-              </section>
               {!!block.hints?.length && (
                 <section className="section">
                   <h3>
@@ -556,16 +562,18 @@ export function TaskDialog({
           )}
           {!!block.sources?.length && (
             <footer className="task-sources">
-              <h3>Fuentes y contexto</h3>
-              {block.sources.map((id) => {
-                const s = sources.find((x) => x.id === id);
-                return s ? (
-                  <a key={id} href={s.url} target="_blank" rel="noreferrer">
-                    {s.title}
-                    <ExternalLink size={13} />
-                  </a>
-                ) : null;
-              })}
+              <details>
+                <summary>Fuentes y contexto</summary>
+                {block.sources.map((id) => {
+                  const s = sources.find((x) => x.id === id);
+                  return s ? (
+                    <a key={id} href={s.url} target="_blank" rel="noreferrer">
+                      {s.title}
+                      <ExternalLink size={13} />
+                    </a>
+                  ) : null;
+                })}
+              </details>
             </footer>
           )}
         </div>
