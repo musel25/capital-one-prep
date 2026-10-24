@@ -45,8 +45,14 @@ export function Markdown({ children }: { children: string }) {
     </div>
   );
 }
-export function CopyButton({ text }: { text: string }) {
-  const [label, setLabel] = useState("Copiar");
+export function CopyButton({
+  text,
+  initialLabel = "Copiar",
+}: {
+  text: string;
+  initialLabel?: string;
+}) {
+  const [label, setLabel] = useState(initialLabel);
   return (
     <button
       className="copy-button"
@@ -289,6 +295,24 @@ export function TaskDialog({
                 </section>
               )}
               <Markdown>{block.content}</Markdown>
+              {block.setupPrompt && (
+                <section className="local-work">
+                  <h3>Preparar el ejercicio local</h3>
+                  <p>
+                    Copia este prompt y pégalo en tu agente local, con este
+                    repositorio abierto. Crea el archivo y las pruebas; tú
+                    implementas la función. La página no ejecuta Python.
+                  </p>
+                  <CopyButton
+                    text={block.setupPrompt}
+                    initialLabel="Copiar prompt"
+                  />
+                  <details>
+                    <summary>Ver o seleccionar el prompt completo</summary>
+                    <pre className="setup-prompt">{block.setupPrompt}</pre>
+                  </details>
+                </section>
+              )}
               {!!block.prompts?.length && (
                 <section className="section">
                   <h3>Preguntas para practicar en voz alta</h3>

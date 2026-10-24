@@ -51,6 +51,32 @@ afterEach(() => {
   history.replaceState(null, "", "/grind/capital-one/?day=2026-10-23");
 });
 
+test("Python setup prompt can be copied with the full contract without changing progress", async () => {
+  const block = plan.days[0].blocks.find((b) => b.kind === "python") as Block;
+  let saves = 0;
+  render(
+    createElement(TaskDialog, {
+      block,
+      sources: [],
+      close: () => {},
+      save: () => {
+        saves++;
+        return true;
+      },
+    }),
+  );
+  assert.ok(
+    screen.getByRole("heading", { name: "Preparar el ejercicio local" }),
+  );
+  await user.click(screen.getByRole("button", { name: "Copiar prompt" }));
+  const copied = await navigator.clipboard.readText();
+  assert.match(copied, /ordered_ids\(rows\)/);
+  assert.match(copied, /Do not implement/);
+  assert.match(copied, /Never overwrite/);
+  assert.match(copied, /uv run python/);
+  assert.equal(saves, 0);
+});
+
 test("tutorial deep link returns to day one without changing saved practice", async () => {
   const id = plan.days[0].blocks[0].id;
   const raw = JSON.stringify(

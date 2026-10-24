@@ -14,6 +14,7 @@ export type Block = {
   solution?: string;
   prompts?: string[];
   labs?: string[];
+  setupPrompt?: string;
   phases?: Phase[];
   sources?: string[];
 };

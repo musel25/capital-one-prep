@@ -499,6 +499,12 @@ code {
   color: #26745a;
   background: #eaf4ee;
 }
+.setup-prompt {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
 .reflection {
   color: #62758a;
   background: #edf1f6;
