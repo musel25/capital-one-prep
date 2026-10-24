@@ -11,7 +11,6 @@ import {
   ExternalLink,
   FileText,
   Flag,
-  HelpCircle,
   ListChecks,
   MessageCircle,
   Play,
@@ -33,8 +32,7 @@ import {
   validateState,
 } from "./model";
 import { kindLabels, TaskDialog } from "./TaskDialog";
-import { Tutorial } from "./Tutorial";
-type View = "agenda" | "resources" | "behavioral" | "guide";
+type View = "agenda" | "resources" | "behavioral";
 const plan = planData as Plan;
 const all = plan.days.flatMap((d) => d.blocks);
 // Accept old closing notes in stored state and backups without scheduling them.
@@ -86,9 +84,7 @@ export default function App() {
   );
   const [view, setView] = useState<View>(() => {
     const requested = new URLSearchParams(location.search).get("view");
-    return requested === "guide" ||
-      requested === "resources" ||
-      requested === "behavioral"
+    return requested === "resources" || requested === "behavioral"
       ? requested
       : "agenda";
   });
@@ -317,12 +313,6 @@ export default function App() {
           >
             <BookOpen size={17} /> Fuentes y contexto
           </button>
-          <button
-            className={view === "guide" ? "active" : ""}
-            onClick={() => showView("guide")}
-          >
-            <HelpCircle size={17} /> Empieza aquí · Tutorial
-          </button>
         </nav>
         <div className="sidebar-footer">
           <span>
@@ -456,18 +446,6 @@ export default function App() {
                 </span>
               </div>
             )}
-            <div className="tutorial-banner">
-              <div>
-                <strong>¿Primera vez aquí?</strong>
-                <p>Cómo abrir los ejercicios y guardar tu progreso.</p>
-              </div>
-              <button
-                className="button secondary small"
-                onClick={() => showView("guide")}
-              >
-                <HelpCircle size={16} /> Ver tutorial
-              </button>
-            </div>
             <div className="day-layout">
               <section className="agenda">
                 <div className="agenda-top">
@@ -645,7 +623,7 @@ export default function App() {
               </article>
             ))}
           </section>
-        ) : view === "behavioral" ? (
+        ) : (
           <section className="resource-page">
             <h1>Tu práctica behavioral</h1>
             <p className="day-focus">
@@ -675,8 +653,6 @@ export default function App() {
                 )),
             )}
           </section>
-        ) : (
-          <Tutorial firstDay={plan.days[0]} openFirstDay={() => selectDay(0)} />
         )}
         <footer className="page-footer">
           Capital One Prep · Preparación independiente · Material ficticio para

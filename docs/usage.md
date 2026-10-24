@@ -2,8 +2,6 @@
 
 Abre [Capital One Prep](https://timer.musel.dev/grind/capital-one/). El calendario elige la fecha de Tijuana entre el 23 de octubre y el 1 de noviembre de 2026. Antes del inicio abre el día 1; después del final conserva el día 10. Puedes elegir cualquier fecha. Cada día tiene exactamente 225 minutos de trabajo; toma pausas aparte.
 
-Para una primera visita, abre [Empieza aquí](https://timer.musel.dev/grind/capital-one/?view=guide), disponible también en el menú y mediante «Ver tutorial» en la agenda. Resume el recorrido página → editor → revisión y contiene un ejemplo completo del primer ejercicio.
-
 El temporizador se maneja por fases: selecciónala, pulsa «Iniciar» y usa «Pausar» para los descansos. Cerrar el ejercicio no pausa el reloj. Llegar a cero no avanza de fase ni completa el bloque automáticamente; el resultado se registra en «Mi intento y revisión».
 
 ## Página y editor

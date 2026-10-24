@@ -132,26 +132,24 @@ test("older backups with closing notes can still be imported", async () => {
   );
 });
 
-test("tutorial deep link returns to day one without changing saved practice", async () => {
+test("old tutorial links open the agenda without changing saved practice", () => {
   const id = plan.days[0].blocks[0].id;
   const raw = JSON.stringify(
     replaceProgress(freshState(), id, { notes: "Keep my actual practice." }),
   );
   localStorage.setItem(STORAGE_KEY, raw);
-  history.replaceState(null, "", "/grind/capital-one/?view=guide");
+  history.replaceState(
+    null,
+    "",
+    "/grind/capital-one/?view=guide&day=2026-10-23",
+  );
   const mounted = render(createElement(App));
-  assert.ok(screen.getByRole("heading", { name: "Empieza aquí" }));
-  await user.click(screen.getByRole("button", { name: "Abrir el día 1" }));
-  assert.equal(new URLSearchParams(location.search).get("day"), "2026-10-23");
-  assert.equal(new URLSearchParams(location.search).has("view"), false);
   assert.ok(screen.getByRole("heading", { name: plan.days[0].title }));
+  assert.ok(screen.queryByRole("button", { name: /tutorial/i }) === null);
   assert.equal(localStorage.getItem(STORAGE_KEY), raw);
   mounted.unmount();
   render(createElement(App));
   assert.ok(screen.getByRole("heading", { name: plan.days[0].title }));
-  await user.click(screen.getByRole("button", { name: "Ver tutorial" }));
-  assert.equal(new URLSearchParams(location.search).get("view"), "guide");
-  assert.ok(screen.getByRole("heading", { name: "Empieza aquí" }));
   assert.equal(localStorage.getItem(STORAGE_KEY), raw);
 });
 
