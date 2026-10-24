@@ -669,11 +669,6 @@ progress::-moz-progress-bar {
   font-size: 11px;
   color: var(--muted);
 }
-.page-footer {
-  font-size: 10px;
-  color: #8793a4;
-  padding: 20px 0 26px;
-}
 .previous {
   border: 1px solid var(--line);
   background: #fff;
@@ -1489,10 +1484,6 @@ progress::-moz-progress-bar {
   }
   .day-bottom > .text-button {
     font-size: 11px;
-  }
-  .page-footer {
-    font-size: 9px;
-    padding-top: 12px;
   }
   .task-dialog {
     width: calc(100vw - 16px);

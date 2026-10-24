@@ -27,6 +27,7 @@ import {
   elapsedSeconds,
   formatDuration,
   freshState,
+  phaseTitle,
   replaceProgress,
   STORAGE_KEY,
   validateState,
@@ -51,7 +52,7 @@ function read() {
       state: freshState(),
       raw: null,
       error:
-        "No se pudo leer el progreso guardado. Descarga una copia de recuperación antes de empezar de nuevo.",
+        "Could not read saved progress. Download a recovery copy before starting over.",
     };
   }
 }
@@ -97,7 +98,7 @@ export default function App() {
       if (e.key === STORAGE_KEY && e.newValue !== rawRef.current) {
         setBlocked(true);
         setError(
-          "El progreso cambió en otra pestaña. Exporta esta versión si la necesitas y recarga para continuar.",
+          "Progress changed in another tab. Export this version if needed, then reload to continue.",
         );
       }
     };
@@ -113,7 +114,7 @@ export default function App() {
       if (localStorage.getItem(STORAGE_KEY) !== rawRef.current) {
         setBlocked(true);
         throw Error(
-          "Otra pestaña cambió el progreso. Exporta esta versión y recarga antes de continuar.",
+          "Another tab changed your progress. Export this version, then reload to continue.",
         );
       }
       const raw = JSON.stringify(next);
@@ -127,7 +128,7 @@ export default function App() {
       setError(
         e instanceof Error
           ? e.message
-          : "No se pudo guardar. Exporta tu progreso.",
+          : "Could not save. Export your progress.",
       );
       return false;
     }
@@ -165,13 +166,11 @@ export default function App() {
     if (!file) return;
     try {
       if (file.size > 5_000_000)
-        throw Error(
-          "El archivo es demasiado grande. Elige un respaldo de Capital One Prep.",
-        );
+        throw Error("File too large. Choose a Capital One Prep backup.");
       const next = validateState(JSON.parse(await file.text()), ids);
       if (
         !confirm(
-          "¿Reemplazar el progreso de este navegador por el archivo? Se conservará una copia local del progreso anterior.",
+          "Replace this browser's progress with the file? A local copy of your previous progress will be kept.",
         )
       )
         return;
@@ -186,13 +185,13 @@ export default function App() {
       setError("");
       setTask(null);
       setNotice(
-        "Respaldo importado. El progreso anterior conserva una copia local.",
+        "Backup imported. A local copy of your previous progress was kept.",
       );
     } catch (e) {
       setError(
         e instanceof Error
           ? e.message
-          : "No se pudo importar. Tu progreso se conserva.",
+          : "Could not import. Your progress is unchanged.",
       );
     }
     if (fileRef.current) fileRef.current.value = "";
@@ -205,15 +204,12 @@ export default function App() {
       );
     } catch {
       setError(
-        "El navegador no permite acceder al almacenamiento. Prueba permitir almacenamiento para este sitio.",
+        "Browser storage is blocked. Allow storage for this site to continue.",
       );
     }
   }
   function resetCorrupt() {
-    if (
-      !confirm("¿Empezar de nuevo? Primero descarga la copia de recuperación.")
-    )
-      return;
+    if (!confirm("Start over? Download a recovery copy first.")) return;
     try {
       const old = localStorage.getItem(STORAGE_KEY);
       if (old)
@@ -221,7 +217,7 @@ export default function App() {
       localStorage.removeItem(STORAGE_KEY);
       location.reload();
     } catch {
-      setError("No se puede acceder al almacenamiento del navegador.");
+      setError("Cannot access browser storage.");
     }
   }
   const day = plan.days[selected];
@@ -265,14 +261,14 @@ export default function App() {
         <div className="sprint-meta">
           <CalendarDays size={16} />
           <span>
-            23 oct – 1 nov, 2026
+            Oct 23 – Nov 1, 2026
             <br />
             <strong>
-              10 días · {formatDuration(plan.dailyMinutes)} al día
+              10 days · {formatDuration(plan.dailyMinutes)} per day
             </strong>
           </span>
         </div>
-        <nav aria-label="Días de preparación" className="day-nav">
+        <nav aria-label="Practice days" className="day-nav">
           {plan.days.map((d, i) => {
             const n = d.blocks.filter((b) => done(state.tasks[b.id])).length;
             return (
@@ -292,31 +288,33 @@ export default function App() {
                 <span>
                   <strong>{dateLabel(d.date, true)}</strong>
                   <small>
-                    {i === 7 || i === 9 ? "Simulacro completo" : d.title}
+                    {i === 7 || i === 9 ? "Full mock interview" : d.title}
                   </small>
                 </span>
-                {d.date === today && <span className="today-dot" title="Hoy" />}
+                {d.date === today && (
+                  <span className="today-dot" title="Today" />
+                )}
               </button>
             );
           })}
         </nav>
-        <nav className="secondary-nav" aria-label="Recursos">
+        <nav className="secondary-nav" aria-label="Resources">
           <button
             className={view === "behavioral" ? "active" : ""}
             onClick={() => showView("behavioral")}
           >
-            <MessageCircle size={17} /> Mi práctica behavioral
+            <MessageCircle size={17} /> Behavioral practice
           </button>
           <button
             className={view === "resources" ? "active" : ""}
             onClick={() => showView("resources")}
           >
-            <BookOpen size={17} /> Fuentes y contexto
+            <BookOpen size={17} /> Sources
           </button>
         </nav>
         <div className="sidebar-footer">
           <span>
-            <ShieldCheck size={15} /> Progreso privado en este navegador
+            <ShieldCheck size={15} /> Saved in this browser
           </span>
           <div className="backup-actions">
             <button
@@ -327,10 +325,10 @@ export default function App() {
                 )
               }
             >
-              <Download size={14} /> Exportar
+              <Download size={14} /> Export
             </button>
             <button onClick={() => fileRef.current?.click()}>
-              <Upload size={14} /> Importar
+              <Upload size={14} /> Import
             </button>
           </div>
           <input
@@ -338,7 +336,7 @@ export default function App() {
             type="file"
             accept="application/json,.json"
             className="sr-only"
-            aria-label="Importar progreso"
+            aria-label="Import progress"
             onChange={(e) => void importFile(e.target.files?.[0])}
           />
           <a
@@ -346,15 +344,15 @@ export default function App() {
             target="_blank"
             rel="noreferrer"
           >
-            Repositorio <ArrowUpRight size={13} />
+            Repository <ArrowUpRight size={13} />
           </a>
         </div>
       </aside>
       <main className="main">
         <header className="topbar">
           <div>
-            <span className="status-dot" /> Plan de práctica{" "}
-            <span className="topbar-sub">TDP México 2027</span>
+            <span className="status-dot" /> Practice plan{" "}
+            <span className="topbar-sub">TDP Mexico 2027</span>
           </div>
           <a href="https://timer.musel.dev/grind/">
             Grind Recall <ArrowUpRight size={14} />
@@ -366,20 +364,20 @@ export default function App() {
             {blocked && (
               <div className="button-row">
                 <button className="button small secondary" onClick={recover}>
-                  Descargar recuperación
+                  Download recovery copy
                 </button>
                 <button
                   className="button small secondary"
                   onClick={() => location.reload()}
                 >
-                  Recargar
+                  Reload
                 </button>
                 {initial.error && (
                   <button
                     className="button small secondary"
                     onClick={resetCorrupt}
                   >
-                    Empezar de nuevo
+                    Start over
                   </button>
                 )}
               </div>
@@ -392,7 +390,7 @@ export default function App() {
             <button
               className="icon-button"
               onClick={() => setNotice("")}
-              aria-label="Cerrar aviso"
+              aria-label="Dismiss notice"
             >
               <X size={16} />
             </button>
@@ -404,10 +402,9 @@ export default function App() {
               <div>
                 <p className="date-heading">
                   {dateLabel(day.date)}
-                  <span>Día {selected + 1} de 10</span>
+                  <span>Day {selected + 1} of 10</span>
                 </p>
                 <h1>{day.title}</h1>
-                <p className="day-focus">{day.focus}</p>
               </div>
               <button
                 className="button secondary small"
@@ -422,18 +419,18 @@ export default function App() {
               >
                 <CalendarDays size={16} />{" "}
                 {today < plan.startDate
-                  ? "Ir al primer día"
+                  ? "First day"
                   : today > plan.endDate
-                    ? "Ir al último día"
-                    : "Volver a hoy"}
+                    ? "Last day"
+                    : "Today"}
               </button>
             </div>
             {today < plan.startDate && (
               <div className="before-start">
                 <CalendarDays size={17} />
                 <span>
-                  Tu sprint empieza el 23 de octubre. Puedes explorar los
-                  materiales y preparar el entorno desde ahora.
+                  Practice starts on October 23. You can set up your environment
+                  now.
                 </span>
               </div>
             )}
@@ -441,18 +438,18 @@ export default function App() {
               <div className="before-start">
                 <Flag size={17} />
                 <span>
-                  El calendario terminó. Tus intentos y materiales siguen
-                  disponibles para continuar o repasar.
+                  The schedule has ended. Your attempts and exercises are still
+                  available.
                 </span>
               </div>
             )}
             <div className="day-layout">
               <section className="agenda">
                 <div className="agenda-top">
-                  <h2>Tu agenda</h2>
+                  <h2>Schedule</h2>
                   <span>
-                    <Clock3 size={15} /> {formatDuration(dayMinutes)} de trabajo
-                    · pausas aparte
+                    <Clock3 size={15} /> {formatDuration(dayMinutes)} · breaks
+                    excluded
                   </span>
                 </div>
                 <div className="agenda-list">
@@ -478,14 +475,14 @@ export default function App() {
                             className={`task-status ${p?.status ?? "pending"}`}
                           >
                             {p?.status === "done"
-                              ? "Completado"
+                              ? "Completed"
                               : p?.status === "assisted"
-                                ? "Completado con pistas"
+                                ? "Completed with hints"
                                 : p?.status === "retry"
-                                  ? "Pendiente de otro intento"
+                                  ? "Try again"
                                   : p?.status === "in-progress"
-                                    ? "En curso"
-                                    : `Bloque ${i + 1}`}
+                                    ? "In progress"
+                                    : `Block ${i + 1}`}
                           </span>
                         </span>
                         <ChevronRight size={19} />
@@ -497,15 +494,15 @@ export default function App() {
               <aside className="day-aside">
                 <section className="next-panel">
                   <span className="panel-label">
-                    {next ? "Tu siguiente paso" : "Día completado"}
+                    {next ? "Up next" : "Day completed"}
                   </span>
-                  <h2>{next ? next.title : "Terminaste los bloques de hoy"}</h2>
+                  <h2>{next ? next.title : "Today's tasks are complete"}</h2>
                   <p>
                     {next
                       ? next.kind === "technical"
-                        ? "Abre el ejercicio para empezar."
+                        ? "Open the exercise to begin."
                         : next.summary
-                      : "Puedes exportar tu progreso para guardar una copia."}
+                      : "Export your progress to keep a backup."}
                   </p>
                   {next && (
                     <button
@@ -514,16 +511,16 @@ export default function App() {
                     >
                       <Play size={16} />{" "}
                       {state.tasks[next.id]?.status === "in-progress"
-                        ? "Continuar"
-                        : "Empezar bloque"}
+                        ? "Continue"
+                        : "Start task"}
                     </button>
                   )}
                 </section>
                 <section className="progress-panel">
-                  <h3>Avance de este día</h3>
+                  <h3>Today's progress</h3>
                   <div className="progress-caption">
                     <strong>
-                      {count} de {day.blocks.length} bloques
+                      {count} of {day.blocks.length} tasks
                     </strong>
                     <span>
                       {formatDuration(completedMinutes)} /{" "}
@@ -535,13 +532,13 @@ export default function App() {
                     {day.blocks.filter(
                       (b) => state.tasks[b.id]?.status === "retry",
                     ).length > 0
-                      ? "Los intentos por repetir quedan pendientes."
-                      : "Avance basado en lo que registras como completado."}
+                      ? "Attempts marked for retry remain pending."
+                      : "Based on tasks you mark as completed."}
                   </p>
                   <div className="overall">
-                    <span>Sprint completo</span>
+                    <span>Overall</span>
                     <strong>
-                      {totalDone} / {all.length} bloques
+                      {totalDone} / {all.length} tasks
                     </strong>
                   </div>
                 </section>
@@ -554,18 +551,21 @@ export default function App() {
                   setTask(all.find((b) => b.id === running[0]) ?? null)
                 }
               >
-                <Clock3 size={16} /> Temporizador activo:{" "}
-                {running[1].timer?.phase}
+                <Clock3 size={16} /> Timer running:{" "}
+                {phaseTitle(
+                  all.find((b) => b.id === running[0])?.phases,
+                  running[1].timer?.phase,
+                )}
                 <ChevronRight size={16} />
               </button>
             )}
             {!!previous.length && (
               <details className="previous">
                 <summary>
-                  {previous.length} bloques anteriores pendientes{" "}
+                  {previous.length} earlier tasks pending{" "}
                   <ChevronRight size={16} />
                 </summary>
-                <p>Puedes retomarlos cuando quieras.</p>
+                <p>Resume these anytime.</p>
                 <div>
                   {previous.map((b) => (
                     <button key={b.id} onClick={() => setTask(b)}>
@@ -582,34 +582,33 @@ export default function App() {
                 disabled={selected === 0}
                 onClick={() => selectDay(selected - 1)}
               >
-                Día anterior
+                Previous day
               </button>
-              <span>Horario de Tijuana · {dateLabel(day.date, true)}</span>
               <button
                 className="text-button"
                 disabled={selected === plan.days.length - 1}
                 onClick={() => selectDay(selected + 1)}
               >
-                Día siguiente
+                Next day
               </button>
             </div>
           </>
         ) : view === "resources" ? (
           <section className="resource-page">
-            <h1>Fuentes y formato</h1>
+            <h1>Sources</h1>
             <p className="day-focus">
-              Documentación, testimonios y material de práctica. Confirma el
-              formato y las herramientas de tu entrevista en tu invitación.
+              Documentation, candidate accounts, and practice material. Check
+              your invitation for your interview format and tools.
             </p>
             {plan.sources.map((s) => (
               <article className="source-row" key={s.id}>
                 <span className={`source-level ${s.level}`}>
                   {
                     {
-                      official: "Documentación oficial",
-                      testimony: "Testimonio",
-                      practice: "Práctica creada",
-                      repository: "Repositorio",
+                      official: "Official documentation",
+                      testimony: "Candidate account",
+                      practice: "Original practice",
+                      repository: "Repository",
                     }[s.level]
                   }
                 </span>
@@ -625,10 +624,10 @@ export default function App() {
           </section>
         ) : (
           <section className="resource-page">
-            <h1>Tu práctica behavioral</h1>
+            <h1>Behavioral practice</h1>
             <p className="day-focus">
-              Elige un día y responde sus preguntas en inglés con ejemplos de
-              tus proyectos. Cada día practica un tema distinto.
+              Choose a day and answer its questions using examples from your own
+              projects.
             </p>
             {plan.days.flatMap((d) =>
               d.blocks
@@ -644,8 +643,8 @@ export default function App() {
                       <strong>{b.title}</strong>
                       <span>
                         {state.tasks[b.id]?.notes
-                          ? "Tienes notas guardadas"
-                          : "Abrir preguntas"}
+                          ? "Notes saved"
+                          : "Open questions"}
                       </span>
                     </span>
                     <ChevronRight size={18} />
@@ -654,10 +653,6 @@ export default function App() {
             )}
           </section>
         )}
-        <footer className="page-footer">
-          Capital One Prep · Preparación independiente · Material ficticio para
-          practicar
-        </footer>
       </main>
       {task && (
         <TaskDialog

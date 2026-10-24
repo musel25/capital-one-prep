@@ -1,6 +1,6 @@
 export type Kind =
   "technical" | "case" | "behavioral" | "python" | "reflection";
-export type Phase = { title: string; minutes: number };
+export type Phase = { title: string; minutes: number; legacyTitle?: string };
 export type Block = {
   id: string;
   title: string;

@@ -19,6 +19,7 @@ import {
   elapsedSeconds,
   emptyProgress,
   formatDuration,
+  phaseTitle,
 } from "./model";
 import type { Block, Progress, Source } from "./types";
 
@@ -47,7 +48,7 @@ export function Markdown({ children }: { children: string }) {
 }
 export function CopyButton({
   text,
-  initialLabel = "Copiar",
+  initialLabel = "Copy",
 }: {
   text: string;
   initialLabel?: string;
@@ -59,9 +60,9 @@ export function CopyButton({
       onClick={async () => {
         try {
           await navigator.clipboard.writeText(text);
-          setLabel("Copiado");
+          setLabel("Copied");
         } catch {
-          setLabel("Selecciona el texto para copiar");
+          setLabel("Select the text to copy");
         }
       }}
     >
@@ -71,11 +72,11 @@ export function CopyButton({
   );
 }
 export const kindLabels = {
-  technical: "Con agente de IA",
-  case: "Caso técnico",
+  technical: "AI-assisted coding",
+  case: "Technical case",
   behavioral: "Behavioral",
   python: "Python",
-  reflection: "Cierre y reflexión",
+  reflection: "Closing reflection",
 };
 export function TaskDialog({
   block,
@@ -105,7 +106,9 @@ export function TaskDialog({
   const phases = block.phases?.length
     ? block.phases
     : [{ title: block.title, minutes: block.minutes }];
-  const [phase, setPhase] = useState(p.timer?.phase ?? phases[0].title);
+  const [phase, setPhase] = useState(
+    phaseTitle(phases, p.timer?.phase) || phases[0].title,
+  );
   const selectedPhase = phases.find((x) => x.title === phase) ?? phases[0];
   const elapsed = p.timer ? elapsedSeconds(p.timer, now) : 0;
   const remaining = Math.max(
@@ -117,7 +120,8 @@ export function TaskDialog({
     .padStart(2, "0")}:${Math.floor(remaining % 60)
     .toString()
     .padStart(2, "0")}`;
-  const phaseMatches = !p.timer || p.timer.phase === selectedPhase.title;
+  const phaseMatches =
+    !p.timer || phaseTitle(phases, p.timer.phase) === selectedPhase.title;
   function start() {
     save({
       status: p.status === "pending" ? "in-progress" : p.status,
@@ -135,7 +139,7 @@ export function TaskDialog({
   function finish(status: Progress["status"]) {
     const patch: Partial<Progress> = { status, notes };
     if (p.timer) patch.timer = { ...p.timer, elapsed, startedAt: null };
-    if (save(patch)) setFeedback("Resultado guardado en este navegador.");
+    if (save(patch)) setFeedback("Result saved in this browser.");
   }
   const predictionChanged = prediction !== p.prediction;
   const notesChanged = notes !== p.notes;
@@ -151,7 +155,7 @@ export function TaskDialog({
   function requestClose() {
     if ((predictionChanged || notesChanged) && !save({ prediction, notes })) {
       setFeedback(
-        "No se pudo guardar tu borrador. Cópialo antes de salir de la página.",
+        "Could not save your draft. Copy it before leaving this page.",
       );
       return;
     }
@@ -177,14 +181,14 @@ export function TaskDialog({
             </span>
             <h2>{block.title}</h2>
             <p>
-              {formatDuration(block.minutes)} de práctica
-              {block.kind === "case" && " · Sin ejecutar código"}
+              {formatDuration(block.minutes)} of practice
+              {block.kind === "case" && " · Without running code"}
             </p>
           </div>
           <button
             className="icon-button"
             onClick={requestClose}
-            aria-label="Cerrar ejercicio"
+            aria-label="Close exercise"
           >
             <X />
           </button>
@@ -194,13 +198,11 @@ export function TaskDialog({
             <Clock3 size={18} />
             <strong role="timer">{countdown}</strong>
             <span>
-              {remaining === 0 && p.timer
-                ? "Tiempo cumplido"
-                : "Tiempo de la fase"}
+              {remaining === 0 && p.timer ? "Time's up" : "Phase time"}
             </span>
           </div>
           <label className="phase-select">
-            <span className="sr-only">Fase del temporizador</span>
+            <span className="sr-only">Timer phase</span>
             <select
               value={selectedPhase.title}
               onChange={(e) => {
@@ -229,12 +231,12 @@ export function TaskDialog({
             onClick={p.timer?.startedAt ? stop : start}
           >
             {p.timer?.startedAt ? <Pause size={16} /> : <Play size={16} />}{" "}
-            {p.timer?.startedAt ? "Pausar" : "Iniciar"}
+            {p.timer?.startedAt ? "Pause" : "Start"}
           </button>
           <button
             className="icon-button"
-            title="Reiniciar solo el temporizador"
-            aria-label="Reiniciar solo el temporizador"
+            title="Reset timer only"
+            aria-label="Reset timer only"
             onClick={() =>
               save({
                 timer: {
@@ -254,13 +256,13 @@ export function TaskDialog({
             className={tab === "brief" ? "active" : ""}
             onClick={() => setTab("brief")}
           >
-            Enunciado y recursos
+            Exercise
           </button>
           <button
             className={tab === "work" ? "active" : ""}
             onClick={() => setTab("work")}
           >
-            Mi intento y revisión
+            My attempt
           </button>
         </div>
         <div className="dialog-body">
@@ -270,12 +272,11 @@ export function TaskDialog({
               {!!block.labs?.length && (
                 <section className="local-work">
                   <h3>
-                    <Terminal size={18} /> Abre el ejercicio en tu editor
+                    <Terminal size={18} /> Open in your editor
                   </h3>
                   <p>
-                    Ejecuta desde{" "}
-                    <code>/home/musel/Github/capital-one-prep</code>. Abre la
-                    carpeta devuelta y lee su README.
+                    Run from <code>/home/musel/Github/capital-one-prep</code>.
+                    Open the returned folder and read its README.
                   </p>
                   {block.labs.map((id) => (
                     <div key={id} className="command-row">
@@ -286,25 +287,25 @@ export function TaskDialog({
                     </div>
                   ))}
                   <p className="muted">
-                    Bug y feature usan copias distintas. Para continuar un
-                    intento, abre su carpeta existente.
+                    Use separate copies for the bug and feature. To resume an
+                    attempt, open its existing folder.
                   </p>
                 </section>
               )}
               <Markdown>{block.content}</Markdown>
               {block.setupPrompt && (
                 <section className="local-work">
-                  <h3>Preparar el ejercicio local</h3>
+                  <h3>Local setup</h3>
                   <p>
-                    Pégalo en tu agente local: preparará la función vacía, las
-                    pruebas y el comando para ejecutarlas.
+                    Paste this into your local agent to create the starter,
+                    tests, and run command.
                   </p>
                   <CopyButton
                     text={block.setupPrompt}
-                    initialLabel="Copiar prompt"
+                    initialLabel="Copy prompt"
                   />
                   <details>
-                    <summary>Ver o seleccionar el prompt completo</summary>
+                    <summary>View full prompt</summary>
                     <pre className="setup-prompt">{block.setupPrompt}</pre>
                   </details>
                 </section>
@@ -313,8 +314,8 @@ export function TaskDialog({
                 <section className="section">
                   <h3>
                     {block.kind === "behavioral"
-                      ? "Preguntas de hoy"
-                      : "Preguntas para practicar en voz alta"}
+                      ? "Today's questions"
+                      : "Questions"}
                   </h3>
                   <ol className="prompt-list">
                     {block.prompts.map((q, i) => (
@@ -325,7 +326,7 @@ export function TaskDialog({
               )}
               {block.kind !== "behavioral" && (
                 <details className="section completion-details">
-                  <summary>Al terminar</summary>
+                  <summary>Deliverables</summary>
                   <ul>
                     {block.deliverables.map((d, i) => (
                       <li key={i}>{d}</li>
@@ -336,13 +337,13 @@ export function TaskDialog({
               {!!block.hints?.length && (
                 <section className="section">
                   <h3>
-                    <Lightbulb size={18} /> Pistas opcionales
+                    <Lightbulb size={18} /> Hints
                   </h3>
-                  <p className="muted">Abre una si te atascas.</p>
+                  <p className="muted">Open if you get stuck.</p>
                   {block.hints.map((hint, i) => (
                     <details key={i} className="hint">
                       <summary>
-                        Pista {i + 1}
+                        Hint {i + 1}
                         <ChevronDown size={15} />
                       </summary>
                       <Markdown>{hint}</Markdown>
@@ -351,17 +352,17 @@ export function TaskDialog({
                 </section>
               )}
               <button className="button primary" onClick={() => setTab("work")}>
-                Registrar mi intento <Check size={17} />
+                Record attempt <Check size={17} />
               </button>
             </>
           ) : (
             <>
               {block.kind === "case" && (
                 <section className="section">
-                  <h3>Mi predicción, antes de ejecutar</h3>
+                  <h3>Prediction</h3>
                   <p>
-                    Anota la salida actual, la deseada y tu corrección antes de
-                    abrir la solución.
+                    Record the current output, desired output, and your
+                    correction before revealing the solution.
                   </p>
                   <textarea
                     rows={7}
@@ -369,27 +370,27 @@ export function TaskDialog({
                     value={prediction}
                     onChange={(e) => setPrediction(e.target.value)}
                     placeholder="Input → expected result → rule. My counterexamples and proposed change…"
-                    aria-label="Mi predicción"
+                    aria-label="My prediction"
                   />
                   <button
                     className="button secondary small"
                     disabled={!prediction.trim() || !predictionChanged}
                     onClick={() => {
                       if (save({ prediction }))
-                        setFeedback("Predicción guardada.");
+                        setFeedback("Prediction saved.");
                     }}
                   >
                     {predictionChanged
-                      ? "Guardar predicción"
+                      ? "Save prediction"
                       : p.prediction
-                        ? "Predicción guardada"
-                        : "Guardar predicción"}
+                        ? "Prediction saved"
+                        : "Save prediction"}
                   </button>
                 </section>
               )}
               <details className="section completion-details">
-                <summary>Comprobar mi trabajo</summary>
-                <p className="muted">Marca lo que comprobaste.</p>
+                <summary>Review checklist</summary>
+                <p className="muted">Check what you verified.</p>
                 <div className="checklist">
                   {block.rubric.map((r, i) => {
                     const key = `rubric-${i}`;
@@ -414,11 +415,11 @@ export function TaskDialog({
               </details>
               <section className="section">
                 <label className="field-label" htmlFor="task-notes">
-                  Notas
+                  Notes
                 </label>
                 <textarea
                   id="task-notes"
-                  aria-label="Notas, evidencia y preguntas pendientes"
+                  aria-label="Notes, evidence, and open questions"
                   value={notes}
                   onChange={(e) => {
                     setNotes(e.target.value);
@@ -426,39 +427,37 @@ export function TaskDialog({
                   }}
                   rows={6}
                   maxLength={30000}
-                  placeholder="Tu respuesta, resultados o dudas…"
+                  placeholder="Your answer, results, or questions…"
                 />
                 {notesChanged && (
                   <p className="alert" role="alert">
-                    No se pudo guardar. Tu texto sigue aquí; cópialo antes de
-                    recargar o salir. Cierra el ejercicio para reintentar el
-                    guardado.
+                    Could not save. Your text is still here; copy it before
+                    reloading or leaving. Close the exercise to retry saving.
                   </p>
                 )}
                 <p className="muted">
-                  Guardado en este navegador. Usa «Exportar» para respaldarlo.
+                  Saved in this browser. Use Export to back it up.
                 </p>
               </section>
               {!!block.labs?.length && (
                 <div className="callout">
-                  <strong>Comprueba tu código localmente</strong>
+                  <strong>Check your code locally</strong>
                   <p>
-                    Desde la raíz del repositorio, sustituye la ruta por la de
-                    tu intento:
+                    From the repository root, replace the path with your attempt
+                    folder:
                   </p>
                   <code>
-                    uv run python scripts/practice.py check attempts/TU-CARPETA
+                    uv run python scripts/practice.py check
+                    attempts/YOUR-ATTEMPT
                   </code>
-                  <p>
-                    Guarda aquí el resultado; la página no ejecuta tu código.
-                  </p>
+                  <p>Save the result here; this page does not run your code.</p>
                 </div>
               )}
               <section className="section">
                 <div className="result-heading">
-                  <h3>Terminar este intento</h3>
+                  <h3>Finish attempt</h3>
                   <label>
-                    Minutos reales{" "}
+                    Minutes spent{" "}
                     <input
                       type="number"
                       min="0"
@@ -476,44 +475,45 @@ export function TaskDialog({
                   </label>
                 </div>
                 <p className="muted">
-                  «Con pistas» indica ayuda adicional o consulta de la solución.
+                  Choose “with hints” if you used extra help or viewed the
+                  solution.
                 </p>
                 <div className="result-buttons">
                   <button
                     className={`button ${p.status === "done" ? "primary" : "secondary"}`}
                     onClick={() => finish("done")}
                   >
-                    <Check size={16} /> Completado
+                    <Check size={16} /> Completed
                   </button>
                   <button
                     className={`button ${p.status === "assisted" ? "primary" : "secondary"}`}
                     onClick={() => finish("assisted")}
                   >
-                    Completado con pistas
+                    Completed with hints
                   </button>
                   <button
                     className={`button ${p.status === "retry" ? "primary" : "secondary"}`}
                     onClick={() => finish("retry")}
                   >
-                    Necesito otro intento
+                    Try again
                   </button>
                 </div>
                 <button
                   className="text-button"
                   onClick={() => save({ status: "pending" })}
                 >
-                  Volver a pendiente
+                  Mark as pending
                 </button>
               </section>
               {block.solution && (
                 <section className="section solution">
-                  <h3>Revisión del intento</h3>
+                  <h3>Solution review</h3>
                   {!p.reviewed ? (
                     <>
                       <p>
                         {block.kind === "case"
-                          ? "Guarda tu predicción y termina el intento para abrir la explicación."
-                          : "Termina el intento antes de consultar la explicación."}
+                          ? "Save your prediction and finish the attempt to reveal the explanation."
+                          : "Finish the attempt before viewing the explanation."}
                       </p>
                       <button
                         className="button secondary"
@@ -524,7 +524,7 @@ export function TaskDialog({
                         }
                         onClick={() => save({ reviewed: true })}
                       >
-                        He terminado: abrir explicación
+                        Reveal explanation
                       </button>
                     </>
                   ) : (
@@ -544,7 +544,7 @@ export function TaskDialog({
           {!!block.sources?.length && (
             <footer className="task-sources">
               <details>
-                <summary>Fuentes y contexto</summary>
+                <summary>Sources</summary>
                 {block.sources.map((id) => {
                   const s = sources.find((x) => x.id === id);
                   return s ? (

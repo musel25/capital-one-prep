@@ -2,7 +2,7 @@
 
 A ten-day preparation workspace for Capital One TDP Mexico, October 23–November 1, 2026. Three hours and forty-five minutes each day: AI-assisted debugging and feature work, technical business cases, behavioral practice, and targeted Python exercises.
 
-The daily page provides the agenda. Code is practiced in your own editor, with independent attempt folders that preserve your work. Instructions are in Spanish; interview practice is in English.
+The daily page provides the agenda. Code is practiced in your own editor, with independent attempt folders that preserve your work. The website and interview exercises are in English.
 
 **Open the planner:** [timer.musel.dev/grind/capital-one/](https://timer.musel.dev/grind/capital-one/)
 

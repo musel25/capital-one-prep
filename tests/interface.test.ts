@@ -65,10 +65,8 @@ test("Python setup prompt can be copied with the full contract without changing 
       },
     }),
   );
-  assert.ok(
-    screen.getByRole("heading", { name: "Preparar el ejercicio local" }),
-  );
-  await user.click(screen.getByRole("button", { name: "Copiar prompt" }));
+  assert.ok(screen.getByRole("heading", { name: "Local setup" }));
+  await user.click(screen.getByRole("button", { name: "Copy prompt" }));
   const copied = await navigator.clipboard.readText();
   assert.match(copied, /ordered_ids\(rows\)/);
   assert.match(copied, /Do not implement/);
@@ -93,18 +91,18 @@ test("removed closing blocks stay in saved progress without appearing in the age
   render(createElement(App));
   assert.equal(screen.queryByRole("alert"), null);
   assert.ok(
-    screen.queryByText("Cierre y reflexión") === null,
+    screen.queryByText("Closing reflection") === null,
     "Closing block must not appear",
   );
   assert.ok(
-    screen.queryByRole("button", { name: /Temporizador activo/ }) === null,
+    screen.queryByRole("button", { name: /Timer running/ }) === null,
     "Archived timers must not appear",
   );
-  assert.ok(screen.getByText("0 / 40 bloques"));
+  assert.ok(screen.getByText("0 / 40 tasks"));
   assert.ok(screen.getByText("0 min / 3 h 45 min"));
   assert.equal(localStorage.getItem(STORAGE_KEY), raw);
-  await user.click(screen.getByRole("button", { name: "Empezar bloque" }));
-  await user.click(screen.getByRole("button", { name: "Iniciar" }));
+  await user.click(screen.getByRole("button", { name: "Start task" }));
+  await user.click(screen.getByRole("button", { name: "Start" }));
   assert.equal(
     JSON.parse(localStorage.getItem(STORAGE_KEY)!).tasks["d01-reflection"]
       .notes,
@@ -118,7 +116,7 @@ test("older backups with closing notes can still be imported", async () => {
   });
   render(createElement(App));
   await act(async () => {
-    fireEvent.change(screen.getByLabelText("Importar progreso"), {
+    fireEvent.change(screen.getByLabelText("Import progress"), {
       target: {
         files: [{ size: 1000, text: async () => JSON.stringify(old) }],
       },
@@ -130,6 +128,48 @@ test("older backups with closing notes can still be imported", async () => {
       .notes,
     "Old final notes.",
   );
+});
+
+test("a saved Spanish timer keeps its phase and elapsed time in the English UI", async () => {
+  const id = "d01-technical";
+  const raw = JSON.stringify(
+    replaceProgress(freshState(), id, {
+      status: "in-progress",
+      notes: "Keep my notes.",
+      prediction: "Keep my prediction.",
+      checked: ["rubric-1"],
+      timer: {
+        elapsed: 123,
+        startedAt: Date.now(),
+        duration: 1200,
+        phase: "Bug: trabajo",
+      },
+    }),
+  );
+  localStorage.setItem(STORAGE_KEY, raw);
+  render(createElement(App));
+  assert.equal(localStorage.getItem(STORAGE_KEY), raw);
+  await user.click(
+    screen.getByRole("button", { name: /Timer running: Bug: implement/ }),
+  );
+  assert.equal(
+    (screen.getByRole("combobox", { name: "Timer phase" }) as HTMLSelectElement)
+      .value,
+    "Bug: implement",
+  );
+  await user.click(screen.getByRole("button", { name: "Pause" }));
+  const paused = JSON.parse(localStorage.getItem(STORAGE_KEY)!).tasks[id];
+  assert.ok(paused.timer.elapsed >= 123);
+  assert.equal(paused.timer.startedAt, null);
+  await user.click(screen.getByRole("button", { name: "Start" }));
+  const resumed = JSON.parse(localStorage.getItem(STORAGE_KEY)!).tasks[id];
+  assert.equal(resumed.timer.phase, "Bug: implement");
+  assert.equal(resumed.timer.elapsed, paused.timer.elapsed);
+  assert.equal(resumed.timer.duration, 1200);
+  assert.ok(resumed.timer.startedAt);
+  assert.equal(resumed.notes, "Keep my notes.");
+  assert.equal(resumed.prediction, "Keep my prediction.");
+  assert.deepEqual(resumed.checked, ["rubric-1"]);
 });
 
 test("old tutorial links open the agenda without changing saved practice", () => {
@@ -184,25 +224,23 @@ test("case review needs saved prediction and finished attempt; closing preserves
     });
   }
   render(createElement(Harness));
-  await user.click(
-    screen.getByRole("button", { name: "Mi intento y revisión" }),
-  );
+  await user.click(screen.getByRole("button", { name: "My attempt" }));
   const reveal = screen.getByRole("button", {
-    name: "He terminado: abrir explicación",
+    name: "Reveal explanation",
   }) as HTMLButtonElement;
   assert.equal(reveal.disabled, true);
   await user.type(
-    screen.getByLabelText("Mi predicción"),
+    screen.getByLabelText("My prediction"),
     "Approve at the inclusive limit.",
   );
-  await user.click(screen.getByRole("button", { name: "Guardar predicción" }));
+  await user.click(screen.getByRole("button", { name: "Save prediction" }));
   assert.equal(reveal.disabled, true);
-  await user.click(screen.getByRole("button", { name: "Completado" }));
+  await user.click(screen.getByRole("button", { name: "Completed" }));
   assert.equal(reveal.disabled, false);
   await user.click(reveal);
   assert.ok(screen.getByText("The worked explanation."));
-  await user.type(screen.getByLabelText("Mi predicción"), " Updated evidence.");
-  await user.click(screen.getByRole("button", { name: "Cerrar ejercicio" }));
+  await user.type(screen.getByLabelText("My prediction"), " Updated evidence.");
+  await user.click(screen.getByRole("button", { name: "Close exercise" }));
   assert.equal(closed, true);
   assert.match(saved.prediction, /Updated evidence/);
   assert.equal(saved.reviewed, true);
@@ -211,16 +249,14 @@ test("case review needs saved prediction and finished attempt; closing preserves
 test("daily task notes, checklist and running timer restore after remount", async () => {
   const technical = plan.days[0].blocks[0];
   const mounted = render(createElement(App));
-  await user.click(screen.getByRole("button", { name: "Empezar bloque" }));
-  await user.click(screen.getByRole("button", { name: "Iniciar" }));
-  await user.click(
-    screen.getByRole("button", { name: "Mi intento y revisión" }),
-  );
+  await user.click(screen.getByRole("button", { name: "Start task" }));
+  await user.click(screen.getByRole("button", { name: "Start" }));
+  await user.click(screen.getByRole("button", { name: "My attempt" }));
   await user.type(
-    screen.getByLabelText("Notas, evidencia y preguntas pendientes"),
+    screen.getByLabelText("Notes, evidence, and open questions"),
     "My local test evidence.",
   );
-  await user.click(screen.getByText("Comprobar mi trabajo"));
+  await user.click(screen.getByText("Review checklist"));
   await user.click(screen.getAllByRole("checkbox")[0]);
   const before = JSON.parse(localStorage.getItem(STORAGE_KEY)!);
   assert.equal(before.tasks[technical.id].notes, "My local test evidence.");
@@ -228,20 +264,18 @@ test("daily task notes, checklist and running timer restore after remount", asyn
   assert.ok(before.tasks[technical.id].timer.startedAt);
   mounted.unmount();
   render(createElement(App));
-  await user.click(screen.getByRole("button", { name: "Continuar" }));
-  assert.ok(screen.getByRole("button", { name: "Pausar" }));
-  await user.click(
-    screen.getByRole("button", { name: "Mi intento y revisión" }),
-  );
+  await user.click(screen.getByRole("button", { name: "Continue" }));
+  assert.ok(screen.getByRole("button", { name: "Pause" }));
+  await user.click(screen.getByRole("button", { name: "My attempt" }));
   assert.equal(
     (
       screen.getByLabelText(
-        "Notas, evidencia y preguntas pendientes",
+        "Notes, evidence, and open questions",
       ) as HTMLTextAreaElement
     ).value,
     "My local test evidence.",
   );
-  await user.click(screen.getByText("Comprobar mi trabajo"));
+  await user.click(screen.getByText("Review checklist"));
   assert.equal(
     (screen.getAllByRole("checkbox")[0] as HTMLInputElement).checked,
     true,
@@ -254,14 +288,11 @@ test("invalid import preserves progress and another tab cannot silently overwrit
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   render(createElement(App));
   await act(async () => {
-    fireEvent.change(screen.getByLabelText("Importar progreso"), {
+    fireEvent.change(screen.getByLabelText("Import progress"), {
       target: { files: [{ size: 20, text: async () => '{"version":99}' }] },
     });
   });
-  assert.match(
-    screen.getByRole("alert").textContent!,
-    /no es un respaldo válido/,
-  );
+  assert.match(screen.getByRole("alert").textContent!, /not a valid backup/);
   assert.equal(
     JSON.parse(localStorage.getItem(STORAGE_KEY)!).tasks[id].notes,
     "Keep this note.",
@@ -274,9 +305,9 @@ test("invalid import preserves progress and another tab cannot silently overwrit
       new StorageEvent("storage", { key: STORAGE_KEY, newValue: raw }),
     ),
   );
-  assert.match(screen.getByRole("alert").textContent!, /otra pestaña/);
-  await user.click(screen.getByRole("button", { name: "Empezar bloque" }));
-  await user.click(screen.getByRole("button", { name: "Iniciar" }));
+  assert.match(screen.getByRole("alert").textContent!, /another tab/);
+  await user.click(screen.getByRole("button", { name: "Start task" }));
+  await user.click(screen.getByRole("button", { name: "Start" }));
   assert.equal(localStorage.getItem(STORAGE_KEY), raw);
 });
 
@@ -287,12 +318,10 @@ test("a storage failure preserves the note draft and prevents closing away unsav
     JSON.stringify(replaceProgress(freshState(), id, { notes: "Saved note." })),
   );
   render(createElement(App));
-  await user.click(screen.getByRole("button", { name: "Empezar bloque" }));
-  await user.click(
-    screen.getByRole("button", { name: "Mi intento y revisión" }),
-  );
+  await user.click(screen.getByRole("button", { name: "Start task" }));
+  await user.click(screen.getByRole("button", { name: "My attempt" }));
   const field = screen.getByLabelText(
-    "Notas, evidencia y preguntas pendientes",
+    "Notes, evidence, and open questions",
   ) as HTMLTextAreaElement;
   const originalSetItem = dom.window.Storage.prototype.setItem;
   try {
@@ -304,13 +333,13 @@ test("a storage failure preserves the note draft and prevents closing away unsav
     });
     assert.equal(field.value, "Saved note. My long new story.");
     assert.ok(document.querySelector("dialog [role=alert]"));
-    await user.click(screen.getByRole("button", { name: "Cerrar ejercicio" }));
+    await user.click(screen.getByRole("button", { name: "Close exercise" }));
     assert.ok(document.querySelector("dialog"));
     assert.equal(field.value, "Saved note. My long new story.");
   } finally {
     dom.window.Storage.prototype.setItem = originalSetItem;
   }
-  await user.click(screen.getByRole("button", { name: "Cerrar ejercicio" }));
+  await user.click(screen.getByRole("button", { name: "Close exercise" }));
   assert.equal(document.querySelector("dialog"), null);
   assert.equal(
     JSON.parse(localStorage.getItem(STORAGE_KEY)!).tasks[id].notes,

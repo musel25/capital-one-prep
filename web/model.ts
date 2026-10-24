@@ -1,5 +1,12 @@
-import type { Progress, State, Timer } from "./types";
+import type { Phase, Progress, State, Timer } from "./types";
 export const STORAGE_KEY = "capital-one-prep:v1";
+// Older saves use Spanish phase titles. Resolve them without rewriting progress.
+export function phaseTitle(phases: Phase[] = [], title = "") {
+  return (
+    phases.find((p) => p.title === title || p.legacyTitle === title)?.title ??
+    title
+  );
+}
 export function dayIn(date = new Date()): string {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Tijuana",
@@ -59,7 +66,7 @@ const number = (x: unknown, max: number) =>
 export function validateState(input: unknown, ids: string[]): State {
   const fail = () => {
     throw Error(
-      "El archivo no es un respaldo válido de este plan. Tu progreso actual se conserva.",
+      "This file is not a valid backup for this plan. Your current progress is unchanged.",
     );
   };
   if (
@@ -116,7 +123,7 @@ export function formatDuration(minutes: number) {
     : `${minutes} min`;
 }
 export function dateLabel(date: string, short = false) {
-  return new Date(date + "T12:00:00Z").toLocaleDateString("es-MX", {
+  return new Date(date + "T12:00:00Z").toLocaleDateString("en-US", {
     timeZone: "UTC",
     weekday: short ? "short" : "long",
     day: "numeric",
