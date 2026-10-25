@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Parcel Lane</title><link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script></head>
+<body><main><header><p>Fictional practice application · Shipping counter</p><h1>Parcel Lane</h1><p>Compare service options before sending a package.</p></header>
+<section><h2>Delivery zones</h2><table><thead><tr><th>Zone</th><th>Base</th><th>Per 500 g unit</th><th>Standard days</th></tr></thead><tbody id="rates"></tbody></table></section>
+<section><h2>Package quote</h2><form id="quote-form"><label>Destination zone <select name="zone" id="zone"></select></label><label>Weight in grams <input name="weight" type="number" min="1" max="20000" step="1" value="501" required></label><label>Service <select name="service"><option value="standard">Standard</option><option value="express">Express</option></select></label><label><input name="signature" type="checkbox"> Signature on delivery</label><button>Calculate quote</button></form></section>
+<p id="message" role="status"></p><section><h2>Your estimate</h2><dl id="quote"></dl><p>Quotes do not purchase a label. Final delivery addresses are outside this demo.</p></section><footer>Prices in USD · <a href="/docs">API explorer</a></footer></main></body></html>

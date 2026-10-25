@@ -1,0 +1,5 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Field Kit Library</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><main><p>FICTIONAL LOCAL PRACTICE</p><h1>Field Kit Library</h1><p>Manage shared camera equipment and track full-loan returns. Inventory resets when this local server restarts.</p><h2>Equipment</h2><pre id="equipment"></pre>
+<form id="checkout"><label>Equipment <select name="equipment_id"><option>camera</option><option>tripod</option></select></label><label>Borrower <input name="borrower" value="Eli" required></label><label>Quantity <input name="quantity" type="number" value="1" min="1" step="1" required></label><button>Check out</button></form>
+<form id="return"><label>Loan ID <input name="loan_id" value="loan-1" required></label><button>Return equipment</button></form><h2>Operation result</h2><pre id="result" aria-live="polite">No operation requested.</pre><h2>Loans</h2><pre id="loans"></pre><a href="/docs">Interactive API docs</a></main><script src="/static/app.js"></script></body></html>

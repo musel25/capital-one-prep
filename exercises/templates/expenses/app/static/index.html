@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Fieldwork Expenses</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><main><p>FICTIONAL LOCAL PRACTICE</p><h1>Fieldwork Expenses</h1><p>Review employee claims and preview monthly reimbursement.</p>
+
+<form id="summary"><label>Employee <select name="employee_id"><option value="ada">Ada</option><option value="bo">Bo</option><option value="cam">Cam</option></select></label><label>Month <input name="month" type="month" value="2026-10" required></label><button>Show summary</button></form>
+<h2>Monthly summary</h2><pre id="totals">Choose an employee and request a summary.</pre>
+<form id="claim"><label>Employee <select name="employee_id"><option value="ada">Ada</option><option value="bo">Bo</option><option value="cam">Cam</option></select></label><label>Incurred on <input name="incurred_on" type="date" value="2026-10-26" required></label><label>Category <select name="category"><option>meals</option><option>supplies</option><option>travel</option></select></label><label>Amount (cents) <input name="amount_cents" type="number" min="1" step="1" value="500" required></label><label>Description <input name="description" value="Site visit lunch" required></label><button>Submit claim</button></form>
+<h2>Expense ledger</h2><pre id="expenses"></pre>
+<p id="message" role="status" aria-live="polite"></p><p><a href="/docs">Interactive API documentation</a></p>
+</main><script src="/static/app.js"></script></body></html>

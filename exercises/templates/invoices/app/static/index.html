@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Paper Trail</title><link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script></head>
+<body><main><header><p>Fictional practice application · Stationery wholesale</p><h1>Paper Trail</h1><p>Build a customer invoice preview from the current catalog.</p></header>
+<section><h2>Product catalog</h2><ul id="catalog"></ul></section>
+<section><h2>Invoice builder</h2><form id="invoice-form"><div id="lines"></div><button type="button" id="add-line">Add line</button><label>Discount percentage <input name="discount" type="number" min="0" max="100" step="1" value="10" required></label><button>Preview invoice</button></form></section>
+<p id="message" role="status"></p><section><h2>Preview</h2><table><thead><tr><th>Product</th><th>Quantity</th><th>Subtotal</th><th>Discount</th><th>Total</th></tr></thead><tbody id="preview-lines"></tbody></table><p id="totals">Choose products to see a preview.</p></section>
+<footer>Previews do not place orders · Prices in USD · <a href="/docs">API explorer</a></footer></main></body></html>

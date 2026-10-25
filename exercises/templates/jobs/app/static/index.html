@@ -1,0 +1,5 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Export Desk</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><main><p>FICTIONAL LOCAL PRACTICE</p><h1>Export Desk</h1><p>Queue dataset exports for the operations team. This local demo records jobs without running a worker.</p><h2>Datasets</h2><pre id="datasets"></pre>
+<form id="submission"><label>Dataset <select name="dataset_id"><option>visits</option><option>tickets</option></select></label><label>Format <select name="format"><option>csv</option><option>json</option></select></label><label>Request key (optional) <input name="key" placeholder="export-request-1" maxlength="64"></label><button>Queue export</button></form>
+<h2>Submission result</h2><pre id="result" aria-live="polite">No job submitted.</pre><h2>Queue</h2><pre id="jobs"></pre><a href="/docs">Interactive API docs</a></main><script src="/static/app.js"></script></body></html>

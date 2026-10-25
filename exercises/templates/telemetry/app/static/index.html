@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Pulse Window</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><main><p>FICTIONAL LOCAL PRACTICE</p><h1>Pulse Window</h1><p>Inspect request latency and service health from collected samples.</p>
+
+<form id="service"><label>Service <select name="service_id"><option value="atlas">Atlas search</option><option value="beacon">Beacon notifications</option></select></label><button>Refresh monitor</button></form>
+<h2>Service overview</h2><pre id="overview"></pre>
+<h2>Collected readings</h2><ul id="readings"></ul>
+<form id="collect"><label>Service <select name="service_id"><option value="atlas">Atlas search</option><option value="beacon">Beacon notifications</option></select></label><label>Duration (microseconds) <input name="duration_us" type="number" min="0" step="1" value="1500" required></label><label>Status <select name="status"><option>ok</option><option>error</option></select></label><button>Collect sample</button></form>
+<p id="message" role="status" aria-live="polite"></p><p><a href="/docs">Interactive API documentation</a></p>
+</main><script src="/static/app.js"></script></body></html>

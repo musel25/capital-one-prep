@@ -287,8 +287,9 @@ export function TaskDialog({
                     </div>
                   ))}
                   <p className="muted">
-                    Use separate copies for the bug and feature. To resume an
-                    attempt, open its existing folder.
+                    Read the opening brief, write your questions, then consult
+                    CLARIFICATIONS.md for the requirements. To resume an
+                    attempt, open its existing folder; its original task still applies.
                   </p>
                 </section>
               )}

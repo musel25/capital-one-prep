@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Gather Directory</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><main><p>FICTIONAL LOCAL PRACTICE</p><h1>Gather Directory</h1><p>Keep event and support contacts in one local address book.</p>
+
+<form id="contact"><label>Name <input name="name" value="Rae Lin" required></label><label>Email <input name="email" type="email" value="rae@example.com" required></label><label>Team <select name="team"><option>events</option><option>support</option></select></label><button>Add contact</button></form>
+<h2>Batch import</h2><form id="import"><label>Contacts (JSON array)<textarea name="contacts" rows="6" cols="65" required>[{"name":"Mo Tan","email":"mo@example.com","team":"support"}]</textarea></label><button>Import contacts</button></form>
+<h2>Directory</h2><pre id="contacts"></pre>
+<p id="message" role="status" aria-live="polite"></p><p><a href="/docs">Interactive API documentation</a></p>
+</main><script src="/static/app.js"></script></body></html>

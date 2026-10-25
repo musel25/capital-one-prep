@@ -256,15 +256,15 @@
     {
       "date": "2026-10-24",
       "title": "Transfers and invariants",
-      "focus": "Transfers, history, and asking for help.",
+      "focus": "Cedar Wallet and a separate help desk application.",
       "blocks": [
         {
           "id": "d02-technical",
-          "title": "Transfers and consistent state",
+          "title": "Transfers and support tickets",
           "kind": "technical",
           "minutes": 90,
-          "summary": "Atomic rejection and transaction history",
-          "content": "## Today’s task\n\nBefore editing, trace source balance → validation → target balance → history. Save the state before a rejected transfer and compare it afterward. For history, distinguish incoming and outgoing transfers while preserving the contract’s order and fields.\n\n## Steps\n\n1. Open the bug attempt and read its README. Reproduce the failure and add a test before fixing it.\n2. Review the diff, run the tests, and explain the change in English.\n3. Create a separate attempt for the feature and repeat. You may use AI; review its changes.\n4. From the repository root, run `uv run python scripts/practice.py check ATTEMPT_PATH` for each attempt. Save the results and unfinished work.\n\nUse 20 minutes for implementation and 5 for explanation per task, plus setup and review.\n\n## Explain\n\nCan a failure debit without crediting? Is a failed attempt recorded as successful? Does account history include both directions without duplicates?",
+          "summary": "Cedar Wallet and a separate help desk application.",
+          "content": "## Two projects\n\nThe bug task remains your Cedar Wallet transfer investigation. The feature task now belongs to a help desk with tickets and event records. Create the feature attempt to explore that new product; existing transfer-history attempts keep their original instructions.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the existing setup and review phases. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?",
           "deliverables": [
             "Two separate attempt folders with code and tests, including unsuccessful attempts.",
             "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
@@ -272,10 +272,10 @@
             "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
           ],
           "rubric": [
-            "Reproduce the bug or missing feature before changing code.",
-            "Meet the README contract and test an additional boundary. Explain the evidence from your checks.",
-            "Walk through the execution path and justify each change yourself.",
-            "Stop after 20 minutes, keep bug and feature attempts separate, and identify tests you did not run."
+            "Record questions, assumptions and a hypothesis or feature design before editing.",
+            "Describe a test yourself and observe its relevant failure before implementation.",
+            "Preserve existing behavior, review AI output and justify each change with executed checks.",
+            "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
           "labs": [
             "d02-bug",
@@ -324,14 +324,14 @@
             }
           ],
           "prompts": [
-            "Before editing, give me two plausible causes and one small experiment that distinguishes them. Do not change files yet.",
-            "Make the smallest change that satisfies these acceptance criteria. List the files you would touch first.",
-            "Review this diff against the requirements. Identify one regression risk and a test that would expose it.",
-            "I reproduced X. The cause was Y. I changed Z. The evidence is __. I have not yet verified __."
+            "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+            "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+            "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+            "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
           ],
           "hints": [
-            "Trace a small input through the layers. Inspect state where it can distinguish competing hypotheses.",
-            "A useful test fails on the specific requirement before the patch and passes afterward. Starting successfully does not prove correctness."
+            "Draw the request path using the code you actually inspected. A hypothesis should predict an observable result you can test.",
+            "A status code alone may miss a state or output error. Choose assertions from the agreed requirements, then inspect why the test fails."
           ],
           "sources": [
             "codesignal-agentic",
@@ -504,16 +504,16 @@
     },
     {
       "date": "2026-10-25",
-      "title": "Money, rounding, and budgets",
-      "focus": "Rewards, rounding, and team decisions.",
+      "title": "Invoices and parcel shipping",
+      "focus": "Two unfamiliar products: invoice billing and parcel shipping.",
       "blocks": [
         {
           "id": "d03-technical",
-          "title": "Cashback and limits",
+          "title": "Invoices and parcel shipping",
           "kind": "technical",
           "minutes": 90,
-          "summary": "Rounding in cents and a monthly cap",
-          "content": "## Today’s task\n\nCalculate two amounts that produce fractional cents. Identify where rounding happens and distinguish money from rates. For the feature, calculate the monthly sum of individual rewards, then test a cap below, equal to, and above that total, plus zero and omitted caps. Compare two months without assuming persistent accumulated state.\n\n## Steps\n\n1. Open the bug attempt and read its README. Reproduce the failure and add a test before fixing it.\n2. Review the diff, run the tests, and explain the change in English.\n3. Create a separate attempt for the feature and repeat. You may use AI; review its changes.\n4. From the repository root, run `uv run python scripts/practice.py check ATTEMPT_PATH` for each attempt. Save the results and unfinished work.\n\nUse 20 minutes for implementation and 5 for explanation per task, plus setup and review.\n\n## Explain\n\nIs rounding per purchase or on the total? Are cap and reward in the same units? What happens when the cap is zero, omitted, or below the total?",
+          "summary": "Two unfamiliar products: invoice billing and parcel shipping.",
+          "content": "## Two projects\n\nInvestigate an invoice report in one application, then work on a shipping request in another. Start each by discovering its public interface, data model and existing tests. Do not assume the second project uses the first project’s money rules.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the existing setup and review phases. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?",
           "deliverables": [
             "Two separate attempt folders with code and tests, including unsuccessful attempts.",
             "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
@@ -521,10 +521,10 @@
             "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
           ],
           "rubric": [
-            "Reproduce the bug or missing feature before changing code.",
-            "Meet the README contract and test an additional boundary. Explain the evidence from your checks.",
-            "Walk through the execution path and justify each change yourself.",
-            "Stop after 20 minutes, keep bug and feature attempts separate, and identify tests you did not run."
+            "Record questions, assumptions and a hypothesis or feature design before editing.",
+            "Describe a test yourself and observe its relevant failure before implementation.",
+            "Preserve existing behavior, review AI output and justify each change with executed checks.",
+            "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
           "labs": [
             "d03-bug",
@@ -573,14 +573,14 @@
             }
           ],
           "prompts": [
-            "Before editing, give me two plausible causes and one small experiment that distinguishes them. Do not change files yet.",
-            "Make the smallest change that satisfies these acceptance criteria. List the files you would touch first.",
-            "Review this diff against the requirements. Identify one regression risk and a test that would expose it.",
-            "I reproduced X. The cause was Y. I changed Z. The evidence is __. I have not yet verified __."
+            "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+            "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+            "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+            "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
           ],
           "hints": [
-            "Trace a small input through the layers. Inspect state where it can distinguish competing hypotheses.",
-            "A useful test fails on the specific requirement before the patch and passes afterward. Starting successfully does not prove correctness."
+            "Draw the request path using the code you actually inspected. A hypothesis should predict an observable result you can test.",
+            "A status code alone may miss a state or output error. Choose assertions from the agreed requirements, then inspect why the test fails."
           ],
           "sources": [
             "codesignal-agentic",
@@ -753,16 +753,16 @@
     },
     {
       "date": "2026-10-26",
-      "title": "Pages, filters, and metadata",
-      "focus": "Filters, pagination, and metadata.",
+      "title": "Library search and appointments",
+      "focus": "Catalog browsing and appointment scheduling in separate repositories.",
       "blocks": [
         {
           "id": "d04-technical",
-          "title": "Pagination and metadata",
+          "title": "Library search and appointments",
           "kind": "technical",
           "minutes": 90,
-          "summary": "Filter before pagination; totals and next-page metadata",
-          "content": "## Today’s task\n\nTrace filter → sort → page selection → metadata. Create input with a match beyond the original first page. For the feature, verify that total covers the entire filtered set and that empty pages have consistent metadata.\n\n## Steps\n\n1. Open the bug attempt and read its README. Reproduce the failure and add a test before fixing it.\n2. Review the diff, run the tests, and explain the change in English.\n3. Create a separate attempt for the feature and repeat. You may use AI; review its changes.\n4. From the repository root, run `uv run python scripts/practice.py check ATTEMPT_PATH` for each attempt. Save the results and unfinished work.\n\nUse 20 minutes for implementation and 5 for explanation per task, plus setup and review.\n\n## Explain\n\nDoes total count returned rows or matching rows? Does pagination operate on filtered records? How is the end represented?",
+          "summary": "Catalog browsing and appointment scheduling in separate repositories.",
+          "content": "## Two projects\n\nA library catalog and an appointment scheduler have different users, data and constraints. Read each opening brief before exploring. Ask what users expect at boundaries and identify a test that distinguishes your hypothesis from an alternative.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the existing setup and review phases. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?",
           "deliverables": [
             "Two separate attempt folders with code and tests, including unsuccessful attempts.",
             "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
@@ -770,10 +770,10 @@
             "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
           ],
           "rubric": [
-            "Reproduce the bug or missing feature before changing code.",
-            "Meet the README contract and test an additional boundary. Explain the evidence from your checks.",
-            "Walk through the execution path and justify each change yourself.",
-            "Stop after 20 minutes, keep bug and feature attempts separate, and identify tests you did not run."
+            "Record questions, assumptions and a hypothesis or feature design before editing.",
+            "Describe a test yourself and observe its relevant failure before implementation.",
+            "Preserve existing behavior, review AI output and justify each change with executed checks.",
+            "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
           "labs": [
             "d04-bug",
@@ -822,14 +822,14 @@
             }
           ],
           "prompts": [
-            "Before editing, give me two plausible causes and one small experiment that distinguishes them. Do not change files yet.",
-            "Make the smallest change that satisfies these acceptance criteria. List the files you would touch first.",
-            "Review this diff against the requirements. Identify one regression risk and a test that would expose it.",
-            "I reproduced X. The cause was Y. I changed Z. The evidence is __. I have not yet verified __."
+            "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+            "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+            "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+            "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
           ],
           "hints": [
-            "Trace a small input through the layers. Inspect state where it can distinguish competing hypotheses.",
-            "A useful test fails on the specific requirement before the patch and passes afterward. Starting successfully does not prove correctness."
+            "Draw the request path using the code you actually inspected. A hypothesis should predict an observable result you can test.",
+            "A status code alone may miss a state or output error. Choose assertions from the agreed requirements, then inspect why the test fails."
           ],
           "sources": [
             "codesignal-agentic",
@@ -1000,16 +1000,16 @@
     },
     {
       "date": "2026-10-27",
-      "title": "Refunds and aggregation",
-      "focus": "Refunds, net spending, and responding to mistakes.",
+      "title": "Usage billing and expense reporting",
+      "focus": "Independent metering and expense applications.",
       "blocks": [
         {
           "id": "d05-technical",
-          "title": "Refunds and grouping",
+          "title": "Usage billing and expense reporting",
           "kind": "technical",
           "minutes": 90,
-          "summary": "Correct net spending and category totals",
-          "content": "## Today’s task\n\nCreate an example with a purchase, a partial refund, and a second purchase in another category. Follow the sign, purchase link, and grouping through the layers. For the feature, verify that category sums equal total net spending under the contract.\n\n## Steps\n\n1. Open the bug attempt and read its README. Reproduce the failure and add a test before fixing it.\n2. Review the diff, run the tests, and explain the change in English.\n3. Create a separate attempt for the feature and repeat. You may use AI; review its changes.\n4. From the repository root, run `uv run python scripts/practice.py check ATTEMPT_PATH` for each attempt. Save the results and unfinished work.\n\nUse 20 minutes for implementation and 5 for explanation per task, plus setup and review.\n\n## Explain\n\nDoes a refund add or subtract? Does its category come from the refund or linked purchase? Which cases does the contract reject or skip?",
+          "summary": "Independent metering and expense applications.",
+          "content": "## Two projects\n\nInvestigate a metering report, then implement a request in an employee expense application. Clarify what each record represents and which existing behaviors the change must preserve. Explain one example by hand before asking AI to write assertions.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the existing setup and review phases. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?",
           "deliverables": [
             "Two separate attempt folders with code and tests, including unsuccessful attempts.",
             "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
@@ -1017,10 +1017,10 @@
             "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
           ],
           "rubric": [
-            "Reproduce the bug or missing feature before changing code.",
-            "Meet the README contract and test an additional boundary. Explain the evidence from your checks.",
-            "Walk through the execution path and justify each change yourself.",
-            "Stop after 20 minutes, keep bug and feature attempts separate, and identify tests you did not run."
+            "Record questions, assumptions and a hypothesis or feature design before editing.",
+            "Describe a test yourself and observe its relevant failure before implementation.",
+            "Preserve existing behavior, review AI output and justify each change with executed checks.",
+            "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
           "labs": [
             "d05-bug",
@@ -1069,14 +1069,14 @@
             }
           ],
           "prompts": [
-            "Before editing, give me two plausible causes and one small experiment that distinguishes them. Do not change files yet.",
-            "Make the smallest change that satisfies these acceptance criteria. List the files you would touch first.",
-            "Review this diff against the requirements. Identify one regression risk and a test that would expose it.",
-            "I reproduced X. The cause was Y. I changed Z. The evidence is __. I have not yet verified __."
+            "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+            "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+            "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+            "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
           ],
           "hints": [
-            "Trace a small input through the layers. Inspect state where it can distinguish competing hypotheses.",
-            "A useful test fails on the specific requirement before the patch and passes afterward. Starting successfully does not prove correctness."
+            "Draw the request path using the code you actually inspected. A hypothesis should predict an observable result you can test.",
+            "A status code alone may miss a state or output error. Choose assertions from the agreed requirements, then inspect why the test fails."
           ],
           "sources": [
             "codesignal-agentic",
@@ -1249,16 +1249,16 @@
     },
     {
       "date": "2026-10-28",
-      "title": "Follow the contract end to end",
-      "focus": "API and UI contracts and unclear requirements.",
+      "title": "Telemetry and contact imports",
+      "focus": "Trace an interface problem, then extend a separate contact product.",
       "blocks": [
         {
           "id": "d06-technical",
-          "title": "The UI and API contract",
+          "title": "Telemetry and contact imports",
           "kind": "technical",
           "minutes": 90,
-          "summary": "Consistent fields and strict validation of cents",
-          "content": "## Today’s task\n\nOpen your copy’s UI using its README. Reproduce the symptom and inspect the payload or fixture; trace API field → transformation → visible element. For the feature, test booleans, strings, floats, zero, and positive integers. Python treats bool as a subtype of int.\n\n## Steps\n\n1. Open the bug attempt and read its README. Reproduce the failure and add a test before fixing it.\n2. Review the diff, run the tests, and explain the change in English.\n3. Create a separate attempt for the feature and repeat. You may use AI; review its changes.\n4. From the repository root, run `uv run python scripts/practice.py check ATTEMPT_PATH` for each attempt. Save the results and unfinished work.\n\nUse 20 minutes for implementation and 5 for explanation per task, plus setup and review.\n\n## Explain\n\nDoes the UI display zero because a field is missing? Does the server receive what the UI intends to send? Can browser-only validation prevent direct invalid requests?",
+          "summary": "Trace an interface problem, then extend a separate contact product.",
+          "content": "## Two projects\n\nExplore a telemetry dashboard and a contact directory as separate projects. Use the visible behavior to choose what to inspect. For each task, describe the expected response and state before asking AI to implement a test or a change.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the existing setup and review phases. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?",
           "deliverables": [
             "Two separate attempt folders with code and tests, including unsuccessful attempts.",
             "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
@@ -1266,10 +1266,10 @@
             "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
           ],
           "rubric": [
-            "Reproduce the bug or missing feature before changing code.",
-            "Meet the README contract and test an additional boundary. Explain the evidence from your checks.",
-            "Walk through the execution path and justify each change yourself.",
-            "Stop after 20 minutes, keep bug and feature attempts separate, and identify tests you did not run."
+            "Record questions, assumptions and a hypothesis or feature design before editing.",
+            "Describe a test yourself and observe its relevant failure before implementation.",
+            "Preserve existing behavior, review AI output and justify each change with executed checks.",
+            "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
           "labs": [
             "d06-bug",
@@ -1318,14 +1318,14 @@
             }
           ],
           "prompts": [
-            "Before editing, give me two plausible causes and one small experiment that distinguishes them. Do not change files yet.",
-            "Make the smallest change that satisfies these acceptance criteria. List the files you would touch first.",
-            "Review this diff against the requirements. Identify one regression risk and a test that would expose it.",
-            "I reproduced X. The cause was Y. I changed Z. The evidence is __. I have not yet verified __."
+            "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+            "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+            "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+            "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
           ],
           "hints": [
-            "Trace a small input through the layers. Inspect state where it can distinguish competing hypotheses.",
-            "A useful test fails on the specific requirement before the patch and passes afterward. Starting successfully does not prove correctness."
+            "Draw the request path using the code you actually inspected. A hypothesis should predict an observable result you can test.",
+            "A status code alone may miss a state or output error. Choose assertions from the agreed requirements, then inspect why the test fails."
           ],
           "sources": [
             "codesignal-agentic",
@@ -1497,16 +1497,16 @@
     },
     {
       "date": "2026-10-29",
-      "title": "Reviewing AI and recovering from errors",
-      "focus": "Safe retries and reviewing AI-generated code.",
+      "title": "Webhook delivery and job submission",
+      "focus": "Independent notification and background-job applications.",
       "blocks": [
         {
           "id": "d07-technical",
-          "title": "Recovering from an AI suggestion",
+          "title": "Webhook delivery and job submission",
           "kind": "technical",
           "minutes": 90,
-          "summary": "Safe retries and idempotency",
-          "content": "## Today’s task\n\nAsk the agent for hypotheses and a test that distinguishes them before requesting a patch. Scrutinize suggestions that repeat a write operation. Save the accepted or rejected diff and evidence. For the feature, test the same identifier twice, then reuse it with a different payload as specified in the README.\n\n## Steps\n\n1. Open the bug attempt and read its README. Reproduce the failure and add a test before fixing it.\n2. Review the diff, run the tests, and explain the change in English.\n3. Create a separate attempt for the feature and repeat. You may use AI; review its changes.\n4. From the repository root, run `uv run python scripts/practice.py check ATTEMPT_PATH` for each attempt. Save the results and unfinished work.\n\nUse 20 minutes for implementation and 5 for explanation per task, plus setup and review.\n\n## Explain\n\nIs retrying a read equivalent to retrying a write? Is the key saved before or after the effect? Which test detects a duplicate charge?",
+          "summary": "Independent notification and background-job applications.",
+          "content": "## Two projects\n\nWork on a notification delivery report and then an export-job request in a different application. Read each product’s rules instead of carrying assumptions between them. Treat any AI claim of correctness as a hypothesis until you have test evidence.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the existing setup and review phases. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?",
           "deliverables": [
             "Two separate attempt folders with code and tests, including unsuccessful attempts.",
             "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
@@ -1514,10 +1514,10 @@
             "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
           ],
           "rubric": [
-            "Reproduce the bug or missing feature before changing code.",
-            "Meet the README contract and test an additional boundary. Explain the evidence from your checks.",
-            "Walk through the execution path and justify each change yourself.",
-            "Stop after 20 minutes, keep bug and feature attempts separate, and identify tests you did not run."
+            "Record questions, assumptions and a hypothesis or feature design before editing.",
+            "Describe a test yourself and observe its relevant failure before implementation.",
+            "Preserve existing behavior, review AI output and justify each change with executed checks.",
+            "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
           "labs": [
             "d07-bug",
@@ -1566,14 +1566,14 @@
             }
           ],
           "prompts": [
-            "Before editing, give me two plausible causes and one small experiment that distinguishes them. Do not change files yet.",
-            "Make the smallest change that satisfies these acceptance criteria. List the files you would touch first.",
-            "Review this diff against the requirements. Identify one regression risk and a test that would expose it.",
-            "I reproduced X. The cause was Y. I changed Z. The evidence is __. I have not yet verified __."
+            "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+            "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+            "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+            "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
           ],
           "hints": [
-            "Trace a small input through the layers. Inspect state where it can distinguish competing hypotheses.",
-            "A useful test fails on the specific requirement before the patch and passes afterward. Starting successfully does not prove correctness."
+            "Draw the request path using the code you actually inspected. A hypothesis should predict an observable result you can test.",
+            "A status code alone may miss a state or output error. Choose assertions from the agreed requirements, then inspect why the test fails."
           ],
           "sources": [
             "codesignal-agentic",
@@ -1747,15 +1747,15 @@
     {
       "date": "2026-10-30",
       "title": "Mock A: the full interview",
-      "focus": "Mock interview: two tasks, one case, and three stories.",
+      "focus": "Merchant operations and attendance reporting under a time limit.",
       "blocks": [
         {
           "id": "d08-technical",
-          "title": "Mock A: merchant settlements",
+          "title": "Mock A: payouts and attendance",
           "kind": "technical",
           "minutes": 90,
-          "summary": "Two new tasks without hints during the timed rounds",
-          "content": "## Today’s task\n\nDo not open solutions, hints, or earlier session code before starting the timer. Summarize the symptom, clarify ambiguities, and start from the public interface. For the daily summary, derive the grouping key from the contract and check eligibility and date before aggregating.\n\n## Steps\n\n1. Open the bug attempt and read its README. Reproduce the failure and add a test before fixing it.\n2. Review the diff, run the tests, and explain the change in English.\n3. Create a separate attempt for the feature and repeat. You may use AI; review its changes.\n4. From the repository root, run `uv run python scripts/practice.py check ATTEMPT_PATH` for each attempt. Save the results and unfinished work.\n\nUse 20 minutes for implementation and 5 for explanation per task, plus setup and review.\n\n## Explain\n\nExplain what you observed, what you inferred, and what remains unfinished. Identify any tests you did not run.\n\nMock interview: do not consult hints or earlier answers during the rounds. Review them afterward.",
+          "summary": "Merchant operations and attendance reporting under a time limit.",
+          "content": "## Two projects\n\nStart from the merchant’s report, ask focused clarification questions, and investigate. For the feature round, open the independent attendance application. Do not reuse a previous solution or inspect instructor source. Use only the assistance you agreed to allow for this mock.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the existing setup and review phases. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?",
           "deliverables": [
             "Two separate attempt folders with code and tests, including unsuccessful attempts.",
             "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
@@ -1763,10 +1763,10 @@
             "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
           ],
           "rubric": [
-            "Reproduce the bug or missing feature before changing code.",
-            "Meet the README contract and test an additional boundary. Explain the evidence from your checks.",
-            "Walk through the execution path and justify each change yourself.",
-            "Stop after 20 minutes, keep bug and feature attempts separate, and identify tests you did not run."
+            "Record questions, assumptions and a hypothesis or feature design before editing.",
+            "Describe a test yourself and observe its relevant failure before implementation.",
+            "Preserve existing behavior, review AI output and justify each change with executed checks.",
+            "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
           "labs": [
             "d08-bug",
@@ -1815,10 +1815,10 @@
             }
           ],
           "prompts": [
-            "Before editing, give me two plausible causes and one small experiment that distinguishes them. Do not change files yet.",
-            "Make the smallest change that satisfies these acceptance criteria. List the files you would touch first.",
-            "Review this diff against the requirements. Identify one regression risk and a test that would expose it.",
-            "I reproduced X. The cause was Y. I changed Z. The evidence is __. I have not yet verified __."
+            "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+            "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+            "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+            "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
           ],
           "hints": [],
           "sources": [
@@ -1992,25 +1992,25 @@
     {
       "date": "2026-10-31",
       "title": "A real repository and focused practice",
-      "focus": "Gilded Rose, promotions, and priorities.",
+      "focus": "A real upstream task plus two distinct original applications.",
       "blocks": [
         {
           "id": "d09-technical",
-          "title": "Gilded Rose and promotion boundaries",
+          "title": "Gilded Rose, promotions and subscriptions",
           "kind": "technical",
           "minutes": 90,
-          "summary": "30 minutes on Gilded Rose, two independent tasks, and review",
-          "content": "## Gilded Rose and promotions\n\n### 30 min — Gilded Rose\n\nFrom the repository root, run `uv run python external/start.py external-gilded-rose`. Open the returned folder and read its README. Spend 5 minutes reading the rules, 20 implementing the Conjured extension, and 5 explaining the change in English. Preserve existing behavior.\n\nThis uses real [Gilded Rose code](https://github.com/emilybache/GildedRose-Refactoring-Kata/tree/d6407909c73b2ba61bfa7568af0d9bdce1902fd5); the extension is practice created for this plan.\n\n### 50 min — Bug and feature\n\nUse the commands above to create two independent copies. Spend 20 minutes on each task and 5 explaining each change. Test eligibility boundaries and the per-purchase cap according to each README.\n\n### 10 min — Check\n\nRun `uv run python external/check.py EXTERNAL_ATTEMPT_PATH` and `uv run python scripts/practice.py check ATTEMPT_PATH` for both labs. Save the results. `--smoke` checks startup and base behavior only, not the extension.\n\nAre the boundaries inclusive? Is the cap per purchase or cumulative? Explain what you verified and what remains.",
+          "summary": "A real upstream task plus two distinct original applications.",
+          "content": "## 30 min — Gilded Rose\n\nFrom the repository root, run `uv run python external/start.py external-gilded-rose`. Read the returned README. Spend 5 minutes reading the rules, 20 implementing the Conjured extension, and 5 explaining your change. Preserve existing behavior.\n\nThis uses real [Gilded Rose code](https://github.com/emilybache/GildedRose-Refactoring-Kata/tree/d6407909c73b2ba61bfa7568af0d9bdce1902fd5); the extension is practice created for this plan.\n\n## 50 min — Two separate applications\n\nThe bug task concerns a promotion complaint. The feature task uses a different subscription product. Start a new attempt for each, clarify its rules, describe your test, and verify a small change. Spend 20 minutes on each task and 5 explaining it.\n\n## 10 min — Check\n\nRun `uv run python external/check.py EXTERNAL_ATTEMPT_PATH` and `uv run python scripts/practice.py check ATTEMPT_PATH` for both original labs. Save the results. An external `--smoke` check covers startup and base behavior only.\n\nRead `CLARIFICATIONS.md` after recording your questions, or ask a mock interviewer to answer from it. Explain what you verified and what remains uncertain. Existing attempts retain their own instructions and checker.",
           "deliverables": [
             "A unique external-gilded-rose attempt, an explanation of the change, and actual external check results.",
             "Separate saved d09-bug and d09-feature attempts, with checks and a tested boundary.",
             "Three explanations in English; notes on help used, failures, and the next step."
           ],
           "rubric": [
-            "Distinguish real upstream code, the practice extension, and original labs.",
-            "The extension meets the README and preserves at least two verified existing behaviors.",
-            "Use separate copies for bug and feature tasks; explain boundary and cap rules.",
-            "Support each success claim with executed checks. A smoke check is not full verification."
+            "Record questions, assumptions and a hypothesis or feature design before editing.",
+            "Describe a test yourself and observe its relevant failure before implementation.",
+            "Preserve existing behavior, review AI output and justify each change with executed checks.",
+            "Distinguish upstream code, the practice extension and original applications; explain what each executed check establishes."
           ],
           "labs": [
             "d09-bug",
@@ -2059,14 +2059,14 @@
             }
           ],
           "prompts": [
-            "Before editing, give me two plausible causes and one small experiment that distinguishes them. Do not change files yet.",
-            "Make the smallest change that satisfies these acceptance criteria. List the files you would touch first.",
-            "Review this diff against the requirements. Identify one regression risk and a test that would expose it.",
-            "I reproduced X. The cause was Y. I changed Z. The evidence is __. I have not yet verified __."
+            "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+            "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+            "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+            "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
           ],
           "hints": [
-            "Trace a small input through the layers. Inspect state where it can distinguish competing hypotheses.",
-            "A useful test fails on the specific requirement before the patch and passes afterward. Starting successfully does not prove correctness."
+            "Draw the request path using the code you actually inspected. A hypothesis should predict an observable result you can test.",
+            "A status code alone may miss a state or output error. Choose assertions from the agreed requirements, then inspect why the test fails."
           ],
           "sources": [
             "codesignal-agentic",
@@ -2238,15 +2238,15 @@
     {
       "date": "2026-11-01",
       "title": "Mock B: unfamiliar rules",
-      "focus": "Final mock: inventory, reservations, and three stories.",
+      "focus": "Two final unfamiliar projects: supply reservations and equipment lending.",
       "blocks": [
         {
           "id": "d10-technical",
-          "title": "Mock B: inventory reservations",
+          "title": "Mock B: warehouse and equipment loans",
           "kind": "technical",
           "minutes": 90,
-          "summary": "Unfamiliar code: atomic reservations and cancellation",
-          "content": "## Today’s task\n\nStart both attempts from fresh copies. Trace product → available stock → reservation → cancellation. Define inventory invariants instead of reusing a financial patch from memory. Record the final state even if unfinished.\n\n## Steps\n\n1. Open the bug attempt and read its README. Reproduce the failure and add a test before fixing it.\n2. Review the diff, run the tests, and explain the change in English.\n3. Create a separate attempt for the feature and repeat. You may use AI; review its changes.\n4. From the repository root, run `uv run python scripts/practice.py check ATTEMPT_PATH` for each attempt. Save the results and unfinished work.\n\nUse 20 minutes for implementation and 5 for explanation per task, plus setup and review.\n\n## Explain\n\nDo you preserve available stock plus reserved units? Does rejection change state? Can a second cancellation release units again? Does the solution meet the full contract?\n\nMock interview: do not consult hints or earlier answers during the rounds. Review them afterward.",
+          "summary": "Two final unfamiliar projects: supply reservations and equipment lending.",
+          "content": "## Two projects\n\nInvestigate the warehouse report, then switch to an independent equipment-loan application for the feature round. Discover the data flow and clarify product rules separately. Record partial progress and remaining uncertainty if time expires.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the existing setup and review phases. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?",
           "deliverables": [
             "Two separate attempt folders with code and tests, including unsuccessful attempts.",
             "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
@@ -2254,10 +2254,10 @@
             "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
           ],
           "rubric": [
-            "Reproduce the bug or missing feature before changing code.",
-            "Meet the README contract and test an additional boundary. Explain the evidence from your checks.",
-            "Walk through the execution path and justify each change yourself.",
-            "Stop after 20 minutes, keep bug and feature attempts separate, and identify tests you did not run."
+            "Record questions, assumptions and a hypothesis or feature design before editing.",
+            "Describe a test yourself and observe its relevant failure before implementation.",
+            "Preserve existing behavior, review AI output and justify each change with executed checks.",
+            "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
           "labs": [
             "d10-bug",
@@ -2306,10 +2306,10 @@
             }
           ],
           "prompts": [
-            "Before editing, give me two plausible causes and one small experiment that distinguishes them. Do not change files yet.",
-            "Make the smallest change that satisfies these acceptance criteria. List the files you would touch first.",
-            "Review this diff against the requirements. Identify one regression risk and a test that would expose it.",
-            "I reproduced X. The cause was Y. I changed Z. The evidence is __. I have not yet verified __."
+            "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+            "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+            "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+            "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
           ],
           "hints": [],
           "sources": [

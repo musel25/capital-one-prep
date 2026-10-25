@@ -123,8 +123,16 @@ def cancel(store, reservation_id):
 }
 
 
-def apply_starter(task_id: str, destination: Path):
-    relative, name, replacement = PATCHES[task_id]
+def apply_starter(task_id: str, destination: Path, *, revision=2):
+    patches = PATCHES
+    if revision == 2:
+        from exercises.coach.early import PATCHES as early
+        from exercises.coach.middle import PATCHES as middle
+        from exercises.coach.late import PATCHES as late
+        patches = {**PATCHES, **early, **middle, **late}
+    elif revision != 1:
+        raise ValueError('Unsupported exercise revision')
+    relative, name, replacement = patches[task_id]
     path = destination / relative
     source = path.read_text()
     node = next(node for node in ast.parse(source).body if isinstance(node, (ast.FunctionDef, ast.ClassDef)) and node.name == name)

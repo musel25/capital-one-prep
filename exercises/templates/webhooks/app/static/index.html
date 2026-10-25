@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Parcel Signal</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><main><p>FICTIONAL LOCAL PRACTICE</p><h1>Parcel Signal</h1><p>Receive locker delivery updates and review customer notifications. All records reset when the server restarts.</p>
+<h2>Parcels</h2><pre id="parcels"></pre>
+<form id="delivery"><label>Event ID <input name="event_id" value="delivery-1001" required></label><label>Parcel <select name="parcel_id"><option>parcel-101</option><option>parcel-102</option></select></label><label>Status <select name="status"><option>arrived</option><option>delayed</option></select></label><button>Send delivery update</button></form>
+<h2>Latest acknowledgement</h2><pre id="result" aria-live="polite">No update sent.</pre><h2>Notifications</h2><pre id="notifications"></pre><a href="/docs">Interactive API docs</a></main><script src="/static/app.js"></script></body></html>

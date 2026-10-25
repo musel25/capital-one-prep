@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Meter Trail</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><main><p>FICTIONAL LOCAL PRACTICE</p><h1>Meter Trail</h1><p>Inspect metered deliveries and preview a workspace invoice.</p>
+
+<form id="invoice"><label>Workspace <select name="workspace_id"><option value="north">North lab</option><option value="south">South lab</option></select></label><label>Month <input name="month" type="month" value="2026-10" required></label><button>Preview invoice</button></form>
+<h2>Invoice</h2><pre id="bill"></pre>
+<form id="ingest"><label>Delivery ID <input name="event_id" value="delivery-9" required></label><label>Workspace <select name="workspace_id"><option value="north">North lab</option><option value="south">South lab</option></select></label><label>Month <input name="month" type="month" value="2026-10" required></label><label>Meter <input name="meter_id" value="api" required></label><label>Sample ID <input name="sample_id" value="s5" required></label><label>Units <input name="units" type="number" min="1" step="1" value="10" required></label><label>Status <select name="status"><option>accepted</option><option>pending</option><option>rejected</option></select></label><button>Record delivery</button></form>
+<h2>Raw delivery feed</h2><pre id="events"></pre>
+<p id="message" role="status" aria-live="polite"></p><p><a href="/docs">Interactive API documentation</a></p>
+</main><script src="/static/app.js"></script></body></html>

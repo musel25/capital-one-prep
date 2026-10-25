@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Juniper Appointments</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><main><p>FICTIONAL LOCAL PRACTICE</p><h1>Juniper Appointments</h1><p>Browse repair-clinic bookings and look for a visit that fits.</p>
+
+<h2>Providers</h2><pre id="providers"></pre>
+<form id="availability"><label>Provider <select name="provider_id"><option value="aria">Aria</option><option value="ben">Ben</option></select></label><label>Day <input name="on" type="date" value="2026-10-26" required></label><label>Minutes <select name="duration_minutes"><option>30</option><option>60</option></select></label><button>Find appointments</button></form>
+<h2>Available appointments</h2><pre id="slots">Choose a day and find appointments.</pre>
+<form id="booking"><label>Provider <select name="provider_id"><option value="aria">Aria</option><option value="ben">Ben</option></select></label><label>Day <input name="on" type="date" value="2026-10-26" required></label><label>Start <input name="start" type="time" value="09:00" required></label><label>Minutes <select name="duration_minutes"><option>30</option><option>60</option></select></label><button>Book visit</button></form>
+<h2>Booking history</h2><pre id="bookings"></pre>
+<p id="message" role="status" aria-live="polite"></p><p><a href="/docs">Interactive API documentation</a></p>
+</main><script src="/static/app.js"></script></body></html>

@@ -15,8 +15,9 @@ import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from exercises.catalog import BY_ID, TASKS, public_tasks
+from exercises.catalog import BY_ID, TASKS, LEGACY_BY_ID, LEGACY_TASKS, public_tasks
 from exercises.coach.starters import apply_starter
+from exercises.legacy.readme import readme as legacy_readme
 
 IGNORED = {'.venv', '.git', '__pycache__', '.pytest_cache', '.mypy_cache', '.ruff_cache', 'node_modules'}
 CSS = '''body{font:16px/1.5 system-ui,sans-serif;background:#f6f8fc;color:#19273b;margin:0}main{max-width:850px;margin:3rem auto;padding:2rem;background:white;border:1px solid #dae2ef;border-radius:12px}h1{margin-top:0}form{display:flex;gap:1rem;flex-wrap:wrap;align-items:end}label{display:flex;flex-direction:column;gap:.3rem}input,select,button{font:inherit;padding:.5rem;border:1px solid #cad4e4;border-radius:5px}button{background:#375dcc;color:white;cursor:pointer}pre{background:#edf1f8;white-space:pre-wrap;overflow-wrap:anywhere;padding:1rem}a{color:#375dcc}@media(max-width:650px){main{margin:0;padding:1rem;border:0}}
@@ -40,39 +41,68 @@ def test_api_documentation_is_available():
 '''
 
 
-def readme(task, destination):
-    coaching = ('Guiado: primero describe una hipótesis, reproduce, escribe una prueba y después edita. Puedes pedir una pista.'
-                if task.id <= 'd03-feature' else
-                'Práctica independiente: 20 minutos de implementación y después 5 minutos de explicación. Registra ayuda recibida. Para la segunda tarea crea una copia nueva.')
-    context = {
-        'bank': 'Cedar Wallet. Checking starts at 100000 cents; savings at 20000. Seven transactions include mixed timezone offsets, equal instants, posted/pending purchases and a 499-cent refund linked to a 1999-cent purchase. Inspect app/store.py for the full fictitious fixture, without editing it to satisfy a test.',
-        'settlements': 'Fern Merchant Operations. Six fictitious charges cover captured, authorized, refunded, already-settled and another merchant. Gross amounts and fees are integer cents. Inspect app/store.py for the complete fixture.',
-        'promotions': 'Juniper Rewards. Fictitious UTC promotion runs from October 30 to November 1, 2026; membership and minimum spend apply. The browser allows custom purchases. No database or real rewards account exists.',
-        'inventory': 'Harbor Supply. dock starts with 5 units at 4000 cents; cable starts with 10 units at 1200 cents. Reservation IDs are allocated locally. Inspect app/store.py for the complete fixture.',
-    }[task.context]
-    return f'''# {task.id}: {task.title}
+def clarifications(task):
+    return f'''# Interviewer clarification sheet — {task.id}
 
-{coaching}
+Use this after writing your questions. In a mock, the interviewer can read this
+file and answer your questions one at a time. These are acceptance criteria,
+not a diagnosis or a suggested implementation.
 
-## Interview prompt (English)
-
-{task.brief}
-
-## Required contract
+## Required behavior
 
 {task.contract}
 
-## Context and fixtures
+## Example request
 
-{context}
+```sh
+{task.probe}
+```
 
-Each task is an independent snapshot. It contains one deliberately seeded defect or missing feature. Other functionality is supplied as context, not as extra assigned work. These are original constructed exercises; the bugs are not claims about FastAPI, Capital One, or an upstream template. Everything is fictional and local. No credentials or banking access are needed.
+## Scope
 
-Repository orientation: `app/main.py` registers HTTP routes; the other Python modules hold models, state and business behavior; `app/static/` contains the small browser interface; `tests/` is yours to extend. Read the application to locate the relevant behavior: this brief deliberately does not identify the defective line.
+All data is fictional and local. One server process and sequential requests are
+in scope; persistence, authentication and distributed concurrency are not.
+Preserve fixtures and existing supported behavior. Ask about ambiguous policy;
+record any assumption the contract does not resolve rather than inventing one.
+'''
+
+
+def readme(task, destination, *, mode='interview'):
+    requirements = (f"## Required contract\n\n{task.contract}\n\nExample request:\n\n```sh\n{task.probe}\n```\n"
+                    if mode == 'guided' else
+                    "## Clarify before coding\n\nWrite your questions and assumptions first. Then open `CLARIFICATIONS.md` "
+                    "for the interviewer's acceptance criteria, or ask your mock interviewer "
+                    "to read it and answer only the questions you ask. That file contains "
+                    "requirements, not the solution. Read it before final verification.\n")
+    return f'''# {task.id}: {task.title}
+
+## Interview prompt
+
+{task.brief}
+
+## Product context
+
+{task.orientation}
+
+{requirements}
+## Work through the problem
+
+1. Explore the public interface and relevant code. State a hypothesis (or feature
+   design) and a small experiment that could disprove it.
+2. Describe a test's input, expected response and expected state in your own
+   words. You may ask AI to implement that test. Review it and run it **before**
+   changing application code; explain why it fails.
+3. Make or delegate the smallest change. Inspect the diff, run the tests, and
+   ask for additional boundaries only after your first regression is covered.
+4. Explain the cause, user impact, evidence, and one remaining limitation in English.
+
+Use 20 minutes for the task and 5 for the explanation. Record incomplete work
+honestly. For guided practice, use `start {task.id} --mode guided` to create a
+separate attempt with acceptance criteria visible from the start.
 
 ## Run locally
 
-From this attempt folder (not the repository root):
+From this attempt folder:
 
 ```sh
 cd "{destination}"
@@ -81,53 +111,71 @@ uv sync
 uv run uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-Open http://127.0.0.1:8000 and http://127.0.0.1:8000/docs . If that port is occupied use `--port 8001` and update URLs. Restarting or reloading resets in-memory data. One server worker is the scope; production persistence, authentication and distributed concurrency are out of scope.
+Open http://127.0.0.1:8000 and http://127.0.0.1:8000/docs . If port 8000 is busy,
+use 8001 and update your URLs. Reloading resets in-memory data. `app/main.py`
+is the entry point; discover the remaining structure rather than assuming it
+matches another exercise. The browser UI is context unless your task says otherwise.
 
-In a second terminal:
+In another terminal, from this folder:
 
 ```sh
-cd "{destination}"
 uv run pytest
-{task.probe}
 ```
 
-The included tests prove startup only; passing them does not solve the exercise. Add your own tests using `TestClient(create_app())` for fresh state per test. Make assertions about API responses and resulting state, including rejected inputs.
+Public tests protect startup and supplied behavior where present. Passing them
+alone does not solve the assigned task. Extend `tests/` with real requests using
+`TestClient(create_app())` for fresh state. Never change fixtures to satisfy a test.
 
-After your attempt, run the external coach check from this folder:
+## Check and record evidence
+
+After implementing and reviewing the acceptance criteria:
 
 ```sh
 uv run --project "{ROOT}" python "{ROOT / 'scripts/practice.py'}" check "{destination}"
 ```
 
-The checker executes the real code from a temporary copy and does not reset or edit your workspace. It returns 0 for passed checks, 1 for an unmet behavior assertion, and 2 for execution/setup errors. A check pass is evidence only for the sampled contract, not proof of interview readiness. Record the output, tests you added, and remaining uncertainty. Instructor tests and reference code are not copied here; avoid opening repository instructor material before the independent attempt.
+The checker runs a temporary copy. It never resets or edits this attempt.
+Exit 0 means sampled checks passed; 1 means an unmet assertion; 2 means a setup
+or execution error. A pass is not proof of general correctness or interview
+readiness. Keep `.practice.json`: it selects this exercise's original checker.
 
-## Deliverables and explanation
+Save `NOTES.md` with your questions, hypothesis, reproduction, test predictions,
+commands/results, explanation of the change, AI help used and remaining uncertainty.
+Keep your code and tests here. The planner cannot observe local checks; record
+completion yourself. Do not copy a prior solution into a new exercise.
 
-1. Leave your edited code and regression tests in this folder; never edit fixtures to disguise the failure.
-2. Save `NOTES.md` with the symptom, hypothesis, reproduction, root cause or design, commands/results, boundaries tested, and whether you used help.
-3. Explain the user impact, the smallest change, why your test would fail before it, and one remaining limitation. Use English for the five-minute explanation.
-
-Evaluate: correct happy path; boundary/rejection behavior; no unrelated regressions; understandable small change; explanation grounded in an observed test. Stopping at the time limit is valid: record incomplete work honestly. The planner uses self-reported completion and cannot observe these commands.
+This is an original constructed training application with one seeded defect or
+missing feature. It is not an employer question or a claim about an upstream
+framework. Instructor source remains outside this folder; avoid opening it
+before an independent attempt. No credentials or banking access are required.
 '''
 
 
-def build(task_id: str, destination: Path, *, reference=False):
-    task = BY_ID[task_id]
+def build(task_id: str, destination: Path, *, reference=False, revision=2, mode='interview'):
+    if revision not in (1, 2) or mode not in ('interview', 'guided'):
+        raise ValueError('Unsupported exercise revision or mode')
+    task = (LEGACY_BY_ID if revision == 1 else BY_ID)[task_id]
     shutil.copytree(ROOT / 'exercises/templates' / task.context, destination, dirs_exist_ok=True,
-                    ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
+                    ignore=shutil.ignore_patterns('__pycache__', '*.pyc', *(['tests'] if revision == 1 else [])))
     (destination / 'app/__init__.py').write_text('')
     (destination / 'app/static/style.css').write_text(CSS)
     (destination / 'tests').mkdir(exist_ok=True)
     (destination / 'tests/test_smoke.py').write_text(SMOKE)
     for name in ('pyproject.toml', 'uv.lock'):
         shutil.copy2(ROOT / name, destination / name)
-    (destination / '.practice.json').write_text(json.dumps({'schema_version': 1, 'task_id': task_id}, indent=2) + '\n')
-    (destination / 'README.md').write_text(readme(task, destination))
+    marker = ({'schema_version': 1, 'task_id': task_id} if revision == 1 else
+              {'schema_version': 2, 'task_id': task_id, 'catalog_revision': 2, 'mode': mode})
+    (destination / '.practice.json').write_text(json.dumps(marker, indent=2) + '\n')
+    if revision == 1:
+        (destination / 'README.md').write_text(legacy_readme(task, destination))
+    else:
+        (destination / 'README.md').write_text(readme(task, destination, mode=mode))
+        (destination / 'CLARIFICATIONS.md').write_text(clarifications(task))
     if not reference:
-        apply_starter(task_id, destination)
+        apply_starter(task_id, destination, revision=revision)
 
 
-def start(task_id: str, output_root: Path) -> Path:
+def start(task_id: str, output_root: Path, *, mode='interview') -> Path:
     if task_id not in BY_ID:
         raise ValueError(f'Unknown task: {task_id!r}. Run list for valid IDs.')
     output_root = output_root.expanduser().resolve()
@@ -137,11 +185,11 @@ def start(task_id: str, output_root: Path) -> Path:
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ')
     destination = output_root / f'{task_id}-{stamp}-{uuid.uuid4().hex[:8]}'
     destination.mkdir(exist_ok=False)
-    build(task_id, destination)
+    build(task_id, destination, mode=mode)
     return destination
 
 
-def manifest(path: Path) -> str:
+def manifest(path: Path) -> tuple[str, int]:
     marker = path / '.practice.json'
     if not marker.is_file() or marker.is_symlink():
         raise ValueError('Attempt manifest .practice.json is missing or unsafe; use start TASK_ID first.')
@@ -149,15 +197,22 @@ def manifest(path: Path) -> str:
         data = json.loads(marker.read_text())
     except (OSError, json.JSONDecodeError) as error:
         raise ValueError(f'Invalid attempt manifest: {error}') from error
-    if (not isinstance(data, dict) or data.get('schema_version') != 1
-            or not isinstance(data.get('task_id'), str) or data['task_id'] not in BY_ID):
+    if (not isinstance(data, dict) or type(data.get('schema_version')) is not int
+            or data['schema_version'] not in (1, 2)
+            or not isinstance(data.get('task_id'), str)):
         raise ValueError('Unknown schema or task in attempt manifest.')
-    return data['task_id']
+    revision = 1 if data['schema_version'] == 1 else data.get('catalog_revision')
+    if type(revision) is not int or revision not in (1, 2) or revision != data['schema_version']:
+        raise ValueError('Unsupported catalog revision in attempt manifest.')
+    catalog = LEGACY_BY_ID if revision == 1 else BY_ID
+    if data['task_id'] not in catalog:
+        raise ValueError('Unknown task in attempt manifest.')
+    return data['task_id'], revision
 
 
 def check(path: Path) -> dict:
     path = path.expanduser().resolve()
-    task_id = manifest(path)
+    task_id, revision = manifest(path)
     # Do not follow project symlinks into unrelated user files. Environment/cache
     # directories are skipped entirely, including their normal interpreter links.
     for directory, dirs, files in os.walk(path, followlinks=False):
@@ -170,7 +225,7 @@ def check(path: Path) -> dict:
         shutil.copytree(path, copy, ignore=lambda _, names: set(names) & IGNORED)
         environment = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'}
         try:
-            result = subprocess.run([sys.executable, str(ROOT / 'exercises/coach/run.py'), task_id, str(copy)],
+            result = subprocess.run([sys.executable, str(ROOT / 'exercises/coach/run.py'), task_id, str(copy), str(revision)],
                                     cwd=temporary, env=environment, capture_output=True, text=True, timeout=40)
         except subprocess.TimeoutExpired:
             return {'task_id': task_id, 'status': 'error', 'detail': 'Verification exceeded 40 seconds.', 'exit_code': 2}
@@ -184,17 +239,24 @@ def check(path: Path) -> dict:
         return outcome
 
 
-def verify() -> list[dict]:
+def verify(*, revision=2) -> list[dict]:
     report = []
     with tempfile.TemporaryDirectory(prefix='capital-one-verify-') as temporary:
-        for task in TASKS:
+        for task in LEGACY_TASKS if revision == 1 else TASKS:
             outcomes = {}
             for version in ('starter', 'reference'):
                 destination = Path(temporary) / f'{task.id}-{version}'
-                build(task.id, destination, reference=version == 'reference')
+                build(task.id, destination, reference=version == 'reference', revision=revision)
                 outcomes[version] = check(destination)
+                public = subprocess.run([sys.executable, '-m', 'pytest', '-q'], cwd=destination,
+                                        capture_output=True, text=True, timeout=40,
+                                        env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'})
+                outcomes[f'public_{version}'] = {'passed': public.returncode == 0,
+                                               'output': public.stdout[-2500:] + public.stderr[-1000:]}
             report.append({'task_id': task.id, 'starter_fails': outcomes['starter']['status'] == 'failed',
-                           'reference_passes': outcomes['reference']['status'] == 'passed', 'evidence': outcomes})
+                           'reference_passes': outcomes['reference']['status'] == 'passed',
+                           'public_starter_passes': outcomes['public_starter']['passed'],
+                           'public_reference_passes': outcomes['public_reference']['passed'], 'evidence': outcomes})
     return report
 
 
@@ -207,26 +269,30 @@ def main() -> int:
     starting.add_argument('task_id')
     starting.add_argument('--output-root', type=Path, default=ROOT / 'attempts', help='Defaults to ignored attempts/; custom locations are not automatically Git-ignored')
     starting.add_argument('--json', action='store_true')
+    starting.add_argument('--mode', choices=('interview', 'guided'), default='interview',
+                          help='Interview: questions before contract; guided: show contract immediately')
     checking = sub.add_parser('check', help='Execute external coach checks on a temporary copy')
     checking.add_argument('attempt', type=Path)
     checking.add_argument('--json', action='store_true')
     verifying = sub.add_parser('verify', help='Maintainer: verify all faulty starters and working references')
     verifying.add_argument('--json', action='store_true')
+    verifying.add_argument('--revision', type=int, choices=(1, 2), default=2)
     args = parser.parse_args()
     try:
         if args.command == 'list':
             print(json.dumps(public_tasks(), indent=2) if args.json else '\n'.join(f'{task.id:13} {task.title}' for task in TASKS))
         elif args.command == 'start':
-            path = start(args.task_id, args.output_root)
+            path = start(args.task_id, args.output_root, mode=args.mode)
             print(json.dumps({'task_id': args.task_id, 'path': str(path)}) if args.json else f'Created: {path}\nRead {path / "README.md"}\nYour work will never be overwritten by start.')
         elif args.command == 'check':
             result = check(args.attempt)
             print(json.dumps(result, indent=2) if args.json else f'{result["task_id"]}: {result["status"].upper()} — {result["detail"]}\nExecuted real checks on a temporary copy. Original attempt preserved. This is sampled verification, not a readiness score.')
             return result['exit_code']
         else:
-            result = verify()
-            print(json.dumps(result, indent=2) if args.json else '\n'.join(f'{row["task_id"]}: starter {"EXPECTED FAILURE" if row["starter_fails"] else "INVALID"}; reference {"PASS" if row["reference_passes"] else "FAIL"}' for row in result))
-            return 0 if all(row['starter_fails'] and row['reference_passes'] for row in result) else 1
+            result = verify(revision=args.revision)
+            print(json.dumps(result, indent=2) if args.json else '\n'.join(f'{row["task_id"]}: starter {"EXPECTED FAILURE" if row["starter_fails"] else "INVALID"}; reference {"PASS" if row["reference_passes"] else "FAIL"}; public tests {"PASS" if row["public_starter_passes"] and row["public_reference_passes"] else "FAIL"}' for row in result))
+            return 0 if all(row['starter_fails'] and row['reference_passes'] and row['public_starter_passes']
+                            and row['public_reference_passes'] for row in result) else 1
     except (ValueError, OSError) as error:
         print(f'Error: {error}', file=sys.stderr)
         return 2

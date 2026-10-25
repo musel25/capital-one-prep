@@ -4,6 +4,12 @@ import sys
 from pathlib import Path
 
 from contracts import CHECKS
+revision = int(sys.argv[3]) if len(sys.argv) > 3 else 1
+if revision == 2:
+    from early import CHECKS as early
+    from middle import CHECKS as middle
+    from late import CHECKS as late
+    CHECKS = {**CHECKS, **early, **middle, **late}
 sys.path.insert(0, str(Path(sys.argv[2]).resolve()))
 
 try:

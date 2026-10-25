@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lantern Desk</title><link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script></head>
+<body><main><header><p>Fictional practice application · Internal support</p><h1>Lantern Desk</h1><p>Follow a ticket from first report to resolution.</p></header>
+<section><h2>Support queue</h2><label>Ticket <select id="ticket"></select></label><p id="detail"></p></section>
+<section><h2>Ticket activity</h2><p id="timeline-message" role="status"></p><ol id="timeline"></ol></section>
+<section><h2>Leave a comment</h2><form id="comment-form"><label>Your name <input name="author" required value="Alex"></label><label>Comment <textarea name="body" required></textarea></label><button>Add comment</button></form></section>
+<section><h2>Update status</h2><form id="status-form"><label>Your name <input name="actor" required value="Alex"></label><label>Status <select name="status"><option>new</option><option>open</option><option>resolved</option></select></label><button>Save status</button></form></section>
+<p id="message" role="status"></p><footer>In-memory demo · Restarting resets the queue · <a href="/docs">API explorer</a></footer></main></body></html>

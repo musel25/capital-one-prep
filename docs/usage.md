@@ -15,7 +15,13 @@ uv run python scripts/practice.py list
 uv run python scripts/practice.py start d01-bug
 ```
 
-El último comando imprime una carpeta nueva. Ábrela en tu editor y lee su README. Allí están los comandos `uv sync`, `uv run pytest` y `uv run uvicorn app.main:app --reload --host 127.0.0.1 --port 8000`. Los tests iniciales comprueban el arranque; no demuestran que hayas resuelto el ticket.
+El último comando imprime una carpeta nueva. Ábrela en tu editor y lee su README. Allí están los comandos `uv sync`, `uv run pytest` y `uv run uvicorn app.main:app --reload --host 127.0.0.1 --port 8000`. Los tests iniciales protegen el arranque y comportamientos existentes; no demuestran que hayas resuelto el ticket.
+
+Desde `d02-feature`, cada tarea nueva usa una aplicación diferente, incluso el bug y la feature del mismo día. Los intentos existentes siguen intactos y conservan su checker original. Para continuar uno, abre su carpeta; para obtener el ejercicio actualizado, ejecuta `start` otra vez.
+
+El modo predeterminado es entrevista: lee el síntoma, escribe tus preguntas y después abre `CLARIFICATIONS.md` para consultar los criterios. Puedes pedirle a la IA que actúe como entrevistador y conteste solo tus preguntas usando ese archivo. Para ver el contrato desde el principio usa `uv run python scripts/practice.py start d02-feature --mode guided`.
+
+Antes de pedirle código a la IA, describe la entrada, respuesta y estado esperado de tu prueba. Revisa la prueba generada y comprueba que falla por el motivo esperado **antes** de implementar o delegar el arreglo. Conserva `.practice.json`: permite comprobar cada intento con su versión original del ejercicio.
 
 Al terminar, desde la raíz ejecuta:
 

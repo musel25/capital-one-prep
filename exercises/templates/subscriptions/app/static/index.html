@@ -1,0 +1,5 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Plan Studio</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><main><p>FICTIONAL LOCAL PRACTICE</p><h1>Plan Studio</h1><p>Preview an upgrade charge for a subscription's current billing period. Quotes do not change a customer's plan.</p><h2>Plan catalog</h2><pre id="plans"></pre><h2>Subscriptions</h2><pre id="subscriptions"></pre>
+<form id="quote"><label>Subscription <select name="subscription_id"><option>sub-100</option><option>sub-200</option><option>sub-300</option></select></label><label>Target plan <select name="target_plan"><option>plus</option><option>team</option><option>basic</option></select></label><label>Effective date <input type="date" name="effective_on" value="2026-10-16" required></label><label>Maximum charge in cents (optional) <input type="number" name="cap_cents" min="0" step="1"></label><button>Preview charge</button></form>
+<h2>Quote result</h2><pre id="result" aria-live="polite">No quote requested.</pre><a href="/docs">Interactive API docs</a></main><script src="/static/app.js"></script></body></html>

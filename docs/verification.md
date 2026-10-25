@@ -1,4 +1,37 @@
-# Initial release verification
+# Verification history
+
+## October 24, 2026 — unfamiliar application sequence
+
+The revised catalog keeps the three initial Cedar Wallet tasks and uses 17
+distinct applications for the remaining 17 tasks. Fourteen new reference apps
+were added; all remaining tasks include public tests of existing behavior.
+New attempts support interview/guided modes. Existing schema-1 attempts retain
+their original checker and are never migrated or rewritten.
+
+Verification for this update:
+
+- `uv run pytest -q`: 34 passed, including all 20 current starter/reference
+  pairs, their public suites, mode generation, revision validation, old-attempt
+  compatibility, preservation of learner files and instructor separation.
+- `uv run python scripts/practice.py verify --revision 1 --json`: all 20 old
+  starters failed by behavior assertion, all 20 old references passed, and their
+  original public startup suites passed on both versions.
+- `npm test`: 15 passed. `npm run build`: successful; the existing Vite chunk-size
+  advisory remains (about 153.5 kB compressed main JavaScript).
+- Independent review reproduced unintended year-zero validation and maximum-date
+  overflow in new references. Added coach assertions failed before the changes
+  and passed after calendar-month validation and overflow-safe report calculation.
+- A data comparison against the prior commit confirmed unchanged dates, block
+  IDs, lab IDs, time budgets, timer phases and all nontechnical activities.
+- Browser checks exercised the four early app workflows and the updated day-two
+  planner modal without page errors. Other new UIs have HTTP asset and JavaScript
+  syntax checks; they have not all received a visual browser review.
+
+These remain small, constructed Python/FastAPI exercises. Distinct domains and
+module responsibilities increase navigation practice; they do not establish an
+exact match for an employer's repository size, prompt or AI-use policy.
+
+## Initial release — October 22, 2026
 
 Recorded October 22, 2026, America/Tijuana. Published code: `f95bcf6f2c73`.
 

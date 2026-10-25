@@ -13,8 +13,12 @@ uv run python scripts/practice.py start d01-bug
 ```
 
 Open the returned folder in your editor and read its README. It includes the
-English interview prompt, exact contract, fixture description, startup commands,
-public tests and deliverables. `uv run uvicorn app.main:app --reload` runs its API
+English interview prompt, product context, startup commands, public tests and
+deliverables. In the default interview mode, write your questions first and then
+open `CLARIFICATIONS.md` for the exact contract. A mock interviewer can read that
+file and answer only the questions you ask. `--mode guided` includes the contract
+in the README immediately. Both modes have the same task and checks.
+`uv run uvicorn app.main:app --reload` runs its API
 and browser UI. Save your code, tests and notes inside the returned attempt.
 
 Create a fresh attempt for the feature task. Starting a task again creates a new
@@ -39,28 +43,43 @@ expected to return 1. Passing is evidence for these checks only; it does not pro
 general correctness or interview readiness. The web planner cannot observe the
 CLI, so record completion and assistance honestly.
 
-The public learner tests verify startup. Add regression and boundary tests before
-claiming a fix. The external checks sample the published behavior; their failure
+From d02-feature onward, each task uses a distinct application, even within a day.
+Different domain rules, data shapes and module responsibilities require fresh
+navigation. Python/FastAPI and the run commands stay familiar. The initial Cedar
+Wallet tasks remain available; no existing learner folder is migrated.
+
+New manifests select catalog revision 2. Older schema-1 manifests still select
+their original contracts, even when a task ID now describes a different project.
+Keep `.practice.json` with your attempt. The web planner preserves existing task
+IDs, notes and timers; its updated brief applies to newly created attempts.
+
+The public learner tests verify startup and existing behavior in the new projects.
+They intentionally do not cover the assigned defect or feature. Describe and add
+regression and boundary tests before claiming a fix. The external checks sample the published behavior; their failure
 messages describe the contract without printing the hidden test source.
 
 ## Instructor and maintenance material
 
 Do not read the following before an independent attempt:
 
-- `templates/` contains the four working reference applications: Cedar Wallet,
-  Fern Merchant Operations, Juniper Rewards and Harbor Supply.
-- `coach/starters.py` applies exactly one controlled defect or missing feature to
+- `templates/` contains working reference applications and public existing-behavior tests.
+- `coach/starters.py` and the scenario coach modules apply one controlled defect or missing feature to
   a fresh reference copy for each task.
-- `coach/contracts.py` exercises HTTP behavior, side effects and boundaries.
-- `catalog.py` contains learner-facing briefs, with no defective line locations.
+- `coach/contracts.py` preserves original contracts; the scenario coach modules
+  supply replacement checks with HTTP behavior, side effects and boundaries.
+- `catalog.py` and `scenarios/` contain learner-facing briefs, with no defective line locations.
+- `legacy/` retains the original catalog and README generator for compatibility.
 
 ```sh
 uv run python scripts/practice.py verify
+uv run python scripts/practice.py verify --revision 1
 uv run pytest
 ```
 
-`verify` checks all twenty pairs. Every starter must fail a behavior assertion
-(an import error does not qualify), and every reference must pass. The platform
+`verify` checks all twenty current pairs and runs public tests on each version.
+Every starter must fail a behavior assertion (an import error does not qualify),
+every reference must pass, and both versions must pass their public tests. Use
+`--revision 1` to check the original sequence. The platform
 tests additionally verify no overwrite, no instructor leakage, no attempt
 modification, traversal/symlink rejection, and failure/error distinction.
 

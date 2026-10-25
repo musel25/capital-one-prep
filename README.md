@@ -16,6 +16,18 @@ uv run python scripts/practice.py start d01-bug
 
 Open the newly printed directory in your editor and read its README. It includes the startup commands and the exact task. Run `start` again for a fresh attempt; it never overwrites previous work. To check a solution, run `uv run python scripts/practice.py check attempts/YOUR-ATTEMPT` from the repository root.
 
+Starting with **d02-feature**, every remaining task uses a different application,
+including the bug and feature on the same day. The sequence includes support,
+shipping, scheduling, reporting, telemetry and other domains. Existing attempts
+keep their original code and checks. Open an existing folder to resume it; run
+`start` to get the revised exercise.
+
+New attempts default to **interview mode**: read the symptom or request, write
+your clarification questions, then consult `CLARIFICATIONS.md` for acceptance
+criteria. Use `start TASK_ID --mode guided` to show the contract up front.
+Describe a regression test yourself, let AI implement it if useful, review it,
+and observe it fail before changing the application.
+
 The schedule has 40 blocks across ten days, including 20 independent debugging/feature tasks, ten technical cases, behavioral questions with follow-ups, and Python practice. Four LeetCode alternatives fit inside the existing time allocation. The site includes phase timers, checklists, notes, and gated case explanations. Behavioral blocks present a daily topic and an ordered list of questions about real projects. Python blocks include copyable prompts for creating local starters and tests without solutions. There is no separate closing block.
 
 The 20 application tasks are **original training exercises**. Day 9 also uses a real, unmodified Python snapshot from [Gilded Rose](external/README.md), pinned to an upstream commit with its MIT license. Sources distinguish official platform documentation, candidate accounts, and constructed practice. None confirms your specific interview's tool permissions or timing.
