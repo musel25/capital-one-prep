@@ -49,14 +49,14 @@
 - [x] Implement two meaningful multi-module apps, independent seeded faults/features, public existing-behavior tests and instructor checks.
 - [x] Connect fresh late-session blocks to mock IDs; preserve old blocks in archive.
 - [x] Run uv run pytest (includes starter/reference/public verification) and npm test/build.
-- [ ] Commit and push mock unit.
+- [x] Commit and push mock unit.
 
 ### Task 3: Review and publish
 
 - [x] Fresh reviewer checks the complete diff, evidence, answer keys, contracts and progress preservation.
 - [x] Fix material findings, verify affected behavior and complete suites.
-- [ ] Fast-forward the original checkout, push main, and deploy built static assets from the clean worktree using scripts/deploy.sh.
-- [ ] Verify live asset contents, current-day links, archive and mobile layout. Report actual delivery and limitations.
+- [x] Fast-forward the original checkout, push main, and deploy built static assets from the clean worktree using scripts/deploy.sh.
+- [x] Verify live asset contents, current-day links, archive and mobile layout. Report actual delivery and limitations.
 
 ## Execution record
 
@@ -71,3 +71,5 @@
 - Review scope: live publication and external-source validity were not judged by the reviewer. Browser checks cover rendering; publication is the next step. External sources were researched during curriculum design and are labeled by provenance.
 - Build passes with Vite's bundle-size advisory (about 646 kB minified / 170 kB gzip). No dependency migration.
 - Final verification before publication: 42 Python tests passed (including all 24 starter/reference/public pairs), 20 website tests passed, production build passed, and git diff --check passed. No deferred review findings remain.
+- Mock/review unit committed as 8ea5e17, pushed, and fast-forwarded into main. scripts/deploy.sh published release 8ea5e176c371-20261025T195909; nginx and both existing application health checks passed.
+- Live browser verified October 25 selection, the official Parking System link, both Support Ops commands, archived 90-minute definitions, no mobile horizontal overflow and no console errors. Published JavaScript is index-BFynP8bF.js. This final record-only commit does not change the deployed assets.
