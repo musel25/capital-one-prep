@@ -33,11 +33,11 @@
 
 **Interfaces:** Optional Block.problems, Block.stages and Plan.archivedBlocks; retain all existing Progress fields and storage key.
 
-- [ ] Test preserved archived notes, uncompleted replacement assignment, working problem links, staged case disclosure and shuffled question follow-ups.
-- [ ] Add accessible UI using existing styling; replace daily Python blocks with official LeetCode links and learning guidance, no local starter prompts.
-- [ ] Add an original virtual-card case with independently checked answer key. Improve business follow-ups, practical design and behavioral rehearsal.
-- [ ] Run npm test and npm run build; inspect desktop and mobile rendering.
-- [ ] Commit and push curriculum/UI unit.
+- [x] Test preserved archived notes, uncompleted replacement assignment, working problem links, staged case disclosure and shuffled question follow-ups.
+- [x] Add accessible UI using existing styling; replace daily Python blocks with official LeetCode links and learning guidance, no local starter prompts.
+- [x] Add an original virtual-card case with independently checked answer key. Improve business follow-ups, practical design and behavioral rehearsal.
+- [x] Run npm test and npm run build; inspect desktop and mobile rendering.
+- [x] Commit and push curriculum/UI unit.
 
 ### Task 2: Larger agentic mocks
 
@@ -45,16 +45,16 @@
 
 **Interfaces:** Four new IDs mock-support-bug/feature and mock-dispatch-bug/feature, using existing revision-2 manifest, Task and check/build contracts. Existing 20 IDs and all previous revisions remain valid.
 
-- [ ] Write behavioral contract checks and no-overwrite/legacy compatibility tests; observe missing mock IDs fail.
-- [ ] Implement two meaningful multi-module apps, independent seeded faults/features, public existing-behavior tests and instructor checks.
-- [ ] Connect fresh late-session blocks to mock IDs; preserve old blocks in archive.
-- [ ] Run uv run pytest (includes starter/reference/public verification) and npm test/build.
+- [x] Write behavioral contract checks and no-overwrite/legacy compatibility tests; observe missing mock IDs fail.
+- [x] Implement two meaningful multi-module apps, independent seeded faults/features, public existing-behavior tests and instructor checks.
+- [x] Connect fresh late-session blocks to mock IDs; preserve old blocks in archive.
+- [x] Run uv run pytest (includes starter/reference/public verification) and npm test/build.
 - [ ] Commit and push mock unit.
 
 ### Task 3: Review and publish
 
-- [ ] Fresh reviewer checks the complete diff, evidence, answer keys, contracts and progress preservation.
-- [ ] Fix material findings, verify affected behavior and complete suites.
+- [x] Fresh reviewer checks the complete diff, evidence, answer keys, contracts and progress preservation.
+- [x] Fix material findings, verify affected behavior and complete suites.
 - [ ] Fast-forward the original checkout, push main, and deploy built static assets from the clean worktree using scripts/deploy.sh.
 - [ ] Verify live asset contents, current-day links, archive and mobile layout. Report actual delivery and limitations.
 
@@ -62,3 +62,12 @@
 
 - Worktree: .worktrees/practice-upgrade; baseline f65039a.
 - The user approved the proposed direction and explicitly requested website adaptation; implementation proceeds without another approval cycle.
+
+- Task 1 completed in b23aa77 and pushed to origin/feat/practice-upgrade. New UI tests were observed failing before implementation, then passed.
+- Task 2 adds four independent mock snapshots to the existing revision-2 catalog; missing-ID tests failed before implementation. Original 20 tasks and legacy revision-1 support remain.
+- Final review found the day-9 required-work mismatch and altered archived mock definitions. Day 9 now requires two chosen attempts. The archived blocks were restored exactly from f65039a; the archive regression failed first and now passes.
+- Strengthened the external checker after four deliberately incorrect implementations were incorrectly accepted: assignment history details, quote breakdown, cancellation event items, and rejected-shipment history. Each regression now fails the incorrect implementation with an assertion rather than a setup error.
+- Browser checks: 1440px planner and 390px task modal/archive; official problem link, staged disclosure, behavioral draws/follow-ups and mock commands. Generated reference apps exercised queue/assignment/comment and quote/cancellation flows. No horizontal overflow; mock apps have only a harmless missing favicon request.
+- Review scope: live publication and external-source validity were not judged by the reviewer. Browser checks cover rendering; publication is the next step. External sources were researched during curriculum design and are labeled by provenance.
+- Build passes with Vite's bundle-size advisory (about 646 kB minified / 170 kB gzip). No dependency migration.
+- Final verification before publication: 42 Python tests passed (including all 24 starter/reference/public pairs), 20 website tests passed, production build passed, and git diff --check passed. No deferred review findings remain.

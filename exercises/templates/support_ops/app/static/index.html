@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Atlas Support Operations</title><link rel="stylesheet" href="/static/style.css"></head><body><main>
+<h1>Atlas Support Operations</h1><p>Fictional internal support console. Reloading the server resets all data. <a href="/docs">API reference</a></p>
+<h2>Queue explorer</h2><form id="queue"><label>Team<select name="team"><option>platform</option><option>support</option></select></label><label>Status<select name="status"><option>open</option><option>resolved</option></select></label><label>Page<input name="page" type="number" value="1" min="1"></label><button>Load queue</button></form>
+<pre id="queue-output" aria-live="polite"></pre><h2>Bulk assignment</h2><form id="assign"><label>Ticket IDs, comma-separated<input name="tickets" value="t-1,t-4" required></label><label>Agent ID<input name="agent" value="a-1" required></label><button>Assign</button></form>
+<h2>Ticket activity</h2><form id="comment"><label>Ticket ID<input name="ticket" value="t-1" required></label><label>Comment<input name="body" required></label><button>Add comment</button></form>
+<form id="status"><label>Ticket ID<input name="ticket" value="t-1" required></label><label>Status<select name="status"><option>resolved</option><option>open</option></select></label><button>Change status</button></form>
+<pre id="result" aria-live="polite"></pre><h2>Directory and activity</h2><button id="refresh">Refresh overview</button><pre id="overview"></pre><pre id="agents"></pre><pre id="events"></pre>
+</main><script src="/static/app.js"></script></body></html>

@@ -9,7 +9,8 @@ if revision == 2:
     from early import CHECKS as early
     from middle import CHECKS as middle
     from late import CHECKS as late
-    CHECKS = {**CHECKS, **early, **middle, **late}
+    from mocks import CHECKS as mocks
+    CHECKS = {**CHECKS, **early, **middle, **late, **mocks}
 sys.path.insert(0, str(Path(sys.argv[2]).resolve()))
 
 try:

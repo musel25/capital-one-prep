@@ -17,7 +17,7 @@ uv run python scripts/practice.py start d01-bug
 
 El último comando imprime una carpeta nueva. Ábrela en tu editor y lee su README. Allí están los comandos `uv sync`, `uv run pytest` y `uv run uvicorn app.main:app --reload --host 127.0.0.1 --port 8000`. Los tests iniciales protegen el arranque y comportamientos existentes; no demuestran que hayas resuelto el ticket.
 
-Desde `d02-feature`, cada tarea nueva usa una aplicación diferente, incluso el bug y la feature del mismo día. Los intentos existentes siguen intactos y conservan su checker original. Para continuar uno, abre su carpeta; para obtener el ejercicio actualizado, ejecuta `start` otra vez.
+Entre las tareas originales `d01–d10`, desde `d02-feature` cada tarea usa una aplicación diferente. Los días 8 y 10 ahora usan Support Ops y Parcel Dispatch: aplicaciones más amplias, con un bug y una feature en copias independientes del mismo producto. Usa los comandos del bloque actualizado; la copia de la feature ya tiene corregido el bug. Los intentos existentes siguen intactos y conservan su checker original. Para continuar uno, abre su carpeta; para obtener el ejercicio actualizado, ejecuta `start` otra vez.
 
 El modo predeterminado es entrevista: lee el síntoma, escribe tus preguntas y después abre `CLARIFICATIONS.md` para consultar los criterios. Puedes pedirle a la IA que actúe como entrevistador y conteste solo tus preguntas usando ese archivo. Para ver el contrato desde el principio usa `uv run python scripts/practice.py start d02-feature --mode guided`.
 
@@ -31,15 +31,17 @@ uv run python scripts/practice.py check attempts/NOMBRE-DE-TU-INTENTO
 
 La página no ejecuta ni observa tu código local. Registra la ruta, el resultado real y tus decisiones en sus notas. Para pedir revisión: **«Revisa mi intento en attempts/…; corrí estos tests y obtuve este resultado»**. Para empezar otra vez usa `start` de nuevo; no borres tu trabajo. Bug y feature tienen copias independientes.
 
-El día 9 añade código real de Gilded Rose. Usa su comando específico `uv run python external/start.py external-gilded-rose` y sigue el README generado. Su procedencia y licencia están en [external/README.md](../external/README.md).
+El día 9 ofrece Gilded Rose como sustitución opcional de una tarea, dentro de los 75 minutos del bloque. Usa su comando específico `uv run python external/start.py external-gilded-rose` y sigue el README generado. Su procedencia y licencia están en [external/README.md](../external/README.md).
 
 ## Casos y behavioral
 
 En los casos, interpreta las reglas, predice resultados y explica tu corrección sin ejecutar el código. Guarda la predicción y marca el intento terminado antes de abrir la explicación. La solución se oculta para evitar spoilers casuales; no es un control de acceso. No pidas al agente que resuelva el caso antes de tu intento.
 
-Para behavioral, la guía está dentro de cada bloque: elige un proyecto real y un episodio, contesta en el orden indicado y practica las repreguntas en inglés. Puedes responder en «Mi intento y revisión»; no necesitas abrir las plantillas del repositorio. No inventes historias.
+Desde el día 3, los casos revelan sus etapas una por una. Las preguntas de behavioral se sortean sin repetirse dentro de la ronda; abre las repreguntas después de tu primera respuesta. Usa episodios reales y practica en inglés. Las etapas y los sorteos se reinician al cerrar el bloque; conserva tus respuestas en las notas.
 
-En Python, pulsa «Copiar prompt» y pégalo en tu agente local para crear un archivo con función pendiente y pruebas. El prompt incluye el contrato completo y exige conservar intentos anteriores. Implementa tú la función y ejecuta el archivo con `uv run python` desde la raíz.
+Python ahora se practica con un LeetCode diario: abre el enlace oficial, resuélvelo tú, comprueba casos límite y explica tu solución. La progresión introduce clases con Parking System antes de Simple Bank System y otros problemas con estado. Los bloques nuevos no heredan la marca de completado de los drills anteriores.
+
+En **Previous exercises** siguen disponibles los ejercicios reemplazados y sus notas. No cuentan para el progreso del plan activo; las carpetas de intentos existentes no se modifican.
 
 Cada día tiene cuatro bloques, sin «Cierre y reflexión». Registra resultados dentro de cada ejercicio. Los antiguos registros de cierre se conservan en los respaldos; ya no cuentan para el progreso ni aparecen en la agenda.
 
@@ -70,7 +72,7 @@ uv run pytest
 uv run python scripts/practice.py verify
 ```
 
-Los checks de Python comprueban que los 20 starters fallan en el comportamiento objetivo, que las 20 referencias pasan, que iniciar/verificar conserva intentos y que el ejercicio upstream conserva su procedencia y sus reglas. Los tests del planner comprueban calendario, duración, importación y condiciones de revisión. Pasar esos checks no equivale a estar preparado para una entrevista.
+Los checks de Python comprueban que los 24 starters fallan en el comportamiento objetivo, que las 24 referencias pasan, que iniciar/verificar conserva intentos y que el ejercicio upstream conserva su procedencia y sus reglas. Los tests del planner comprueban calendario, duración, importación y condiciones de revisión. Pasar esos checks no equivale a estar preparado para una entrevista.
 
 `scripts/deploy.sh` requiere cambios guardados y publica una versión estática independiente en el VPS existente. Respalda nginx, cambia el enlace `current` y revierte si fallan sus comprobaciones. No sube respuestas ni modifica el almacenamiento de Grind Recall. La ruta bajo `/grind/` evita la caché de navegación del service worker del temporizador.
 

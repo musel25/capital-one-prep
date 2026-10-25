@@ -32,7 +32,7 @@ The schedule has 40 blocks across ten days. Python practice now links directly t
 
 Cases reveal business discussion, rules, code and follow-ups in stages; answer keys remain gated by a saved prediction and finished attempt. Behavioral rehearsal draws questions without repetition and reveals follow-ups after the initial answer. Stage/question position is session-only; save it in Notes to resume. Replaced exercises and their saved notes are available under **Previous exercises** and remain in backups, without counting toward the new assignments. New LeetCode blocks never inherit old completion marks. There is no separate closing block.
 
-The 20 application tasks are **original training exercises**. Day 9 also uses a real, unmodified Python snapshot from [Gilded Rose](external/README.md), pinned to an upstream commit with its MIT license. Sources distinguish official platform documentation, candidate accounts, and constructed practice. None confirms your specific interview's tool permissions or timing.
+The 24 application tasks are **original training exercises**. Days 8 and 10 use fuller Support Ops and Parcel Dispatch mocks, with independent bug/feature snapshots. Day 9 offers an optional substitution using a real, unmodified Python snapshot from [Gilded Rose](external/README.md), pinned to an upstream commit with its MIT license. Sources distinguish official platform documentation, candidate accounts, and constructed practice. None confirms your specific interview's tool permissions or timing.
 
 Progress stays in this browser. Export a backup into `private/` when you finish a day; import it to continue on another device. The page does not inspect code in your editor. Share your local attempt path when requesting a code review.
 

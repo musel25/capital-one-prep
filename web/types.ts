@@ -17,7 +17,13 @@ export type Block = {
   setupPrompt?: string;
   phases?: Phase[];
   sources?: string[];
-  problems?: { number: number; title: string; url: string; difficulty: string; focus: string }[];
+  problems?: {
+    number: number;
+    title: string;
+    url: string;
+    difficulty: string;
+    focus: string;
+  }[];
   stages?: { title: string; content: string }[];
   promptGroups?: { question: string; followUps: string[] }[];
 };

@@ -1,6 +1,6 @@
 # Local practice system
 
-Twenty independent tasks cover ten days. These are original fictional exercises,
+Twenty original tasks and four larger mock tasks support the ten-day plan. These are original fictional exercises,
 inspired by the familiar API/routes/models/UI structure of public FastAPI
 applications. They do not reproduce an employer assessment or identify upstream
 bugs. No real accounts, credentials, external API or banking access is involved.
@@ -43,10 +43,19 @@ expected to return 1. Passing is evidence for these checks only; it does not pro
 general correctness or interview readiness. The web planner cannot observe the
 CLI, so record completion and assistance honestly.
 
-From d02-feature onward, each task uses a distinct application, even within a day.
+Among the original d01–d10 tasks, from d02-feature onward each task uses a distinct application, even within a day.
 Different domain rules, data shapes and module responsibilities require fresh
 navigation. Python/FastAPI and the run commands stay familiar. The initial Cedar
 Wallet tasks remain available; no existing learner folder is migrated.
+
+Days 8 and 10 now use **Support Ops** and **Parcel Dispatch**, two fuller
+applications with UI, routes, validation, state, event history and multiple
+service modules. Each mock pairs a bug and feature in the same product but in
+independent snapshots: the feature starts with the bug already corrected.
+Use `mock-support-bug` / `mock-support-feature` or
+`mock-dispatch-bug` / `mock-dispatch-feature`. Keep each returned folder.
+The old day-8/day-10 tasks remain available through the CLI and the website's
+**Previous exercises** view.
 
 New manifests select catalog revision 2. Older schema-1 manifests still select
 their original contracts, even when a task ID now describes a different project.
@@ -76,7 +85,7 @@ uv run python scripts/practice.py verify --revision 1
 uv run pytest
 ```
 
-`verify` checks all twenty current pairs and runs public tests on each version.
+`verify` checks all 24 current starter/reference pairs and runs public tests on each version.
 Every starter must fail a behavior assertion (an import error does not qualify),
 every reference must pass, and both versions must pass their public tests. Use
 `--revision 1` to check the original sequence. The platform

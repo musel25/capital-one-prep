@@ -52,7 +52,9 @@ afterEach(() => {
 });
 
 test("Python setup prompt can be copied with the full contract without changing progress", async () => {
-  const block = ((plan as Plan).archivedBlocks ?? plan.days[0].blocks).find((b) => b.id === "d01-python") as Block;
+  const block = ((plan as Plan).archivedBlocks ?? plan.days[0].blocks).find(
+    (b) => b.id === "d01-python",
+  ) as Block;
   let saves = 0;
   render(
     createElement(TaskDialog, {
@@ -77,7 +79,9 @@ test("Python setup prompt can be copied with the full contract without changing 
 
 test("replacement LeetCode assignment stays pending and old Python notes remain accessible", async () => {
   const old = replaceProgress(freshState(), "d01-python", {
-    status: "done", notes: "My earlier sorting solution.", checked: ["rubric-0"],
+    status: "done",
+    notes: "My earlier sorting solution.",
+    checked: ["rubric-0"],
   });
   const raw = JSON.stringify(old);
   localStorage.setItem(STORAGE_KEY, raw);
@@ -86,31 +90,85 @@ test("replacement LeetCode assignment stays pending and old Python notes remain 
   assert.ok(screen.getByText("0 / 40 tasks"));
   assert.equal(localStorage.getItem(STORAGE_KEY), raw);
   await user.click(screen.getByRole("button", { name: "Previous exercises" }));
-  await user.click(screen.getByRole("button", { name: /Python: sort without mutation/ }));
+  await user.click(
+    screen.getByRole("button", { name: /Python: sort without mutation/ }),
+  );
   await user.click(screen.getByRole("button", { name: "My attempt" }));
-  assert.equal((screen.getByLabelText("Notes, evidence, and open questions") as HTMLTextAreaElement).value,
-    "My earlier sorting solution.");
+  assert.equal(
+    (
+      screen.getByLabelText(
+        "Notes, evidence, and open questions",
+      ) as HTMLTextAreaElement
+    ).value,
+    "My earlier sorting solution.",
+  );
 });
 
 test("problem cards link to the official exercise without changing progress", () => {
   let saves = 0;
-  const block = { id: "lc", title: "Bank practice", kind: "python", minutes: 60,
-    summary: "Practice", content: "Solve independently.", deliverables: [], rubric: [],
-    problems: [{ number: 2043, title: "Simple Bank System", difficulty: "Medium",
-      url: "https://leetcode.com/problems/simple-bank-system/", focus: "State across calls" }] } as Block;
-  render(createElement(TaskDialog, { block, sources: [], close: () => {}, save: () => { saves++; return true; } }));
+  const block = {
+    id: "lc",
+    title: "Bank practice",
+    kind: "python",
+    minutes: 60,
+    summary: "Practice",
+    content: "Solve independently.",
+    deliverables: [],
+    rubric: [],
+    problems: [
+      {
+        number: 2043,
+        title: "Simple Bank System",
+        difficulty: "Medium",
+        url: "https://leetcode.com/problems/simple-bank-system/",
+        focus: "State across calls",
+      },
+    ],
+  } as Block;
+  render(
+    createElement(TaskDialog, {
+      block,
+      sources: [],
+      close: () => {},
+      save: () => {
+        saves++;
+        return true;
+      },
+    }),
+  );
   const link = screen.getByRole("link", { name: /2043. Simple Bank System/ });
-  assert.equal(link.getAttribute("href"), "https://leetcode.com/problems/simple-bank-system/");
+  assert.equal(
+    link.getAttribute("href"),
+    "https://leetcode.com/problems/simple-bank-system/",
+  );
   assert.equal(saves, 0);
   assert.equal(screen.queryByRole("heading", { name: "Local setup" }), null);
 });
 
 test("case stages reveal progressively without revealing the answer key", async () => {
-  const block = { id: "staged", title: "Staged case", kind: "case", minutes: 60,
-    summary: "Practice", content: "Ask questions first.", deliverables: [], rubric: [],
-    stages: [{ title: "Business", content: "Discuss customer impact." }, { title: "Rules", content: "Trace rule table." }],
-    solution: "Secret answer." } as Block;
-  render(createElement(TaskDialog, { block, sources: [], close: () => {}, save: () => true }));
+  const block = {
+    id: "staged",
+    title: "Staged case",
+    kind: "case",
+    minutes: 60,
+    summary: "Practice",
+    content: "Ask questions first.",
+    deliverables: [],
+    rubric: [],
+    stages: [
+      { title: "Business", content: "Discuss customer impact." },
+      { title: "Rules", content: "Trace rule table." },
+    ],
+    solution: "Secret answer.",
+  } as Block;
+  render(
+    createElement(TaskDialog, {
+      block,
+      sources: [],
+      close: () => {},
+      save: () => true,
+    }),
+  );
   assert.ok(screen.getByText("Discuss customer impact."));
   assert.equal(screen.queryByText("Trace rule table."), null);
   await user.click(screen.getByRole("button", { name: "Reveal next stage" }));
@@ -119,18 +177,47 @@ test("case stages reveal progressively without revealing the answer key", async 
 });
 
 test("behavioral rehearsal draws unseen questions and reveals their follow-ups on demand", async () => {
-  const block = { id: "draw", title: "Rehearsal", kind: "behavioral", minutes: 30,
-    summary: "Practice", content: "Answer aloud.", deliverables: [], rubric: [],
-    promptGroups: [{ question: "Explain a disagreement.", followUps: ["Why was their position reasonable?"] },
-      { question: "Explain a mistake.", followUps: ["When did you tell the team?"] }] } as Block;
-  render(createElement(TaskDialog, { block, sources: [], close: () => {}, save: () => true }));
+  const block = {
+    id: "draw",
+    title: "Rehearsal",
+    kind: "behavioral",
+    minutes: 30,
+    summary: "Practice",
+    content: "Answer aloud.",
+    deliverables: [],
+    rubric: [],
+    promptGroups: [
+      {
+        question: "Explain a disagreement.",
+        followUps: ["Why was their position reasonable?"],
+      },
+      {
+        question: "Explain a mistake.",
+        followUps: ["When did you tell the team?"],
+      },
+    ],
+  } as Block;
+  render(
+    createElement(TaskDialog, {
+      block,
+      sources: [],
+      close: () => {},
+      save: () => true,
+    }),
+  );
   assert.equal(screen.queryByText("Explain a disagreement."), null);
   await user.click(screen.getByRole("button", { name: "Draw a question" }));
   const first = screen.getByTestId("drawn-question").textContent;
   assert.equal(screen.queryByText("Why was their position reasonable?"), null);
   assert.equal(screen.queryByText("When did you tell the team?"), null);
   await user.click(screen.getByRole("button", { name: "Show follow-ups" }));
-  assert.ok(screen.getByText(first === "Explain a disagreement." ? "Why was their position reasonable?" : "When did you tell the team?"));
+  assert.ok(
+    screen.getByText(
+      first === "Explain a disagreement."
+        ? "Why was their position reasonable?"
+        : "When did you tell the team?",
+    ),
+  );
   await user.click(screen.getByRole("button", { name: "Draw a question" }));
   assert.notEqual(screen.getByTestId("drawn-question").textContent, first);
 });

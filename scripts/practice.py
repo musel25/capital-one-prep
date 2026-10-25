@@ -263,7 +263,7 @@ def verify(*, revision=2) -> list[dict]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
-    listing = sub.add_parser('list', help='Show the twenty independent exercises')
+    listing = sub.add_parser('list', help='Show original exercises and larger mock tasks')
     listing.add_argument('--json', action='store_true')
     starting = sub.add_parser('start', help='Create a unique learner-only attempt; never overwrites')
     starting.add_argument('task_id')

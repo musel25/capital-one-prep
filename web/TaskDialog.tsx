@@ -102,11 +102,16 @@ export function TaskDialog({
   const [drawn, setDrawn] = useState<number[]>([]);
   const [showFollowUps, setShowFollowUps] = useState(false);
   const groups = block.promptGroups ?? [];
-  const currentQuestion = drawn.length ? groups[drawn[drawn.length - 1]] : undefined;
+  const currentQuestion = drawn.length
+    ? groups[drawn[drawn.length - 1]]
+    : undefined;
   function drawQuestion() {
     const available = groups.map((_, i) => i).filter((i) => !drawn.includes(i));
     if (!available.length) return;
-    setDrawn([...drawn, available[Math.floor(Math.random() * available.length)]]);
+    setDrawn([
+      ...drawn,
+      available[Math.floor(Math.random() * available.length)],
+    ]);
     setShowFollowUps(false);
   }
   useEffect(() => {
@@ -281,11 +286,25 @@ export function TaskDialog({
             <>
               <p className="task-summary">{block.summary}</p>
               {!!block.problems?.length && (
-                <section className="problem-cards" aria-label="LeetCode assignments">
+                <section
+                  className="problem-cards"
+                  aria-label="LeetCode assignments"
+                >
                   {block.problems.map((problem) => (
-                    <a className="problem-card" href={problem.url} key={problem.number} target="_blank" rel="noreferrer">
-                      <span className="problem-meta">{problem.difficulty} · Python</span>
-                      <strong>{problem.number}. {problem.title} <ExternalLink size={16} /></strong>
+                    <a
+                      className="problem-card"
+                      href={problem.url}
+                      key={problem.number}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span className="problem-meta">
+                        {problem.difficulty} · Python
+                      </span>
+                      <strong>
+                        {problem.number}. {problem.title}{" "}
+                        <ExternalLink size={16} />
+                      </strong>
                       <span>{problem.focus}</span>
                       <span className="problem-action">Open on LeetCode ↗</span>
                     </a>
@@ -312,37 +331,100 @@ export function TaskDialog({
                   <p className="muted">
                     Read the opening brief, write your questions, then consult
                     CLARIFICATIONS.md for the requirements. To resume an
-                    attempt, open its existing folder; its original task still applies.
+                    attempt, open its existing folder; its original task still
+                    applies.
                   </p>
                 </section>
               )}
               <Markdown>{block.content}</Markdown>
               {!!block.stages?.length && (
                 <section className="section" aria-label="Case stages">
-                  <p className="muted">Stage {Math.min(visibleStages, block.stages.length)} of {block.stages.length}. Explain your answer before moving on. These reveals are session-only; save your place in Notes.</p>
+                  <p className="muted">
+                    Stage {Math.min(visibleStages, block.stages.length)} of{" "}
+                    {block.stages.length}. Explain your answer before moving on.
+                    These reveals are session-only; save your place in Notes.
+                  </p>
                   {block.stages.slice(0, visibleStages).map((stage, i) => (
                     <section className="case-stage" key={i}>
-                      <h3>{i + 1}. {stage.title}</h3>
+                      <h3>
+                        {i + 1}. {stage.title}
+                      </h3>
                       <Markdown>{stage.content}</Markdown>
                     </section>
                   ))}
-                  {visibleStages < block.stages.length && <button className="button secondary" onClick={() => setVisibleStages(visibleStages + 1)}>Reveal next stage</button>}
+                  {visibleStages < block.stages.length && (
+                    <button
+                      className="button secondary"
+                      onClick={() => setVisibleStages(visibleStages + 1)}
+                    >
+                      Reveal next stage
+                    </button>
+                  )}
                 </section>
               )}
               {!!groups.length && (
-                <section className="section rehearsal" aria-label="Behavioral rehearsal">
+                <section
+                  className="section rehearsal"
+                  aria-label="Behavioral rehearsal"
+                >
                   <h3>Interview rehearsal</h3>
-                  <p>Choose your story after hearing the question. Answer aloud for 90–120 seconds, then open the follow-ups. Questions do not repeat within this round.</p>
-                  {currentQuestion && <>
-                    <p className="drawn-question" data-testid="drawn-question" aria-live="polite">{currentQuestion.question}</p>
-                    {!showFollowUps ? <button className="text-button" onClick={() => setShowFollowUps(true)}>Show follow-ups</button> : <ul>{currentQuestion.followUps.map((q) => <li key={q}>{q}</li>)}</ul>}
-                  </>}
+                  <p>
+                    Choose your story after hearing the question. Answer aloud
+                    for 90–120 seconds, then open the follow-ups. Questions do
+                    not repeat within this round.
+                  </p>
+                  {currentQuestion && (
+                    <>
+                      <p
+                        className="drawn-question"
+                        data-testid="drawn-question"
+                        aria-live="polite"
+                      >
+                        {currentQuestion.question}
+                      </p>
+                      {!showFollowUps ? (
+                        <button
+                          className="text-button"
+                          onClick={() => setShowFollowUps(true)}
+                        >
+                          Show follow-ups
+                        </button>
+                      ) : (
+                        <ul>
+                          {currentQuestion.followUps.map((q) => (
+                            <li key={q}>{q}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </>
+                  )}
                   <div className="button-row">
-                    <button className="button secondary" disabled={drawn.length === groups.length} onClick={drawQuestion}>Draw a question</button>
-                    {drawn.length === groups.length && <button className="text-button" onClick={() => { setDrawn([]); setShowFollowUps(false); }}>Start another round</button>}
-                    <span className="muted">{drawn.length} / {groups.length} asked</span>
+                    <button
+                      className="button secondary"
+                      disabled={drawn.length === groups.length}
+                      onClick={drawQuestion}
+                    >
+                      Draw a question
+                    </button>
+                    {drawn.length === groups.length && (
+                      <button
+                        className="text-button"
+                        onClick={() => {
+                          setDrawn([]);
+                          setShowFollowUps(false);
+                        }}
+                      >
+                        Start another round
+                      </button>
+                    )}
+                    <span className="muted">
+                      {drawn.length} / {groups.length} asked
+                    </span>
                   </div>
-                  <p className="muted">Save the question and your answer in My attempt. The shuffled order resets when this exercise is closed.</p>
+                  <p className="muted">
+                    Save the question and your answer in My attempt. The
+                    shuffled order resets when this exercise is closed.
+                  </p>
                 </section>
               )}
               {block.setupPrompt && (

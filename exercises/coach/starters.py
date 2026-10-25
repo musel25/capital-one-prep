@@ -129,7 +129,8 @@ def apply_starter(task_id: str, destination: Path, *, revision=2):
         from exercises.coach.early import PATCHES as early
         from exercises.coach.middle import PATCHES as middle
         from exercises.coach.late import PATCHES as late
-        patches = {**PATCHES, **early, **middle, **late}
+        from exercises.coach.mocks import PATCHES as mocks
+        patches = {**PATCHES, **early, **middle, **late, **mocks}
     elif revision != 1:
         raise ValueError('Unsupported exercise revision')
     relative, name, replacement = patches[task_id]

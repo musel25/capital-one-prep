@@ -1,0 +1,158 @@
+[
+  {
+    "id": "d08-technical",
+    "title": "Mock A: payouts and attendance",
+    "kind": "technical",
+    "minutes": 90,
+    "summary": "Merchant operations and attendance reporting under a time limit.",
+    "content": "## Two projects\n\nStart from the merchant’s report, ask focused clarification questions, and investigate. For the feature round, open the independent attendance application. Do not reuse a previous solution or inspect instructor source. Use only the assistance you agreed to allow for this mock.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the existing setup and review phases. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?",
+    "deliverables": [
+      "Two separate attempt folders with code and tests, including unsuccessful attempts.",
+      "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
+      "Actual check results, commands used, and two five-minute explanations in English.",
+      "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
+    ],
+    "rubric": [
+      "Record questions, assumptions and a hypothesis or feature design before editing.",
+      "Describe a test yourself and observe its relevant failure before implementation.",
+      "Preserve existing behavior, review AI output and justify each change with executed checks.",
+      "Explain results and remaining uncertainty in English; keep each application in its own attempt."
+    ],
+    "labs": ["d08-bug", "d08-feature"],
+    "phases": [
+      {
+        "title": "Mock setup",
+        "minutes": 5,
+        "legacyTitle": "Preparación de mock"
+      },
+      {
+        "title": "Bug: implement",
+        "minutes": 20,
+        "legacyTitle": "Bug: trabajo"
+      },
+      {
+        "title": "Bug: explain",
+        "minutes": 5,
+        "legacyTitle": "Bug: explicación"
+      },
+      {
+        "title": "Save and open a fresh copy",
+        "minutes": 5,
+        "legacyTitle": "Guardar y abrir copia limpia"
+      },
+      {
+        "title": "Feature: implement",
+        "minutes": 20,
+        "legacyTitle": "Feature: trabajo"
+      },
+      {
+        "title": "Feature: explain",
+        "minutes": 5,
+        "legacyTitle": "Feature: explicación"
+      },
+      {
+        "title": "Tests, feedback, and retry",
+        "minutes": 25,
+        "legacyTitle": "Pruebas, feedback y reintento"
+      },
+      {
+        "title": "Record results",
+        "minutes": 5,
+        "legacyTitle": "Registro"
+      }
+    ],
+    "prompts": [
+      "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+      "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+      "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+      "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
+    ],
+    "hints": [],
+    "sources": [
+      "codesignal-agentic",
+      "codesignal-copilot",
+      "tdp-agentic-report",
+      "gildedrose",
+      "fastapi-template",
+      "original-practice"
+    ]
+  },
+  {
+    "id": "d10-technical",
+    "title": "Mock B: warehouse and equipment loans",
+    "kind": "technical",
+    "minutes": 90,
+    "summary": "Two final unfamiliar projects: supply reservations and equipment lending.",
+    "content": "## Two projects\n\nInvestigate the warehouse report, then switch to an independent equipment-loan application for the feature round. Discover the data flow and clarify product rules separately. Record partial progress and remaining uncertainty if time expires.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the existing setup and review phases. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?",
+    "deliverables": [
+      "Two separate attempt folders with code and tests, including unsuccessful attempts.",
+      "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
+      "Actual check results, commands used, and two five-minute explanations in English.",
+      "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
+    ],
+    "rubric": [
+      "Record questions, assumptions and a hypothesis or feature design before editing.",
+      "Describe a test yourself and observe its relevant failure before implementation.",
+      "Preserve existing behavior, review AI output and justify each change with executed checks.",
+      "Explain results and remaining uncertainty in English; keep each application in its own attempt."
+    ],
+    "labs": ["d10-bug", "d10-feature"],
+    "phases": [
+      {
+        "title": "Mock setup",
+        "minutes": 5,
+        "legacyTitle": "Preparación de mock"
+      },
+      {
+        "title": "Bug: implement",
+        "minutes": 20,
+        "legacyTitle": "Bug: trabajo"
+      },
+      {
+        "title": "Bug: explain",
+        "minutes": 5,
+        "legacyTitle": "Bug: explicación"
+      },
+      {
+        "title": "Save and open a fresh copy",
+        "minutes": 5,
+        "legacyTitle": "Guardar y abrir copia limpia"
+      },
+      {
+        "title": "Feature: implement",
+        "minutes": 20,
+        "legacyTitle": "Feature: trabajo"
+      },
+      {
+        "title": "Feature: explain",
+        "minutes": 5,
+        "legacyTitle": "Feature: explicación"
+      },
+      {
+        "title": "Tests, feedback, and retry",
+        "minutes": 25,
+        "legacyTitle": "Pruebas, feedback y reintento"
+      },
+      {
+        "title": "Record results",
+        "minutes": 5,
+        "legacyTitle": "Registro"
+      }
+    ],
+    "prompts": [
+      "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+      "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+      "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+      "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
+    ],
+    "hints": [],
+    "sources": [
+      "codesignal-agentic",
+      "codesignal-copilot",
+      "tdp-agentic-report",
+      "gildedrose",
+      "fastapi-template",
+      "original-practice"
+    ]
+  }
+]

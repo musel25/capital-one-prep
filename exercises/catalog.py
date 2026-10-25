@@ -5,6 +5,7 @@ from exercises.legacy.catalog import TASKS as LEGACY_TASKS, BY_ID as LEGACY_BY_I
 from exercises.scenarios.early import TASK_DATA as EARLY
 from exercises.scenarios.middle import TASK_DATA as MIDDLE
 from exercises.scenarios.late import TASK_DATA as LATE
+from exercises.scenarios.mocks import TASK_DATA as MOCKS
 
 
 @dataclass(frozen=True)
@@ -43,6 +44,7 @@ OPENINGS = {
 }
 TASKS = [replace(task, title=OPENINGS[task.id][0], brief=OPENINGS[task.id][1])
          if task.id in OPENINGS else task for task in TASKS]
+TASKS += [Task(id=task_id, **data) for task_id, data in MOCKS.items()]
 BY_ID = {task.id: task for task in TASKS}
 
 

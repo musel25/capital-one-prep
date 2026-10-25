@@ -66,8 +66,6 @@ Preguntas originales de práctica en inglés; los temas se inspiran en testimoni
 - What did you defer, and why?
 - How did you communicate what would not be delivered?
 
-## Repreguntas transversales
-
 ## Program motivation and project depth
 
 - Introduce yourself and explain what led you toward software engineering.

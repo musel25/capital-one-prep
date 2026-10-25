@@ -29,10 +29,7 @@
             "Walk through the execution path and justify each change yourself.",
             "Stop after 20 minutes, keep bug and feature attempts separate, and identify tests you did not run."
           ],
-          "labs": [
-            "d01-bug",
-            "d01-feature"
-          ],
+          "labs": ["d01-bug", "d01-feature"],
           "phases": [
             {
               "title": "Explore and set up",
@@ -243,9 +240,7 @@
               "minutes": 2
             }
           ],
-          "sources": [
-            "leetcode-1"
-          ]
+          "sources": ["leetcode-1"]
         }
       ]
     },
@@ -273,10 +268,7 @@
             "Preserve existing behavior, review AI output and justify each change with executed checks.",
             "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
-          "labs": [
-            "d02-bug",
-            "d02-feature"
-          ],
+          "labs": ["d02-bug", "d02-feature"],
           "phases": [
             {
               "title": "Explore and set up",
@@ -486,9 +478,7 @@
               "minutes": 2
             }
           ],
-          "sources": [
-            "leetcode-242"
-          ]
+          "sources": ["leetcode-242"]
         }
       ]
     },
@@ -516,10 +506,7 @@
             "Preserve existing behavior, review AI output and justify each change with executed checks.",
             "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
-          "labs": [
-            "d03-bug",
-            "d03-feature"
-          ],
+          "labs": ["d03-bug", "d03-feature"],
           "phases": [
             {
               "title": "Orient and clarify",
@@ -809,10 +796,7 @@
               "minutes": 5
             }
           ],
-          "sources": [
-            "leetcode-1603",
-            "python-classes"
-          ]
+          "sources": ["leetcode-1603", "python-classes"]
         }
       ]
     },
@@ -840,10 +824,7 @@
             "Preserve existing behavior, review AI output and justify each change with executed checks.",
             "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
-          "labs": [
-            "d04-bug",
-            "d04-feature"
-          ],
+          "labs": ["d04-bug", "d04-feature"],
           "phases": [
             {
               "title": "Orient and clarify",
@@ -1133,9 +1114,7 @@
               "minutes": 5
             }
           ],
-          "sources": [
-            "leetcode-2043"
-          ]
+          "sources": ["leetcode-2043"]
         }
       ]
     },
@@ -1163,10 +1142,7 @@
             "Preserve existing behavior, review AI output and justify each change with executed checks.",
             "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
-          "labs": [
-            "d05-bug",
-            "d05-feature"
-          ],
+          "labs": ["d05-bug", "d05-feature"],
           "phases": [
             {
               "title": "Orient and clarify",
@@ -1456,9 +1432,7 @@
               "minutes": 5
             }
           ],
-          "sources": [
-            "leetcode-1656"
-          ]
+          "sources": ["leetcode-1656"]
         }
       ]
     },
@@ -1486,10 +1460,7 @@
             "Preserve existing behavior, review AI output and justify each change with executed checks.",
             "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
-          "labs": [
-            "d06-bug",
-            "d06-feature"
-          ],
+          "labs": ["d06-bug", "d06-feature"],
           "phases": [
             {
               "title": "Orient and clarify",
@@ -1778,9 +1749,7 @@
               "minutes": 5
             }
           ],
-          "sources": [
-            "leetcode-1396"
-          ]
+          "sources": ["leetcode-1396"]
         }
       ]
     },
@@ -1808,10 +1777,7 @@
             "Preserve existing behavior, review AI output and justify each change with executed checks.",
             "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
-          "labs": [
-            "d07-bug",
-            "d07-feature"
-          ],
+          "labs": ["d07-bug", "d07-feature"],
           "phases": [
             {
               "title": "Orient and clarify",
@@ -2102,24 +2068,22 @@
               "minutes": 5
             }
           ],
-          "sources": [
-            "leetcode-933"
-          ]
+          "sources": ["leetcode-933"]
         }
       ]
     },
     {
       "date": "2026-10-30",
-      "title": "Mock A: the full interview",
-      "focus": "Merchant operations and attendance reporting under a time limit.",
+      "title": "Mock A: Support Ops",
+      "focus": "Explore a support-operations application with queues, agents, comments, status changes and event history. Reproduce a queue-isolation report, then start an independent snapshot for a batch-assignment feature.",
       "blocks": [
         {
-          "id": "d08-technical",
-          "title": "Mock A: payouts and attendance",
+          "id": "d08-technical-v2",
+          "title": "Mock A: Support Ops",
           "kind": "technical",
           "minutes": 75,
-          "summary": "Merchant operations and attendance reporting under a time limit.",
-          "content": "## Two projects\n\nStart from the merchant’s report, ask focused clarification questions, and investigate. For the feature round, open the independent attendance application. Do not reuse a previous solution or inspect instructor source. Use only the assistance you agreed to allow for this mock.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the 75-minute block. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?\n\n## Ten-minute debrief: AI patch review\n\nAsk a practice partner to propose a deliberately flawed patch separately from your solution. Check whether it changes fixtures, swallows exceptions, or weakens a test. Explain one counterexample before accepting it.\n\nFirst explain the real request path through the files you changed. Support claims with actual commands/results and say what you did not verify. Your interviewer may ask for a small manual change; be ready to explain and edit the relevant Python without delegating every line. These discussions are original practice, not a claim that your interview includes a separate system-design round.",
+          "summary": "Explore a support-operations application with queues, agents, comments, status changes and event history. Reproduce a queue-isolation report, then start an independent snapshot for a batch-assignment feature.",
+          "content": "## A fuller application, two independent tickets\n\nExplore a support-operations application with queues, agents, comments, status changes and event history. Reproduce a queue-isolation report, then start an independent snapshot for a batch-assignment feature.\n\nThese are original multi-module practice applications, not copies of a Capital One assessment. Each includes a browser UI, API routes, validation, application state, event history and tests. Use the app and request paths to narrow your search; you do not need to read every file.\n\n## Seventy-five-minute mock\n\n1. **10 minutes — orient and clarify.** Start the bug attempt, read its README, run the app and existing tests, and ask focused product questions. Record questions before consulting `CLARIFICATIONS.md` (or have a practice partner answer from it). Trace one request from UI to route to state.\n2. **20 minutes — investigate and change.** Describe a reproduction and expected response/state yourself. Ask AI for focused help with the relevant evidence. Verify the test fails for the intended reason, inspect any suggested change, and run regression checks.\n3. **5 minutes — explain the bug work.** Explain your hypothesis, evidence, diff and remaining uncertainty in English, including an accepted or rejected AI suggestion.\n4. **5 minutes — fresh feature snapshot.** Use the separate feature command below. The same product is familiar, but this is an independent copy with the bug already corrected and the feature missing. Do not copy a solution between attempts.\n5. **20 minutes — implement the feature.** Clarify the contract, describe success and rejection cases, make a focused change and check both response and state. You must understand any code the assistant writes.\n6. **5 minutes — explain the feature work.** State exactly which checks you ran. Keep unfinished work and explain your next step when time expires.\n7. **10 minutes — review.** Propose a deliberately flawed AI patch, then identify a concrete counterexample. Check rejected requests for partial changes and history side effects.\n\nRun `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt and record the actual result. The checker cannot prove general correctness; add your own regression and boundary tests. Be ready to make and explain a small manual Python change.\n\nRestarting the server resets these in-memory applications. They do not implement production authentication, persistence or distributed concurrency. Discuss how those constraints would change a design only after explaining the application in front of you. This is preparation for engineering discussion, not a claim of a separate system-design round.",
           "deliverables": [
             "Two separate attempt folders with code and tests, including unsuccessful attempts.",
             "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
@@ -2132,10 +2096,7 @@
             "Preserve existing behavior, review AI output and justify each change with executed checks.",
             "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
-          "labs": [
-            "d08-bug",
-            "d08-feature"
-          ],
+          "labs": ["mock-support-bug", "mock-support-feature"],
           "phases": [
             {
               "title": "Orient and clarify",
@@ -2177,7 +2138,6 @@
             "codesignal-agentic",
             "codesignal-copilot",
             "tdp-agentic-report",
-            "gildedrose",
             "fastapi-template",
             "original-practice"
           ]
@@ -2422,9 +2382,7 @@
               "minutes": 5
             }
           ],
-          "sources": [
-            "leetcode-49"
-          ]
+          "sources": ["leetcode-49"]
         }
       ]
     },
@@ -2438,12 +2396,12 @@
           "title": "Focused review: promotions and subscriptions",
           "kind": "technical",
           "minutes": 75,
-          "summary": "A real upstream task plus two distinct original applications.",
+          "summary": "Two focused tasks, with Gilded Rose available as an optional substitution.",
           "content": "## Two focused attempts\n\nUse 10 minutes to read the prompts and clarify acceptance criteria. Investigate the promotion complaint in one application, then create a separate subscription feature attempt. Give each task 20 minutes of work and 5 minutes of explanation, with 5 minutes between tasks to open the fresh project.\n\nDescribe your regression test before asking AI to implement it. Observe the failure, inspect the diff and run existing plus new checks. Finish with a 10-minute review: explain the request path, one rejected AI suggestion, and what remains unverified.\n\n## Optional substitution\n\nIf you want upstream code practice, replace one 25-minute local task plus 5 minutes of review with the [Gilded Rose kata](https://github.com/emilybache/GildedRose-Refactoring-Kata). Run `uv run python external/start.py external-gilded-rose`, read TASK.md, and use 5 minutes to orient, 20 to implement, and 5 to explain. This is a small refactoring kata, not a large-codebase simulation. Do not add it on top of today's workload.",
           "deliverables": [
-            "A unique external-gilded-rose attempt, an explanation of the change, and actual external check results.",
-            "Separate saved d09-bug and d09-feature attempts, with checks and a tested boundary.",
-            "Three explanations in English; notes on help used, failures, and the next step."
+            "Two separate saved attempts: d09-bug and d09-feature, or one local task and the optional external-gilded-rose substitution.",
+            "Actual check results and a tested boundary for each chosen task, including unfinished work.",
+            "Two explanations in English; notes on help used, failures, and the next step."
           ],
           "rubric": [
             "Record questions, assumptions and a hypothesis or feature design before editing.",
@@ -2451,10 +2409,7 @@
             "Preserve existing behavior, review AI output and justify each change with executed checks.",
             "Distinguish upstream code, the practice extension and original applications; explain what each executed check establishes."
           ],
-          "labs": [
-            "d09-bug",
-            "d09-feature"
-          ],
+          "labs": ["d09-bug", "d09-feature"],
           "phases": [
             {
               "title": "Orient and clarify",
@@ -2744,24 +2699,22 @@
               "minutes": 5
             }
           ],
-          "sources": [
-            "leetcode-937"
-          ]
+          "sources": ["leetcode-937"]
         }
       ]
     },
     {
       "date": "2026-11-01",
-      "title": "Mock B: unfamiliar rules",
-      "focus": "Two final unfamiliar projects: supply reservations and equipment lending.",
+      "title": "Mock B: Parcel Dispatch",
+      "focus": "Explore a parcel-dispatch application with products, reservations, quotes, shipments and tracking. Investigate inconsistent quotes, then start an independent snapshot for an order-cancellation feature.",
       "blocks": [
         {
-          "id": "d10-technical",
-          "title": "Mock B: warehouse and equipment loans",
+          "id": "d10-technical-v2",
+          "title": "Mock B: Parcel Dispatch",
           "kind": "technical",
           "minutes": 75,
-          "summary": "Two final unfamiliar projects: supply reservations and equipment lending.",
-          "content": "## Two projects\n\nInvestigate the warehouse report, then switch to an independent equipment-loan application for the feature round. Discover the data flow and clarify product rules separately. Record partial progress and remaining uncertainty if time expires.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the 75-minute block. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?\n\n## Ten-minute debrief: Operational handoff\n\nExplain how another engineer can reproduce the issue and validate your change. Name one remaining limitation and a concrete next check.\n\nFirst explain the real request path through the files you changed. Support claims with actual commands/results and say what you did not verify. Your interviewer may ask for a small manual change; be ready to explain and edit the relevant Python without delegating every line. These discussions are original practice, not a claim that your interview includes a separate system-design round.",
+          "summary": "Explore a parcel-dispatch application with products, reservations, quotes, shipments and tracking. Investigate inconsistent quotes, then start an independent snapshot for an order-cancellation feature.",
+          "content": "## A fuller application, two independent tickets\n\nExplore a parcel-dispatch application with products, reservations, quotes, shipments and tracking. Investigate inconsistent quotes, then start an independent snapshot for an order-cancellation feature.\n\nThese are original multi-module practice applications, not copies of a Capital One assessment. Each includes a browser UI, API routes, validation, application state, event history and tests. Use the app and request paths to narrow your search; you do not need to read every file.\n\n## Seventy-five-minute mock\n\n1. **10 minutes — orient and clarify.** Start the bug attempt, read its README, run the app and existing tests, and ask focused product questions. Record questions before consulting `CLARIFICATIONS.md` (or have a practice partner answer from it). Trace one request from UI to route to state.\n2. **20 minutes — investigate and change.** Describe a reproduction and expected response/state yourself. Ask AI for focused help with the relevant evidence. Verify the test fails for the intended reason, inspect any suggested change, and run regression checks.\n3. **5 minutes — explain the bug work.** Explain your hypothesis, evidence, diff and remaining uncertainty in English, including an accepted or rejected AI suggestion.\n4. **5 minutes — fresh feature snapshot.** Use the separate feature command below. The same product is familiar, but this is an independent copy with the bug already corrected and the feature missing. Do not copy a solution between attempts.\n5. **20 minutes — implement the feature.** Clarify the contract, describe success and rejection cases, make a focused change and check both response and state. You must understand any code the assistant writes.\n6. **5 minutes — explain the feature work.** State exactly which checks you ran. Keep unfinished work and explain your next step when time expires.\n7. **10 minutes — review.** Give an operational handoff: reproduce the issue, trace the request through the modules, show before/after evidence, and name one remaining limitation and the next check.\n\nRun `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt and record the actual result. The checker cannot prove general correctness; add your own regression and boundary tests. Be ready to make and explain a small manual Python change.\n\nRestarting the server resets these in-memory applications. They do not implement production authentication, persistence or distributed concurrency. Discuss how those constraints would change a design only after explaining the application in front of you. This is preparation for engineering discussion, not a claim of a separate system-design round.",
           "deliverables": [
             "Two separate attempt folders with code and tests, including unsuccessful attempts.",
             "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
@@ -2774,10 +2727,7 @@
             "Preserve existing behavior, review AI output and justify each change with executed checks.",
             "Explain results and remaining uncertainty in English; keep each application in its own attempt."
           ],
-          "labs": [
-            "d10-bug",
-            "d10-feature"
-          ],
+          "labs": ["mock-dispatch-bug", "mock-dispatch-feature"],
           "phases": [
             {
               "title": "Orient and clarify",
@@ -2819,7 +2769,6 @@
             "codesignal-agentic",
             "codesignal-copilot",
             "tdp-agentic-report",
-            "gildedrose",
             "fastapi-template",
             "original-practice"
           ]
@@ -3064,9 +3013,7 @@
               "minutes": 5
             }
           ],
-          "sources": [
-            "leetcode-2043"
-          ]
+          "sources": ["leetcode-2043"]
         }
       ]
     }
@@ -3319,9 +3266,7 @@
           "legacyTitle": "Guardar"
         }
       ],
-      "sources": [
-        "original-practice"
-      ],
+      "sources": ["original-practice"],
       "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d01-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement ordered_ids(rows). Each row has unique string id, integer minute and state. Keep only posted rows; return IDs sorted by (minute,id), ascending. Do not mutate rows or row dicts.\n\nInput: [{'id':'b','minute':5,'state':'posted'},{'id':'a','minute':5,'state':'posted'},{'id':'c','minute':1,'state':'pending'},{'id':'d','minute':2,'state':'posted'}]. Test empty input, tied minutes, and preservation of the original list order and row dictionaries.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d01-python.py.\n"
     },
     {
@@ -3371,10 +3316,7 @@
           "legacyTitle": "Guardar"
         }
       ],
-      "sources": [
-        "original-practice",
-        "leetcode-two-sum"
-      ],
+      "sources": ["original-practice", "leetcode-two-sum"],
       "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d02-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement deltas(transfers) returning a dict of net cents per account. Each tuple is (source,target,amount); amounts are positive ints, source != target. Include accounts even if their final net is zero. Input [('A','B',30),('B','C',10),('C','A',10)]. No mutation. Test empty input, an account with zero net change, and two transfers in the same direction.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d02-python.py.\n"
     },
     {
@@ -3424,10 +3366,7 @@
           "legacyTitle": "Guardar"
         }
       ],
-      "sources": [
-        "original-practice",
-        "leetcode-valid-anagram"
-      ],
+      "sources": ["original-practice", "leetcode-valid-anagram"],
       "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d03-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement reward(amount_cents, rate_bps, remaining_cents) for nonnegative integers. Raw reward=floor(amount_cents*rate_bps/10000); return min(raw,remaining). No floats. Predict reward(999,250,20), reward(39,250,100), reward(40,250,100), reward(10000,250,0). Explain basis points in one sentence.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d03-python.py.\n"
     },
     {
@@ -3476,9 +3415,7 @@
           "legacyTitle": "Guardar"
         }
       ],
-      "sources": [
-        "original-practice"
-      ],
+      "sources": ["original-practice"],
       "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d04-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement slice_page(values,offset,limit) for offset>=0, limit>0 returning {'items':list,'total':int,'next':int|None}. next is offset+len(items) only if unreturned elements remain. Input values=['x','y','z','w'], (offset,limit)=(0,2),(2,2),(4,2),(9,2). Do not modify values.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d04-python.py.\n"
     },
     {
@@ -3528,10 +3465,7 @@
           "legacyTitle": "Guardar"
         }
       ],
-      "sources": [
-        "original-practice",
-        "leetcode-group-anagrams"
-      ],
+      "sources": ["original-practice", "leetcode-group-anagrams"],
       "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d05-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement net_totals(purchases,refunds). purchases is [(id,category,cents)] with unique IDs. refunds is [(purchase_id,cents)] with valid IDs; all refunds here are posted. Return category sums minus refunds. Input purchases=[('a','food',800),('b','food',200),('c','travel',900)], refunds=[('a',300),('a',100)]. Preserve zero categories. Do not mutate.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d05-python.py.\n"
     },
     {
@@ -3580,9 +3514,7 @@
           "legacyTitle": "Guardar"
         }
       ],
-      "sources": [
-        "original-practice"
-      ],
+      "sources": ["original-practice"],
       "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d06-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement parse_cents(text). Accept a string of one or more ASCII digits, optionally '.' followed by exactly two ASCII digits; no signs, spaces, commas or exponent. Leading zeros allowed. Return integer cents; any invalid input including non-string raises ValueError. Examples: '12','12.30','001.05','0.00','1.2','-1',' 2',True. Use standard library only.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d06-python.py.\n"
     },
     {
@@ -3632,10 +3564,7 @@
           "legacyTitle": "Guardar"
         }
       ],
-      "sources": [
-        "original-practice",
-        "leetcode-top-k"
-      ],
+      "sources": ["original-practice", "leetcode-top-k"],
       "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d07-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement unique_events(events), each dict has id and amount_cents. Return first occurrences in input order. Same id/same amount is ignored; same id/different amount raises ValueError. Do not mutate or partially return on conflict. No other fields. Input [{'id':'k','amount_cents':10},{'id':'k','amount_cents':10},{'id':'m','amount_cents':20}]. Then change the second amount to 11. Explain why deduplication alone is not a durable payment transaction.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d07-python.py.\n"
     },
     {
@@ -3684,9 +3613,7 @@
           "legacyTitle": "Guardar"
         }
       ],
-      "sources": [
-        "original-practice"
-      ],
+      "sources": ["original-practice"],
       "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d08-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement merge_windows(windows). Each tuple (start,end) represents a half-open interval with start<end. Return sorted merged intervals; overlap or touching endpoints should merge. Input [(8,10),(1,3),(3,5),(9,12),(15,16)]. No mutation. Test empty input, a contained interval, identical windows, and a one-unit gap. Work independently for the first 15 minutes.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d08-python.py.\n"
     },
     {
@@ -3735,9 +3662,7 @@
           "legacyTitle": "Guardar"
         }
       ],
-      "sources": [
-        "original-practice"
-      ],
+      "sources": ["original-practice"],
       "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d09-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement first_at_least(values,target) for ascending sorted integer values, duplicates allowed. Return the first index with value>=target, or len(values) if none. Use binary search, no library bisect for this drill. Input [2,4,4,9] with targets 1, 4, 5, 10. Explain the [lo,hi) invariant and why equality moves hi.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d09-python.py.\n"
     },
     {
@@ -3786,9 +3711,7 @@
           "legacyTitle": "Guardar"
         }
       ],
-      "sources": [
-        "original-practice"
-      ],
+      "sources": ["original-practice"],
       "setupPrompt": "Prepare a local LeetCode-style Python exercise in /home/musel/Github/capital-one-prep.\n\nCreate private/d10-python.py. Never overwrite an existing file: choose a numbered suffix if it exists, and report the exact path and run command.\n\nDo not implement the solution, provide an algorithm, inspect instructor solutions, or modify any existing attempt, test, fixture, project file, or dependency. Use only Python's standard library. Do not commit or publish private files.\n\nInclude:\n- The complete contract below, valid Python example inputs, and blank prediction/complexity/help-used notes before the tests.\n- The requested function signature with a TODO and NotImplementedError.\n- At least four independent test cases with literal, independently derived expected results. Cover the stated boundaries, normal behavior, and non-mutation where required. Test invalid input only where the contract specifies behavior.\n- A runner under if __name__ == \"__main__\" that reports every case as PASS, FAIL, or TODO, shows useful expected/actual differences, continues after a failed case, and exits nonzero unless every case passes. Clearly separate tests from the learner section so I can predict before reading expected results.\n\nUse uv run python to run the starter once and verify the runner works. Expected TODO results mean setup is ready, not that the exercise is solved. Leave the function unimplemented.\n\nExercise contract:\nImplement apply_deltas(stock,changes), stock maps product to nonnegative integer units; changes is [(product,signed_delta)] with existing products. Aggregate all changes per product; validate the final result is nonnegative, then return a new dict. If any final value is negative raise ValueError; stock remains unchanged. Input stock={'a':2,'b':1}, changes=[('a',-3),('a',2),('b',-1)]. Also test [('a',-3)] and []. Intermediate negative totals are allowed because only final atomic state matters.\n\nFinish with a link to the created file and the exact command from the repository root, for example: uv run python private/d10-python.py.\n"
     },
     {
@@ -3868,10 +3791,7 @@
         "Preserve existing behavior, review AI output and justify each change with executed checks.",
         "Distinguish upstream code, the practice extension and original applications; explain what each executed check establishes."
       ],
-      "labs": [
-        "d09-bug",
-        "d09-feature"
-      ],
+      "labs": ["d09-bug", "d09-feature"],
       "phases": [
         {
           "title": "Upstream: read",
@@ -3924,6 +3844,162 @@
         "Draw the request path using the code you actually inspected. A hypothesis should predict an observable result you can test.",
         "A status code alone may miss a state or output error. Choose assertions from the agreed requirements, then inspect why the test fails."
       ],
+      "sources": [
+        "codesignal-agentic",
+        "codesignal-copilot",
+        "tdp-agentic-report",
+        "gildedrose",
+        "fastapi-template",
+        "original-practice"
+      ]
+    },
+    {
+      "id": "d08-technical",
+      "title": "Mock A: payouts and attendance",
+      "kind": "technical",
+      "minutes": 90,
+      "summary": "Merchant operations and attendance reporting under a time limit.",
+      "content": "## Two projects\n\nStart from the merchant’s report, ask focused clarification questions, and investigate. For the feature round, open the independent attendance application. Do not reuse a previous solution or inspect instructor source. Use only the assistance you agreed to allow for this mock.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the existing setup and review phases. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?",
+      "deliverables": [
+        "Two separate attempt folders with code and tests, including unsuccessful attempts.",
+        "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
+        "Actual check results, commands used, and two five-minute explanations in English.",
+        "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
+      ],
+      "rubric": [
+        "Record questions, assumptions and a hypothesis or feature design before editing.",
+        "Describe a test yourself and observe its relevant failure before implementation.",
+        "Preserve existing behavior, review AI output and justify each change with executed checks.",
+        "Explain results and remaining uncertainty in English; keep each application in its own attempt."
+      ],
+      "labs": ["d08-bug", "d08-feature"],
+      "phases": [
+        {
+          "title": "Mock setup",
+          "minutes": 5,
+          "legacyTitle": "Preparación de mock"
+        },
+        {
+          "title": "Bug: implement",
+          "minutes": 20,
+          "legacyTitle": "Bug: trabajo"
+        },
+        {
+          "title": "Bug: explain",
+          "minutes": 5,
+          "legacyTitle": "Bug: explicación"
+        },
+        {
+          "title": "Save and open a fresh copy",
+          "minutes": 5,
+          "legacyTitle": "Guardar y abrir copia limpia"
+        },
+        {
+          "title": "Feature: implement",
+          "minutes": 20,
+          "legacyTitle": "Feature: trabajo"
+        },
+        {
+          "title": "Feature: explain",
+          "minutes": 5,
+          "legacyTitle": "Feature: explicación"
+        },
+        {
+          "title": "Tests, feedback, and retry",
+          "minutes": 25,
+          "legacyTitle": "Pruebas, feedback y reintento"
+        },
+        {
+          "title": "Record results",
+          "minutes": 5,
+          "legacyTitle": "Registro"
+        }
+      ],
+      "prompts": [
+        "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+        "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+        "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+        "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
+      ],
+      "hints": [],
+      "sources": [
+        "codesignal-agentic",
+        "codesignal-copilot",
+        "tdp-agentic-report",
+        "gildedrose",
+        "fastapi-template",
+        "original-practice"
+      ]
+    },
+    {
+      "id": "d10-technical",
+      "title": "Mock B: warehouse and equipment loans",
+      "kind": "technical",
+      "minutes": 90,
+      "summary": "Two final unfamiliar projects: supply reservations and equipment lending.",
+      "content": "## Two projects\n\nInvestigate the warehouse report, then switch to an independent equipment-loan application for the feature round. Discover the data flow and clarify product rules separately. Record partial progress and remaining uncertainty if time expires.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the existing setup and review phases. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?",
+      "deliverables": [
+        "Two separate attempt folders with code and tests, including unsuccessful attempts.",
+        "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
+        "Actual check results, commands used, and two five-minute explanations in English.",
+        "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
+      ],
+      "rubric": [
+        "Record questions, assumptions and a hypothesis or feature design before editing.",
+        "Describe a test yourself and observe its relevant failure before implementation.",
+        "Preserve existing behavior, review AI output and justify each change with executed checks.",
+        "Explain results and remaining uncertainty in English; keep each application in its own attempt."
+      ],
+      "labs": ["d10-bug", "d10-feature"],
+      "phases": [
+        {
+          "title": "Mock setup",
+          "minutes": 5,
+          "legacyTitle": "Preparación de mock"
+        },
+        {
+          "title": "Bug: implement",
+          "minutes": 20,
+          "legacyTitle": "Bug: trabajo"
+        },
+        {
+          "title": "Bug: explain",
+          "minutes": 5,
+          "legacyTitle": "Bug: explicación"
+        },
+        {
+          "title": "Save and open a fresh copy",
+          "minutes": 5,
+          "legacyTitle": "Guardar y abrir copia limpia"
+        },
+        {
+          "title": "Feature: implement",
+          "minutes": 20,
+          "legacyTitle": "Feature: trabajo"
+        },
+        {
+          "title": "Feature: explain",
+          "minutes": 5,
+          "legacyTitle": "Feature: explicación"
+        },
+        {
+          "title": "Tests, feedback, and retry",
+          "minutes": 25,
+          "legacyTitle": "Pruebas, feedback y reintento"
+        },
+        {
+          "title": "Record results",
+          "minutes": 5,
+          "legacyTitle": "Registro"
+        }
+      ],
+      "prompts": [
+        "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+        "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+        "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+        "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
+      ],
+      "hints": [],
       "sources": [
         "codesignal-agentic",
         "codesignal-copilot",

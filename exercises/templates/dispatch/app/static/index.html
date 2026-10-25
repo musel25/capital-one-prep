@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Parcel Dispatch</title><link rel="stylesheet" href="/static/style.css"></head><body><main>
+<h1>Parcel Dispatch</h1><p>Fictional warehouse and carrier sandbox. No real labels or purchases. <a href="/docs">API reference</a></p>
+<h2>Quote separately labeled parcels</h2><form id="quote"><label>Weights in grams, comma-separated<input name="weights" value="250,250" required></label><label>Service<select name="service"><option>standard</option><option>express</option></select></label><label>Signature<select name="signature"><option value="false">No</option><option value="true">Yes</option></select></label><button>Preview</button></form>
+<h2>Create an order</h2><form id="order"><label>Customer<input name="customer" value="Rae" required></label><label>SKU<select name="sku"><option>cable</option><option>dock</option></select></label><label>Quantity<input name="quantity" type="number" min="1" value="1" required></label><button>Reserve</button></form>
+<h2>Fulfillment</h2><form id="ship"><label>Order ID<input name="order_id" value="o-1" required></label><label>Service<select name="service"><option>standard</option><option>express</option></select></label><button>Create shipment</button></form>
+<form id="cancel"><label>Order ID<input name="order_id" value="o-1" required></label><button>Cancel reservation</button></form>
+<pre id="result" aria-live="polite"></pre><h2>Operations</h2><button id="refresh">Refresh records</button><pre id="inventory"></pre><pre id="orders"></pre><pre id="rates"></pre><pre id="events"></pre>
+</main><script src="/static/app.js"></script></body></html>

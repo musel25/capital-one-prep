@@ -5,6 +5,21 @@ import type { Plan } from "../web/types";
 const plan = JSON.parse(
   readFileSync(new URL("../curriculum/plan.json", import.meta.url), "utf8"),
 ) as Plan;
+test("archived mock instructions and timer phases retain their original definitions", () => {
+  const originalBlocks = JSON.parse(
+    readFileSync(
+      new URL("./fixtures/archived-mocks.json", import.meta.url),
+      "utf8",
+    ),
+  ) as Plan["archivedBlocks"];
+  for (const original of originalBlocks ?? []) {
+    assert.deepEqual(
+      plan.archivedBlocks?.find((b) => b.id === original.id),
+      original,
+    );
+  }
+});
+
 test("all ten days have four actionable blocks totaling 225 minutes", () => {
   assert.equal(plan.days.length, 10);
   assert.equal(plan.timezone, "America/Tijuana");
@@ -37,6 +52,7 @@ test("all ten days have four actionable blocks totaling 225 minutes", () => {
       for (const s of b.sources ?? [])
         assert.ok(sources.has(s), `${b.id}: unknown source ${s}`);
       for (const l of b.labs ?? []) labIds.add(l);
+      if (b.kind === "technical") assert.equal(b.labs?.length, 2);
       if (b.phases?.length)
         assert.equal(
           b.phases.reduce((n, p) => n + p.minutes, 0),
@@ -50,7 +66,5 @@ test("all ten days have four actionable blocks totaling 225 minutes", () => {
         );
     }
   }
-  for (let i = 1; i <= 10; i++)
-    for (const kind of ["bug", "feature"])
-      assert.ok(labIds.has(`d${String(i).padStart(2, "0")}-${kind}`));
+  assert.equal(labIds.size, 20);
 });

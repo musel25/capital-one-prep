@@ -15,13 +15,13 @@ def cli(*args):
                           cwd=ROOT, capture_output=True, text=True)
 
 
-def test_list_exposes_twenty_independent_tasks():
+def test_list_exposes_original_tasks_and_four_larger_mock_tasks():
     result = cli('list', '--json')
     assert result.returncode == 0, result.stderr
     tasks = json.loads(result.stdout)
     assert {x['id'] for x in tasks} == {
         f'd{day:02d}-{kind}' for day in range(1, 11) for kind in ('bug', 'feature')
-    }
+    } | {'mock-support-bug', 'mock-support-feature', 'mock-dispatch-bug', 'mock-dispatch-feature'}
 
 
 def test_invalid_task_cannot_escape_attempts(tmp_path):
@@ -29,6 +29,14 @@ def test_invalid_task_cannot_escape_attempts(tmp_path):
     assert result.returncode == 2
     assert 'unknown task' in result.stderr.lower()
     assert not list(tmp_path.iterdir())
+
+
+def test_current_and_archived_planner_labs_resolve_to_preserved_catalog():
+    from exercises.catalog import BY_ID
+    plan = json.loads((ROOT / 'curriculum/plan.json').read_text())
+    blocks = [b for d in plan['days'] for b in d['blocks']] + plan['archivedBlocks']
+    linked = {task for block in blocks for task in block.get('labs', [])}
+    assert linked == set(BY_ID)
 
 
 def test_repeated_start_preserves_work_and_never_copies_coach(tmp_path):
@@ -139,14 +147,14 @@ def test_all_starters_fail_target_contract_and_references_pass():
     result = cli('verify', '--json')
     assert result.returncode == 0, result.stdout + result.stderr
     report = json.loads(result.stdout)
-    assert len(report) == 20
+    assert len(report) == 24
     assert all(item['starter_fails'] and item['reference_passes'] for item in report)
     assert all(item['public_starter_passes'] and item['public_reference_passes'] for item in report)
 
 
 def test_remaining_tasks_use_unfamiliar_applications():
     tasks = json.loads(cli('list', '--json').stdout)
-    remaining = [task for task in tasks if task['id'] > 'd02-bug']
+    remaining = [task for task in tasks if task['id'].startswith('d') and task['id'] > 'd02-bug']
     assert len(remaining) == 17
     assert len({task['context'] for task in remaining}) == 17
     assert all(task['context'] != 'bank' for task in remaining)
@@ -179,6 +187,19 @@ def test_new_attempt_manifest_and_public_behavior_tests(tmp_path):
     assert cli('check', str(attempt)).returncode == 1
 
 
+@pytest.mark.parametrize('context', ['support', 'dispatch'])
+def test_large_mock_bug_and_feature_are_independent_and_preserve_existing_work(tmp_path, context):
+    bug = start_at(tmp_path, f'mock-{context}-bug')
+    (bug / 'NOTES.md').write_text('Keep my diagnosis and unfinished work.')
+    before = digests(bug)
+    feature = start_at(tmp_path, f'mock-{context}-feature')
+    assert bug != feature and digests(bug) == before
+    assert len(list((feature / 'app').glob('*.py'))) >= 10
+    assert not any('coach' in str(p.relative_to(feature)) or 'reference' in str(p.relative_to(feature)) for p in feature.rglob('*'))
+    assert cli('check', str(bug)).returncode == 1
+    assert cli('check', str(feature)).returncode == 1
+
+
 def test_old_replaced_task_keeps_original_contract_without_editing_attempt(tmp_path):
     from scripts.practice import build
     attempt = tmp_path / 'legacy-history'
@@ -190,6 +211,25 @@ def test_old_replaced_task_keeps_original_contract_without_editing_attempt(tmp_p
     result = cli('check', str(attempt), '--json')
     assert result.returncode == 0, result.stdout + result.stderr
     assert digests(attempt) == before
+
+
+@pytest.mark.parametrize('task, source, original, incorrect', [
+    ('mock-support-feature', 'app/assignments.py', "'current': agent['id']", "'current': None"),
+    ('mock-dispatch-bug', 'app/quotes.py', "'signature_cents': signature_cents", "'signature_cents': 0"),
+    ('mock-dispatch-feature', 'app/orders.py', "record(store, order_id, 'cancelled', {'items': order['items']})", "record(store, order_id, 'cancelled', {})"),
+    ('mock-dispatch-feature', 'app/shipments.py', "raise HTTPException(409, 'Order must be reserved before shipment')", "record(store, order['id'], 'shipped', {})\n        raise HTTPException(409, 'Order must be reserved before shipment')"),
+])
+def test_mock_checks_detect_incorrect_output_and_rejected_request_side_effects(tmp_path, task, source, original, incorrect):
+    from scripts.practice import build
+    attempt = tmp_path / task
+    build(task, attempt, reference=True)
+    target = attempt / source
+    text = target.read_text()
+    assert original in text
+    target.write_text(text.replace(original, incorrect))
+    result = cli('check', str(attempt), '--json')
+    assert result.returncode == 1, result.stdout + result.stderr
+    assert json.loads(result.stdout)['status'] == 'failed'
 
 
 @pytest.mark.parametrize('revision', [None, True, '2', 3, [], {}])
