@@ -40,7 +40,7 @@
 ### Task 3: Review and publish
 
 - [x] Fresh read-only review of the whole change; fix material findings.
-- [ ] Fast-forward and push main, deploy from clean worktree, inspect live desktop/mobile and new commands.
+- [x] Fast-forward and push main, deploy from clean worktree, inspect live desktop/mobile and new commands.
 
 ## Execution record
 
@@ -51,3 +51,5 @@
 - Task 2's case and two UI regressions first failed, then passed after implementation. The archive-isolation integration check also passes. Final suites: 46 Python tests, 23 website tests; production build and diff whitespace checks pass.
 - Fresh reviewer found no Critical/Important defects. Clarified assistance reporting so independent practice does not require an AI suggestion; no outstanding findings.
 - Browser QA at 390px and 1440px: manual card rules, progressive stage reveal and launcher, all three behavioral draws followed by exhaustion, and Group Anagrams link. No horizontal overflow. Existing learner attempts and private notes were not read or changed.
+- Curriculum unit 502e1a0 was pushed and fast-forwarded into main. Deployment published 502e1a0e05be-20261025T201104; nginx and existing application health checks passed.
+- Live browser verified card-number case, progressive launcher, Merge Similar Items and all three behavioral draws followed by exhaustion. Served asset: index-C37hLqWv.js. This final record-only commit leaves the published assets unchanged.
