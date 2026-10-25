@@ -33,11 +33,11 @@ import {
   validateState,
 } from "./model";
 import { kindLabels, TaskDialog } from "./TaskDialog";
-type View = "agenda" | "resources" | "behavioral";
+type View = "agenda" | "resources" | "behavioral" | "archive";
 const plan = planData as Plan;
 const all = plan.days.flatMap((d) => d.blocks);
 // Accept old closing notes in stored state and backups without scheduling them.
-const ids = [...all.map((b) => b.id), ...(plan.archivedBlockIds ?? [])];
+const ids = [...all.map((b) => b.id), ...(plan.archivedBlocks ?? []).map((b) => b.id), ...(plan.archivedBlockIds ?? [])];
 const done = (p?: Progress) => p?.status === "done" || p?.status === "assisted";
 function read() {
   try {
@@ -85,7 +85,7 @@ export default function App() {
   );
   const [view, setView] = useState<View>(() => {
     const requested = new URLSearchParams(location.search).get("view");
-    return requested === "resources" || requested === "behavioral"
+    return requested === "resources" || requested === "behavioral" || requested === "archive"
       ? requested
       : "agenda";
   });
@@ -299,6 +299,9 @@ export default function App() {
           })}
         </nav>
         <nav className="secondary-nav" aria-label="Resources">
+          <button className={view === "archive" ? "active" : ""} onClick={() => showView("archive")}>
+            <BookOpen size={17} /> Previous exercises
+          </button>
           <button
             className={view === "behavioral" ? "active" : ""}
             onClick={() => showView("behavioral")}
@@ -593,6 +596,17 @@ export default function App() {
               </button>
             </div>
           </>
+        ) : view === "archive" ? (
+          <section className="resource-page">
+            <h1>Previous exercises</h1>
+            <p className="day-focus">Original exercises and their saved notes remain available here. They do not count toward the updated schedule. Local coding attempts keep their original instructions and checks.</p>
+            {(plan.archivedBlocks ?? []).map((b) => (
+              <button className="story-row" key={b.id} onClick={() => setTask(b)}>
+                <span><small>{b.id} · {formatDuration(b.minutes)}</small><strong>{b.title}</strong><span>{state.tasks[b.id]?.notes ? "Notes saved" : "Original exercise"}</span></span>
+                <ChevronRight size={18} />
+              </button>
+            ))}
+          </section>
         ) : view === "resources" ? (
           <section className="resource-page">
             <h1>Sources</h1>

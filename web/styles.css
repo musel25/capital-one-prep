@@ -1598,3 +1598,12 @@ progress::-moz-progress-bar {
     scroll-behavior: auto !important;
   }
 }
+.problem-cards { display: grid; gap: 12px; margin: 20px 0; }
+.problem-card { display: grid; gap: 8px; padding: 20px; border: 1px solid #cbd8ed; border-radius: 12px; background: #f4f7fc; color: #19273b; text-decoration: none; }
+.problem-card:hover { border-color: #375dcc; background: #edf3fc; }
+.problem-card strong { display: flex; align-items: center; gap: 8px; font-size: 1.08rem; }
+.problem-meta { font-size: .8rem; color: #68778b; }
+.problem-action { color: #375dcc; font-weight: 600; font-size: .85rem; }
+.case-stage { border-top: 1px solid #dae2ef; margin: 20px 0; padding-top: 12px; }
+.drawn-question { padding: 16px; background: #f4f7fc; border-left: 3px solid #375dcc; font-size: 1.1rem; line-height: 1.6; }
+.rehearsal .button-row { flex-wrap: wrap; align-items: center; }

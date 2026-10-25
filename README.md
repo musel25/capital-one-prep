@@ -28,7 +28,9 @@ criteria. Use `start TASK_ID --mode guided` to show the contract up front.
 Describe a regression test yourself, let AI implement it if useful, review it,
 and observe it fail before changing the application.
 
-The schedule has 40 blocks across ten days, including 20 independent debugging/feature tasks, ten technical cases, behavioral questions with follow-ups, and Python practice. Four LeetCode alternatives fit inside the existing time allocation. The site includes phase timers, checklists, notes, and gated case explanations. Behavioral blocks present a daily topic and an ordered list of questions about real projects. Python blocks include copyable prompts for creating local starters and tests without solutions. There is no separate closing block.
+The schedule has 40 blocks across ten days. Python practice now links directly to daily LeetCode assignments: Two Sum, Valid Anagram, Parking System, Simple Bank System, Ordered Stream, Underground System, Recent Calls, Group Anagrams, Log Files, then an independent Bank retry. From October 25, the daily allocation is 75 minutes agentic practice, 60 case, 30 behavioral and 60 LeetCode. Days 1–2 keep their earlier timing.
+
+Cases reveal business discussion, rules, code and follow-ups in stages; answer keys remain gated by a saved prediction and finished attempt. Behavioral rehearsal draws questions without repetition and reveals follow-ups after the initial answer. Stage/question position is session-only; save it in Notes to resume. Replaced exercises and their saved notes are available under **Previous exercises** and remain in backups, without counting toward the new assignments. New LeetCode blocks never inherit old completion marks. There is no separate closing block.
 
 The 20 application tasks are **original training exercises**. Day 9 also uses a real, unmodified Python snapshot from [Gilded Rose](external/README.md), pinned to an upstream commit with its MIT license. Sources distinguish official platform documentation, candidate accounts, and constructed practice. None confirms your specific interview's tool permissions or timing.
 

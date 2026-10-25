@@ -68,6 +68,17 @@ Preguntas originales de práctica en inglés; los temas se inspiran en testimoni
 
 ## Repreguntas transversales
 
+## Program motivation and project depth
+
+- Introduce yourself and explain what led you toward software engineering.
+- Why Capital One and why the Technology Development Program? Connect a verified aspect of the program with your actual learning goals.
+- Walk through one real project and trace a request through its components.
+- What did you implement personally, what alternative did you consider, and what would you revisit?
+
+From day 3, the website draws questions before you choose a story. Give a 90–120-second initial answer, then reveal follow-ups. The draw order is session-only; record the question and story in private notes. Practice two or three questions inside the 30-minute block. Do not force a memorized story onto an unrelated question.
+
+## Cross-topic follow-ups
+
 - What exactly did you do, rather than the team as a whole?
 - What alternative did you seriously consider?
 - What evidence supported your choice at the time?
