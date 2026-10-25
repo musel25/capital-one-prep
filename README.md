@@ -16,7 +16,7 @@ uv run python scripts/practice.py start d01-bug
 
 Open the newly printed directory in your editor and read its README. It includes the startup commands and the exact task. Run `start` again for a fresh attempt; it never overwrites previous work. To check a solution, run `uv run python scripts/practice.py check attempts/YOUR-ATTEMPT` from the repository root.
 
-Starting with **d02-feature**, every remaining task uses a different application,
+Among the original d01–d10 tasks, starting with **d02-feature**, each task uses a different application,
 including the bug and feature on the same day. The sequence includes support,
 shipping, scheduling, reporting, telemetry and other domains. Existing attempts
 keep their original code and checks. Open an existing folder to resume it; run
@@ -28,7 +28,9 @@ criteria. Use `start TASK_ID --mode guided` to show the contract up front.
 Describe a regression test yourself, let AI implement it if useful, review it,
 and observe it fail before changing the application.
 
-The schedule has 40 blocks across ten days. Python practice now links directly to daily LeetCode assignments: Two Sum, Valid Anagram, Parking System, Simple Bank System, Ordered Stream, Underground System, Recent Calls, Group Anagrams, Log Files, then an independent Bank retry. From October 25, the daily allocation is 75 minutes agentic practice, 60 case, 30 behavioral and 60 LeetCode. Days 1–2 keep their earlier timing.
+The schedule has 40 blocks across ten days. Daily LeetCode assignments are Two Sum, Valid Anagram, Parking System, Simple Bank System, Group Anagrams, Contains Duplicate, Intersection of Two Arrays II, Merge Similar Items, Log Files, then an independent Bank retry. From October 25, the daily allocation is 75 minutes coding practice, 60 case, 30 behavioral and 60 LeetCode. Days 1–2 keep their earlier timing.
+
+Day 6 practices fictional digital card-number rules: discuss benefits, classify examples by hand, then debug their implementation. Day 7 extends one array/dictionary program through aggregation, duplicate events and partial refunds. Start it with `uv run python scripts/progressive.py start`; use its local staged pytest tests, without an API server. Day 8's behavioral mock covers exactly teamwork, challenging the status quo and a programming obstacle. Each larger repository mock remains in the schedule.
 
 Cases reveal business discussion, rules, code and follow-ups in stages; answer keys remain gated by a saved prediction and finished attempt. Behavioral rehearsal draws questions without repetition and reveals follow-ups after the initial answer. Stage/question position is session-only; save it in Notes to resume. Replaced exercises and their saved notes are available under **Previous exercises** and remain in backups, without counting toward the new assignments. New LeetCode blocks never inherit old completion marks. There is no separate closing block.
 

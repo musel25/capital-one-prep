@@ -44,6 +44,13 @@ Preguntas originales de práctica en inglés; los temas se inspiran en testimoni
 
 ## S6 — Error y recuperación
 
+Also prepare a distinct programming-adversity example. An obstacle need not be a mistake you caused:
+
+- Tell me about a significant obstacle in a programming project and how you handled it.
+- What made it difficult, and what did you try first?
+- How did you investigate, seek help, or change your approach?
+- What was the outcome, and what would you do differently?
+
 - Tell me about a mistake you made and how you responded.
 - When did you first know something was wrong?
 - Who did you tell, and when?
@@ -74,6 +81,8 @@ Preguntas originales de práctica en inglés; los temas se inspiran en testimoni
 - What did you implement personally, what alternative did you consider, and what would you revisit?
 
 From day 3, the website draws questions before you choose a story. Give a 90–120-second initial answer, then reveal follow-ups. The draw order is session-only; record the question and story in private notes. Practice two or three questions inside the 30-minute block. Do not force a memorized story onto an unrelated question.
+
+Day 8 has exactly three draws: teamwork, challenging an established process, and a programming obstacle. Complete all three without resetting; allow 8 minutes per question including follow-ups and 6 minutes for review. The other remaining days include those themes in the broader pool.
 
 ## Cross-topic follow-ups
 

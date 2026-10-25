@@ -35,6 +35,13 @@ El día 9 ofrece Gilded Rose como sustitución opcional de una tarea, dentro de 
 
 ## Casos y behavioral
 
+El día 6 ahora usa reglas ficticias para validar números de tarjetas: beneficios,
+ejemplos manuales y corrección de código. El caso anterior queda en el archivo.
+El día 7 tiene un ejercicio progresivo de listas y diccionarios: ejecuta
+`uv run python scripts/progressive.py start`, abre la carpeta devuelta y sigue
+los tres archivos STAGE. No necesita servidor; usa los comandos de pytest de su
+README. El día 8 garantiza las tres preguntas de equipo, status quo y adversidad.
+
 En los casos, interpreta las reglas, predice resultados y explica tu corrección sin ejecutar el código. Guarda la predicción y marca el intento terminado antes de abrir la explicación. La solución se oculta para evitar spoilers casuales; no es un control de acceso. No pidas al agente que resuelva el caso antes de tu intento.
 
 Desde el día 3, los casos revelan sus etapas una por una. Las preguntas de behavioral se sortean sin repetirse dentro de la ronda; abre las repreguntas después de tu primera respuesta. Usa episodios reales y practica en inglés. Las etapas y los sorteos se reinician al cerrar el bloque; conserva tus respuestas en las notas.

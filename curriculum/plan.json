@@ -635,10 +635,10 @@
         },
         {
           "id": "d03-behavioral",
-          "title": "Resolving a disagreement",
+          "title": "Behavioral: stories and follow-ups",
           "kind": "behavioral",
           "minutes": 30,
-          "summary": "Discuss a real disagreement about a project decision.",
+          "summary": "Draw from a mixed pool including teamwork, status quo and programming adversity; choose a real story after hearing the question.",
           "content": "## Rehearse aloud\n\nDraw a question below before choosing a story. Give a 90–120-second answer using a real project, academic experience or employment. Keep the situation brief; explain your own actions, why you took them, and the outcome you actually observed. Then reveal the follow-ups and answer without reading a script.\n\n## This session\n\nPractice two or three questions within 30 minutes. Record the question, story used, one vague claim and a more precise version. On mock days, ask a partner to choose questions and interrupt with follow-ups. If you lack a real example, say so and choose the closest honest experience; do not invent numbers or turn practice into employment.\n\n## Evaluate\n\nDid you answer the question asked? Could a listener distinguish your actions from the team's? Can you explain an alternative and a limitation? Use STAR as organization, not a memorized speech. Record private answers only in My attempt or local private notes.",
           "deliverables": [
             "Answers to today’s questions based on real experiences."
@@ -749,6 +749,22 @@
                 "Which project best demonstrates your interests?",
                 "What did you own in that project?",
                 "What are you working to improve now?"
+              ]
+            },
+            {
+              "question": "Tell me about a time you helped a team deliver a difficult project.",
+              "followUps": [
+                "What did you own personally?",
+                "How did you coordinate a dependency or help a teammate?",
+                "What did someone else contribute, and what result did you observe?"
+              ]
+            },
+            {
+              "question": "Tell me about a significant obstacle in a programming project and how you handled it.",
+              "followUps": [
+                "What made the obstacle difficult, and what did you try first?",
+                "How did you investigate, seek help, or change your approach?",
+                "What was the outcome, and what would you do differently?"
               ]
             }
           ]
@@ -953,10 +969,10 @@
         },
         {
           "id": "d04-behavioral",
-          "title": "Improving how you work",
+          "title": "Behavioral: stories and follow-ups",
           "kind": "behavioral",
           "minutes": 30,
-          "summary": "Discuss an improvement you proposed in a project.",
+          "summary": "Draw from a mixed pool including teamwork, status quo and programming adversity; choose a real story after hearing the question.",
           "content": "## Rehearse aloud\n\nDraw a question below before choosing a story. Give a 90–120-second answer using a real project, academic experience or employment. Keep the situation brief; explain your own actions, why you took them, and the outcome you actually observed. Then reveal the follow-ups and answer without reading a script.\n\n## This session\n\nPractice two or three questions within 30 minutes. Record the question, story used, one vague claim and a more precise version. On mock days, ask a partner to choose questions and interrupt with follow-ups. If you lack a real example, say so and choose the closest honest experience; do not invent numbers or turn practice into employment.\n\n## Evaluate\n\nDid you answer the question asked? Could a listener distinguish your actions from the team's? Can you explain an alternative and a limitation? Use STAR as organization, not a memorized speech. Record private answers only in My attempt or local private notes.",
           "deliverables": [
             "Answers to today’s questions based on real experiences."
@@ -1067,6 +1083,22 @@
                 "Which project best demonstrates your interests?",
                 "What did you own in that project?",
                 "What are you working to improve now?"
+              ]
+            },
+            {
+              "question": "Tell me about a time you helped a team deliver a difficult project.",
+              "followUps": [
+                "What did you own personally?",
+                "How did you coordinate a dependency or help a teammate?",
+                "What did someone else contribute, and what result did you observe?"
+              ]
+            },
+            {
+              "question": "Tell me about a significant obstacle in a programming project and how you handled it.",
+              "followUps": [
+                "What made the obstacle difficult, and what did you try first?",
+                "How did you investigate, seek help, or change your approach?",
+                "What was the outcome, and what would you do differently?"
               ]
             }
           ]
@@ -1271,10 +1303,10 @@
         },
         {
           "id": "d05-behavioral",
-          "title": "A mistake and your response",
+          "title": "Behavioral: stories and follow-ups",
           "kind": "behavioral",
           "minutes": 30,
-          "summary": "Discuss a mistake you made and what you did afterward.",
+          "summary": "Draw from a mixed pool including teamwork, status quo and programming adversity; choose a real story after hearing the question.",
           "content": "## Rehearse aloud\n\nDraw a question below before choosing a story. Give a 90–120-second answer using a real project, academic experience or employment. Keep the situation brief; explain your own actions, why you took them, and the outcome you actually observed. Then reveal the follow-ups and answer without reading a script.\n\n## This session\n\nPractice two or three questions within 30 minutes. Record the question, story used, one vague claim and a more precise version. On mock days, ask a partner to choose questions and interrupt with follow-ups. If you lack a real example, say so and choose the closest honest experience; do not invent numbers or turn practice into employment.\n\n## Evaluate\n\nDid you answer the question asked? Could a listener distinguish your actions from the team's? Can you explain an alternative and a limitation? Use STAR as organization, not a memorized speech. Record private answers only in My attempt or local private notes.",
           "deliverables": [
             "Answers to today’s questions based on real experiences."
@@ -1386,23 +1418,39 @@
                 "What did you own in that project?",
                 "What are you working to improve now?"
               ]
+            },
+            {
+              "question": "Tell me about a time you helped a team deliver a difficult project.",
+              "followUps": [
+                "What did you own personally?",
+                "How did you coordinate a dependency or help a teammate?",
+                "What did someone else contribute, and what result did you observe?"
+              ]
+            },
+            {
+              "question": "Tell me about a significant obstacle in a programming project and how you handled it.",
+              "followUps": [
+                "What made the obstacle difficult, and what did you try first?",
+                "How did you investigate, seek help, or change your approach?",
+                "What was the outcome, and what would you do differently?"
+              ]
             }
           ]
         },
         {
-          "id": "d05-leetcode",
-          "title": "1656. Design an Ordered Stream",
+          "id": "d05-leetcode-v2",
+          "title": "49. Group Anagrams",
           "kind": "python",
           "minutes": 60,
-          "summary": "Persistent state, indexing and out-of-order arrivals.",
-          "content": "## Today's assignment\n\nSolve **1656. Design an Ordered Stream** in Python on LeetCode. Read the full official statement using the link above; it is the source of truth for inputs and edge cases. These assignments build useful skills and are not a prediction of your interview questions.\n\n## Before you code\n\nTrace several method calls on the same object before implementing. State what changes and what must be retained between calls.\n\n## Work independently\n\nExplain your plan aloud, then implement. Use the first 25 minutes of the solving phase without AI or an editorial. If blocked, write down the precise gap, take one hint, and mark the attempt as assisted. Do not copy a complete solution. Prioritize a correct, readable implementation within the stated constraints.\n\n## Verify and explain\n\nRun examples and your own boundary tests, submit, and explain time/space complexity. For a class problem, test multiple calls on the same instance and two separate instances. Explain what failed operations leave unchanged when relevant. Save your submission link, edge cases, explanation and help used in My attempt. A green submission is evidence for those tests, not interview readiness.\n\n## When time runs out\n\nRecord the first unresolved issue and mark Try again. Use the next review slot to reconstruct the fix without looking; never add an unplanned second hour. If you finish early, repeat a weak prior problem or explain a new test instead of starting an unrelated hard problem.",
+          "summary": "Group records using a hashable key; explain equality and duplicates.",
+          "content": "## Today's assignment\n\nSolve **49. Group Anagrams** in Python on LeetCode. Read the full official statement using the link above; it is the source of truth for inputs and edge cases. These assignments build useful skills and are not a prediction of your interview questions.\n\n## Before you code\n\nPredict groups containing repeated words, an empty string and anagrams. Decide how you will represent a grouping key before coding.\n\n## Work independently\n\nExplain your plan aloud, then implement. Use the first 25 minutes of the solving phase without AI or an editorial. If blocked, write down the precise gap, take one hint, and mark the attempt as assisted. Do not copy a complete solution. Prioritize a correct, readable implementation within the stated constraints.\n\n## Verify and explain\n\nRun examples and your own boundary tests, submit, and explain time/space complexity. For a class problem, test multiple calls on the same instance and two separate instances. Explain what failed operations leave unchanged when relevant. Save your submission link, edge cases, explanation and help used in My attempt. A green submission is evidence for those tests, not interview readiness.\n\n## When time runs out\n\nRecord the first unresolved issue and mark Try again. Use the next review slot to reconstruct the fix without looking; never add an unplanned second hour. If you finish early, repeat a weak prior problem or explain a new test instead of starting an unrelated hard problem.",
           "problems": [
             {
-              "number": 1656,
-              "title": "Design an Ordered Stream",
-              "url": "https://leetcode.com/problems/design-an-ordered-stream/",
-              "difficulty": "Easy",
-              "focus": "Persistent state, indexing and out-of-order arrivals."
+              "number": 49,
+              "title": "Group Anagrams",
+              "url": "https://leetcode.com/problems/group-anagrams/",
+              "difficulty": "Medium",
+              "focus": "Group records using a hashable key; explain equality and duplicates."
             }
           ],
           "deliverables": [
@@ -1432,7 +1480,7 @@
               "minutes": 5
             }
           ],
-          "sources": ["leetcode-1656"]
+          "sources": ["leetcode-49"]
         }
       ]
     },
@@ -1511,87 +1559,76 @@
           ]
         },
         {
-          "id": "d06-case-v2",
-          "title": "Case: virtual-card authorization",
+          "id": "d06-case-v3",
+          "title": "Case: digital card-number validation",
           "kind": "case",
           "minutes": 60,
-          "summary": "Discuss customer value, trace five authorization rules, then build a non-mutating preview.",
-          "content": "## Staged technical case\n\nDiscuss the fictional product, predict the rules, inspect the code, then propose a correction and extension. Work without execution or AI solutions. Save a row for every event before revealing the answer key. State assumptions and distinguish business recommendations from the fixed technical contract.",
+          "summary": "Discuss customer benefits, apply fictional number rules manually, then debug their implementation.",
+          "content": "## A staged product-and-code case\n\nStart with the business discussion, then reveal the number rules and classify examples before looking at code. Work without executing code or asking an AI to solve the case. Save your required and actual outcomes before revealing the answer. This is original constructed practice; the specific rules are not presented as an employer's question.",
           "deliverables": [
-            "A prediction saved before revealing, with exact output and at least one state-table row per event.",
-            "A correction in Python or pseudocode, plus the extension and two manual tests, without execution.",
-            "A 60–90 second answer covering your proposal, customer benefit, risk, and two metrics: success and harm.",
-            "After revealing: the first difference between your trace and the solution, and a rule to prevent it."
+            "A saved manual classification for every example, with the first failed rule and checksum arithmetic where needed.",
+            "Actual code outcomes, the first mismatch, and a correction justified by counterexamples.",
+            "A short customer-benefit/risk recommendation and a non-mutating batch classification extension."
           ],
           "rubric": [
-            "Distinguish current and desired behavior; respect ordering, units, and boundaries.",
-            "Explain a specific cause using the first counterexample, beyond simply saying “off by one.”",
-            "The extension meets its signature and contract, preserves invariants, and handles empty input.",
-            "Include a success metric and a risk metric in your product recommendation, without inventing results."
+            "Keep card numbers as strings and apply every stated rule rather than a remembered standard.",
+            "Distinguish required behavior from actual behavior, including boundary positions.",
+            "Explain why each fix works on a new example, not just the supplied sample.",
+            "Answer business questions with customer impact, a risk, and a way to test the proposal."
           ],
-          "solution": "## Independently checked trace\n\n| Request | Current outcome | Current remaining | Required outcome | Required remaining |\n|---|---|---:|---|---:|\n| a | approved | 1000 | approved | 1000 |\n| b | approved | 500 | rejected | 1000 |\n| c | approved | 0 | rejected | 1000 |\n| d | rejected | 0 | approved | 0 |\n| e | rejected | 0 | rejected | 0 |\n\nBoth final budgets are zero, so checking only final state misses the incorrect approvals. Request b is the first counterexample. The merchant/limit check uses AND when either violation should reject; the expiration check admits the excluded endpoint.\n\n```python\ndef authorize(card, request):\n    if not card[\"active\"] or request[\"at\"] >= card[\"expires_at\"]:\n        return \"rejected\"\n    if request[\"merchant\"] != card[\"merchant\"] or request[\"amount\"] > card[\"per_transaction\"]:\n        return \"rejected\"\n    if request[\"amount\"] > card[\"remaining\"]:\n        return \"rejected\"\n    card[\"remaining\"] -= request[\"amount\"]\n    return \"approved\"\n\ndef preview_batch(card, requests):\n    simulated = dict(card)\n    results = [authorize(simulated, request) for request in requests]\n    return {\"results\": results, \"remaining\": simulated[\"remaining\"]}\n```\n\npreview_batch returns {\"results\":[\"approved\",\"rejected\",\"rejected\",\"approved\",\"rejected\"],\"remaining\":0}; the original remaining stays 3000. Empty requests return an empty results list and the unchanged budget. The shallow copy is sufficient here because the contract contains only scalar card fields. This does not generalize automatically to nested mutable state.\n\nManual boundary checks: inactive card rejects without mutation; amount=per_transaction may approve; amount=per_transaction+1 rejects even with sufficient budget; at=expires_at rejects. Test a matching merchant with an excessive amount as well as the nonmatching merchant in the table. Batch time O(n), additional result space O(n); single authorization O(1).\n\nBusiness discussion has multiple defensible answers. A possible success metric is completed legitimate purchases; a harm metric is false declines. Explain merchant matching, lifecycle and support costs as design questions, not facts about the company's systems. A limited rollout with monitoring is a possible next step.",
+          "solution": "## Checked classification\n\n| Label | Required | Current code | Reason under the rules |\n|---|---|---|---|\n| A | True | True | Sum 19, check digit 9 |\n| B | True | True | Sum 22, check digit 2 |\n| C | False | True | Check digit 0 differs from required 9 |\n| D | False | True | Four 2s at the end; checksum itself is valid |\n| E | False | False | Four consecutive 0s |\n| F | False | False | Prefix 09 is not allowed |\n| G | False | False | Seven characters |\n| H | False | False | A is not a digit |\n| I | False | False | Full-width zero is not ASCII |\n| J | True | True | Three consecutive 3s are allowed; sum 13, check digit 3 |\n\nC is the first mismatch in table order. `<=` accepts incorrect smaller check digits. The run check examines starts 0–3, omitting start 4: D exposes that boundary. Fix the actual predicates rather than adding exceptions for sample numbers.\n\n```python\ndef is_valid(number):\n    if len(number) != 8 or not number.isascii() or not number.isdigit():\n        return False\n    if number[:2] not in (\"04\", \"07\"):\n        return False\n    if any(number[i:i+4] == number[i] * 4 for i in range(len(number) - 3)):\n        return False\n    return int(number[-1]) == sum(int(digit) for digit in number[:7]) % 10\n\ndef classify(numbers):\n    return [is_valid(number) for number in numbers]\n```\n\n`classify` preserves order and duplicates and never changes its input; empty input returns []. A single check takes constant time for these fixed-length numbers. For n inputs, classification takes O(n) time and O(n) result space. If number length were variable, account for characters scanned.\n\nAdditional manual checks: empty string, leading/trailing space, nine digits, a non-ASCII digit, and a valid number repeated twice. Test each rule independently; a bad checksum can hide a missing run check.\n\nThe business discussion has multiple defensible answers. Explain how a virtual number could reduce exposure of a primary card credential at a merchant, and discuss customer controls and lifecycle/support costs. Do not claim virtual cards eliminate fraud. A success measure could be legitimate purchase completion; a harm measure could be false declines. Validate assumptions in a limited rollout. These are proposals, not claims about Capital One's implementation.",
+          "sources": ["original-practice", "capital-one-case"],
           "phases": [
             {
               "title": "Product discussion",
-              "minutes": 8,
-              "legacyTitle": "Negocio y aclaraciones"
+              "minutes": 8
             },
             {
-              "title": "Trace and predict",
-              "minutes": 12,
-              "legacyTitle": "Trazado y predicción"
+              "title": "Rules and manual classification",
+              "minutes": 12
             },
             {
-              "title": "Debug on paper",
-              "minutes": 12,
-              "legacyTitle": "Depurar en papel"
+              "title": "Trace faulty implementation",
+              "minutes": 12
             },
             {
-              "title": "Extend on paper",
-              "minutes": 15,
-              "legacyTitle": "Extensión en papel"
+              "title": "Correct and extend",
+              "minutes": 15
             },
             {
               "title": "Explain and save prediction",
-              "minutes": 8,
-              "legacyTitle": "Explicar y guardar predicción"
+              "minutes": 8
             },
             {
               "title": "Reveal and evaluate",
-              "minutes": 5,
-              "legacyTitle": "Revelar y evaluar"
+              "minutes": 5
             }
-          ],
-          "sources": [
-            "original-practice",
-            "tdp-agentic-report",
-            "capital-one-case"
           ],
           "stages": [
             {
               "title": "Product discussion",
-              "content": "A bank is considering merchant-locked virtual cards with expiration and spending controls. Who benefits, what can go wrong for legitimate customers, and how would you decide whether to roll out? Propose one success metric, one harm metric and a next step. Do not invent measured results."
+              "content": "A bank is considering offering digital card numbers for online purchases. Explain potential customer and business benefits, one limitation or risk, and a way to evaluate a pilot. Clarify what the product would actually do; do not assume implementation details. Give a 60–90 second recommendation before moving on."
             },
             {
               "title": "Rules and examples",
-              "content": "This is a fictional merchant-locked virtual-card policy, not a description of Capital One's actual implementation.\n\nAll requests have positive integer-cent amounts and integer timestamps. The card must be active, the request timestamp must be strictly before expires_at, the merchant must match, the amount must not exceed per_transaction, and enough remaining budget must exist. All five conditions are required. Only approved requests reduce remaining; rejected requests change nothing. Process the supplied requests in table order, even when timestamps are not sorted.\n\nInitial card: active=True, merchant=\"M1\", expires_at=100, per_transaction=2000, remaining=3000.\n\n| id | at | merchant | amount |\n|---|---:|---|---:|\n| a | 99 | M1 | 2000 |\n| b | 99 | M2 | 500 |\n| c | 100 | M1 | 500 |\n| d | 99 | M1 | 1000 |\n| e | 99 | M1 | 1 |\n\nPredict each required outcome and remaining budget before reading the implementation."
+              "content": "These are invented practice rules, not real payment-card standards or confirmed interview questions. Do not substitute Luhn or any other remembered validation scheme.\n\nInputs are strings. A valid number must meet **all four** rules:\n1. Exactly eight ASCII digits (0–9). Preserve leading zeros. Do not trim spaces or convert the entire string to an integer.\n2. The first two characters are `04` or `07`.\n3. No four identical digits appear consecutively anywhere in the full eight-character string.\n4. The final digit equals the sum of the first seven digits modulo 10.\n\nClassify these examples by hand and give the first failed rule for each rejection. For checksum arithmetic, write the sum and remainder.\n\n| Label | Input string |\n|---|---|\n| A | `04123459` |\n| B | `07123452` |\n| C | `04123450` |\n| D | `04112222` |\n| E | `04000004` |\n| F | `09123454` |\n| G | `0412345` |\n| H | `04123A59` |\n| I | `０4123459` (first character is a full-width zero, not ASCII) |\n| J | `04333003` |"
             },
             {
               "title": "Read the implementation",
-              "content": "Trace actual outcomes and remaining budget after each request. Identify the first mismatch with the required behavior.\n\n```python\ndef authorize(card, request):\n    if not card[\"active\"] or request[\"at\"] > card[\"expires_at\"]:\n        return \"rejected\"\n    if request[\"merchant\"] != card[\"merchant\"] and request[\"amount\"] > card[\"per_transaction\"]:\n        return \"rejected\"\n    if request[\"amount\"] > card[\"remaining\"]:\n        return \"rejected\"\n    card[\"remaining\"] -= request[\"amount\"]\n    return \"approved\"\n```"
+              "content": "Trace this code on the same examples. Record actual outcomes separately from your earlier rule-based predictions. Identify the first mismatch and explain the condition responsible.\n\n```python\ndef is_valid(number):\n    if len(number) != 8 or not number.isascii() or not number.isdigit():\n        return False\n    if number[:2] not in (\"04\", \"07\"):\n        return False\n    if any(number[i:i+4] == number[i] * 4 for i in range(4)):\n        return False\n    return int(number[-1]) <= sum(int(digit) for digit in number[:7]) % 10\n```"
             },
             {
               "title": "Correct and extend",
-              "content": "Correct authorize without changing the contract. Then implement preview_batch(card, requests), returning {results: [status per request], remaining: simulated final budget} while preserving the original card and requests. Use the same rules and supplied order. Predict the sample and an empty batch. Explain why matching final balances alone does not prove correctness."
+              "content": "Correct is_valid without changing the rules. Then write classify(numbers), returning one boolean per input string in the original order, preserving duplicates and leaving the input unchanged. Explain an empty-list example and one new counterexample for each fix. Keep this on paper or in the editor without execution until your practice review."
             }
           ]
         },
         {
           "id": "d06-behavioral",
-          "title": "Learning with unclear requirements",
+          "title": "Behavioral: stories and follow-ups",
           "kind": "behavioral",
           "minutes": 30,
-          "summary": "Explain how you moved forward with missing knowledge or unclear requirements.",
+          "summary": "Draw from a mixed pool including teamwork, status quo and programming adversity; choose a real story after hearing the question.",
           "content": "## Rehearse aloud\n\nDraw a question below before choosing a story. Give a 90–120-second answer using a real project, academic experience or employment. Keep the situation brief; explain your own actions, why you took them, and the outcome you actually observed. Then reveal the follow-ups and answer without reading a script.\n\n## This session\n\nPractice two or three questions within 30 minutes. Record the question, story used, one vague claim and a more precise version. On mock days, ask a partner to choose questions and interrupt with follow-ups. If you lack a real example, say so and choose the closest honest experience; do not invent numbers or turn practice into employment.\n\n## Evaluate\n\nDid you answer the question asked? Could a listener distinguish your actions from the team's? Can you explain an alternative and a limitation? Use STAR as organization, not a memorized speech. Record private answers only in My attempt or local private notes.",
           "deliverables": [
             "Answers to today’s questions based on real experiences."
@@ -1703,23 +1740,39 @@
                 "What did you own in that project?",
                 "What are you working to improve now?"
               ]
+            },
+            {
+              "question": "Tell me about a time you helped a team deliver a difficult project.",
+              "followUps": [
+                "What did you own personally?",
+                "How did you coordinate a dependency or help a teammate?",
+                "What did someone else contribute, and what result did you observe?"
+              ]
+            },
+            {
+              "question": "Tell me about a significant obstacle in a programming project and how you handled it.",
+              "followUps": [
+                "What made the obstacle difficult, and what did you try first?",
+                "How did you investigate, seek help, or change your approach?",
+                "What was the outcome, and what would you do differently?"
+              ]
             }
           ]
         },
         {
-          "id": "d06-leetcode",
-          "title": "1396. Design Underground System",
+          "id": "d06-leetcode-v2",
+          "title": "217. Contains Duplicate",
           "kind": "python",
           "minutes": 60,
-          "summary": "Related methods, active records and accumulated statistics.",
-          "content": "## Today's assignment\n\nSolve **1396. Design Underground System** in Python on LeetCode. Read the full official statement using the link above; it is the source of truth for inputs and edge cases. These assignments build useful skills and are not a prediction of your interview questions.\n\n## Before you code\n\nSeparate the information needed while an activity is in progress from information needed for a later query. Explain why the direction of a journey matters.\n\n## Work independently\n\nExplain your plan aloud, then implement. Use the first 25 minutes of the solving phase without AI or an editorial. If blocked, write down the precise gap, take one hint, and mark the attempt as assisted. Do not copy a complete solution. Prioritize a correct, readable implementation within the stated constraints.\n\n## Verify and explain\n\nRun examples and your own boundary tests, submit, and explain time/space complexity. For a class problem, test multiple calls on the same instance and two separate instances. Explain what failed operations leave unchanged when relevant. Save your submission link, edge cases, explanation and help used in My attempt. A green submission is evidence for those tests, not interview readiness.\n\n## When time runs out\n\nRecord the first unresolved issue and mark Try again. Use the next review slot to reconstruct the fix without looking; never add an unplanned second hour. If you finish early, repeat a weak prior problem or explain a new test instead of starting an unrelated hard problem.",
+          "summary": "Set membership, repeated values and the time/space tradeoff.",
+          "content": "## Today's assignment\n\nSolve **217. Contains Duplicate** in Python on LeetCode. Read the full official statement using the link above; it is the source of truth for inputs and edge cases. These assignments build useful skills and are not a prediction of your interview questions.\n\n## Before you code\n\nCompare scanning prior values with using a set. Predict a single element, all distinct values, and a repeated value at the end.\n\n## Work independently\n\nExplain your plan aloud, then implement. Use the first 25 minutes of the solving phase without AI or an editorial. If blocked, write down the precise gap, take one hint, and mark the attempt as assisted. Do not copy a complete solution. Prioritize a correct, readable implementation within the stated constraints.\n\n## Verify and explain\n\nRun examples and your own boundary tests, submit, and explain time/space complexity. For a class problem, test multiple calls on the same instance and two separate instances. Explain what failed operations leave unchanged when relevant. Save your submission link, edge cases, explanation and help used in My attempt. A green submission is evidence for those tests, not interview readiness.\n\n## When time runs out\n\nRecord the first unresolved issue and mark Try again. Use the next review slot to reconstruct the fix without looking; never add an unplanned second hour. If you finish early, repeat a weak prior problem or explain a new test instead of starting an unrelated hard problem.",
           "problems": [
             {
-              "number": 1396,
-              "title": "Design Underground System",
-              "url": "https://leetcode.com/problems/design-underground-system/",
-              "difficulty": "Medium",
-              "focus": "Related methods, active records and accumulated statistics."
+              "number": 217,
+              "title": "Contains Duplicate",
+              "url": "https://leetcode.com/problems/contains-duplicate/",
+              "difficulty": "Easy",
+              "focus": "Set membership, repeated values and the time/space tradeoff."
             }
           ],
           "deliverables": [
@@ -1749,83 +1802,73 @@
               "minutes": 5
             }
           ],
-          "sources": ["leetcode-1396"]
+          "sources": ["leetcode-217"]
         }
       ]
     },
     {
       "date": "2026-10-29",
-      "title": "Webhook delivery and job submission",
-      "focus": "Independent notification and background-job applications.",
+      "title": "Progressive coding and careful validation",
+      "focus": "Extend one solution through new array and dictionary requirements.",
       "blocks": [
         {
-          "id": "d07-technical",
-          "title": "Webhook delivery and job submission",
+          "id": "d07-technical-v2",
+          "title": "Progressive coding: merchant events",
           "kind": "technical",
           "minutes": 75,
-          "summary": "Independent notification and background-job applications.",
-          "content": "## Two projects\n\nWork on a notification delivery report and then an export-job request in a different application. Read each product’s rules instead of carrying assumptions between them. Treat any AI claim of correctness as a hypothesis until you have test evidence.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the 75-minute block. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?\n\n## Ten-minute debrief: Contract change\n\nIf a client sends an old field name, should the API reject it or support a transition? Explain validation and how you would test compatibility.\n\nFirst explain the real request path through the files you changed. Support claims with actual commands/results and say what you did not verify. Your interviewer may ask for a small manual change; be ready to explain and edit the relevant Python without delegating every line. These discussions are original practice, not a claim that your interview includes a separate system-design round.\n\n## Debrief alternative: review an AI suggestion\n\nA different fictional API promises that a repeated request ID with the same amount returns the prior receipt without changing balance. Reusing that ID with a different amount must raise a conflict and preserve state. The AI suggests the following code. Without running it, give a two-call counterexample, identify what it fails to verify, and specify a regression test. This snippet is independent of today's application tasks.\n\n```python\ndef credit(balance, receipts, request_id, amount):\n    if request_id in receipts:\n        return balance, receipts[request_id]\n    balance += amount\n    receipt = {\"id\": request_id, \"amount\": amount}\n    receipts[request_id] = receipt\n    return balance, receipt\n```\n\nUse this instead of the other debrief topic, within the same ten minutes. A tiny test that only repeats the same amount is insufficient evidence.",
+          "summary": "Extend one array/dictionary solution as aggregation, replay and refund requirements arrive.",
+          "content": "## One program, three rounds\n\nRun from `/home/musel/Github/capital-one-prep`:\n\n```sh\nuv run python scripts/progressive.py start\n```\n\nOpen the returned folder, run `uv sync`, and read README.md. It contains solution.py and staged tests; no server is needed. Open only the current stage file. Keep the same solution and extend it as requirements arrive.\n\nUse 5 minutes to orient, 15 for stage 1, 15 for stage 2, 20 for stage 3, 10 for regression checks, and 10 to explain. Reveal the next stage after explaining the current one or when its time expires. Record partial progress honestly.\n\nThis is original array/hash-map practice, not a reconstruction of an employer question. Practice understanding the task yourself and using AI only when permitted. Before delegating, state expected output and a test; afterward inspect the diff and verify it. Good prompts do not replace understanding and evidence.\n\nAt the end run `uv run pytest -q` inside the attempt. This exercise uses local stage tests, not `scripts/practice.py check`. Save your attempt path, stages reached, commands/results, assistance used and a concrete next step. If you used AI, record one accepted, changed or rejected suggestion and the evidence supporting your decision.",
           "deliverables": [
-            "Two separate attempt folders with code and tests, including unsuccessful attempts.",
-            "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
-            "Actual check results, commands used, and two five-minute explanations in English.",
-            "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
+            "One preserved attempt folder whose solution grows across stages; keep tests from earlier stages.",
+            "Actual stage and regression test results, including failures and unfinished requirements.",
+            "An English explanation of the dictionaries used, complexity, replay/conflict handling and how AI output was verified."
           ],
           "rubric": [
-            "Record questions, assumptions and a hypothesis or feature design before editing.",
-            "Describe a test yourself and observe its relevant failure before implementation.",
-            "Preserve existing behavior, review AI output and justify each change with executed checks.",
-            "Explain results and remaining uncertainty in English; keep each application in its own attempt."
+            "Predict output and clarify new requirements before changing the solution.",
+            "Keep earlier behavior passing while adding the next requirement.",
+            "Check input preservation, identical replay, conflicting IDs and refund boundaries.",
+            "Explain your own decisions, assistance used and remaining uncertainty."
           ],
-          "labs": ["d07-bug", "d07-feature"],
+          "sources": ["original-practice", "codesignal-agentic"],
           "phases": [
             {
               "title": "Orient and clarify",
+              "minutes": 5
+            },
+            {
+              "title": "Stage 1: aggregate",
+              "minutes": 15
+            },
+            {
+              "title": "Stage 2: replay and conflicts",
+              "minutes": 15
+            },
+            {
+              "title": "Stage 3: partial refunds",
+              "minutes": 20
+            },
+            {
+              "title": "Regression checks",
               "minutes": 10
             },
             {
-              "title": "Bug: implement",
-              "minutes": 20
-            },
-            {
-              "title": "Bug: explain",
-              "minutes": 5
-            },
-            {
-              "title": "Fresh feature attempt",
-              "minutes": 5
-            },
-            {
-              "title": "Feature: implement",
-              "minutes": 20
-            },
-            {
-              "title": "Feature: explain",
-              "minutes": 5
-            },
-            {
-              "title": "Review and design",
+              "title": "Explain and review",
               "minutes": 10
             }
           ],
-          "prompts": [
-            "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
-            "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
-            "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
-            "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
-          ],
-          "hints": [
-            "Draw the request path using the code you actually inspected. A hypothesis should predict an observable result you can test.",
-            "A status code alone may miss a state or output error. Choose assertions from the agreed requirements, then inspect why the test fails.",
-            "For the patch-review snippet only: compare calls with the same request ID but different amounts. The existing receipt must be compared with the new payload before treating a retry as equivalent."
-          ],
-          "sources": [
-            "codesignal-agentic",
-            "codesignal-copilot",
-            "tdp-agentic-report",
-            "gildedrose",
-            "fastapi-template",
-            "original-practice"
+          "stages": [
+            {
+              "title": "Aggregate purchases",
+              "content": "Read STAGE_1.md. Implement summarize(events) using lists and dictionaries. Purchases have unique IDs, a merchant and a positive integer-cent amount. Return total cents per merchant without changing input. Predict p1/A/1000, p2/B/500, p3/A/200, then implement and run `uv run pytest -q tests/test_stage1.py`. Explain your data structure and complexity before revealing the next requirement."
+            },
+            {
+              "title": "Replayed and conflicting IDs",
+              "content": "Read STAGE_2.md. The same event may arrive more than once. Count identical events once; raise ValueError when an existing ID is reused with different content. Dictionary key order does not matter. Preserve input even on error. Extend the same function and run `uv run pytest -q tests/test_stage1.py tests/test_stage2.py`. Explain why simply skipping all seen IDs would be wrong."
+            },
+            {
+              "title": "Partial refunds",
+              "content": "Read STAGE_3.md. Add refunds referencing earlier purchases. Subtract from the original merchant; permit partial refunds up to the original purchase amount and retain zero totals. Unknown/forward references and excessive cumulative refunds raise ValueError. Identical refund replays do not subtract twice. Apply replay/conflict rules before processing another copy. Keep inputs unchanged. Predict a 1000-cent purchase with refunds of 300 and 700, then a replay, and run `uv run pytest -q`. Add a counterexample and explain which earlier tests protect your change."
+            }
           ]
         },
         {
@@ -1907,10 +1950,10 @@
         },
         {
           "id": "d07-behavioral",
-          "title": "Using your judgment with AI",
+          "title": "Behavioral: stories and follow-ups",
           "kind": "behavioral",
           "minutes": 30,
-          "summary": "Discuss a real use of AI and how you checked its work.",
+          "summary": "Draw from a mixed pool including teamwork, status quo and programming adversity; choose a real story after hearing the question.",
           "content": "## Rehearse aloud\n\nDraw a question below before choosing a story. Give a 90–120-second answer using a real project, academic experience or employment. Keep the situation brief; explain your own actions, why you took them, and the outcome you actually observed. Then reveal the follow-ups and answer without reading a script.\n\n## This session\n\nPractice two or three questions within 30 minutes. Record the question, story used, one vague claim and a more precise version. On mock days, ask a partner to choose questions and interrupt with follow-ups. If you lack a real example, say so and choose the closest honest experience; do not invent numbers or turn practice into employment.\n\n## Evaluate\n\nDid you answer the question asked? Could a listener distinguish your actions from the team's? Can you explain an alternative and a limitation? Use STAR as organization, not a memorized speech. Record private answers only in My attempt or local private notes.",
           "deliverables": [
             "Answers to today’s questions based on real experiences."
@@ -2022,23 +2065,39 @@
                 "What did you own in that project?",
                 "What are you working to improve now?"
               ]
+            },
+            {
+              "question": "Tell me about a time you helped a team deliver a difficult project.",
+              "followUps": [
+                "What did you own personally?",
+                "How did you coordinate a dependency or help a teammate?",
+                "What did someone else contribute, and what result did you observe?"
+              ]
+            },
+            {
+              "question": "Tell me about a significant obstacle in a programming project and how you handled it.",
+              "followUps": [
+                "What made the obstacle difficult, and what did you try first?",
+                "How did you investigate, seek help, or change your approach?",
+                "What was the outcome, and what would you do differently?"
+              ]
             }
           ]
         },
         {
-          "id": "d07-leetcode",
-          "title": "933. Number of Recent Calls",
+          "id": "d07-leetcode-v2",
+          "title": "350. Intersection of Two Arrays II",
           "kind": "python",
           "minutes": 60,
-          "summary": "Queues, time boundaries and obsolete state.",
-          "content": "## Today's assignment\n\nSolve **933. Number of Recent Calls** in Python on LeetCode. Read the full official statement using the link above; it is the source of truth for inputs and edge cases. These assignments build useful skills and are not a prediction of your interview questions.\n\n## Before you code\n\nPredict requests exactly on either side of the time-window boundary. State the time-order guarantee from the prompt before choosing your data structure.\n\n## Work independently\n\nExplain your plan aloud, then implement. Use the first 25 minutes of the solving phase without AI or an editorial. If blocked, write down the precise gap, take one hint, and mark the attempt as assisted. Do not copy a complete solution. Prioritize a correct, readable implementation within the stated constraints.\n\n## Verify and explain\n\nRun examples and your own boundary tests, submit, and explain time/space complexity. For a class problem, test multiple calls on the same instance and two separate instances. Explain what failed operations leave unchanged when relevant. Save your submission link, edge cases, explanation and help used in My attempt. A green submission is evidence for those tests, not interview readiness.\n\n## When time runs out\n\nRecord the first unresolved issue and mark Try again. Use the next review slot to reconstruct the fix without looking; never add an unplanned second hour. If you finish early, repeat a weak prior problem or explain a new test instead of starting an unrelated hard problem.",
+          "summary": "Frequency dictionaries and duplicate counts.",
+          "content": "## Today's assignment\n\nSolve **350. Intersection of Two Arrays II** in Python on LeetCode. Read the full official statement using the link above; it is the source of truth for inputs and edge cases. These assignments build useful skills and are not a prediction of your interview questions.\n\n## Before you code\n\nPredict inputs where the same value appears different numbers of times. Explain why a set intersection alone loses required information.\n\n## Work independently\n\nExplain your plan aloud, then implement. Use the first 25 minutes of the solving phase without AI or an editorial. If blocked, write down the precise gap, take one hint, and mark the attempt as assisted. Do not copy a complete solution. Prioritize a correct, readable implementation within the stated constraints.\n\n## Verify and explain\n\nRun examples and your own boundary tests, submit, and explain time/space complexity. For a class problem, test multiple calls on the same instance and two separate instances. Explain what failed operations leave unchanged when relevant. Save your submission link, edge cases, explanation and help used in My attempt. A green submission is evidence for those tests, not interview readiness.\n\n## When time runs out\n\nRecord the first unresolved issue and mark Try again. Use the next review slot to reconstruct the fix without looking; never add an unplanned second hour. If you finish early, repeat a weak prior problem or explain a new test instead of starting an unrelated hard problem.",
           "problems": [
             {
-              "number": 933,
-              "title": "Number of Recent Calls",
-              "url": "https://leetcode.com/problems/number-of-recent-calls/",
+              "number": 350,
+              "title": "Intersection of Two Arrays II",
+              "url": "https://leetcode.com/problems/intersection-of-two-arrays-ii/",
               "difficulty": "Easy",
-              "focus": "Queues, time boundaries and obsolete state."
+              "focus": "Frequency dictionaries and duplicate counts."
             }
           ],
           "deliverables": [
@@ -2068,7 +2127,7 @@
               "minutes": 5
             }
           ],
-          "sources": ["leetcode-933"]
+          "sources": ["leetcode-350"]
         }
       ]
     },
@@ -2220,14 +2279,14 @@
           ]
         },
         {
-          "id": "d08-behavioral",
-          "title": "Mock: help, disagreement, and mistakes",
+          "id": "d08-behavioral-v2",
+          "title": "Three-story mock: teamwork, status quo, adversity",
           "kind": "behavioral",
           "minutes": 30,
-          "summary": "Answer without reading notes. Even-numbered questions are follow-ups.",
-          "content": "## Rehearse aloud\n\nDraw a question below before choosing a story. Give a 90–120-second answer using a real project, academic experience or employment. Keep the situation brief; explain your own actions, why you took them, and the outcome you actually observed. Then reveal the follow-ups and answer without reading a script.\n\n## This session\n\nPractice two or three questions within 30 minutes. Record the question, story used, one vague claim and a more precise version. On mock days, ask a partner to choose questions and interrupt with follow-ups. If you lack a real example, say so and choose the closest honest experience; do not invent numbers or turn practice into employment.\n\n## Evaluate\n\nDid you answer the question asked? Could a listener distinguish your actions from the team's? Can you explain an alternative and a limitation? Use STAR as organization, not a memorized speech. Record private answers only in My attempt or local private notes.",
+          "summary": "Cover all three themes with real examples and unscripted follow-ups.",
+          "content": "## Three questions, three real stories\n\nDraw exactly three questions without resetting the round. The pool contains one teamwork question, one question about challenging an established process, and one about adversity in a programming project. The order is shuffled; no theme is omitted. These are practice themes, not guaranteed interview questions.\n\nUse one 8-minute round per question: give a 90–120-second initial answer, then reveal and answer follow-ups. Use the final 6 minutes to identify one vague claim and improve it. Do not draw a fourth question or extend the block.\n\nChoose the story after hearing the question. Be specific about your own contribution, the alternatives you considered, and the outcome you actually observed. Adversity need not be a mistake you caused; explain a real constraint or obstacle. Challenging the status quo should include why the existing approach made sense and how you tested or gained support for a change.\n\nSave each question and the story used in My attempt. The draw order resets when the exercise closes, so record which themes you have completed. Never invent experience or metrics.",
           "deliverables": [
-            "Answers to today’s questions based on real experiences."
+            "Three real examples covering teamwork, challenging the status quo and programming adversity, with follow-up answers and one improvement."
           ],
           "rubric": [
             "Answer the specific question in 90–120 seconds without reading an essay.",
@@ -2237,12 +2296,16 @@
           ],
           "phases": [
             {
-              "title": "Draw and answer",
-              "minutes": 12
+              "title": "Question 1",
+              "minutes": 8
             },
             {
-              "title": "Follow-ups",
-              "minutes": 12
+              "title": "Question 2",
+              "minutes": 8
+            },
+            {
+              "title": "Question 3",
+              "minutes": 8
             },
             {
               "title": "Review one improvement",
@@ -2258,11 +2321,11 @@
           ],
           "promptGroups": [
             {
-              "question": "Tell me about a disagreement that changed your approach.",
+              "question": "Tell me about a time you helped a team deliver a difficult project.",
               "followUps": [
-                "Why was the other position reasonable?",
-                "What did you personally say or do?",
-                "What evidence changed your mind—or theirs?"
+                "What did you own personally?",
+                "How did you coordinate a dependency or help a teammate?",
+                "What did someone else contribute, and what result did you observe?"
               ]
             },
             {
@@ -2274,85 +2337,29 @@
               ]
             },
             {
-              "question": "Tell me about a mistake you made and how you handled it.",
+              "question": "Tell me about a significant obstacle in a programming project and how you handled it.",
               "followUps": [
-                "When did you tell the affected people?",
-                "What was your responsibility?",
-                "What changed afterward?"
-              ]
-            },
-            {
-              "question": "Tell me about a time you learned something unfamiliar under time pressure.",
-              "followUps": [
-                "How did you choose what not to learn?",
-                "How did you check your understanding?",
-                "What could you do independently afterward?"
-              ]
-            },
-            {
-              "question": "Tell me about a time you needed another person's expertise.",
-              "followUps": [
-                "What had you tried?",
-                "How did you make your question easy to answer?",
-                "What knowledge did you share afterward?"
-              ]
-            },
-            {
-              "question": "Tell me about a time you used AI for a technical task.",
-              "followUps": [
-                "What did you verify yourself?",
-                "Which suggestion did you reject or correct?",
-                "What remained uncertain? If this was practice, name it as practice."
-              ]
-            },
-            {
-              "question": "Tell me about a time requirements or priorities changed.",
-              "followUps": [
-                "What was the riskiest assumption?",
-                "Who helped resolve the tradeoff?",
-                "What did you defer and communicate?"
-              ]
-            },
-            {
-              "question": "Walk me through a project you know well and your specific contribution.",
-              "followUps": [
-                "Trace a request through its components.",
-                "What alternative did you consider?",
-                "Which decision would you revisit?"
-              ]
-            },
-            {
-              "question": "Why Capital One and why the Technology Development Program?",
-              "followUps": [
-                "Which published aspect of the program connects to your goals?",
-                "What do you hope to learn?",
-                "What would you contribute based on real experience?"
-              ]
-            },
-            {
-              "question": "Introduce yourself and explain how your experience led you toward software engineering.",
-              "followUps": [
-                "Which project best demonstrates your interests?",
-                "What did you own in that project?",
-                "What are you working to improve now?"
+                "What made the obstacle difficult, and what did you try first?",
+                "How did you investigate, seek help, or change your approach?",
+                "What was the outcome, and what would you do differently?"
               ]
             }
           ]
         },
         {
-          "id": "d08-leetcode",
-          "title": "49. Group Anagrams",
+          "id": "d08-leetcode-v2",
+          "title": "2363. Merge Similar Items",
           "kind": "python",
           "minutes": 60,
-          "summary": "Grouping with dictionaries and choosing a useful key.",
-          "content": "## Today's assignment\n\nSolve **49. Group Anagrams** in Python on LeetCode. Read the full official statement using the link above; it is the source of truth for inputs and edge cases. These assignments build useful skills and are not a prediction of your interview questions.\n\n## Before you code\n\nExplain how you know two records belong in the same group. Include an empty string and repeated strings in your tests.\n\n## Work independently\n\nExplain your plan aloud, then implement. Use the first 25 minutes of the solving phase without AI or an editorial. If blocked, write down the precise gap, take one hint, and mark the attempt as assisted. Do not copy a complete solution. Prioritize a correct, readable implementation within the stated constraints.\n\n## Verify and explain\n\nRun examples and your own boundary tests, submit, and explain time/space complexity. For a class problem, test multiple calls on the same instance and two separate instances. Explain what failed operations leave unchanged when relevant. Save your submission link, edge cases, explanation and help used in My attempt. A green submission is evidence for those tests, not interview readiness.\n\n## When time runs out\n\nRecord the first unresolved issue and mark Try again. Use the next review slot to reconstruct the fix without looking; never add an unplanned second hour. If you finish early, repeat a weak prior problem or explain a new test instead of starting an unrelated hard problem.",
+          "summary": "Aggregate by key, then return records in the required order.",
+          "content": "## Today's assignment\n\nSolve **2363. Merge Similar Items** in Python on LeetCode. Read the full official statement using the link above; it is the source of truth for inputs and edge cases. These assignments build useful skills and are not a prediction of your interview questions.\n\n## Before you code\n\nPredict disjoint keys and shared keys. Separate aggregation from output ordering and explain the cost of each.\n\n## Work independently\n\nExplain your plan aloud, then implement. Use the first 25 minutes of the solving phase without AI or an editorial. If blocked, write down the precise gap, take one hint, and mark the attempt as assisted. Do not copy a complete solution. Prioritize a correct, readable implementation within the stated constraints.\n\n## Verify and explain\n\nRun examples and your own boundary tests, submit, and explain time/space complexity. For a class problem, test multiple calls on the same instance and two separate instances. Explain what failed operations leave unchanged when relevant. Save your submission link, edge cases, explanation and help used in My attempt. A green submission is evidence for those tests, not interview readiness.\n\n## When time runs out\n\nRecord the first unresolved issue and mark Try again. Use the next review slot to reconstruct the fix without looking; never add an unplanned second hour. If you finish early, repeat a weak prior problem or explain a new test instead of starting an unrelated hard problem.",
           "problems": [
             {
-              "number": 49,
-              "title": "Group Anagrams",
-              "url": "https://leetcode.com/problems/group-anagrams/",
-              "difficulty": "Medium",
-              "focus": "Grouping with dictionaries and choosing a useful key."
+              "number": 2363,
+              "title": "Merge Similar Items",
+              "url": "https://leetcode.com/problems/merge-similar-items/",
+              "difficulty": "Easy",
+              "focus": "Aggregate by key, then return records in the required order."
             }
           ],
           "deliverables": [
@@ -2382,7 +2389,7 @@
               "minutes": 5
             }
           ],
-          "sources": ["leetcode-49"]
+          "sources": ["leetcode-2363"]
         }
       ]
     },
@@ -2538,10 +2545,10 @@
         },
         {
           "id": "d09-behavioral",
-          "title": "Influence and priorities",
+          "title": "Behavioral: stories and follow-ups",
           "kind": "behavioral",
           "minutes": 30,
-          "summary": "Discuss how you influenced a decision and chose between priorities.",
+          "summary": "Draw from a mixed pool including teamwork, status quo and programming adversity; choose a real story after hearing the question.",
           "content": "## Rehearse aloud\n\nDraw a question below before choosing a story. Give a 90–120-second answer using a real project, academic experience or employment. Keep the situation brief; explain your own actions, why you took them, and the outcome you actually observed. Then reveal the follow-ups and answer without reading a script.\n\n## This session\n\nPractice two or three questions within 30 minutes. Record the question, story used, one vague claim and a more precise version. On mock days, ask a partner to choose questions and interrupt with follow-ups. If you lack a real example, say so and choose the closest honest experience; do not invent numbers or turn practice into employment.\n\n## Evaluate\n\nDid you answer the question asked? Could a listener distinguish your actions from the team's? Can you explain an alternative and a limitation? Use STAR as organization, not a memorized speech. Record private answers only in My attempt or local private notes.",
           "deliverables": [
             "Answers to today’s questions based on real experiences."
@@ -2652,6 +2659,22 @@
                 "Which project best demonstrates your interests?",
                 "What did you own in that project?",
                 "What are you working to improve now?"
+              ]
+            },
+            {
+              "question": "Tell me about a time you helped a team deliver a difficult project.",
+              "followUps": [
+                "What did you own personally?",
+                "How did you coordinate a dependency or help a teammate?",
+                "What did someone else contribute, and what result did you observe?"
+              ]
+            },
+            {
+              "question": "Tell me about a significant obstacle in a programming project and how you handled it.",
+              "followUps": [
+                "What made the obstacle difficult, and what did you try first?",
+                "How did you investigate, seek help, or change your approach?",
+                "What was the outcome, and what would you do differently?"
               ]
             }
           ]
@@ -2852,10 +2875,10 @@
         },
         {
           "id": "d10-behavioral",
-          "title": "Mock: improvement, uncertainty, and AI",
+          "title": "Behavioral: stories and follow-ups",
           "kind": "behavioral",
           "minutes": 30,
-          "summary": "Use three stories without reading notes, then prepare a question for the interviewer.",
+          "summary": "Draw from a mixed pool including teamwork, status quo and programming adversity; choose a real story after hearing the question.",
           "content": "## Rehearse aloud\n\nDraw a question below before choosing a story. Give a 90–120-second answer using a real project, academic experience or employment. Keep the situation brief; explain your own actions, why you took them, and the outcome you actually observed. Then reveal the follow-ups and answer without reading a script.\n\n## This session\n\nPractice two or three questions within 30 minutes. Record the question, story used, one vague claim and a more precise version. On mock days, ask a partner to choose questions and interrupt with follow-ups. If you lack a real example, say so and choose the closest honest experience; do not invent numbers or turn practice into employment.\n\n## Evaluate\n\nDid you answer the question asked? Could a listener distinguish your actions from the team's? Can you explain an alternative and a limitation? Use STAR as organization, not a memorized speech. Record private answers only in My attempt or local private notes.",
           "deliverables": [
             "Answers to today’s questions based on real experiences."
@@ -2966,6 +2989,22 @@
                 "Which project best demonstrates your interests?",
                 "What did you own in that project?",
                 "What are you working to improve now?"
+              ]
+            },
+            {
+              "question": "Tell me about a time you helped a team deliver a difficult project.",
+              "followUps": [
+                "What did you own personally?",
+                "How did you coordinate a dependency or help a teammate?",
+                "What did someone else contribute, and what result did you observe?"
+              ]
+            },
+            {
+              "question": "Tell me about a significant obstacle in a programming project and how you handled it.",
+              "followUps": [
+                "What made the obstacle difficult, and what did you try first?",
+                "How did you investigate, seek help, or change your approach?",
+                "What was the outcome, and what would you do differently?"
               ]
             }
           ]
@@ -3193,6 +3232,27 @@
       "url": "https://www.reddit.com/r/taquerosprogramadores/comments/1xcxmn9/power_day_c1_tdp/",
       "level": "testimony",
       "note": "October 2026 applicant reports round names; not a completed-round account or confirmation of your individual format."
+    },
+    {
+      "id": "leetcode-217",
+      "title": "LeetCode: 217. Contains Duplicate",
+      "url": "https://leetcode.com/problems/contains-duplicate/",
+      "level": "official",
+      "note": "Official problem statement checked October 25, 2026. Skill practice, not a confirmed employer question."
+    },
+    {
+      "id": "leetcode-350",
+      "title": "LeetCode: 350. Intersection of Two Arrays II",
+      "url": "https://leetcode.com/problems/intersection-of-two-arrays-ii/",
+      "level": "official",
+      "note": "Official problem statement checked October 25, 2026. Skill practice, not a confirmed employer question."
+    },
+    {
+      "id": "leetcode-2363",
+      "title": "LeetCode: 2363. Merge Similar Items",
+      "url": "https://leetcode.com/problems/merge-similar-items/",
+      "level": "official",
+      "note": "Official problem statement checked October 25, 2026. Skill practice, not a confirmed employer question."
     }
   ],
   "archivedBlockIds": [
@@ -4007,6 +4067,452 @@
         "gildedrose",
         "fastapi-template",
         "original-practice"
+      ]
+    },
+    {
+      "id": "d06-case-v2",
+      "title": "Case: virtual-card authorization",
+      "kind": "case",
+      "minutes": 60,
+      "summary": "Discuss customer value, trace five authorization rules, then build a non-mutating preview.",
+      "content": "## Staged technical case\n\nDiscuss the fictional product, predict the rules, inspect the code, then propose a correction and extension. Work without execution or AI solutions. Save a row for every event before revealing the answer key. State assumptions and distinguish business recommendations from the fixed technical contract.",
+      "deliverables": [
+        "A prediction saved before revealing, with exact output and at least one state-table row per event.",
+        "A correction in Python or pseudocode, plus the extension and two manual tests, without execution.",
+        "A 60–90 second answer covering your proposal, customer benefit, risk, and two metrics: success and harm.",
+        "After revealing: the first difference between your trace and the solution, and a rule to prevent it."
+      ],
+      "rubric": [
+        "Distinguish current and desired behavior; respect ordering, units, and boundaries.",
+        "Explain a specific cause using the first counterexample, beyond simply saying “off by one.”",
+        "The extension meets its signature and contract, preserves invariants, and handles empty input.",
+        "Include a success metric and a risk metric in your product recommendation, without inventing results."
+      ],
+      "solution": "## Independently checked trace\n\n| Request | Current outcome | Current remaining | Required outcome | Required remaining |\n|---|---|---:|---|---:|\n| a | approved | 1000 | approved | 1000 |\n| b | approved | 500 | rejected | 1000 |\n| c | approved | 0 | rejected | 1000 |\n| d | rejected | 0 | approved | 0 |\n| e | rejected | 0 | rejected | 0 |\n\nBoth final budgets are zero, so checking only final state misses the incorrect approvals. Request b is the first counterexample. The merchant/limit check uses AND when either violation should reject; the expiration check admits the excluded endpoint.\n\n```python\ndef authorize(card, request):\n    if not card[\"active\"] or request[\"at\"] >= card[\"expires_at\"]:\n        return \"rejected\"\n    if request[\"merchant\"] != card[\"merchant\"] or request[\"amount\"] > card[\"per_transaction\"]:\n        return \"rejected\"\n    if request[\"amount\"] > card[\"remaining\"]:\n        return \"rejected\"\n    card[\"remaining\"] -= request[\"amount\"]\n    return \"approved\"\n\ndef preview_batch(card, requests):\n    simulated = dict(card)\n    results = [authorize(simulated, request) for request in requests]\n    return {\"results\": results, \"remaining\": simulated[\"remaining\"]}\n```\n\npreview_batch returns {\"results\":[\"approved\",\"rejected\",\"rejected\",\"approved\",\"rejected\"],\"remaining\":0}; the original remaining stays 3000. Empty requests return an empty results list and the unchanged budget. The shallow copy is sufficient here because the contract contains only scalar card fields. This does not generalize automatically to nested mutable state.\n\nManual boundary checks: inactive card rejects without mutation; amount=per_transaction may approve; amount=per_transaction+1 rejects even with sufficient budget; at=expires_at rejects. Test a matching merchant with an excessive amount as well as the nonmatching merchant in the table. Batch time O(n), additional result space O(n); single authorization O(1).\n\nBusiness discussion has multiple defensible answers. A possible success metric is completed legitimate purchases; a harm metric is false declines. Explain merchant matching, lifecycle and support costs as design questions, not facts about the company's systems. A limited rollout with monitoring is a possible next step.",
+      "phases": [
+        {
+          "title": "Product discussion",
+          "minutes": 8,
+          "legacyTitle": "Negocio y aclaraciones"
+        },
+        {
+          "title": "Trace and predict",
+          "minutes": 12,
+          "legacyTitle": "Trazado y predicción"
+        },
+        {
+          "title": "Debug on paper",
+          "minutes": 12,
+          "legacyTitle": "Depurar en papel"
+        },
+        {
+          "title": "Extend on paper",
+          "minutes": 15,
+          "legacyTitle": "Extensión en papel"
+        },
+        {
+          "title": "Explain and save prediction",
+          "minutes": 8,
+          "legacyTitle": "Explicar y guardar predicción"
+        },
+        {
+          "title": "Reveal and evaluate",
+          "minutes": 5,
+          "legacyTitle": "Revelar y evaluar"
+        }
+      ],
+      "sources": [
+        "original-practice",
+        "tdp-agentic-report",
+        "capital-one-case"
+      ],
+      "stages": [
+        {
+          "title": "Product discussion",
+          "content": "A bank is considering merchant-locked virtual cards with expiration and spending controls. Who benefits, what can go wrong for legitimate customers, and how would you decide whether to roll out? Propose one success metric, one harm metric and a next step. Do not invent measured results."
+        },
+        {
+          "title": "Rules and examples",
+          "content": "This is a fictional merchant-locked virtual-card policy, not a description of Capital One's actual implementation.\n\nAll requests have positive integer-cent amounts and integer timestamps. The card must be active, the request timestamp must be strictly before expires_at, the merchant must match, the amount must not exceed per_transaction, and enough remaining budget must exist. All five conditions are required. Only approved requests reduce remaining; rejected requests change nothing. Process the supplied requests in table order, even when timestamps are not sorted.\n\nInitial card: active=True, merchant=\"M1\", expires_at=100, per_transaction=2000, remaining=3000.\n\n| id | at | merchant | amount |\n|---|---:|---|---:|\n| a | 99 | M1 | 2000 |\n| b | 99 | M2 | 500 |\n| c | 100 | M1 | 500 |\n| d | 99 | M1 | 1000 |\n| e | 99 | M1 | 1 |\n\nPredict each required outcome and remaining budget before reading the implementation."
+        },
+        {
+          "title": "Read the implementation",
+          "content": "Trace actual outcomes and remaining budget after each request. Identify the first mismatch with the required behavior.\n\n```python\ndef authorize(card, request):\n    if not card[\"active\"] or request[\"at\"] > card[\"expires_at\"]:\n        return \"rejected\"\n    if request[\"merchant\"] != card[\"merchant\"] and request[\"amount\"] > card[\"per_transaction\"]:\n        return \"rejected\"\n    if request[\"amount\"] > card[\"remaining\"]:\n        return \"rejected\"\n    card[\"remaining\"] -= request[\"amount\"]\n    return \"approved\"\n```"
+        },
+        {
+          "title": "Correct and extend",
+          "content": "Correct authorize without changing the contract. Then implement preview_batch(card, requests), returning {results: [status per request], remaining: simulated final budget} while preserving the original card and requests. Use the same rules and supplied order. Predict the sample and an empty batch. Explain why matching final balances alone does not prove correctness."
+        }
+      ]
+    },
+    {
+      "id": "d07-technical",
+      "title": "Webhook delivery and job submission",
+      "kind": "technical",
+      "minutes": 75,
+      "summary": "Independent notification and background-job applications.",
+      "content": "## Two projects\n\nWork on a notification delivery report and then an export-job request in a different application. Read each product’s rules instead of carrying assumptions between them. Treat any AI claim of correctness as a hypothesis until you have test evidence.\n\n## Workflow\n\n1. Read the opening README and write your clarification questions. Ask a mock interviewer to use `CLARIFICATIONS.md`, or consult it yourself after recording your questions. Use `--mode guided` when you want the contract visible immediately.\n2. State your hypothesis or feature design. Describe one test’s input, expected response and expected state yourself. You may ask AI to implement that test; review it and observe the expected failure before changing the application.\n3. Make or delegate a small change. Review the diff, run existing and new tests, then consider additional boundaries.\n4. Run `uv run python scripts/practice.py check ATTEMPT_PATH` from the repository root for each attempt. Record actual results, help used and unfinished work.\n\nUse 20 minutes for each task and 5 for its English explanation, within the 75-minute block. Every new task from d02-feature onward uses a different application. To resume old work, open its existing folder; its original brief and checker still apply.\n\n## Explain\n\nWhat did you observe? What did you infer? Why would your test fail before the change? Which AI suggestion did you accept, change or reject, and what evidence supported that decision?\n\n## Ten-minute debrief: Contract change\n\nIf a client sends an old field name, should the API reject it or support a transition? Explain validation and how you would test compatibility.\n\nFirst explain the real request path through the files you changed. Support claims with actual commands/results and say what you did not verify. Your interviewer may ask for a small manual change; be ready to explain and edit the relevant Python without delegating every line. These discussions are original practice, not a claim that your interview includes a separate system-design round.\n\n## Debrief alternative: review an AI suggestion\n\nA different fictional API promises that a repeated request ID with the same amount returns the prior receipt without changing balance. Reusing that ID with a different amount must raise a conflict and preserve state. The AI suggests the following code. Without running it, give a two-call counterexample, identify what it fails to verify, and specify a regression test. This snippet is independent of today's application tasks.\n\n```python\ndef credit(balance, receipts, request_id, amount):\n    if request_id in receipts:\n        return balance, receipts[request_id]\n    balance += amount\n    receipt = {\"id\": request_id, \"amount\": amount}\n    receipts[request_id] = receipt\n    return balance, receipt\n```\n\nUse this instead of the other debrief topic, within the same ten minutes. A tiny test that only repeats the same amount is insufficient evidence.",
+      "deliverables": [
+        "Two separate attempt folders with code and tests, including unsuccessful attempts.",
+        "Private notes for each task: reproducible symptom, initial hypothesis, cause, and explanation of the diff.",
+        "Actual check results, commands used, and two five-minute explanations in English.",
+        "If you used AI: the relevant prompt, a suggestion you accepted or rejected, and how you verified it."
+      ],
+      "rubric": [
+        "Record questions, assumptions and a hypothesis or feature design before editing.",
+        "Describe a test yourself and observe its relevant failure before implementation.",
+        "Preserve existing behavior, review AI output and justify each change with executed checks.",
+        "Explain results and remaining uncertainty in English; keep each application in its own attempt."
+      ],
+      "labs": ["d07-bug", "d07-feature"],
+      "phases": [
+        {
+          "title": "Orient and clarify",
+          "minutes": 10
+        },
+        {
+          "title": "Bug: implement",
+          "minutes": 20
+        },
+        {
+          "title": "Bug: explain",
+          "minutes": 5
+        },
+        {
+          "title": "Fresh feature attempt",
+          "minutes": 5
+        },
+        {
+          "title": "Feature: implement",
+          "minutes": 20
+        },
+        {
+          "title": "Feature: explain",
+          "minutes": 5
+        },
+        {
+          "title": "Review and design",
+          "minutes": 10
+        }
+      ],
+      "prompts": [
+        "Act as my interviewer. Read CLARIFICATIONS.md and answer only the product questions I ask. Do not diagnose the bug, identify the defective line, or propose a fix.",
+        "My hypothesis is __. My proposed test uses input __ and expects response __ and state __. Implement only that test, explain its assertions, and run it before changing application code.",
+        "The test failed because __. My proposed change is __. Apply the smallest change, run the tests, and show me the diff and results.",
+        "Review my change against the clarified contract. Suggest an additional boundary case and explain what regression it would detect. Do not expand the task."
+      ],
+      "hints": [
+        "Draw the request path using the code you actually inspected. A hypothesis should predict an observable result you can test.",
+        "A status code alone may miss a state or output error. Choose assertions from the agreed requirements, then inspect why the test fails.",
+        "For the patch-review snippet only: compare calls with the same request ID but different amounts. The existing receipt must be compared with the new payload before treating a retry as equivalent."
+      ],
+      "sources": [
+        "codesignal-agentic",
+        "codesignal-copilot",
+        "tdp-agentic-report",
+        "gildedrose",
+        "fastapi-template",
+        "original-practice"
+      ]
+    },
+    {
+      "id": "d05-leetcode",
+      "title": "1656. Design an Ordered Stream",
+      "kind": "python",
+      "minutes": 60,
+      "summary": "Persistent state, indexing and out-of-order arrivals.",
+      "content": "## Today's assignment\n\nSolve **1656. Design an Ordered Stream** in Python on LeetCode. Read the full official statement using the link above; it is the source of truth for inputs and edge cases. These assignments build useful skills and are not a prediction of your interview questions.\n\n## Before you code\n\nTrace several method calls on the same object before implementing. State what changes and what must be retained between calls.\n\n## Work independently\n\nExplain your plan aloud, then implement. Use the first 25 minutes of the solving phase without AI or an editorial. If blocked, write down the precise gap, take one hint, and mark the attempt as assisted. Do not copy a complete solution. Prioritize a correct, readable implementation within the stated constraints.\n\n## Verify and explain\n\nRun examples and your own boundary tests, submit, and explain time/space complexity. For a class problem, test multiple calls on the same instance and two separate instances. Explain what failed operations leave unchanged when relevant. Save your submission link, edge cases, explanation and help used in My attempt. A green submission is evidence for those tests, not interview readiness.\n\n## When time runs out\n\nRecord the first unresolved issue and mark Try again. Use the next review slot to reconstruct the fix without looking; never add an unplanned second hour. If you finish early, repeat a weak prior problem or explain a new test instead of starting an unrelated hard problem.",
+      "problems": [
+        {
+          "number": 1656,
+          "title": "Design an Ordered Stream",
+          "url": "https://leetcode.com/problems/design-an-ordered-stream/",
+          "difficulty": "Easy",
+          "focus": "Persistent state, indexing and out-of-order arrivals."
+        }
+      ],
+      "deliverables": [
+        "Submission link or unfinished code location, independently predicted edge cases, complexity and help used."
+      ],
+      "rubric": [
+        "I explained the contract and chose a data structure before coding.",
+        "I tested boundaries and, where relevant, state across calls.",
+        "I can explain the implementation and its complexity without reading an editorial.",
+        "My recorded result distinguishes independent, assisted and unfinished work."
+      ],
+      "phases": [
+        {
+          "title": "Read and predict",
+          "minutes": 15
+        },
+        {
+          "title": "Solve independently",
+          "minutes": 30
+        },
+        {
+          "title": "Test and explain",
+          "minutes": 10
+        },
+        {
+          "title": "Record evidence",
+          "minutes": 5
+        }
+      ],
+      "sources": ["leetcode-1656"]
+    },
+    {
+      "id": "d06-leetcode",
+      "title": "1396. Design Underground System",
+      "kind": "python",
+      "minutes": 60,
+      "summary": "Related methods, active records and accumulated statistics.",
+      "content": "## Today's assignment\n\nSolve **1396. Design Underground System** in Python on LeetCode. Read the full official statement using the link above; it is the source of truth for inputs and edge cases. These assignments build useful skills and are not a prediction of your interview questions.\n\n## Before you code\n\nSeparate the information needed while an activity is in progress from information needed for a later query. Explain why the direction of a journey matters.\n\n## Work independently\n\nExplain your plan aloud, then implement. Use the first 25 minutes of the solving phase without AI or an editorial. If blocked, write down the precise gap, take one hint, and mark the attempt as assisted. Do not copy a complete solution. Prioritize a correct, readable implementation within the stated constraints.\n\n## Verify and explain\n\nRun examples and your own boundary tests, submit, and explain time/space complexity. For a class problem, test multiple calls on the same instance and two separate instances. Explain what failed operations leave unchanged when relevant. Save your submission link, edge cases, explanation and help used in My attempt. A green submission is evidence for those tests, not interview readiness.\n\n## When time runs out\n\nRecord the first unresolved issue and mark Try again. Use the next review slot to reconstruct the fix without looking; never add an unplanned second hour. If you finish early, repeat a weak prior problem or explain a new test instead of starting an unrelated hard problem.",
+      "problems": [
+        {
+          "number": 1396,
+          "title": "Design Underground System",
+          "url": "https://leetcode.com/problems/design-underground-system/",
+          "difficulty": "Medium",
+          "focus": "Related methods, active records and accumulated statistics."
+        }
+      ],
+      "deliverables": [
+        "Submission link or unfinished code location, independently predicted edge cases, complexity and help used."
+      ],
+      "rubric": [
+        "I explained the contract and chose a data structure before coding.",
+        "I tested boundaries and, where relevant, state across calls.",
+        "I can explain the implementation and its complexity without reading an editorial.",
+        "My recorded result distinguishes independent, assisted and unfinished work."
+      ],
+      "phases": [
+        {
+          "title": "Read and predict",
+          "minutes": 15
+        },
+        {
+          "title": "Solve independently",
+          "minutes": 30
+        },
+        {
+          "title": "Test and explain",
+          "minutes": 10
+        },
+        {
+          "title": "Record evidence",
+          "minutes": 5
+        }
+      ],
+      "sources": ["leetcode-1396"]
+    },
+    {
+      "id": "d07-leetcode",
+      "title": "933. Number of Recent Calls",
+      "kind": "python",
+      "minutes": 60,
+      "summary": "Queues, time boundaries and obsolete state.",
+      "content": "## Today's assignment\n\nSolve **933. Number of Recent Calls** in Python on LeetCode. Read the full official statement using the link above; it is the source of truth for inputs and edge cases. These assignments build useful skills and are not a prediction of your interview questions.\n\n## Before you code\n\nPredict requests exactly on either side of the time-window boundary. State the time-order guarantee from the prompt before choosing your data structure.\n\n## Work independently\n\nExplain your plan aloud, then implement. Use the first 25 minutes of the solving phase without AI or an editorial. If blocked, write down the precise gap, take one hint, and mark the attempt as assisted. Do not copy a complete solution. Prioritize a correct, readable implementation within the stated constraints.\n\n## Verify and explain\n\nRun examples and your own boundary tests, submit, and explain time/space complexity. For a class problem, test multiple calls on the same instance and two separate instances. Explain what failed operations leave unchanged when relevant. Save your submission link, edge cases, explanation and help used in My attempt. A green submission is evidence for those tests, not interview readiness.\n\n## When time runs out\n\nRecord the first unresolved issue and mark Try again. Use the next review slot to reconstruct the fix without looking; never add an unplanned second hour. If you finish early, repeat a weak prior problem or explain a new test instead of starting an unrelated hard problem.",
+      "problems": [
+        {
+          "number": 933,
+          "title": "Number of Recent Calls",
+          "url": "https://leetcode.com/problems/number-of-recent-calls/",
+          "difficulty": "Easy",
+          "focus": "Queues, time boundaries and obsolete state."
+        }
+      ],
+      "deliverables": [
+        "Submission link or unfinished code location, independently predicted edge cases, complexity and help used."
+      ],
+      "rubric": [
+        "I explained the contract and chose a data structure before coding.",
+        "I tested boundaries and, where relevant, state across calls.",
+        "I can explain the implementation and its complexity without reading an editorial.",
+        "My recorded result distinguishes independent, assisted and unfinished work."
+      ],
+      "phases": [
+        {
+          "title": "Read and predict",
+          "minutes": 15
+        },
+        {
+          "title": "Solve independently",
+          "minutes": 30
+        },
+        {
+          "title": "Test and explain",
+          "minutes": 10
+        },
+        {
+          "title": "Record evidence",
+          "minutes": 5
+        }
+      ],
+      "sources": ["leetcode-933"]
+    },
+    {
+      "id": "d08-leetcode",
+      "title": "49. Group Anagrams",
+      "kind": "python",
+      "minutes": 60,
+      "summary": "Grouping with dictionaries and choosing a useful key.",
+      "content": "## Today's assignment\n\nSolve **49. Group Anagrams** in Python on LeetCode. Read the full official statement using the link above; it is the source of truth for inputs and edge cases. These assignments build useful skills and are not a prediction of your interview questions.\n\n## Before you code\n\nExplain how you know two records belong in the same group. Include an empty string and repeated strings in your tests.\n\n## Work independently\n\nExplain your plan aloud, then implement. Use the first 25 minutes of the solving phase without AI or an editorial. If blocked, write down the precise gap, take one hint, and mark the attempt as assisted. Do not copy a complete solution. Prioritize a correct, readable implementation within the stated constraints.\n\n## Verify and explain\n\nRun examples and your own boundary tests, submit, and explain time/space complexity. For a class problem, test multiple calls on the same instance and two separate instances. Explain what failed operations leave unchanged when relevant. Save your submission link, edge cases, explanation and help used in My attempt. A green submission is evidence for those tests, not interview readiness.\n\n## When time runs out\n\nRecord the first unresolved issue and mark Try again. Use the next review slot to reconstruct the fix without looking; never add an unplanned second hour. If you finish early, repeat a weak prior problem or explain a new test instead of starting an unrelated hard problem.",
+      "problems": [
+        {
+          "number": 49,
+          "title": "Group Anagrams",
+          "url": "https://leetcode.com/problems/group-anagrams/",
+          "difficulty": "Medium",
+          "focus": "Grouping with dictionaries and choosing a useful key."
+        }
+      ],
+      "deliverables": [
+        "Submission link or unfinished code location, independently predicted edge cases, complexity and help used."
+      ],
+      "rubric": [
+        "I explained the contract and chose a data structure before coding.",
+        "I tested boundaries and, where relevant, state across calls.",
+        "I can explain the implementation and its complexity without reading an editorial.",
+        "My recorded result distinguishes independent, assisted and unfinished work."
+      ],
+      "phases": [
+        {
+          "title": "Read and predict",
+          "minutes": 15
+        },
+        {
+          "title": "Solve independently",
+          "minutes": 30
+        },
+        {
+          "title": "Test and explain",
+          "minutes": 10
+        },
+        {
+          "title": "Record evidence",
+          "minutes": 5
+        }
+      ],
+      "sources": ["leetcode-49"]
+    },
+    {
+      "id": "d08-behavioral",
+      "title": "Mock: help, disagreement, and mistakes",
+      "kind": "behavioral",
+      "minutes": 30,
+      "summary": "Answer without reading notes. Even-numbered questions are follow-ups.",
+      "content": "## Rehearse aloud\n\nDraw a question below before choosing a story. Give a 90–120-second answer using a real project, academic experience or employment. Keep the situation brief; explain your own actions, why you took them, and the outcome you actually observed. Then reveal the follow-ups and answer without reading a script.\n\n## This session\n\nPractice two or three questions within 30 minutes. Record the question, story used, one vague claim and a more precise version. On mock days, ask a partner to choose questions and interrupt with follow-ups. If you lack a real example, say so and choose the closest honest experience; do not invent numbers or turn practice into employment.\n\n## Evaluate\n\nDid you answer the question asked? Could a listener distinguish your actions from the team's? Can you explain an alternative and a limitation? Use STAR as organization, not a memorized speech. Record private answers only in My attempt or local private notes.",
+      "deliverables": [
+        "Answers to today’s questions based on real experiences."
+      ],
+      "rubric": [
+        "Answer the specific question in 90–120 seconds without reading an essay.",
+        "Distinguish your contribution from the team’s; ground actions and results in a real event.",
+        "Follow-up answers stay consistent with the story and do not introduce invented metrics.",
+        "Name a decision, its reason, and an alternative. Avoid generalities such as “we communicated well.”"
+      ],
+      "phases": [
+        {
+          "title": "Draw and answer",
+          "minutes": 12
+        },
+        {
+          "title": "Follow-ups",
+          "minutes": 12
+        },
+        {
+          "title": "Review one improvement",
+          "minutes": 6
+        }
+      ],
+      "sources": [
+        "tdp-case-report",
+        "tdp-mexico-report",
+        "tdp-agentic-report",
+        "original-practice",
+        "capital-one-students"
+      ],
+      "promptGroups": [
+        {
+          "question": "Tell me about a disagreement that changed your approach.",
+          "followUps": [
+            "Why was the other position reasonable?",
+            "What did you personally say or do?",
+            "What evidence changed your mind—or theirs?"
+          ]
+        },
+        {
+          "question": "Tell me about a time you challenged an established process.",
+          "followUps": [
+            "Why did the original process exist?",
+            "Who disagreed and how did you respond?",
+            "What outcome did you actually observe?"
+          ]
+        },
+        {
+          "question": "Tell me about a mistake you made and how you handled it.",
+          "followUps": [
+            "When did you tell the affected people?",
+            "What was your responsibility?",
+            "What changed afterward?"
+          ]
+        },
+        {
+          "question": "Tell me about a time you learned something unfamiliar under time pressure.",
+          "followUps": [
+            "How did you choose what not to learn?",
+            "How did you check your understanding?",
+            "What could you do independently afterward?"
+          ]
+        },
+        {
+          "question": "Tell me about a time you needed another person's expertise.",
+          "followUps": [
+            "What had you tried?",
+            "How did you make your question easy to answer?",
+            "What knowledge did you share afterward?"
+          ]
+        },
+        {
+          "question": "Tell me about a time you used AI for a technical task.",
+          "followUps": [
+            "What did you verify yourself?",
+            "Which suggestion did you reject or correct?",
+            "What remained uncertain? If this was practice, name it as practice."
+          ]
+        },
+        {
+          "question": "Tell me about a time requirements or priorities changed.",
+          "followUps": [
+            "What was the riskiest assumption?",
+            "Who helped resolve the tradeoff?",
+            "What did you defer and communicate?"
+          ]
+        },
+        {
+          "question": "Walk me through a project you know well and your specific contribution.",
+          "followUps": [
+            "Trace a request through its components.",
+            "What alternative did you consider?",
+            "Which decision would you revisit?"
+          ]
+        },
+        {
+          "question": "Why Capital One and why the Technology Development Program?",
+          "followUps": [
+            "Which published aspect of the program connects to your goals?",
+            "What do you hope to learn?",
+            "What would you contribute based on real experience?"
+          ]
+        },
+        {
+          "question": "Introduce yourself and explain how your experience led you toward software engineering.",
+          "followUps": [
+            "Which project best demonstrates your interests?",
+            "What did you own in that project?",
+            "What are you working to improve now?"
+          ]
+        }
       ]
     }
   ]

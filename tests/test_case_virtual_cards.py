@@ -8,7 +8,8 @@ from pathlib import Path
 def test_virtual_card_actual_and_corrected_sequences_and_nonmutating_preview():
     root = Path(__file__).resolve().parents[1]
     plan = json.loads((root / 'curriculum/plan.json').read_text())
-    case = next(b for d in plan['days'] for b in d['blocks'] if b['id'] == 'd06-case-v2')
+    blocks = [b for d in plan['days'] for b in d['blocks']] + plan.get('archivedBlocks', [])
+    case = next(b for b in blocks if b['id'] == 'd06-case-v2')
     source = next(s['content'] for s in case['stages'] if '```python' in s['content'])
     current, corrected = {}, {}
     exec(re.search(r'```python\n(.*?)```', source, re.S)[1], current)

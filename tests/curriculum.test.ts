@@ -52,7 +52,10 @@ test("all ten days have four actionable blocks totaling 225 minutes", () => {
       for (const s of b.sources ?? [])
         assert.ok(sources.has(s), `${b.id}: unknown source ${s}`);
       for (const l of b.labs ?? []) labIds.add(l);
-      if (b.kind === "technical") assert.equal(b.labs?.length, 2);
+      if (b.kind === "technical") {
+        if (b.stages?.length) assert.equal(b.stages.length, 3);
+        else assert.equal(b.labs?.length, 2);
+      }
       if (b.phases?.length)
         assert.equal(
           b.phases.reduce((n, p) => n + p.minutes, 0),
@@ -66,5 +69,5 @@ test("all ten days have four actionable blocks totaling 225 minutes", () => {
         );
     }
   }
-  assert.equal(labIds.size, 20);
+  assert.equal(labIds.size, 18);
 });

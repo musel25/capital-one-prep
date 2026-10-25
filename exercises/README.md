@@ -69,6 +69,14 @@ messages describe the contract without printing the hidden test source.
 
 ## Instructor and maintenance material
 
+Day 7 uses a separate pure-Python progressive exercise:
+`uv run python scripts/progressive.py start`. Open the returned folder and follow
+its README through stages 1–3. One summarize function grows as requirements arrive;
+earlier tests keep running. Use `uv run pytest -q` inside that attempt.
+It does not use the FastAPI task catalog or `practice.py check`. Its public tests
+are examples; add boundaries and record unfinished stages honestly.
+Every start creates a unique folder without instructor reference code.
+
 Do not read the following before an independent attempt:
 
 - `templates/` contains working reference applications and public existing-behavior tests.

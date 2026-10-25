@@ -104,6 +104,106 @@ test("replacement LeetCode assignment stays pending and old Python notes remain 
   );
 });
 
+test("archived authorization notes cannot unlock the new number-validation answer", async () => {
+  const old = replaceProgress(freshState(), "d06-case-v2", {
+    status: "done",
+    reviewed: true,
+    prediction: "My previous authorization trace.",
+    notes: "Keep this earlier work.",
+  });
+  const raw = JSON.stringify(old);
+  localStorage.setItem(STORAGE_KEY, raw);
+  history.replaceState(null, "", "/grind/capital-one/?day=2026-10-28");
+  render(createElement(App));
+  await user.click(
+    screen.getByRole("button", {
+      name: /Case: digital card-number validation/,
+    }),
+  );
+  await user.click(screen.getByRole("button", { name: "My attempt" }));
+  assert.equal(
+    (screen.getByLabelText("My prediction") as HTMLTextAreaElement).value,
+    "",
+  );
+  assert.equal(
+    (
+      screen.getByRole("button", {
+        name: "Reveal explanation",
+      }) as HTMLButtonElement
+    ).disabled,
+    true,
+  );
+  await user.click(screen.getByRole("button", { name: "Close exercise" }));
+  await user.click(screen.getByRole("button", { name: "Previous exercises" }));
+  await user.click(
+    screen.getByRole("button", { name: /Case: virtual-card authorization/ }),
+  );
+  await user.click(screen.getByRole("button", { name: "My attempt" }));
+  assert.equal(
+    (screen.getByLabelText("My prediction") as HTMLTextAreaElement).value,
+    "My previous authorization trace.",
+  );
+  assert.equal(localStorage.getItem(STORAGE_KEY), raw);
+});
+
+test("focused behavioral mock draws all three themes before ending the round", async () => {
+  const block = (plan as Plan).days[7].blocks[2];
+  render(
+    createElement(TaskDialog, {
+      block,
+      sources: [],
+      close: () => {},
+      save: () => true,
+    }),
+  );
+  const questions = new Set<string>();
+  for (let i = 0; i < 3; i++) {
+    await user.click(screen.getByRole("button", { name: "Draw a question" }));
+    questions.add(screen.getByTestId("drawn-question").textContent ?? "");
+    await user.click(screen.getByRole("button", { name: "Show follow-ups" }));
+  }
+  assert.equal(questions.size, 3);
+  assert.ok([...questions].some((q) => /team.*deliver/i.test(q)));
+  assert.ok([...questions].some((q) => /challenged.*process/i.test(q)));
+  assert.ok([...questions].some((q) => /obstacle.*programming/i.test(q)));
+  assert.equal(
+    (
+      screen.getByRole("button", {
+        name: "Draw a question",
+      }) as HTMLButtonElement
+    ).disabled,
+    true,
+  );
+});
+
+test("progressive technical exercise reveals one coding stage at a time", async () => {
+  const block = (plan as Plan).days[6].blocks[0];
+  render(
+    createElement(TaskDialog, {
+      block,
+      sources: [],
+      close: () => {},
+      save: () => true,
+    }),
+  );
+  assert.ok(screen.getByRole("region", { name: "Coding stages" }));
+  assert.ok(screen.getByRole("heading", { name: /Aggregate purchases/ }));
+  assert.equal(
+    screen.queryByRole("heading", { name: /Partial refunds/ }),
+    null,
+  );
+  await user.click(screen.getByRole("button", { name: "Reveal next stage" }));
+  assert.ok(
+    screen.getByRole("heading", { name: /Replayed and conflicting IDs/ }),
+  );
+  await user.click(screen.getByRole("button", { name: "Reveal next stage" }));
+  assert.ok(screen.getByRole("heading", { name: /Partial refunds/ }));
+  assert.equal(
+    screen.queryByRole("heading", { name: "Open in your editor" }),
+    null,
+  );
+});
+
 test("problem cards link to the official exercise without changing progress", () => {
   let saves = 0;
   const block = {

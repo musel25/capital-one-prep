@@ -338,7 +338,12 @@ export function TaskDialog({
               )}
               <Markdown>{block.content}</Markdown>
               {!!block.stages?.length && (
-                <section className="section" aria-label="Case stages">
+                <section
+                  className="section"
+                  aria-label={
+                    block.kind === "technical" ? "Coding stages" : "Case stages"
+                  }
+                >
                   <p className="muted">
                     Stage {Math.min(visibleStages, block.stages.length)} of{" "}
                     {block.stages.length}. Explain your answer before moving on.
