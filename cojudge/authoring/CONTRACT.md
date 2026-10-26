@@ -53,6 +53,7 @@ static List<Object> arr(Object x);
 static String s(Object x);
 static int n(Object x);
 static long lng(Object x);
+static boolean isInteger(Object x); // true for JSON integer tokens, false for 1.0 / 1e0 / bool
 static boolean b(Object x);
 static Map<String,Object> map(Object... keyValuePairs);
 static List<Object> list(Object... values);
@@ -61,8 +62,10 @@ static List<Object> list(Object... values);
 
 Marker imports java.util.*, java.math.*, java.time.*, java.time.format.*,
 java.util.regex.*, java.nio.charset.StandardCharsets. Add fully qualified names
-for other standard classes. Support numeric parsing uses BigDecimal; use n/lng.
+for other standard classes. Use n/lng for numeric conversion.
 Do not mutate data used for comparison. Return JSON-compatible structures.
+JSON integer tokens use BigInteger; decimal/exponent tokens use BigDecimal.
+Use isInteger(x) for Python type(x) is int validation, including 1.0 and 1e0.
 Java reference computes answers independently from arbitrary valid inputs.
 Do not use expected-output lookup tables or call the Python reference from Java.
 
