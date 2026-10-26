@@ -1,0 +1,19 @@
+[
+  {
+    "name": "confirms a hold at its expiration boundary",
+    "detected_by": [
+      1,
+      7,
+      11,
+      13,
+      14,
+      17,
+      20,
+      22,
+      28,
+      32,
+      36,
+      38
+    ]
+  }
+]

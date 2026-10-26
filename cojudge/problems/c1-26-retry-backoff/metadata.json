@@ -1,0 +1,50 @@
+{
+  "id": "c1-26-retry-backoff",
+  "title": "26. Classify retries and cap backoff",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "03-apis-and-clients",
+  "examples": [
+    {
+      "input": "{\"outcomes\": [503, 503, 200], \"max_attempts\": 3, \"base\": 2, \"cap\": 3}",
+      "output": "{\"attempts\": 3, \"delays\": [2, 3], \"result\": \"success\"}",
+      "explanation": "backoff is capped"
+    },
+    {
+      "input": "{\"outcomes\": [400, 200], \"max_attempts\": 2, \"base\": 1, \"cap\": 10}",
+      "output": "{\"attempts\": 1, \"delays\": [], \"result\": \"failed\"}",
+      "explanation": "do not retry a client error"
+    },
+    {
+      "input": "{\"outcomes\": [\"timeout\", 504], \"max_attempts\": 2, \"base\": 4, \"cap\": 20}",
+      "output": "{\"attempts\": 2, \"delays\": [4], \"result\": \"exhausted\"}",
+      "explanation": "no delay after final failure"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"base\":2,\"cap\":3,\"max_attempts\":3,\"outcomes\":[503,503,200]}"
+    },
+    {
+      "payload": "{\"base\":1,\"cap\":10,\"max_attempts\":2,\"outcomes\":[400,200]}"
+    },
+    {
+      "payload": "{\"base\":4,\"cap\":20,\"max_attempts\":2,\"outcomes\":[\"timeout\",504]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Return immediately for success and permanent failure.",
+    "The first delay is base, subject to the cap."
+  ]
+}

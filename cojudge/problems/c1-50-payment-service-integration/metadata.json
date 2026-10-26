@@ -1,0 +1,50 @@
+{
+  "id": "c1-50-payment-service-integration",
+  "title": "50. Compose a bounded reliable payment service",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "05-system-components",
+  "examples": [
+    {
+      "input": "{\"balances\": {\"a\": 5, \"b\": 0}, \"payments\": [{\"key\": \"k\", \"from\": \"a\", \"to\": \"b\", \"amount\": 2, \"fail\": \"none\"}]}",
+      "output": "{\"results\": [\"ok\"], \"balances\": {\"a\": 3, \"b\": 2}, \"events\": [[\"k\", \"a\", \"b\", 2]]}",
+      "explanation": "payment commits balance changes and event"
+    },
+    {
+      "input": "{\"balances\": {\"a\": 5, \"b\": 0}, \"payments\": [{\"key\": \"k\", \"from\": \"a\", \"to\": \"b\", \"amount\": 2, \"fail\": \"none\"}, {\"key\": \"k\", \"from\": \"a\", \"to\": \"b\", \"amount\": 2, \"fail\": \"none\"}]}",
+      "output": "{\"results\": [\"ok\", \"replay\"], \"balances\": {\"a\": 3, \"b\": 2}, \"events\": [[\"k\", \"a\", \"b\", 2]]}",
+      "explanation": "retry has no duplicate effect or event"
+    },
+    {
+      "input": "{\"balances\": {\"a\": 5, \"b\": 0}, \"payments\": [{\"key\": \"k\", \"from\": \"a\", \"to\": \"b\", \"amount\": 2, \"fail\": \"debit\"}, {\"key\": \"k\", \"from\": \"a\", \"to\": \"b\", \"amount\": 2, \"fail\": \"none\"}]}",
+      "output": "{\"results\": [\"failed\", \"ok\"], \"balances\": {\"a\": 3, \"b\": 2}, \"events\": [[\"k\", \"a\", \"b\", 2]]}",
+      "explanation": "retry after partial staged debit"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    # Compose idempotency, atomic balances, and an ordered outbox.\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"balances\":{\"a\":5,\"b\":0},\"payments\":[{\"amount\":2,\"fail\":\"none\",\"from\":\"a\",\"key\":\"k\",\"to\":\"b\"}]}"
+    },
+    {
+      "payload": "{\"balances\":{\"a\":5,\"b\":0},\"payments\":[{\"amount\":2,\"fail\":\"none\",\"from\":\"a\",\"key\":\"k\",\"to\":\"b\"},{\"amount\":2,\"fail\":\"none\",\"from\":\"a\",\"key\":\"k\",\"to\":\"b\"}]}"
+    },
+    {
+      "payload": "{\"balances\":{\"a\":5,\"b\":0},\"payments\":[{\"amount\":2,\"fail\":\"debit\",\"from\":\"a\",\"key\":\"k\",\"to\":\"b\"},{\"amount\":2,\"fail\":\"none\",\"from\":\"a\",\"key\":\"k\",\"to\":\"b\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Check prior committed payloads before validating a new payment.",
+    "Keep staged state separate until every injected failure point has passed."
+  ]
+}

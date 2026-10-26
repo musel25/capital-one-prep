@@ -1,0 +1,95 @@
+[
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"name\":\"Bo\"},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"name\":\"Bo\"},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"email\":null},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"name\":null},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"email\":7,\"name\":\"Bo\"},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"extra\":1},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"email\":\"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\",\"name\":\"xxxxxxxxxxxxxxxxxxxx\"},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"name\":\"xxxxxxxxxxxxxxxxxxxxx\"},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":null,\"method\":\"PATCH\"},{\"body\":[],\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"name\":\"Bo\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"Cy\"},\"method\":\"PUT\"},{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"x@y\",\"name\":\"user0\"},\"requests\":[{\"body\":{},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":null,\"name\":\"user1\"},\"requests\":[{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"x@y\",\"name\":\"user2\"},\"requests\":[{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"email\":null},\"method\":\"PATCH\"},{\"body\":{\"name\":\"new2\"},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":null,\"name\":\"user3\"},\"requests\":[{\"body\":{},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{},\"method\":\"PATCH\"},{\"body\":{},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"x@y\",\"name\":\"user4\"},\"requests\":[{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{\"name\":\"new4\"},\"method\":\"PATCH\"},{\"body\":{\"email\":null},\"method\":\"PUT\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":null,\"name\":\"user5\"},\"requests\":[{\"body\":{\"name\":false},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{\"name\":false},\"method\":\"PUT\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"name\":false},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"x@y\",\"name\":\"user6\"},\"requests\":[{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"\"},\"method\":\"PUT\"},{\"body\":{\"name\":false},\"method\":\"PUT\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"name\":false},\"method\":\"PATCH\"},{\"body\":{\"email\":null},\"method\":\"PUT\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":null,\"name\":\"user7\"},\"requests\":[{\"body\":{\"name\":false},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{},\"method\":\"PUT\"},{\"body\":{\"name\":\"\"},\"method\":\"PUT\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"x@y\",\"name\":\"user8\"},\"requests\":[{\"body\":{\"name\":\"new8\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"new8\"},\"method\":\"PUT\"},{\"body\":{},\"method\":\"PUT\"},{\"body\":{\"name\":false},\"method\":\"PUT\"},{\"body\":{\"email\":null},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"name\":false},\"method\":\"PUT\"},{\"body\":{\"name\":\"\"},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":null,\"name\":\"user9\"},\"requests\":[{\"body\":{\"name\":\"\"},\"method\":\"PUT\"},{\"body\":{},\"method\":\"PUT\"},{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"email\":null},\"method\":\"PUT\"},{\"body\":{\"name\":false},\"method\":\"PUT\"},{\"body\":{\"email\":null},\"method\":\"PUT\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{\"name\":false},\"method\":\"PATCH\"},{\"body\":{\"name\":\"new9\"},\"method\":\"PUT\"},{\"body\":{\"name\":\"\"},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"x@y\",\"name\":\"user10\"},\"requests\":[{\"body\":{\"email\":null},\"method\":\"PATCH\"},{\"body\":{},\"method\":\"PUT\"},{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"\"},\"method\":\"PUT\"},{\"body\":{\"email\":null},\"method\":\"PATCH\"},{\"body\":{},\"method\":\"PUT\"},{\"body\":{\"name\":false},\"method\":\"PUT\"},{\"body\":{\"name\":\"new10\"},\"method\":\"PUT\"},{\"body\":{\"name\":\"\"},\"method\":\"PUT\"},{\"body\":{},\"method\":\"PUT\"},{\"body\":{\"name\":\"new10\"},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":null,\"name\":\"user11\"},\"requests\":[{\"body\":{\"email\":null},\"method\":\"PATCH\"},{\"body\":{},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"new11\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"new11\"},\"method\":\"PUT\"},{\"body\":{},\"method\":\"PUT\"},{\"body\":{\"name\":\"new11\"},\"method\":\"PUT\"},{\"body\":{\"email\":null},\"method\":\"PATCH\"},{\"body\":{\"name\":false},\"method\":\"PUT\"},{\"body\":{\"name\":\"new11\"},\"method\":\"PUT\"},{\"body\":{\"email\":null},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"x@y\",\"name\":\"user12\"},\"requests\":[{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"},{\"body\":{},\"method\":\"PATCH\"},{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"email\":null},\"method\":\"PUT\"},{\"body\":{\"email\":null},\"method\":\"PATCH\"},{\"body\":{\"email\":null},\"method\":\"PUT\"},{\"body\":{\"name\":false},\"method\":\"PATCH\"},{\"body\":{},\"method\":\"PATCH\"},{\"body\":{\"name\":false},\"method\":\"PATCH\"},{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{\"name\":\"new12\"},\"method\":\"PATCH\"},{\"body\":{\"email\":null},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":null,\"name\":\"user13\"},\"requests\":[{\"body\":{\"name\":\"\"},\"method\":\"PUT\"},{\"body\":{},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"new13\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"new13\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"new13\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"\"},\"method\":\"PUT\"},{\"body\":{\"name\":\"\"},\"method\":\"PUT\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"name\":false},\"method\":\"PATCH\"},{\"body\":{\"name\":\"\"},\"method\":\"PUT\"},{\"body\":{\"name\":\"new13\"},\"method\":\"PUT\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":\"x@y\",\"name\":\"user14\"},\"requests\":[{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{},\"method\":\"PATCH\"},{\"body\":{},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{},\"method\":\"PATCH\"},{\"body\":{\"name\":\"new14\"},\"method\":\"PUT\"},{\"body\":{\"email\":null},\"method\":\"PUT\"},{\"body\":{},\"method\":\"PATCH\"},{\"body\":{},\"method\":\"PATCH\"},{\"body\":{\"email\":null},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{\"email\":null},\"method\":\"PUT\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"name\":\"new14\"},\"method\":\"PATCH\"}]}"
+  },
+  {
+    "payload": "{\"initial\":{\"email\":null,\"name\":\"user15\"},\"requests\":[{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{},\"method\":\"PUT\"},{\"body\":{\"name\":false},\"method\":\"PUT\"},{\"body\":{},\"method\":\"PUT\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"},{\"body\":{\"name\":false},\"method\":\"PUT\"},{\"body\":{\"name\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{},\"method\":\"PUT\"},{\"body\":{\"name\":\"new15\"},\"method\":\"PUT\"},{\"body\":{\"email\":null},\"method\":\"PUT\"},{\"body\":{},\"method\":\"PATCH\"},{\"body\":{\"email\":null},\"method\":\"PUT\"},{\"body\":{\"name\":\"\"},\"method\":\"PUT\"},{\"body\":{\"email\":\"\"},\"method\":\"PATCH\"},{\"body\":{\"email\":\"\"},\"method\":\"PUT\"}]}"
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "id": "c1-42-bounded-lru-cache",
+  "title": "42. Build a capacity-bounded LRU cache",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "05-system-components",
+  "examples": [
+    {
+      "input": "{\"capacity\": 2, \"ops\": [{\"op\": \"put\", \"key\": \"a\", \"value\": 1}, {\"op\": \"put\", \"key\": \"b\", \"value\": 2}, {\"op\": \"put\", \"key\": \"c\", \"value\": 3}]}",
+      "output": "{\"results\": [null, null, \"a\"], \"entries\": [[\"b\", 2], [\"c\", 3]]}",
+      "explanation": "evict oldest use"
+    },
+    {
+      "input": "{\"capacity\": 2, \"ops\": [{\"op\": \"put\", \"key\": \"a\", \"value\": 1}, {\"op\": \"put\", \"key\": \"b\", \"value\": 2}, {\"op\": \"get\", \"key\": \"a\"}, {\"op\": \"put\", \"key\": \"c\", \"value\": 3}]}",
+      "output": "{\"results\": [null, null, 1, \"b\"], \"entries\": [[\"a\", 1], [\"c\", 3]]}",
+      "explanation": "read refreshes recency"
+    },
+    {
+      "input": "{\"capacity\": 2, \"ops\": [{\"op\": \"put\", \"key\": \"a\", \"value\": 1}, {\"op\": \"put\", \"key\": \"b\", \"value\": 2}, {\"op\": \"put\", \"key\": \"a\", \"value\": 9}]}",
+      "output": "{\"results\": [null, null, null], \"entries\": [[\"b\", 2], [\"a\", 9]]}",
+      "explanation": "overwrite refreshes recency"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    # Return results and final entries in LRU-to-MRU order.\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"capacity\":2,\"ops\":[{\"key\":\"a\",\"op\":\"put\",\"value\":1},{\"key\":\"b\",\"op\":\"put\",\"value\":2},{\"key\":\"c\",\"op\":\"put\",\"value\":3}]}"
+    },
+    {
+      "payload": "{\"capacity\":2,\"ops\":[{\"key\":\"a\",\"op\":\"put\",\"value\":1},{\"key\":\"b\",\"op\":\"put\",\"value\":2},{\"key\":\"a\",\"op\":\"get\"},{\"key\":\"c\",\"op\":\"put\",\"value\":3}]}"
+    },
+    {
+      "payload": "{\"capacity\":2,\"ops\":[{\"key\":\"a\",\"op\":\"put\",\"value\":1},{\"key\":\"b\",\"op\":\"put\",\"value\":2},{\"key\":\"a\",\"op\":\"put\",\"value\":9}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Keep one end as least recent and the other as most recent.",
+    "Both successful reads and overwrites must move the key."
+  ]
+}

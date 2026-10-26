@@ -1,0 +1,50 @@
+{
+  "id": "c1-40-transactional-outbox",
+  "title": "40. Write an order and its outbox event atomically",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "04-sql-and-transactions",
+  "examples": [
+    {
+      "input": "{\"orders\": [{\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}]}",
+      "output": "{\"results\": [\"ok\"], \"orders\": [[\"a\", 2]], \"events\": [[\"a\", 2]]}",
+      "explanation": "business record and event commit"
+    },
+    {
+      "input": "{\"orders\": [{\"id\": \"a\", \"amount\": 2, \"fail\": \"business\"}]}",
+      "output": "{\"results\": [\"failed\"], \"orders\": [], \"events\": []}",
+      "explanation": "failure between writes"
+    },
+    {
+      "input": "{\"orders\": [{\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}, {\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}]}",
+      "output": "{\"results\": [\"ok\", \"replay\"], \"orders\": [[\"a\", 2]], \"events\": [[\"a\", 2]]}",
+      "explanation": "retry creates no duplicate event"
+    }
+  ],
+  "starterCode": {
+    "python": "import sqlite3\n\ndef solve(data: dict) -> dict:\n    db = sqlite3.connect(\":memory:\")\n    db.executescript(\"CREATE TABLE orders(id TEXT PRIMARY KEY, amount INTEGER); CREATE TABLE outbox(id TEXT PRIMARY KEY, amount INTEGER);\")\n    # TODO: insert each new order and event in one transaction.\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"orders\":[{\"amount\":2,\"fail\":\"none\",\"id\":\"a\"}]}"
+    },
+    {
+      "payload": "{\"orders\":[{\"amount\":2,\"fail\":\"business\",\"id\":\"a\"}]}"
+    },
+    {
+      "payload": "{\"orders\":[{\"amount\":2,\"fail\":\"none\",\"id\":\"a\"},{\"amount\":2,\"fail\":\"none\",\"id\":\"a\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Put both INSERT statements in the same transaction.",
+    "A rolled-back ID can be used by a later request."
+  ]
+}

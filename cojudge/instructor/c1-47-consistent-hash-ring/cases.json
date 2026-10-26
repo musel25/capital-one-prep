@@ -1,0 +1,3595 @@
+[
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 100
+        },
+        {
+          "id": "b",
+          "hash": 500
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 101
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "b"
+      ],
+      "ring": [
+        [
+          100,
+          "a"
+        ],
+        [
+          500,
+          "b"
+        ]
+      ]
+    },
+    "label": "clockwise successor"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 100
+        },
+        {
+          "id": "b",
+          "hash": 500
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 100
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a"
+      ],
+      "ring": [
+        [
+          100,
+          "a"
+        ],
+        [
+          500,
+          "b"
+        ]
+      ]
+    },
+    "label": "exact hash belongs to that node"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 100
+        },
+        {
+          "id": "b",
+          "hash": 500
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 999
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a"
+      ],
+      "ring": [
+        [
+          100,
+          "a"
+        ],
+        [
+          500,
+          "b"
+        ]
+      ]
+    },
+    "label": "wrap past final point"
+  },
+  {
+    "input": {
+      "nodes": [],
+      "ops": []
+    },
+    "expected": {
+      "results": [],
+      "ring": []
+    },
+    "label": "empty ring"
+  },
+  {
+    "input": {
+      "nodes": [],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 0
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null
+      ],
+      "ring": []
+    },
+    "label": "empty lookup"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 100
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 0
+        },
+        {
+          "op": "lookup",
+          "hash": 100
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          100,
+          "a"
+        ]
+      ]
+    },
+    "label": "single node owns whole ring"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "b",
+          "hash": 500
+        },
+        {
+          "id": "a",
+          "hash": 100
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 0
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a"
+      ],
+      "ring": [
+        [
+          100,
+          "a"
+        ],
+        [
+          500,
+          "b"
+        ]
+      ]
+    },
+    "label": "input need not be sorted"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 100
+        },
+        {
+          "id": "b",
+          "hash": 500
+        }
+      ],
+      "ops": [
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 300
+        },
+        {
+          "op": "lookup",
+          "hash": 200
+        },
+        {
+          "op": "lookup",
+          "hash": 400
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "added",
+        "c",
+        "b"
+      ],
+      "ring": [
+        [
+          100,
+          "a"
+        ],
+        [
+          300,
+          "c"
+        ],
+        [
+          500,
+          "b"
+        ]
+      ]
+    },
+    "label": "add splits one interval"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 100
+        },
+        {
+          "id": "b",
+          "hash": 500
+        }
+      ],
+      "ops": [
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 400
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        true,
+        "a"
+      ],
+      "ring": [
+        [
+          100,
+          "a"
+        ]
+      ]
+    },
+    "label": "remove transfers interval"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 100
+        }
+      ],
+      "ops": [
+        {
+          "op": "remove",
+          "id": "a"
+        },
+        {
+          "op": "lookup",
+          "hash": 0
+        },
+        {
+          "op": "remove",
+          "id": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        true,
+        null,
+        false
+      ],
+      "ring": []
+    },
+    "label": "remove final node and repeat"
+  },
+  {
+    "input": {
+      "nodes": [],
+      "ops": [
+        {
+          "op": "add",
+          "id": "z",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "a",
+          "hash": 0
+        },
+        {
+          "op": "lookup",
+          "hash": 0
+        },
+        {
+          "op": "lookup",
+          "hash": 1
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "added",
+        "added",
+        "a",
+        "z",
+        "z"
+      ],
+      "ring": [
+        [
+          0,
+          "a"
+        ],
+        [
+          999,
+          "z"
+        ]
+      ]
+    },
+    "label": "ring endpoints"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 100
+        }
+      ],
+      "ops": [
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "remove",
+          "id": "a"
+        },
+        {
+          "op": "add",
+          "id": "a",
+          "hash": 700
+        },
+        {
+          "op": "lookup",
+          "hash": 100
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        false,
+        true,
+        "added",
+        "a"
+      ],
+      "ring": [
+        [
+          700,
+          "a"
+        ]
+      ]
+    },
+    "label": "ID can be reused after removal"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 0
+        },
+        {
+          "id": "b",
+          "hash": 400
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 0
+        },
+        {
+          "op": "lookup",
+          "hash": 400
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 200
+        },
+        {
+          "op": "lookup",
+          "hash": 100
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 360
+        },
+        {
+          "op": "lookup",
+          "hash": 64
+        },
+        {
+          "op": "lookup",
+          "hash": 440
+        },
+        {
+          "op": "lookup",
+          "hash": 566
+        },
+        {
+          "op": "lookup",
+          "hash": 464
+        },
+        {
+          "op": "lookup",
+          "hash": 584
+        },
+        {
+          "op": "lookup",
+          "hash": 351
+        },
+        {
+          "op": "lookup",
+          "hash": 263
+        },
+        {
+          "op": "lookup",
+          "hash": 524
+        },
+        {
+          "op": "lookup",
+          "hash": 395
+        },
+        {
+          "op": "lookup",
+          "hash": 401
+        },
+        {
+          "op": "lookup",
+          "hash": 630
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          0,
+          "a"
+        ],
+        [
+          200,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 1
+        },
+        {
+          "id": "b",
+          "hash": 401
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 1
+        },
+        {
+          "op": "lookup",
+          "hash": 401
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 201
+        },
+        {
+          "op": "lookup",
+          "hash": 101
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 41
+        },
+        {
+          "op": "lookup",
+          "hash": 814
+        },
+        {
+          "op": "lookup",
+          "hash": 428
+        },
+        {
+          "op": "lookup",
+          "hash": 674
+        },
+        {
+          "op": "lookup",
+          "hash": 24
+        },
+        {
+          "op": "lookup",
+          "hash": 980
+        },
+        {
+          "op": "lookup",
+          "hash": 104
+        },
+        {
+          "op": "lookup",
+          "hash": 0
+        },
+        {
+          "op": "lookup",
+          "hash": 270
+        },
+        {
+          "op": "lookup",
+          "hash": 965
+        },
+        {
+          "op": "lookup",
+          "hash": 988
+        },
+        {
+          "op": "lookup",
+          "hash": 811
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "c",
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          1,
+          "a"
+        ],
+        [
+          201,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 2
+        },
+        {
+          "id": "b",
+          "hash": 402
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 2
+        },
+        {
+          "op": "lookup",
+          "hash": 402
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 202
+        },
+        {
+          "op": "lookup",
+          "hash": 102
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 493
+        },
+        {
+          "op": "lookup",
+          "hash": 741
+        },
+        {
+          "op": "lookup",
+          "hash": 559
+        },
+        {
+          "op": "lookup",
+          "hash": 9
+        },
+        {
+          "op": "lookup",
+          "hash": 939
+        },
+        {
+          "op": "lookup",
+          "hash": 835
+        },
+        {
+          "op": "lookup",
+          "hash": 920
+        },
+        {
+          "op": "lookup",
+          "hash": 323
+        },
+        {
+          "op": "lookup",
+          "hash": 581
+        },
+        {
+          "op": "lookup",
+          "hash": 437
+        },
+        {
+          "op": "lookup",
+          "hash": 235
+        },
+        {
+          "op": "lookup",
+          "hash": 243
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          2,
+          "a"
+        ],
+        [
+          202,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 3
+        },
+        {
+          "id": "b",
+          "hash": 403
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 3
+        },
+        {
+          "op": "lookup",
+          "hash": 403
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 203
+        },
+        {
+          "op": "lookup",
+          "hash": 103
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 535
+        },
+        {
+          "op": "lookup",
+          "hash": 526
+        },
+        {
+          "op": "lookup",
+          "hash": 367
+        },
+        {
+          "op": "lookup",
+          "hash": 452
+        },
+        {
+          "op": "lookup",
+          "hash": 980
+        },
+        {
+          "op": "lookup",
+          "hash": 247
+        },
+        {
+          "op": "lookup",
+          "hash": 34
+        },
+        {
+          "op": "lookup",
+          "hash": 574
+        },
+        {
+          "op": "lookup",
+          "hash": 383
+        },
+        {
+          "op": "lookup",
+          "hash": 733
+        },
+        {
+          "op": "lookup",
+          "hash": 704
+        },
+        {
+          "op": "lookup",
+          "hash": 361
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          3,
+          "a"
+        ],
+        [
+          203,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 4
+        },
+        {
+          "id": "b",
+          "hash": 404
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 4
+        },
+        {
+          "op": "lookup",
+          "hash": 404
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 204
+        },
+        {
+          "op": "lookup",
+          "hash": 104
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 615
+        },
+        {
+          "op": "lookup",
+          "hash": 350
+        },
+        {
+          "op": "lookup",
+          "hash": 571
+        },
+        {
+          "op": "lookup",
+          "hash": 588
+        },
+        {
+          "op": "lookup",
+          "hash": 780
+        },
+        {
+          "op": "lookup",
+          "hash": 200
+        },
+        {
+          "op": "lookup",
+          "hash": 244
+        },
+        {
+          "op": "lookup",
+          "hash": 807
+        },
+        {
+          "op": "lookup",
+          "hash": 860
+        },
+        {
+          "op": "lookup",
+          "hash": 746
+        },
+        {
+          "op": "lookup",
+          "hash": 936
+        },
+        {
+          "op": "lookup",
+          "hash": 957
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          4,
+          "a"
+        ],
+        [
+          204,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 5
+        },
+        {
+          "id": "b",
+          "hash": 405
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 5
+        },
+        {
+          "op": "lookup",
+          "hash": 405
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 205
+        },
+        {
+          "op": "lookup",
+          "hash": 105
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 36
+        },
+        {
+          "op": "lookup",
+          "hash": 128
+        },
+        {
+          "op": "lookup",
+          "hash": 341
+        },
+        {
+          "op": "lookup",
+          "hash": 100
+        },
+        {
+          "op": "lookup",
+          "hash": 371
+        },
+        {
+          "op": "lookup",
+          "hash": 592
+        },
+        {
+          "op": "lookup",
+          "hash": 392
+        },
+        {
+          "op": "lookup",
+          "hash": 520
+        },
+        {
+          "op": "lookup",
+          "hash": 553
+        },
+        {
+          "op": "lookup",
+          "hash": 832
+        },
+        {
+          "op": "lookup",
+          "hash": 258
+        },
+        {
+          "op": "lookup",
+          "hash": 99
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "c",
+        "c",
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c"
+      ],
+      "ring": [
+        [
+          5,
+          "a"
+        ],
+        [
+          205,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 6
+        },
+        {
+          "id": "b",
+          "hash": 406
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 6
+        },
+        {
+          "op": "lookup",
+          "hash": 406
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 206
+        },
+        {
+          "op": "lookup",
+          "hash": 106
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 664
+        },
+        {
+          "op": "lookup",
+          "hash": 892
+        },
+        {
+          "op": "lookup",
+          "hash": 902
+        },
+        {
+          "op": "lookup",
+          "hash": 232
+        },
+        {
+          "op": "lookup",
+          "hash": 949
+        },
+        {
+          "op": "lookup",
+          "hash": 715
+        },
+        {
+          "op": "lookup",
+          "hash": 865
+        },
+        {
+          "op": "lookup",
+          "hash": 342
+        },
+        {
+          "op": "lookup",
+          "hash": 223
+        },
+        {
+          "op": "lookup",
+          "hash": 482
+        },
+        {
+          "op": "lookup",
+          "hash": 762
+        },
+        {
+          "op": "lookup",
+          "hash": 112
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c"
+      ],
+      "ring": [
+        [
+          6,
+          "a"
+        ],
+        [
+          206,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 7
+        },
+        {
+          "id": "b",
+          "hash": 407
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 7
+        },
+        {
+          "op": "lookup",
+          "hash": 407
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 207
+        },
+        {
+          "op": "lookup",
+          "hash": 107
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 791
+        },
+        {
+          "op": "lookup",
+          "hash": 426
+        },
+        {
+          "op": "lookup",
+          "hash": 619
+        },
+        {
+          "op": "lookup",
+          "hash": 361
+        },
+        {
+          "op": "lookup",
+          "hash": 691
+        },
+        {
+          "op": "lookup",
+          "hash": 893
+        },
+        {
+          "op": "lookup",
+          "hash": 293
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "lookup",
+          "hash": 791
+        },
+        {
+          "op": "lookup",
+          "hash": 829
+        },
+        {
+          "op": "lookup",
+          "hash": 244
+        },
+        {
+          "op": "lookup",
+          "hash": 828
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          7,
+          "a"
+        ],
+        [
+          207,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 8
+        },
+        {
+          "id": "b",
+          "hash": 408
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 8
+        },
+        {
+          "op": "lookup",
+          "hash": 408
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 208
+        },
+        {
+          "op": "lookup",
+          "hash": 108
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 568
+        },
+        {
+          "op": "lookup",
+          "hash": 944
+        },
+        {
+          "op": "lookup",
+          "hash": 267
+        },
+        {
+          "op": "lookup",
+          "hash": 365
+        },
+        {
+          "op": "lookup",
+          "hash": 545
+        },
+        {
+          "op": "lookup",
+          "hash": 578
+        },
+        {
+          "op": "lookup",
+          "hash": 41
+        },
+        {
+          "op": "lookup",
+          "hash": 495
+        },
+        {
+          "op": "lookup",
+          "hash": 319
+        },
+        {
+          "op": "lookup",
+          "hash": 576
+        },
+        {
+          "op": "lookup",
+          "hash": 798
+        },
+        {
+          "op": "lookup",
+          "hash": 404
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          8,
+          "a"
+        ],
+        [
+          208,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 9
+        },
+        {
+          "id": "b",
+          "hash": 409
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 9
+        },
+        {
+          "op": "lookup",
+          "hash": 409
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 209
+        },
+        {
+          "op": "lookup",
+          "hash": 109
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 266
+        },
+        {
+          "op": "lookup",
+          "hash": 967
+        },
+        {
+          "op": "lookup",
+          "hash": 747
+        },
+        {
+          "op": "lookup",
+          "hash": 531
+        },
+        {
+          "op": "lookup",
+          "hash": 818
+        },
+        {
+          "op": "lookup",
+          "hash": 226
+        },
+        {
+          "op": "lookup",
+          "hash": 620
+        },
+        {
+          "op": "lookup",
+          "hash": 116
+        },
+        {
+          "op": "lookup",
+          "hash": 642
+        },
+        {
+          "op": "lookup",
+          "hash": 861
+        },
+        {
+          "op": "lookup",
+          "hash": 212
+        },
+        {
+          "op": "lookup",
+          "hash": 388
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          9,
+          "a"
+        ],
+        [
+          209,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 10
+        },
+        {
+          "id": "b",
+          "hash": 410
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 10
+        },
+        {
+          "op": "lookup",
+          "hash": 410
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 210
+        },
+        {
+          "op": "lookup",
+          "hash": 110
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 497
+        },
+        {
+          "op": "lookup",
+          "hash": 259
+        },
+        {
+          "op": "lookup",
+          "hash": 985
+        },
+        {
+          "op": "lookup",
+          "hash": 618
+        },
+        {
+          "op": "lookup",
+          "hash": 947
+        },
+        {
+          "op": "lookup",
+          "hash": 571
+        },
+        {
+          "op": "lookup",
+          "hash": 152
+        },
+        {
+          "op": "lookup",
+          "hash": 454
+        },
+        {
+          "op": "lookup",
+          "hash": 15
+        },
+        {
+          "op": "lookup",
+          "hash": 174
+        },
+        {
+          "op": "lookup",
+          "hash": 560
+        },
+        {
+          "op": "lookup",
+          "hash": 642
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "c",
+        "c",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          10,
+          "a"
+        ],
+        [
+          210,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 11
+        },
+        {
+          "id": "b",
+          "hash": 411
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 11
+        },
+        {
+          "op": "lookup",
+          "hash": 411
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 211
+        },
+        {
+          "op": "lookup",
+          "hash": 111
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 823
+        },
+        {
+          "op": "lookup",
+          "hash": 779
+        },
+        {
+          "op": "lookup",
+          "hash": 84
+        },
+        {
+          "op": "lookup",
+          "hash": 76
+        },
+        {
+          "op": "lookup",
+          "hash": 272
+        },
+        {
+          "op": "lookup",
+          "hash": 523
+        },
+        {
+          "op": "lookup",
+          "hash": 832
+        },
+        {
+          "op": "lookup",
+          "hash": 637
+        },
+        {
+          "op": "lookup",
+          "hash": 559
+        },
+        {
+          "op": "lookup",
+          "hash": 487
+        },
+        {
+          "op": "lookup",
+          "hash": 801
+        },
+        {
+          "op": "lookup",
+          "hash": 821
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "c",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          11,
+          "a"
+        ],
+        [
+          211,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 12
+        },
+        {
+          "id": "b",
+          "hash": 412
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 12
+        },
+        {
+          "op": "lookup",
+          "hash": 412
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 212
+        },
+        {
+          "op": "lookup",
+          "hash": 112
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 446
+        },
+        {
+          "op": "lookup",
+          "hash": 374
+        },
+        {
+          "op": "lookup",
+          "hash": 940
+        },
+        {
+          "op": "lookup",
+          "hash": 777
+        },
+        {
+          "op": "lookup",
+          "hash": 33
+        },
+        {
+          "op": "lookup",
+          "hash": 622
+        },
+        {
+          "op": "lookup",
+          "hash": 271
+        },
+        {
+          "op": "lookup",
+          "hash": 920
+        },
+        {
+          "op": "lookup",
+          "hash": 659
+        },
+        {
+          "op": "lookup",
+          "hash": 623
+        },
+        {
+          "op": "lookup",
+          "hash": 529
+        },
+        {
+          "op": "lookup",
+          "hash": 966
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          12,
+          "a"
+        ],
+        [
+          212,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 13
+        },
+        {
+          "id": "b",
+          "hash": 413
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 13
+        },
+        {
+          "op": "lookup",
+          "hash": 413
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 213
+        },
+        {
+          "op": "lookup",
+          "hash": 113
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 690
+        },
+        {
+          "op": "lookup",
+          "hash": 931
+        },
+        {
+          "op": "lookup",
+          "hash": 483
+        },
+        {
+          "op": "lookup",
+          "hash": 936
+        },
+        {
+          "op": "lookup",
+          "hash": 725
+        },
+        {
+          "op": "lookup",
+          "hash": 653
+        },
+        {
+          "op": "lookup",
+          "hash": 817
+        },
+        {
+          "op": "lookup",
+          "hash": 974
+        },
+        {
+          "op": "lookup",
+          "hash": 322
+        },
+        {
+          "op": "lookup",
+          "hash": 849
+        },
+        {
+          "op": "lookup",
+          "hash": 22
+        },
+        {
+          "op": "lookup",
+          "hash": 590
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "a"
+      ],
+      "ring": [
+        [
+          13,
+          "a"
+        ],
+        [
+          213,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 14
+        },
+        {
+          "id": "b",
+          "hash": 414
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 14
+        },
+        {
+          "op": "lookup",
+          "hash": 414
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 214
+        },
+        {
+          "op": "lookup",
+          "hash": 114
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 248
+        },
+        {
+          "op": "lookup",
+          "hash": 216
+        },
+        {
+          "op": "lookup",
+          "hash": 354
+        },
+        {
+          "op": "lookup",
+          "hash": 441
+        },
+        {
+          "op": "lookup",
+          "hash": 981
+        },
+        {
+          "op": "lookup",
+          "hash": 887
+        },
+        {
+          "op": "lookup",
+          "hash": 708
+        },
+        {
+          "op": "lookup",
+          "hash": 188
+        },
+        {
+          "op": "lookup",
+          "hash": 180
+        },
+        {
+          "op": "lookup",
+          "hash": 481
+        },
+        {
+          "op": "lookup",
+          "hash": 943
+        },
+        {
+          "op": "lookup",
+          "hash": 203
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "c",
+        "a",
+        "a",
+        "c"
+      ],
+      "ring": [
+        [
+          14,
+          "a"
+        ],
+        [
+          214,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 15
+        },
+        {
+          "id": "b",
+          "hash": 415
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 15
+        },
+        {
+          "op": "lookup",
+          "hash": 415
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 215
+        },
+        {
+          "op": "lookup",
+          "hash": 115
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 130
+        },
+        {
+          "op": "lookup",
+          "hash": 100
+        },
+        {
+          "op": "lookup",
+          "hash": 139
+        },
+        {
+          "op": "lookup",
+          "hash": 747
+        },
+        {
+          "op": "lookup",
+          "hash": 803
+        },
+        {
+          "op": "lookup",
+          "hash": 583
+        },
+        {
+          "op": "lookup",
+          "hash": 352
+        },
+        {
+          "op": "lookup",
+          "hash": 540
+        },
+        {
+          "op": "lookup",
+          "hash": 401
+        },
+        {
+          "op": "lookup",
+          "hash": 110
+        },
+        {
+          "op": "lookup",
+          "hash": 273
+        },
+        {
+          "op": "lookup",
+          "hash": 454
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "c",
+        "c",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          15,
+          "a"
+        ],
+        [
+          215,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 16
+        },
+        {
+          "id": "b",
+          "hash": 416
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 16
+        },
+        {
+          "op": "lookup",
+          "hash": 416
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 216
+        },
+        {
+          "op": "lookup",
+          "hash": 116
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 0
+        },
+        {
+          "op": "lookup",
+          "hash": 668
+        },
+        {
+          "op": "lookup",
+          "hash": 125
+        },
+        {
+          "op": "lookup",
+          "hash": 424
+        },
+        {
+          "op": "lookup",
+          "hash": 68
+        },
+        {
+          "op": "lookup",
+          "hash": 378
+        },
+        {
+          "op": "lookup",
+          "hash": 21
+        },
+        {
+          "op": "lookup",
+          "hash": 270
+        },
+        {
+          "op": "lookup",
+          "hash": 42
+        },
+        {
+          "op": "lookup",
+          "hash": 143
+        },
+        {
+          "op": "lookup",
+          "hash": 185
+        },
+        {
+          "op": "lookup",
+          "hash": 756
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "c",
+        "a",
+        "c",
+        "a",
+        "c",
+        "a",
+        "c",
+        "c",
+        "c",
+        "a"
+      ],
+      "ring": [
+        [
+          16,
+          "a"
+        ],
+        [
+          216,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 17
+        },
+        {
+          "id": "b",
+          "hash": 417
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 17
+        },
+        {
+          "op": "lookup",
+          "hash": 417
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 217
+        },
+        {
+          "op": "lookup",
+          "hash": 117
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 523
+        },
+        {
+          "op": "lookup",
+          "hash": 855
+        },
+        {
+          "op": "lookup",
+          "hash": 502
+        },
+        {
+          "op": "lookup",
+          "hash": 205
+        },
+        {
+          "op": "lookup",
+          "hash": 801
+        },
+        {
+          "op": "lookup",
+          "hash": 791
+        },
+        {
+          "op": "lookup",
+          "hash": 831
+        },
+        {
+          "op": "lookup",
+          "hash": 506
+        },
+        {
+          "op": "lookup",
+          "hash": 540
+        },
+        {
+          "op": "lookup",
+          "hash": 464
+        },
+        {
+          "op": "lookup",
+          "hash": 577
+        },
+        {
+          "op": "lookup",
+          "hash": 580
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          17,
+          "a"
+        ],
+        [
+          217,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-18"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 18
+        },
+        {
+          "id": "b",
+          "hash": 418
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 18
+        },
+        {
+          "op": "lookup",
+          "hash": 418
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 218
+        },
+        {
+          "op": "lookup",
+          "hash": 118
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 10
+        },
+        {
+          "op": "lookup",
+          "hash": 711
+        },
+        {
+          "op": "lookup",
+          "hash": 75
+        },
+        {
+          "op": "lookup",
+          "hash": 179
+        },
+        {
+          "op": "lookup",
+          "hash": 855
+        },
+        {
+          "op": "lookup",
+          "hash": 154
+        },
+        {
+          "op": "lookup",
+          "hash": 943
+        },
+        {
+          "op": "lookup",
+          "hash": 556
+        },
+        {
+          "op": "lookup",
+          "hash": 346
+        },
+        {
+          "op": "lookup",
+          "hash": 650
+        },
+        {
+          "op": "lookup",
+          "hash": 887
+        },
+        {
+          "op": "lookup",
+          "hash": 47
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "c",
+        "c",
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c"
+      ],
+      "ring": [
+        [
+          18,
+          "a"
+        ],
+        [
+          218,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-19"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 19
+        },
+        {
+          "id": "b",
+          "hash": 419
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 19
+        },
+        {
+          "op": "lookup",
+          "hash": 419
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 219
+        },
+        {
+          "op": "lookup",
+          "hash": 119
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 898
+        },
+        {
+          "op": "lookup",
+          "hash": 636
+        },
+        {
+          "op": "lookup",
+          "hash": 240
+        },
+        {
+          "op": "lookup",
+          "hash": 729
+        },
+        {
+          "op": "lookup",
+          "hash": 62
+        },
+        {
+          "op": "lookup",
+          "hash": 387
+        },
+        {
+          "op": "lookup",
+          "hash": 126
+        },
+        {
+          "op": "lookup",
+          "hash": 22
+        },
+        {
+          "op": "lookup",
+          "hash": 90
+        },
+        {
+          "op": "lookup",
+          "hash": 309
+        },
+        {
+          "op": "lookup",
+          "hash": 55
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "c",
+        "c",
+        "c",
+        "a",
+        "c",
+        "a"
+      ],
+      "ring": [
+        [
+          19,
+          "a"
+        ],
+        [
+          219,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-20"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 20
+        },
+        {
+          "id": "b",
+          "hash": 420
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 20
+        },
+        {
+          "op": "lookup",
+          "hash": 420
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 220
+        },
+        {
+          "op": "lookup",
+          "hash": 120
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 561
+        },
+        {
+          "op": "lookup",
+          "hash": 315
+        },
+        {
+          "op": "lookup",
+          "hash": 244
+        },
+        {
+          "op": "lookup",
+          "hash": 627
+        },
+        {
+          "op": "lookup",
+          "hash": 917
+        },
+        {
+          "op": "lookup",
+          "hash": 751
+        },
+        {
+          "op": "lookup",
+          "hash": 547
+        },
+        {
+          "op": "lookup",
+          "hash": 154
+        },
+        {
+          "op": "lookup",
+          "hash": 563
+        },
+        {
+          "op": "lookup",
+          "hash": 593
+        },
+        {
+          "op": "lookup",
+          "hash": 780
+        },
+        {
+          "op": "lookup",
+          "hash": 279
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          20,
+          "a"
+        ],
+        [
+          220,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-21"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 21
+        },
+        {
+          "id": "b",
+          "hash": 421
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 21
+        },
+        {
+          "op": "lookup",
+          "hash": 421
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 221
+        },
+        {
+          "op": "lookup",
+          "hash": 121
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 633
+        },
+        {
+          "op": "lookup",
+          "hash": 878
+        },
+        {
+          "op": "lookup",
+          "hash": 584
+        },
+        {
+          "op": "lookup",
+          "hash": 82
+        },
+        {
+          "op": "lookup",
+          "hash": 576
+        },
+        {
+          "op": "lookup",
+          "hash": 503
+        },
+        {
+          "op": "lookup",
+          "hash": 350
+        },
+        {
+          "op": "lookup",
+          "hash": 569
+        },
+        {
+          "op": "lookup",
+          "hash": 53
+        },
+        {
+          "op": "lookup",
+          "hash": 976
+        },
+        {
+          "op": "lookup",
+          "hash": 117
+        },
+        {
+          "op": "lookup",
+          "hash": 423
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "a",
+        "c",
+        "a"
+      ],
+      "ring": [
+        [
+          21,
+          "a"
+        ],
+        [
+          221,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-22"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 22
+        },
+        {
+          "id": "b",
+          "hash": 422
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 22
+        },
+        {
+          "op": "lookup",
+          "hash": 422
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 222
+        },
+        {
+          "op": "lookup",
+          "hash": 122
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 427
+        },
+        {
+          "op": "lookup",
+          "hash": 362
+        },
+        {
+          "op": "lookup",
+          "hash": 928
+        },
+        {
+          "op": "lookup",
+          "hash": 310
+        },
+        {
+          "op": "lookup",
+          "hash": 577
+        },
+        {
+          "op": "lookup",
+          "hash": 864
+        },
+        {
+          "op": "lookup",
+          "hash": 777
+        },
+        {
+          "op": "lookup",
+          "hash": 500
+        },
+        {
+          "op": "lookup",
+          "hash": 612
+        },
+        {
+          "op": "lookup",
+          "hash": 143
+        },
+        {
+          "op": "lookup",
+          "hash": 65
+        },
+        {
+          "op": "lookup",
+          "hash": 994
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "c",
+        "c",
+        "a"
+      ],
+      "ring": [
+        [
+          22,
+          "a"
+        ],
+        [
+          222,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-23"
+  },
+  {
+    "input": {
+      "nodes": [
+        {
+          "id": "a",
+          "hash": 23
+        },
+        {
+          "id": "b",
+          "hash": 423
+        }
+      ],
+      "ops": [
+        {
+          "op": "lookup",
+          "hash": 23
+        },
+        {
+          "op": "lookup",
+          "hash": 423
+        },
+        {
+          "op": "lookup",
+          "hash": 999
+        },
+        {
+          "op": "add",
+          "id": "c",
+          "hash": 223
+        },
+        {
+          "op": "lookup",
+          "hash": 123
+        },
+        {
+          "op": "remove",
+          "id": "b"
+        },
+        {
+          "op": "lookup",
+          "hash": 900
+        },
+        {
+          "op": "remove",
+          "id": "missing"
+        },
+        {
+          "op": "lookup",
+          "hash": 520
+        },
+        {
+          "op": "lookup",
+          "hash": 119
+        },
+        {
+          "op": "lookup",
+          "hash": 924
+        },
+        {
+          "op": "lookup",
+          "hash": 472
+        },
+        {
+          "op": "lookup",
+          "hash": 668
+        },
+        {
+          "op": "lookup",
+          "hash": 805
+        },
+        {
+          "op": "lookup",
+          "hash": 464
+        },
+        {
+          "op": "lookup",
+          "hash": 843
+        },
+        {
+          "op": "lookup",
+          "hash": 18
+        },
+        {
+          "op": "lookup",
+          "hash": 445
+        },
+        {
+          "op": "lookup",
+          "hash": 829
+        },
+        {
+          "op": "lookup",
+          "hash": 577
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        "b",
+        "a",
+        "added",
+        "c",
+        true,
+        "a",
+        false,
+        "a",
+        "c",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ],
+      "ring": [
+        [
+          23,
+          "a"
+        ],
+        [
+          223,
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-24"
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "id": "c1-18-event-id-conflicts",
+  "title": "18. Separate duplicate events from conflicts",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "02-objects-and-state",
+  "examples": [
+    {
+      "input": "{\"balance\": 10, \"events\": [{\"id\": \"e1\", \"delta\": 5}, {\"id\": \"e1\", \"delta\": 5}, {\"id\": \"e1\", \"delta\": 7}]}",
+      "output": "{\"status\": [\"applied\", \"duplicate\", \"conflict\"], \"balance\": 15}",
+      "explanation": "new, duplicate, and conflicting payload"
+    },
+    {
+      "input": "{\"balance\": 0, \"events\": [{\"id\": \"x\", \"delta\": 2}, {\"id\": \"x\", \"delta\": 3}, {\"id\": \"x\", \"delta\": 2}]}",
+      "output": "{\"status\": [\"applied\", \"conflict\", \"duplicate\"], \"balance\": 2}",
+      "explanation": "conflict does not replace the first payload"
+    },
+    {
+      "input": "{\"balance\": 8, \"events\": []}",
+      "output": "{\"status\": [], \"balance\": 8}",
+      "explanation": "no events"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"balance\":10,\"events\":[{\"delta\":5,\"id\":\"e1\"},{\"delta\":5,\"id\":\"e1\"},{\"delta\":7,\"id\":\"e1\"}]}"
+    },
+    {
+      "payload": "{\"balance\":0,\"events\":[{\"delta\":2,\"id\":\"x\"},{\"delta\":3,\"id\":\"x\"},{\"delta\":2,\"id\":\"x\"}]}"
+    },
+    {
+      "payload": "{\"balance\":8,\"events\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Remember the first delta for each ID.",
+    "A repeated ID needs a payload comparison before you choose its status."
+  ]
+}

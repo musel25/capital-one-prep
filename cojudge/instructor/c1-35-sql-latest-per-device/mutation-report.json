@@ -1,0 +1,13 @@
+[
+  {
+    "name": "choose smallest id on a timestamp tie",
+    "detected_by": [
+      1,
+      13,
+      18,
+      22,
+      23,
+      31
+    ]
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "id": "c1-07-typed-json-boundary",
+  "title": "07. Validate JSON before using TypedDict",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-python-data-and-libraries",
+  "examples": [
+    {
+      "input": "{\"records\": [{\"id\": \"A\", \"amount\": 0}, {\"id\": \"B\", \"amount\": true}, {\"id\": \"C\"}]}",
+      "output": "{\"valid\": [{\"id\": \"A\", \"amount\": 0}], \"rejected\": [1, 2]}",
+      "explanation": "validate fields at the boundary"
+    },
+    {
+      "input": "{\"records\": [{\"id\": \"X\", \"amount\": 4, \"debug\": true}]}",
+      "output": "{\"valid\": [{\"id\": \"X\", \"amount\": 4}], \"rejected\": []}",
+      "explanation": "drop extra fields"
+    },
+    {
+      "input": "{\"records\": []}",
+      "output": "{\"valid\": [], \"rejected\": []}",
+      "explanation": "empty list"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"records\":[{\"amount\":0,\"id\":\"A\"},{\"amount\":true,\"id\":\"B\"},{\"id\":\"C\"}]}"
+    },
+    {
+      "payload": "{\"records\":[{\"amount\":4,\"debug\":true,\"id\":\"X\"}]}"
+    },
+    {
+      "payload": "{\"records\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "TypedDict does not replace runtime checks.",
+    "Return a newly constructed Entry only after all checks pass."
+  ]
+}

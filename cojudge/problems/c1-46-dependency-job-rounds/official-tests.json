@@ -1,0 +1,113 @@
+[
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[\"a\"],\"id\":\"b\"},{\"depends\":[\"a\"],\"id\":\"c\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"c\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[],\"id\":\"a\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"b\"],\"id\":\"a\"},{\"depends\":[\"a\"],\"id\":\"b\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[],\"workers\":3}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"}],\"workers\":1}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"a\"],\"id\":\"a\"}],\"workers\":1}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[\"a\"],\"id\":\"b\"},{\"depends\":[\"b\"],\"id\":\"c\"}],\"workers\":5}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[\"a\",\"b\"],\"id\":\"c\"}],\"workers\":1}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[\"a\"],\"id\":\"b\"},{\"depends\":[\"a\"],\"id\":\"c\"},{\"depends\":[\"b\",\"c\"],\"id\":\"d\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[\"c\"],\"id\":\"b\"},{\"depends\":[\"b\"],\"id\":\"c\"},{\"depends\":[\"c\"],\"id\":\"d\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[\"a\"],\"id\":\"b\"},{\"depends\":[],\"id\":\"c\"}],\"workers\":1}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"b\"],\"id\":\"a\"},{\"depends\":[\"a\"],\"id\":\"b\"},{\"depends\":[],\"id\":\"c\"},{\"depends\":[\"c\"],\"id\":\"d\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"a\",\"b\",\"c\"],\"id\":\"d\"},{\"depends\":[],\"id\":\"c\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[],\"id\":\"a\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"a\"],\"id\":\"a\"},{\"depends\":[\"a\"],\"id\":\"b\"}],\"workers\":1}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[\"a\",\"b\",\"c\"],\"id\":\"c\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"b\",\"c\"],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[\"a\"],\"id\":\"c\"},{\"depends\":[\"d\"],\"id\":\"d\"}],\"workers\":3}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"d\"],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[\"b\",\"e\"],\"id\":\"c\"},{\"depends\":[],\"id\":\"d\"},{\"depends\":[\"e\"],\"id\":\"e\"}],\"workers\":4}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"e\"],\"id\":\"a\"},{\"depends\":[\"a\"],\"id\":\"b\"},{\"depends\":[\"f\"],\"id\":\"c\"},{\"depends\":[\"b\",\"f\"],\"id\":\"d\"},{\"depends\":[\"e\"],\"id\":\"e\"},{\"depends\":[\"a\",\"e\",\"f\"],\"id\":\"f\"}],\"workers\":1}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[\"b\",\"c\",\"d\",\"f\"],\"id\":\"c\"},{\"depends\":[\"f\"],\"id\":\"d\"},{\"depends\":[],\"id\":\"e\"},{\"depends\":[\"a\",\"c\"],\"id\":\"f\"},{\"depends\":[\"a\",\"e\"],\"id\":\"g\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"c\",\"d\"],\"id\":\"a\"},{\"depends\":[\"a\",\"e\",\"f\"],\"id\":\"b\"},{\"depends\":[\"a\",\"e\",\"h\"],\"id\":\"c\"},{\"depends\":[\"d\"],\"id\":\"d\"},{\"depends\":[\"e\"],\"id\":\"e\"},{\"depends\":[\"g\"],\"id\":\"f\"},{\"depends\":[],\"id\":\"g\"},{\"depends\":[\"g\"],\"id\":\"h\"}],\"workers\":3}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[\"b\"],\"id\":\"b\"}],\"workers\":4}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"b\"],\"id\":\"a\"},{\"depends\":[\"b\"],\"id\":\"b\"},{\"depends\":[\"c\"],\"id\":\"c\"}],\"workers\":1}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"b\"],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[],\"id\":\"c\"},{\"depends\":[],\"id\":\"d\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[\"c\"],\"id\":\"b\"},{\"depends\":[\"a\",\"d\"],\"id\":\"c\"},{\"depends\":[\"b\"],\"id\":\"d\"},{\"depends\":[\"a\"],\"id\":\"e\"}],\"workers\":3}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"c\",\"d\"],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[\"f\"],\"id\":\"c\"},{\"depends\":[\"c\"],\"id\":\"d\"},{\"depends\":[\"a\",\"b\",\"e\"],\"id\":\"e\"},{\"depends\":[\"e\",\"f\"],\"id\":\"f\"}],\"workers\":4}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"e\",\"f\"],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[],\"id\":\"c\"},{\"depends\":[\"a\",\"d\",\"e\"],\"id\":\"d\"},{\"depends\":[\"a\",\"e\",\"g\"],\"id\":\"e\"},{\"depends\":[\"e\"],\"id\":\"f\"},{\"depends\":[],\"id\":\"g\"}],\"workers\":1}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"h\"],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[],\"id\":\"c\"},{\"depends\":[],\"id\":\"d\"},{\"depends\":[\"a\"],\"id\":\"e\"},{\"depends\":[\"a\",\"e\"],\"id\":\"f\"},{\"depends\":[\"c\",\"g\"],\"id\":\"g\"},{\"depends\":[\"h\"],\"id\":\"h\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"}],\"workers\":3}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[],\"id\":\"c\"}],\"workers\":4}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"b\"],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[],\"id\":\"c\"},{\"depends\":[\"c\"],\"id\":\"d\"}],\"workers\":1}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[\"e\"],\"id\":\"b\"},{\"depends\":[\"d\"],\"id\":\"c\"},{\"depends\":[\"b\",\"e\"],\"id\":\"d\"},{\"depends\":[],\"id\":\"e\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"a\",\"f\"],\"id\":\"a\"},{\"depends\":[\"e\"],\"id\":\"b\"},{\"depends\":[\"a\",\"c\",\"f\"],\"id\":\"c\"},{\"depends\":[],\"id\":\"d\"},{\"depends\":[\"b\"],\"id\":\"e\"},{\"depends\":[],\"id\":\"f\"}],\"workers\":3}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"e\",\"f\"],\"id\":\"a\"},{\"depends\":[\"e\",\"f\"],\"id\":\"b\"},{\"depends\":[\"a\",\"c\",\"e\"],\"id\":\"c\"},{\"depends\":[\"a\"],\"id\":\"d\"},{\"depends\":[\"a\",\"g\"],\"id\":\"e\"},{\"depends\":[\"a\",\"c\",\"e\",\"f\",\"g\"],\"id\":\"f\"},{\"depends\":[\"g\"],\"id\":\"g\"}],\"workers\":4}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"c\",\"g\",\"h\"],\"id\":\"a\"},{\"depends\":[\"b\"],\"id\":\"b\"},{\"depends\":[],\"id\":\"c\"},{\"depends\":[],\"id\":\"d\"},{\"depends\":[\"a\",\"f\"],\"id\":\"e\"},{\"depends\":[\"c\"],\"id\":\"f\"},{\"depends\":[\"a\",\"c\",\"e\"],\"id\":\"g\"},{\"depends\":[\"a\",\"e\",\"g\"],\"id\":\"h\"}],\"workers\":1}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"a\"],\"id\":\"a\"},{\"depends\":[],\"id\":\"b\"}],\"workers\":2}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[\"a\"],\"id\":\"b\"},{\"depends\":[],\"id\":\"c\"}],\"workers\":3}"
+  },
+  {
+    "payload": "{\"jobs\":[{\"depends\":[\"a\"],\"id\":\"a\"},{\"depends\":[\"a\"],\"id\":\"b\"},{\"depends\":[],\"id\":\"c\"},{\"depends\":[],\"id\":\"d\"}],\"workers\":4}"
+  }
+]

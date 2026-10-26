@@ -1,0 +1,50 @@
+{
+  "id": "c1-23-put-patch-fields",
+  "title": "23. Replace or patch a profile",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "03-apis-and-clients",
+  "examples": [
+    {
+      "input": "{\"initial\": {\"name\": \"Ada\", \"email\": \"a@x\"}, \"requests\": [{\"method\": \"PATCH\", \"body\": {\"name\": \"Bo\"}}]}",
+      "output": "{\"responses\": [{\"status\": 200, \"body\": {\"name\": \"Bo\", \"email\": \"a@x\"}}], \"state\": {\"name\": \"Bo\", \"email\": \"a@x\"}}",
+      "explanation": "PATCH keeps omitted email"
+    },
+    {
+      "input": "{\"initial\": {\"name\": \"Ada\", \"email\": \"a@x\"}, \"requests\": [{\"method\": \"PUT\", \"body\": {\"name\": \"Bo\"}}]}",
+      "output": "{\"responses\": [{\"status\": 200, \"body\": {\"name\": \"Bo\", \"email\": null}}], \"state\": {\"name\": \"Bo\", \"email\": null}}",
+      "explanation": "PUT resets omitted email"
+    },
+    {
+      "input": "{\"initial\": {\"name\": \"Ada\", \"email\": \"a@x\"}, \"requests\": [{\"method\": \"PATCH\", \"body\": {\"email\": null}}]}",
+      "output": "{\"responses\": [{\"status\": 200, \"body\": {\"name\": \"Ada\", \"email\": null}}], \"state\": {\"name\": \"Ada\", \"email\": null}}",
+      "explanation": "explicit null clears email"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"name\":\"Bo\"},\"method\":\"PATCH\"}]}"
+    },
+    {
+      "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"name\":\"Bo\"},\"method\":\"PUT\"}]}"
+    },
+    {
+      "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"email\":null},\"method\":\"PATCH\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Membership tests distinguish absent fields from null values.",
+    "Build or validate a candidate state before committing it."
+  ]
+}

@@ -1,0 +1,5369 @@
+[
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "rows": [
+            "ok"
+          ],
+          "committed": true
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          1
+        ]
+      ]
+    },
+    "label": "valid item commits"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 3,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "rows": [
+            "ok",
+            "invalid",
+            "ok"
+          ],
+          "committed": true
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          1
+        ],
+        [
+          "c",
+          3
+        ]
+      ]
+    },
+    "label": "one invalid item does not cancel batch"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            }
+          ],
+          "abort": true
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "rows": [
+            "ok"
+          ],
+          "committed": false
+        }
+      ],
+      "rows": []
+    },
+    "label": "outer abort cancels released savepoint"
+  },
+  {
+    "input": {
+      "batches": []
+    },
+    "expected": {
+      "batches": [],
+      "rows": []
+    },
+    "label": "no batches"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "rows": [],
+          "committed": true
+        }
+      ],
+      "rows": []
+    },
+    "label": "empty committed batch"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [],
+          "abort": true
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "rows": [],
+          "committed": false
+        }
+      ],
+      "rows": []
+    },
+    "label": "empty aborted batch"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 0,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "rows": [
+            "ok"
+          ],
+          "committed": true
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          0
+        ]
+      ]
+    },
+    "label": "zero quantity"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 9,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "rows": [
+            "ok",
+            "invalid"
+          ],
+          "committed": true
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          1
+        ]
+      ]
+    },
+    "label": "duplicate preserves first row"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 2,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "rows": [
+            "failed",
+            "ok"
+          ],
+          "committed": true
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          2
+        ]
+      ]
+    },
+    "label": "rollback removes failed insert before retry"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 2,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "rows": [
+            "ok"
+          ],
+          "committed": true
+        },
+        {
+          "rows": [
+            "invalid",
+            "ok"
+          ],
+          "committed": true
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          1
+        ],
+        [
+          "b",
+          2
+        ]
+      ]
+    },
+    "label": "duplicate across batches"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 7,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "rows": [
+            "ok"
+          ],
+          "committed": false
+        },
+        {
+          "rows": [
+            "ok"
+          ],
+          "committed": true
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          7
+        ]
+      ]
+    },
+    "label": "abort frees identifiers"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "z",
+              "qty": 2,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 4,
+              "fail": true
+            }
+          ],
+          "abort": true
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "rows": [
+            "ok"
+          ],
+          "committed": true
+        },
+        {
+          "rows": [
+            "ok",
+            "failed"
+          ],
+          "committed": false
+        }
+      ],
+      "rows": [
+        [
+          "z",
+          2
+        ]
+      ]
+    },
+    "label": "outer abort preserves prior batch"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": -1,
+              "fail": true
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "rows": [
+            "invalid"
+          ],
+          "committed": true
+        }
+      ],
+      "rows": []
+    },
+    "label": "constraint failure precedes injected fault"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 7,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": -2,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 3,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": -2,
+              "fail": true
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "ok",
+            "ok"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "failed",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "failed",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "c",
+          4
+        ],
+        [
+          "d",
+          4
+        ]
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 5,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 4,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 6,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": -2,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": -2,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 7,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 0,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 0,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 7,
+              "fail": false
+            }
+          ],
+          "abort": true
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "invalid",
+            "ok",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "failed",
+            "invalid",
+            "ok"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "failed",
+            "failed"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "ok",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": []
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 0,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 8,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 1,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": -2,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "failed",
+            "ok",
+            "ok",
+            "invalid",
+            "ok"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "ok",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          6
+        ],
+        [
+          "b",
+          6
+        ],
+        [
+          "c",
+          0
+        ],
+        [
+          "d",
+          0
+        ],
+        [
+          "e",
+          0
+        ]
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 4,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 4,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 0,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 0,
+              "fail": true
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 7,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "failed",
+            "invalid",
+            "invalid",
+            "ok",
+            "ok"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "failed",
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          2
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "c",
+          4
+        ],
+        [
+          "d",
+          3
+        ],
+        [
+          "e",
+          3
+        ]
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 4,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 0,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": true
+            }
+          ],
+          "abort": true
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "failed",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "ok"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "ok"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "ok",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "failed",
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid",
+            "failed",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "b",
+          6
+        ],
+        [
+          "d",
+          3
+        ],
+        [
+          "e",
+          4
+        ]
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 2,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": -2,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 6,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": true
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": -1,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 1,
+              "fail": false
+            }
+          ],
+          "abort": true
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "failed",
+            "ok",
+            "invalid",
+            "failed",
+            "ok",
+            "ok",
+            "failed",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "invalid",
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "failed",
+            "failed",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "failed"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "failed",
+            "ok"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "b",
+          0
+        ],
+        [
+          "c",
+          7
+        ],
+        [
+          "d",
+          6
+        ]
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 4,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -2,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 5,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 0,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 8,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 4,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": -1,
+              "fail": true
+            }
+          ],
+          "abort": true
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "ok",
+            "invalid",
+            "ok",
+            "ok",
+            "failed",
+            "invalid",
+            "ok",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          7
+        ],
+        [
+          "b",
+          5
+        ],
+        [
+          "c",
+          6
+        ],
+        [
+          "d",
+          6
+        ],
+        [
+          "e",
+          5
+        ]
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 3,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 3,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 4,
+              "fail": true
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "failed"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "ok",
+            "ok"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          3
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "d",
+          8
+        ],
+        [
+          "e",
+          3
+        ]
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 4,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 4,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "invalid",
+            "ok",
+            "ok"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "ok",
+            "ok",
+            "failed"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "failed",
+            "failed",
+            "ok",
+            "ok"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "ok",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          4
+        ],
+        [
+          "b",
+          3
+        ],
+        [
+          "c",
+          4
+        ],
+        [
+          "d",
+          8
+        ],
+        [
+          "e",
+          1
+        ]
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 4,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 3,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 3,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 7,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 7,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "ok",
+            "failed",
+            "ok",
+            "ok"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "ok",
+            "invalid",
+            "ok"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          0
+        ],
+        [
+          "b",
+          3
+        ],
+        [
+          "c",
+          0
+        ],
+        [
+          "d",
+          3
+        ],
+        [
+          "e",
+          0
+        ]
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": -1,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -1,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 0,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 7,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 4,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": -2,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "ok",
+            "ok",
+            "invalid",
+            "ok",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          4
+        ],
+        [
+          "b",
+          6
+        ],
+        [
+          "c",
+          2
+        ],
+        [
+          "d",
+          4
+        ],
+        [
+          "e",
+          4
+        ]
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 4,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": -1,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": -1,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 4,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 4,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 7,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "failed",
+            "failed",
+            "ok",
+            "ok",
+            "invalid",
+            "ok",
+            "failed"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "failed",
+            "invalid",
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          8
+        ],
+        [
+          "b",
+          3
+        ],
+        [
+          "c",
+          8
+        ],
+        [
+          "d",
+          3
+        ],
+        [
+          "e",
+          7
+        ]
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 4,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 0,
+              "fail": true
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 4,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": -1,
+              "fail": true
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -2,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 1,
+              "fail": false
+            }
+          ],
+          "abort": true
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "invalid",
+            "invalid",
+            "failed",
+            "ok",
+            "ok",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "failed",
+            "invalid",
+            "failed",
+            "invalid",
+            "invalid",
+            "failed",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "ok",
+            "ok",
+            "invalid",
+            "ok",
+            "invalid",
+            "ok",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "ok",
+            "ok",
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid",
+            "ok"
+          ]
+        }
+      ],
+      "rows": []
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 6,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 0,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 7,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid",
+            "ok",
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "failed",
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "failed",
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          4
+        ],
+        [
+          "b",
+          5
+        ],
+        [
+          "c",
+          7
+        ],
+        [
+          "d",
+          5
+        ],
+        [
+          "e",
+          0
+        ]
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 4,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": -2,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 1,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "ok",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "failed",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "failed",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "failed",
+            "invalid",
+            "ok"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "b",
+          1
+        ],
+        [
+          "d",
+          6
+        ]
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 0,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 7,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": -2,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 8,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "failed",
+            "invalid",
+            "ok",
+            "ok"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "ok",
+            "failed",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          0
+        ],
+        [
+          "b",
+          3
+        ],
+        [
+          "c",
+          2
+        ],
+        [
+          "d",
+          6
+        ]
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 7,
+              "fail": true
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 5,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 3,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 6,
+              "fail": false
+            }
+          ],
+          "abort": true
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid",
+            "failed"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid",
+            "failed"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "ok",
+            "ok",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          1
+        ],
+        [
+          "d",
+          1
+        ],
+        [
+          "e",
+          5
+        ]
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 4,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -1,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": -1,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 3,
+              "fail": true
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 7,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 0,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "invalid",
+            "ok",
+            "ok",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "ok",
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "failed",
+            "ok",
+            "invalid",
+            "failed",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "failed",
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid",
+            "ok"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          0
+        ],
+        [
+          "b",
+          0
+        ],
+        [
+          "d",
+          0
+        ],
+        [
+          "e",
+          1
+        ]
+      ]
+    },
+    "label": "additional-18"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 7,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 5,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 4,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 0,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 7,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 7,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 6,
+              "fail": false
+            }
+          ],
+          "abort": true
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": false,
+          "rows": [
+            "failed",
+            "ok",
+            "invalid",
+            "ok",
+            "failed",
+            "ok",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "ok",
+            "failed",
+            "failed",
+            "ok",
+            "invalid",
+            "ok"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "ok",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "failed",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          3
+        ],
+        [
+          "b",
+          3
+        ],
+        [
+          "c",
+          7
+        ],
+        [
+          "d",
+          1
+        ]
+      ]
+    },
+    "label": "additional-19"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": -2,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 1,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 3,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 4,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": -1,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": -1,
+              "fail": true
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 3,
+              "fail": true
+            }
+          ],
+          "abort": true
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "failed",
+            "ok",
+            "ok",
+            "ok",
+            "invalid",
+            "ok",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "ok",
+            "failed",
+            "invalid",
+            "failed",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "failed",
+            "invalid",
+            "ok",
+            "invalid",
+            "ok",
+            "invalid",
+            "ok"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "invalid",
+            "failed",
+            "ok",
+            "invalid",
+            "ok",
+            "invalid",
+            "failed"
+          ]
+        }
+      ],
+      "rows": []
+    },
+    "label": "additional-20"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": -1,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 3,
+              "fail": true
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 0,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 0,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 7,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 0,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": true
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "failed",
+            "ok",
+            "ok",
+            "ok",
+            "invalid",
+            "ok",
+            "ok"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          6
+        ],
+        [
+          "b",
+          0
+        ],
+        [
+          "c",
+          3
+        ],
+        [
+          "d",
+          5
+        ],
+        [
+          "e",
+          0
+        ]
+      ]
+    },
+    "label": "additional-21"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "e",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 3,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 3,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -2,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 3,
+              "fail": false
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": true
+            },
+            {
+              "id": "d",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 5,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "invalid",
+            "failed"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "ok",
+            "ok",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "failed",
+            "ok",
+            "ok"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "c",
+          7
+        ],
+        [
+          "d",
+          3
+        ],
+        [
+          "e",
+          6
+        ]
+      ]
+    },
+    "label": "additional-22"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 5,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "c",
+              "qty": 0,
+              "fail": true
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 5,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 8,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 3,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 0,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 7,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "c",
+              "qty": 7,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 3,
+              "fail": true
+            },
+            {
+              "id": "a",
+              "qty": 3,
+              "fail": false
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": false,
+          "rows": [
+            "failed",
+            "failed",
+            "ok",
+            "failed"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "failed",
+            "ok",
+            "invalid",
+            "ok"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "failed",
+            "ok",
+            "failed",
+            "failed"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "failed",
+            "failed",
+            "ok"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "a",
+          3
+        ],
+        [
+          "b",
+          3
+        ],
+        [
+          "c",
+          7
+        ]
+      ]
+    },
+    "label": "additional-23"
+  },
+  {
+    "input": {
+      "batches": [
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": 0,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 4,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": 4,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 1,
+              "fail": true
+            },
+            {
+              "id": "b",
+              "qty": 6,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 8,
+              "fail": true
+            },
+            {
+              "id": "c",
+              "qty": -1,
+              "fail": true
+            }
+          ],
+          "abort": false
+        },
+        {
+          "rows": [
+            {
+              "id": "d",
+              "qty": -1,
+              "fail": true
+            },
+            {
+              "id": "e",
+              "qty": 8,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": 1,
+              "fail": false
+            },
+            {
+              "id": "e",
+              "qty": -2,
+              "fail": false
+            }
+          ],
+          "abort": true
+        },
+        {
+          "rows": [
+            {
+              "id": "b",
+              "qty": -2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": -1,
+              "fail": false
+            },
+            {
+              "id": "d",
+              "qty": 2,
+              "fail": false
+            },
+            {
+              "id": "a",
+              "qty": 8,
+              "fail": true
+            }
+          ],
+          "abort": false
+        }
+      ]
+    },
+    "expected": {
+      "batches": [
+        {
+          "committed": false,
+          "rows": [
+            "failed",
+            "ok",
+            "failed",
+            "ok",
+            "ok"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "ok",
+            "invalid",
+            "failed",
+            "failed",
+            "invalid"
+          ]
+        },
+        {
+          "committed": false,
+          "rows": [
+            "invalid",
+            "ok",
+            "ok",
+            "invalid",
+            "invalid"
+          ]
+        },
+        {
+          "committed": true,
+          "rows": [
+            "invalid",
+            "invalid",
+            "invalid",
+            "invalid",
+            "failed"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "d",
+          4
+        ]
+      ]
+    },
+    "label": "additional-24"
+  }
+]

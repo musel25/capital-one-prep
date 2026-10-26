@@ -1,0 +1,4723 @@
+[
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 5,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 4,
+          "id": "a",
+          "token": 1
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        true
+      ],
+      "pending": []
+    },
+    "label": "ack before visibility timeout"
+  },
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 5,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 6,
+          "id": "a",
+          "token": 1
+        },
+        {
+          "op": "ack",
+          "at": 6,
+          "id": "a",
+          "token": 2
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        true
+      ],
+      "pending": []
+    },
+    "label": "redelivery invalidates stale token"
+  },
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 5,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "a",
+          "token": 1
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false
+      ],
+      "pending": [
+        "a"
+      ]
+    },
+    "label": "ack at timeout is too late"
+  },
+  {
+    "input": {
+      "messages": [],
+      "timeout": 5,
+      "ops": []
+    },
+    "expected": {
+      "results": [],
+      "pending": []
+    },
+    "label": "empty queue and trace"
+  },
+  {
+    "input": {
+      "messages": [],
+      "timeout": 5,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 0,
+          "id": "a",
+          "token": 1
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null,
+        false
+      ],
+      "pending": []
+    },
+    "label": "empty receive and unknown ack"
+  },
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 5,
+      "ops": [
+        {
+          "op": "ack",
+          "at": 0,
+          "id": "a",
+          "token": 0
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        false
+      ],
+      "pending": [
+        "a"
+      ]
+    },
+    "label": "never received message cannot be acked"
+  },
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 5,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "receive",
+          "at": 4
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        null
+      ],
+      "pending": [
+        "a"
+      ]
+    },
+    "label": "hidden message is unavailable"
+  },
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 5,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 0,
+          "id": "a",
+          "token": 1
+        },
+        {
+          "op": "ack",
+          "at": 0,
+          "id": "a",
+          "token": 1
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        true,
+        false
+      ],
+      "pending": []
+    },
+    "label": "duplicate ack rejected"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b"
+      ],
+      "timeout": 5,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "receive",
+          "at": 0
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        {
+          "id": "b",
+          "token": 1
+        },
+        null
+      ],
+      "pending": [
+        "a",
+        "b"
+      ]
+    },
+    "label": "skip hidden earlier message"
+  },
+  {
+    "input": {
+      "messages": [
+        "b",
+        "a"
+      ],
+      "timeout": 5,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "receive",
+          "at": 5
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        {
+          "id": "b",
+          "token": 1
+        },
+        {
+          "id": "b",
+          "token": 2
+        }
+      ],
+      "pending": [
+        "b",
+        "a"
+      ]
+    },
+    "label": "original queue order controls redelivery"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b"
+      ],
+      "timeout": 2,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 1,
+          "id": "a",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 2
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "b",
+          "token": 1
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        true,
+        {
+          "id": "b",
+          "token": 1
+        },
+        true
+      ],
+      "pending": []
+    },
+    "label": "independent token counters"
+  },
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 1,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "receive",
+          "at": 2
+        },
+        {
+          "op": "ack",
+          "at": 2,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "ack",
+          "at": 2,
+          "id": "a",
+          "token": 3
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        {
+          "id": "a",
+          "token": 2
+        },
+        {
+          "id": "a",
+          "token": 3
+        },
+        false,
+        true
+      ],
+      "pending": []
+    },
+    "label": "multiple visibility cycles"
+  },
+  {
+    "input": {
+      "messages": [],
+      "timeout": 1,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 4
+        },
+        {
+          "op": "ack",
+          "at": 4,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 4
+        },
+        {
+          "op": "ack",
+          "at": 4,
+          "id": "a",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 4
+        },
+        {
+          "op": "ack",
+          "at": 6,
+          "id": "c",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 9,
+          "id": "c",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 9
+        },
+        {
+          "op": "ack",
+          "at": 10,
+          "id": "c",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "a",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 13
+        },
+        {
+          "op": "ack",
+          "at": 14,
+          "id": "a",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 15,
+          "id": "x",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 16
+        },
+        {
+          "op": "ack",
+          "at": 17,
+          "id": "b",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 18,
+          "id": "b",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 22
+        }
+      ]
+    },
+    "expected": {
+      "pending": [],
+      "results": [
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 2,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 2
+        },
+        {
+          "op": "ack",
+          "at": 4,
+          "id": "c",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 7,
+          "id": "x",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "x",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "a",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "b",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 16,
+          "id": "c",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 18,
+          "id": "x",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 19
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "a",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 22
+        },
+        {
+          "op": "ack",
+          "at": 24,
+          "id": "a",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 24
+        },
+        {
+          "op": "ack",
+          "at": 26,
+          "id": "x",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 26
+        },
+        {
+          "op": "ack",
+          "at": 26,
+          "id": "a",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 28
+        },
+        {
+          "op": "ack",
+          "at": 28,
+          "id": "c",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 28
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "a"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        {
+          "id": "a",
+          "token": 3
+        },
+        false,
+        {
+          "id": "a",
+          "token": 4
+        },
+        false,
+        {
+          "id": "a",
+          "token": 5
+        },
+        false,
+        {
+          "id": "a",
+          "token": 6
+        },
+        false,
+        {
+          "id": "a",
+          "token": 7
+        },
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 8
+        },
+        false,
+        {
+          "id": "a",
+          "token": 9
+        },
+        false,
+        {
+          "id": "a",
+          "token": 10
+        },
+        false,
+        {
+          "id": "a",
+          "token": 11
+        },
+        false,
+        null
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b"
+      ],
+      "timeout": 3,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 2,
+          "id": "b",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 2
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "x",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "c",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 6,
+          "id": "x",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "c",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 9,
+          "id": "c",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 9
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "b",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 13,
+          "id": "c",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 13
+        },
+        {
+          "op": "ack",
+          "at": 14,
+          "id": "b",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 16
+        },
+        {
+          "op": "ack",
+          "at": 18,
+          "id": "c",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "b",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 20
+        },
+        {
+          "op": "ack",
+          "at": 22,
+          "id": "c",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 24
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "a",
+        "b"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        {
+          "id": "b",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        {
+          "id": "b",
+          "token": 2
+        },
+        false,
+        {
+          "id": "a",
+          "token": 3
+        },
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 4
+        },
+        false,
+        {
+          "id": "b",
+          "token": 3
+        },
+        false,
+        {
+          "id": "a",
+          "token": 5
+        },
+        false,
+        {
+          "id": "b",
+          "token": 4
+        },
+        false,
+        {
+          "id": "a",
+          "token": 6
+        },
+        false,
+        {
+          "id": "a",
+          "token": 7
+        }
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b",
+        "c"
+      ],
+      "timeout": 4,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 1,
+          "id": "c",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "c",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 4
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "x",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "x",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 6
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "x",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "b",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 9
+        },
+        {
+          "op": "ack",
+          "at": 10,
+          "id": "a",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "b",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 14,
+          "id": "a",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 15,
+          "id": "a",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 16
+        },
+        {
+          "op": "ack",
+          "at": 16,
+          "id": "c",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "a",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 22
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "c"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        {
+          "id": "b",
+          "token": 1
+        },
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        {
+          "id": "b",
+          "token": 2
+        },
+        false,
+        {
+          "id": "c",
+          "token": 1
+        },
+        false,
+        {
+          "id": "a",
+          "token": 3
+        },
+        false,
+        {
+          "id": "b",
+          "token": 3
+        },
+        true,
+        {
+          "id": "c",
+          "token": 2
+        },
+        true,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "c",
+          "token": 3
+        },
+        false,
+        null,
+        false,
+        {
+          "id": "c",
+          "token": 4
+        }
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "messages": [],
+      "timeout": 5,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 2
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "a",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "b",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "x",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 10,
+          "id": "c",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 11
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "x",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 14,
+          "id": "x",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 15
+        },
+        {
+          "op": "ack",
+          "at": 16,
+          "id": "x",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 18,
+          "id": "x",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 19
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "x",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 22
+        },
+        {
+          "op": "ack",
+          "at": 23,
+          "id": "b",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 23
+        }
+      ]
+    },
+    "expected": {
+      "pending": [],
+      "results": [
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 6,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "b",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 4,
+          "id": "b",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 6,
+          "id": "a",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 10,
+          "id": "x",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 10,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "b",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 16,
+          "id": "c",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 17,
+          "id": "a",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 19,
+          "id": "b",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 21
+        },
+        {
+          "op": "ack",
+          "at": 21,
+          "id": "c",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 21
+        },
+        {
+          "op": "ack",
+          "at": 23,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 25
+        },
+        {
+          "op": "ack",
+          "at": 25,
+          "id": "c",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 25
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "a"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 3
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 4
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b"
+      ],
+      "timeout": 7,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 1,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "a",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "a",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 7,
+          "id": "c",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 9,
+          "id": "c",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 9
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 11
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 13
+        },
+        {
+          "op": "ack",
+          "at": 15,
+          "id": "a",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 17,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 19,
+          "id": "b",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 21
+        },
+        {
+          "op": "ack",
+          "at": 22,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 22
+        },
+        {
+          "op": "ack",
+          "at": 22,
+          "id": "c",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 23
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "a",
+        "b"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        {
+          "id": "b",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        {
+          "id": "b",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 3
+        },
+        false,
+        {
+          "id": "b",
+          "token": 3
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b",
+        "c"
+      ],
+      "timeout": 8,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 2,
+          "id": "c",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 4
+        },
+        {
+          "op": "ack",
+          "at": 6,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 7,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 9
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "x",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 11
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "x",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 11
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "c",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 13,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 15,
+          "id": "x",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 18,
+          "id": "b",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 19
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "a",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 21
+        },
+        {
+          "op": "ack",
+          "at": 21,
+          "id": "c",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 22
+        },
+        {
+          "op": "ack",
+          "at": 22,
+          "id": "a",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 23
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "b",
+        "c"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        {
+          "id": "b",
+          "token": 1
+        },
+        false,
+        {
+          "id": "c",
+          "token": 1
+        },
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "b",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 3
+        },
+        false,
+        {
+          "id": "c",
+          "token": 2
+        },
+        false,
+        {
+          "id": "b",
+          "token": 3
+        },
+        false,
+        null,
+        true,
+        null
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "messages": [],
+      "timeout": 9,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 1,
+          "id": "b",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 2,
+          "id": "a",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 4
+        },
+        {
+          "op": "ack",
+          "at": 4,
+          "id": "x",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 6
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "b",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "b",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 13
+        },
+        {
+          "op": "ack",
+          "at": 15,
+          "id": "c",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 16
+        },
+        {
+          "op": "ack",
+          "at": 17,
+          "id": "x",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 19
+        },
+        {
+          "op": "ack",
+          "at": 19,
+          "id": "c",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 19
+        },
+        {
+          "op": "ack",
+          "at": 19,
+          "id": "a",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 21
+        },
+        {
+          "op": "ack",
+          "at": 21,
+          "id": "x",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 22
+        },
+        {
+          "op": "ack",
+          "at": 24,
+          "id": "b",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 24
+        },
+        {
+          "op": "ack",
+          "at": 25,
+          "id": "x",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 25
+        }
+      ]
+    },
+    "expected": {
+      "pending": [],
+      "results": [
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 10,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "a",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 4
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "x",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 6,
+          "id": "a",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 6
+        },
+        {
+          "op": "ack",
+          "at": 7,
+          "id": "x",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 9,
+          "id": "a",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 9
+        },
+        {
+          "op": "ack",
+          "at": 10,
+          "id": "b",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 13,
+          "id": "x",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 15
+        },
+        {
+          "op": "ack",
+          "at": 17,
+          "id": "b",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "c",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 20
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "c",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 21
+        },
+        {
+          "op": "ack",
+          "at": 23,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 25
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "a"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 3
+        }
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b"
+      ],
+      "timeout": 11,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 2,
+          "id": "x",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 2
+        },
+        {
+          "op": "ack",
+          "at": 4,
+          "id": "x",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "x",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "a",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 10,
+          "id": "a",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 13
+        },
+        {
+          "op": "ack",
+          "at": 14,
+          "id": "a",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 16
+        },
+        {
+          "op": "ack",
+          "at": 18,
+          "id": "a",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 19
+        },
+        {
+          "op": "ack",
+          "at": 19,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 19
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "c",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 22
+        },
+        {
+          "op": "ack",
+          "at": 24,
+          "id": "b",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 25
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "b"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        {
+          "id": "b",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        true,
+        null,
+        false,
+        {
+          "id": "b",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "b",
+          "token": 3
+        }
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b",
+        "c"
+      ],
+      "timeout": 12,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 2,
+          "id": "a",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 2
+        },
+        {
+          "op": "ack",
+          "at": 2,
+          "id": "x",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "c",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 6
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "x",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 9,
+          "id": "b",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 11
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "c",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 13,
+          "id": "a",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 13
+        },
+        {
+          "op": "ack",
+          "at": 15,
+          "id": "a",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 16
+        },
+        {
+          "op": "ack",
+          "at": 18,
+          "id": "x",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 19,
+          "id": "b",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 20
+        },
+        {
+          "op": "ack",
+          "at": 22,
+          "id": "b",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 24
+        },
+        {
+          "op": "ack",
+          "at": 26,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 26
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "a",
+        "b",
+        "c"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        {
+          "id": "b",
+          "token": 1
+        },
+        false,
+        {
+          "id": "c",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        {
+          "id": "b",
+          "token": 2
+        },
+        false,
+        {
+          "id": "c",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 3
+        },
+        false,
+        null
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "messages": [],
+      "timeout": 13,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 1,
+          "id": "a",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "x",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 7,
+          "id": "c",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 7,
+          "id": "b",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 9
+        },
+        {
+          "op": "ack",
+          "at": 10,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "c",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 14,
+          "id": "b",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 16,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 17,
+          "id": "c",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 19
+        },
+        {
+          "op": "ack",
+          "at": 19,
+          "id": "b",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 20
+        },
+        {
+          "op": "ack",
+          "at": 21,
+          "id": "c",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 21
+        },
+        {
+          "op": "ack",
+          "at": 21,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 23
+        }
+      ]
+    },
+    "expected": {
+      "pending": [],
+      "results": [
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 14,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "b",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "b",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "a",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "a",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 13
+        },
+        {
+          "op": "ack",
+          "at": 14,
+          "id": "x",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 15
+        },
+        {
+          "op": "ack",
+          "at": 17,
+          "id": "x",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 19
+        },
+        {
+          "op": "ack",
+          "at": 21,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 22
+        },
+        {
+          "op": "ack",
+          "at": 22,
+          "id": "x",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 24
+        },
+        {
+          "op": "ack",
+          "at": 25,
+          "id": "x",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 26
+        },
+        {
+          "op": "ack",
+          "at": 27,
+          "id": "b",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 29
+        },
+        {
+          "op": "ack",
+          "at": 31,
+          "id": "b",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 31
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "a"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 3
+        },
+        false,
+        null
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b"
+      ],
+      "timeout": 15,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 0,
+          "id": "b",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 2
+        },
+        {
+          "op": "ack",
+          "at": 4,
+          "id": "x",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "c",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 6
+        },
+        {
+          "op": "ack",
+          "at": 6,
+          "id": "c",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 6
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "x",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "x",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 15,
+          "id": "x",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 18,
+          "id": "b",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 19,
+          "id": "c",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 20
+        },
+        {
+          "op": "ack",
+          "at": 21,
+          "id": "a",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 22
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "a",
+        "b"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        {
+          "id": "b",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        {
+          "id": "b",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b",
+        "c"
+      ],
+      "timeout": 16,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 2
+        },
+        {
+          "op": "ack",
+          "at": 2,
+          "id": "x",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 4
+        },
+        {
+          "op": "ack",
+          "at": 6,
+          "id": "b",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 9,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "b",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 13
+        },
+        {
+          "op": "ack",
+          "at": 15,
+          "id": "c",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 17,
+          "id": "x",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 19,
+          "id": "b",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 20
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "c",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 20
+        },
+        {
+          "op": "ack",
+          "at": 21,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 21
+        },
+        {
+          "op": "ack",
+          "at": 22,
+          "id": "a",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 23
+        },
+        {
+          "op": "ack",
+          "at": 25,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 25
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "b",
+        "c"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        {
+          "id": "b",
+          "token": 1
+        },
+        false,
+        {
+          "id": "c",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        {
+          "id": "b",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        null,
+        true,
+        {
+          "id": "c",
+          "token": 2
+        }
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "messages": [],
+      "timeout": 17,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 1,
+          "id": "b",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 4,
+          "id": "b",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 4
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "a",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "x",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "c",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "b",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 13
+        },
+        {
+          "op": "ack",
+          "at": 14,
+          "id": "a",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 16,
+          "id": "c",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 20
+        },
+        {
+          "op": "ack",
+          "at": 21,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 23
+        },
+        {
+          "op": "ack",
+          "at": 24,
+          "id": "b",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 26
+        },
+        {
+          "op": "ack",
+          "at": 26,
+          "id": "x",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 28
+        }
+      ]
+    },
+    "expected": {
+      "pending": [],
+      "results": [
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 18,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 1,
+          "id": "c",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 2
+        },
+        {
+          "op": "ack",
+          "at": 4,
+          "id": "a",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 6
+        },
+        {
+          "op": "ack",
+          "at": 7,
+          "id": "c",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "x",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 9
+        },
+        {
+          "op": "ack",
+          "at": 9,
+          "id": "x",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 11
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "c",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 13
+        },
+        {
+          "op": "ack",
+          "at": 15,
+          "id": "b",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 16
+        },
+        {
+          "op": "ack",
+          "at": 16,
+          "id": "c",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 18,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 20
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "b",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 21
+        },
+        {
+          "op": "ack",
+          "at": 21,
+          "id": "x",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 21
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "a"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-18"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b"
+      ],
+      "timeout": 19,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 1,
+          "id": "a",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "x",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 7,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 9
+        },
+        {
+          "op": "ack",
+          "at": 10,
+          "id": "a",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 11
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "b",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 14,
+          "id": "b",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 15
+        },
+        {
+          "op": "ack",
+          "at": 17,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 19,
+          "id": "c",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 20
+        },
+        {
+          "op": "ack",
+          "at": 22,
+          "id": "a",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 24
+        },
+        {
+          "op": "ack",
+          "at": 24,
+          "id": "c",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 26
+        },
+        {
+          "op": "ack",
+          "at": 26,
+          "id": "b",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 28
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "b"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        true,
+        {
+          "id": "b",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "b",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-19"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b",
+        "c"
+      ],
+      "timeout": 20,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "x",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 4,
+          "id": "a",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 7,
+          "id": "b",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 9,
+          "id": "a",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 9
+        },
+        {
+          "op": "ack",
+          "at": 10,
+          "id": "a",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 13,
+          "id": "a",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 16,
+          "id": "b",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 17,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 19
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "c",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 22
+        },
+        {
+          "op": "ack",
+          "at": 22,
+          "id": "x",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 24
+        },
+        {
+          "op": "ack",
+          "at": 24,
+          "id": "a",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 25
+        },
+        {
+          "op": "ack",
+          "at": 26,
+          "id": "a",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 28
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "a",
+        "b",
+        "c"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        {
+          "id": "b",
+          "token": 1
+        },
+        false,
+        {
+          "id": "c",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        false,
+        {
+          "id": "b",
+          "token": 2
+        },
+        false,
+        {
+          "id": "c",
+          "token": 2
+        },
+        false,
+        null
+      ]
+    },
+    "label": "additional-20"
+  },
+  {
+    "input": {
+      "messages": [],
+      "timeout": 21,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 1,
+          "id": "x",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 1,
+          "id": "c",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 2,
+          "id": "x",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "x",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "x",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 7,
+          "id": "b",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 7,
+          "id": "b",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 9
+        },
+        {
+          "op": "ack",
+          "at": 11,
+          "id": "b",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 13,
+          "id": "b",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 15
+        },
+        {
+          "op": "ack",
+          "at": 17,
+          "id": "x",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 20
+        },
+        {
+          "op": "ack",
+          "at": 21,
+          "id": "c",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 21
+        }
+      ]
+    },
+    "expected": {
+      "pending": [],
+      "results": [
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-21"
+  },
+  {
+    "input": {
+      "messages": [
+        "a"
+      ],
+      "timeout": 22,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 2,
+          "id": "x",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 3
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "c",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 5
+        },
+        {
+          "op": "ack",
+          "at": 6,
+          "id": "b",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "a",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 9,
+          "id": "b",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 9
+        },
+        {
+          "op": "ack",
+          "at": 9,
+          "id": "x",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 10,
+          "id": "c",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 12
+        },
+        {
+          "op": "ack",
+          "at": 14,
+          "id": "c",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 16,
+          "id": "c",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 16
+        },
+        {
+          "op": "ack",
+          "at": 16,
+          "id": "a",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 18,
+          "id": "b",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 18,
+          "id": "x",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 19
+        }
+      ]
+    },
+    "expected": {
+      "pending": [],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        true,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-22"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b"
+      ],
+      "timeout": 23,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 1,
+          "id": "c",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 1
+        },
+        {
+          "op": "ack",
+          "at": 3,
+          "id": "a",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 4
+        },
+        {
+          "op": "ack",
+          "at": 5,
+          "id": "a",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 7
+        },
+        {
+          "op": "ack",
+          "at": 9,
+          "id": "c",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 11
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "b",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 13
+        },
+        {
+          "op": "ack",
+          "at": 14,
+          "id": "c",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 16
+        },
+        {
+          "op": "ack",
+          "at": 16,
+          "id": "x",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 18
+        },
+        {
+          "op": "ack",
+          "at": 19,
+          "id": "x",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 19
+        },
+        {
+          "op": "ack",
+          "at": 21,
+          "id": "x",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 22
+        },
+        {
+          "op": "ack",
+          "at": 23,
+          "id": "b",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 24
+        },
+        {
+          "op": "ack",
+          "at": 26,
+          "id": "x",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 27
+        },
+        {
+          "op": "ack",
+          "at": 29,
+          "id": "c",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 29
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "b"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        {
+          "id": "b",
+          "token": 1
+        },
+        true,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "b",
+          "token": 2
+        },
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-23"
+  },
+  {
+    "input": {
+      "messages": [
+        "a",
+        "b",
+        "c"
+      ],
+      "timeout": 24,
+      "ops": [
+        {
+          "op": "receive",
+          "at": 0
+        },
+        {
+          "op": "ack",
+          "at": 2,
+          "id": "x",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 4
+        },
+        {
+          "op": "ack",
+          "at": 6,
+          "id": "a",
+          "token": 3
+        },
+        {
+          "op": "receive",
+          "at": 8
+        },
+        {
+          "op": "ack",
+          "at": 8,
+          "id": "a",
+          "token": 7
+        },
+        {
+          "op": "receive",
+          "at": 10
+        },
+        {
+          "op": "ack",
+          "at": 12,
+          "id": "c",
+          "token": 6
+        },
+        {
+          "op": "receive",
+          "at": 14
+        },
+        {
+          "op": "ack",
+          "at": 15,
+          "id": "a",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 17
+        },
+        {
+          "op": "ack",
+          "at": 18,
+          "id": "a",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 20
+        },
+        {
+          "op": "ack",
+          "at": 20,
+          "id": "c",
+          "token": 4
+        },
+        {
+          "op": "receive",
+          "at": 21
+        },
+        {
+          "op": "ack",
+          "at": 22,
+          "id": "x",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 22
+        },
+        {
+          "op": "ack",
+          "at": 24,
+          "id": "c",
+          "token": 5
+        },
+        {
+          "op": "receive",
+          "at": 26
+        },
+        {
+          "op": "ack",
+          "at": 27,
+          "id": "b",
+          "token": 1
+        },
+        {
+          "op": "receive",
+          "at": 28
+        },
+        {
+          "op": "ack",
+          "at": 29,
+          "id": "x",
+          "token": 2
+        },
+        {
+          "op": "receive",
+          "at": 29
+        },
+        {
+          "op": "ack",
+          "at": 29,
+          "id": "b",
+          "token": 0
+        },
+        {
+          "op": "receive",
+          "at": 30
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "a",
+        "c"
+      ],
+      "results": [
+        {
+          "id": "a",
+          "token": 1
+        },
+        false,
+        {
+          "id": "b",
+          "token": 1
+        },
+        false,
+        {
+          "id": "c",
+          "token": 1
+        },
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        null,
+        false,
+        {
+          "id": "a",
+          "token": 2
+        },
+        true,
+        null,
+        false,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-24"
+  }
+]

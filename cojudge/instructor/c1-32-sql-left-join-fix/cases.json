@@ -1,0 +1,2134 @@
+[
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "1"
+        },
+        {
+          "id": 2,
+          "name": "2"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 1,
+          "amount": 10,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "customer_id": 1,
+        "name": "1",
+        "payment_id": 1,
+        "amount": 10
+      },
+      {
+        "customer_id": 2,
+        "name": "2",
+        "payment_id": null,
+        "amount": null
+      }
+    ],
+    "label": "keep customer with no payments"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "1"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 1,
+          "amount": 10,
+          "status": "pending"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "customer_id": 1,
+        "name": "1",
+        "payment_id": null,
+        "amount": null
+      }
+    ],
+    "label": "pending-only customer remains with nulls"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "1"
+        }
+      ],
+      "payments": [
+        {
+          "id": 3,
+          "customer_id": 1,
+          "amount": 30,
+          "status": "paid"
+        },
+        {
+          "id": 2,
+          "customer_id": 1,
+          "amount": 20,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "customer_id": 1,
+        "name": "1",
+        "payment_id": 2,
+        "amount": 20
+      },
+      {
+        "customer_id": 1,
+        "name": "1",
+        "payment_id": 3,
+        "amount": 30
+      }
+    ],
+    "label": "one output row per paid payment"
+  },
+  {
+    "input": {
+      "customers": [],
+      "payments": []
+    },
+    "expected": [],
+    "label": "empty database"
+  },
+  {
+    "input": {
+      "customers": [],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 99,
+          "amount": 10,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [],
+    "label": "orphan payments create no customer"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "1"
+        }
+      ],
+      "payments": []
+    },
+    "expected": [
+      {
+        "customer_id": 1,
+        "name": "1",
+        "payment_id": null,
+        "amount": null
+      }
+    ],
+    "label": "one unmatched customer"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "1"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": null,
+          "amount": 10,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "customer_id": 1,
+        "name": "1",
+        "payment_id": null,
+        "amount": null
+      }
+    ],
+    "label": "null foreign key does not match"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "1"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 2,
+          "amount": 10,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "customer_id": 1,
+        "name": "1",
+        "payment_id": null,
+        "amount": null
+      }
+    ],
+    "label": "missing related customer id"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "1"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 1,
+          "amount": 0,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "customer_id": 1,
+        "name": "1",
+        "payment_id": 1,
+        "amount": 0
+      }
+    ],
+    "label": "zero amount is not missing"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "1"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 1,
+          "amount": -5,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "customer_id": 1,
+        "name": "1",
+        "payment_id": 1,
+        "amount": -5
+      }
+    ],
+    "label": "negative paid amount"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 2,
+          "name": "same"
+        },
+        {
+          "id": 1,
+          "name": "same"
+        }
+      ],
+      "payments": []
+    },
+    "expected": [
+      {
+        "customer_id": 1,
+        "name": "same",
+        "payment_id": null,
+        "amount": null
+      },
+      {
+        "customer_id": 2,
+        "name": "same",
+        "payment_id": null,
+        "amount": null
+      }
+    ],
+    "label": "names do not identify customers"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 10,
+          "name": "10"
+        },
+        {
+          "id": 2,
+          "name": "2"
+        }
+      ],
+      "payments": [
+        {
+          "id": 10,
+          "customer_id": 2,
+          "amount": 10,
+          "status": "paid"
+        },
+        {
+          "id": 2,
+          "customer_id": 2,
+          "amount": 10,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "customer_id": 2,
+        "name": "2",
+        "payment_id": 2,
+        "amount": 10
+      },
+      {
+        "customer_id": 2,
+        "name": "2",
+        "payment_id": 10,
+        "amount": 10
+      },
+      {
+        "customer_id": 10,
+        "name": "10",
+        "payment_id": null,
+        "amount": null
+      }
+    ],
+    "label": "numeric order on both ids"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "1"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 1,
+          "amount": 10,
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "customer_id": 1,
+          "amount": 10,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "customer_id": 1,
+        "name": "1",
+        "payment_id": 2,
+        "amount": 10
+      }
+    ],
+    "label": "do not add null row when a paid match exists"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "O'Reilly"
+        }
+      ],
+      "payments": []
+    },
+    "expected": [
+      {
+        "customer_id": 1,
+        "name": "O'Reilly",
+        "payment_id": null,
+        "amount": null
+      }
+    ],
+    "label": "quoted name survives scaffold"
+  },
+  {
+    "input": {
+      "customers": [],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": null,
+          "amount": 1,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [],
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name2"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 2,
+          "amount": 17,
+          "status": "paid"
+        },
+        {
+          "id": 2,
+          "customer_id": 3,
+          "amount": -5,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": null,
+        "customer_id": 1,
+        "name": "name2",
+        "payment_id": null
+      }
+    ],
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name0"
+        },
+        {
+          "id": 2,
+          "name": "name1"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": null,
+          "amount": 5,
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "customer_id": 99,
+          "amount": -4,
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "customer_id": 2,
+          "amount": 14,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": null,
+        "customer_id": 1,
+        "name": "name0",
+        "payment_id": null
+      },
+      {
+        "amount": 14,
+        "customer_id": 2,
+        "name": "name1",
+        "payment_id": 3
+      }
+    ],
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name1"
+        },
+        {
+          "id": 2,
+          "name": "name2"
+        },
+        {
+          "id": 3,
+          "name": "name0"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 4,
+          "amount": 19,
+          "status": "paid"
+        },
+        {
+          "id": 2,
+          "customer_id": 4,
+          "amount": -5,
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "customer_id": 5,
+          "amount": 19,
+          "status": "paid"
+        },
+        {
+          "id": 4,
+          "customer_id": 99,
+          "amount": 4,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": null,
+        "customer_id": 1,
+        "name": "name1",
+        "payment_id": null
+      },
+      {
+        "amount": null,
+        "customer_id": 2,
+        "name": "name2",
+        "payment_id": null
+      },
+      {
+        "amount": null,
+        "customer_id": 3,
+        "name": "name0",
+        "payment_id": null
+      }
+    ],
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name2"
+        },
+        {
+          "id": 2,
+          "name": "name0"
+        },
+        {
+          "id": 3,
+          "name": "name1"
+        },
+        {
+          "id": 4,
+          "name": "name2"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 3,
+          "amount": -3,
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "customer_id": null,
+          "amount": -4,
+          "status": "paid"
+        },
+        {
+          "id": 3,
+          "customer_id": 5,
+          "amount": 0,
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "customer_id": null,
+          "amount": 8,
+          "status": "paid"
+        },
+        {
+          "id": 5,
+          "customer_id": null,
+          "amount": 12,
+          "status": "pending"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": null,
+        "customer_id": 1,
+        "name": "name2",
+        "payment_id": null
+      },
+      {
+        "amount": null,
+        "customer_id": 2,
+        "name": "name0",
+        "payment_id": null
+      },
+      {
+        "amount": null,
+        "customer_id": 3,
+        "name": "name1",
+        "payment_id": null
+      },
+      {
+        "amount": null,
+        "customer_id": 4,
+        "name": "name2",
+        "payment_id": null
+      }
+    ],
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name0"
+        },
+        {
+          "id": 2,
+          "name": "name1"
+        },
+        {
+          "id": 3,
+          "name": "name2"
+        },
+        {
+          "id": 4,
+          "name": "name0"
+        },
+        {
+          "id": 5,
+          "name": "name1"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 1,
+          "amount": 0,
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "customer_id": 2,
+          "amount": 18,
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "customer_id": 1,
+          "amount": 12,
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "customer_id": 4,
+          "amount": 13,
+          "status": "paid"
+        },
+        {
+          "id": 5,
+          "customer_id": 99,
+          "amount": -4,
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "customer_id": 1,
+          "amount": 4,
+          "status": "pending"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": null,
+        "customer_id": 1,
+        "name": "name0",
+        "payment_id": null
+      },
+      {
+        "amount": null,
+        "customer_id": 2,
+        "name": "name1",
+        "payment_id": null
+      },
+      {
+        "amount": null,
+        "customer_id": 3,
+        "name": "name2",
+        "payment_id": null
+      },
+      {
+        "amount": 13,
+        "customer_id": 4,
+        "name": "name0",
+        "payment_id": 4
+      },
+      {
+        "amount": null,
+        "customer_id": 5,
+        "name": "name1",
+        "payment_id": null
+      }
+    ],
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name1"
+        },
+        {
+          "id": 2,
+          "name": "name2"
+        },
+        {
+          "id": 3,
+          "name": "name0"
+        },
+        {
+          "id": 4,
+          "name": "name1"
+        },
+        {
+          "id": 5,
+          "name": "name2"
+        },
+        {
+          "id": 6,
+          "name": "name0"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": null,
+          "amount": 2,
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "customer_id": 99,
+          "amount": 4,
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "customer_id": 5,
+          "amount": -3,
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "customer_id": null,
+          "amount": 0,
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "customer_id": 1,
+          "amount": 17,
+          "status": "paid"
+        },
+        {
+          "id": 6,
+          "customer_id": 99,
+          "amount": -4,
+          "status": "paid"
+        },
+        {
+          "id": 7,
+          "customer_id": 5,
+          "amount": 3,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": 17,
+        "customer_id": 1,
+        "name": "name1",
+        "payment_id": 5
+      },
+      {
+        "amount": null,
+        "customer_id": 2,
+        "name": "name2",
+        "payment_id": null
+      },
+      {
+        "amount": null,
+        "customer_id": 3,
+        "name": "name0",
+        "payment_id": null
+      },
+      {
+        "amount": null,
+        "customer_id": 4,
+        "name": "name1",
+        "payment_id": null
+      },
+      {
+        "amount": 3,
+        "customer_id": 5,
+        "name": "name2",
+        "payment_id": 7
+      },
+      {
+        "amount": null,
+        "customer_id": 6,
+        "name": "name0",
+        "payment_id": null
+      }
+    ],
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "customers": [],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 4,
+          "amount": 4,
+          "status": "paid"
+        },
+        {
+          "id": 2,
+          "customer_id": 3,
+          "amount": -4,
+          "status": "paid"
+        },
+        {
+          "id": 3,
+          "customer_id": 4,
+          "amount": -4,
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "customer_id": null,
+          "amount": 11,
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "customer_id": 2,
+          "amount": 10,
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "customer_id": 99,
+          "amount": 2,
+          "status": "pending"
+        },
+        {
+          "id": 7,
+          "customer_id": 4,
+          "amount": 13,
+          "status": "paid"
+        },
+        {
+          "id": 8,
+          "customer_id": 1,
+          "amount": 7,
+          "status": "pending"
+        }
+      ]
+    },
+    "expected": [],
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name0"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 4,
+          "amount": 18,
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "customer_id": 1,
+          "amount": 11,
+          "status": "paid"
+        },
+        {
+          "id": 3,
+          "customer_id": 4,
+          "amount": 16,
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "customer_id": 5,
+          "amount": 6,
+          "status": "paid"
+        },
+        {
+          "id": 5,
+          "customer_id": 4,
+          "amount": 2,
+          "status": "paid"
+        },
+        {
+          "id": 6,
+          "customer_id": 3,
+          "amount": -5,
+          "status": "paid"
+        },
+        {
+          "id": 7,
+          "customer_id": null,
+          "amount": 13,
+          "status": "paid"
+        },
+        {
+          "id": 8,
+          "customer_id": 99,
+          "amount": 5,
+          "status": "pending"
+        },
+        {
+          "id": 9,
+          "customer_id": 1,
+          "amount": 9,
+          "status": "pending"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": 11,
+        "customer_id": 1,
+        "name": "name0",
+        "payment_id": 2
+      }
+    ],
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name1"
+        },
+        {
+          "id": 2,
+          "name": "name2"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": null,
+          "amount": 5,
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "customer_id": 1,
+          "amount": 6,
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "customer_id": null,
+          "amount": 17,
+          "status": "paid"
+        },
+        {
+          "id": 4,
+          "customer_id": 1,
+          "amount": 19,
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "customer_id": 3,
+          "amount": 16,
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "customer_id": 3,
+          "amount": -3,
+          "status": "paid"
+        },
+        {
+          "id": 7,
+          "customer_id": 4,
+          "amount": 0,
+          "status": "paid"
+        },
+        {
+          "id": 8,
+          "customer_id": null,
+          "amount": 14,
+          "status": "paid"
+        },
+        {
+          "id": 9,
+          "customer_id": 5,
+          "amount": 11,
+          "status": "pending"
+        },
+        {
+          "id": 10,
+          "customer_id": 3,
+          "amount": 2,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": null,
+        "customer_id": 1,
+        "name": "name1",
+        "payment_id": null
+      },
+      {
+        "amount": null,
+        "customer_id": 2,
+        "name": "name2",
+        "payment_id": null
+      }
+    ],
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name2"
+        },
+        {
+          "id": 2,
+          "name": "name0"
+        },
+        {
+          "id": 3,
+          "name": "name1"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 3,
+          "amount": 5,
+          "status": "paid"
+        },
+        {
+          "id": 2,
+          "customer_id": 5,
+          "amount": -1,
+          "status": "paid"
+        },
+        {
+          "id": 3,
+          "customer_id": 4,
+          "amount": 9,
+          "status": "paid"
+        },
+        {
+          "id": 4,
+          "customer_id": 3,
+          "amount": 16,
+          "status": "paid"
+        },
+        {
+          "id": 5,
+          "customer_id": null,
+          "amount": 9,
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "customer_id": null,
+          "amount": 12,
+          "status": "paid"
+        },
+        {
+          "id": 7,
+          "customer_id": 1,
+          "amount": 6,
+          "status": "paid"
+        },
+        {
+          "id": 8,
+          "customer_id": 5,
+          "amount": -2,
+          "status": "paid"
+        },
+        {
+          "id": 9,
+          "customer_id": 5,
+          "amount": 5,
+          "status": "paid"
+        },
+        {
+          "id": 10,
+          "customer_id": 2,
+          "amount": 13,
+          "status": "paid"
+        },
+        {
+          "id": 11,
+          "customer_id": 1,
+          "amount": 11,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": 6,
+        "customer_id": 1,
+        "name": "name2",
+        "payment_id": 7
+      },
+      {
+        "amount": 11,
+        "customer_id": 1,
+        "name": "name2",
+        "payment_id": 11
+      },
+      {
+        "amount": 13,
+        "customer_id": 2,
+        "name": "name0",
+        "payment_id": 10
+      },
+      {
+        "amount": 5,
+        "customer_id": 3,
+        "name": "name1",
+        "payment_id": 1
+      },
+      {
+        "amount": 16,
+        "customer_id": 3,
+        "name": "name1",
+        "payment_id": 4
+      }
+    ],
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name0"
+        },
+        {
+          "id": 2,
+          "name": "name1"
+        },
+        {
+          "id": 3,
+          "name": "name2"
+        },
+        {
+          "id": 4,
+          "name": "name0"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": null,
+          "amount": 0,
+          "status": "paid"
+        },
+        {
+          "id": 2,
+          "customer_id": null,
+          "amount": 2,
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "customer_id": 2,
+          "amount": 17,
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "customer_id": 1,
+          "amount": 14,
+          "status": "paid"
+        },
+        {
+          "id": 5,
+          "customer_id": 4,
+          "amount": 17,
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "customer_id": null,
+          "amount": -5,
+          "status": "paid"
+        },
+        {
+          "id": 7,
+          "customer_id": 99,
+          "amount": 0,
+          "status": "paid"
+        },
+        {
+          "id": 8,
+          "customer_id": null,
+          "amount": 16,
+          "status": "paid"
+        },
+        {
+          "id": 9,
+          "customer_id": 3,
+          "amount": 13,
+          "status": "pending"
+        },
+        {
+          "id": 10,
+          "customer_id": null,
+          "amount": 15,
+          "status": "paid"
+        },
+        {
+          "id": 11,
+          "customer_id": 3,
+          "amount": 3,
+          "status": "paid"
+        },
+        {
+          "id": 12,
+          "customer_id": 99,
+          "amount": 1,
+          "status": "pending"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": 14,
+        "customer_id": 1,
+        "name": "name0",
+        "payment_id": 4
+      },
+      {
+        "amount": null,
+        "customer_id": 2,
+        "name": "name1",
+        "payment_id": null
+      },
+      {
+        "amount": 3,
+        "customer_id": 3,
+        "name": "name2",
+        "payment_id": 11
+      },
+      {
+        "amount": null,
+        "customer_id": 4,
+        "name": "name0",
+        "payment_id": null
+      }
+    ],
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name1"
+        },
+        {
+          "id": 2,
+          "name": "name2"
+        },
+        {
+          "id": 3,
+          "name": "name0"
+        },
+        {
+          "id": 4,
+          "name": "name1"
+        },
+        {
+          "id": 5,
+          "name": "name2"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": null,
+          "amount": 16,
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "customer_id": 99,
+          "amount": 2,
+          "status": "paid"
+        },
+        {
+          "id": 3,
+          "customer_id": 2,
+          "amount": 9,
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "customer_id": 5,
+          "amount": -1,
+          "status": "paid"
+        },
+        {
+          "id": 5,
+          "customer_id": 3,
+          "amount": 4,
+          "status": "paid"
+        },
+        {
+          "id": 6,
+          "customer_id": null,
+          "amount": 11,
+          "status": "pending"
+        },
+        {
+          "id": 7,
+          "customer_id": 99,
+          "amount": 19,
+          "status": "pending"
+        },
+        {
+          "id": 8,
+          "customer_id": 1,
+          "amount": 3,
+          "status": "pending"
+        },
+        {
+          "id": 9,
+          "customer_id": 2,
+          "amount": 17,
+          "status": "paid"
+        },
+        {
+          "id": 10,
+          "customer_id": null,
+          "amount": 17,
+          "status": "pending"
+        },
+        {
+          "id": 11,
+          "customer_id": 1,
+          "amount": -1,
+          "status": "paid"
+        },
+        {
+          "id": 12,
+          "customer_id": 99,
+          "amount": 2,
+          "status": "pending"
+        },
+        {
+          "id": 13,
+          "customer_id": 1,
+          "amount": -3,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": -1,
+        "customer_id": 1,
+        "name": "name1",
+        "payment_id": 11
+      },
+      {
+        "amount": -3,
+        "customer_id": 1,
+        "name": "name1",
+        "payment_id": 13
+      },
+      {
+        "amount": 17,
+        "customer_id": 2,
+        "name": "name2",
+        "payment_id": 9
+      },
+      {
+        "amount": 4,
+        "customer_id": 3,
+        "name": "name0",
+        "payment_id": 5
+      },
+      {
+        "amount": null,
+        "customer_id": 4,
+        "name": "name1",
+        "payment_id": null
+      },
+      {
+        "amount": -1,
+        "customer_id": 5,
+        "name": "name2",
+        "payment_id": 4
+      }
+    ],
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name2"
+        },
+        {
+          "id": 2,
+          "name": "name0"
+        },
+        {
+          "id": 3,
+          "name": "name1"
+        },
+        {
+          "id": 4,
+          "name": "name2"
+        },
+        {
+          "id": 5,
+          "name": "name0"
+        },
+        {
+          "id": 6,
+          "name": "name1"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 99,
+          "amount": 14,
+          "status": "paid"
+        },
+        {
+          "id": 2,
+          "customer_id": 2,
+          "amount": -1,
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "customer_id": 3,
+          "amount": 11,
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "customer_id": 2,
+          "amount": 10,
+          "status": "paid"
+        },
+        {
+          "id": 5,
+          "customer_id": 4,
+          "amount": 20,
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "customer_id": 3,
+          "amount": 3,
+          "status": "paid"
+        },
+        {
+          "id": 7,
+          "customer_id": 2,
+          "amount": 6,
+          "status": "paid"
+        },
+        {
+          "id": 8,
+          "customer_id": 2,
+          "amount": 7,
+          "status": "paid"
+        },
+        {
+          "id": 9,
+          "customer_id": 99,
+          "amount": 16,
+          "status": "paid"
+        },
+        {
+          "id": 10,
+          "customer_id": 5,
+          "amount": 14,
+          "status": "paid"
+        },
+        {
+          "id": 11,
+          "customer_id": 5,
+          "amount": 6,
+          "status": "paid"
+        },
+        {
+          "id": 12,
+          "customer_id": 99,
+          "amount": 12,
+          "status": "pending"
+        },
+        {
+          "id": 13,
+          "customer_id": 2,
+          "amount": -3,
+          "status": "paid"
+        },
+        {
+          "id": 14,
+          "customer_id": 4,
+          "amount": 9,
+          "status": "pending"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": null,
+        "customer_id": 1,
+        "name": "name2",
+        "payment_id": null
+      },
+      {
+        "amount": 10,
+        "customer_id": 2,
+        "name": "name0",
+        "payment_id": 4
+      },
+      {
+        "amount": 6,
+        "customer_id": 2,
+        "name": "name0",
+        "payment_id": 7
+      },
+      {
+        "amount": 7,
+        "customer_id": 2,
+        "name": "name0",
+        "payment_id": 8
+      },
+      {
+        "amount": -3,
+        "customer_id": 2,
+        "name": "name0",
+        "payment_id": 13
+      },
+      {
+        "amount": 3,
+        "customer_id": 3,
+        "name": "name1",
+        "payment_id": 6
+      },
+      {
+        "amount": null,
+        "customer_id": 4,
+        "name": "name2",
+        "payment_id": null
+      },
+      {
+        "amount": 14,
+        "customer_id": 5,
+        "name": "name0",
+        "payment_id": 10
+      },
+      {
+        "amount": 6,
+        "customer_id": 5,
+        "name": "name0",
+        "payment_id": 11
+      },
+      {
+        "amount": null,
+        "customer_id": 6,
+        "name": "name1",
+        "payment_id": null
+      }
+    ],
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "customers": [],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": 3,
+          "amount": 16,
+          "status": "paid"
+        },
+        {
+          "id": 2,
+          "customer_id": 5,
+          "amount": -2,
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "customer_id": 99,
+          "amount": 6,
+          "status": "paid"
+        },
+        {
+          "id": 4,
+          "customer_id": null,
+          "amount": 12,
+          "status": "paid"
+        },
+        {
+          "id": 5,
+          "customer_id": 2,
+          "amount": 8,
+          "status": "paid"
+        },
+        {
+          "id": 6,
+          "customer_id": 5,
+          "amount": 17,
+          "status": "paid"
+        },
+        {
+          "id": 7,
+          "customer_id": null,
+          "amount": 15,
+          "status": "paid"
+        },
+        {
+          "id": 8,
+          "customer_id": 99,
+          "amount": 12,
+          "status": "paid"
+        },
+        {
+          "id": 9,
+          "customer_id": 3,
+          "amount": 20,
+          "status": "paid"
+        },
+        {
+          "id": 10,
+          "customer_id": 5,
+          "amount": 0,
+          "status": "paid"
+        },
+        {
+          "id": 11,
+          "customer_id": 1,
+          "amount": -1,
+          "status": "pending"
+        },
+        {
+          "id": 12,
+          "customer_id": 3,
+          "amount": 12,
+          "status": "pending"
+        },
+        {
+          "id": 13,
+          "customer_id": 1,
+          "amount": 0,
+          "status": "pending"
+        },
+        {
+          "id": 14,
+          "customer_id": 5,
+          "amount": -1,
+          "status": "pending"
+        },
+        {
+          "id": 15,
+          "customer_id": 4,
+          "amount": 12,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [],
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name1"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": null,
+          "amount": 20,
+          "status": "paid"
+        },
+        {
+          "id": 2,
+          "customer_id": 5,
+          "amount": 3,
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "customer_id": null,
+          "amount": 11,
+          "status": "paid"
+        },
+        {
+          "id": 4,
+          "customer_id": 2,
+          "amount": 10,
+          "status": "paid"
+        },
+        {
+          "id": 5,
+          "customer_id": 4,
+          "amount": 8,
+          "status": "paid"
+        },
+        {
+          "id": 6,
+          "customer_id": 2,
+          "amount": 8,
+          "status": "paid"
+        },
+        {
+          "id": 7,
+          "customer_id": 1,
+          "amount": -1,
+          "status": "pending"
+        },
+        {
+          "id": 8,
+          "customer_id": 1,
+          "amount": 16,
+          "status": "pending"
+        },
+        {
+          "id": 9,
+          "customer_id": null,
+          "amount": 12,
+          "status": "paid"
+        },
+        {
+          "id": 10,
+          "customer_id": 2,
+          "amount": 9,
+          "status": "paid"
+        },
+        {
+          "id": 11,
+          "customer_id": 2,
+          "amount": 2,
+          "status": "pending"
+        },
+        {
+          "id": 12,
+          "customer_id": 5,
+          "amount": -4,
+          "status": "paid"
+        },
+        {
+          "id": 13,
+          "customer_id": 3,
+          "amount": 12,
+          "status": "pending"
+        },
+        {
+          "id": 14,
+          "customer_id": null,
+          "amount": 11,
+          "status": "pending"
+        },
+        {
+          "id": 15,
+          "customer_id": 5,
+          "amount": -3,
+          "status": "pending"
+        },
+        {
+          "id": 16,
+          "customer_id": 99,
+          "amount": 1,
+          "status": "paid"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": null,
+        "customer_id": 1,
+        "name": "name1",
+        "payment_id": null
+      }
+    ],
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name2"
+        },
+        {
+          "id": 2,
+          "name": "name0"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": null,
+          "amount": 3,
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "customer_id": 3,
+          "amount": 20,
+          "status": "paid"
+        },
+        {
+          "id": 3,
+          "customer_id": 99,
+          "amount": 8,
+          "status": "paid"
+        },
+        {
+          "id": 4,
+          "customer_id": null,
+          "amount": 10,
+          "status": "paid"
+        },
+        {
+          "id": 5,
+          "customer_id": 5,
+          "amount": 7,
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "customer_id": 3,
+          "amount": -4,
+          "status": "paid"
+        },
+        {
+          "id": 7,
+          "customer_id": 5,
+          "amount": 19,
+          "status": "pending"
+        },
+        {
+          "id": 8,
+          "customer_id": 1,
+          "amount": 19,
+          "status": "pending"
+        },
+        {
+          "id": 9,
+          "customer_id": 3,
+          "amount": -1,
+          "status": "pending"
+        },
+        {
+          "id": 10,
+          "customer_id": 3,
+          "amount": 17,
+          "status": "pending"
+        },
+        {
+          "id": 11,
+          "customer_id": 99,
+          "amount": 6,
+          "status": "paid"
+        },
+        {
+          "id": 12,
+          "customer_id": 2,
+          "amount": -4,
+          "status": "pending"
+        },
+        {
+          "id": 13,
+          "customer_id": 99,
+          "amount": 16,
+          "status": "paid"
+        },
+        {
+          "id": 14,
+          "customer_id": 3,
+          "amount": -1,
+          "status": "paid"
+        },
+        {
+          "id": 15,
+          "customer_id": 3,
+          "amount": 1,
+          "status": "paid"
+        },
+        {
+          "id": 16,
+          "customer_id": 5,
+          "amount": -4,
+          "status": "pending"
+        },
+        {
+          "id": 17,
+          "customer_id": null,
+          "amount": 9,
+          "status": "pending"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": null,
+        "customer_id": 1,
+        "name": "name2",
+        "payment_id": null
+      },
+      {
+        "amount": null,
+        "customer_id": 2,
+        "name": "name0",
+        "payment_id": null
+      }
+    ],
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "customers": [
+        {
+          "id": 1,
+          "name": "name0"
+        },
+        {
+          "id": 2,
+          "name": "name1"
+        },
+        {
+          "id": 3,
+          "name": "name2"
+        }
+      ],
+      "payments": [
+        {
+          "id": 1,
+          "customer_id": null,
+          "amount": -5,
+          "status": "paid"
+        },
+        {
+          "id": 2,
+          "customer_id": 5,
+          "amount": -4,
+          "status": "paid"
+        },
+        {
+          "id": 3,
+          "customer_id": 1,
+          "amount": 10,
+          "status": "paid"
+        },
+        {
+          "id": 4,
+          "customer_id": null,
+          "amount": 3,
+          "status": "paid"
+        },
+        {
+          "id": 5,
+          "customer_id": 4,
+          "amount": 0,
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "customer_id": 1,
+          "amount": 2,
+          "status": "pending"
+        },
+        {
+          "id": 7,
+          "customer_id": 2,
+          "amount": 1,
+          "status": "paid"
+        },
+        {
+          "id": 8,
+          "customer_id": 99,
+          "amount": 20,
+          "status": "pending"
+        },
+        {
+          "id": 9,
+          "customer_id": 2,
+          "amount": 17,
+          "status": "paid"
+        },
+        {
+          "id": 10,
+          "customer_id": 3,
+          "amount": 4,
+          "status": "pending"
+        },
+        {
+          "id": 11,
+          "customer_id": 1,
+          "amount": 1,
+          "status": "pending"
+        },
+        {
+          "id": 12,
+          "customer_id": 3,
+          "amount": 8,
+          "status": "pending"
+        },
+        {
+          "id": 13,
+          "customer_id": 1,
+          "amount": 12,
+          "status": "pending"
+        },
+        {
+          "id": 14,
+          "customer_id": 5,
+          "amount": 15,
+          "status": "paid"
+        },
+        {
+          "id": 15,
+          "customer_id": null,
+          "amount": -1,
+          "status": "paid"
+        },
+        {
+          "id": 16,
+          "customer_id": 4,
+          "amount": 14,
+          "status": "paid"
+        },
+        {
+          "id": 17,
+          "customer_id": 99,
+          "amount": 0,
+          "status": "paid"
+        },
+        {
+          "id": 18,
+          "customer_id": 4,
+          "amount": -1,
+          "status": "pending"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "amount": 10,
+        "customer_id": 1,
+        "name": "name0",
+        "payment_id": 3
+      },
+      {
+        "amount": 1,
+        "customer_id": 2,
+        "name": "name1",
+        "payment_id": 7
+      },
+      {
+        "amount": 17,
+        "customer_id": 2,
+        "name": "name1",
+        "payment_id": 9
+      },
+      {
+        "amount": null,
+        "customer_id": 3,
+        "name": "name2",
+        "payment_id": null
+      }
+    ],
+    "label": "additional-18"
+  }
+]

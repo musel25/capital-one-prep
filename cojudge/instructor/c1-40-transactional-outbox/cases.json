@@ -1,0 +1,4292 @@
+[
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok"
+      ],
+      "orders": [
+        [
+          "a",
+          2
+        ]
+      ],
+      "events": [
+        [
+          "a",
+          2
+        ]
+      ]
+    },
+    "label": "business record and event commit"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "business"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "failed"
+      ],
+      "orders": [],
+      "events": []
+    },
+    "label": "failure between writes"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "replay"
+      ],
+      "orders": [
+        [
+          "a",
+          2
+        ]
+      ],
+      "events": [
+        [
+          "a",
+          2
+        ]
+      ]
+    },
+    "label": "retry creates no duplicate event"
+  },
+  {
+    "input": {
+      "orders": []
+    },
+    "expected": {
+      "results": [],
+      "orders": [],
+      "events": []
+    },
+    "label": "empty input"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "failed"
+      ],
+      "orders": [],
+      "events": []
+    },
+    "label": "failure after event rolls back both"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "failed",
+        "ok"
+      ],
+      "orders": [
+        [
+          "a",
+          2
+        ]
+      ],
+      "events": [
+        [
+          "a",
+          2
+        ]
+      ]
+    },
+    "label": "retry after business failure"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 5,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "failed",
+        "ok"
+      ],
+      "orders": [
+        [
+          "a",
+          5
+        ]
+      ],
+      "events": [
+        [
+          "a",
+          5
+        ]
+      ]
+    },
+    "label": "failed payload reserves no ID"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "conflict"
+      ],
+      "orders": [
+        [
+          "a",
+          2
+        ]
+      ],
+      "events": [
+        [
+          "a",
+          2
+        ]
+      ]
+    },
+    "label": "changed replay payload"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "ok"
+      ],
+      "orders": [
+        [
+          "a",
+          3
+        ],
+        [
+          "b",
+          4
+        ]
+      ],
+      "events": [
+        [
+          "a",
+          3
+        ],
+        [
+          "b",
+          4
+        ]
+      ]
+    },
+    "label": "output order differs from commit order"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "replay"
+      ],
+      "orders": [
+        [
+          "a",
+          2
+        ]
+      ],
+      "events": [
+        [
+          "a",
+          2
+        ]
+      ]
+    },
+    "label": "replay ignores fault"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "business"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "conflict"
+      ],
+      "orders": [
+        [
+          "a",
+          2
+        ]
+      ],
+      "events": [
+        [
+          "a",
+          2
+        ]
+      ]
+    },
+    "label": "conflict ignores fault"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "failed",
+        "ok",
+        "ok"
+      ],
+      "orders": [
+        [
+          "a",
+          1
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "c",
+          3
+        ]
+      ],
+      "events": [
+        [
+          "a",
+          1
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "c",
+          3
+        ]
+      ]
+    },
+    "label": "failure isolation and recovery"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "d",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 3,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 6,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "b",
+          8
+        ],
+        [
+          "c",
+          8
+        ],
+        [
+          "d",
+          9
+        ],
+        [
+          "e",
+          3
+        ]
+      ],
+      "orders": [
+        [
+          "b",
+          8
+        ],
+        [
+          "c",
+          8
+        ],
+        [
+          "d",
+          9
+        ],
+        [
+          "e",
+          3
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "failed",
+        "ok",
+        "ok",
+        "ok",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "e",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "b",
+          5
+        ],
+        [
+          "c",
+          8
+        ],
+        [
+          "d",
+          9
+        ],
+        [
+          "e",
+          9
+        ]
+      ],
+      "orders": [
+        [
+          "b",
+          5
+        ],
+        [
+          "c",
+          8
+        ],
+        [
+          "d",
+          9
+        ],
+        [
+          "e",
+          9
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "ok",
+        "conflict",
+        "ok",
+        "conflict"
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "e",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 4,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "d",
+          5
+        ],
+        [
+          "e",
+          1
+        ]
+      ],
+      "orders": [
+        [
+          "d",
+          5
+        ],
+        [
+          "e",
+          1
+        ]
+      ],
+      "results": [
+        "ok",
+        "ok",
+        "failed",
+        "conflict",
+        "failed",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 5,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "b",
+          4
+        ],
+        [
+          "d",
+          4
+        ],
+        [
+          "e",
+          4
+        ]
+      ],
+      "orders": [
+        [
+          "b",
+          4
+        ],
+        [
+          "d",
+          4
+        ],
+        [
+          "e",
+          4
+        ]
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "ok",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "replay",
+        "conflict",
+        "failed",
+        "conflict"
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "d",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 9,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "b",
+          5
+        ],
+        [
+          "d",
+          1
+        ]
+      ],
+      "orders": [
+        [
+          "b",
+          5
+        ],
+        [
+          "d",
+          1
+        ]
+      ],
+      "results": [
+        "ok",
+        "ok",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "failed"
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 6,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          5
+        ],
+        [
+          "b",
+          1
+        ],
+        [
+          "c",
+          2
+        ],
+        [
+          "d",
+          1
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          5
+        ],
+        [
+          "b",
+          1
+        ],
+        [
+          "c",
+          2
+        ],
+        [
+          "d",
+          1
+        ]
+      ],
+      "results": [
+        "ok",
+        "ok",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "ok",
+        "conflict"
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "b",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 5,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 4,
+          "fail": "business"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          9
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "c",
+          2
+        ],
+        [
+          "d",
+          2
+        ],
+        [
+          "e",
+          1
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          9
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "c",
+          2
+        ],
+        [
+          "d",
+          2
+        ],
+        [
+          "e",
+          1
+        ]
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "ok",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "c",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 4,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          7
+        ],
+        [
+          "c",
+          9
+        ],
+        [
+          "d",
+          9
+        ],
+        [
+          "e",
+          1
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          7
+        ],
+        [
+          "c",
+          9
+        ],
+        [
+          "d",
+          9
+        ],
+        [
+          "e",
+          1
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "ok",
+        "conflict",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "b",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 8,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          3
+        ],
+        [
+          "b",
+          7
+        ],
+        [
+          "c",
+          7
+        ],
+        [
+          "d",
+          5
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          3
+        ],
+        [
+          "b",
+          7
+        ],
+        [
+          "c",
+          7
+        ],
+        [
+          "d",
+          5
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "ok",
+        "ok",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "business"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "b",
+          1
+        ],
+        [
+          "c",
+          2
+        ],
+        [
+          "d",
+          3
+        ],
+        [
+          "e",
+          5
+        ]
+      ],
+      "orders": [
+        [
+          "b",
+          1
+        ],
+        [
+          "c",
+          2
+        ],
+        [
+          "d",
+          3
+        ],
+        [
+          "e",
+          5
+        ]
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "replay",
+        "ok",
+        "replay",
+        "conflict",
+        "replay",
+        "failed",
+        "ok",
+        "failed",
+        "conflict",
+        "replay",
+        "failed"
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 3,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 5,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 9,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          3
+        ],
+        [
+          "b",
+          8
+        ],
+        [
+          "e",
+          8
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          3
+        ],
+        [
+          "b",
+          8
+        ],
+        [
+          "e",
+          8
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "replay",
+        "failed",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          8
+        ],
+        [
+          "d",
+          4
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          8
+        ],
+        [
+          "d",
+          4
+        ]
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "replay",
+        "conflict",
+        "failed",
+        "ok",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "failed"
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 3,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 3,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "b",
+          8
+        ],
+        [
+          "c",
+          3
+        ],
+        [
+          "d",
+          3
+        ],
+        [
+          "e",
+          7
+        ]
+      ],
+      "orders": [
+        [
+          "b",
+          8
+        ],
+        [
+          "c",
+          3
+        ],
+        [
+          "d",
+          3
+        ],
+        [
+          "e",
+          7
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "failed",
+        "replay",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok"
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 4,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 3,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "b",
+          7
+        ],
+        [
+          "c",
+          8
+        ],
+        [
+          "d",
+          6
+        ],
+        [
+          "e",
+          9
+        ]
+      ],
+      "orders": [
+        [
+          "b",
+          7
+        ],
+        [
+          "c",
+          8
+        ],
+        [
+          "d",
+          6
+        ],
+        [
+          "e",
+          9
+        ]
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "ok",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "conflict",
+        "ok",
+        "failed"
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 5,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 5,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 5,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          3
+        ],
+        [
+          "b",
+          6
+        ],
+        [
+          "c",
+          2
+        ],
+        [
+          "d",
+          9
+        ],
+        [
+          "e",
+          5
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          3
+        ],
+        [
+          "b",
+          6
+        ],
+        [
+          "c",
+          2
+        ],
+        [
+          "d",
+          9
+        ],
+        [
+          "e",
+          5
+        ]
+      ],
+      "results": [
+        "ok",
+        "ok",
+        "failed",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "ok",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 3,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          7
+        ],
+        [
+          "b",
+          7
+        ],
+        [
+          "c",
+          2
+        ],
+        [
+          "e",
+          2
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          7
+        ],
+        [
+          "b",
+          7
+        ],
+        [
+          "c",
+          2
+        ],
+        [
+          "e",
+          2
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "ok",
+        "failed",
+        "failed",
+        "failed",
+        "conflict",
+        "failed",
+        "conflict",
+        "replay",
+        "conflict",
+        "replay",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict"
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 9,
+          "fail": "business"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          5
+        ],
+        [
+          "b",
+          7
+        ],
+        [
+          "c",
+          1
+        ],
+        [
+          "e",
+          9
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          5
+        ],
+        [
+          "b",
+          7
+        ],
+        [
+          "c",
+          1
+        ],
+        [
+          "e",
+          9
+        ]
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "replay"
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 9,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "b",
+          1
+        ],
+        [
+          "d",
+          9
+        ],
+        [
+          "e",
+          6
+        ]
+      ],
+      "orders": [
+        [
+          "b",
+          1
+        ],
+        [
+          "d",
+          9
+        ],
+        [
+          "e",
+          6
+        ]
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "conflict",
+        "ok"
+      ]
+    },
+    "label": "additional-18"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          6
+        ],
+        [
+          "b",
+          8
+        ],
+        [
+          "c",
+          7
+        ],
+        [
+          "d",
+          5
+        ],
+        [
+          "e",
+          7
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          6
+        ],
+        [
+          "b",
+          8
+        ],
+        [
+          "c",
+          7
+        ],
+        [
+          "d",
+          5
+        ],
+        [
+          "e",
+          7
+        ]
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "ok",
+        "ok",
+        "ok",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-19"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "b",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          7
+        ],
+        [
+          "b",
+          3
+        ],
+        [
+          "c",
+          6
+        ],
+        [
+          "d",
+          8
+        ],
+        [
+          "e",
+          5
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          7
+        ],
+        [
+          "b",
+          3
+        ],
+        [
+          "c",
+          6
+        ],
+        [
+          "d",
+          8
+        ],
+        [
+          "e",
+          5
+        ]
+      ],
+      "results": [
+        "ok",
+        "conflict",
+        "ok",
+        "ok",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-20"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "b",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 3,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 5,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          9
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "c",
+          5
+        ],
+        [
+          "e",
+          1
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          9
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "c",
+          5
+        ],
+        [
+          "e",
+          1
+        ]
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "failed",
+        "replay",
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "replay"
+      ]
+    },
+    "label": "additional-21"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "d",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 8,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          6
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "c",
+          9
+        ],
+        [
+          "d",
+          5
+        ],
+        [
+          "e",
+          6
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          6
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "c",
+          9
+        ],
+        [
+          "d",
+          5
+        ],
+        [
+          "e",
+          6
+        ]
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-22"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 1,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 3,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 4,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 5,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 9,
+          "fail": "business"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          7
+        ],
+        [
+          "c",
+          7
+        ],
+        [
+          "d",
+          8
+        ],
+        [
+          "e",
+          1
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          7
+        ],
+        [
+          "c",
+          7
+        ],
+        [
+          "d",
+          8
+        ],
+        [
+          "e",
+          1
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "failed",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-23"
+  },
+  {
+    "input": {
+      "orders": [
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 3,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 3,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 6,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 9,
+          "fail": "business"
+        },
+        {
+          "id": "c",
+          "amount": 8,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "d",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 8,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 4,
+          "fail": "event"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "business"
+        },
+        {
+          "id": "a",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 9,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 1,
+          "fail": "event"
+        },
+        {
+          "id": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "event"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 2,
+          "fail": "business"
+        },
+        {
+          "id": "b",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 7,
+          "fail": "business"
+        },
+        {
+          "id": "e",
+          "amount": 5,
+          "fail": "event"
+        },
+        {
+          "id": "e",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 9,
+          "fail": "event"
+        }
+      ]
+    },
+    "expected": {
+      "events": [
+        [
+          "a",
+          6
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "e",
+          7
+        ]
+      ],
+      "orders": [
+        [
+          "a",
+          6
+        ],
+        [
+          "b",
+          2
+        ],
+        [
+          "e",
+          7
+        ]
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "ok",
+        "ok",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "conflict",
+        "replay",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed"
+      ]
+    },
+    "label": "additional-24"
+  }
+]

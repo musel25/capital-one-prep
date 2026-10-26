@@ -1,0 +1,14 @@
+[
+  {
+    "name": "replay a key even when the amount changed",
+    "detected_by": [
+      1,
+      8,
+      24,
+      25,
+      26,
+      27,
+      28
+    ]
+  }
+]

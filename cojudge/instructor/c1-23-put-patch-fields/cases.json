@@ -1,0 +1,2434 @@
+[
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "name": "Bo"
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "name": "Bo",
+            "email": "a@x"
+          }
+        }
+      ],
+      "state": {
+        "name": "Bo",
+        "email": "a@x"
+      }
+    },
+    "label": "PATCH keeps omitted email"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PUT",
+          "body": {
+            "name": "Bo"
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "name": "Bo",
+            "email": null
+          }
+        }
+      ],
+      "state": {
+        "name": "Bo",
+        "email": null
+      }
+    },
+    "label": "PUT resets omitted email"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "email": null
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "name": "Ada",
+            "email": null
+          }
+        }
+      ],
+      "state": {
+        "name": "Ada",
+        "email": null
+      }
+    },
+    "label": "explicit null clears email"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": []
+    },
+    "expected": {
+      "responses": [],
+      "state": {
+        "name": "Ada",
+        "email": "a@x"
+      }
+    },
+    "label": "no requests"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {}
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "name": "Ada",
+            "email": "a@x"
+          }
+        }
+      ],
+      "state": {
+        "name": "Ada",
+        "email": "a@x"
+      }
+    },
+    "label": "empty patch"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PUT",
+          "body": {}
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 422,
+          "body": {
+            "error": "invalid"
+          }
+        }
+      ],
+      "state": {
+        "name": "Ada",
+        "email": "a@x"
+      }
+    },
+    "label": "replacement needs name"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "name": null
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 422,
+          "body": {
+            "error": "invalid"
+          }
+        }
+      ],
+      "state": {
+        "name": "Ada",
+        "email": "a@x"
+      }
+    },
+    "label": "name cannot be null"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "name": "Bo",
+            "email": 7
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 422,
+          "body": {
+            "error": "invalid"
+          }
+        }
+      ],
+      "state": {
+        "name": "Ada",
+        "email": "a@x"
+      }
+    },
+    "label": "invalid update is atomic"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "extra": 1
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 422,
+          "body": {
+            "error": "invalid"
+          }
+        }
+      ],
+      "state": {
+        "name": "Ada",
+        "email": "a@x"
+      }
+    },
+    "label": "unknown key"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PUT",
+          "body": {
+            "name": "xxxxxxxxxxxxxxxxxxxx",
+            "email": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "name": "xxxxxxxxxxxxxxxxxxxx",
+            "email": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+          }
+        }
+      ],
+      "state": {
+        "name": "xxxxxxxxxxxxxxxxxxxx",
+        "email": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+      }
+    },
+    "label": "length boundaries"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PUT",
+          "body": {
+            "name": "xxxxxxxxxxxxxxxxxxxxx"
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 422,
+          "body": {
+            "error": "invalid"
+          }
+        }
+      ],
+      "state": {
+        "name": "Ada",
+        "email": "a@x"
+      }
+    },
+    "label": "name too long"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "name": "Ada",
+            "email": ""
+          }
+        }
+      ],
+      "state": {
+        "name": "Ada",
+        "email": ""
+      }
+    },
+    "label": "empty email stays empty"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": null
+        },
+        {
+          "method": "PUT",
+          "body": []
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 422,
+          "body": {
+            "error": "invalid"
+          }
+        },
+        {
+          "status": 422,
+          "body": {
+            "error": "invalid"
+          }
+        }
+      ],
+      "state": {
+        "name": "Ada",
+        "email": "a@x"
+      }
+    },
+    "label": "non-object bodies"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 422,
+          "body": {
+            "error": "invalid"
+          }
+        }
+      ],
+      "state": {
+        "name": "Ada",
+        "email": "a@x"
+      }
+    },
+    "label": "empty name"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "Ada",
+        "email": "a@x"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "name": "Bo"
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": "Cy"
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "name": "Bo",
+            "email": "a@x"
+          }
+        },
+        {
+          "status": 200,
+          "body": {
+            "name": "Cy",
+            "email": null
+          }
+        },
+        {
+          "status": 422,
+          "body": {
+            "error": "invalid"
+          }
+        }
+      ],
+      "state": {
+        "name": "Cy",
+        "email": null
+      }
+    },
+    "label": "snapshots and rejected later update"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user0",
+        "email": "x@y"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {}
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "email": "x@y",
+            "name": "user0"
+          },
+          "status": 200
+        }
+      ],
+      "state": {
+        "email": "x@y",
+        "name": "user0"
+      }
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user1",
+        "email": null
+      },
+      "requests": [
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        }
+      ],
+      "state": {
+        "email": null,
+        "name": "user1"
+      }
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user2",
+        "email": "x@y"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": "new2"
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "email": "",
+            "name": "user2"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "user2"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new2"
+          },
+          "status": 200
+        }
+      ],
+      "state": {
+        "email": null,
+        "name": "new2"
+      }
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user3",
+        "email": null
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {}
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {}
+        },
+        {
+          "method": "PUT",
+          "body": {}
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "email": null,
+            "name": "user3"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "user3"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        }
+      ],
+      "state": {
+        "email": null,
+        "name": "user3"
+      }
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user4",
+        "email": "x@y"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": "new4"
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": "x@y",
+            "name": "new4"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        }
+      ],
+      "state": {
+        "email": "x@y",
+        "name": "new4"
+      }
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user5",
+        "email": null
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": false
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "user5"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "user5"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        }
+      ],
+      "state": {
+        "email": "",
+        "name": "user5"
+      }
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user6",
+        "email": "x@y"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "email": "",
+            "name": "user6"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "user6"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        }
+      ],
+      "state": {
+        "email": "",
+        "name": "user6"
+      }
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user7",
+        "email": null
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {}
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {}
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "user7"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "user7"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "user7"
+          },
+          "status": 200
+        }
+      ],
+      "state": {
+        "email": "",
+        "name": "user7"
+      }
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user8",
+        "email": "x@y"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "name": "new8"
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": "new8"
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {}
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": ""
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "email": "x@y",
+            "name": "new8"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new8"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new8"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "new8"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        }
+      ],
+      "state": {
+        "email": "",
+        "name": "new8"
+      }
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user9",
+        "email": null
+      },
+      "requests": [
+        {
+          "method": "PUT",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {}
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": "new9"
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": ""
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new9"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        }
+      ],
+      "state": {
+        "email": null,
+        "name": "new9"
+      }
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user10",
+        "email": "x@y"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {}
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {}
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": "new10"
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {}
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": "new10"
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "email": null,
+            "name": "user10"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "user10"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new10"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new10"
+          },
+          "status": 200
+        }
+      ],
+      "state": {
+        "email": null,
+        "name": "new10"
+      }
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user11",
+        "email": null
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {}
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": "new11"
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": "new11"
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {}
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": "new11"
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": "new11"
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": null
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "email": null,
+            "name": "user11"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "user11"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new11"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new11"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new11"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new11"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new11"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        }
+      ],
+      "state": {
+        "email": null,
+        "name": "new11"
+      }
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user12",
+        "email": "x@y"
+      },
+      "requests": [
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {}
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {}
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": "new12"
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": null
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": "x@y",
+            "name": "user12"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "user12"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "user12"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new12"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        }
+      ],
+      "state": {
+        "email": null,
+        "name": "new12"
+      }
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user13",
+        "email": null
+      },
+      "requests": [
+        {
+          "method": "PUT",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {}
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": "new13"
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": "new13"
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": "new13"
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": "new13"
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "user13"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "user13"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "new13"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "new13"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "new13"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "new13"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "new13"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new13"
+          },
+          "status": 200
+        }
+      ],
+      "state": {
+        "email": null,
+        "name": "new13"
+      }
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user14",
+        "email": "x@y"
+      },
+      "requests": [
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {}
+        },
+        {
+          "method": "PATCH",
+          "body": {}
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {}
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": "new14"
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {}
+        },
+        {
+          "method": "PATCH",
+          "body": {}
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": "new14"
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": "x@y",
+            "name": "user14"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "x@y",
+            "name": "user14"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "user14"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "user14"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new14"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new14"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new14"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new14"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "new14"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "new14"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "new14"
+          },
+          "status": 200
+        }
+      ],
+      "state": {
+        "email": "",
+        "name": "new14"
+      }
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "initial": {
+        "name": "user15",
+        "email": null
+      },
+      "requests": [
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {}
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {}
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": false
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {}
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": "new15"
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {}
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": null
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "name": ""
+          }
+        },
+        {
+          "method": "PATCH",
+          "body": {
+            "email": ""
+          }
+        },
+        {
+          "method": "PUT",
+          "body": {
+            "email": ""
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "user15"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new15"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": null,
+            "name": "new15"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        },
+        {
+          "body": {
+            "email": "",
+            "name": "new15"
+          },
+          "status": 200
+        },
+        {
+          "body": {
+            "error": "invalid"
+          },
+          "status": 422
+        }
+      ],
+      "state": {
+        "email": "",
+        "name": "new15"
+      }
+    },
+    "label": "additional-16"
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "id": "c1-35-sql-latest-per-device",
+  "title": "35. Select the latest row per device",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "04-sql-and-transactions",
+  "examples": [
+    {
+      "input": "{\"rows\": [{\"id\": 1, \"device\": \"a\", \"ts\": 5, \"value\": 10}, {\"id\": 2, \"device\": \"a\", \"ts\": 9, \"value\": 10}, {\"id\": 3, \"device\": \"b\", \"ts\": 6, \"value\": 10}], \"cutoff\": 100}",
+      "output": "[{\"device\": \"a\", \"id\": 2, \"ts\": 9, \"value\": 10}, {\"device\": \"b\", \"id\": 3, \"ts\": 6, \"value\": 10}]",
+      "explanation": "latest row within each device"
+    },
+    {
+      "input": "{\"rows\": [{\"id\": 1, \"device\": \"a\", \"ts\": 5, \"value\": 10}, {\"id\": 3, \"device\": \"a\", \"ts\": 5, \"value\": 30}, {\"id\": 2, \"device\": \"a\", \"ts\": 5, \"value\": 20}], \"cutoff\": 100}",
+      "output": "[{\"device\": \"a\", \"id\": 3, \"ts\": 5, \"value\": 30}]",
+      "explanation": "largest id resolves timestamp tie"
+    },
+    {
+      "input": "{\"rows\": [{\"id\": 1, \"device\": \"a\", \"ts\": 5, \"value\": 10}, {\"id\": 2, \"device\": \"a\", \"ts\": 20, \"value\": 10}], \"cutoff\": 10}",
+      "output": "[{\"device\": \"a\", \"id\": 1, \"ts\": 5, \"value\": 10}]",
+      "explanation": "cutoff filters before ranking"
+    }
+  ],
+  "starterCode": {
+    "python": "import sqlite3\n\ndef solve(data):\n    connection = sqlite3.connect(\":memory:\")\n    connection.row_factory = sqlite3.Row\n    try:\n        connection.execute(\"CREATE TABLE readings(id INTEGER PRIMARY KEY, device TEXT NOT NULL, ts INTEGER NOT NULL, value INTEGER)\")\n        connection.executemany(\"INSERT INTO readings VALUES (?, ?, ?, ?)\", [(r[\"id\"], r[\"device\"], r[\"ts\"], r[\"value\"]) for r in data[\"rows\"]])\n        return [dict(r) for r in latest_rows(connection, data[\"cutoff\"])]\n    finally:\n        connection.close()\n\ndef latest_rows(connection, cutoff):\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"cutoff\":100,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":5,\"value\":10},{\"device\":\"a\",\"id\":2,\"ts\":9,\"value\":10},{\"device\":\"b\",\"id\":3,\"ts\":6,\"value\":10}]}"
+    },
+    {
+      "payload": "{\"cutoff\":100,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":5,\"value\":10},{\"device\":\"a\",\"id\":3,\"ts\":5,\"value\":30},{\"device\":\"a\",\"id\":2,\"ts\":5,\"value\":20}]}"
+    },
+    {
+      "payload": "{\"cutoff\":10,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":5,\"value\":10},{\"device\":\"a\",\"id\":2,\"ts\":20,\"value\":10}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Filter by cutoff inside the ranked subquery or common table expression.",
+    "Order each partition by ts DESC, id DESC, then keep row number one."
+  ]
+}

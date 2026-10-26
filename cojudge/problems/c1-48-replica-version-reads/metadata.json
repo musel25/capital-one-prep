@@ -1,0 +1,50 @@
+{
+  "id": "c1-48-replica-version-reads",
+  "title": "48. Preserve read-your-writes with version floors",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "05-system-components",
+  "examples": [
+    {
+      "input": "{\"replicas\": [{\"id\": \"a\", \"version\": 1, \"value\": 10}, {\"id\": \"b\", \"version\": 3, \"value\": 30}], \"ops\": [{\"op\": \"read\", \"min_version\": 2}]}",
+      "output": "{\"results\": [{\"id\": \"b\", \"version\": 3, \"value\": 30}], \"replicas\": [[\"a\", 1, 10], [\"b\", 3, 30]]}",
+      "explanation": "choose freshest eligible replica"
+    },
+    {
+      "input": "{\"replicas\": [{\"id\": \"a\", \"version\": 1, \"value\": 10}], \"ops\": [{\"op\": \"read\", \"min_version\": 2}]}",
+      "output": "{\"results\": [null], \"replicas\": [[\"a\", 1, 10]]}",
+      "explanation": "stale replica cannot satisfy read token"
+    },
+    {
+      "input": "{\"replicas\": [{\"id\": \"b\", \"version\": 2, \"value\": 20}, {\"id\": \"a\", \"version\": 2, \"value\": 20}], \"ops\": [{\"op\": \"read\", \"min_version\": 2}]}",
+      "output": "{\"results\": [{\"id\": \"a\", \"version\": 2, \"value\": 20}], \"replicas\": [[\"a\", 2, 20], [\"b\", 2, 20]]}",
+      "explanation": "equal version tie uses ASCII ID"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    # Model replica updates and reads with an explicit version floor.\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"ops\":[{\"min_version\":2,\"op\":\"read\"}],\"replicas\":[{\"id\":\"a\",\"value\":10,\"version\":1},{\"id\":\"b\",\"value\":30,\"version\":3}]}"
+    },
+    {
+      "payload": "{\"ops\":[{\"min_version\":2,\"op\":\"read\"}],\"replicas\":[{\"id\":\"a\",\"value\":10,\"version\":1}]}"
+    },
+    {
+      "payload": "{\"ops\":[{\"min_version\":2,\"op\":\"read\"}],\"replicas\":[{\"id\":\"b\",\"value\":20,\"version\":2},{\"id\":\"a\",\"value\":20,\"version\":2}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Filter by the client's version floor before selecting a replica.",
+    "Order candidates by descending version, then ascending ID."
+  ]
+}

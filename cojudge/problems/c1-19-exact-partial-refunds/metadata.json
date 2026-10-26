@@ -1,0 +1,50 @@
+{
+  "id": "c1-19-exact-partial-refunds",
+  "title": "19. Cap partial refunds with exact cents",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "02-objects-and-state",
+  "examples": [
+    {
+      "input": "{\"payments\": {\"p\": 100}, \"refunds\": [{\"payment\": \"p\", \"cents\": 30}, {\"payment\": \"p\", \"cents\": 80}, {\"payment\": \"p\", \"cents\": 70}]}",
+      "output": "{\"accepted\": [true, false, true], \"remaining\": {\"p\": 0}}",
+      "explanation": "cumulative cap and failure preservation"
+    },
+    {
+      "input": "{\"payments\": {\"a\": 50, \"b\": 20}, \"refunds\": [{\"payment\": \"b\", \"cents\": 20}, {\"payment\": \"a\", \"cents\": 10}]}",
+      "output": "{\"accepted\": [true, true], \"remaining\": {\"a\": 40, \"b\": 0}}",
+      "explanation": "separate payment state"
+    },
+    {
+      "input": "{\"payments\": {}, \"refunds\": []}",
+      "output": "{\"accepted\": [], \"remaining\": {}}",
+      "explanation": "no payments"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"payments\":{\"p\":100},\"refunds\":[{\"cents\":30,\"payment\":\"p\"},{\"cents\":80,\"payment\":\"p\"},{\"cents\":70,\"payment\":\"p\"}]}"
+    },
+    {
+      "payload": "{\"payments\":{\"a\":50,\"b\":20},\"refunds\":[{\"cents\":20,\"payment\":\"b\"},{\"cents\":10,\"payment\":\"a\"}]}"
+    },
+    {
+      "payload": "{\"payments\":{},\"refunds\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Compare with the remaining amount, not the original charge.",
+    "Update the refunded amount only after the request passes."
+  ]
+}

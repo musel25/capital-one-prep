@@ -1,0 +1,50 @@
+{
+  "id": "c1-27-shared-deadline",
+  "title": "27. Spend one timeout budget",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "03-apis-and-clients",
+  "examples": [
+    {
+      "input": "{\"budget\": 10, \"steps\": [{\"duration\": 4, \"timeout\": 10, \"outcome\": \"ok\"}, {\"duration\": 7, \"timeout\": 10, \"outcome\": \"ok\"}]}",
+      "output": "{\"result\": \"deadline\", \"elapsed\": 10, \"completed\": 1, \"started\": 2}",
+      "explanation": "second step gets only remaining budget"
+    },
+    {
+      "input": "{\"budget\": 20, \"steps\": [{\"duration\": 8, \"timeout\": 5, \"outcome\": \"ok\"}]}",
+      "output": "{\"result\": \"timeout\", \"elapsed\": 5, \"completed\": 0, \"started\": 1}",
+      "explanation": "per-step timeout can expire first"
+    },
+    {
+      "input": "{\"budget\": 10, \"steps\": [{\"duration\": 10, \"timeout\": 10, \"outcome\": \"ok\"}]}",
+      "output": "{\"result\": \"success\", \"elapsed\": 10, \"completed\": 1, \"started\": 1}",
+      "explanation": "completion at deadline succeeds"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"budget\":10,\"steps\":[{\"duration\":4,\"outcome\":\"ok\",\"timeout\":10},{\"duration\":7,\"outcome\":\"ok\",\"timeout\":10}]}"
+    },
+    {
+      "payload": "{\"budget\":20,\"steps\":[{\"duration\":8,\"outcome\":\"ok\",\"timeout\":5}]}"
+    },
+    {
+      "payload": "{\"budget\":10,\"steps\":[{\"duration\":10,\"outcome\":\"ok\",\"timeout\":10}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Compute remaining from one accumulated elapsed value.",
+    "Check response arrival before deciding whether its outcome is an error."
+  ]
+}

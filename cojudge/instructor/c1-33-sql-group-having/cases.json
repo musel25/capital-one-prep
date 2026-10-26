@@ -1,0 +1,1825 @@
+[
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 3,
+          "account": "a",
+          "amount": null,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 0,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "a",
+        "events": 3,
+        "valued": 2,
+        "total": 20
+      }
+    ],
+    "label": "repeated amounts count and null affects only valued count"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 4,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": 6,
+          "kind": "paid"
+        },
+        {
+          "id": 3,
+          "account": "b",
+          "amount": 20,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 10,
+      "minimum_events": 2
+    },
+    "expected": [
+      {
+        "account": "a",
+        "events": 2,
+        "valued": 2,
+        "total": 10
+      }
+    ],
+    "label": "HAVING applies both group thresholds"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": null,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 0,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "a",
+        "events": 2,
+        "valued": 0,
+        "total": 0
+      }
+    ],
+    "label": "all-null sum becomes zero"
+  },
+  {
+    "input": {
+      "rows": [],
+      "minimum_total": 0,
+      "minimum_events": 1
+    },
+    "expected": [],
+    "label": "empty table"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 100,
+          "kind": "void"
+        }
+      ],
+      "minimum_total": 0,
+      "minimum_events": 1
+    },
+    "expected": [],
+    "label": "void rows form no group"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 0,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 0,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "a",
+        "events": 1,
+        "valued": 1,
+        "total": 0
+      }
+    ],
+    "label": "zero is a valued amount"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": 100,
+          "kind": "void"
+        }
+      ],
+      "minimum_total": 0,
+      "minimum_events": 2
+    },
+    "expected": [],
+    "label": "void rows do not meet event threshold"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": -2,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": -3,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": -5,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "a",
+        "events": 2,
+        "valued": 2,
+        "total": -5
+      }
+    ],
+    "label": "negative total threshold"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "b",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": 10,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 0,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "a",
+        "events": 1,
+        "valued": 1,
+        "total": 10
+      },
+      {
+        "account": "b",
+        "events": 1,
+        "valued": 1,
+        "total": 10
+      }
+    ],
+    "label": "account resolves total ties"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 1,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "z",
+          "amount": 9,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 0,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "z",
+        "events": 1,
+        "valued": 1,
+        "total": 9
+      },
+      {
+        "account": "a",
+        "events": 1,
+        "valued": 1,
+        "total": 1
+      }
+    ],
+    "label": "descending totals"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 9,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 10,
+      "minimum_events": 1
+    },
+    "expected": [],
+    "label": "group below minimum total"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 0,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "A",
+        "events": 1,
+        "valued": 1,
+        "total": 5
+      },
+      {
+        "account": "a",
+        "events": 1,
+        "valued": 1,
+        "total": 5
+      }
+    ],
+    "label": "case-sensitive grouping and ASCII order"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 8,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": -8,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 0,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "a",
+        "events": 2,
+        "valued": 2,
+        "total": 0
+      }
+    ],
+    "label": "positive and negative offset"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "O'Reilly",
+          "amount": 3,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 0,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "O'Reilly",
+        "events": 1,
+        "valued": 1,
+        "total": 3
+      }
+    ],
+    "label": "quoted account value"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "A",
+          "amount": 10,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": -7,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "A",
+        "events": 1,
+        "total": 10,
+        "valued": 1
+      },
+      {
+        "account": "b",
+        "events": 1,
+        "total": 5,
+        "valued": 1
+      }
+    ],
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "A",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": 10,
+          "kind": "void"
+        },
+        {
+          "id": 3,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": -6,
+      "minimum_events": 2
+    },
+    "expected": [],
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 10,
+          "kind": "void"
+        },
+        {
+          "id": 2,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 3,
+          "account": "A",
+          "amount": 10,
+          "kind": "void"
+        },
+        {
+          "id": 4,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": -5,
+      "minimum_events": 3
+    },
+    "expected": [],
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "b",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 2,
+          "account": "A",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 3,
+          "account": "a",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "b",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 5,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": -4,
+      "minimum_events": 4
+    },
+    "expected": [],
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "A",
+          "amount": 10,
+          "kind": "void"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": 10,
+          "kind": "void"
+        },
+        {
+          "id": 3,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "A",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 5,
+          "account": "a",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 6,
+          "account": "b",
+          "amount": null,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": -3,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "a",
+        "events": 1,
+        "total": 10,
+        "valued": 1
+      },
+      {
+        "account": "b",
+        "events": 2,
+        "total": 5,
+        "valued": 1
+      }
+    ],
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "b",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 3,
+          "account": "A",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "a",
+          "amount": null,
+          "kind": "void"
+        },
+        {
+          "id": 5,
+          "account": "b",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 6,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 7,
+          "account": "a",
+          "amount": 0,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": -2,
+      "minimum_events": 2
+    },
+    "expected": [
+      {
+        "account": "A",
+        "events": 2,
+        "total": 15,
+        "valued": 2
+      },
+      {
+        "account": "a",
+        "events": 2,
+        "total": 0,
+        "valued": 2
+      }
+    ],
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "b",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 2,
+          "account": "A",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 3,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 5,
+          "account": "A",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 6,
+          "account": "a",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 7,
+          "account": "b",
+          "amount": 10,
+          "kind": "void"
+        },
+        {
+          "id": 8,
+          "account": "A",
+          "amount": 10,
+          "kind": "void"
+        }
+      ],
+      "minimum_total": -1,
+      "minimum_events": 3
+    },
+    "expected": [],
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "A",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 3,
+          "account": "b",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "A",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 5,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 6,
+          "account": "b",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 7,
+          "account": "A",
+          "amount": -5,
+          "kind": "void"
+        },
+        {
+          "id": 8,
+          "account": "a",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 9,
+          "account": "b",
+          "amount": 5,
+          "kind": "void"
+        }
+      ],
+      "minimum_total": 0,
+      "minimum_events": 4
+    },
+    "expected": [],
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "b",
+          "amount": 5,
+          "kind": "void"
+        },
+        {
+          "id": 3,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 5,
+          "account": "b",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 6,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 7,
+          "account": "a",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 8,
+          "account": "b",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 9,
+          "account": "A",
+          "amount": null,
+          "kind": "void"
+        },
+        {
+          "id": 10,
+          "account": "a",
+          "amount": 10,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 1,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "a",
+        "events": 4,
+        "total": 20,
+        "valued": 4
+      },
+      {
+        "account": "A",
+        "events": 2,
+        "total": 10,
+        "valued": 2
+      },
+      {
+        "account": "b",
+        "events": 2,
+        "total": 10,
+        "valued": 1
+      }
+    ],
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "b",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "A",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 3,
+          "account": "a",
+          "amount": 5,
+          "kind": "void"
+        },
+        {
+          "id": 4,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 5,
+          "account": "A",
+          "amount": null,
+          "kind": "void"
+        },
+        {
+          "id": 6,
+          "account": "a",
+          "amount": null,
+          "kind": "void"
+        },
+        {
+          "id": 7,
+          "account": "b",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 8,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 9,
+          "account": "a",
+          "amount": 5,
+          "kind": "void"
+        },
+        {
+          "id": 10,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 11,
+          "account": "A",
+          "amount": 5,
+          "kind": "void"
+        }
+      ],
+      "minimum_total": 2,
+      "minimum_events": 2
+    },
+    "expected": [
+      {
+        "account": "b",
+        "events": 4,
+        "total": 30,
+        "valued": 4
+      },
+      {
+        "account": "A",
+        "events": 2,
+        "total": 15,
+        "valued": 2
+      }
+    ],
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 3,
+          "account": "b",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "A",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 5,
+          "account": "a",
+          "amount": -5,
+          "kind": "void"
+        },
+        {
+          "id": 6,
+          "account": "b",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 7,
+          "account": "A",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 8,
+          "account": "a",
+          "amount": -5,
+          "kind": "void"
+        },
+        {
+          "id": 9,
+          "account": "b",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 10,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 11,
+          "account": "a",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 12,
+          "account": "b",
+          "amount": 5,
+          "kind": "void"
+        }
+      ],
+      "minimum_total": 3,
+      "minimum_events": 3
+    },
+    "expected": [
+      {
+        "account": "A",
+        "events": 3,
+        "total": 5,
+        "valued": 3
+      }
+    ],
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "b",
+          "amount": 10,
+          "kind": "void"
+        },
+        {
+          "id": 3,
+          "account": "A",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "a",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 5,
+          "account": "b",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 6,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 7,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 8,
+          "account": "b",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 9,
+          "account": "A",
+          "amount": -5,
+          "kind": "void"
+        },
+        {
+          "id": 10,
+          "account": "a",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 11,
+          "account": "b",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 12,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 13,
+          "account": "a",
+          "amount": 5,
+          "kind": "void"
+        }
+      ],
+      "minimum_total": 4,
+      "minimum_events": 4
+    },
+    "expected": [
+      {
+        "account": "a",
+        "events": 4,
+        "total": 5,
+        "valued": 3
+      }
+    ],
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "b",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "A",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 3,
+          "account": "a",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "b",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 5,
+          "account": "A",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 6,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 7,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 8,
+          "account": "A",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 9,
+          "account": "a",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 10,
+          "account": "b",
+          "amount": null,
+          "kind": "void"
+        },
+        {
+          "id": 11,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 12,
+          "account": "a",
+          "amount": null,
+          "kind": "void"
+        },
+        {
+          "id": 13,
+          "account": "b",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 14,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 5,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "A",
+        "events": 5,
+        "total": 15,
+        "valued": 4
+      },
+      {
+        "account": "a",
+        "events": 3,
+        "total": 5,
+        "valued": 2
+      }
+    ],
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 3,
+          "account": "b",
+          "amount": -5,
+          "kind": "void"
+        },
+        {
+          "id": 4,
+          "account": "A",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 5,
+          "account": "a",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 6,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 7,
+          "account": "A",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 8,
+          "account": "a",
+          "amount": null,
+          "kind": "void"
+        },
+        {
+          "id": 9,
+          "account": "b",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 10,
+          "account": "A",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 11,
+          "account": "a",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 12,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 13,
+          "account": "A",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 14,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 15,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 6,
+      "minimum_events": 2
+    },
+    "expected": [
+      {
+        "account": "b",
+        "events": 4,
+        "total": 10,
+        "valued": 4
+      }
+    ],
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": 10,
+          "kind": "void"
+        },
+        {
+          "id": 2,
+          "account": "b",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 3,
+          "account": "A",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "a",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 5,
+          "account": "b",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 6,
+          "account": "A",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 7,
+          "account": "a",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 8,
+          "account": "b",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 9,
+          "account": "A",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 10,
+          "account": "a",
+          "amount": 5,
+          "kind": "void"
+        },
+        {
+          "id": 11,
+          "account": "b",
+          "amount": 5,
+          "kind": "void"
+        },
+        {
+          "id": 12,
+          "account": "A",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 13,
+          "account": "a",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 14,
+          "account": "b",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 15,
+          "account": "A",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 16,
+          "account": "a",
+          "amount": null,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 7,
+      "minimum_events": 3
+    },
+    "expected": [],
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "b",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "A",
+          "amount": -5,
+          "kind": "void"
+        },
+        {
+          "id": 3,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "b",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 5,
+          "account": "A",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 6,
+          "account": "a",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 7,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 8,
+          "account": "A",
+          "amount": 5,
+          "kind": "void"
+        },
+        {
+          "id": 9,
+          "account": "a",
+          "amount": null,
+          "kind": "void"
+        },
+        {
+          "id": 10,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 11,
+          "account": "A",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 12,
+          "account": "a",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 13,
+          "account": "b",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 14,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 15,
+          "account": "a",
+          "amount": 10,
+          "kind": "paid"
+        },
+        {
+          "id": 16,
+          "account": "b",
+          "amount": -5,
+          "kind": "void"
+        },
+        {
+          "id": 17,
+          "account": "A",
+          "amount": 10,
+          "kind": "void"
+        }
+      ],
+      "minimum_total": 8,
+      "minimum_events": 4
+    },
+    "expected": [
+      {
+        "account": "a",
+        "events": 4,
+        "total": 35,
+        "valued": 4
+      }
+    ],
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 2,
+          "account": "a",
+          "amount": 5,
+          "kind": "void"
+        },
+        {
+          "id": 3,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "A",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 5,
+          "account": "a",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 6,
+          "account": "b",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 7,
+          "account": "A",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 8,
+          "account": "a",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 9,
+          "account": "b",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 10,
+          "account": "A",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 11,
+          "account": "a",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 12,
+          "account": "b",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 13,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 14,
+          "account": "a",
+          "amount": -5,
+          "kind": "void"
+        },
+        {
+          "id": 15,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 16,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 17,
+          "account": "a",
+          "amount": 5,
+          "kind": "void"
+        },
+        {
+          "id": 18,
+          "account": "b",
+          "amount": 5,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 9,
+      "minimum_events": 1
+    },
+    "expected": [
+      {
+        "account": "A",
+        "events": 6,
+        "total": 10,
+        "valued": 5
+      },
+      {
+        "account": "b",
+        "events": 6,
+        "total": 10,
+        "valued": 5
+      }
+    ],
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "account": "a",
+          "amount": null,
+          "kind": "void"
+        },
+        {
+          "id": 2,
+          "account": "b",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 3,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 4,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 5,
+          "account": "b",
+          "amount": -5,
+          "kind": "void"
+        },
+        {
+          "id": 6,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 7,
+          "account": "a",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 8,
+          "account": "b",
+          "amount": 5,
+          "kind": "void"
+        },
+        {
+          "id": 9,
+          "account": "A",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 10,
+          "account": "a",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 11,
+          "account": "b",
+          "amount": 0,
+          "kind": "paid"
+        },
+        {
+          "id": 12,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 13,
+          "account": "a",
+          "amount": null,
+          "kind": "paid"
+        },
+        {
+          "id": 14,
+          "account": "b",
+          "amount": 0,
+          "kind": "void"
+        },
+        {
+          "id": 15,
+          "account": "A",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 16,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 17,
+          "account": "b",
+          "amount": -5,
+          "kind": "paid"
+        },
+        {
+          "id": 18,
+          "account": "A",
+          "amount": 5,
+          "kind": "paid"
+        },
+        {
+          "id": 19,
+          "account": "a",
+          "amount": 5,
+          "kind": "paid"
+        }
+      ],
+      "minimum_total": 10,
+      "minimum_events": 2
+    },
+    "expected": [
+      {
+        "account": "a",
+        "events": 5,
+        "total": 15,
+        "valued": 4
+      },
+      {
+        "account": "A",
+        "events": 6,
+        "total": 10,
+        "valued": 6
+      }
+    ],
+    "label": "additional-18"
+  }
+]

@@ -32,20 +32,20 @@ The existing server loads the pack from its persistent content volume.
 
 ## Tasks
 
-- [ ] Build and test the authoring adapter, Java JSON support, and local verifier.
+- [x] Build and test the authoring adapter, Java JSON support, and local verifier.
   Files: `cojudge/authoring/support.py`, `cojudge/authoring/Support.java`,
   `scripts/build_cojudge.py`, `scripts/verify_cojudge.py`, `tests/test_cojudge.py`.
   Test wrong output types, JSON formatting, deterministic generation, and guards.
-- [ ] Author 01–20 in `cojudge/authoring/p01.py` through `p20.py`.
+- [x] Author 01–20 in `cojudge/authoring/p01.py` through `p20.py`.
   Cover data boundaries, standard libraries, typed models, objects, inheritance,
   mutation, invariants, and idempotency. Verify explicit cases and mutations.
-- [ ] Author 21–35 in `cojudge/authoring/p21.py` through `p35.py`.
+- [x] Author 21–35 in `cojudge/authoring/p21.py` through `p35.py`.
   Cover HTTP contracts, retries, caching, pagination, and initial SQL tasks.
   Verify explicit cases and mutations.
-- [ ] Author 36–50 in `cojudge/authoring/p36.py` through `p50.py`.
+- [x] Author 36–50 in `cojudge/authoring/p36.py` through `p50.py`.
   Cover database transactions, version conflicts, queues, and system components.
   Verify explicit cases and mutations.
-- [ ] Review contracts, pedagogy, independent references, and test diversity.
+- [x] Review contracts, pedagogy, independent references, and test diversity.
   Build all content; run `uv run python scripts/verify_cojudge.py` and focused pytest.
 - [ ] Stage content on the server, run every reference through the live judge,
   and reject a wrong solution for every problem. Publish the course index last.

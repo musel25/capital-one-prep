@@ -1,0 +1,50 @@
+{
+  "id": "c1-29-etag-validation",
+  "title": "29. Validate cached representations with ETags",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "03-apis-and-clients",
+  "examples": [
+    {
+      "input": "{\"initial\": {\"version\": 1, \"body\": \"hello\"}, \"requests\": [{\"op\": \"get\", \"tags\": null}]}",
+      "output": "[{\"status\": 200, \"etag\": \"\\\"v1\\\"\", \"body\": \"hello\"}]",
+      "explanation": "unconditional read returns representation"
+    },
+    {
+      "input": "{\"initial\": {\"version\": 1, \"body\": \"hello\"}, \"requests\": [{\"op\": \"get\", \"tags\": [\"\\\"v1\\\"\"]}]}",
+      "output": "[{\"status\": 304, \"etag\": \"\\\"v1\\\"\", \"body\": null}]",
+      "explanation": "matching tag avoids body"
+    },
+    {
+      "input": "{\"initial\": {\"version\": 1, \"body\": \"hello\"}, \"requests\": [{\"op\": \"put\", \"body\": \"new\"}, {\"op\": \"get\", \"tags\": [\"\\\"v1\\\"\"]}]}",
+      "output": "[{\"status\": 200, \"etag\": \"\\\"v2\\\"\", \"body\": \"new\"}, {\"status\": 200, \"etag\": \"\\\"v2\\\"\", \"body\": \"new\"}]",
+      "explanation": "write invalidates old validator"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> list:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"initial\":{\"body\":\"hello\",\"version\":1},\"requests\":[{\"op\":\"get\",\"tags\":null}]}"
+    },
+    {
+      "payload": "{\"initial\":{\"body\":\"hello\",\"version\":1},\"requests\":[{\"op\":\"get\",\"tags\":[\"\\\"v1\\\"\"]}]}"
+    },
+    {
+      "payload": "{\"initial\":{\"body\":\"hello\",\"version\":1},\"requests\":[{\"body\":\"new\",\"op\":\"put\"},{\"op\":\"get\",\"tags\":[\"\\\"v1\\\"\"]}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Use the same tag construction for reads and writes.",
+    "Remove W/ only for the comparison, not from the returned strong tag."
+  ]
+}

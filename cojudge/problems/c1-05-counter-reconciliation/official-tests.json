@@ -1,0 +1,74 @@
+[
+  {
+    "payload": "{\"expected\":[\"A\",\"A\",\"B\"],\"observed\":[\"A\",\"C\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"B\",\"A\"],\"observed\":[\"A\",\"B\"]}"
+  },
+  {
+    "payload": "{\"expected\":[],\"observed\":[]}"
+  },
+  {
+    "payload": "{\"expected\":[\"x\"],\"observed\":[]}"
+  },
+  {
+    "payload": "{\"expected\":[],\"observed\":[\"x\",\"x\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"x\",\"x\",\"x\"],\"observed\":[\"x\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"x\"],\"observed\":[\"x\",\"x\",\"x\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"b\",\"A\",\"a\"],\"observed\":[]}"
+  },
+  {
+    "payload": "{\"expected\":[\"\"],\"observed\":[\"\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"a\",\"a\",\"b\"],\"observed\":[\"b\",\"a\",\"a\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"z\",\"z\"],\"observed\":[\"a\",\"a\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"2\",\"10\",\"2\"],\"observed\":[\"10\",\"3\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"A\",\"C\"],\"observed\":[\"B\",\"B\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"A\",\"A\",\"B\",\"C\"],\"observed\":[\"A\",\"B\",\"B\",\"D\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"A\",\"A\",\"A\",\"B\",\"B\",\"C\"],\"observed\":[\"A\",\"A\",\"B\",\"B\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"A\",\"A\",\"A\",\"A\",\"C\"],\"observed\":[\"A\",\"A\",\"A\",\"B\",\"B\",\"D\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"A\",\"A\",\"A\",\"A\",\"A\",\"B\",\"C\"],\"observed\":[\"B\",\"B\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"B\",\"B\",\"C\"],\"observed\":[\"A\",\"B\",\"B\",\"D\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"C\"],\"observed\":[\"A\",\"A\",\"B\",\"B\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"B\",\"C\"],\"observed\":[\"A\",\"A\",\"A\",\"B\",\"B\",\"D\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"B\",\"B\",\"C\"],\"observed\":[\"B\",\"B\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"C\"],\"observed\":[\"A\",\"B\",\"B\",\"D\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"B\",\"C\"],\"observed\":[\"A\",\"A\",\"B\",\"B\"]}"
+  },
+  {
+    "payload": "{\"expected\":[\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"A\",\"B\",\"B\",\"C\"],\"observed\":[\"A\",\"A\",\"A\",\"B\",\"B\",\"D\"]}"
+  }
+]

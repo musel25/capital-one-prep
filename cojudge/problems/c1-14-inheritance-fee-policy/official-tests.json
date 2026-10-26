@@ -1,0 +1,77 @@
+[
+  {
+    "payload": "{\"balance\":20,\"fee\":2,\"kind\":\"standard\",\"threshold\":10,\"withdrawals\":[10,8]}"
+  },
+  {
+    "payload": "{\"balance\":20,\"fee\":2,\"kind\":\"premium\",\"threshold\":10,\"withdrawals\":[10,8]}"
+  },
+  {
+    "payload": "{\"balance\":10,\"fee\":3,\"kind\":\"premium\",\"threshold\":10,\"withdrawals\":[]}"
+  },
+  {
+    "payload": "{\"balance\":0,\"fee\":0,\"kind\":\"standard\",\"threshold\":0,\"withdrawals\":[1]}"
+  },
+  {
+    "payload": "{\"balance\":10,\"fee\":3,\"kind\":\"premium\",\"threshold\":10,\"withdrawals\":[10]}"
+  },
+  {
+    "payload": "{\"balance\":10,\"fee\":3,\"kind\":\"premium\",\"threshold\":10,\"withdrawals\":[9]}"
+  },
+  {
+    "payload": "{\"balance\":12,\"fee\":2,\"kind\":\"standard\",\"threshold\":0,\"withdrawals\":[10]}"
+  },
+  {
+    "payload": "{\"balance\":5,\"fee\":100,\"kind\":\"premium\",\"threshold\":0,\"withdrawals\":[5]}"
+  },
+  {
+    "payload": "{\"balance\":10,\"fee\":0,\"kind\":\"standard\",\"threshold\":100,\"withdrawals\":[5,5]}"
+  },
+  {
+    "payload": "{\"balance\":10,\"fee\":1,\"kind\":\"premium\",\"threshold\":100,\"withdrawals\":[11,9]}"
+  },
+  {
+    "payload": "{\"balance\":10,\"fee\":1,\"kind\":\"standard\",\"threshold\":1,\"withdrawals\":[10,9]}"
+  },
+  {
+    "payload": "{\"balance\":30,\"fee\":2,\"kind\":\"premium\",\"threshold\":10,\"withdrawals\":[5,10,5]}"
+  },
+  {
+    "payload": "{\"balance\":1000000000000,\"fee\":10,\"kind\":\"premium\",\"threshold\":1000000000000,\"withdrawals\":[1000000000000]}"
+  },
+  {
+    "payload": "{\"balance\":30,\"fee\":0,\"kind\":\"standard\",\"threshold\":5,\"withdrawals\":[4,5,20,1]}"
+  },
+  {
+    "payload": "{\"balance\":37,\"fee\":1,\"kind\":\"premium\",\"threshold\":6,\"withdrawals\":[5,6,21,1]}"
+  },
+  {
+    "payload": "{\"balance\":44,\"fee\":2,\"kind\":\"standard\",\"threshold\":7,\"withdrawals\":[6,7,22,1]}"
+  },
+  {
+    "payload": "{\"balance\":51,\"fee\":3,\"kind\":\"premium\",\"threshold\":8,\"withdrawals\":[7,8,23,1]}"
+  },
+  {
+    "payload": "{\"balance\":58,\"fee\":0,\"kind\":\"standard\",\"threshold\":9,\"withdrawals\":[8,9,24,1]}"
+  },
+  {
+    "payload": "{\"balance\":65,\"fee\":1,\"kind\":\"premium\",\"threshold\":10,\"withdrawals\":[9,10,25,1]}"
+  },
+  {
+    "payload": "{\"balance\":72,\"fee\":2,\"kind\":\"standard\",\"threshold\":11,\"withdrawals\":[10,11,26,1]}"
+  },
+  {
+    "payload": "{\"balance\":79,\"fee\":3,\"kind\":\"premium\",\"threshold\":12,\"withdrawals\":[11,12,27,1]}"
+  },
+  {
+    "payload": "{\"balance\":86,\"fee\":0,\"kind\":\"standard\",\"threshold\":13,\"withdrawals\":[12,13,28,1]}"
+  },
+  {
+    "payload": "{\"balance\":93,\"fee\":1,\"kind\":\"premium\",\"threshold\":14,\"withdrawals\":[13,14,29,1]}"
+  },
+  {
+    "payload": "{\"balance\":100,\"fee\":2,\"kind\":\"standard\",\"threshold\":15,\"withdrawals\":[14,15,30,1]}"
+  },
+  {
+    "payload": "{\"balance\":107,\"fee\":3,\"kind\":\"premium\",\"threshold\":16,\"withdrawals\":[15,16,31,1]}"
+  }
+]

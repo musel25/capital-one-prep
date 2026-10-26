@@ -1,0 +1,14 @@
+[
+  {
+    "name": "allows cancel after capture",
+    "detected_by": [
+      8,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23
+    ]
+  }
+]

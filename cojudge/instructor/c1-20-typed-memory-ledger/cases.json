@@ -1,0 +1,1179 @@
+[
+  {
+    "input": {
+      "accounts": {
+        "A": 10,
+        "B": 0
+      },
+      "events": [
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 4
+        },
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 4
+        },
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 5
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict"
+      ],
+      "balances": {
+        "A": 6,
+        "B": 4
+      }
+    },
+    "label": "transfer, duplicate, and conflict"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 0,
+        "B": 10
+      },
+      "events": [
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 5
+        },
+        {
+          "id": "fund",
+          "from": "B",
+          "to": "A",
+          "cents": 10
+        },
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 5
+        },
+        {
+          "id": "new",
+          "from": "A",
+          "to": "B",
+          "cents": 5
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "insufficient",
+        "applied",
+        "duplicate",
+        "applied"
+      ],
+      "balances": {
+        "A": 5,
+        "B": 5
+      }
+    },
+    "label": "failed ID stays reserved after new funds arrive"
+  },
+  {
+    "input": {
+      "accounts": {},
+      "events": []
+    },
+    "expected": {
+      "status": [],
+      "balances": {}
+    },
+    "label": "empty ledger"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 5,
+        "B": 0
+      },
+      "events": []
+    },
+    "expected": {
+      "status": [],
+      "balances": {
+        "A": 5,
+        "B": 0
+      }
+    },
+    "label": "unchanged account map"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 5,
+        "B": 0
+      },
+      "events": [
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 5
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied"
+      ],
+      "balances": {
+        "A": 0,
+        "B": 5
+      }
+    },
+    "label": "exact-balance transfer"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 0,
+        "B": 0
+      },
+      "events": [
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 0
+        },
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "duplicate"
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0
+      }
+    },
+    "label": "zero-cent event has identity"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 5
+      },
+      "events": [
+        {
+          "id": "x",
+          "from": "A",
+          "to": "A",
+          "cents": 5
+        },
+        {
+          "id": "y",
+          "from": "A",
+          "to": "A",
+          "cents": 6
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "insufficient"
+      ],
+      "balances": {
+        "A": 5
+      }
+    },
+    "label": "self-transfer preserves funds and checks limit"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 10,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 3
+        },
+        {
+          "id": "x",
+          "from": "A",
+          "to": "C",
+          "cents": 3
+        },
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 3
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "conflict",
+        "duplicate"
+      ],
+      "balances": {
+        "A": 7,
+        "B": 3,
+        "C": 0
+      }
+    },
+    "label": "destination is part of payload"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 10,
+        "B": 10,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x",
+          "from": "A",
+          "to": "C",
+          "cents": 3
+        },
+        {
+          "id": "x",
+          "from": "B",
+          "to": "C",
+          "cents": 3
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "conflict"
+      ],
+      "balances": {
+        "A": 7,
+        "B": 10,
+        "C": 3
+      }
+    },
+    "label": "source is part of payload"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 10,
+        "B": 0
+      },
+      "events": [
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 3
+        },
+        {
+          "id": "y",
+          "from": "A",
+          "to": "B",
+          "cents": 3
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "applied"
+      ],
+      "balances": {
+        "A": 4,
+        "B": 6
+      }
+    },
+    "label": "new ID applies same payload again"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 1,
+        "B": 0
+      },
+      "events": [
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 2
+        },
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 2
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "insufficient",
+        "conflict",
+        "duplicate"
+      ],
+      "balances": {
+        "A": 1,
+        "B": 0
+      }
+    },
+    "label": "failed event still defines its original payload"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 1000000000000,
+        "B": 0
+      },
+      "events": [
+        {
+          "id": "x",
+          "from": "A",
+          "to": "B",
+          "cents": 1000000000000
+        },
+        {
+          "id": "y",
+          "from": "B",
+          "to": "A",
+          "cents": 1000000000000
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "applied"
+      ],
+      "balances": {
+        "A": 1000000000000,
+        "B": 0
+      }
+    },
+    "label": "large exact round trip"
+  },
+  {
+    "input": {
+      "accounts": {
+        "": 2,
+        "B": 0
+      },
+      "events": [
+        {
+          "id": "",
+          "from": "",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "",
+          "from": "",
+          "to": "B",
+          "cents": 1
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "duplicate"
+      ],
+      "balances": {
+        "": 1,
+        "B": 1
+      }
+    },
+    "label": "empty account and event identifiers"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 20,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x0",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "x0",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "x0",
+          "from": "A",
+          "to": "C",
+          "cents": 1
+        },
+        {
+          "id": "y0",
+          "from": "B",
+          "to": "C",
+          "cents": 2
+        },
+        {
+          "id": "z0",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "y0",
+          "from": "B",
+          "to": "C",
+          "cents": 2
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "A": 18,
+        "B": 2,
+        "C": 0
+      },
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict",
+        "insufficient",
+        "applied",
+        "duplicate"
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 21,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x1",
+          "from": "A",
+          "to": "B",
+          "cents": 2
+        },
+        {
+          "id": "x1",
+          "from": "A",
+          "to": "B",
+          "cents": 2
+        },
+        {
+          "id": "x1",
+          "from": "A",
+          "to": "C",
+          "cents": 2
+        },
+        {
+          "id": "y1",
+          "from": "B",
+          "to": "C",
+          "cents": 3
+        },
+        {
+          "id": "z1",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "y1",
+          "from": "B",
+          "to": "C",
+          "cents": 3
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "A": 18,
+        "B": 3,
+        "C": 0
+      },
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict",
+        "insufficient",
+        "applied",
+        "duplicate"
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 22,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x2",
+          "from": "A",
+          "to": "B",
+          "cents": 3
+        },
+        {
+          "id": "x2",
+          "from": "A",
+          "to": "B",
+          "cents": 3
+        },
+        {
+          "id": "x2",
+          "from": "A",
+          "to": "C",
+          "cents": 3
+        },
+        {
+          "id": "y2",
+          "from": "B",
+          "to": "C",
+          "cents": 4
+        },
+        {
+          "id": "z2",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "y2",
+          "from": "B",
+          "to": "C",
+          "cents": 4
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "A": 18,
+        "B": 4,
+        "C": 0
+      },
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict",
+        "insufficient",
+        "applied",
+        "duplicate"
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 23,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x3",
+          "from": "A",
+          "to": "B",
+          "cents": 4
+        },
+        {
+          "id": "x3",
+          "from": "A",
+          "to": "B",
+          "cents": 4
+        },
+        {
+          "id": "x3",
+          "from": "A",
+          "to": "C",
+          "cents": 4
+        },
+        {
+          "id": "y3",
+          "from": "B",
+          "to": "C",
+          "cents": 5
+        },
+        {
+          "id": "z3",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "y3",
+          "from": "B",
+          "to": "C",
+          "cents": 5
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "A": 18,
+        "B": 5,
+        "C": 0
+      },
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict",
+        "insufficient",
+        "applied",
+        "duplicate"
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 24,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x4",
+          "from": "A",
+          "to": "B",
+          "cents": 5
+        },
+        {
+          "id": "x4",
+          "from": "A",
+          "to": "B",
+          "cents": 5
+        },
+        {
+          "id": "x4",
+          "from": "A",
+          "to": "C",
+          "cents": 5
+        },
+        {
+          "id": "y4",
+          "from": "B",
+          "to": "C",
+          "cents": 6
+        },
+        {
+          "id": "z4",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "y4",
+          "from": "B",
+          "to": "C",
+          "cents": 6
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "A": 18,
+        "B": 6,
+        "C": 0
+      },
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict",
+        "insufficient",
+        "applied",
+        "duplicate"
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 25,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x5",
+          "from": "A",
+          "to": "B",
+          "cents": 6
+        },
+        {
+          "id": "x5",
+          "from": "A",
+          "to": "B",
+          "cents": 6
+        },
+        {
+          "id": "x5",
+          "from": "A",
+          "to": "C",
+          "cents": 6
+        },
+        {
+          "id": "y5",
+          "from": "B",
+          "to": "C",
+          "cents": 7
+        },
+        {
+          "id": "z5",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "y5",
+          "from": "B",
+          "to": "C",
+          "cents": 7
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "A": 18,
+        "B": 7,
+        "C": 0
+      },
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict",
+        "insufficient",
+        "applied",
+        "duplicate"
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 26,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x6",
+          "from": "A",
+          "to": "B",
+          "cents": 7
+        },
+        {
+          "id": "x6",
+          "from": "A",
+          "to": "B",
+          "cents": 7
+        },
+        {
+          "id": "x6",
+          "from": "A",
+          "to": "C",
+          "cents": 7
+        },
+        {
+          "id": "y6",
+          "from": "B",
+          "to": "C",
+          "cents": 8
+        },
+        {
+          "id": "z6",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "y6",
+          "from": "B",
+          "to": "C",
+          "cents": 8
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "A": 18,
+        "B": 8,
+        "C": 0
+      },
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict",
+        "insufficient",
+        "applied",
+        "duplicate"
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 27,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x7",
+          "from": "A",
+          "to": "B",
+          "cents": 8
+        },
+        {
+          "id": "x7",
+          "from": "A",
+          "to": "B",
+          "cents": 8
+        },
+        {
+          "id": "x7",
+          "from": "A",
+          "to": "C",
+          "cents": 8
+        },
+        {
+          "id": "y7",
+          "from": "B",
+          "to": "C",
+          "cents": 9
+        },
+        {
+          "id": "z7",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "y7",
+          "from": "B",
+          "to": "C",
+          "cents": 9
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "A": 18,
+        "B": 9,
+        "C": 0
+      },
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict",
+        "insufficient",
+        "applied",
+        "duplicate"
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 28,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x8",
+          "from": "A",
+          "to": "B",
+          "cents": 9
+        },
+        {
+          "id": "x8",
+          "from": "A",
+          "to": "B",
+          "cents": 9
+        },
+        {
+          "id": "x8",
+          "from": "A",
+          "to": "C",
+          "cents": 9
+        },
+        {
+          "id": "y8",
+          "from": "B",
+          "to": "C",
+          "cents": 10
+        },
+        {
+          "id": "z8",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "y8",
+          "from": "B",
+          "to": "C",
+          "cents": 10
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "A": 18,
+        "B": 10,
+        "C": 0
+      },
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict",
+        "insufficient",
+        "applied",
+        "duplicate"
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 29,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x9",
+          "from": "A",
+          "to": "B",
+          "cents": 10
+        },
+        {
+          "id": "x9",
+          "from": "A",
+          "to": "B",
+          "cents": 10
+        },
+        {
+          "id": "x9",
+          "from": "A",
+          "to": "C",
+          "cents": 10
+        },
+        {
+          "id": "y9",
+          "from": "B",
+          "to": "C",
+          "cents": 11
+        },
+        {
+          "id": "z9",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "y9",
+          "from": "B",
+          "to": "C",
+          "cents": 11
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "A": 18,
+        "B": 11,
+        "C": 0
+      },
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict",
+        "insufficient",
+        "applied",
+        "duplicate"
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 30,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x10",
+          "from": "A",
+          "to": "B",
+          "cents": 11
+        },
+        {
+          "id": "x10",
+          "from": "A",
+          "to": "B",
+          "cents": 11
+        },
+        {
+          "id": "x10",
+          "from": "A",
+          "to": "C",
+          "cents": 11
+        },
+        {
+          "id": "y10",
+          "from": "B",
+          "to": "C",
+          "cents": 12
+        },
+        {
+          "id": "z10",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "y10",
+          "from": "B",
+          "to": "C",
+          "cents": 12
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "A": 18,
+        "B": 12,
+        "C": 0
+      },
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict",
+        "insufficient",
+        "applied",
+        "duplicate"
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 31,
+        "B": 0,
+        "C": 0
+      },
+      "events": [
+        {
+          "id": "x11",
+          "from": "A",
+          "to": "B",
+          "cents": 12
+        },
+        {
+          "id": "x11",
+          "from": "A",
+          "to": "B",
+          "cents": 12
+        },
+        {
+          "id": "x11",
+          "from": "A",
+          "to": "C",
+          "cents": 12
+        },
+        {
+          "id": "y11",
+          "from": "B",
+          "to": "C",
+          "cents": 13
+        },
+        {
+          "id": "z11",
+          "from": "A",
+          "to": "B",
+          "cents": 1
+        },
+        {
+          "id": "y11",
+          "from": "B",
+          "to": "C",
+          "cents": 13
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "A": 18,
+        "B": 13,
+        "C": 0
+      },
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict",
+        "insufficient",
+        "applied",
+        "duplicate"
+      ]
+    },
+    "label": "additional-12"
+  }
+]

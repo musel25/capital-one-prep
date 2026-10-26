@@ -1,0 +1,73 @@
+{
+  "title": "Capital One Engineering 50",
+  "description": "50 original Python problems for technical practice beyond basic LeetCode. Start at 01. Work through one level at a time: Python data, objects and state, APIs, SQL, then system components. Read the short lesson before coding. Select Python in the editor. API and distributed-system tasks use deterministic simulations; SQL references use real SQLite. Optional reference solutions are available. This is independent training, not an official question bank or a readiness score.",
+  "category-order": [
+    "01-python-data-and-libraries",
+    "02-objects-and-state",
+    "03-apis-and-clients",
+    "04-sql-and-transactions",
+    "05-system-components"
+  ],
+  "problems-of-category": {
+    "01-python-data-and-libraries": [
+      "c1-01-strict-numeric-fields",
+      "c1-02-exact-money-parser",
+      "c1-03-missing-null-zero",
+      "c1-04-stable-ticket-order",
+      "c1-05-counter-reconciliation",
+      "c1-06-csv-account-totals",
+      "c1-07-typed-json-boundary",
+      "c1-08-aware-utc-normalization",
+      "c1-09-iterator-batches",
+      "c1-10-stable-priority-jobs"
+    ],
+    "02-objects-and-state": [
+      "c1-11-dataclass-list-isolation",
+      "c1-12-nested-copy-isolation",
+      "c1-13-balance-invariants",
+      "c1-14-inheritance-fee-policy",
+      "c1-15-composed-fee-protocol",
+      "c1-16-explicit-order-states",
+      "c1-17-atomic-memory-batch",
+      "c1-18-event-id-conflicts",
+      "c1-19-exact-partial-refunds",
+      "c1-20-typed-memory-ledger"
+    ],
+    "03-apis-and-clients": [
+      "c1-21-route-contract",
+      "c1-22-body-validation",
+      "c1-23-put-patch-fields",
+      "c1-24-idempotency-conflicts",
+      "c1-25-cursor-tie-breaks",
+      "c1-26-retry-backoff",
+      "c1-27-shared-deadline",
+      "c1-28-rolling-rate-limit",
+      "c1-29-etag-validation",
+      "c1-30-upstream-page-client"
+    ],
+    "04-sql-and-transactions": [
+      "c1-31-sql-filter-order",
+      "c1-32-sql-left-join-fix",
+      "c1-33-sql-group-having",
+      "c1-34-sql-unique-create",
+      "c1-35-sql-latest-per-device",
+      "c1-36-atomic-transfer-rollback",
+      "c1-37-sql-optimistic-locking",
+      "c1-38-sql-idempotency-key",
+      "c1-39-sql-savepoint-import",
+      "c1-40-transactional-outbox"
+    ],
+    "05-system-components": [
+      "c1-41-ttl-cache-boundaries",
+      "c1-42-bounded-lru-cache",
+      "c1-43-message-deduplication",
+      "c1-44-queue-visibility-tokens",
+      "c1-45-circuit-breaker-state",
+      "c1-46-dependency-job-rounds",
+      "c1-47-consistent-hash-ring",
+      "c1-48-replica-version-reads",
+      "c1-49-reservation-expiry",
+      "c1-50-payment-service-integration"
+    ]
+  }
+}

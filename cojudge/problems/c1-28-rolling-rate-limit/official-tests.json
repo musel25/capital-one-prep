@@ -1,0 +1,95 @@
+[
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":1,\"user\":\"a\"},{\"time\":2,\"user\":\"a\"}],\"limit\":2,\"window\":10}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":10,\"user\":\"a\"}],\"limit\":1,\"window\":10}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":1,\"user\":\"a\"}],\"limit\":1,\"window\":10}"
+  },
+  {
+    "payload": "{\"events\":[],\"limit\":1,\"window\":1}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":5,\"user\":\"a\"}],\"limit\":3,\"window\":10}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"a\"}],\"limit\":1,\"window\":10}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":9,\"user\":\"a\"},{\"time\":10,\"user\":\"a\"}],\"limit\":1,\"window\":10}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":5,\"user\":\"a\"},{\"time\":10,\"user\":\"a\"},{\"time\":11,\"user\":\"a\"}],\"limit\":2,\"window\":10}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":1,\"user\":\"a\"},{\"time\":100,\"user\":\"a\"}],\"limit\":2,\"window\":10}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":1,\"user\":\"a\"},{\"time\":2,\"user\":\"a\"}],\"limit\":1,\"window\":1}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"A\"},{\"time\":0,\"user\":\"a\"}],\"limit\":1,\"window\":10}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":2,\"user\":\"a\"},{\"time\":2,\"user\":\"a\"},{\"time\":2,\"user\":\"a\"},{\"time\":5,\"user\":\"a\"},{\"time\":5,\"user\":\"a\"}],\"limit\":2,\"window\":3}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":999990,\"user\":\"a\"},{\"time\":1000000,\"user\":\"a\"}],\"limit\":1,\"window\":10}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"}],\"limit\":1,\"window\":1}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"b\"},{\"time\":1,\"user\":\"a\"},{\"time\":2,\"user\":\"c\"},{\"time\":3,\"user\":\"a\"}],\"limit\":2,\"window\":2}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":2,\"user\":\"c\"},{\"time\":4,\"user\":\"a\"},{\"time\":6,\"user\":\"b\"},{\"time\":8,\"user\":\"a\"}],\"limit\":3,\"window\":3}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"}],\"limit\":4,\"window\":4}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":1,\"user\":\"b\"},{\"time\":2,\"user\":\"a\"},{\"time\":3,\"user\":\"c\"},{\"time\":4,\"user\":\"a\"},{\"time\":5,\"user\":\"b\"},{\"time\":6,\"user\":\"a\"}],\"limit\":1,\"window\":5}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"b\"},{\"time\":2,\"user\":\"a\"},{\"time\":4,\"user\":\"c\"},{\"time\":6,\"user\":\"a\"},{\"time\":8,\"user\":\"b\"},{\"time\":10,\"user\":\"a\"},{\"time\":12,\"user\":\"c\"},{\"time\":14,\"user\":\"a\"}],\"limit\":2,\"window\":6}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"}],\"limit\":3,\"window\":7}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"c\"},{\"time\":1,\"user\":\"a\"},{\"time\":2,\"user\":\"b\"},{\"time\":3,\"user\":\"a\"},{\"time\":4,\"user\":\"c\"},{\"time\":5,\"user\":\"a\"},{\"time\":6,\"user\":\"b\"},{\"time\":7,\"user\":\"a\"},{\"time\":8,\"user\":\"c\"},{\"time\":9,\"user\":\"a\"}],\"limit\":4,\"window\":1}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":2,\"user\":\"b\"},{\"time\":4,\"user\":\"a\"},{\"time\":6,\"user\":\"c\"},{\"time\":8,\"user\":\"a\"},{\"time\":10,\"user\":\"b\"},{\"time\":12,\"user\":\"a\"},{\"time\":14,\"user\":\"c\"},{\"time\":16,\"user\":\"a\"},{\"time\":18,\"user\":\"b\"},{\"time\":20,\"user\":\"a\"}],\"limit\":1,\"window\":2}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"}],\"limit\":2,\"window\":3}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":1,\"user\":\"c\"},{\"time\":2,\"user\":\"a\"},{\"time\":3,\"user\":\"b\"},{\"time\":4,\"user\":\"a\"},{\"time\":5,\"user\":\"c\"},{\"time\":6,\"user\":\"a\"},{\"time\":7,\"user\":\"b\"},{\"time\":8,\"user\":\"a\"},{\"time\":9,\"user\":\"c\"},{\"time\":10,\"user\":\"a\"},{\"time\":11,\"user\":\"b\"},{\"time\":12,\"user\":\"a\"}],\"limit\":3,\"window\":4}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"c\"},{\"time\":2,\"user\":\"a\"},{\"time\":4,\"user\":\"b\"},{\"time\":6,\"user\":\"a\"},{\"time\":8,\"user\":\"c\"},{\"time\":10,\"user\":\"a\"},{\"time\":12,\"user\":\"b\"},{\"time\":14,\"user\":\"a\"},{\"time\":16,\"user\":\"c\"},{\"time\":18,\"user\":\"a\"},{\"time\":20,\"user\":\"b\"},{\"time\":22,\"user\":\"a\"},{\"time\":24,\"user\":\"c\"},{\"time\":26,\"user\":\"a\"}],\"limit\":4,\"window\":5}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"}],\"limit\":1,\"window\":6}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"b\"},{\"time\":1,\"user\":\"a\"},{\"time\":2,\"user\":\"c\"},{\"time\":3,\"user\":\"a\"},{\"time\":4,\"user\":\"b\"},{\"time\":5,\"user\":\"a\"},{\"time\":6,\"user\":\"c\"},{\"time\":7,\"user\":\"a\"},{\"time\":8,\"user\":\"b\"},{\"time\":9,\"user\":\"a\"},{\"time\":10,\"user\":\"c\"},{\"time\":11,\"user\":\"a\"},{\"time\":12,\"user\":\"b\"},{\"time\":13,\"user\":\"a\"},{\"time\":14,\"user\":\"c\"},{\"time\":15,\"user\":\"a\"}],\"limit\":2,\"window\":7}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":2,\"user\":\"c\"},{\"time\":4,\"user\":\"a\"},{\"time\":6,\"user\":\"b\"},{\"time\":8,\"user\":\"a\"},{\"time\":10,\"user\":\"c\"},{\"time\":12,\"user\":\"a\"},{\"time\":14,\"user\":\"b\"},{\"time\":16,\"user\":\"a\"},{\"time\":18,\"user\":\"c\"},{\"time\":20,\"user\":\"a\"},{\"time\":22,\"user\":\"b\"},{\"time\":24,\"user\":\"a\"},{\"time\":26,\"user\":\"c\"},{\"time\":28,\"user\":\"a\"},{\"time\":30,\"user\":\"b\"},{\"time\":32,\"user\":\"a\"}],\"limit\":3,\"window\":1}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"c\"},{\"time\":0,\"user\":\"a\"}],\"limit\":4,\"window\":2}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":1,\"user\":\"b\"},{\"time\":2,\"user\":\"a\"},{\"time\":3,\"user\":\"c\"},{\"time\":4,\"user\":\"a\"},{\"time\":5,\"user\":\"b\"},{\"time\":6,\"user\":\"a\"},{\"time\":7,\"user\":\"c\"},{\"time\":8,\"user\":\"a\"},{\"time\":9,\"user\":\"b\"},{\"time\":10,\"user\":\"a\"},{\"time\":11,\"user\":\"c\"},{\"time\":12,\"user\":\"a\"},{\"time\":13,\"user\":\"b\"},{\"time\":14,\"user\":\"a\"},{\"time\":15,\"user\":\"c\"},{\"time\":16,\"user\":\"a\"},{\"time\":17,\"user\":\"b\"},{\"time\":18,\"user\":\"a\"}],\"limit\":1,\"window\":3}"
+  },
+  {
+    "payload": "{\"events\":[{\"time\":0,\"user\":\"b\"},{\"time\":2,\"user\":\"a\"},{\"time\":4,\"user\":\"c\"},{\"time\":6,\"user\":\"a\"},{\"time\":8,\"user\":\"b\"},{\"time\":10,\"user\":\"a\"},{\"time\":12,\"user\":\"c\"},{\"time\":14,\"user\":\"a\"},{\"time\":16,\"user\":\"b\"},{\"time\":18,\"user\":\"a\"},{\"time\":20,\"user\":\"c\"},{\"time\":22,\"user\":\"a\"},{\"time\":24,\"user\":\"b\"},{\"time\":26,\"user\":\"a\"},{\"time\":28,\"user\":\"c\"},{\"time\":30,\"user\":\"a\"},{\"time\":32,\"user\":\"b\"},{\"time\":34,\"user\":\"a\"},{\"time\":36,\"user\":\"c\"},{\"time\":38,\"user\":\"a\"}],\"limit\":2,\"window\":4}"
+  }
+]

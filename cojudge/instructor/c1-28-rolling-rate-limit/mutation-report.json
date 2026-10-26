@@ -1,0 +1,16 @@
+[
+  {
+    "name": "keep timestamp at expired boundary",
+    "detected_by": [
+      1,
+      6,
+      7,
+      9,
+      11,
+      12,
+      14,
+      23,
+      30
+    ]
+  }
+]

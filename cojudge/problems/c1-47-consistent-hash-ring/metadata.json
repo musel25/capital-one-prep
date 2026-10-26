@@ -1,0 +1,50 @@
+{
+  "id": "c1-47-consistent-hash-ring",
+  "title": "47. Route requests around a consistent hash ring",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "05-system-components",
+  "examples": [
+    {
+      "input": "{\"nodes\": [{\"id\": \"a\", \"hash\": 100}, {\"id\": \"b\", \"hash\": 500}], \"ops\": [{\"op\": \"lookup\", \"hash\": 101}]}",
+      "output": "{\"results\": [\"b\"], \"ring\": [[100, \"a\"], [500, \"b\"]]}",
+      "explanation": "clockwise successor"
+    },
+    {
+      "input": "{\"nodes\": [{\"id\": \"a\", \"hash\": 100}, {\"id\": \"b\", \"hash\": 500}], \"ops\": [{\"op\": \"lookup\", \"hash\": 100}]}",
+      "output": "{\"results\": [\"a\"], \"ring\": [[100, \"a\"], [500, \"b\"]]}",
+      "explanation": "exact hash belongs to that node"
+    },
+    {
+      "input": "{\"nodes\": [{\"id\": \"a\", \"hash\": 100}, {\"id\": \"b\", \"hash\": 500}], \"ops\": [{\"op\": \"lookup\", \"hash\": 999}]}",
+      "output": "{\"results\": [\"a\"], \"ring\": [[100, \"a\"], [500, \"b\"]]}",
+      "explanation": "wrap past final point"
+    }
+  ],
+  "starterCode": {
+    "python": "from bisect import bisect_left, insort\n\ndef solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"nodes\":[{\"hash\":100,\"id\":\"a\"},{\"hash\":500,\"id\":\"b\"}],\"ops\":[{\"hash\":101,\"op\":\"lookup\"}]}"
+    },
+    {
+      "payload": "{\"nodes\":[{\"hash\":100,\"id\":\"a\"},{\"hash\":500,\"id\":\"b\"}],\"ops\":[{\"hash\":100,\"op\":\"lookup\"}]}"
+    },
+    {
+      "payload": "{\"nodes\":[{\"hash\":100,\"id\":\"a\"},{\"hash\":500,\"id\":\"b\"}],\"ops\":[{\"hash\":999,\"op\":\"lookup\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Use the left insertion position so equality selects the matching node.",
+    "An insertion index equal to the ring size wraps to index zero."
+  ]
+}

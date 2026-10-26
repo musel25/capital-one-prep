@@ -1,0 +1,50 @@
+{
+  "id": "c1-08-aware-utc-normalization",
+  "title": "08. Normalize aware timestamps to UTC",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-python-data-and-libraries",
+  "examples": [
+    {
+      "input": "{\"timestamps\": [\"2026-10-26T09:30:00-07:00\", \"2026-10-26T16:30:00Z\"]}",
+      "output": "[\"2026-10-26T16:30:00Z\", \"2026-10-26T16:30:00Z\"]",
+      "explanation": "same instant from two offsets"
+    },
+    {
+      "input": "{\"timestamps\": [\"2026-01-01T00:15:00+02:00\"]}",
+      "output": "[\"2025-12-31T22:15:00Z\"]",
+      "explanation": "previous day and year"
+    },
+    {
+      "input": "{\"timestamps\": []}",
+      "output": "[]",
+      "explanation": "empty list"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> list[str]:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"timestamps\":[\"2026-10-26T09:30:00-07:00\",\"2026-10-26T16:30:00Z\"]}"
+    },
+    {
+      "payload": "{\"timestamps\":[\"2026-01-01T00:15:00+02:00\"]}"
+    },
+    {
+      "payload": "{\"timestamps\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Parse an aware datetime for each input.",
+    "Convert the instant with astimezone, then format it."
+  ]
+}

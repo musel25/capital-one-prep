@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":0,\"rows\":[{\"account\":\"a\",\"amount\":10,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":10,\"id\":2,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":3,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":2,\"minimum_total\":10,\"rows\":[{\"account\":\"a\",\"amount\":4,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":6,\"id\":2,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":20,\"id\":3,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":0,\"rows\":[{\"account\":\"a\",\"amount\":null,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":2,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":0,\"rows\":[]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":0,\"rows\":[{\"account\":\"a\",\"amount\":100,\"id\":1,\"kind\":\"void\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":0,\"rows\":[{\"account\":\"a\",\"amount\":0,\"id\":1,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":2,\"minimum_total\":0,\"rows\":[{\"account\":\"a\",\"amount\":5,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":100,\"id\":2,\"kind\":\"void\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":-5,\"rows\":[{\"account\":\"a\",\"amount\":-2,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":-3,\"id\":2,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":0,\"rows\":[{\"account\":\"b\",\"amount\":10,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":10,\"id\":2,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":0,\"rows\":[{\"account\":\"a\",\"amount\":1,\"id\":1,\"kind\":\"paid\"},{\"account\":\"z\",\"amount\":9,\"id\":2,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":10,\"rows\":[{\"account\":\"a\",\"amount\":9,\"id\":1,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":0,\"rows\":[{\"account\":\"A\",\"amount\":5,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":2,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":0,\"rows\":[{\"account\":\"a\",\"amount\":8,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":-8,\"id\":2,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":0,\"rows\":[{\"account\":\"O'Reilly\",\"amount\":3,\"id\":1,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":-7,\"rows\":[{\"account\":\"b\",\"amount\":5,\"id\":1,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":10,\"id\":2,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":2,\"minimum_total\":-6,\"rows\":[{\"account\":\"A\",\"amount\":0,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":10,\"id\":2,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":5,\"id\":3,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":3,\"minimum_total\":-5,\"rows\":[{\"account\":\"a\",\"amount\":10,\"id\":1,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":5,\"id\":2,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":10,\"id\":3,\"kind\":\"void\"},{\"account\":\"a\",\"amount\":5,\"id\":4,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":4,\"minimum_total\":-4,\"rows\":[{\"account\":\"b\",\"amount\":0,\"id\":1,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":10,\"id\":2,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":0,\"id\":3,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":0,\"id\":4,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":5,\"id\":5,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":-3,\"rows\":[{\"account\":\"A\",\"amount\":10,\"id\":1,\"kind\":\"void\"},{\"account\":\"a\",\"amount\":10,\"id\":2,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":5,\"id\":3,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":0,\"id\":4,\"kind\":\"void\"},{\"account\":\"a\",\"amount\":10,\"id\":5,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":null,\"id\":6,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":2,\"minimum_total\":-2,\"rows\":[{\"account\":\"a\",\"amount\":0,\"id\":1,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":-5,\"id\":2,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":10,\"id\":3,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":4,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":0,\"id\":5,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":6,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":0,\"id\":7,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":3,\"minimum_total\":-1,\"rows\":[{\"account\":\"b\",\"amount\":0,\"id\":1,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":10,\"id\":2,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":3,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":5,\"id\":4,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":10,\"id\":5,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":6,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":10,\"id\":7,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":10,\"id\":8,\"kind\":\"void\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":4,\"minimum_total\":0,\"rows\":[{\"account\":\"A\",\"amount\":null,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":-5,\"id\":2,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":null,\"id\":3,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":null,\"id\":4,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":5,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":0,\"id\":6,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":-5,\"id\":7,\"kind\":\"void\"},{\"account\":\"a\",\"amount\":10,\"id\":8,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":5,\"id\":9,\"kind\":\"void\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":1,\"rows\":[{\"account\":\"a\",\"amount\":5,\"id\":1,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":5,\"id\":2,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":5,\"id\":3,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":4,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":null,\"id\":5,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":6,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":0,\"id\":7,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":10,\"id\":8,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":null,\"id\":9,\"kind\":\"void\"},{\"account\":\"a\",\"amount\":10,\"id\":10,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":2,\"minimum_total\":2,\"rows\":[{\"account\":\"b\",\"amount\":10,\"id\":1,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":10,\"id\":2,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":3,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":5,\"id\":4,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":null,\"id\":5,\"kind\":\"void\"},{\"account\":\"a\",\"amount\":null,\"id\":6,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":10,\"id\":7,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":8,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":9,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":5,\"id\":10,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":11,\"kind\":\"void\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":3,\"minimum_total\":3,\"rows\":[{\"account\":\"A\",\"amount\":5,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":2,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":0,\"id\":3,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":-5,\"id\":4,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":-5,\"id\":5,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":0,\"id\":6,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":0,\"id\":7,\"kind\":\"void\"},{\"account\":\"a\",\"amount\":-5,\"id\":8,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":0,\"id\":9,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":10,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":10,\"id\":11,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":5,\"id\":12,\"kind\":\"void\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":4,\"minimum_total\":4,\"rows\":[{\"account\":\"a\",\"amount\":5,\"id\":1,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":10,\"id\":2,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":10,\"id\":3,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":-5,\"id\":4,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":null,\"id\":5,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":6,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":7,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":-5,\"id\":8,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":-5,\"id\":9,\"kind\":\"void\"},{\"account\":\"a\",\"amount\":null,\"id\":10,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":10,\"id\":11,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":12,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":13,\"kind\":\"void\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":5,\"rows\":[{\"account\":\"b\",\"amount\":0,\"id\":1,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":-5,\"id\":2,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":3,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":-5,\"id\":4,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":null,\"id\":5,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":6,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":5,\"id\":7,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":10,\"id\":8,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":0,\"id\":9,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":null,\"id\":10,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":5,\"id\":11,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":12,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":null,\"id\":13,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":14,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":2,\"minimum_total\":6,\"rows\":[{\"account\":\"A\",\"amount\":5,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":0,\"id\":2,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":-5,\"id\":3,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":0,\"id\":4,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":0,\"id\":5,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":5,\"id\":6,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":0,\"id\":7,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":8,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":-5,\"id\":9,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":0,\"id\":10,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":-5,\"id\":11,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":5,\"id\":12,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":-5,\"id\":13,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":14,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":5,\"id\":15,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":3,\"minimum_total\":7,\"rows\":[{\"account\":\"a\",\"amount\":10,\"id\":1,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":-5,\"id\":2,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":null,\"id\":3,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":4,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":0,\"id\":5,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":0,\"id\":6,\"kind\":\"void\"},{\"account\":\"a\",\"amount\":0,\"id\":7,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":0,\"id\":8,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":null,\"id\":9,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":10,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":5,\"id\":11,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":0,\"id\":12,\"kind\":\"void\"},{\"account\":\"a\",\"amount\":0,\"id\":13,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":null,\"id\":14,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":-5,\"id\":15,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":16,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":4,\"minimum_total\":8,\"rows\":[{\"account\":\"b\",\"amount\":null,\"id\":1,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":-5,\"id\":2,\"kind\":\"void\"},{\"account\":\"a\",\"amount\":5,\"id\":3,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":-5,\"id\":4,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":null,\"id\":5,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":10,\"id\":6,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":5,\"id\":7,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":8,\"kind\":\"void\"},{\"account\":\"a\",\"amount\":null,\"id\":9,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":5,\"id\":10,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":-5,\"id\":11,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":10,\"id\":12,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":0,\"id\":13,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":5,\"id\":14,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":10,\"id\":15,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":-5,\"id\":16,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":10,\"id\":17,\"kind\":\"void\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":1,\"minimum_total\":9,\"rows\":[{\"account\":\"A\",\"amount\":5,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":2,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":5,\"id\":3,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":0,\"id\":4,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":-5,\"id\":5,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":-5,\"id\":6,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":null,\"id\":7,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":-5,\"id\":8,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":0,\"id\":9,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":-5,\"id\":10,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":-5,\"id\":11,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":null,\"id\":12,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":13,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":-5,\"id\":14,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":5,\"id\":15,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":16,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":17,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":5,\"id\":18,\"kind\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"minimum_events\":2,\"minimum_total\":10,\"rows\":[{\"account\":\"a\",\"amount\":null,\"id\":1,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":null,\"id\":2,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":3,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":4,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":-5,\"id\":5,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":5,\"id\":6,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":0,\"id\":7,\"kind\":\"void\"},{\"account\":\"b\",\"amount\":5,\"id\":8,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":-5,\"id\":9,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":0,\"id\":10,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":0,\"id\":11,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":12,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":13,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":0,\"id\":14,\"kind\":\"void\"},{\"account\":\"A\",\"amount\":-5,\"id\":15,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":16,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":-5,\"id\":17,\"kind\":\"paid\"},{\"account\":\"A\",\"amount\":5,\"id\":18,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":5,\"id\":19,\"kind\":\"paid\"}]}"
+  }
+]

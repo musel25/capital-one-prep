@@ -1,0 +1,50 @@
+{
+  "id": "c1-28-rolling-rate-limit",
+  "title": "28. Rate limits with a rolling window",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "03-apis-and-clients",
+  "examples": [
+    {
+      "input": "{\"limit\": 2, \"window\": 10, \"events\": [{\"time\": 0, \"user\": \"a\"}, {\"time\": 1, \"user\": \"a\"}, {\"time\": 2, \"user\": \"a\"}]}",
+      "output": "[{\"allowed\": true, \"remaining\": 1, \"retry_after\": 0}, {\"allowed\": true, \"remaining\": 0, \"retry_after\": 0}, {\"allowed\": false, \"remaining\": 0, \"retry_after\": 8}]",
+      "explanation": "third call exceeds window"
+    },
+    {
+      "input": "{\"limit\": 1, \"window\": 10, \"events\": [{\"time\": 0, \"user\": \"a\"}, {\"time\": 10, \"user\": \"a\"}]}",
+      "output": "[{\"allowed\": true, \"remaining\": 0, \"retry_after\": 0}, {\"allowed\": true, \"remaining\": 0, \"retry_after\": 0}]",
+      "explanation": "timestamp at left boundary expires"
+    },
+    {
+      "input": "{\"limit\": 1, \"window\": 10, \"events\": [{\"time\": 0, \"user\": \"a\"}, {\"time\": 0, \"user\": \"b\"}, {\"time\": 1, \"user\": \"a\"}]}",
+      "output": "[{\"allowed\": true, \"remaining\": 0, \"retry_after\": 0}, {\"allowed\": true, \"remaining\": 0, \"retry_after\": 0}, {\"allowed\": false, \"remaining\": 0, \"retry_after\": 9}]",
+      "explanation": "users have independent windows"
+    }
+  ],
+  "starterCode": {
+    "python": "from collections import defaultdict, deque\n\ndef solve(data: dict) -> list:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":1,\"user\":\"a\"},{\"time\":2,\"user\":\"a\"}],\"limit\":2,\"window\":10}"
+    },
+    {
+      "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":10,\"user\":\"a\"}],\"limit\":1,\"window\":10}"
+    },
+    {
+      "payload": "{\"events\":[{\"time\":0,\"user\":\"a\"},{\"time\":0,\"user\":\"b\"},{\"time\":1,\"user\":\"a\"}],\"limit\":1,\"window\":10}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Remove expired timestamps with a while loop, not one if statement.",
+    "Only accepted calls belong in the deque."
+  ]
+}

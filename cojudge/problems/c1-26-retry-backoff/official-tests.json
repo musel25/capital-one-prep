@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"base\":2,\"cap\":3,\"max_attempts\":3,\"outcomes\":[503,503,200]}"
+  },
+  {
+    "payload": "{\"base\":1,\"cap\":10,\"max_attempts\":2,\"outcomes\":[400,200]}"
+  },
+  {
+    "payload": "{\"base\":4,\"cap\":20,\"max_attempts\":2,\"outcomes\":[\"timeout\",504]}"
+  },
+  {
+    "payload": "{\"base\":1,\"cap\":1,\"max_attempts\":1,\"outcomes\":[200]}"
+  },
+  {
+    "payload": "{\"base\":1,\"cap\":10,\"max_attempts\":1,\"outcomes\":[429]}"
+  },
+  {
+    "payload": "{\"base\":10,\"cap\":5,\"max_attempts\":2,\"outcomes\":[201,500]}"
+  },
+  {
+    "payload": "{\"base\":1,\"cap\":1,\"max_attempts\":1,\"outcomes\":[299]}"
+  },
+  {
+    "payload": "{\"base\":1,\"cap\":1,\"max_attempts\":1,\"outcomes\":[300]}"
+  },
+  {
+    "payload": "{\"base\":1,\"cap\":10,\"max_attempts\":2,\"outcomes\":[501,200]}"
+  },
+  {
+    "payload": "{\"base\":9,\"cap\":3,\"max_attempts\":2,\"outcomes\":[502,200]}"
+  },
+  {
+    "payload": "{\"base\":1,\"cap\":8,\"max_attempts\":6,\"outcomes\":[500,502,503,504,429,\"timeout\"]}"
+  },
+  {
+    "payload": "{\"base\":2,\"cap\":20,\"max_attempts\":3,\"outcomes\":[\"timeout\",403,200]}"
+  },
+  {
+    "payload": "{\"base\":2,\"cap\":4,\"max_attempts\":1,\"outcomes\":[599]}"
+  },
+  {
+    "payload": "{\"base\":2,\"cap\":4,\"max_attempts\":1,\"outcomes\":[199]}"
+  },
+  {
+    "payload": "{\"base\":1,\"cap\":1,\"max_attempts\":1,\"outcomes\":[422,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":2,\"cap\":2,\"max_attempts\":2,\"outcomes\":[502,200,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":3,\"cap\":3,\"max_attempts\":3,\"outcomes\":[503,504,422,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":4,\"cap\":4,\"max_attempts\":4,\"outcomes\":[504,429,\"timeout\",200,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":5,\"cap\":5,\"max_attempts\":5,\"outcomes\":[429,\"timeout\",500,502,422,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":6,\"cap\":1,\"max_attempts\":6,\"outcomes\":[\"timeout\",500,502,503,504,200,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":7,\"cap\":2,\"max_attempts\":7,\"outcomes\":[422,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":8,\"cap\":3,\"max_attempts\":8,\"outcomes\":[502,200,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":9,\"cap\":4,\"max_attempts\":1,\"outcomes\":[503,504,422,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":10,\"cap\":5,\"max_attempts\":2,\"outcomes\":[504,429,\"timeout\",200,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":11,\"cap\":1,\"max_attempts\":3,\"outcomes\":[429,\"timeout\",500,502,422,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":12,\"cap\":2,\"max_attempts\":4,\"outcomes\":[\"timeout\",500,502,503,504,200,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":13,\"cap\":3,\"max_attempts\":5,\"outcomes\":[422,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":14,\"cap\":4,\"max_attempts\":6,\"outcomes\":[502,200,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":15,\"cap\":5,\"max_attempts\":7,\"outcomes\":[503,504,422,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":16,\"cap\":1,\"max_attempts\":8,\"outcomes\":[504,429,\"timeout\",200,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":17,\"cap\":2,\"max_attempts\":1,\"outcomes\":[429,\"timeout\",500,502,422,503,503,503,503,503,503,503,503]}"
+  },
+  {
+    "payload": "{\"base\":18,\"cap\":3,\"max_attempts\":2,\"outcomes\":[\"timeout\",500,502,503,504,200,503,503,503,503,503,503,503,503]}"
+  }
+]

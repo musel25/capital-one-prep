@@ -1,0 +1,50 @@
+{
+  "id": "c1-09-iterator-batches",
+  "title": "09. Keep the final iterator batch",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-python-data-and-libraries",
+  "examples": [
+    {
+      "input": "{\"values\": [1, 2, 3, 4, 5], \"size\": 2}",
+      "output": "[[1, 2], [3, 4], [5]]",
+      "explanation": "final partial batch"
+    },
+    {
+      "input": "{\"values\": [7, 8, 9, 10], \"size\": 2}",
+      "output": "[[7, 8], [9, 10]]",
+      "explanation": "exact multiple"
+    },
+    {
+      "input": "{\"values\": [], \"size\": 3}",
+      "output": "[]",
+      "explanation": "empty iterator"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> list[list[int]]:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"size\":2,\"values\":[1,2,3,4,5]}"
+    },
+    {
+      "payload": "{\"size\":2,\"values\":[7,8,9,10]}"
+    },
+    {
+      "payload": "{\"size\":3,\"values\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Create the iterator once, outside the loop.",
+    "An empty batch ends the loop; a short batch does not."
+  ]
+}

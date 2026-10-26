@@ -1,0 +1,50 @@
+{
+  "id": "c1-45-circuit-breaker-state",
+  "title": "45. Trace a circuit breaker through recovery",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "05-system-components",
+  "examples": [
+    {
+      "input": "{\"threshold\": 2, \"cooldown\": 5, \"calls\": [{\"at\": 0, \"ok\": false}, {\"at\": 1, \"ok\": false}]}",
+      "output": "{\"results\": [{\"mode\": \"closed\", \"result\": \"failure\", \"state\": \"closed\"}, {\"mode\": \"closed\", \"result\": \"failure\", \"state\": \"open\"}], \"state\": \"open\", \"failures\": 2, \"retry_at\": 6}",
+      "explanation": "consecutive failures open breaker"
+    },
+    {
+      "input": "{\"threshold\": 1, \"cooldown\": 5, \"calls\": [{\"at\": 0, \"ok\": false}, {\"at\": 4, \"ok\": true}]}",
+      "output": "{\"results\": [{\"mode\": \"closed\", \"result\": \"failure\", \"state\": \"open\"}, {\"mode\": \"blocked\", \"result\": \"blocked\", \"state\": \"open\"}], \"state\": \"open\", \"failures\": 1, \"retry_at\": 5}",
+      "explanation": "open breaker ignores supplied outcome"
+    },
+    {
+      "input": "{\"threshold\": 1, \"cooldown\": 5, \"calls\": [{\"at\": 0, \"ok\": false}, {\"at\": 5, \"ok\": true}]}",
+      "output": "{\"results\": [{\"mode\": \"closed\", \"result\": \"failure\", \"state\": \"open\"}, {\"mode\": \"probe\", \"result\": \"success\", \"state\": \"closed\"}], \"state\": \"closed\", \"failures\": 0, \"retry_at\": null}",
+      "explanation": "probe succeeds at deadline"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    # Keep breaker state, consecutive failures, and retry deadline.\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"calls\":[{\"at\":0,\"ok\":false},{\"at\":1,\"ok\":false}],\"cooldown\":5,\"threshold\":2}"
+    },
+    {
+      "payload": "{\"calls\":[{\"at\":0,\"ok\":false},{\"at\":4,\"ok\":true}],\"cooldown\":5,\"threshold\":1}"
+    },
+    {
+      "payload": "{\"calls\":[{\"at\":0,\"ok\":false},{\"at\":5,\"ok\":true}],\"cooldown\":5,\"threshold\":1}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Check the open deadline before reading the outcome.",
+    "A failed probe opens immediately, even if the threshold is larger than one."
+  ]
+}

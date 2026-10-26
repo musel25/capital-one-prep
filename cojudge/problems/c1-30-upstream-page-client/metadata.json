@@ -1,0 +1,50 @@
+{
+  "id": "c1-30-upstream-page-client",
+  "title": "30. Build a guarded upstream page client",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "03-apis-and-clients",
+  "examples": [
+    {
+      "input": "{\"pages\": {\"a\": {\"status\": 200, \"items\": [{\"id\": 1, \"value\": \"1\"}], \"next\": \"b\"}, \"b\": {\"status\": 200, \"items\": [{\"id\": 1, \"value\": \"1\"}, {\"id\": 2, \"value\": \"2\"}], \"next\": null}}, \"start\": \"a\", \"max_pages\": 5}",
+      "output": "{\"items\": [{\"id\": 1, \"value\": \"1\"}, {\"id\": 2, \"value\": \"2\"}], \"requests\": [\"a\", \"b\"], \"error\": null}",
+      "explanation": "deduplicate across pages"
+    },
+    {
+      "input": "{\"pages\": {\"a\": {\"status\": 200, \"items\": [{\"id\": 1, \"value\": \"1\"}], \"next\": \"a\"}}, \"start\": \"a\", \"max_pages\": 5}",
+      "output": "{\"items\": [{\"id\": 1, \"value\": \"1\"}], \"requests\": [\"a\"], \"error\": \"cycle\"}",
+      "explanation": "stop before fetching a repeated cursor"
+    },
+    {
+      "input": "{\"pages\": {\"a\": {\"status\": 200, \"items\": [{\"id\": 1, \"value\": \"1\"}], \"next\": \"b\"}, \"b\": {\"status\": 503}}, \"start\": \"a\", \"max_pages\": 5}",
+      "output": "{\"items\": [{\"id\": 1, \"value\": \"1\"}], \"requests\": [\"a\", \"b\"], \"error\": \"upstream\"}",
+      "explanation": "preserve earlier data on failure"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"max_pages\":5,\"pages\":{\"a\":{\"items\":[{\"id\":1,\"value\":\"1\"}],\"next\":\"b\",\"status\":200},\"b\":{\"items\":[{\"id\":1,\"value\":\"1\"},{\"id\":2,\"value\":\"2\"}],\"next\":null,\"status\":200}},\"start\":\"a\"}"
+    },
+    {
+      "payload": "{\"max_pages\":5,\"pages\":{\"a\":{\"items\":[{\"id\":1,\"value\":\"1\"}],\"next\":\"a\",\"status\":200}},\"start\":\"a\"}"
+    },
+    {
+      "payload": "{\"max_pages\":5,\"pages\":{\"a\":{\"items\":[{\"id\":1,\"value\":\"1\"}],\"next\":\"b\",\"status\":200},\"b\":{\"status\":503}},\"start\":\"a\"}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Use separate sets for visited cursors and accepted item ids.",
+    "Check cycle before limit, then record an attempted fetch before looking up its fixture."
+  ]
+}

@@ -196,6 +196,11 @@ class Verify extends Support {
                 if (marker.isCorrect(payload, invalid)) throw new AssertionError("Accepted invalid JSON");
                 rejected++;
             }
+            for (String token : new String[]{"u+041", "u-001"}) {
+                String invalid = Character.toString(34) + Character.toString(92) + token + Character.toString(34);
+                if (marker.isCorrect(payload, invalid)) throw new AssertionError("Accepted invalid Unicode escape");
+                rejected++;
+            }
             count++;
         }
         System.out.println(J.dump(map("cases", count, "wrong_rejected", rejected)));
@@ -219,6 +224,23 @@ def check_java(spec, work_root):
     return json.loads(checked.stdout)
 
 
+def check_review_cases(spec, work_root, run_java=True):
+    """Keep independently authored expectations separate from generated cases."""
+    path = ROOT / "cojudge/authoring/review-cases.json"
+    cases = json.loads(path.read_text())[str(spec["number"])]
+    solve = python_solver(spec["reference"])
+    official_inputs = {encode(c["input"]) for c in all_cases(spec)}
+    for case in cases:
+        assert encode(case["input"]) not in official_inputs, "Review case duplicates an official input"
+        assert json_equal(solve(copy.deepcopy(case["input"])), case["expected"]), (
+            f"{slug(spec)} reviewer case failed: {case['label']}"
+        )
+    report = {"cases": len(cases)}
+    if run_java:
+        report["java"] = check_java({**spec, "cases": cases, "generated": []}, work_root)
+    return report
+
+
 def write_json(path, data):
     path.write_text(json.dumps(data, indent=2, ensure_ascii=True, allow_nan=False) + "\n")
 
@@ -240,7 +262,8 @@ def build_problem(spec, destination):
     metadata = {
         "id": problem_id, "title": f"{spec['number']:02d}. {spec['title']}",
         "difficulty": spec["difficulty"],
-        "link": "https://cojudge.musel.dev/?course=capital-one-engineering-50",
+        # CoJudge labels this optional link as LeetCode. These are original tasks.
+        "link": "",
         "category": LEVELS[(spec["number"] - 1) // 10],
         "examples": examples, "starterCode": {"python": spec["starter"].rstrip() + ADAPTER},
         "testCases": [{"payload": encode(c["input"])} for c in cases[:3]],
@@ -252,6 +275,8 @@ def build_problem(spec, destination):
         for i, c in enumerate(cases[:3])
     )
     statement = f"""# {metadata['title']}
+
+[Back to the course list](/?course=capital-one-engineering-50)
 
 **Level {(spec['number'] - 1) // 10 + 1} · {spec['difficulty']} · About {spec['time']} minutes**
 

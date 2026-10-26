@@ -1,0 +1,50 @@
+{
+  "id": "c1-24-idempotency-conflicts",
+  "title": "24. Replay writes with idempotency keys",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "03-apis-and-clients",
+  "examples": [
+    {
+      "input": "{\"requests\": [{\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 10}}, {\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 10}}]}",
+      "output": "{\"responses\": [{\"status\": 201, \"body\": {\"id\": 1, \"to\": \"a\", \"amount\": 10}, \"replayed\": false}, {\"status\": 201, \"body\": {\"id\": 1, \"to\": \"a\", \"amount\": 10}, \"replayed\": true}], \"transfers\": [{\"id\": 1, \"to\": \"a\", \"amount\": 10}]}",
+      "explanation": "same key and body replay one transfer"
+    },
+    {
+      "input": "{\"requests\": [{\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 10}}, {\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 11}}]}",
+      "output": "{\"responses\": [{\"status\": 201, \"body\": {\"id\": 1, \"to\": \"a\", \"amount\": 10}, \"replayed\": false}, {\"status\": 409, \"body\": {\"error\": \"key_conflict\"}, \"replayed\": false}], \"transfers\": [{\"id\": 1, \"to\": \"a\", \"amount\": 10}]}",
+      "explanation": "same key with changed amount conflicts"
+    },
+    {
+      "input": "{\"requests\": [{\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 10}}, {\"key\": \"j\", \"body\": {\"to\": \"a\", \"amount\": 10}}]}",
+      "output": "{\"responses\": [{\"status\": 201, \"body\": {\"id\": 1, \"to\": \"a\", \"amount\": 10}, \"replayed\": false}, {\"status\": 201, \"body\": {\"id\": 2, \"to\": \"a\", \"amount\": 10}, \"replayed\": false}], \"transfers\": [{\"id\": 1, \"to\": \"a\", \"amount\": 10}, {\"id\": 2, \"to\": \"a\", \"amount\": 10}]}",
+      "explanation": "different keys permit same body"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"}]}"
+    },
+    {
+      "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":11,\"to\":\"a\"},\"key\":\"k\"}]}"
+    },
+    {
+      "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"j\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Store the original body together with the successful result.",
+    "Allocate an id only after deciding the key is new."
+  ]
+}

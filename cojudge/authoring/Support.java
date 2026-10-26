@@ -109,7 +109,9 @@ class J {
                 case 't': out.append('\t'); break;
                 case 'u':
                     if (pos + 4 > text.length()) throw new IllegalArgumentException("Short Unicode escape");
-                    out.append((char) Integer.parseInt(text.substring(pos, pos + 4), 16));
+                    String hex = text.substring(pos, pos + 4);
+                    if (!hex.matches("[0-9a-fA-F]{4}")) throw new IllegalArgumentException("Invalid Unicode escape");
+                    out.append((char) Integer.parseInt(hex, 16));
                     pos += 4;
                     break;
                 default: throw new IllegalArgumentException("Invalid JSON escape");

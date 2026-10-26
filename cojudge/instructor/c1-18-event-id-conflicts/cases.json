@@ -1,0 +1,742 @@
+[
+  {
+    "input": {
+      "balance": 10,
+      "events": [
+        {
+          "id": "e1",
+          "delta": 5
+        },
+        {
+          "id": "e1",
+          "delta": 5
+        },
+        {
+          "id": "e1",
+          "delta": 7
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "duplicate",
+        "conflict"
+      ],
+      "balance": 15
+    },
+    "label": "new, duplicate, and conflicting payload"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "events": [
+        {
+          "id": "x",
+          "delta": 2
+        },
+        {
+          "id": "x",
+          "delta": 3
+        },
+        {
+          "id": "x",
+          "delta": 2
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "conflict",
+        "duplicate"
+      ],
+      "balance": 2
+    },
+    "label": "conflict does not replace the first payload"
+  },
+  {
+    "input": {
+      "balance": 8,
+      "events": []
+    },
+    "expected": {
+      "status": [],
+      "balance": 8
+    },
+    "label": "no events"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "events": [
+        {
+          "id": "z",
+          "delta": 0
+        },
+        {
+          "id": "z",
+          "delta": 0
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "duplicate"
+      ],
+      "balance": 0
+    },
+    "label": "zero delta is still recorded"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "events": [
+        {
+          "id": "a",
+          "delta": 5
+        },
+        {
+          "id": "b",
+          "delta": 5
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "applied"
+      ],
+      "balance": 10
+    },
+    "label": "same payload under different IDs"
+  },
+  {
+    "input": {
+      "balance": 3,
+      "events": [
+        {
+          "id": "a",
+          "delta": -5
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied"
+      ],
+      "balance": -2
+    },
+    "label": "signed totals allowed"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "events": [
+        {
+          "id": "a",
+          "delta": 1
+        },
+        {
+          "id": "a",
+          "delta": -1
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "conflict"
+      ],
+      "balance": 1
+    },
+    "label": "sign change is a conflict"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "events": [
+        {
+          "id": "",
+          "delta": 2
+        },
+        {
+          "id": "",
+          "delta": 2
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "duplicate"
+      ],
+      "balance": 2
+    },
+    "label": "empty ID is a valid key"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "events": [
+        {
+          "id": "a",
+          "delta": 1
+        },
+        {
+          "id": "b",
+          "delta": -1
+        },
+        {
+          "id": "a",
+          "delta": 1
+        },
+        {
+          "id": "b",
+          "delta": -1
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "duplicate"
+      ],
+      "balance": 0
+    },
+    "label": "interleaved retries"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "events": [
+        {
+          "id": "a",
+          "delta": 0
+        },
+        {
+          "id": "a",
+          "delta": 1
+        },
+        {
+          "id": "a",
+          "delta": 1
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "conflict",
+        "conflict"
+      ],
+      "balance": 0
+    },
+    "label": "repeated conflict remains a conflict"
+  },
+  {
+    "input": {
+      "balance": 1000000000000,
+      "events": [
+        {
+          "id": "a",
+          "delta": 1000000000000
+        },
+        {
+          "id": "a",
+          "delta": 1000000000000
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "duplicate"
+      ],
+      "balance": 2000000000000
+    },
+    "label": "large exact delta"
+  },
+  {
+    "input": {
+      "balance": -5,
+      "events": [
+        {
+          "id": "A",
+          "delta": 2
+        },
+        {
+          "id": "a",
+          "delta": 3
+        }
+      ]
+    },
+    "expected": {
+      "status": [
+        "applied",
+        "applied"
+      ],
+      "balance": 0
+    },
+    "label": "case-sensitive IDs"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "events": [
+        {
+          "id": "x0",
+          "delta": 1
+        },
+        {
+          "id": "y0",
+          "delta": 0
+        },
+        {
+          "id": "x0",
+          "delta": 1
+        },
+        {
+          "id": "x0",
+          "delta": 2
+        },
+        {
+          "id": "x0",
+          "delta": 1
+        }
+      ]
+    },
+    "expected": {
+      "balance": 1,
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "conflict",
+        "duplicate"
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "balance": 1,
+      "events": [
+        {
+          "id": "x1",
+          "delta": 2
+        },
+        {
+          "id": "y1",
+          "delta": -1
+        },
+        {
+          "id": "x1",
+          "delta": 2
+        },
+        {
+          "id": "x1",
+          "delta": 3
+        },
+        {
+          "id": "x1",
+          "delta": 2
+        }
+      ]
+    },
+    "expected": {
+      "balance": 2,
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "conflict",
+        "duplicate"
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "balance": 2,
+      "events": [
+        {
+          "id": "x2",
+          "delta": 3
+        },
+        {
+          "id": "y2",
+          "delta": -2
+        },
+        {
+          "id": "x2",
+          "delta": 3
+        },
+        {
+          "id": "x2",
+          "delta": 4
+        },
+        {
+          "id": "x2",
+          "delta": 3
+        }
+      ]
+    },
+    "expected": {
+      "balance": 3,
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "conflict",
+        "duplicate"
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "balance": 3,
+      "events": [
+        {
+          "id": "x3",
+          "delta": 4
+        },
+        {
+          "id": "y3",
+          "delta": -3
+        },
+        {
+          "id": "x3",
+          "delta": 4
+        },
+        {
+          "id": "x3",
+          "delta": 5
+        },
+        {
+          "id": "x3",
+          "delta": 4
+        }
+      ]
+    },
+    "expected": {
+      "balance": 4,
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "conflict",
+        "duplicate"
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "balance": 4,
+      "events": [
+        {
+          "id": "x4",
+          "delta": 5
+        },
+        {
+          "id": "y4",
+          "delta": -4
+        },
+        {
+          "id": "x4",
+          "delta": 5
+        },
+        {
+          "id": "x4",
+          "delta": 6
+        },
+        {
+          "id": "x4",
+          "delta": 5
+        }
+      ]
+    },
+    "expected": {
+      "balance": 5,
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "conflict",
+        "duplicate"
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "balance": 5,
+      "events": [
+        {
+          "id": "x5",
+          "delta": 6
+        },
+        {
+          "id": "y5",
+          "delta": -5
+        },
+        {
+          "id": "x5",
+          "delta": 6
+        },
+        {
+          "id": "x5",
+          "delta": 7
+        },
+        {
+          "id": "x5",
+          "delta": 6
+        }
+      ]
+    },
+    "expected": {
+      "balance": 6,
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "conflict",
+        "duplicate"
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "balance": 6,
+      "events": [
+        {
+          "id": "x6",
+          "delta": 7
+        },
+        {
+          "id": "y6",
+          "delta": -6
+        },
+        {
+          "id": "x6",
+          "delta": 7
+        },
+        {
+          "id": "x6",
+          "delta": 8
+        },
+        {
+          "id": "x6",
+          "delta": 7
+        }
+      ]
+    },
+    "expected": {
+      "balance": 7,
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "conflict",
+        "duplicate"
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "balance": 7,
+      "events": [
+        {
+          "id": "x7",
+          "delta": 8
+        },
+        {
+          "id": "y7",
+          "delta": -7
+        },
+        {
+          "id": "x7",
+          "delta": 8
+        },
+        {
+          "id": "x7",
+          "delta": 9
+        },
+        {
+          "id": "x7",
+          "delta": 8
+        }
+      ]
+    },
+    "expected": {
+      "balance": 8,
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "conflict",
+        "duplicate"
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "balance": 8,
+      "events": [
+        {
+          "id": "x8",
+          "delta": 9
+        },
+        {
+          "id": "y8",
+          "delta": -8
+        },
+        {
+          "id": "x8",
+          "delta": 9
+        },
+        {
+          "id": "x8",
+          "delta": 10
+        },
+        {
+          "id": "x8",
+          "delta": 9
+        }
+      ]
+    },
+    "expected": {
+      "balance": 9,
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "conflict",
+        "duplicate"
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "balance": 9,
+      "events": [
+        {
+          "id": "x9",
+          "delta": 10
+        },
+        {
+          "id": "y9",
+          "delta": -9
+        },
+        {
+          "id": "x9",
+          "delta": 10
+        },
+        {
+          "id": "x9",
+          "delta": 11
+        },
+        {
+          "id": "x9",
+          "delta": 10
+        }
+      ]
+    },
+    "expected": {
+      "balance": 10,
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "conflict",
+        "duplicate"
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "balance": 10,
+      "events": [
+        {
+          "id": "x10",
+          "delta": 11
+        },
+        {
+          "id": "y10",
+          "delta": -10
+        },
+        {
+          "id": "x10",
+          "delta": 11
+        },
+        {
+          "id": "x10",
+          "delta": 12
+        },
+        {
+          "id": "x10",
+          "delta": 11
+        }
+      ]
+    },
+    "expected": {
+      "balance": 11,
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "conflict",
+        "duplicate"
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "balance": 11,
+      "events": [
+        {
+          "id": "x11",
+          "delta": 12
+        },
+        {
+          "id": "y11",
+          "delta": -11
+        },
+        {
+          "id": "x11",
+          "delta": 12
+        },
+        {
+          "id": "x11",
+          "delta": 13
+        },
+        {
+          "id": "x11",
+          "delta": 12
+        }
+      ]
+    },
+    "expected": {
+      "balance": 12,
+      "status": [
+        "applied",
+        "applied",
+        "duplicate",
+        "conflict",
+        "duplicate"
+      ]
+    },
+    "label": "additional-12"
+  }
+]

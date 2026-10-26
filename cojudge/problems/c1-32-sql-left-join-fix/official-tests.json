@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"1\"},{\"id\":2,\"name\":\"2\"}],\"payments\":[{\"amount\":10,\"customer_id\":1,\"id\":1,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"1\"}],\"payments\":[{\"amount\":10,\"customer_id\":1,\"id\":1,\"status\":\"pending\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"1\"}],\"payments\":[{\"amount\":30,\"customer_id\":1,\"id\":3,\"status\":\"paid\"},{\"amount\":20,\"customer_id\":1,\"id\":2,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[],\"payments\":[]}"
+  },
+  {
+    "payload": "{\"customers\":[],\"payments\":[{\"amount\":10,\"customer_id\":99,\"id\":1,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"1\"}],\"payments\":[]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"1\"}],\"payments\":[{\"amount\":10,\"customer_id\":null,\"id\":1,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"1\"}],\"payments\":[{\"amount\":10,\"customer_id\":2,\"id\":1,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"1\"}],\"payments\":[{\"amount\":0,\"customer_id\":1,\"id\":1,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"1\"}],\"payments\":[{\"amount\":-5,\"customer_id\":1,\"id\":1,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":2,\"name\":\"same\"},{\"id\":1,\"name\":\"same\"}],\"payments\":[]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":10,\"name\":\"10\"},{\"id\":2,\"name\":\"2\"}],\"payments\":[{\"amount\":10,\"customer_id\":2,\"id\":10,\"status\":\"paid\"},{\"amount\":10,\"customer_id\":2,\"id\":2,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"1\"}],\"payments\":[{\"amount\":10,\"customer_id\":1,\"id\":1,\"status\":\"pending\"},{\"amount\":10,\"customer_id\":1,\"id\":2,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"O'Reilly\"}],\"payments\":[]}"
+  },
+  {
+    "payload": "{\"customers\":[],\"payments\":[{\"amount\":1,\"customer_id\":null,\"id\":1,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name2\"}],\"payments\":[{\"amount\":17,\"customer_id\":2,\"id\":1,\"status\":\"paid\"},{\"amount\":-5,\"customer_id\":3,\"id\":2,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name0\"},{\"id\":2,\"name\":\"name1\"}],\"payments\":[{\"amount\":5,\"customer_id\":null,\"id\":1,\"status\":\"pending\"},{\"amount\":-4,\"customer_id\":99,\"id\":2,\"status\":\"pending\"},{\"amount\":14,\"customer_id\":2,\"id\":3,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name1\"},{\"id\":2,\"name\":\"name2\"},{\"id\":3,\"name\":\"name0\"}],\"payments\":[{\"amount\":19,\"customer_id\":4,\"id\":1,\"status\":\"paid\"},{\"amount\":-5,\"customer_id\":4,\"id\":2,\"status\":\"pending\"},{\"amount\":19,\"customer_id\":5,\"id\":3,\"status\":\"paid\"},{\"amount\":4,\"customer_id\":99,\"id\":4,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name2\"},{\"id\":2,\"name\":\"name0\"},{\"id\":3,\"name\":\"name1\"},{\"id\":4,\"name\":\"name2\"}],\"payments\":[{\"amount\":-3,\"customer_id\":3,\"id\":1,\"status\":\"pending\"},{\"amount\":-4,\"customer_id\":null,\"id\":2,\"status\":\"paid\"},{\"amount\":0,\"customer_id\":5,\"id\":3,\"status\":\"pending\"},{\"amount\":8,\"customer_id\":null,\"id\":4,\"status\":\"paid\"},{\"amount\":12,\"customer_id\":null,\"id\":5,\"status\":\"pending\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name0\"},{\"id\":2,\"name\":\"name1\"},{\"id\":3,\"name\":\"name2\"},{\"id\":4,\"name\":\"name0\"},{\"id\":5,\"name\":\"name1\"}],\"payments\":[{\"amount\":0,\"customer_id\":1,\"id\":1,\"status\":\"pending\"},{\"amount\":18,\"customer_id\":2,\"id\":2,\"status\":\"pending\"},{\"amount\":12,\"customer_id\":1,\"id\":3,\"status\":\"pending\"},{\"amount\":13,\"customer_id\":4,\"id\":4,\"status\":\"paid\"},{\"amount\":-4,\"customer_id\":99,\"id\":5,\"status\":\"pending\"},{\"amount\":4,\"customer_id\":1,\"id\":6,\"status\":\"pending\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name1\"},{\"id\":2,\"name\":\"name2\"},{\"id\":3,\"name\":\"name0\"},{\"id\":4,\"name\":\"name1\"},{\"id\":5,\"name\":\"name2\"},{\"id\":6,\"name\":\"name0\"}],\"payments\":[{\"amount\":2,\"customer_id\":null,\"id\":1,\"status\":\"pending\"},{\"amount\":4,\"customer_id\":99,\"id\":2,\"status\":\"pending\"},{\"amount\":-3,\"customer_id\":5,\"id\":3,\"status\":\"pending\"},{\"amount\":0,\"customer_id\":null,\"id\":4,\"status\":\"pending\"},{\"amount\":17,\"customer_id\":1,\"id\":5,\"status\":\"paid\"},{\"amount\":-4,\"customer_id\":99,\"id\":6,\"status\":\"paid\"},{\"amount\":3,\"customer_id\":5,\"id\":7,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[],\"payments\":[{\"amount\":4,\"customer_id\":4,\"id\":1,\"status\":\"paid\"},{\"amount\":-4,\"customer_id\":3,\"id\":2,\"status\":\"paid\"},{\"amount\":-4,\"customer_id\":4,\"id\":3,\"status\":\"pending\"},{\"amount\":11,\"customer_id\":null,\"id\":4,\"status\":\"pending\"},{\"amount\":10,\"customer_id\":2,\"id\":5,\"status\":\"pending\"},{\"amount\":2,\"customer_id\":99,\"id\":6,\"status\":\"pending\"},{\"amount\":13,\"customer_id\":4,\"id\":7,\"status\":\"paid\"},{\"amount\":7,\"customer_id\":1,\"id\":8,\"status\":\"pending\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name0\"}],\"payments\":[{\"amount\":18,\"customer_id\":4,\"id\":1,\"status\":\"pending\"},{\"amount\":11,\"customer_id\":1,\"id\":2,\"status\":\"paid\"},{\"amount\":16,\"customer_id\":4,\"id\":3,\"status\":\"pending\"},{\"amount\":6,\"customer_id\":5,\"id\":4,\"status\":\"paid\"},{\"amount\":2,\"customer_id\":4,\"id\":5,\"status\":\"paid\"},{\"amount\":-5,\"customer_id\":3,\"id\":6,\"status\":\"paid\"},{\"amount\":13,\"customer_id\":null,\"id\":7,\"status\":\"paid\"},{\"amount\":5,\"customer_id\":99,\"id\":8,\"status\":\"pending\"},{\"amount\":9,\"customer_id\":1,\"id\":9,\"status\":\"pending\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name1\"},{\"id\":2,\"name\":\"name2\"}],\"payments\":[{\"amount\":5,\"customer_id\":null,\"id\":1,\"status\":\"pending\"},{\"amount\":6,\"customer_id\":1,\"id\":2,\"status\":\"pending\"},{\"amount\":17,\"customer_id\":null,\"id\":3,\"status\":\"paid\"},{\"amount\":19,\"customer_id\":1,\"id\":4,\"status\":\"pending\"},{\"amount\":16,\"customer_id\":3,\"id\":5,\"status\":\"pending\"},{\"amount\":-3,\"customer_id\":3,\"id\":6,\"status\":\"paid\"},{\"amount\":0,\"customer_id\":4,\"id\":7,\"status\":\"paid\"},{\"amount\":14,\"customer_id\":null,\"id\":8,\"status\":\"paid\"},{\"amount\":11,\"customer_id\":5,\"id\":9,\"status\":\"pending\"},{\"amount\":2,\"customer_id\":3,\"id\":10,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name2\"},{\"id\":2,\"name\":\"name0\"},{\"id\":3,\"name\":\"name1\"}],\"payments\":[{\"amount\":5,\"customer_id\":3,\"id\":1,\"status\":\"paid\"},{\"amount\":-1,\"customer_id\":5,\"id\":2,\"status\":\"paid\"},{\"amount\":9,\"customer_id\":4,\"id\":3,\"status\":\"paid\"},{\"amount\":16,\"customer_id\":3,\"id\":4,\"status\":\"paid\"},{\"amount\":9,\"customer_id\":null,\"id\":5,\"status\":\"pending\"},{\"amount\":12,\"customer_id\":null,\"id\":6,\"status\":\"paid\"},{\"amount\":6,\"customer_id\":1,\"id\":7,\"status\":\"paid\"},{\"amount\":-2,\"customer_id\":5,\"id\":8,\"status\":\"paid\"},{\"amount\":5,\"customer_id\":5,\"id\":9,\"status\":\"paid\"},{\"amount\":13,\"customer_id\":2,\"id\":10,\"status\":\"paid\"},{\"amount\":11,\"customer_id\":1,\"id\":11,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name0\"},{\"id\":2,\"name\":\"name1\"},{\"id\":3,\"name\":\"name2\"},{\"id\":4,\"name\":\"name0\"}],\"payments\":[{\"amount\":0,\"customer_id\":null,\"id\":1,\"status\":\"paid\"},{\"amount\":2,\"customer_id\":null,\"id\":2,\"status\":\"pending\"},{\"amount\":17,\"customer_id\":2,\"id\":3,\"status\":\"pending\"},{\"amount\":14,\"customer_id\":1,\"id\":4,\"status\":\"paid\"},{\"amount\":17,\"customer_id\":4,\"id\":5,\"status\":\"pending\"},{\"amount\":-5,\"customer_id\":null,\"id\":6,\"status\":\"paid\"},{\"amount\":0,\"customer_id\":99,\"id\":7,\"status\":\"paid\"},{\"amount\":16,\"customer_id\":null,\"id\":8,\"status\":\"paid\"},{\"amount\":13,\"customer_id\":3,\"id\":9,\"status\":\"pending\"},{\"amount\":15,\"customer_id\":null,\"id\":10,\"status\":\"paid\"},{\"amount\":3,\"customer_id\":3,\"id\":11,\"status\":\"paid\"},{\"amount\":1,\"customer_id\":99,\"id\":12,\"status\":\"pending\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name1\"},{\"id\":2,\"name\":\"name2\"},{\"id\":3,\"name\":\"name0\"},{\"id\":4,\"name\":\"name1\"},{\"id\":5,\"name\":\"name2\"}],\"payments\":[{\"amount\":16,\"customer_id\":null,\"id\":1,\"status\":\"pending\"},{\"amount\":2,\"customer_id\":99,\"id\":2,\"status\":\"paid\"},{\"amount\":9,\"customer_id\":2,\"id\":3,\"status\":\"pending\"},{\"amount\":-1,\"customer_id\":5,\"id\":4,\"status\":\"paid\"},{\"amount\":4,\"customer_id\":3,\"id\":5,\"status\":\"paid\"},{\"amount\":11,\"customer_id\":null,\"id\":6,\"status\":\"pending\"},{\"amount\":19,\"customer_id\":99,\"id\":7,\"status\":\"pending\"},{\"amount\":3,\"customer_id\":1,\"id\":8,\"status\":\"pending\"},{\"amount\":17,\"customer_id\":2,\"id\":9,\"status\":\"paid\"},{\"amount\":17,\"customer_id\":null,\"id\":10,\"status\":\"pending\"},{\"amount\":-1,\"customer_id\":1,\"id\":11,\"status\":\"paid\"},{\"amount\":2,\"customer_id\":99,\"id\":12,\"status\":\"pending\"},{\"amount\":-3,\"customer_id\":1,\"id\":13,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name2\"},{\"id\":2,\"name\":\"name0\"},{\"id\":3,\"name\":\"name1\"},{\"id\":4,\"name\":\"name2\"},{\"id\":5,\"name\":\"name0\"},{\"id\":6,\"name\":\"name1\"}],\"payments\":[{\"amount\":14,\"customer_id\":99,\"id\":1,\"status\":\"paid\"},{\"amount\":-1,\"customer_id\":2,\"id\":2,\"status\":\"pending\"},{\"amount\":11,\"customer_id\":3,\"id\":3,\"status\":\"pending\"},{\"amount\":10,\"customer_id\":2,\"id\":4,\"status\":\"paid\"},{\"amount\":20,\"customer_id\":4,\"id\":5,\"status\":\"pending\"},{\"amount\":3,\"customer_id\":3,\"id\":6,\"status\":\"paid\"},{\"amount\":6,\"customer_id\":2,\"id\":7,\"status\":\"paid\"},{\"amount\":7,\"customer_id\":2,\"id\":8,\"status\":\"paid\"},{\"amount\":16,\"customer_id\":99,\"id\":9,\"status\":\"paid\"},{\"amount\":14,\"customer_id\":5,\"id\":10,\"status\":\"paid\"},{\"amount\":6,\"customer_id\":5,\"id\":11,\"status\":\"paid\"},{\"amount\":12,\"customer_id\":99,\"id\":12,\"status\":\"pending\"},{\"amount\":-3,\"customer_id\":2,\"id\":13,\"status\":\"paid\"},{\"amount\":9,\"customer_id\":4,\"id\":14,\"status\":\"pending\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[],\"payments\":[{\"amount\":16,\"customer_id\":3,\"id\":1,\"status\":\"paid\"},{\"amount\":-2,\"customer_id\":5,\"id\":2,\"status\":\"pending\"},{\"amount\":6,\"customer_id\":99,\"id\":3,\"status\":\"paid\"},{\"amount\":12,\"customer_id\":null,\"id\":4,\"status\":\"paid\"},{\"amount\":8,\"customer_id\":2,\"id\":5,\"status\":\"paid\"},{\"amount\":17,\"customer_id\":5,\"id\":6,\"status\":\"paid\"},{\"amount\":15,\"customer_id\":null,\"id\":7,\"status\":\"paid\"},{\"amount\":12,\"customer_id\":99,\"id\":8,\"status\":\"paid\"},{\"amount\":20,\"customer_id\":3,\"id\":9,\"status\":\"paid\"},{\"amount\":0,\"customer_id\":5,\"id\":10,\"status\":\"paid\"},{\"amount\":-1,\"customer_id\":1,\"id\":11,\"status\":\"pending\"},{\"amount\":12,\"customer_id\":3,\"id\":12,\"status\":\"pending\"},{\"amount\":0,\"customer_id\":1,\"id\":13,\"status\":\"pending\"},{\"amount\":-1,\"customer_id\":5,\"id\":14,\"status\":\"pending\"},{\"amount\":12,\"customer_id\":4,\"id\":15,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name1\"}],\"payments\":[{\"amount\":20,\"customer_id\":null,\"id\":1,\"status\":\"paid\"},{\"amount\":3,\"customer_id\":5,\"id\":2,\"status\":\"pending\"},{\"amount\":11,\"customer_id\":null,\"id\":3,\"status\":\"paid\"},{\"amount\":10,\"customer_id\":2,\"id\":4,\"status\":\"paid\"},{\"amount\":8,\"customer_id\":4,\"id\":5,\"status\":\"paid\"},{\"amount\":8,\"customer_id\":2,\"id\":6,\"status\":\"paid\"},{\"amount\":-1,\"customer_id\":1,\"id\":7,\"status\":\"pending\"},{\"amount\":16,\"customer_id\":1,\"id\":8,\"status\":\"pending\"},{\"amount\":12,\"customer_id\":null,\"id\":9,\"status\":\"paid\"},{\"amount\":9,\"customer_id\":2,\"id\":10,\"status\":\"paid\"},{\"amount\":2,\"customer_id\":2,\"id\":11,\"status\":\"pending\"},{\"amount\":-4,\"customer_id\":5,\"id\":12,\"status\":\"paid\"},{\"amount\":12,\"customer_id\":3,\"id\":13,\"status\":\"pending\"},{\"amount\":11,\"customer_id\":null,\"id\":14,\"status\":\"pending\"},{\"amount\":-3,\"customer_id\":5,\"id\":15,\"status\":\"pending\"},{\"amount\":1,\"customer_id\":99,\"id\":16,\"status\":\"paid\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name2\"},{\"id\":2,\"name\":\"name0\"}],\"payments\":[{\"amount\":3,\"customer_id\":null,\"id\":1,\"status\":\"pending\"},{\"amount\":20,\"customer_id\":3,\"id\":2,\"status\":\"paid\"},{\"amount\":8,\"customer_id\":99,\"id\":3,\"status\":\"paid\"},{\"amount\":10,\"customer_id\":null,\"id\":4,\"status\":\"paid\"},{\"amount\":7,\"customer_id\":5,\"id\":5,\"status\":\"pending\"},{\"amount\":-4,\"customer_id\":3,\"id\":6,\"status\":\"paid\"},{\"amount\":19,\"customer_id\":5,\"id\":7,\"status\":\"pending\"},{\"amount\":19,\"customer_id\":1,\"id\":8,\"status\":\"pending\"},{\"amount\":-1,\"customer_id\":3,\"id\":9,\"status\":\"pending\"},{\"amount\":17,\"customer_id\":3,\"id\":10,\"status\":\"pending\"},{\"amount\":6,\"customer_id\":99,\"id\":11,\"status\":\"paid\"},{\"amount\":-4,\"customer_id\":2,\"id\":12,\"status\":\"pending\"},{\"amount\":16,\"customer_id\":99,\"id\":13,\"status\":\"paid\"},{\"amount\":-1,\"customer_id\":3,\"id\":14,\"status\":\"paid\"},{\"amount\":1,\"customer_id\":3,\"id\":15,\"status\":\"paid\"},{\"amount\":-4,\"customer_id\":5,\"id\":16,\"status\":\"pending\"},{\"amount\":9,\"customer_id\":null,\"id\":17,\"status\":\"pending\"}]}"
+  },
+  {
+    "payload": "{\"customers\":[{\"id\":1,\"name\":\"name0\"},{\"id\":2,\"name\":\"name1\"},{\"id\":3,\"name\":\"name2\"}],\"payments\":[{\"amount\":-5,\"customer_id\":null,\"id\":1,\"status\":\"paid\"},{\"amount\":-4,\"customer_id\":5,\"id\":2,\"status\":\"paid\"},{\"amount\":10,\"customer_id\":1,\"id\":3,\"status\":\"paid\"},{\"amount\":3,\"customer_id\":null,\"id\":4,\"status\":\"paid\"},{\"amount\":0,\"customer_id\":4,\"id\":5,\"status\":\"pending\"},{\"amount\":2,\"customer_id\":1,\"id\":6,\"status\":\"pending\"},{\"amount\":1,\"customer_id\":2,\"id\":7,\"status\":\"paid\"},{\"amount\":20,\"customer_id\":99,\"id\":8,\"status\":\"pending\"},{\"amount\":17,\"customer_id\":2,\"id\":9,\"status\":\"paid\"},{\"amount\":4,\"customer_id\":3,\"id\":10,\"status\":\"pending\"},{\"amount\":1,\"customer_id\":1,\"id\":11,\"status\":\"pending\"},{\"amount\":8,\"customer_id\":3,\"id\":12,\"status\":\"pending\"},{\"amount\":12,\"customer_id\":1,\"id\":13,\"status\":\"pending\"},{\"amount\":15,\"customer_id\":5,\"id\":14,\"status\":\"paid\"},{\"amount\":-1,\"customer_id\":null,\"id\":15,\"status\":\"paid\"},{\"amount\":14,\"customer_id\":4,\"id\":16,\"status\":\"paid\"},{\"amount\":0,\"customer_id\":99,\"id\":17,\"status\":\"paid\"},{\"amount\":-1,\"customer_id\":4,\"id\":18,\"status\":\"pending\"}]}"
+  }
+]

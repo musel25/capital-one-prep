@@ -1,0 +1,50 @@
+{
+  "id": "c1-06-csv-account-totals",
+  "title": "06. Read quoted CSV records",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-python-data-and-libraries",
+  "examples": [
+    {
+      "input": "{\"csv\": \"account,amount\\n\\\"Acme, West\\\",10\\nBeta,3\\n\\\"Acme, West\\\",-4\\n\"}",
+      "output": "[{\"account\": \"Acme, West\", \"total\": 6}, {\"account\": \"Beta\", \"total\": 3}]",
+      "explanation": "quoted comma and repeated account"
+    },
+    {
+      "input": "{\"csv\": \"account,amount\\n\\\"a\\\"\\\"b\\\",7\\n\\\"line\\nbreak\\\",2\\n\"}",
+      "output": "[{\"account\": \"a\\\"b\", \"total\": 7}, {\"account\": \"line\\nbreak\", \"total\": 2}]",
+      "explanation": "quote and embedded line break"
+    },
+    {
+      "input": "{\"csv\": \"account,amount\\n\"}",
+      "output": "[]",
+      "explanation": "header only"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> list[dict]:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"csv\":\"account,amount\\n\\\"Acme, West\\\",10\\nBeta,3\\n\\\"Acme, West\\\",-4\\n\"}"
+    },
+    {
+      "payload": "{\"csv\":\"account,amount\\n\\\"a\\\"\\\"b\\\",7\\n\\\"line\\nbreak\\\",2\\n\"}"
+    },
+    {
+      "payload": "{\"csv\":\"account,amount\\n\"}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Pass the complete text stream to csv.reader.",
+    "Use a dictionary to accumulate totals without changing first-seen order."
+  ]
+}

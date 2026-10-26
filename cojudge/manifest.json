@@ -1,0 +1,352 @@
+[
+  {
+    "id": "c1-01-strict-numeric-fields",
+    "number": 1,
+    "title": "Strict numeric fields",
+    "cases": 25,
+    "category": "01-python-data-and-libraries"
+  },
+  {
+    "id": "c1-02-exact-money-parser",
+    "number": 2,
+    "title": "Parse money into exact cents",
+    "cases": 27,
+    "category": "01-python-data-and-libraries"
+  },
+  {
+    "id": "c1-03-missing-null-zero",
+    "number": 3,
+    "title": "Keep missing, null, and zero separate",
+    "cases": 24,
+    "category": "01-python-data-and-libraries"
+  },
+  {
+    "id": "c1-04-stable-ticket-order",
+    "number": 4,
+    "title": "Sort tickets with stable ties",
+    "cases": 24,
+    "category": "01-python-data-and-libraries"
+  },
+  {
+    "id": "c1-05-counter-reconciliation",
+    "number": 5,
+    "title": "Reconcile repeated item IDs",
+    "cases": 24,
+    "category": "01-python-data-and-libraries"
+  },
+  {
+    "id": "c1-06-csv-account-totals",
+    "number": 6,
+    "title": "Read quoted CSV records",
+    "cases": 27,
+    "category": "01-python-data-and-libraries"
+  },
+  {
+    "id": "c1-07-typed-json-boundary",
+    "number": 7,
+    "title": "Validate JSON before using TypedDict",
+    "cases": 25,
+    "category": "01-python-data-and-libraries"
+  },
+  {
+    "id": "c1-08-aware-utc-normalization",
+    "number": 8,
+    "title": "Normalize aware timestamps to UTC",
+    "cases": 25,
+    "category": "01-python-data-and-libraries"
+  },
+  {
+    "id": "c1-09-iterator-batches",
+    "number": 9,
+    "title": "Keep the final iterator batch",
+    "cases": 24,
+    "category": "01-python-data-and-libraries"
+  },
+  {
+    "id": "c1-10-stable-priority-jobs",
+    "number": 10,
+    "title": "Schedule jobs with stable priorities",
+    "cases": 24,
+    "category": "01-python-data-and-libraries"
+  },
+  {
+    "id": "c1-11-dataclass-list-isolation",
+    "number": 11,
+    "title": "Fix shared dataclass items",
+    "cases": 24,
+    "category": "02-objects-and-state"
+  },
+  {
+    "id": "c1-12-nested-copy-isolation",
+    "number": 12,
+    "title": "Fix nested configuration copies",
+    "cases": 24,
+    "category": "02-objects-and-state"
+  },
+  {
+    "id": "c1-13-balance-invariants",
+    "number": 13,
+    "title": "Keep an account balance nonnegative",
+    "cases": 24,
+    "category": "02-objects-and-state"
+  },
+  {
+    "id": "c1-14-inheritance-fee-policy",
+    "number": 14,
+    "title": "Extend an account with a fee rule",
+    "cases": 25,
+    "category": "02-objects-and-state"
+  },
+  {
+    "id": "c1-15-composed-fee-protocol",
+    "number": 15,
+    "title": "Compose a calculator with a fee policy",
+    "cases": 25,
+    "category": "02-objects-and-state"
+  },
+  {
+    "id": "c1-16-explicit-order-states",
+    "number": 16,
+    "title": "Model explicit order transitions",
+    "cases": 24,
+    "category": "02-objects-and-state"
+  },
+  {
+    "id": "c1-17-atomic-memory-batch",
+    "number": 17,
+    "title": "Fix an in-memory transfer batch",
+    "cases": 25,
+    "category": "02-objects-and-state"
+  },
+  {
+    "id": "c1-18-event-id-conflicts",
+    "number": 18,
+    "title": "Separate duplicate events from conflicts",
+    "cases": 24,
+    "category": "02-objects-and-state"
+  },
+  {
+    "id": "c1-19-exact-partial-refunds",
+    "number": 19,
+    "title": "Cap partial refunds with exact cents",
+    "cases": 24,
+    "category": "02-objects-and-state"
+  },
+  {
+    "id": "c1-20-typed-memory-ledger",
+    "number": 20,
+    "title": "Build a typed in-memory ledger",
+    "cases": 25,
+    "category": "02-objects-and-state"
+  },
+  {
+    "id": "c1-21-route-contract",
+    "number": 21,
+    "title": "Route and method contracts",
+    "cases": 30,
+    "category": "03-apis-and-clients"
+  },
+  {
+    "id": "c1-22-body-validation",
+    "number": 22,
+    "title": "Validate a request body",
+    "cases": 37,
+    "category": "03-apis-and-clients"
+  },
+  {
+    "id": "c1-23-put-patch-fields",
+    "number": 23,
+    "title": "Replace or patch a profile",
+    "cases": 31,
+    "category": "03-apis-and-clients"
+  },
+  {
+    "id": "c1-24-idempotency-conflicts",
+    "number": 24,
+    "title": "Replay writes with idempotency keys",
+    "cases": 29,
+    "category": "03-apis-and-clients"
+  },
+  {
+    "id": "c1-25-cursor-tie-breaks",
+    "number": 25,
+    "title": "Page by timestamp and id",
+    "cases": 30,
+    "category": "03-apis-and-clients"
+  },
+  {
+    "id": "c1-26-retry-backoff",
+    "number": 26,
+    "title": "Classify retries and cap backoff",
+    "cases": 32,
+    "category": "03-apis-and-clients"
+  },
+  {
+    "id": "c1-27-shared-deadline",
+    "number": 27,
+    "title": "Spend one timeout budget",
+    "cases": 32,
+    "category": "03-apis-and-clients"
+  },
+  {
+    "id": "c1-28-rolling-rate-limit",
+    "number": 28,
+    "title": "Rate limits with a rolling window",
+    "cases": 31,
+    "category": "03-apis-and-clients"
+  },
+  {
+    "id": "c1-29-etag-validation",
+    "number": 29,
+    "title": "Validate cached representations with ETags",
+    "cases": 29,
+    "category": "03-apis-and-clients"
+  },
+  {
+    "id": "c1-30-upstream-page-client",
+    "number": 30,
+    "title": "Build a guarded upstream page client",
+    "cases": 32,
+    "category": "03-apis-and-clients"
+  },
+  {
+    "id": "c1-31-sql-filter-order",
+    "number": 31,
+    "title": "Query posted transfers safely",
+    "cases": 32,
+    "category": "04-sql-and-transactions"
+  },
+  {
+    "id": "c1-32-sql-left-join-fix",
+    "number": 32,
+    "title": "Fix a LEFT JOIN that loses customers",
+    "cases": 32,
+    "category": "04-sql-and-transactions"
+  },
+  {
+    "id": "c1-33-sql-group-having",
+    "number": 33,
+    "title": "Summarize groups without losing NULL meaning",
+    "cases": 32,
+    "category": "04-sql-and-transactions"
+  },
+  {
+    "id": "c1-34-sql-unique-create",
+    "number": 34,
+    "title": "Create accounts with stable conflict rules",
+    "cases": 31,
+    "category": "04-sql-and-transactions"
+  },
+  {
+    "id": "c1-35-sql-latest-per-device",
+    "number": 35,
+    "title": "Select the latest row per device",
+    "cases": 32,
+    "category": "04-sql-and-transactions"
+  },
+  {
+    "id": "c1-36-atomic-transfer-rollback",
+    "number": 36,
+    "title": "Repair an atomic SQL transfer",
+    "cases": 36,
+    "category": "04-sql-and-transactions"
+  },
+  {
+    "id": "c1-37-sql-optimistic-locking",
+    "number": 37,
+    "title": "Reject stale SQL updates",
+    "cases": 36,
+    "category": "04-sql-and-transactions"
+  },
+  {
+    "id": "c1-38-sql-idempotency-key",
+    "number": 38,
+    "title": "Commit a credit and its idempotency key",
+    "cases": 36,
+    "category": "04-sql-and-transactions"
+  },
+  {
+    "id": "c1-39-sql-savepoint-import",
+    "number": 39,
+    "title": "Isolate failed import rows with savepoints",
+    "cases": 37,
+    "category": "04-sql-and-transactions"
+  },
+  {
+    "id": "c1-40-transactional-outbox",
+    "number": 40,
+    "title": "Write an order and its outbox event atomically",
+    "cases": 36,
+    "category": "04-sql-and-transactions"
+  },
+  {
+    "id": "c1-41-ttl-cache-boundaries",
+    "number": 41,
+    "title": "Expire and invalidate cache entries",
+    "cases": 37,
+    "category": "05-system-components"
+  },
+  {
+    "id": "c1-42-bounded-lru-cache",
+    "number": 42,
+    "title": "Build a capacity-bounded LRU cache",
+    "cases": 37,
+    "category": "05-system-components"
+  },
+  {
+    "id": "c1-43-message-deduplication",
+    "number": 43,
+    "title": "Deduplicate at-least-once message delivery",
+    "cases": 36,
+    "category": "05-system-components"
+  },
+  {
+    "id": "c1-44-queue-visibility-tokens",
+    "number": 44,
+    "title": "Reject stale queue acknowledgements",
+    "cases": 36,
+    "category": "05-system-components"
+  },
+  {
+    "id": "c1-45-circuit-breaker-state",
+    "number": 45,
+    "title": "Trace a circuit breaker through recovery",
+    "cases": 36,
+    "category": "05-system-components"
+  },
+  {
+    "id": "c1-46-dependency-job-rounds",
+    "number": 46,
+    "title": "Schedule dependent jobs and detect blocked cycles",
+    "cases": 37,
+    "category": "05-system-components"
+  },
+  {
+    "id": "c1-47-consistent-hash-ring",
+    "number": 47,
+    "title": "Route requests around a consistent hash ring",
+    "cases": 36,
+    "category": "05-system-components"
+  },
+  {
+    "id": "c1-48-replica-version-reads",
+    "number": 48,
+    "title": "Preserve read-your-writes with version floors",
+    "cases": 36,
+    "category": "05-system-components"
+  },
+  {
+    "id": "c1-49-reservation-expiry",
+    "number": 49,
+    "title": "Expire reservations and make transitions idempotent",
+    "cases": 39,
+    "category": "05-system-components"
+  },
+  {
+    "id": "c1-50-payment-service-integration",
+    "number": 50,
+    "title": "Compose a bounded reliable payment service",
+    "cases": 39,
+    "category": "05-system-components"
+  }
+]

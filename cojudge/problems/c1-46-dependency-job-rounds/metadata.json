@@ -1,0 +1,50 @@
+{
+  "id": "c1-46-dependency-job-rounds",
+  "title": "46. Schedule dependent jobs and detect blocked cycles",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "05-system-components",
+  "examples": [
+    {
+      "input": "{\"jobs\": [{\"id\": \"a\", \"depends\": []}, {\"id\": \"b\", \"depends\": [\"a\"]}, {\"id\": \"c\", \"depends\": [\"a\"]}], \"workers\": 2}",
+      "output": "{\"rounds\": [[\"a\"], [\"b\", \"c\"]], \"blocked\": [], \"has_cycle\": false}",
+      "explanation": "dependencies finish before next round"
+    },
+    {
+      "input": "{\"jobs\": [{\"id\": \"c\", \"depends\": []}, {\"id\": \"b\", \"depends\": []}, {\"id\": \"a\", \"depends\": []}], \"workers\": 2}",
+      "output": "{\"rounds\": [[\"a\", \"b\"], [\"c\"]], \"blocked\": [], \"has_cycle\": false}",
+      "explanation": "worker limit and ASCII tie break"
+    },
+    {
+      "input": "{\"jobs\": [{\"id\": \"a\", \"depends\": [\"b\"]}, {\"id\": \"b\", \"depends\": [\"a\"]}], \"workers\": 2}",
+      "output": "{\"rounds\": [], \"blocked\": [\"a\", \"b\"], \"has_cycle\": true}",
+      "explanation": "cycle blocks both jobs"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    # Build deterministic rounds and report unscheduled jobs.\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"a\"},{\"depends\":[\"a\"],\"id\":\"b\"},{\"depends\":[\"a\"],\"id\":\"c\"}],\"workers\":2}"
+    },
+    {
+      "payload": "{\"jobs\":[{\"depends\":[],\"id\":\"c\"},{\"depends\":[],\"id\":\"b\"},{\"depends\":[],\"id\":\"a\"}],\"workers\":2}"
+    },
+    {
+      "payload": "{\"jobs\":[{\"depends\":[\"b\"],\"id\":\"a\"},{\"depends\":[\"a\"],\"id\":\"b\"}],\"workers\":2}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Compute the whole ready set before marking this round complete.",
+    "A stalled nonempty remainder proves a cycle when all dependency IDs exist."
+  ]
+}

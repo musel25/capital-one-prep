@@ -1,0 +1,50 @@
+{
+  "id": "c1-03-missing-null-zero",
+  "title": "03. Keep missing, null, and zero separate",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-python-data-and-libraries",
+  "examples": [
+    {
+      "input": "{\"default\": 10, \"records\": [{}, {\"limit\": null}, {\"limit\": 0}, {\"limit\": 4}]}",
+      "output": "{\"limits\": [10, null, 0, 4], \"configured\": 2}",
+      "explanation": "three distinct field states"
+    },
+    {
+      "input": "{\"default\": 5, \"records\": [{\"limit\": 2}, {\"limit\": 2}]}",
+      "output": "{\"limits\": [2, 2], \"configured\": 2}",
+      "explanation": "count records, not distinct values"
+    },
+    {
+      "input": "{\"default\": 9, \"records\": []}",
+      "output": "{\"limits\": [], \"configured\": 0}",
+      "explanation": "empty records"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"default\":10,\"records\":[{},{\"limit\":null},{\"limit\":0},{\"limit\":4}]}"
+    },
+    {
+      "payload": "{\"default\":5,\"records\":[{\"limit\":2},{\"limit\":2}]}"
+    },
+    {
+      "payload": "{\"default\":9,\"records\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Use key membership to detect absence.",
+    "Use is not None to count configured values."
+  ]
+}

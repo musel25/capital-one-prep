@@ -1,0 +1,50 @@
+{
+  "id": "c1-33-sql-group-having",
+  "title": "33. Summarize groups without losing NULL meaning",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "04-sql-and-transactions",
+  "examples": [
+    {
+      "input": "{\"rows\": [{\"id\": 1, \"account\": \"a\", \"amount\": 10, \"kind\": \"paid\"}, {\"id\": 2, \"account\": \"a\", \"amount\": 10, \"kind\": \"paid\"}, {\"id\": 3, \"account\": \"a\", \"amount\": null, \"kind\": \"paid\"}], \"minimum_total\": 0, \"minimum_events\": 1}",
+      "output": "[{\"account\": \"a\", \"events\": 3, \"valued\": 2, \"total\": 20}]",
+      "explanation": "repeated amounts count and null affects only valued count"
+    },
+    {
+      "input": "{\"rows\": [{\"id\": 1, \"account\": \"a\", \"amount\": 4, \"kind\": \"paid\"}, {\"id\": 2, \"account\": \"a\", \"amount\": 6, \"kind\": \"paid\"}, {\"id\": 3, \"account\": \"b\", \"amount\": 20, \"kind\": \"paid\"}], \"minimum_total\": 10, \"minimum_events\": 2}",
+      "output": "[{\"account\": \"a\", \"events\": 2, \"valued\": 2, \"total\": 10}]",
+      "explanation": "HAVING applies both group thresholds"
+    },
+    {
+      "input": "{\"rows\": [{\"id\": 1, \"account\": \"a\", \"amount\": null, \"kind\": \"paid\"}, {\"id\": 2, \"account\": \"a\", \"amount\": null, \"kind\": \"paid\"}], \"minimum_total\": 0, \"minimum_events\": 1}",
+      "output": "[{\"account\": \"a\", \"events\": 2, \"valued\": 0, \"total\": 0}]",
+      "explanation": "all-null sum becomes zero"
+    }
+  ],
+  "starterCode": {
+    "python": "import sqlite3\n\ndef solve(data):\n    connection = sqlite3.connect(\":memory:\")\n    connection.row_factory = sqlite3.Row\n    try:\n        connection.execute(\"CREATE TABLE entries(id INTEGER PRIMARY KEY, account TEXT NOT NULL, amount INTEGER, kind TEXT NOT NULL)\")\n        connection.executemany(\"INSERT INTO entries VALUES (?, ?, ?, ?)\", [(r[\"id\"], r[\"account\"], r[\"amount\"], r[\"kind\"]) for r in data[\"rows\"]])\n        return [dict(r) for r in summary_rows(connection, data[\"minimum_total\"], data[\"minimum_events\"])]\n    finally:\n        connection.close()\n\ndef summary_rows(connection, minimum_total, minimum_events):\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"minimum_events\":1,\"minimum_total\":0,\"rows\":[{\"account\":\"a\",\"amount\":10,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":10,\"id\":2,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":3,\"kind\":\"paid\"}]}"
+    },
+    {
+      "payload": "{\"minimum_events\":2,\"minimum_total\":10,\"rows\":[{\"account\":\"a\",\"amount\":4,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":6,\"id\":2,\"kind\":\"paid\"},{\"account\":\"b\",\"amount\":20,\"id\":3,\"kind\":\"paid\"}]}"
+    },
+    {
+      "payload": "{\"minimum_events\":1,\"minimum_total\":0,\"rows\":[{\"account\":\"a\",\"amount\":null,\"id\":1,\"kind\":\"paid\"},{\"account\":\"a\",\"amount\":null,\"id\":2,\"kind\":\"paid\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "COUNT(*) and COUNT(amount) answer different questions.",
+    "Apply the same COALESCE sum rule to the displayed total and the HAVING condition."
+  ]
+}

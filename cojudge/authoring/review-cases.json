@@ -1,0 +1,6082 @@
+{
+  "1": [
+    {
+      "input": {
+        "values": [
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000
+        ]
+      },
+      "expected": {
+        "total": 100000000000,
+        "rejected": []
+      },
+      "label": "maximum integer batch"
+    }
+  ],
+  "2": [
+    {
+      "input": {
+        "amounts": [
+          "000000000000",
+          "0000000000000",
+          "-0000000000000.1",
+          "999999999999.9",
+          "\uff11",
+          "-000000000001.01"
+        ]
+      },
+      "expected": {
+        "cents": [
+          0,
+          null,
+          null,
+          99999999999990,
+          null,
+          -101
+        ]
+      },
+      "label": "format width and zero width count"
+    }
+  ],
+  "3": [
+    {
+      "input": {
+        "default": 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+        "records": [
+          {},
+          {
+            "limit": 0
+          },
+          {
+            "limit": null
+          },
+          {
+            "limit": 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+          }
+        ]
+      },
+      "expected": {
+        "limits": [
+          10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+          0,
+          null,
+          1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+        ],
+        "configured": 2
+      },
+      "label": "unbounded permitted integer preservation"
+    }
+  ],
+  "4": [
+    {
+      "input": {
+        "tickets": [
+          {
+            "id": "\ud83d\ude80",
+            "priority": 2,
+            "created": 2
+          },
+          {
+            "id": "A",
+            "priority": 2,
+            "created": 2
+          },
+          {
+            "id": "\u0000",
+            "priority": 3,
+            "created": 1000000
+          }
+        ]
+      },
+      "expected": [
+        "\u0000",
+        "\ud83d\ude80",
+        "A"
+      ],
+      "label": "Unicode identifiers do not sort ties"
+    }
+  ],
+  "5": [
+    {
+      "input": {
+        "expected": [
+          "A",
+          "\t",
+          "\u0000",
+          "A"
+        ],
+        "observed": [
+          "A"
+        ]
+      },
+      "expected": {
+        "missing": [
+          {
+            "id": "\u0000",
+            "count": 1
+          },
+          {
+            "id": "\t",
+            "count": 1
+          },
+          {
+            "id": "A",
+            "count": 1
+          }
+        ],
+        "extra": []
+      },
+      "label": "ASCII control IDs sort by code point"
+    }
+  ],
+  "6": [
+    {
+      "input": {
+        "csv": "account,amount\r\n\"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\",00000000000001000000\r\n\"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\",-0000000000001000000\r\n"
+      },
+      "expected": [
+        {
+          "account": "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+          "total": 0
+        }
+      ],
+      "label": "CSV field length and leading-zero amount boundaries"
+    },
+    {
+      "input": {
+        "csv": "account,amount\n\"x\ry\",1\n\u0000,2\n\"x\ry\",3"
+      },
+      "expected": [
+        {
+          "account": "x\ry",
+          "total": 4
+        },
+        {
+          "account": "\u0000",
+          "total": 2
+        }
+      ],
+      "label": "CSV quoted carriage return and nul account"
+    }
+  ],
+  "7": [
+    {
+      "input": {
+        "records": [
+          {
+            "id": "\ud83d\ude80",
+            "amount": 0,
+            "x": {
+              "a": [
+                true
+              ]
+            }
+          },
+          {
+            "id": "\u0000",
+            "amount": 1000000
+          },
+          {
+            "id": "a",
+            "amount": -0.0
+          }
+        ]
+      },
+      "expected": {
+        "valid": [
+          {
+            "id": "\ud83d\ude80",
+            "amount": 0
+          },
+          {
+            "id": "\u0000",
+            "amount": 1000000
+          }
+        ],
+        "rejected": [
+          2
+        ]
+      },
+      "label": "Unicode identifier and nested extra field"
+    }
+  ],
+  "8": [
+    {
+      "input": {
+        "timestamps": [
+          "2000-01-01T00:00:00+13:59",
+          "2099-12-31T23:59:59-13:59",
+          "2000-03-01T00:00:00+00:01"
+        ]
+      },
+      "expected": [
+        "1999-12-31T10:01:00Z",
+        "2100-01-01T13:58:59Z",
+        "2000-02-29T23:59:00Z"
+      ],
+      "label": "year rollover with minute offset"
+    }
+  ],
+  "9": [
+    {
+      "input": {
+        "values": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99
+        ],
+        "size": 11
+      },
+      "expected": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        [
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32
+        ],
+        [
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43
+        ],
+        [
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54
+        ],
+        [
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65
+        ],
+        [
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76
+        ],
+        [
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        [
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98
+        ],
+        [
+          99
+        ]
+      ],
+      "label": "maximum input with singleton tail"
+    }
+  ],
+  "10": [
+    {
+      "input": {
+        "actions": [
+          {
+            "op": "add",
+            "id": "old",
+            "priority": 0
+          },
+          {
+            "op": "add",
+            "id": "urgent",
+            "priority": -1
+          },
+          {
+            "op": "pop"
+          },
+          {
+            "op": "add",
+            "id": "a",
+            "priority": 0
+          },
+          {
+            "op": "pop"
+          },
+          {
+            "op": "pop"
+          }
+        ]
+      },
+      "expected": {
+        "popped": [
+          "urgent",
+          "old",
+          "a"
+        ],
+        "pending": []
+      },
+      "label": "stable insertion counter with occupied queue"
+    }
+  ],
+  "11": [
+    {
+      "input": {
+        "names": [
+          "a",
+          "b",
+          "c"
+        ],
+        "actions": [
+          {
+            "box": 2,
+            "item": "\ud83d\ude80"
+          },
+          {
+            "box": 0,
+            "item": "x"
+          },
+          {
+            "box": 2,
+            "item": "\ud83d\ude80"
+          }
+        ]
+      },
+      "expected": [
+        {
+          "name": "a",
+          "items": [
+            "x"
+          ]
+        },
+        {
+          "name": "b",
+          "items": []
+        },
+        {
+          "name": "c",
+          "items": [
+            "\ud83d\ude80",
+            "\ud83d\ude80"
+          ]
+        }
+      ],
+      "label": "three boxes interleaved Unicode items"
+    }
+  ],
+  "12": [
+    {
+      "input": {
+        "template": {
+          "limits": {
+            "daily": 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+            "monthly": 1
+          },
+          "tags": [
+            "x"
+          ]
+        },
+        "changes": [
+          {
+            "daily": 0,
+            "tag": "x"
+          },
+          {}
+        ]
+      },
+      "expected": {
+        "template": {
+          "limits": {
+            "daily": 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+            "monthly": 1
+          },
+          "tags": [
+            "x"
+          ]
+        },
+        "copies": [
+          {
+            "limits": {
+              "daily": 0,
+              "monthly": 1
+            },
+            "tags": [
+              "x",
+              "x"
+            ]
+          },
+          {
+            "limits": {
+              "daily": 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+              "monthly": 1
+            },
+            "tags": [
+              "x"
+            ]
+          }
+        ]
+      },
+      "label": "unbounded integer copy with repeated tags"
+    }
+  ],
+  "13": [
+    {
+      "input": {
+        "balance": 1000000000000,
+        "actions": [
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          },
+          {
+            "op": "deposit",
+            "cents": 1000000000000
+          }
+        ]
+      },
+      "expected": {
+        "accepted": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "balance": 101000000000000
+      },
+      "label": "maximum cumulative deposits"
+    }
+  ],
+  "14": [
+    {
+      "input": {
+        "kind": "standard",
+        "balance": 1000000000000,
+        "fee": 999999999999,
+        "threshold": 0,
+        "withdrawals": [
+          2,
+          1,
+          1
+        ]
+      },
+      "expected": {
+        "accepted": [
+          false,
+          true,
+          false
+        ],
+        "balance": 0
+      },
+      "label": "large fee and rejected debit isolation"
+    }
+  ],
+  "15": [
+    {
+      "input": {
+        "policy": {
+          "kind": "rate",
+          "bps": 9999
+        },
+        "amounts": [
+          999999999999,
+          1,
+          0
+        ]
+      },
+      "expected": [
+        {
+          "fee": 999900000000,
+          "total": 1999899999999
+        },
+        {
+          "fee": 1,
+          "total": 2
+        },
+        {
+          "fee": 0,
+          "total": 0
+        }
+      ],
+      "label": "large near-full basis point rounding"
+    }
+  ],
+  "16": [
+    {
+      "input": {
+        "actions": [
+          "authorize",
+          "capture",
+          "capture",
+          "refund",
+          "cancel"
+        ]
+      },
+      "expected": {
+        "accepted": [
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "state": "REFUNDED"
+      },
+      "label": "capture duplicate preserves refundable state"
+    }
+  ],
+  "17": [
+    {
+      "input": {
+        "accounts": {
+          "a": 8,
+          "b": 2
+        },
+        "batches": [
+          [
+            {
+              "from": "a",
+              "to": "a",
+              "cents": 8
+            },
+            {
+              "from": "a",
+              "to": "b",
+              "cents": 8
+            },
+            {
+              "from": "b",
+              "to": "a",
+              "cents": 11
+            }
+          ],
+          [
+            {
+              "from": "b",
+              "to": "a",
+              "cents": 2
+            }
+          ]
+        ]
+      },
+      "expected": {
+        "accepted": [
+          false,
+          true
+        ],
+        "balances": {
+          "a": 10,
+          "b": 0
+        }
+      },
+      "label": "self transfer then failed return rolls back batch"
+    }
+  ],
+  "18": [
+    {
+      "input": {
+        "balance": -1000000000000,
+        "events": [
+          {
+            "id": "0",
+            "delta": -1000000000000
+          },
+          {
+            "id": "1",
+            "delta": -1000000000000
+          },
+          {
+            "id": "2",
+            "delta": -1000000000000
+          },
+          {
+            "id": "3",
+            "delta": -1000000000000
+          },
+          {
+            "id": "4",
+            "delta": -1000000000000
+          },
+          {
+            "id": "5",
+            "delta": -1000000000000
+          },
+          {
+            "id": "6",
+            "delta": -1000000000000
+          },
+          {
+            "id": "7",
+            "delta": -1000000000000
+          },
+          {
+            "id": "8",
+            "delta": -1000000000000
+          },
+          {
+            "id": "9",
+            "delta": -1000000000000
+          },
+          {
+            "id": "10",
+            "delta": -1000000000000
+          },
+          {
+            "id": "11",
+            "delta": -1000000000000
+          },
+          {
+            "id": "12",
+            "delta": -1000000000000
+          },
+          {
+            "id": "13",
+            "delta": -1000000000000
+          },
+          {
+            "id": "14",
+            "delta": -1000000000000
+          },
+          {
+            "id": "15",
+            "delta": -1000000000000
+          },
+          {
+            "id": "16",
+            "delta": -1000000000000
+          },
+          {
+            "id": "17",
+            "delta": -1000000000000
+          },
+          {
+            "id": "18",
+            "delta": -1000000000000
+          },
+          {
+            "id": "19",
+            "delta": -1000000000000
+          },
+          {
+            "id": "20",
+            "delta": -1000000000000
+          },
+          {
+            "id": "21",
+            "delta": -1000000000000
+          },
+          {
+            "id": "22",
+            "delta": -1000000000000
+          },
+          {
+            "id": "23",
+            "delta": -1000000000000
+          },
+          {
+            "id": "24",
+            "delta": -1000000000000
+          },
+          {
+            "id": "25",
+            "delta": -1000000000000
+          },
+          {
+            "id": "26",
+            "delta": -1000000000000
+          },
+          {
+            "id": "27",
+            "delta": -1000000000000
+          },
+          {
+            "id": "28",
+            "delta": -1000000000000
+          },
+          {
+            "id": "29",
+            "delta": -1000000000000
+          },
+          {
+            "id": "30",
+            "delta": -1000000000000
+          },
+          {
+            "id": "31",
+            "delta": -1000000000000
+          },
+          {
+            "id": "32",
+            "delta": -1000000000000
+          },
+          {
+            "id": "33",
+            "delta": -1000000000000
+          },
+          {
+            "id": "34",
+            "delta": -1000000000000
+          },
+          {
+            "id": "35",
+            "delta": -1000000000000
+          },
+          {
+            "id": "36",
+            "delta": -1000000000000
+          },
+          {
+            "id": "37",
+            "delta": -1000000000000
+          },
+          {
+            "id": "38",
+            "delta": -1000000000000
+          },
+          {
+            "id": "39",
+            "delta": -1000000000000
+          },
+          {
+            "id": "40",
+            "delta": -1000000000000
+          },
+          {
+            "id": "41",
+            "delta": -1000000000000
+          },
+          {
+            "id": "42",
+            "delta": -1000000000000
+          },
+          {
+            "id": "43",
+            "delta": -1000000000000
+          },
+          {
+            "id": "44",
+            "delta": -1000000000000
+          },
+          {
+            "id": "45",
+            "delta": -1000000000000
+          },
+          {
+            "id": "46",
+            "delta": -1000000000000
+          },
+          {
+            "id": "47",
+            "delta": -1000000000000
+          },
+          {
+            "id": "48",
+            "delta": -1000000000000
+          },
+          {
+            "id": "49",
+            "delta": -1000000000000
+          },
+          {
+            "id": "50",
+            "delta": -1000000000000
+          },
+          {
+            "id": "51",
+            "delta": -1000000000000
+          },
+          {
+            "id": "52",
+            "delta": -1000000000000
+          },
+          {
+            "id": "53",
+            "delta": -1000000000000
+          },
+          {
+            "id": "54",
+            "delta": -1000000000000
+          },
+          {
+            "id": "55",
+            "delta": -1000000000000
+          },
+          {
+            "id": "56",
+            "delta": -1000000000000
+          },
+          {
+            "id": "57",
+            "delta": -1000000000000
+          },
+          {
+            "id": "58",
+            "delta": -1000000000000
+          },
+          {
+            "id": "59",
+            "delta": -1000000000000
+          },
+          {
+            "id": "60",
+            "delta": -1000000000000
+          },
+          {
+            "id": "61",
+            "delta": -1000000000000
+          },
+          {
+            "id": "62",
+            "delta": -1000000000000
+          },
+          {
+            "id": "63",
+            "delta": -1000000000000
+          },
+          {
+            "id": "64",
+            "delta": -1000000000000
+          },
+          {
+            "id": "65",
+            "delta": -1000000000000
+          },
+          {
+            "id": "66",
+            "delta": -1000000000000
+          },
+          {
+            "id": "67",
+            "delta": -1000000000000
+          },
+          {
+            "id": "68",
+            "delta": -1000000000000
+          },
+          {
+            "id": "69",
+            "delta": -1000000000000
+          },
+          {
+            "id": "70",
+            "delta": -1000000000000
+          },
+          {
+            "id": "71",
+            "delta": -1000000000000
+          },
+          {
+            "id": "72",
+            "delta": -1000000000000
+          },
+          {
+            "id": "73",
+            "delta": -1000000000000
+          },
+          {
+            "id": "74",
+            "delta": -1000000000000
+          },
+          {
+            "id": "75",
+            "delta": -1000000000000
+          },
+          {
+            "id": "76",
+            "delta": -1000000000000
+          },
+          {
+            "id": "77",
+            "delta": -1000000000000
+          },
+          {
+            "id": "78",
+            "delta": -1000000000000
+          },
+          {
+            "id": "79",
+            "delta": -1000000000000
+          },
+          {
+            "id": "80",
+            "delta": -1000000000000
+          },
+          {
+            "id": "81",
+            "delta": -1000000000000
+          },
+          {
+            "id": "82",
+            "delta": -1000000000000
+          },
+          {
+            "id": "83",
+            "delta": -1000000000000
+          },
+          {
+            "id": "84",
+            "delta": -1000000000000
+          },
+          {
+            "id": "85",
+            "delta": -1000000000000
+          },
+          {
+            "id": "86",
+            "delta": -1000000000000
+          },
+          {
+            "id": "87",
+            "delta": -1000000000000
+          },
+          {
+            "id": "88",
+            "delta": -1000000000000
+          },
+          {
+            "id": "89",
+            "delta": -1000000000000
+          },
+          {
+            "id": "90",
+            "delta": -1000000000000
+          },
+          {
+            "id": "91",
+            "delta": -1000000000000
+          },
+          {
+            "id": "92",
+            "delta": -1000000000000
+          },
+          {
+            "id": "93",
+            "delta": -1000000000000
+          },
+          {
+            "id": "94",
+            "delta": -1000000000000
+          },
+          {
+            "id": "95",
+            "delta": -1000000000000
+          },
+          {
+            "id": "96",
+            "delta": -1000000000000
+          },
+          {
+            "id": "97",
+            "delta": -1000000000000
+          },
+          {
+            "id": "98",
+            "delta": -1000000000000
+          },
+          {
+            "id": "99",
+            "delta": -1000000000000
+          }
+        ]
+      },
+      "expected": {
+        "status": [
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied",
+          "applied"
+        ],
+        "balance": -101000000000000
+      },
+      "label": "large negative cumulative totals"
+    }
+  ],
+  "19": [
+    {
+      "input": {
+        "payments": {
+          "a": 1000000000000,
+          "b": 0
+        },
+        "refunds": [
+          {
+            "payment": "a",
+            "cents": 0
+          },
+          {
+            "payment": "b",
+            "cents": 1
+          },
+          {
+            "payment": "a",
+            "cents": 1000000000000
+          },
+          {
+            "payment": "a",
+            "cents": 0
+          }
+        ]
+      },
+      "expected": {
+        "accepted": [
+          true,
+          false,
+          true,
+          true
+        ],
+        "remaining": {
+          "a": 0,
+          "b": 0
+        }
+      },
+      "label": "failure between zero refund and full refund"
+    }
+  ],
+  "20": [
+    {
+      "input": {
+        "accounts": {
+          "a": 1,
+          "b": 2
+        },
+        "events": [
+          {
+            "id": "x",
+            "from": "a",
+            "to": "a",
+            "cents": 2
+          },
+          {
+            "id": "fund",
+            "from": "b",
+            "to": "a",
+            "cents": 2
+          },
+          {
+            "id": "x",
+            "from": "a",
+            "to": "a",
+            "cents": 2
+          },
+          {
+            "id": "x",
+            "from": "a",
+            "to": "b",
+            "cents": 2
+          }
+        ]
+      },
+      "expected": {
+        "status": [
+          "insufficient",
+          "applied",
+          "duplicate",
+          "conflict"
+        ],
+        "balances": {
+          "a": 3,
+          "b": 0
+        }
+      },
+      "label": "failed self transfer reserves full payload"
+    }
+  ],
+  "21": [
+    {
+      "input": {
+        "items": [
+          {
+            "id": 1000000,
+            "name": "last"
+          }
+        ],
+        "requests": [
+          {
+            "path": "/items/1000000\n",
+            "method": "GET"
+          },
+          {
+            "path": "/items/1000000",
+            "method": "HEAD"
+          },
+          {
+            "path": "/items/1000000",
+            "method": "DELETE"
+          },
+          {
+            "path": "/items/1000000",
+            "method": "HEAD"
+          }
+        ]
+      },
+      "expected": [
+        {
+          "status": 404,
+          "body": {
+            "error": "not_found"
+          }
+        },
+        {
+          "status": 405,
+          "body": {
+            "error": "method_not_allowed"
+          },
+          "allow": [
+            "GET",
+            "DELETE"
+          ]
+        },
+        {
+          "status": 204,
+          "body": null
+        },
+        {
+          "status": 405,
+          "body": {
+            "error": "method_not_allowed"
+          },
+          "allow": [
+            "GET",
+            "DELETE"
+          ]
+        }
+      ],
+      "label": "exact paths and method precedence"
+    }
+  ],
+  "22": [
+    {
+      "input": {
+        "bodies": [
+          {
+            "account": [],
+            "amount": {},
+            "note": [],
+            "other": null
+          },
+          {
+            "account": "a",
+            "amount": 1,
+            "note": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+          }
+        ]
+      },
+      "expected": [
+        {
+          "status": 422,
+          "errors": [
+            "account",
+            "amount",
+            "note",
+            "unknown"
+          ]
+        },
+        {
+          "status": 201,
+          "body": {
+            "account": "a",
+            "amount": 1,
+            "note": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+          }
+        }
+      ],
+      "label": "all malformed field shapes and valid control note"
+    }
+  ],
+  "23": [
+    {
+      "input": {
+        "initial": {
+          "name": "a",
+          "email": "old"
+        },
+        "requests": [
+          {
+            "method": "PATCH",
+            "body": {
+              "email": null
+            }
+          },
+          {
+            "method": "PATCH",
+            "body": {
+              "name": "new",
+              "email": true
+            }
+          },
+          {
+            "method": "PATCH",
+            "body": {
+              "email": ""
+            }
+          }
+        ]
+      },
+      "expected": {
+        "responses": [
+          {
+            "status": 200,
+            "body": {
+              "name": "a",
+              "email": null
+            }
+          },
+          {
+            "status": 422,
+            "body": {
+              "error": "invalid"
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "name": "a",
+              "email": ""
+            }
+          }
+        ],
+        "state": {
+          "name": "a",
+          "email": ""
+        }
+      },
+      "label": "invalid field must preserve preceding profile snapshot"
+    }
+  ],
+  "24": [
+    {
+      "input": {
+        "requests": [
+          {
+            "key": "\u0000",
+            "body": {
+              "to": "A",
+              "amount": 1
+            }
+          },
+          {
+            "key": "\u0000x",
+            "body": {
+              "to": "A",
+              "amount": 1
+            }
+          },
+          {
+            "key": "\u0000",
+            "body": {
+              "amount": 1,
+              "to": "A"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "responses": [
+          {
+            "status": 201,
+            "body": {
+              "id": 1,
+              "to": "A",
+              "amount": 1
+            },
+            "replayed": false
+          },
+          {
+            "status": 201,
+            "body": {
+              "id": 2,
+              "to": "A",
+              "amount": 1
+            },
+            "replayed": false
+          },
+          {
+            "status": 201,
+            "body": {
+              "id": 1,
+              "to": "A",
+              "amount": 1
+            },
+            "replayed": true
+          }
+        ],
+        "transfers": [
+          {
+            "id": 1,
+            "to": "A",
+            "amount": 1
+          },
+          {
+            "id": 2,
+            "to": "A",
+            "amount": 1
+          }
+        ]
+      },
+      "label": "control keys remain distinct"
+    }
+  ],
+  "25": [
+    {
+      "input": {
+        "records": [
+          {
+            "id": 1000000,
+            "ts": 0
+          },
+          {
+            "id": 1,
+            "ts": 1
+          },
+          {
+            "id": 2,
+            "ts": 1
+          }
+        ],
+        "actions": [
+          {
+            "op": "page",
+            "after": [
+              0,
+              1000000
+            ],
+            "limit": 1
+          },
+          {
+            "op": "page",
+            "after": [
+              1,
+              1
+            ],
+            "limit": 1
+          }
+        ]
+      },
+      "expected": [
+        {
+          "ids": [
+            1
+          ],
+          "next": [
+            1,
+            1
+          ]
+        },
+        {
+          "ids": [
+            2
+          ],
+          "next": null
+        }
+      ],
+      "label": "cursor tuple comparison before timestamp rollover"
+    }
+  ],
+  "26": [
+    {
+      "input": {
+        "outcomes": [
+          "timeout",
+          "timeout",
+          "timeout",
+          "timeout",
+          "timeout",
+          "timeout",
+          "timeout",
+          "timeout",
+          "timeout",
+          "timeout"
+        ],
+        "max_attempts": 10,
+        "base": 1000,
+        "cap": 10000
+      },
+      "expected": {
+        "attempts": 10,
+        "delays": [
+          1000,
+          2000,
+          4000,
+          8000,
+          10000,
+          10000,
+          10000,
+          10000,
+          10000
+        ],
+        "result": "exhausted"
+      },
+      "label": "maximum attempts capped backoff"
+    }
+  ],
+  "27": [
+    {
+      "input": {
+        "budget": 1,
+        "steps": [
+          {
+            "duration": 0,
+            "timeout": 1,
+            "outcome": "ok"
+          },
+          {
+            "duration": 0,
+            "timeout": 1,
+            "outcome": "error"
+          },
+          {
+            "duration": 1,
+            "timeout": 1,
+            "outcome": "ok"
+          }
+        ]
+      },
+      "expected": {
+        "result": "error",
+        "elapsed": 0,
+        "completed": 1,
+        "started": 2
+      },
+      "label": "zero duration error after successful work"
+    }
+  ],
+  "28": [
+    {
+      "input": {
+        "limit": 2,
+        "window": 1,
+        "events": [
+          {
+            "time": 999999,
+            "user": "a"
+          },
+          {
+            "time": 999999,
+            "user": "a"
+          },
+          {
+            "time": 999999,
+            "user": "a"
+          },
+          {
+            "time": 1000000,
+            "user": "a"
+          },
+          {
+            "time": 1000000,
+            "user": "b"
+          }
+        ]
+      },
+      "expected": [
+        {
+          "allowed": true,
+          "remaining": 1,
+          "retry_after": 0
+        },
+        {
+          "allowed": true,
+          "remaining": 0,
+          "retry_after": 0
+        },
+        {
+          "allowed": false,
+          "remaining": 0,
+          "retry_after": 1
+        },
+        {
+          "allowed": true,
+          "remaining": 1,
+          "retry_after": 0
+        },
+        {
+          "allowed": true,
+          "remaining": 1,
+          "retry_after": 0
+        }
+      ],
+      "label": "expired simultaneous events and user separation"
+    }
+  ],
+  "29": [
+    {
+      "input": {
+        "initial": {
+          "version": 1000000,
+          "body": "a"
+        },
+        "requests": [
+          {
+            "op": "put",
+            "body": ""
+          },
+          {
+            "op": "get",
+            "tags": [
+              "W/\"v1000000\""
+            ]
+          },
+          {
+            "op": "get",
+            "tags": [
+              "*"
+            ]
+          }
+        ]
+      },
+      "expected": [
+        {
+          "status": 200,
+          "etag": "\"v1000001\"",
+          "body": ""
+        },
+        {
+          "status": 200,
+          "etag": "\"v1000001\"",
+          "body": ""
+        },
+        {
+          "status": 304,
+          "etag": "\"v1000001\"",
+          "body": null
+        }
+      ],
+      "label": "version grows past input boundary"
+    }
+  ],
+  "30": [
+    {
+      "input": {
+        "start": "a",
+        "max_pages": 2,
+        "pages": {
+          "a": {
+            "status": 200,
+            "items": [
+              {
+                "id": 0,
+                "value": "first"
+              }
+            ],
+            "next": "b"
+          },
+          "b": {
+            "status": 200,
+            "items": [],
+            "next": "a"
+          },
+          "unreachable": {
+            "status": 599
+          }
+        }
+      },
+      "expected": {
+        "items": [
+          {
+            "id": 0,
+            "value": "first"
+          }
+        ],
+        "requests": [
+          "a",
+          "b"
+        ],
+        "error": "cycle"
+      },
+      "label": "cycle after empty page outranks max-page cap"
+    }
+  ],
+  "31": [
+    {
+      "input": {
+        "rows": [
+          {
+            "id": 1,
+            "owner": " x ",
+            "amount": 1000000,
+            "posted": true
+          },
+          {
+            "id": 2,
+            "owner": "x",
+            "amount": 1000000,
+            "posted": true
+          },
+          {
+            "id": 3,
+            "owner": " x ",
+            "amount": 1000000,
+            "posted": true
+          }
+        ],
+        "owner": " x ",
+        "minimum": 1000000,
+        "limit": 1
+      },
+      "expected": [
+        {
+          "id": 1,
+          "amount": 1000000
+        }
+      ],
+      "label": "space is significant in bound SQL owner"
+    }
+  ],
+  "32": [
+    {
+      "input": {
+        "customers": [
+          {
+            "id": 1,
+            "name": "same"
+          },
+          {
+            "id": 2,
+            "name": "same"
+          }
+        ],
+        "payments": [
+          {
+            "id": 1,
+            "customer_id": 1,
+            "amount": 1,
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "customer_id": 2,
+            "amount": 0,
+            "status": "paid"
+          },
+          {
+            "id": 3,
+            "customer_id": null,
+            "amount": 100,
+            "status": "paid"
+          }
+        ]
+      },
+      "expected": [
+        {
+          "customer_id": 1,
+          "name": "same",
+          "payment_id": null,
+          "amount": null
+        },
+        {
+          "customer_id": 2,
+          "name": "same",
+          "payment_id": 2,
+          "amount": 0
+        }
+      ],
+      "label": "duplicate display names never multiply another customer payments"
+    }
+  ],
+  "33": [
+    {
+      "input": {
+        "rows": [
+          {
+            "id": 1,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 2,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 3,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 4,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 5,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 6,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 7,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 8,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 9,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 10,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 11,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 12,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 13,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 14,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 15,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 16,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 17,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 18,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 19,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 20,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 21,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 22,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 23,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 24,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 25,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 26,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 27,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 28,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 29,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 30,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 31,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 32,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 33,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 34,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 35,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 36,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 37,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 38,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 39,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 40,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 41,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 42,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 43,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 44,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 45,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 46,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 47,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 48,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 49,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 50,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 51,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 52,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 53,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 54,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 55,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 56,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 57,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 58,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 59,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 60,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 61,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 62,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 63,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 64,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 65,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 66,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 67,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 68,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 69,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 70,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 71,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 72,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 73,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 74,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 75,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 76,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 77,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 78,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 79,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 80,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 81,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 82,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 83,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 84,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 85,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 86,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 87,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 88,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 89,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 90,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 91,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 92,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 93,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 94,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 95,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 96,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 97,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 98,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 99,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 100,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 101,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 102,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 103,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 104,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 105,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 106,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 107,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 108,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 109,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 110,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 111,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 112,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 113,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 114,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 115,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 116,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 117,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 118,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 119,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 120,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 121,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 122,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 123,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 124,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 125,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 126,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 127,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 128,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 129,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 130,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 131,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 132,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 133,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 134,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 135,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 136,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 137,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 138,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 139,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 140,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 141,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 142,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 143,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 144,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 145,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 146,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 147,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 148,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 149,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 150,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 151,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 152,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 153,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 154,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 155,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 156,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 157,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 158,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 159,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 160,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 161,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 162,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 163,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 164,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 165,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 166,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 167,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 168,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 169,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 170,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 171,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 172,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 173,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 174,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 175,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 176,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 177,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 178,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 179,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 180,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 181,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 182,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 183,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 184,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 185,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 186,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 187,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 188,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 189,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 190,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 191,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 192,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 193,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 194,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 195,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 196,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 197,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 198,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 199,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 200,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 201,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 202,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 203,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 204,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 205,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 206,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 207,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 208,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 209,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 210,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 211,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 212,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 213,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 214,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 215,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 216,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 217,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 218,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 219,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 220,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 221,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 222,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 223,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 224,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 225,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 226,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 227,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 228,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 229,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 230,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 231,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 232,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 233,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 234,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 235,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 236,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 237,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 238,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 239,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 240,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 241,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 242,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 243,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 244,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 245,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 246,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 247,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 248,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 249,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 250,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 251,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 252,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 253,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 254,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 255,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 256,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 257,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 258,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 259,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 260,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 261,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 262,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 263,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 264,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 265,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 266,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 267,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 268,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 269,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 270,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 271,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 272,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 273,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 274,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 275,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 276,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 277,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 278,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 279,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 280,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 281,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 282,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 283,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 284,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 285,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 286,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 287,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 288,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 289,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 290,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 291,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 292,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 293,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 294,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 295,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 296,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 297,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 298,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 299,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          },
+          {
+            "id": 300,
+            "account": "a",
+            "amount": 1000000,
+            "kind": "paid"
+          }
+        ],
+        "minimum_total": 300000000,
+        "minimum_events": 300
+      },
+      "expected": [
+        {
+          "account": "a",
+          "events": 300,
+          "valued": 300,
+          "total": 300000000
+        }
+      ],
+      "label": "maximum sum and count boundaries"
+    }
+  ],
+  "34": [
+    {
+      "input": {
+        "initial": [
+          {
+            "username": " a' ",
+            "quota": 1
+          }
+        ],
+        "requests": [
+          {
+            "username": " a' ",
+            "quota": 2
+          },
+          {
+            "username": "a'",
+            "quota": 0
+          },
+          {
+            "username": " a' ",
+            "quota": 1
+          }
+        ]
+      },
+      "expected": {
+        "responses": [
+          {
+            "status": 409,
+            "record": {
+              "username": " a' ",
+              "quota": 1
+            }
+          },
+          {
+            "status": 201,
+            "record": {
+              "username": "a'",
+              "quota": 0
+            }
+          },
+          {
+            "status": 200,
+            "record": {
+              "username": " a' ",
+              "quota": 1
+            }
+          }
+        ],
+        "accounts": [
+          {
+            "username": " a' ",
+            "quota": 1
+          },
+          {
+            "username": "a'",
+            "quota": 0
+          }
+        ]
+      },
+      "label": "space and quote usernames remain exact distinct keys"
+    }
+  ],
+  "35": [
+    {
+      "input": {
+        "rows": [
+          {
+            "id": 1,
+            "device": "A",
+            "ts": 0,
+            "value": 7
+          },
+          {
+            "id": 2,
+            "device": "A",
+            "ts": 0,
+            "value": null
+          },
+          {
+            "id": 3,
+            "device": "A",
+            "ts": 1,
+            "value": 9
+          }
+        ],
+        "cutoff": 0
+      },
+      "expected": [
+        {
+          "device": "A",
+          "id": 2,
+          "ts": 0,
+          "value": null
+        }
+      ],
+      "label": "eligible null tie wins over older nonnull and future row"
+    }
+  ],
+  "36": [
+    {
+      "input": {
+        "balances": {
+          "0": 1000000,
+          "1": 1000000,
+          "2": 1000000,
+          "3": 1000000,
+          "4": 1000000,
+          "5": 1000000,
+          "6": 1000000,
+          "7": 1000000,
+          "8": 1000000,
+          "9": 1000000,
+          "10": 1000000,
+          "11": 1000000,
+          "12": 1000000,
+          "13": 1000000,
+          "14": 1000000,
+          "15": 1000000,
+          "16": 1000000,
+          "17": 1000000,
+          "18": 1000000,
+          "19": 1000000,
+          "20": 1000000,
+          "21": 1000000,
+          "22": 1000000,
+          "23": 1000000,
+          "24": 1000000,
+          "25": 1000000,
+          "26": 1000000,
+          "27": 1000000,
+          "28": 1000000,
+          "29": 1000000,
+          "30": 1000000,
+          "31": 1000000,
+          "32": 1000000,
+          "33": 1000000,
+          "34": 1000000,
+          "35": 1000000,
+          "36": 1000000,
+          "37": 1000000,
+          "38": 1000000,
+          "39": 1000000,
+          "40": 1000000,
+          "41": 1000000,
+          "42": 1000000,
+          "43": 1000000,
+          "44": 1000000,
+          "45": 1000000,
+          "46": 1000000,
+          "47": 1000000,
+          "48": 1000000,
+          "49": 1000000,
+          "50": 1000000,
+          "51": 1000000,
+          "52": 1000000,
+          "53": 1000000,
+          "54": 1000000,
+          "55": 1000000,
+          "56": 1000000,
+          "57": 1000000,
+          "58": 1000000,
+          "59": 1000000,
+          "60": 1000000,
+          "61": 1000000,
+          "62": 1000000,
+          "63": 1000000,
+          "64": 1000000,
+          "65": 1000000,
+          "66": 1000000,
+          "67": 1000000,
+          "68": 1000000,
+          "69": 1000000,
+          "70": 1000000,
+          "71": 1000000,
+          "72": 1000000,
+          "73": 1000000,
+          "74": 1000000,
+          "75": 1000000,
+          "76": 1000000,
+          "77": 1000000,
+          "78": 1000000,
+          "79": 1000000,
+          "80": 1000000,
+          "81": 1000000,
+          "82": 1000000,
+          "83": 1000000,
+          "84": 1000000,
+          "85": 1000000,
+          "86": 1000000,
+          "87": 1000000,
+          "88": 1000000,
+          "89": 1000000,
+          "90": 1000000,
+          "91": 1000000,
+          "92": 1000000,
+          "93": 1000000,
+          "94": 1000000,
+          "95": 1000000,
+          "96": 1000000,
+          "97": 1000000,
+          "98": 1000000,
+          "99": 1000000
+        },
+        "transfers": [
+          {
+            "from": "1",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "2",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "3",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "4",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "5",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "6",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "7",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "8",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "9",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "10",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "11",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "12",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "13",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "14",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "15",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "16",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "17",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "18",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "19",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "20",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "21",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "22",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "23",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "24",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "25",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "26",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "27",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "28",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "29",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "30",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "31",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "32",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "33",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "34",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "35",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "36",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "37",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "38",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "39",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "40",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "41",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "42",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "43",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "44",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "45",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "46",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "47",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "48",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "49",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "50",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "51",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "52",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "53",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "54",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "55",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "56",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "57",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "58",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "59",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "60",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "61",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "62",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "63",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "64",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "65",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "66",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "67",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "68",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "69",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "70",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "71",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "72",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "73",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "74",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "75",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "76",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "77",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "78",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "79",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "80",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "81",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "82",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "83",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "84",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "85",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "86",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "87",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "88",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "89",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "90",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "91",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "92",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "93",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "94",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "95",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "96",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "97",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "98",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          },
+          {
+            "from": "99",
+            "to": "0",
+            "amount": 1000000,
+            "fail": false
+          }
+        ]
+      },
+      "expected": {
+        "results": [
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok",
+          "ok"
+        ],
+        "balances": {
+          "0": 100000000,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0,
+          "12": 0,
+          "13": 0,
+          "14": 0,
+          "15": 0,
+          "16": 0,
+          "17": 0,
+          "18": 0,
+          "19": 0,
+          "20": 0,
+          "21": 0,
+          "22": 0,
+          "23": 0,
+          "24": 0,
+          "25": 0,
+          "26": 0,
+          "27": 0,
+          "28": 0,
+          "29": 0,
+          "30": 0,
+          "31": 0,
+          "32": 0,
+          "33": 0,
+          "34": 0,
+          "35": 0,
+          "36": 0,
+          "37": 0,
+          "38": 0,
+          "39": 0,
+          "40": 0,
+          "41": 0,
+          "42": 0,
+          "43": 0,
+          "44": 0,
+          "45": 0,
+          "46": 0,
+          "47": 0,
+          "48": 0,
+          "49": 0,
+          "50": 0,
+          "51": 0,
+          "52": 0,
+          "53": 0,
+          "54": 0,
+          "55": 0,
+          "56": 0,
+          "57": 0,
+          "58": 0,
+          "59": 0,
+          "60": 0,
+          "61": 0,
+          "62": 0,
+          "63": 0,
+          "64": 0,
+          "65": 0,
+          "66": 0,
+          "67": 0,
+          "68": 0,
+          "69": 0,
+          "70": 0,
+          "71": 0,
+          "72": 0,
+          "73": 0,
+          "74": 0,
+          "75": 0,
+          "76": 0,
+          "77": 0,
+          "78": 0,
+          "79": 0,
+          "80": 0,
+          "81": 0,
+          "82": 0,
+          "83": 0,
+          "84": 0,
+          "85": 0,
+          "86": 0,
+          "87": 0,
+          "88": 0,
+          "89": 0,
+          "90": 0,
+          "91": 0,
+          "92": 0,
+          "93": 0,
+          "94": 0,
+          "95": 0,
+          "96": 0,
+          "97": 0,
+          "98": 0,
+          "99": 0
+        }
+      },
+      "label": "maximum total money consolidation"
+    }
+  ],
+  "37": [
+    {
+      "input": {
+        "value": "old",
+        "version": 1000000,
+        "updates": [
+          {
+            "expected": 1000000,
+            "value": "new"
+          },
+          {
+            "expected": 1000000,
+            "value": "stale"
+          }
+        ]
+      },
+      "expected": {
+        "accepted": [
+          true,
+          false
+        ],
+        "value": "new",
+        "version": 1000001
+      },
+      "label": "max initial version acceptance and stale rejection"
+    }
+  ],
+  "38": [
+    {
+      "input": {
+        "balance": 0,
+        "credits": [
+          {
+            "key": "\u0000",
+            "amount": 2,
+            "fail": false
+          },
+          {
+            "key": "\u0000x",
+            "amount": 3,
+            "fail": false
+          },
+          {
+            "key": "\u0000",
+            "amount": 9,
+            "fail": true
+          }
+        ]
+      },
+      "expected": {
+        "results": [
+          "ok",
+          "ok",
+          "conflict"
+        ],
+        "balance": 5,
+        "keys": [
+          "\u0000",
+          "\u0000x"
+        ]
+      },
+      "label": "NUL key and prefix key use separate SQL primary keys"
+    }
+  ],
+  "39": [
+    {
+      "input": {
+        "batches": [
+          {
+            "rows": [
+              {
+                "id": "\u0000",
+                "qty": 3,
+                "fail": true
+              },
+              {
+                "id": "\u0000",
+                "qty": -1,
+                "fail": true
+              },
+              {
+                "id": "\u0000",
+                "qty": 0,
+                "fail": false
+              },
+              {
+                "id": "\u0000x",
+                "qty": 1,
+                "fail": false
+              }
+            ],
+            "abort": false
+          }
+        ]
+      },
+      "expected": {
+        "batches": [
+          {
+            "rows": [
+              "failed",
+              "invalid",
+              "ok",
+              "ok"
+            ],
+            "committed": true
+          }
+        ],
+        "rows": [
+          [
+            "\u0000",
+            0
+          ],
+          [
+            "\u0000x",
+            1
+          ]
+        ]
+      },
+      "label": "rollback and constraints with embedded NUL identifier"
+    }
+  ],
+  "40": [
+    {
+      "input": {
+        "orders": [
+          {
+            "id": "\u0000",
+            "amount": 1,
+            "fail": "event"
+          },
+          {
+            "id": "\u0000",
+            "amount": 2,
+            "fail": "none"
+          },
+          {
+            "id": "\u0000",
+            "amount": 1,
+            "fail": "none"
+          }
+        ]
+      },
+      "expected": {
+        "results": [
+          "failed",
+          "ok",
+          "conflict"
+        ],
+        "orders": [
+          [
+            "\u0000",
+            2
+          ]
+        ],
+        "events": [
+          [
+            "\u0000",
+            2
+          ]
+        ]
+      },
+      "label": "outbox failure permits changed retry payload"
+    }
+  ],
+  "41": [
+    {
+      "input": {
+        "ops": [
+          {
+            "op": "put",
+            "at": 1000000,
+            "key": "a",
+            "value": -1000000,
+            "ttl": 1000000
+          },
+          {
+            "op": "get",
+            "at": 1000000,
+            "key": "a"
+          },
+          {
+            "op": "put",
+            "at": 1000000,
+            "key": "a",
+            "value": 1,
+            "ttl": 0
+          },
+          {
+            "op": "invalidate",
+            "at": 1000000,
+            "key": "a"
+          }
+        ]
+      },
+      "expected": {
+        "results": [
+          "stored",
+          -1000000,
+          "stored",
+          false
+        ],
+        "keys": []
+      },
+      "label": "expiration beyond input clock maximum"
+    }
+  ],
+  "42": [
+    {
+      "input": {
+        "capacity": 2,
+        "ops": [
+          {
+            "op": "put",
+            "key": "a",
+            "value": 0
+          },
+          {
+            "op": "put",
+            "key": "b",
+            "value": 1
+          },
+          {
+            "op": "get",
+            "key": "none"
+          },
+          {
+            "op": "put",
+            "key": "a",
+            "value": 2
+          },
+          {
+            "op": "put",
+            "key": "c",
+            "value": 3
+          },
+          {
+            "op": "delete",
+            "key": "a"
+          }
+        ]
+      },
+      "expected": {
+        "results": [
+          null,
+          null,
+          null,
+          null,
+          "b",
+          true
+        ],
+        "entries": [
+          [
+            "c",
+            3
+          ]
+        ]
+      },
+      "label": "missing access and overwrite preserve correct eviction"
+    }
+  ],
+  "43": [
+    {
+      "input": {
+        "total": -1,
+        "deliveries": [
+          {
+            "id": "a",
+            "amount": -1000000,
+            "fail": "after"
+          },
+          {
+            "id": "a",
+            "amount": -1000000,
+            "fail": "before"
+          },
+          {
+            "id": "b",
+            "amount": 0,
+            "fail": "before"
+          },
+          {
+            "id": "b",
+            "amount": 0,
+            "fail": "after"
+          }
+        ]
+      },
+      "expected": {
+        "results": [
+          "retry",
+          "ack",
+          "retry",
+          "retry"
+        ],
+        "total": -1000001,
+        "processed": [
+          "a",
+          "b"
+        ]
+      },
+      "label": "signed effect committed despite missing acknowledgement"
+    }
+  ],
+  "44": [
+    {
+      "input": {
+        "messages": [
+          "b",
+          "a"
+        ],
+        "timeout": 1,
+        "ops": [
+          {
+            "op": "receive",
+            "at": 0
+          },
+          {
+            "op": "receive",
+            "at": 0
+          },
+          {
+            "op": "ack",
+            "at": 1,
+            "id": "a",
+            "token": 1
+          },
+          {
+            "op": "receive",
+            "at": 1
+          },
+          {
+            "op": "ack",
+            "at": 1,
+            "id": "b",
+            "token": 1
+          },
+          {
+            "op": "ack",
+            "at": 1,
+            "id": "b",
+            "token": 2
+          }
+        ]
+      },
+      "expected": {
+        "results": [
+          {
+            "id": "b",
+            "token": 1
+          },
+          {
+            "id": "a",
+            "token": 1
+          },
+          false,
+          {
+            "id": "b",
+            "token": 2
+          },
+          false,
+          true
+        ],
+        "pending": [
+          "a"
+        ]
+      },
+      "label": "stale tokens cannot ack invisible later delivery"
+    }
+  ],
+  "45": [
+    {
+      "input": {
+        "threshold": 2,
+        "cooldown": 1,
+        "calls": [
+          {
+            "at": 0,
+            "ok": false
+          },
+          {
+            "at": 0,
+            "ok": false
+          },
+          {
+            "at": 1,
+            "ok": false
+          },
+          {
+            "at": 1,
+            "ok": true
+          }
+        ]
+      },
+      "expected": {
+        "results": [
+          {
+            "mode": "closed",
+            "result": "failure",
+            "state": "closed"
+          },
+          {
+            "mode": "closed",
+            "result": "failure",
+            "state": "open"
+          },
+          {
+            "mode": "probe",
+            "result": "failure",
+            "state": "open"
+          },
+          {
+            "mode": "blocked",
+            "result": "blocked",
+            "state": "open"
+          }
+        ],
+        "state": "open",
+        "failures": 3,
+        "retry_at": 2
+      },
+      "label": "failed probe and same-time blocked call"
+    }
+  ],
+  "46": [
+    {
+      "input": {
+        "jobs": [
+          {
+            "id": "c",
+            "depends": [
+              "a",
+              "b"
+            ]
+          },
+          {
+            "id": "b",
+            "depends": []
+          },
+          {
+            "id": "a",
+            "depends": []
+          },
+          {
+            "id": "x",
+            "depends": [
+              "x"
+            ]
+          },
+          {
+            "id": "z",
+            "depends": [
+              "x"
+            ]
+          }
+        ],
+        "workers": 1
+      },
+      "expected": {
+        "rounds": [
+          [
+            "a"
+          ],
+          [
+            "b"
+          ],
+          [
+            "c"
+          ]
+        ],
+        "blocked": [
+          "x",
+          "z"
+        ],
+        "has_cycle": true
+      },
+      "label": "self-cycle and independent join with worker bound"
+    }
+  ],
+  "47": [
+    {
+      "input": {
+        "nodes": [
+          {
+            "id": "a",
+            "hash": 0
+          },
+          {
+            "id": "z",
+            "hash": 999
+          }
+        ],
+        "ops": [
+          {
+            "op": "remove",
+            "id": "a"
+          },
+          {
+            "op": "add",
+            "id": "b",
+            "hash": 0
+          },
+          {
+            "op": "lookup",
+            "hash": 999
+          },
+          {
+            "op": "lookup",
+            "hash": 1
+          },
+          {
+            "op": "remove",
+            "id": "z"
+          },
+          {
+            "op": "lookup",
+            "hash": 999
+          }
+        ]
+      },
+      "expected": {
+        "results": [
+          true,
+          "added",
+          "z",
+          "z",
+          true,
+          "b"
+        ],
+        "ring": [
+          [
+            0,
+            "b"
+          ]
+        ]
+      },
+      "label": "reuse removed point under another ID"
+    }
+  ],
+  "48": [
+    {
+      "input": {
+        "replicas": [
+          {
+            "id": "z",
+            "version": 1,
+            "value": -1
+          },
+          {
+            "id": "a",
+            "version": 0,
+            "value": 0
+          }
+        ],
+        "ops": [
+          {
+            "op": "publish",
+            "id": "a",
+            "version": 1,
+            "value": -1
+          },
+          {
+            "op": "read",
+            "min_version": 1
+          },
+          {
+            "op": "publish",
+            "id": "z",
+            "version": 0,
+            "value": 0
+          }
+        ]
+      },
+      "expected": {
+        "results": [
+          "applied",
+          {
+            "id": "a",
+            "version": 1,
+            "value": -1
+          },
+          "stale"
+        ],
+        "replicas": [
+          [
+            "a",
+            1,
+            -1
+          ],
+          [
+            "z",
+            1,
+            -1
+          ]
+        ]
+      },
+      "label": "negative values and version ties after publication"
+    }
+  ],
+  "49": [
+    {
+      "input": {
+        "stock": 4,
+        "ops": [
+          {
+            "op": "reserve",
+            "at": 0,
+            "id": "a",
+            "qty": 4,
+            "ttl": 1
+          },
+          {
+            "op": "reserve",
+            "at": 1,
+            "id": "a",
+            "qty": 3,
+            "ttl": 1
+          },
+          {
+            "op": "reserve",
+            "at": 1,
+            "id": "b",
+            "qty": 4,
+            "ttl": 1
+          },
+          {
+            "op": "confirm",
+            "at": 1,
+            "id": "b"
+          },
+          {
+            "op": "release",
+            "at": 2,
+            "id": "a"
+          }
+        ]
+      },
+      "expected": {
+        "results": [
+          "held",
+          "conflict",
+          "held",
+          "confirmed",
+          "expired"
+        ],
+        "available": 0,
+        "reservations": [
+          [
+            "a",
+            "expired"
+          ],
+          [
+            "b",
+            "confirmed"
+          ]
+        ]
+      },
+      "label": "expired conflict checked after cleanup and terminal state retained"
+    }
+  ],
+  "50": [
+    {
+      "input": {
+        "balances": {
+          "a": 2,
+          "b": 0
+        },
+        "payments": [
+          {
+            "key": "x",
+            "from": "a",
+            "to": "b",
+            "amount": 2,
+            "fail": "outbox"
+          },
+          {
+            "key": "x",
+            "from": "a",
+            "to": "b",
+            "amount": 1,
+            "fail": "none"
+          },
+          {
+            "key": "y",
+            "from": "b",
+            "to": "a",
+            "amount": 1,
+            "fail": "none"
+          },
+          {
+            "key": "x",
+            "from": "a",
+            "to": "b",
+            "amount": 1,
+            "fail": "debit"
+          }
+        ]
+      },
+      "expected": {
+        "results": [
+          "failed",
+          "ok",
+          "ok",
+          "replay"
+        ],
+        "balances": {
+          "a": 2,
+          "b": 0
+        },
+        "events": [
+          [
+            "x",
+            "a",
+            "b",
+            1
+          ],
+          [
+            "y",
+            "b",
+            "a",
+            1
+          ]
+        ]
+      },
+      "label": "successful reverse payment and failed key recovery"
+    }
+  ]
+}

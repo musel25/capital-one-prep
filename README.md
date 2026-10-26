@@ -8,6 +8,12 @@ The daily page provides the agenda. Code is practiced in your own editor, with i
 
 ## Start practicing
 
+**Technical-only course:** [Capital One Engineering 50 on CoJudge](https://cojudge.musel.dev/?course=capital-one-engineering-50).
+Start at problem 01 and select Python. The five levels cover Python data,
+objects and state, APIs, SQL, and system components. Each problem includes a
+short lesson, hints, runnable tests, and an optional reference solution.
+See the [course guide](cojudge/README.md) for the skill map and test process.
+
 ```bash
 cd /home/musel/Github/capital-one-prep
 uv sync

@@ -1,0 +1,847 @@
+[
+  {
+    "input": {
+      "payments": {
+        "p": 100
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 30
+        },
+        {
+          "payment": "p",
+          "cents": 80
+        },
+        {
+          "payment": "p",
+          "cents": 70
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true
+      ],
+      "remaining": {
+        "p": 0
+      }
+    },
+    "label": "cumulative cap and failure preservation"
+  },
+  {
+    "input": {
+      "payments": {
+        "a": 50,
+        "b": 20
+      },
+      "refunds": [
+        {
+          "payment": "b",
+          "cents": 20
+        },
+        {
+          "payment": "a",
+          "cents": 10
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true
+      ],
+      "remaining": {
+        "a": 40,
+        "b": 0
+      }
+    },
+    "label": "separate payment state"
+  },
+  {
+    "input": {
+      "payments": {},
+      "refunds": []
+    },
+    "expected": {
+      "accepted": [],
+      "remaining": {}
+    },
+    "label": "no payments"
+  },
+  {
+    "input": {
+      "payments": {
+        "a": 12,
+        "b": 0
+      },
+      "refunds": []
+    },
+    "expected": {
+      "accepted": [],
+      "remaining": {
+        "a": 12,
+        "b": 0
+      }
+    },
+    "label": "unrefunded payments remain"
+  },
+  {
+    "input": {
+      "payments": {
+        "a": 0
+      },
+      "refunds": [
+        {
+          "payment": "a",
+          "cents": 0
+        },
+        {
+          "payment": "a",
+          "cents": 1
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false
+      ],
+      "remaining": {
+        "a": 0
+      }
+    },
+    "label": "zero charge"
+  },
+  {
+    "input": {
+      "payments": {
+        "a": 1
+      },
+      "refunds": [
+        {
+          "payment": "a",
+          "cents": 1
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "remaining": {
+        "a": 0
+      }
+    },
+    "label": "one-cent full refund"
+  },
+  {
+    "input": {
+      "payments": {
+        "a": 10
+      },
+      "refunds": [
+        {
+          "payment": "a",
+          "cents": 11
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false
+      ],
+      "remaining": {
+        "a": 10
+      }
+    },
+    "label": "request exceeds original charge"
+  },
+  {
+    "input": {
+      "payments": {
+        "a": 10
+      },
+      "refunds": [
+        {
+          "payment": "a",
+          "cents": 10
+        },
+        {
+          "payment": "a",
+          "cents": 10
+        },
+        {
+          "payment": "a",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true
+      ],
+      "remaining": {
+        "a": 0
+      }
+    },
+    "label": "repeated full refund and zero"
+  },
+  {
+    "input": {
+      "payments": {
+        "a": 3
+      },
+      "refunds": [
+        {
+          "payment": "a",
+          "cents": 1
+        },
+        {
+          "payment": "a",
+          "cents": 1
+        },
+        {
+          "payment": "a",
+          "cents": 1
+        },
+        {
+          "payment": "a",
+          "cents": 1
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "remaining": {
+        "a": 0
+      }
+    },
+    "label": "small cumulative refunds"
+  },
+  {
+    "input": {
+      "payments": {
+        "a": 29
+      },
+      "refunds": [
+        {
+          "payment": "a",
+          "cents": 10
+        },
+        {
+          "payment": "a",
+          "cents": 19
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true
+      ],
+      "remaining": {
+        "a": 0
+      }
+    },
+    "label": "exact cents avoid floating error"
+  },
+  {
+    "input": {
+      "payments": {
+        "a": 1000000000000
+      },
+      "refunds": [
+        {
+          "payment": "a",
+          "cents": 999999999999
+        },
+        {
+          "payment": "a",
+          "cents": 1
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true
+      ],
+      "remaining": {
+        "a": 0
+      }
+    },
+    "label": "large exact remaining amount"
+  },
+  {
+    "input": {
+      "payments": {
+        "a": 5,
+        "b": 5
+      },
+      "refunds": [
+        {
+          "payment": "a",
+          "cents": 5
+        },
+        {
+          "payment": "b",
+          "cents": 6
+        },
+        {
+          "payment": "b",
+          "cents": 5
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true
+      ],
+      "remaining": {
+        "a": 0,
+        "b": 0
+      }
+    },
+    "label": "rejected payment does not affect another"
+  },
+  {
+    "input": {
+      "payments": {
+        "p": 20,
+        "q": 0
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 1
+        },
+        {
+          "payment": "p",
+          "cents": 20
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        },
+        {
+          "payment": "p",
+          "cents": 19
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "remaining": {
+        "p": 0,
+        "q": 0
+      }
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "payments": {
+        "p": 21,
+        "q": 1
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 2
+        },
+        {
+          "payment": "p",
+          "cents": 20
+        },
+        {
+          "payment": "q",
+          "cents": 1
+        },
+        {
+          "payment": "p",
+          "cents": 19
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "remaining": {
+        "p": 0,
+        "q": 0
+      }
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "payments": {
+        "p": 22,
+        "q": 2
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 3
+        },
+        {
+          "payment": "p",
+          "cents": 20
+        },
+        {
+          "payment": "q",
+          "cents": 2
+        },
+        {
+          "payment": "p",
+          "cents": 19
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "remaining": {
+        "p": 0,
+        "q": 0
+      }
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "payments": {
+        "p": 23,
+        "q": 3
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 4
+        },
+        {
+          "payment": "p",
+          "cents": 20
+        },
+        {
+          "payment": "q",
+          "cents": 3
+        },
+        {
+          "payment": "p",
+          "cents": 19
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "remaining": {
+        "p": 0,
+        "q": 0
+      }
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "payments": {
+        "p": 24,
+        "q": 4
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 5
+        },
+        {
+          "payment": "p",
+          "cents": 20
+        },
+        {
+          "payment": "q",
+          "cents": 4
+        },
+        {
+          "payment": "p",
+          "cents": 19
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "remaining": {
+        "p": 0,
+        "q": 0
+      }
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "payments": {
+        "p": 25,
+        "q": 5
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 6
+        },
+        {
+          "payment": "p",
+          "cents": 20
+        },
+        {
+          "payment": "q",
+          "cents": 5
+        },
+        {
+          "payment": "p",
+          "cents": 19
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "remaining": {
+        "p": 0,
+        "q": 0
+      }
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "payments": {
+        "p": 26,
+        "q": 6
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 7
+        },
+        {
+          "payment": "p",
+          "cents": 20
+        },
+        {
+          "payment": "q",
+          "cents": 6
+        },
+        {
+          "payment": "p",
+          "cents": 19
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "remaining": {
+        "p": 0,
+        "q": 0
+      }
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "payments": {
+        "p": 27,
+        "q": 7
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 8
+        },
+        {
+          "payment": "p",
+          "cents": 20
+        },
+        {
+          "payment": "q",
+          "cents": 7
+        },
+        {
+          "payment": "p",
+          "cents": 19
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "remaining": {
+        "p": 0,
+        "q": 0
+      }
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "payments": {
+        "p": 28,
+        "q": 8
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 9
+        },
+        {
+          "payment": "p",
+          "cents": 20
+        },
+        {
+          "payment": "q",
+          "cents": 8
+        },
+        {
+          "payment": "p",
+          "cents": 19
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "remaining": {
+        "p": 0,
+        "q": 0
+      }
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "payments": {
+        "p": 29,
+        "q": 9
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 10
+        },
+        {
+          "payment": "p",
+          "cents": 20
+        },
+        {
+          "payment": "q",
+          "cents": 9
+        },
+        {
+          "payment": "p",
+          "cents": 19
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "remaining": {
+        "p": 0,
+        "q": 0
+      }
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "payments": {
+        "p": 30,
+        "q": 10
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 11
+        },
+        {
+          "payment": "p",
+          "cents": 20
+        },
+        {
+          "payment": "q",
+          "cents": 10
+        },
+        {
+          "payment": "p",
+          "cents": 19
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "remaining": {
+        "p": 0,
+        "q": 0
+      }
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "payments": {
+        "p": 31,
+        "q": 11
+      },
+      "refunds": [
+        {
+          "payment": "p",
+          "cents": 12
+        },
+        {
+          "payment": "p",
+          "cents": 20
+        },
+        {
+          "payment": "q",
+          "cents": 11
+        },
+        {
+          "payment": "p",
+          "cents": 19
+        },
+        {
+          "payment": "q",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "remaining": {
+        "p": 0,
+        "q": 0
+      }
+    },
+    "label": "additional-12"
+  }
+]

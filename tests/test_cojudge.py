@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from cojudge.authoring.support import (
-    build_problem, check_python, check_java, json_equal, validate_spec,
+    ROOT, build_problem, check_python, check_java, json_equal, validate_spec, load_specs,
 )
 
 
@@ -94,3 +94,48 @@ def test_java_preserves_integer_vs_float_input_type(tmp_path):
     spec["generated"] = [{"value": i + 12} for i in range(12)]
     spec["mutations"] = [{"name": "accepts floats", "old": "type(data['value']) is int", "new": "isinstance(data['value'], (int, float))"}]
     assert check_java(spec, tmp_path)["cases"] == 24
+
+
+@pytest.mark.skipif(not shutil.which("javac"), reason="Java compiler needed")
+def test_java_rejects_signed_unicode_escape_even_if_it_decodes_to_answer(tmp_path):
+    spec = sample_spec()
+    spec["reference"] = 'def solve(data):\n    return "A"\n'
+    spec["java"] = 'public Object solve(Map<String,Object> d) { return "A"; }'
+    spec["cases"] = [{**case, "expected": "A"} for case in spec["cases"]]
+    spec["mutations"] = [{"name": "wrong character", "old": '"A"', "new": '"B"'}]
+    assert check_java(spec, tmp_path)["cases"] == 24
+
+
+def test_published_course_has_fifty_ordered_complete_python_problems():
+    pack = ROOT / "cojudge"
+    course = json.loads((pack / "courses/capital-one-engineering-50/courseinfo.json").read_text())
+    groups = course["problems-of-category"]
+    ids = [problem for group in course["category-order"] for problem in groups[group]]
+    assert len(ids) == len(set(ids)) == 50
+    assert all(len(groups[group]) == 10 for group in groups)
+    assert [int(name.split("-")[1]) for name in ids] == list(range(1, 51))
+    for problem in ids:
+        folder = pack / "problems" / problem
+        assert {"metadata.json", "statement.md", "official-tests.json", "Marker.java", "solution.md"} <= {p.name for p in folder.iterdir()}
+        meta = json.loads((folder / "metadata.json").read_text())
+        assert meta["link"] == ""  # The site would label this as a LeetCode link.
+        assert list(meta["starterCode"]) == ["python"]
+        compile(meta["starterCode"]["python"], problem, "exec")
+        assert len(json.loads((folder / "official-tests.json").read_text())) >= 24
+    review = json.loads((pack / "authoring/review-cases.json").read_text())
+    assert set(review) == {str(n) for n in range(1, 51)}
+    assert sum(len(cases) for cases in review.values()) == 51
+
+
+def test_bugfix_starters_run_and_expose_the_disclosed_defect():
+    from cojudge.authoring.support import python_solver
+    import copy
+
+    for spec in load_specs([11, 12, 17, 32, 36]):
+        solve = python_solver(spec["starter"])
+        wrong_results = 0
+        for case in spec["cases"]:
+            # These are runnable faulty programs, rather than missing-code stubs.
+            actual = solve(copy.deepcopy(case["input"]))
+            wrong_results += not json_equal(actual, case["expected"])
+        assert wrong_results, f"Starter unexpectedly solves problem {spec['number']}"

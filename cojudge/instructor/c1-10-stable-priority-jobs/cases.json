@@ -1,0 +1,855 @@
+[
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "slow",
+          "priority": 5
+        },
+        {
+          "op": "add",
+          "id": "fast",
+          "priority": 1
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "popped": [
+        "fast"
+      ],
+      "pending": [
+        "slow"
+      ]
+    },
+    "label": "smallest priority first"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "z",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "a",
+          "priority": 1
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "popped": [
+        "z"
+      ],
+      "pending": [
+        "a"
+      ]
+    },
+    "label": "equal priorities use insertion order"
+  },
+  {
+    "input": {
+      "actions": []
+    },
+    "expected": {
+      "popped": [],
+      "pending": []
+    },
+    "label": "empty action list"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "popped": [
+        null,
+        null
+      ],
+      "pending": []
+    },
+    "label": "empty pops"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "A",
+          "priority": 0
+        }
+      ]
+    },
+    "expected": {
+      "popped": [],
+      "pending": [
+        "A"
+      ]
+    },
+    "label": "single pending job"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "A",
+          "priority": 0
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "popped": [
+        "A",
+        null
+      ],
+      "pending": []
+    },
+    "label": "drain then empty pop"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "A",
+          "priority": 100
+        },
+        {
+          "op": "add",
+          "id": "B",
+          "priority": -100
+        }
+      ]
+    },
+    "expected": {
+      "popped": [],
+      "pending": [
+        "B",
+        "A"
+      ]
+    },
+    "label": "priority boundaries"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "same",
+          "priority": 2
+        },
+        {
+          "op": "add",
+          "id": "same",
+          "priority": 2
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "popped": [
+        "same",
+        "same"
+      ],
+      "pending": []
+    },
+    "label": "duplicate job IDs"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "A",
+          "priority": 0
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "add",
+          "id": "B",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "C",
+          "priority": 0
+        }
+      ]
+    },
+    "expected": {
+      "popped": [
+        "A"
+      ],
+      "pending": [
+        "B",
+        "C"
+      ]
+    },
+    "label": "new jobs after draining"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "A",
+          "priority": 3
+        },
+        {
+          "op": "add",
+          "id": "B",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "C",
+          "priority": 2
+        },
+        {
+          "op": "add",
+          "id": "D",
+          "priority": 0
+        }
+      ]
+    },
+    "expected": {
+      "popped": [],
+      "pending": [
+        "D",
+        "B",
+        "C",
+        "A"
+      ]
+    },
+    "label": "pending report is fully sorted"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "pop"
+        },
+        {
+          "op": "add",
+          "id": "",
+          "priority": 0
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "popped": [
+        null,
+        ""
+      ],
+      "pending": []
+    },
+    "label": "empty ID differs from null"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "A",
+          "priority": 2
+        },
+        {
+          "op": "add",
+          "id": "B",
+          "priority": 2
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "add",
+          "id": "C",
+          "priority": 1
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "popped": [
+        "A",
+        "C"
+      ],
+      "pending": [
+        "B"
+      ]
+    },
+    "label": "new urgent job passes waiting job"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "0-0",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "0-1",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "0-2",
+          "priority": 1
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "0-0",
+        "0-1",
+        "0-2"
+      ],
+      "popped": []
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "1-0",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "1-1",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "1-2",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "1-3",
+          "priority": 0
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "1-0",
+        "1-3",
+        "1-1"
+      ],
+      "popped": [
+        "1-2"
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "2-0",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "2-1",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "2-2",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "2-3",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "2-4",
+          "priority": -1
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "2-2",
+        "2-0",
+        "2-3"
+      ],
+      "popped": [
+        "2-1",
+        "2-4"
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "3-0",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "3-1",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "3-2",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "3-3",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "3-4",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "3-5",
+          "priority": 1
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "3-4",
+        "3-2",
+        "3-5"
+      ],
+      "popped": [
+        "3-0",
+        "3-3",
+        "3-1"
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "4-0",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "4-1",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "4-2",
+          "priority": -1
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "pending": [],
+      "popped": [
+        "4-2",
+        "4-0",
+        "4-1",
+        null
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "5-0",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "5-1",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "5-2",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "5-3",
+          "priority": 1
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "5-1",
+        "5-2",
+        "5-0",
+        "5-3"
+      ],
+      "popped": []
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "6-0",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "6-1",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "6-2",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "6-3",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "6-4",
+          "priority": 0
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "6-3",
+        "6-1",
+        "6-4",
+        "6-2"
+      ],
+      "popped": [
+        "6-0"
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "7-0",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "7-1",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "7-2",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "7-3",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "7-4",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "7-5",
+          "priority": -1
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "7-0",
+        "7-3",
+        "7-1",
+        "7-4"
+      ],
+      "popped": [
+        "7-2",
+        "7-5"
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "8-0",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "8-1",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "8-2",
+          "priority": 0
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "pending": [],
+      "popped": [
+        "8-1",
+        "8-2",
+        "8-0"
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "9-0",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "9-1",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "9-2",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "9-3",
+          "priority": -1
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "pending": [],
+      "popped": [
+        "9-0",
+        "9-3",
+        "9-1",
+        "9-2"
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "10-0",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "10-1",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "10-2",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "10-3",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "10-4",
+          "priority": 1
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "10-2",
+        "10-0",
+        "10-3",
+        "10-1",
+        "10-4"
+      ],
+      "popped": []
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "actions": [
+        {
+          "op": "add",
+          "id": "11-0",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "11-1",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "11-2",
+          "priority": 0
+        },
+        {
+          "op": "add",
+          "id": "11-3",
+          "priority": 1
+        },
+        {
+          "op": "add",
+          "id": "11-4",
+          "priority": -1
+        },
+        {
+          "op": "add",
+          "id": "11-5",
+          "priority": 0
+        },
+        {
+          "op": "pop"
+        }
+      ]
+    },
+    "expected": {
+      "pending": [
+        "11-4",
+        "11-2",
+        "11-5",
+        "11-0",
+        "11-3"
+      ],
+      "popped": [
+        "11-1"
+      ]
+    },
+    "label": "additional-12"
+  }
+]

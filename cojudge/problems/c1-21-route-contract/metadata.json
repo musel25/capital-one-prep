@@ -1,0 +1,50 @@
+{
+  "id": "c1-21-route-contract",
+  "title": "21. Route and method contracts",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "03-apis-and-clients",
+  "examples": [
+    {
+      "input": "{\"items\": [{\"id\": 2, \"name\": \"book\"}, {\"id\": 1, \"name\": \"pen\"}], \"requests\": [{\"path\": \"/items\", \"method\": \"GET\"}]}",
+      "output": "[{\"status\": 200, \"body\": [{\"id\": 1, \"name\": \"pen\"}, {\"id\": 2, \"name\": \"book\"}]}]",
+      "explanation": "collection is ordered by numeric id"
+    },
+    {
+      "input": "{\"items\": [{\"id\": 1, \"name\": \"pen\"}], \"requests\": [{\"path\": \"/items/1\", \"method\": \"DELETE\"}, {\"path\": \"/items/1\", \"method\": \"GET\"}]}",
+      "output": "[{\"status\": 204, \"body\": null}, {\"status\": 404, \"body\": {\"error\": \"not_found\"}}]",
+      "explanation": "delete then read"
+    },
+    {
+      "input": "{\"items\": [], \"requests\": [{\"path\": \"/items/9\", \"method\": \"POST\"}]}",
+      "output": "[{\"status\": 405, \"body\": {\"error\": \"method_not_allowed\"}, \"allow\": [\"GET\", \"DELETE\"]}]",
+      "explanation": "method check precedes item lookup"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> list:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"items\":[{\"id\":2,\"name\":\"book\"},{\"id\":1,\"name\":\"pen\"}],\"requests\":[{\"method\":\"GET\",\"path\":\"/items\"}]}"
+    },
+    {
+      "payload": "{\"items\":[{\"id\":1,\"name\":\"pen\"}],\"requests\":[{\"method\":\"DELETE\",\"path\":\"/items/1\"},{\"method\":\"GET\",\"path\":\"/items/1\"}]}"
+    },
+    {
+      "payload": "{\"items\":[],\"requests\":[{\"method\":\"POST\",\"path\":\"/items/9\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Resolve the route before checking its method.",
+    "Copy each response representation before later mutations."
+  ]
+}

@@ -1,0 +1,113 @@
+[
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_1\",\"amount\":25}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"A\",\"amount\":0,\"extra\":1,\"note\":false}]}"
+  },
+  {
+    "payload": "{\"bodies\":[null]}"
+  },
+  {
+    "payload": "{\"bodies\":[]}"
+  },
+  {
+    "payload": "{\"bodies\":[{}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"a\",\"amount\":true}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"a\",\"amount\":1.0}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"a\",\"amount\":1.5}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"a\",\"amount\":100.0,\"note\":\"exponent\"}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"a\",\"amount\":10000}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"a\",\"amount\":10001}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"a\",\"amount\":1,\"note\":\"xxxxxxxxxxxxxxxxxxxx\"}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"a\",\"amount\":1,\"note\":\"xxxxxxxxxxxxxxxxxxxxx\"}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"aaaaaaaaaaaa\",\"amount\":1}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"aaaaaaaaaaaaa\",\"amount\":1}]}"
+  },
+  {
+    "payload": "{\"bodies\":[[],\"text\",7]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"a\",\"amount\":\"1\"}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"a\\n\",\"amount\":1}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"a\",\"amount\":1,\"note\":\"\"},{\"account\":\"a\",\"amount\":1,\"note\":null}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_0\",\"amount\":1.0,\"note\":\"\"},{\"account\":\"bad-0\",\"amount\":1}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_1\",\"amount\":1.5,\"note\":\"n\"},{\"account\":\"bad-1\",\"amount\":2}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_2\",\"amount\":0,\"note\":\"nn\"},{\"account\":\"bad-2\",\"amount\":3}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_3\",\"amount\":false,\"note\":\"nnn\"},{\"account\":\"bad-3\",\"amount\":4}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_4\",\"amount\":1.0,\"note\":\"nnnn\"},{\"account\":\"bad-4\",\"amount\":5}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_5\",\"amount\":1,\"note\":\"nnnnn\"},{\"account\":\"bad-5\",\"amount\":6}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_6\",\"amount\":10000,\"note\":\"nnnnnn\"},{\"account\":\"bad-6\",\"amount\":7}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_7\",\"amount\":1,\"note\":\"nnnnnnn\"},{\"account\":\"bad-7\",\"amount\":8}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_8\",\"amount\":1.5,\"note\":\"nnnnnnnn\"},{\"account\":\"bad-8\",\"amount\":9}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_9\",\"amount\":9999,\"note\":\"nnnnnnnnn\"},{\"account\":\"bad-9\",\"amount\":10}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_10\",\"amount\":0,\"note\":\"nnnnnnnnnn\"},{\"account\":\"bad-10\",\"amount\":11}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_11\",\"amount\":10000,\"note\":\"nnnnnnnnnnn\"},{\"account\":\"bad-11\",\"amount\":12}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_12\",\"amount\":1.0,\"note\":\"nnnnnnnnnnnn\"},{\"account\":\"bad-12\",\"amount\":13}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_13\",\"amount\":10001,\"note\":\"nnnnnnnnnnnnn\"},{\"account\":\"bad-13\",\"amount\":14}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_14\",\"amount\":0,\"note\":\"nnnnnnnnnnnnnn\"},{\"account\":\"bad-14\",\"amount\":15}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_15\",\"amount\":0,\"note\":\"nnnnnnnnnnnnnnn\"},{\"account\":\"bad-15\",\"amount\":16}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_16\",\"amount\":9999,\"note\":\"nnnnnnnnnnnnnnnn\"},{\"account\":\"bad-16\",\"amount\":17}]}"
+  },
+  {
+    "payload": "{\"bodies\":[{\"account\":\"acct_17\",\"amount\":9999,\"note\":\"nnnnnnnnnnnnnnnnn\"},{\"account\":\"bad-17\",\"amount\":18}]}"
+  }
+]

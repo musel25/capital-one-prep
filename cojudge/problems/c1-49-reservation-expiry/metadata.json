@@ -1,0 +1,50 @@
+{
+  "id": "c1-49-reservation-expiry",
+  "title": "49. Expire reservations and make transitions idempotent",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "05-system-components",
+  "examples": [
+    {
+      "input": "{\"stock\": 5, \"ops\": [{\"op\": \"reserve\", \"at\": 0, \"id\": \"a\", \"qty\": 2, \"ttl\": 5}, {\"op\": \"confirm\", \"at\": 4, \"id\": \"a\"}]}",
+      "output": "{\"results\": [\"held\", \"confirmed\"], \"available\": 3, \"reservations\": [[\"a\", \"confirmed\"]]}",
+      "explanation": "confirm before expiry consumes stock"
+    },
+    {
+      "input": "{\"stock\": 5, \"ops\": [{\"op\": \"reserve\", \"at\": 0, \"id\": \"a\", \"qty\": 2, \"ttl\": 5}, {\"op\": \"confirm\", \"at\": 5, \"id\": \"a\"}]}",
+      "output": "{\"results\": [\"held\", \"expired\"], \"available\": 5, \"reservations\": [[\"a\", \"expired\"]]}",
+      "explanation": "confirmation at expiry is too late"
+    },
+    {
+      "input": "{\"stock\": 5, \"ops\": [{\"op\": \"reserve\", \"at\": 0, \"id\": \"a\", \"qty\": 2, \"ttl\": 5}, {\"op\": \"release\", \"at\": 1, \"id\": \"a\"}, {\"op\": \"release\", \"at\": 2, \"id\": \"a\"}]}",
+      "output": "{\"results\": [\"held\", \"released\", \"released\"], \"available\": 5, \"reservations\": [[\"a\", \"released\"]]}",
+      "explanation": "release restores stock only once"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    # Track available stock and reservation state by ID.\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"ops\":[{\"at\":0,\"id\":\"a\",\"op\":\"reserve\",\"qty\":2,\"ttl\":5},{\"at\":4,\"id\":\"a\",\"op\":\"confirm\"}],\"stock\":5}"
+    },
+    {
+      "payload": "{\"ops\":[{\"at\":0,\"id\":\"a\",\"op\":\"reserve\",\"qty\":2,\"ttl\":5},{\"at\":5,\"id\":\"a\",\"op\":\"confirm\"}],\"stock\":5}"
+    },
+    {
+      "payload": "{\"ops\":[{\"at\":0,\"id\":\"a\",\"op\":\"reserve\",\"qty\":2,\"ttl\":5},{\"at\":1,\"id\":\"a\",\"op\":\"release\"},{\"at\":2,\"id\":\"a\",\"op\":\"release\"}],\"stock\":5}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Only the held state can release stock.",
+    "Retain terminal records so duplicate commands remain idempotent."
+  ]
+}

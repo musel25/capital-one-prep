@@ -1,0 +1,50 @@
+{
+  "id": "c1-37-sql-optimistic-locking",
+  "title": "37. Reject stale SQL updates",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "04-sql-and-transactions",
+  "examples": [
+    {
+      "input": "{\"version\": 0, \"value\": \"old\", \"updates\": [{\"expected\": 0, \"value\": \"new\"}]}",
+      "output": "{\"accepted\": [true], \"value\": \"new\", \"version\": 1}",
+      "explanation": "matching version updates"
+    },
+    {
+      "input": "{\"version\": 2, \"value\": \"old\", \"updates\": [{\"expected\": 1, \"value\": \"new\"}]}",
+      "output": "{\"accepted\": [false], \"value\": \"old\", \"version\": 2}",
+      "explanation": "stale writer is rejected"
+    },
+    {
+      "input": "{\"version\": 0, \"value\": \"old\", \"updates\": [{\"expected\": 0, \"value\": \"one\"}, {\"expected\": 0, \"value\": \"two\"}]}",
+      "output": "{\"accepted\": [true, false], \"value\": \"one\", \"version\": 1}",
+      "explanation": "two readers share a version"
+    }
+  ],
+  "starterCode": {
+    "python": "import sqlite3\n\ndef solve(data: dict) -> dict:\n    db = sqlite3.connect(\":memory:\")\n    db.execute(\"CREATE TABLE document (id INTEGER PRIMARY KEY, value TEXT, version INTEGER)\")\n    db.execute(\"INSERT INTO document VALUES (1, ?, ?)\", (data[\"value\"], data[\"version\"]))\n    db.commit()\n    # TODO: execute conditional updates and return accepted/value/version.\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"updates\":[{\"expected\":0,\"value\":\"new\"}],\"value\":\"old\",\"version\":0}"
+    },
+    {
+      "payload": "{\"updates\":[{\"expected\":1,\"value\":\"new\"}],\"value\":\"old\",\"version\":2}"
+    },
+    {
+      "payload": "{\"updates\":[{\"expected\":0,\"value\":\"one\"},{\"expected\":0,\"value\":\"two\"}],\"value\":\"old\",\"version\":0}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Put the expected version in the UPDATE predicate.",
+    "Use the affected-row count to produce the Boolean result."
+  ]
+}

@@ -1,0 +1,662 @@
+[
+  {
+    "input": {
+      "balance": 10,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 7
+        },
+        {
+          "op": "withdraw",
+          "cents": 4
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false
+      ],
+      "balance": 3
+    },
+    "label": "failed withdrawal preserves balance"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "actions": [
+        {
+          "op": "deposit",
+          "cents": 5
+        },
+        {
+          "op": "withdraw",
+          "cents": 5
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true
+      ],
+      "balance": 0
+    },
+    "label": "deposit then exact withdrawal"
+  },
+  {
+    "input": {
+      "balance": 9,
+      "actions": []
+    },
+    "expected": {
+      "accepted": [],
+      "balance": 9
+    },
+    "label": "no actions"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balance": 0
+    },
+    "label": "zero from empty account"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 1
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false
+      ],
+      "balance": 0
+    },
+    "label": "overdraft at zero"
+  },
+  {
+    "input": {
+      "balance": 10,
+      "actions": [
+        {
+          "op": "deposit",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balance": 10
+    },
+    "label": "zero deposit"
+  },
+  {
+    "input": {
+      "balance": 10,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 10
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balance": 0
+    },
+    "label": "all funds can be withdrawn"
+  },
+  {
+    "input": {
+      "balance": 1,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 2
+        },
+        {
+          "op": "deposit",
+          "cents": 1
+        },
+        {
+          "op": "withdraw",
+          "cents": 2
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balance": 0
+    },
+    "label": "failure followed by successful retry"
+  },
+  {
+    "input": {
+      "balance": 5,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 6
+        },
+        {
+          "op": "withdraw",
+          "cents": 6
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false
+      ],
+      "balance": 5
+    },
+    "label": "repeated failures"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "actions": [
+        {
+          "op": "deposit",
+          "cents": 1
+        },
+        {
+          "op": "deposit",
+          "cents": 2
+        },
+        {
+          "op": "deposit",
+          "cents": 3
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true
+      ],
+      "balance": 6
+    },
+    "label": "repeated deposits"
+  },
+  {
+    "input": {
+      "balance": 1000000000000,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 1
+        },
+        {
+          "op": "deposit",
+          "cents": 2
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true
+      ],
+      "balance": 1000000000001
+    },
+    "label": "large exact balance"
+  },
+  {
+    "input": {
+      "balance": 3,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 1
+        },
+        {
+          "op": "withdraw",
+          "cents": 1
+        },
+        {
+          "op": "withdraw",
+          "cents": 1
+        },
+        {
+          "op": "withdraw",
+          "cents": 1
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "balance": 0
+    },
+    "label": "depletion across operations"
+  },
+  {
+    "input": {
+      "balance": 20,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 21
+        },
+        {
+          "op": "withdraw",
+          "cents": 20
+        },
+        {
+          "op": "deposit",
+          "cents": 0
+        },
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "balance": 0
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "balance": 21,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 22
+        },
+        {
+          "op": "withdraw",
+          "cents": 21
+        },
+        {
+          "op": "deposit",
+          "cents": 1
+        },
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "balance": 1
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "balance": 22,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 23
+        },
+        {
+          "op": "withdraw",
+          "cents": 22
+        },
+        {
+          "op": "deposit",
+          "cents": 2
+        },
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "balance": 2
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "balance": 23,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 24
+        },
+        {
+          "op": "withdraw",
+          "cents": 23
+        },
+        {
+          "op": "deposit",
+          "cents": 3
+        },
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "balance": 3
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "balance": 24,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 25
+        },
+        {
+          "op": "withdraw",
+          "cents": 24
+        },
+        {
+          "op": "deposit",
+          "cents": 4
+        },
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "balance": 4
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "balance": 25,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 26
+        },
+        {
+          "op": "withdraw",
+          "cents": 25
+        },
+        {
+          "op": "deposit",
+          "cents": 5
+        },
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "balance": 5
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "balance": 26,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 27
+        },
+        {
+          "op": "withdraw",
+          "cents": 26
+        },
+        {
+          "op": "deposit",
+          "cents": 6
+        },
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "balance": 6
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "balance": 27,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 28
+        },
+        {
+          "op": "withdraw",
+          "cents": 27
+        },
+        {
+          "op": "deposit",
+          "cents": 7
+        },
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "balance": 7
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "balance": 28,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 29
+        },
+        {
+          "op": "withdraw",
+          "cents": 28
+        },
+        {
+          "op": "deposit",
+          "cents": 8
+        },
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "balance": 8
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "balance": 29,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 30
+        },
+        {
+          "op": "withdraw",
+          "cents": 29
+        },
+        {
+          "op": "deposit",
+          "cents": 9
+        },
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "balance": 9
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "balance": 30,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 31
+        },
+        {
+          "op": "withdraw",
+          "cents": 30
+        },
+        {
+          "op": "deposit",
+          "cents": 10
+        },
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "balance": 10
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "balance": 31,
+      "actions": [
+        {
+          "op": "withdraw",
+          "cents": 32
+        },
+        {
+          "op": "withdraw",
+          "cents": 31
+        },
+        {
+          "op": "deposit",
+          "cents": 11
+        },
+        {
+          "op": "withdraw",
+          "cents": 0
+        }
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "balance": 11
+    },
+    "label": "additional-12"
+  }
+]

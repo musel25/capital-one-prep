@@ -1,0 +1,19 @@
+[
+  {
+    "name": "uses newest job first on equal priorities",
+    "detected_by": [
+      1,
+      8,
+      11,
+      13,
+      14,
+      15,
+      17,
+      18,
+      19,
+      21,
+      22,
+      23
+    ]
+  }
+]

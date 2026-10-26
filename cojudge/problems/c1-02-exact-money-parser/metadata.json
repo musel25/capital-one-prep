@@ -1,0 +1,50 @@
+{
+  "id": "c1-02-exact-money-parser",
+  "title": "02. Parse money into exact cents",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-python-data-and-libraries",
+  "examples": [
+    {
+      "input": "{\"amounts\": [\"12.34\", \"-0.05\", \"7\"]}",
+      "output": "{\"cents\": [1234, -5, 700]}",
+      "explanation": "exact decimal conversion"
+    },
+    {
+      "input": "{\"amounts\": [\"1.234\", \" 2.00\", 2]}",
+      "output": "{\"cents\": [null, null, null]}",
+      "explanation": "invalid forms"
+    },
+    {
+      "input": "{\"amounts\": []}",
+      "output": "{\"cents\": []}",
+      "explanation": "empty input"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"amounts\":[\"12.34\",\"-0.05\",\"7\"]}"
+    },
+    {
+      "payload": "{\"amounts\":[\"1.234\",\" 2.00\",2]}"
+    },
+    {
+      "payload": "{\"amounts\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Validate text before calling Decimal.",
+    "Multiply the Decimal value before converting it to int."
+  ]
+}

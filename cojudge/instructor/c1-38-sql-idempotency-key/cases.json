@@ -1,0 +1,4231 @@
+[
+  {
+    "input": {
+      "balance": 0,
+      "credits": [
+        {
+          "key": "k",
+          "amount": 2,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok"
+      ],
+      "balance": 2,
+      "keys": [
+        "k"
+      ]
+    },
+    "label": "new credit"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "credits": [
+        {
+          "key": "k",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "k",
+          "amount": 2,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "replay"
+      ],
+      "balance": 2,
+      "keys": [
+        "k"
+      ]
+    },
+    "label": "retry does not add money"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "credits": [
+        {
+          "key": "k",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "k",
+          "amount": 3,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "conflict"
+      ],
+      "balance": 2,
+      "keys": [
+        "k"
+      ]
+    },
+    "label": "key cannot change amount"
+  },
+  {
+    "input": {
+      "balance": 5,
+      "credits": []
+    },
+    "expected": {
+      "results": [],
+      "balance": 5,
+      "keys": []
+    },
+    "label": "empty requests"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "credits": [
+        {
+          "key": "k",
+          "amount": 2,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "failed"
+      ],
+      "balance": 0,
+      "keys": []
+    },
+    "label": "failure rolls back key and balance"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "credits": [
+        {
+          "key": "k",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "k",
+          "amount": 2,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "failed",
+        "ok"
+      ],
+      "balance": 2,
+      "keys": [
+        "k"
+      ]
+    },
+    "label": "failed key can retry"
+  },
+  {
+    "input": {
+      "balance": 1,
+      "credits": [
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "ok"
+      ],
+      "balance": 8,
+      "keys": [
+        "a",
+        "b"
+      ]
+    },
+    "label": "independent keys sorted"
+  },
+  {
+    "input": {
+      "balance": 9,
+      "credits": [
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 1,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "ok"
+      ],
+      "balance": 11,
+      "keys": [
+        "a",
+        "b"
+      ]
+    },
+    "label": "equal amounts with different keys"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "credits": [
+        {
+          "key": "k",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "k",
+          "amount": 2,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "replay"
+      ],
+      "balance": 2,
+      "keys": [
+        "k"
+      ]
+    },
+    "label": "replay precedes fault"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "credits": [
+        {
+          "key": "k",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "k",
+          "amount": 5,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "conflict"
+      ],
+      "balance": 2,
+      "keys": [
+        "k"
+      ]
+    },
+    "label": "conflict precedes fault"
+  },
+  {
+    "input": {
+      "balance": 7,
+      "credits": [
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 9,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "failed",
+        "ok"
+      ],
+      "balance": 10,
+      "keys": [
+        "a",
+        "c"
+      ]
+    },
+    "label": "prior commits survive later failure"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "credits": [
+        {
+          "key": "k",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "k",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "k",
+          "amount": 1,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "failed",
+        "ok",
+        "conflict"
+      ],
+      "balance": 4,
+      "keys": [
+        "k"
+      ]
+    },
+    "label": "failed payload does not reserve key"
+  },
+  {
+    "input": {
+      "balance": 0,
+      "credits": [
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balance": 12,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay"
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "balance": 1,
+      "credits": [
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 16,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "ok",
+        "ok",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "balance": 2,
+      "credits": [
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 13,
+      "keys": [
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "conflict",
+        "ok",
+        "failed",
+        "failed",
+        "conflict",
+        "replay",
+        "failed",
+        "conflict",
+        "replay",
+        "replay",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "balance": 3,
+      "credits": [
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 18,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "ok",
+        "conflict",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "replay",
+        "conflict"
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "balance": 4,
+      "credits": [
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 19,
+      "keys": [
+        "a",
+        "b",
+        "d"
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "ok",
+        "failed",
+        "ok",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "replay"
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "balance": 5,
+      "credits": [
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balance": 19,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "ok",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "balance": 6,
+      "credits": [
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 23,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "ok",
+        "replay",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict"
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "balance": 7,
+      "credits": [
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 28,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "ok",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "balance": 8,
+      "credits": [
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balance": 23,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "ok",
+        "ok",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "replay",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "balance": 9,
+      "credits": [
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 25,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "ok",
+        "replay",
+        "failed",
+        "conflict",
+        "failed",
+        "conflict",
+        "failed",
+        "ok",
+        "ok",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict"
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "balance": 10,
+      "credits": [
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 24,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "ok",
+        "failed",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "balance": 11,
+      "credits": [
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 31,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "replay",
+        "conflict",
+        "conflict",
+        "ok",
+        "replay",
+        "failed",
+        "replay",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay"
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "balance": 12,
+      "credits": [
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balance": 29,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "ok",
+        "ok",
+        "failed",
+        "replay",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "failed",
+        "ok",
+        "replay",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "balance": 13,
+      "credits": [
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 3,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 28,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "replay",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "replay",
+        "replay",
+        "ok"
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "balance": 14,
+      "credits": [
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 3,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 23,
+      "keys": [
+        "a",
+        "b",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "replay",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict"
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "balance": 15,
+      "credits": [
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balance": 29,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "ok",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "balance": 16,
+      "credits": [
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balance": 25,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "ok",
+        "conflict",
+        "ok",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "replay",
+        "ok",
+        "replay",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "balance": 17,
+      "credits": [
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 32,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "ok",
+        "ok",
+        "conflict",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-18"
+  },
+  {
+    "input": {
+      "balance": 18,
+      "credits": [
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 1,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 33,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "ok",
+        "ok",
+        "ok",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-19"
+  },
+  {
+    "input": {
+      "balance": 19,
+      "credits": [
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balance": 31,
+      "keys": [
+        "a",
+        "b",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "ok",
+        "ok",
+        "conflict",
+        "failed",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-20"
+  },
+  {
+    "input": {
+      "balance": 20,
+      "credits": [
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 1,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balance": 42,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "ok",
+        "failed",
+        "replay",
+        "conflict",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "failed",
+        "conflict",
+        "replay",
+        "conflict",
+        "ok",
+        "failed",
+        "failed",
+        "ok",
+        "replay",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-21"
+  },
+  {
+    "input": {
+      "balance": 21,
+      "credits": [
+        {
+          "key": "a",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balance": 44,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "replay",
+        "replay",
+        "failed",
+        "ok",
+        "replay",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-22"
+  },
+  {
+    "input": {
+      "balance": 22,
+      "credits": [
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 45,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-23"
+  },
+  {
+    "input": {
+      "balance": 23,
+      "credits": [
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "c",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "key": "a",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "key": "d",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "key": "b",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "key": "c",
+          "amount": 1,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balance": 46,
+      "keys": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "ok",
+        "conflict",
+        "failed",
+        "replay",
+        "conflict",
+        "ok",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "replay",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-24"
+  }
+]

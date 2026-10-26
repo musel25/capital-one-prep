@@ -1,0 +1,17 @@
+[
+  {
+    "name": "excludes the waiver threshold",
+    "detected_by": [
+      1,
+      4,
+      11,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24
+    ]
+  }
+]

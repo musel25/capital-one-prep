@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"cutoff\":100,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":5,\"value\":10},{\"device\":\"a\",\"id\":2,\"ts\":9,\"value\":10},{\"device\":\"b\",\"id\":3,\"ts\":6,\"value\":10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":100,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":5,\"value\":10},{\"device\":\"a\",\"id\":3,\"ts\":5,\"value\":30},{\"device\":\"a\",\"id\":2,\"ts\":5,\"value\":20}]}"
+  },
+  {
+    "payload": "{\"cutoff\":10,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":5,\"value\":10},{\"device\":\"a\",\"id\":2,\"ts\":20,\"value\":10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":100,\"rows\":[]}"
+  },
+  {
+    "payload": "{\"cutoff\":0,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":0,\"value\":10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":5,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":5,\"value\":10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":5,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":6,\"value\":10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":100,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":1,\"value\":99},{\"device\":\"a\",\"id\":2,\"ts\":2,\"value\":null}]}"
+  },
+  {
+    "payload": "{\"cutoff\":100,\"rows\":[{\"device\":\"a\",\"id\":10,\"ts\":1,\"value\":10},{\"device\":\"a\",\"id\":2,\"ts\":2,\"value\":10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":100,\"rows\":[{\"device\":\"z\",\"id\":1,\"ts\":10,\"value\":10},{\"device\":\"a\",\"id\":2,\"ts\":1,\"value\":10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":100,\"rows\":[{\"device\":\"A\",\"id\":1,\"ts\":1,\"value\":10},{\"device\":\"a\",\"id\":2,\"ts\":1,\"value\":10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":100,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":1,\"value\":-7}]}"
+  },
+  {
+    "payload": "{\"cutoff\":100,\"rows\":[{\"device\":\"O'Reilly\",\"id\":1,\"ts\":3,\"value\":10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":100,\"rows\":[{\"device\":\"a\",\"id\":2,\"ts\":5,\"value\":0},{\"device\":\"a\",\"id\":10,\"ts\":5,\"value\":1}]}"
+  },
+  {
+    "payload": "{\"cutoff\":0,\"rows\":[{\"device\":\"b\",\"id\":1,\"ts\":8,\"value\":0},{\"device\":\"A\",\"id\":2,\"ts\":2,\"value\":0}]}"
+  },
+  {
+    "payload": "{\"cutoff\":1,\"rows\":[{\"device\":\"A\",\"id\":1,\"ts\":2,\"value\":0},{\"device\":\"z\",\"id\":2,\"ts\":6,\"value\":0},{\"device\":\"a\",\"id\":3,\"ts\":9,\"value\":null}]}"
+  },
+  {
+    "payload": "{\"cutoff\":2,\"rows\":[{\"device\":\"z\",\"id\":1,\"ts\":11,\"value\":0},{\"device\":\"a\",\"id\":2,\"ts\":10,\"value\":0},{\"device\":\"b\",\"id\":3,\"ts\":11,\"value\":null},{\"device\":\"A\",\"id\":4,\"ts\":5,\"value\":null}]}"
+  },
+  {
+    "payload": "{\"cutoff\":3,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":8,\"value\":null},{\"device\":\"b\",\"id\":2,\"ts\":1,\"value\":10},{\"device\":\"A\",\"id\":3,\"ts\":5,\"value\":null},{\"device\":\"z\",\"id\":4,\"ts\":5,\"value\":10},{\"device\":\"a\",\"id\":5,\"ts\":0,\"value\":null}]}"
+  },
+  {
+    "payload": "{\"cutoff\":4,\"rows\":[{\"device\":\"b\",\"id\":1,\"ts\":3,\"value\":0},{\"device\":\"A\",\"id\":2,\"ts\":1,\"value\":-10},{\"device\":\"z\",\"id\":3,\"ts\":5,\"value\":-10},{\"device\":\"a\",\"id\":4,\"ts\":9,\"value\":null},{\"device\":\"b\",\"id\":5,\"ts\":7,\"value\":0},{\"device\":\"A\",\"id\":6,\"ts\":1,\"value\":0}]}"
+  },
+  {
+    "payload": "{\"cutoff\":5,\"rows\":[{\"device\":\"A\",\"id\":1,\"ts\":2,\"value\":null},{\"device\":\"z\",\"id\":2,\"ts\":10,\"value\":-10},{\"device\":\"a\",\"id\":3,\"ts\":8,\"value\":10},{\"device\":\"b\",\"id\":4,\"ts\":7,\"value\":0},{\"device\":\"A\",\"id\":5,\"ts\":6,\"value\":10},{\"device\":\"z\",\"id\":6,\"ts\":0,\"value\":0},{\"device\":\"a\",\"id\":7,\"ts\":9,\"value\":10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":6,\"rows\":[{\"device\":\"z\",\"id\":1,\"ts\":8,\"value\":null},{\"device\":\"a\",\"id\":2,\"ts\":1,\"value\":0},{\"device\":\"b\",\"id\":3,\"ts\":8,\"value\":10},{\"device\":\"A\",\"id\":4,\"ts\":1,\"value\":null},{\"device\":\"z\",\"id\":5,\"ts\":6,\"value\":10},{\"device\":\"a\",\"id\":6,\"ts\":3,\"value\":10},{\"device\":\"b\",\"id\":7,\"ts\":6,\"value\":null},{\"device\":\"A\",\"id\":8,\"ts\":4,\"value\":-10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":7,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":3,\"value\":-10},{\"device\":\"b\",\"id\":2,\"ts\":0,\"value\":null},{\"device\":\"A\",\"id\":3,\"ts\":1,\"value\":null},{\"device\":\"z\",\"id\":4,\"ts\":11,\"value\":-10},{\"device\":\"a\",\"id\":5,\"ts\":0,\"value\":-10},{\"device\":\"b\",\"id\":6,\"ts\":11,\"value\":10},{\"device\":\"A\",\"id\":7,\"ts\":9,\"value\":null},{\"device\":\"z\",\"id\":8,\"ts\":10,\"value\":10},{\"device\":\"a\",\"id\":9,\"ts\":8,\"value\":-10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":8,\"rows\":[{\"device\":\"b\",\"id\":1,\"ts\":8,\"value\":0},{\"device\":\"A\",\"id\":2,\"ts\":8,\"value\":10},{\"device\":\"z\",\"id\":3,\"ts\":11,\"value\":10},{\"device\":\"a\",\"id\":4,\"ts\":0,\"value\":10},{\"device\":\"b\",\"id\":5,\"ts\":8,\"value\":0},{\"device\":\"A\",\"id\":6,\"ts\":8,\"value\":-10},{\"device\":\"z\",\"id\":7,\"ts\":5,\"value\":10},{\"device\":\"a\",\"id\":8,\"ts\":4,\"value\":10},{\"device\":\"b\",\"id\":9,\"ts\":10,\"value\":null},{\"device\":\"A\",\"id\":10,\"ts\":5,\"value\":null}]}"
+  },
+  {
+    "payload": "{\"cutoff\":9,\"rows\":[{\"device\":\"A\",\"id\":1,\"ts\":9,\"value\":0},{\"device\":\"z\",\"id\":2,\"ts\":11,\"value\":10},{\"device\":\"a\",\"id\":3,\"ts\":10,\"value\":10},{\"device\":\"b\",\"id\":4,\"ts\":0,\"value\":10},{\"device\":\"A\",\"id\":5,\"ts\":9,\"value\":10},{\"device\":\"z\",\"id\":6,\"ts\":1,\"value\":-10},{\"device\":\"a\",\"id\":7,\"ts\":11,\"value\":0},{\"device\":\"b\",\"id\":8,\"ts\":10,\"value\":-10},{\"device\":\"A\",\"id\":9,\"ts\":7,\"value\":null},{\"device\":\"z\",\"id\":10,\"ts\":3,\"value\":0},{\"device\":\"a\",\"id\":11,\"ts\":1,\"value\":-10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":10,\"rows\":[{\"device\":\"z\",\"id\":1,\"ts\":6,\"value\":null},{\"device\":\"a\",\"id\":2,\"ts\":6,\"value\":0},{\"device\":\"b\",\"id\":3,\"ts\":7,\"value\":null},{\"device\":\"A\",\"id\":4,\"ts\":2,\"value\":null},{\"device\":\"z\",\"id\":5,\"ts\":7,\"value\":0},{\"device\":\"a\",\"id\":6,\"ts\":8,\"value\":null},{\"device\":\"b\",\"id\":7,\"ts\":11,\"value\":-10},{\"device\":\"A\",\"id\":8,\"ts\":11,\"value\":10},{\"device\":\"z\",\"id\":9,\"ts\":3,\"value\":-10},{\"device\":\"a\",\"id\":10,\"ts\":3,\"value\":10},{\"device\":\"b\",\"id\":11,\"ts\":3,\"value\":0},{\"device\":\"A\",\"id\":12,\"ts\":11,\"value\":-10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":11,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":11,\"value\":10},{\"device\":\"b\",\"id\":2,\"ts\":7,\"value\":-10},{\"device\":\"A\",\"id\":3,\"ts\":2,\"value\":10},{\"device\":\"z\",\"id\":4,\"ts\":1,\"value\":10},{\"device\":\"a\",\"id\":5,\"ts\":9,\"value\":-10},{\"device\":\"b\",\"id\":6,\"ts\":9,\"value\":null},{\"device\":\"A\",\"id\":7,\"ts\":9,\"value\":0},{\"device\":\"z\",\"id\":8,\"ts\":11,\"value\":10},{\"device\":\"a\",\"id\":9,\"ts\":9,\"value\":0},{\"device\":\"b\",\"id\":10,\"ts\":3,\"value\":-10},{\"device\":\"A\",\"id\":11,\"ts\":5,\"value\":0},{\"device\":\"z\",\"id\":12,\"ts\":0,\"value\":-10},{\"device\":\"a\",\"id\":13,\"ts\":0,\"value\":10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":12,\"rows\":[{\"device\":\"b\",\"id\":1,\"ts\":5,\"value\":0},{\"device\":\"A\",\"id\":2,\"ts\":1,\"value\":null},{\"device\":\"z\",\"id\":3,\"ts\":6,\"value\":10},{\"device\":\"a\",\"id\":4,\"ts\":9,\"value\":null},{\"device\":\"b\",\"id\":5,\"ts\":0,\"value\":10},{\"device\":\"A\",\"id\":6,\"ts\":6,\"value\":null},{\"device\":\"z\",\"id\":7,\"ts\":5,\"value\":0},{\"device\":\"a\",\"id\":8,\"ts\":0,\"value\":-10},{\"device\":\"b\",\"id\":9,\"ts\":11,\"value\":-10},{\"device\":\"A\",\"id\":10,\"ts\":11,\"value\":10},{\"device\":\"z\",\"id\":11,\"ts\":7,\"value\":null},{\"device\":\"a\",\"id\":12,\"ts\":4,\"value\":0},{\"device\":\"b\",\"id\":13,\"ts\":7,\"value\":10},{\"device\":\"A\",\"id\":14,\"ts\":1,\"value\":null}]}"
+  },
+  {
+    "payload": "{\"cutoff\":0,\"rows\":[{\"device\":\"A\",\"id\":1,\"ts\":9,\"value\":null},{\"device\":\"z\",\"id\":2,\"ts\":2,\"value\":0},{\"device\":\"a\",\"id\":3,\"ts\":8,\"value\":0},{\"device\":\"b\",\"id\":4,\"ts\":8,\"value\":null},{\"device\":\"A\",\"id\":5,\"ts\":3,\"value\":0},{\"device\":\"z\",\"id\":6,\"ts\":7,\"value\":0},{\"device\":\"a\",\"id\":7,\"ts\":6,\"value\":10},{\"device\":\"b\",\"id\":8,\"ts\":1,\"value\":null},{\"device\":\"A\",\"id\":9,\"ts\":1,\"value\":0},{\"device\":\"z\",\"id\":10,\"ts\":1,\"value\":null},{\"device\":\"a\",\"id\":11,\"ts\":11,\"value\":-10},{\"device\":\"b\",\"id\":12,\"ts\":6,\"value\":-10},{\"device\":\"A\",\"id\":13,\"ts\":1,\"value\":10},{\"device\":\"z\",\"id\":14,\"ts\":4,\"value\":null},{\"device\":\"a\",\"id\":15,\"ts\":5,\"value\":0}]}"
+  },
+  {
+    "payload": "{\"cutoff\":1,\"rows\":[{\"device\":\"z\",\"id\":1,\"ts\":11,\"value\":-10},{\"device\":\"a\",\"id\":2,\"ts\":4,\"value\":10},{\"device\":\"b\",\"id\":3,\"ts\":4,\"value\":-10},{\"device\":\"A\",\"id\":4,\"ts\":3,\"value\":10},{\"device\":\"z\",\"id\":5,\"ts\":7,\"value\":0},{\"device\":\"a\",\"id\":6,\"ts\":1,\"value\":10},{\"device\":\"b\",\"id\":7,\"ts\":2,\"value\":10},{\"device\":\"A\",\"id\":8,\"ts\":2,\"value\":0},{\"device\":\"z\",\"id\":9,\"ts\":6,\"value\":-10},{\"device\":\"a\",\"id\":10,\"ts\":10,\"value\":10},{\"device\":\"b\",\"id\":11,\"ts\":3,\"value\":null},{\"device\":\"A\",\"id\":12,\"ts\":3,\"value\":-10},{\"device\":\"z\",\"id\":13,\"ts\":4,\"value\":-10},{\"device\":\"a\",\"id\":14,\"ts\":0,\"value\":-10},{\"device\":\"b\",\"id\":15,\"ts\":0,\"value\":0},{\"device\":\"A\",\"id\":16,\"ts\":7,\"value\":-10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":2,\"rows\":[{\"device\":\"a\",\"id\":1,\"ts\":11,\"value\":0},{\"device\":\"b\",\"id\":2,\"ts\":8,\"value\":0},{\"device\":\"A\",\"id\":3,\"ts\":8,\"value\":10},{\"device\":\"z\",\"id\":4,\"ts\":0,\"value\":10},{\"device\":\"a\",\"id\":5,\"ts\":10,\"value\":0},{\"device\":\"b\",\"id\":6,\"ts\":5,\"value\":0},{\"device\":\"A\",\"id\":7,\"ts\":7,\"value\":0},{\"device\":\"z\",\"id\":8,\"ts\":4,\"value\":-10},{\"device\":\"a\",\"id\":9,\"ts\":2,\"value\":0},{\"device\":\"b\",\"id\":10,\"ts\":2,\"value\":10},{\"device\":\"A\",\"id\":11,\"ts\":3,\"value\":-10},{\"device\":\"z\",\"id\":12,\"ts\":9,\"value\":null},{\"device\":\"a\",\"id\":13,\"ts\":1,\"value\":0},{\"device\":\"b\",\"id\":14,\"ts\":3,\"value\":-10},{\"device\":\"A\",\"id\":15,\"ts\":2,\"value\":-10},{\"device\":\"z\",\"id\":16,\"ts\":4,\"value\":10},{\"device\":\"a\",\"id\":17,\"ts\":7,\"value\":-10}]}"
+  },
+  {
+    "payload": "{\"cutoff\":3,\"rows\":[{\"device\":\"b\",\"id\":1,\"ts\":5,\"value\":-10},{\"device\":\"A\",\"id\":2,\"ts\":9,\"value\":null},{\"device\":\"z\",\"id\":3,\"ts\":7,\"value\":10},{\"device\":\"a\",\"id\":4,\"ts\":11,\"value\":0},{\"device\":\"b\",\"id\":5,\"ts\":6,\"value\":null},{\"device\":\"A\",\"id\":6,\"ts\":7,\"value\":10},{\"device\":\"z\",\"id\":7,\"ts\":2,\"value\":10},{\"device\":\"a\",\"id\":8,\"ts\":11,\"value\":0},{\"device\":\"b\",\"id\":9,\"ts\":4,\"value\":null},{\"device\":\"A\",\"id\":10,\"ts\":2,\"value\":10},{\"device\":\"z\",\"id\":11,\"ts\":9,\"value\":-10},{\"device\":\"a\",\"id\":12,\"ts\":9,\"value\":0},{\"device\":\"b\",\"id\":13,\"ts\":9,\"value\":null},{\"device\":\"A\",\"id\":14,\"ts\":1,\"value\":-10},{\"device\":\"z\",\"id\":15,\"ts\":8,\"value\":-10},{\"device\":\"a\",\"id\":16,\"ts\":5,\"value\":0},{\"device\":\"b\",\"id\":17,\"ts\":9,\"value\":null},{\"device\":\"A\",\"id\":18,\"ts\":3,\"value\":null}]}"
+  },
+  {
+    "payload": "{\"cutoff\":4,\"rows\":[{\"device\":\"A\",\"id\":1,\"ts\":3,\"value\":-10},{\"device\":\"z\",\"id\":2,\"ts\":2,\"value\":0},{\"device\":\"a\",\"id\":3,\"ts\":4,\"value\":-10},{\"device\":\"b\",\"id\":4,\"ts\":2,\"value\":null},{\"device\":\"A\",\"id\":5,\"ts\":5,\"value\":10},{\"device\":\"z\",\"id\":6,\"ts\":4,\"value\":-10},{\"device\":\"a\",\"id\":7,\"ts\":10,\"value\":null},{\"device\":\"b\",\"id\":8,\"ts\":7,\"value\":10},{\"device\":\"A\",\"id\":9,\"ts\":6,\"value\":0},{\"device\":\"z\",\"id\":10,\"ts\":6,\"value\":0},{\"device\":\"a\",\"id\":11,\"ts\":4,\"value\":null},{\"device\":\"b\",\"id\":12,\"ts\":0,\"value\":10},{\"device\":\"A\",\"id\":13,\"ts\":6,\"value\":0},{\"device\":\"z\",\"id\":14,\"ts\":4,\"value\":0},{\"device\":\"a\",\"id\":15,\"ts\":8,\"value\":10},{\"device\":\"b\",\"id\":16,\"ts\":1,\"value\":-10},{\"device\":\"A\",\"id\":17,\"ts\":9,\"value\":0},{\"device\":\"z\",\"id\":18,\"ts\":5,\"value\":10},{\"device\":\"a\",\"id\":19,\"ts\":8,\"value\":null}]}"
+  }
+]

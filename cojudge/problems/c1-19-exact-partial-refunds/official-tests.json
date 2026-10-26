@@ -1,0 +1,74 @@
+[
+  {
+    "payload": "{\"payments\":{\"p\":100},\"refunds\":[{\"cents\":30,\"payment\":\"p\"},{\"cents\":80,\"payment\":\"p\"},{\"cents\":70,\"payment\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"a\":50,\"b\":20},\"refunds\":[{\"cents\":20,\"payment\":\"b\"},{\"cents\":10,\"payment\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{},\"refunds\":[]}"
+  },
+  {
+    "payload": "{\"payments\":{\"a\":12,\"b\":0},\"refunds\":[]}"
+  },
+  {
+    "payload": "{\"payments\":{\"a\":0},\"refunds\":[{\"cents\":0,\"payment\":\"a\"},{\"cents\":1,\"payment\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"a\":1},\"refunds\":[{\"cents\":1,\"payment\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"a\":10},\"refunds\":[{\"cents\":11,\"payment\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"a\":10},\"refunds\":[{\"cents\":10,\"payment\":\"a\"},{\"cents\":10,\"payment\":\"a\"},{\"cents\":0,\"payment\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"a\":3},\"refunds\":[{\"cents\":1,\"payment\":\"a\"},{\"cents\":1,\"payment\":\"a\"},{\"cents\":1,\"payment\":\"a\"},{\"cents\":1,\"payment\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"a\":29},\"refunds\":[{\"cents\":10,\"payment\":\"a\"},{\"cents\":19,\"payment\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"a\":1000000000000},\"refunds\":[{\"cents\":999999999999,\"payment\":\"a\"},{\"cents\":1,\"payment\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"a\":5,\"b\":5},\"refunds\":[{\"cents\":5,\"payment\":\"a\"},{\"cents\":6,\"payment\":\"b\"},{\"cents\":5,\"payment\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"p\":20,\"q\":0},\"refunds\":[{\"cents\":1,\"payment\":\"p\"},{\"cents\":20,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"},{\"cents\":19,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"p\":21,\"q\":1},\"refunds\":[{\"cents\":2,\"payment\":\"p\"},{\"cents\":20,\"payment\":\"p\"},{\"cents\":1,\"payment\":\"q\"},{\"cents\":19,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"p\":22,\"q\":2},\"refunds\":[{\"cents\":3,\"payment\":\"p\"},{\"cents\":20,\"payment\":\"p\"},{\"cents\":2,\"payment\":\"q\"},{\"cents\":19,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"p\":23,\"q\":3},\"refunds\":[{\"cents\":4,\"payment\":\"p\"},{\"cents\":20,\"payment\":\"p\"},{\"cents\":3,\"payment\":\"q\"},{\"cents\":19,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"p\":24,\"q\":4},\"refunds\":[{\"cents\":5,\"payment\":\"p\"},{\"cents\":20,\"payment\":\"p\"},{\"cents\":4,\"payment\":\"q\"},{\"cents\":19,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"p\":25,\"q\":5},\"refunds\":[{\"cents\":6,\"payment\":\"p\"},{\"cents\":20,\"payment\":\"p\"},{\"cents\":5,\"payment\":\"q\"},{\"cents\":19,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"p\":26,\"q\":6},\"refunds\":[{\"cents\":7,\"payment\":\"p\"},{\"cents\":20,\"payment\":\"p\"},{\"cents\":6,\"payment\":\"q\"},{\"cents\":19,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"p\":27,\"q\":7},\"refunds\":[{\"cents\":8,\"payment\":\"p\"},{\"cents\":20,\"payment\":\"p\"},{\"cents\":7,\"payment\":\"q\"},{\"cents\":19,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"p\":28,\"q\":8},\"refunds\":[{\"cents\":9,\"payment\":\"p\"},{\"cents\":20,\"payment\":\"p\"},{\"cents\":8,\"payment\":\"q\"},{\"cents\":19,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"p\":29,\"q\":9},\"refunds\":[{\"cents\":10,\"payment\":\"p\"},{\"cents\":20,\"payment\":\"p\"},{\"cents\":9,\"payment\":\"q\"},{\"cents\":19,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"p\":30,\"q\":10},\"refunds\":[{\"cents\":11,\"payment\":\"p\"},{\"cents\":20,\"payment\":\"p\"},{\"cents\":10,\"payment\":\"q\"},{\"cents\":19,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"}]}"
+  },
+  {
+    "payload": "{\"payments\":{\"p\":31,\"q\":11},\"refunds\":[{\"cents\":12,\"payment\":\"p\"},{\"cents\":20,\"payment\":\"p\"},{\"cents\":11,\"payment\":\"q\"},{\"cents\":19,\"payment\":\"p\"},{\"cents\":0,\"payment\":\"q\"}]}"
+  }
+]

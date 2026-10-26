@@ -1,0 +1,8 @@
+[
+  {
+    "name": "stop at an empty page despite its next cursor",
+    "detected_by": [
+      9
+    ]
+  }
+]

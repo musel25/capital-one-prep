@@ -1,0 +1,1020 @@
+[
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "low",
+          "priority": 1,
+          "created": 1
+        },
+        {
+          "id": "late",
+          "priority": 3,
+          "created": 9
+        },
+        {
+          "id": "early",
+          "priority": 3,
+          "created": 2
+        }
+      ]
+    },
+    "expected": [
+      "early",
+      "late",
+      "low"
+    ],
+    "label": "two ordering keys"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "z",
+          "priority": 2,
+          "created": 5
+        },
+        {
+          "id": "a",
+          "priority": 2,
+          "created": 5
+        }
+      ]
+    },
+    "expected": [
+      "z",
+      "a"
+    ],
+    "label": "ties preserve input order"
+  },
+  {
+    "input": {
+      "tickets": []
+    },
+    "expected": [],
+    "label": "empty list"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "one",
+          "priority": 0,
+          "created": 0
+        }
+      ]
+    },
+    "expected": [
+      "one"
+    ],
+    "label": "single ticket"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "a",
+          "priority": 0,
+          "created": 0
+        },
+        {
+          "id": "b",
+          "priority": 9,
+          "created": 1000000
+        }
+      ]
+    },
+    "expected": [
+      "b",
+      "a"
+    ],
+    "label": "priority dominates time"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "c",
+          "priority": 4,
+          "created": 3
+        },
+        {
+          "id": "b",
+          "priority": 4,
+          "created": 2
+        },
+        {
+          "id": "a",
+          "priority": 4,
+          "created": 1
+        }
+      ]
+    },
+    "expected": [
+      "a",
+      "b",
+      "c"
+    ],
+    "label": "time ascending"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "same",
+          "priority": 1,
+          "created": 0
+        },
+        {
+          "id": "same",
+          "priority": 2,
+          "created": 0
+        }
+      ]
+    },
+    "expected": [
+      "same",
+      "same"
+    ],
+    "label": "duplicate IDs retained"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "b",
+          "priority": 9,
+          "created": 1
+        },
+        {
+          "id": "c",
+          "priority": 9,
+          "created": 1
+        },
+        {
+          "id": "a",
+          "priority": 9,
+          "created": 1
+        }
+      ]
+    },
+    "expected": [
+      "b",
+      "c",
+      "a"
+    ],
+    "label": "three stable ties"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "x",
+          "priority": 1,
+          "created": 3
+        },
+        {
+          "id": "y",
+          "priority": 2,
+          "created": 3
+        },
+        {
+          "id": "z",
+          "priority": 3,
+          "created": 3
+        }
+      ]
+    },
+    "expected": [
+      "z",
+      "y",
+      "x"
+    ],
+    "label": "equal timestamps"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "",
+          "priority": 2,
+          "created": 0
+        },
+        {
+          "id": "A",
+          "priority": 2,
+          "created": 0
+        }
+      ]
+    },
+    "expected": [
+      "",
+      "A"
+    ],
+    "label": "empty ID participates normally"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "new",
+          "priority": 5,
+          "created": 1000000
+        },
+        {
+          "id": "old",
+          "priority": 5,
+          "created": 0
+        }
+      ]
+    },
+    "expected": [
+      "old",
+      "new"
+    ],
+    "label": "time boundaries"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "first",
+          "priority": 2,
+          "created": 0
+        },
+        {
+          "id": "high",
+          "priority": 3,
+          "created": 0
+        },
+        {
+          "id": "second",
+          "priority": 2,
+          "created": 0
+        }
+      ]
+    },
+    "expected": [
+      "high",
+      "first",
+      "second"
+    ],
+    "label": "ties separated in input"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "0-0",
+          "priority": 0,
+          "created": 0
+        },
+        {
+          "id": "0-1",
+          "priority": 1,
+          "created": 3
+        },
+        {
+          "id": "0-2",
+          "priority": 2,
+          "created": 2
+        },
+        {
+          "id": "0-3",
+          "priority": 3,
+          "created": 1
+        },
+        {
+          "id": "0-4",
+          "priority": 4,
+          "created": 0
+        },
+        {
+          "id": "0-5",
+          "priority": 0,
+          "created": 3
+        },
+        {
+          "id": "0-6",
+          "priority": 1,
+          "created": 2
+        },
+        {
+          "id": "0-7",
+          "priority": 2,
+          "created": 1
+        },
+        {
+          "id": "0-8",
+          "priority": 3,
+          "created": 0
+        }
+      ]
+    },
+    "expected": [
+      "0-4",
+      "0-8",
+      "0-3",
+      "0-7",
+      "0-2",
+      "0-6",
+      "0-1",
+      "0-0",
+      "0-5"
+    ],
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "1-0",
+          "priority": 1,
+          "created": 1
+        },
+        {
+          "id": "1-1",
+          "priority": 2,
+          "created": 0
+        },
+        {
+          "id": "1-2",
+          "priority": 3,
+          "created": 3
+        },
+        {
+          "id": "1-3",
+          "priority": 4,
+          "created": 2
+        },
+        {
+          "id": "1-4",
+          "priority": 0,
+          "created": 1
+        },
+        {
+          "id": "1-5",
+          "priority": 1,
+          "created": 0
+        },
+        {
+          "id": "1-6",
+          "priority": 2,
+          "created": 3
+        },
+        {
+          "id": "1-7",
+          "priority": 3,
+          "created": 2
+        },
+        {
+          "id": "1-8",
+          "priority": 4,
+          "created": 1
+        }
+      ]
+    },
+    "expected": [
+      "1-8",
+      "1-3",
+      "1-7",
+      "1-2",
+      "1-1",
+      "1-6",
+      "1-5",
+      "1-0",
+      "1-4"
+    ],
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "2-0",
+          "priority": 2,
+          "created": 2
+        },
+        {
+          "id": "2-1",
+          "priority": 3,
+          "created": 1
+        },
+        {
+          "id": "2-2",
+          "priority": 4,
+          "created": 0
+        },
+        {
+          "id": "2-3",
+          "priority": 0,
+          "created": 3
+        },
+        {
+          "id": "2-4",
+          "priority": 1,
+          "created": 2
+        },
+        {
+          "id": "2-5",
+          "priority": 2,
+          "created": 1
+        },
+        {
+          "id": "2-6",
+          "priority": 3,
+          "created": 0
+        },
+        {
+          "id": "2-7",
+          "priority": 4,
+          "created": 3
+        },
+        {
+          "id": "2-8",
+          "priority": 0,
+          "created": 2
+        }
+      ]
+    },
+    "expected": [
+      "2-2",
+      "2-7",
+      "2-6",
+      "2-1",
+      "2-5",
+      "2-0",
+      "2-4",
+      "2-8",
+      "2-3"
+    ],
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "3-0",
+          "priority": 3,
+          "created": 3
+        },
+        {
+          "id": "3-1",
+          "priority": 4,
+          "created": 2
+        },
+        {
+          "id": "3-2",
+          "priority": 0,
+          "created": 1
+        },
+        {
+          "id": "3-3",
+          "priority": 1,
+          "created": 0
+        },
+        {
+          "id": "3-4",
+          "priority": 2,
+          "created": 3
+        },
+        {
+          "id": "3-5",
+          "priority": 3,
+          "created": 2
+        },
+        {
+          "id": "3-6",
+          "priority": 4,
+          "created": 1
+        },
+        {
+          "id": "3-7",
+          "priority": 0,
+          "created": 0
+        },
+        {
+          "id": "3-8",
+          "priority": 1,
+          "created": 3
+        }
+      ]
+    },
+    "expected": [
+      "3-6",
+      "3-1",
+      "3-5",
+      "3-0",
+      "3-4",
+      "3-3",
+      "3-8",
+      "3-7",
+      "3-2"
+    ],
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "4-0",
+          "priority": 4,
+          "created": 0
+        },
+        {
+          "id": "4-1",
+          "priority": 0,
+          "created": 3
+        },
+        {
+          "id": "4-2",
+          "priority": 1,
+          "created": 2
+        },
+        {
+          "id": "4-3",
+          "priority": 2,
+          "created": 1
+        },
+        {
+          "id": "4-4",
+          "priority": 3,
+          "created": 0
+        },
+        {
+          "id": "4-5",
+          "priority": 4,
+          "created": 3
+        },
+        {
+          "id": "4-6",
+          "priority": 0,
+          "created": 2
+        },
+        {
+          "id": "4-7",
+          "priority": 1,
+          "created": 1
+        },
+        {
+          "id": "4-8",
+          "priority": 2,
+          "created": 0
+        }
+      ]
+    },
+    "expected": [
+      "4-0",
+      "4-5",
+      "4-4",
+      "4-8",
+      "4-3",
+      "4-7",
+      "4-2",
+      "4-6",
+      "4-1"
+    ],
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "5-0",
+          "priority": 0,
+          "created": 1
+        },
+        {
+          "id": "5-1",
+          "priority": 1,
+          "created": 0
+        },
+        {
+          "id": "5-2",
+          "priority": 2,
+          "created": 3
+        },
+        {
+          "id": "5-3",
+          "priority": 3,
+          "created": 2
+        },
+        {
+          "id": "5-4",
+          "priority": 4,
+          "created": 1
+        },
+        {
+          "id": "5-5",
+          "priority": 0,
+          "created": 0
+        },
+        {
+          "id": "5-6",
+          "priority": 1,
+          "created": 3
+        },
+        {
+          "id": "5-7",
+          "priority": 2,
+          "created": 2
+        },
+        {
+          "id": "5-8",
+          "priority": 3,
+          "created": 1
+        }
+      ]
+    },
+    "expected": [
+      "5-4",
+      "5-8",
+      "5-3",
+      "5-7",
+      "5-2",
+      "5-1",
+      "5-6",
+      "5-5",
+      "5-0"
+    ],
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "6-0",
+          "priority": 1,
+          "created": 2
+        },
+        {
+          "id": "6-1",
+          "priority": 2,
+          "created": 1
+        },
+        {
+          "id": "6-2",
+          "priority": 3,
+          "created": 0
+        },
+        {
+          "id": "6-3",
+          "priority": 4,
+          "created": 3
+        },
+        {
+          "id": "6-4",
+          "priority": 0,
+          "created": 2
+        },
+        {
+          "id": "6-5",
+          "priority": 1,
+          "created": 1
+        },
+        {
+          "id": "6-6",
+          "priority": 2,
+          "created": 0
+        },
+        {
+          "id": "6-7",
+          "priority": 3,
+          "created": 3
+        },
+        {
+          "id": "6-8",
+          "priority": 4,
+          "created": 2
+        }
+      ]
+    },
+    "expected": [
+      "6-8",
+      "6-3",
+      "6-2",
+      "6-7",
+      "6-6",
+      "6-1",
+      "6-5",
+      "6-0",
+      "6-4"
+    ],
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "7-0",
+          "priority": 2,
+          "created": 3
+        },
+        {
+          "id": "7-1",
+          "priority": 3,
+          "created": 2
+        },
+        {
+          "id": "7-2",
+          "priority": 4,
+          "created": 1
+        },
+        {
+          "id": "7-3",
+          "priority": 0,
+          "created": 0
+        },
+        {
+          "id": "7-4",
+          "priority": 1,
+          "created": 3
+        },
+        {
+          "id": "7-5",
+          "priority": 2,
+          "created": 2
+        },
+        {
+          "id": "7-6",
+          "priority": 3,
+          "created": 1
+        },
+        {
+          "id": "7-7",
+          "priority": 4,
+          "created": 0
+        },
+        {
+          "id": "7-8",
+          "priority": 0,
+          "created": 3
+        }
+      ]
+    },
+    "expected": [
+      "7-7",
+      "7-2",
+      "7-6",
+      "7-1",
+      "7-5",
+      "7-0",
+      "7-4",
+      "7-3",
+      "7-8"
+    ],
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "8-0",
+          "priority": 3,
+          "created": 0
+        },
+        {
+          "id": "8-1",
+          "priority": 4,
+          "created": 3
+        },
+        {
+          "id": "8-2",
+          "priority": 0,
+          "created": 2
+        },
+        {
+          "id": "8-3",
+          "priority": 1,
+          "created": 1
+        },
+        {
+          "id": "8-4",
+          "priority": 2,
+          "created": 0
+        },
+        {
+          "id": "8-5",
+          "priority": 3,
+          "created": 3
+        },
+        {
+          "id": "8-6",
+          "priority": 4,
+          "created": 2
+        },
+        {
+          "id": "8-7",
+          "priority": 0,
+          "created": 1
+        },
+        {
+          "id": "8-8",
+          "priority": 1,
+          "created": 0
+        }
+      ]
+    },
+    "expected": [
+      "8-6",
+      "8-1",
+      "8-0",
+      "8-5",
+      "8-4",
+      "8-8",
+      "8-3",
+      "8-7",
+      "8-2"
+    ],
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "9-0",
+          "priority": 4,
+          "created": 1
+        },
+        {
+          "id": "9-1",
+          "priority": 0,
+          "created": 0
+        },
+        {
+          "id": "9-2",
+          "priority": 1,
+          "created": 3
+        },
+        {
+          "id": "9-3",
+          "priority": 2,
+          "created": 2
+        },
+        {
+          "id": "9-4",
+          "priority": 3,
+          "created": 1
+        },
+        {
+          "id": "9-5",
+          "priority": 4,
+          "created": 0
+        },
+        {
+          "id": "9-6",
+          "priority": 0,
+          "created": 3
+        },
+        {
+          "id": "9-7",
+          "priority": 1,
+          "created": 2
+        },
+        {
+          "id": "9-8",
+          "priority": 2,
+          "created": 1
+        }
+      ]
+    },
+    "expected": [
+      "9-5",
+      "9-0",
+      "9-4",
+      "9-8",
+      "9-3",
+      "9-7",
+      "9-2",
+      "9-1",
+      "9-6"
+    ],
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "10-0",
+          "priority": 0,
+          "created": 2
+        },
+        {
+          "id": "10-1",
+          "priority": 1,
+          "created": 1
+        },
+        {
+          "id": "10-2",
+          "priority": 2,
+          "created": 0
+        },
+        {
+          "id": "10-3",
+          "priority": 3,
+          "created": 3
+        },
+        {
+          "id": "10-4",
+          "priority": 4,
+          "created": 2
+        },
+        {
+          "id": "10-5",
+          "priority": 0,
+          "created": 1
+        },
+        {
+          "id": "10-6",
+          "priority": 1,
+          "created": 0
+        },
+        {
+          "id": "10-7",
+          "priority": 2,
+          "created": 3
+        },
+        {
+          "id": "10-8",
+          "priority": 3,
+          "created": 2
+        }
+      ]
+    },
+    "expected": [
+      "10-4",
+      "10-8",
+      "10-3",
+      "10-2",
+      "10-7",
+      "10-6",
+      "10-1",
+      "10-5",
+      "10-0"
+    ],
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "tickets": [
+        {
+          "id": "11-0",
+          "priority": 1,
+          "created": 3
+        },
+        {
+          "id": "11-1",
+          "priority": 2,
+          "created": 2
+        },
+        {
+          "id": "11-2",
+          "priority": 3,
+          "created": 1
+        },
+        {
+          "id": "11-3",
+          "priority": 4,
+          "created": 0
+        },
+        {
+          "id": "11-4",
+          "priority": 0,
+          "created": 3
+        },
+        {
+          "id": "11-5",
+          "priority": 1,
+          "created": 2
+        },
+        {
+          "id": "11-6",
+          "priority": 2,
+          "created": 1
+        },
+        {
+          "id": "11-7",
+          "priority": 3,
+          "created": 0
+        },
+        {
+          "id": "11-8",
+          "priority": 4,
+          "created": 3
+        }
+      ]
+    },
+    "expected": [
+      "11-3",
+      "11-8",
+      "11-7",
+      "11-2",
+      "11-6",
+      "11-1",
+      "11-5",
+      "11-0",
+      "11-4"
+    ],
+    "label": "additional-12"
+  }
+]

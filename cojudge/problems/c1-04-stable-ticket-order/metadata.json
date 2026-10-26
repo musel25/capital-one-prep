@@ -1,0 +1,50 @@
+{
+  "id": "c1-04-stable-ticket-order",
+  "title": "04. Sort tickets with stable ties",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-python-data-and-libraries",
+  "examples": [
+    {
+      "input": "{\"tickets\": [{\"id\": \"low\", \"priority\": 1, \"created\": 1}, {\"id\": \"late\", \"priority\": 3, \"created\": 9}, {\"id\": \"early\", \"priority\": 3, \"created\": 2}]}",
+      "output": "[\"early\", \"late\", \"low\"]",
+      "explanation": "two ordering keys"
+    },
+    {
+      "input": "{\"tickets\": [{\"id\": \"z\", \"priority\": 2, \"created\": 5}, {\"id\": \"a\", \"priority\": 2, \"created\": 5}]}",
+      "output": "[\"z\", \"a\"]",
+      "explanation": "ties preserve input order"
+    },
+    {
+      "input": "{\"tickets\": []}",
+      "output": "[]",
+      "explanation": "empty list"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> list[str]:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"tickets\":[{\"created\":1,\"id\":\"low\",\"priority\":1},{\"created\":9,\"id\":\"late\",\"priority\":3},{\"created\":2,\"id\":\"early\",\"priority\":3}]}"
+    },
+    {
+      "payload": "{\"tickets\":[{\"created\":5,\"id\":\"z\",\"priority\":2},{\"created\":5,\"id\":\"a\",\"priority\":2}]}"
+    },
+    {
+      "payload": "{\"tickets\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Build a tuple key with one value for each sort rule.",
+    "A stable sort supplies the final input-order tie rule."
+  ]
+}

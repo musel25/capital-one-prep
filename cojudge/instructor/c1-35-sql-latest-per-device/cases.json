@@ -1,0 +1,1947 @@
+[
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "a",
+          "ts": 5,
+          "value": 10
+        },
+        {
+          "id": 2,
+          "device": "a",
+          "ts": 9,
+          "value": 10
+        },
+        {
+          "id": 3,
+          "device": "b",
+          "ts": 6,
+          "value": 10
+        }
+      ],
+      "cutoff": 100
+    },
+    "expected": [
+      {
+        "device": "a",
+        "id": 2,
+        "ts": 9,
+        "value": 10
+      },
+      {
+        "device": "b",
+        "id": 3,
+        "ts": 6,
+        "value": 10
+      }
+    ],
+    "label": "latest row within each device"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "a",
+          "ts": 5,
+          "value": 10
+        },
+        {
+          "id": 3,
+          "device": "a",
+          "ts": 5,
+          "value": 30
+        },
+        {
+          "id": 2,
+          "device": "a",
+          "ts": 5,
+          "value": 20
+        }
+      ],
+      "cutoff": 100
+    },
+    "expected": [
+      {
+        "device": "a",
+        "id": 3,
+        "ts": 5,
+        "value": 30
+      }
+    ],
+    "label": "largest id resolves timestamp tie"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "a",
+          "ts": 5,
+          "value": 10
+        },
+        {
+          "id": 2,
+          "device": "a",
+          "ts": 20,
+          "value": 10
+        }
+      ],
+      "cutoff": 10
+    },
+    "expected": [
+      {
+        "device": "a",
+        "id": 1,
+        "ts": 5,
+        "value": 10
+      }
+    ],
+    "label": "cutoff filters before ranking"
+  },
+  {
+    "input": {
+      "rows": [],
+      "cutoff": 100
+    },
+    "expected": [],
+    "label": "empty table"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "a",
+          "ts": 0,
+          "value": 10
+        }
+      ],
+      "cutoff": 0
+    },
+    "expected": [
+      {
+        "device": "a",
+        "id": 1,
+        "ts": 0,
+        "value": 10
+      }
+    ],
+    "label": "zero timestamp at zero cutoff"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "a",
+          "ts": 5,
+          "value": 10
+        }
+      ],
+      "cutoff": 5
+    },
+    "expected": [
+      {
+        "device": "a",
+        "id": 1,
+        "ts": 5,
+        "value": 10
+      }
+    ],
+    "label": "inclusive cutoff"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "a",
+          "ts": 6,
+          "value": 10
+        }
+      ],
+      "cutoff": 5
+    },
+    "expected": [],
+    "label": "device has no eligible row"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "a",
+          "ts": 1,
+          "value": 99
+        },
+        {
+          "id": 2,
+          "device": "a",
+          "ts": 2,
+          "value": null
+        }
+      ],
+      "cutoff": 100
+    },
+    "expected": [
+      {
+        "device": "a",
+        "id": 2,
+        "ts": 2,
+        "value": null
+      }
+    ],
+    "label": "latest null value is retained"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 10,
+          "device": "a",
+          "ts": 1,
+          "value": 10
+        },
+        {
+          "id": 2,
+          "device": "a",
+          "ts": 2,
+          "value": 10
+        }
+      ],
+      "cutoff": 100
+    },
+    "expected": [
+      {
+        "device": "a",
+        "id": 2,
+        "ts": 2,
+        "value": 10
+      }
+    ],
+    "label": "timestamp outranks id"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "z",
+          "ts": 10,
+          "value": 10
+        },
+        {
+          "id": 2,
+          "device": "a",
+          "ts": 1,
+          "value": 10
+        }
+      ],
+      "cutoff": 100
+    },
+    "expected": [
+      {
+        "device": "a",
+        "id": 2,
+        "ts": 1,
+        "value": 10
+      },
+      {
+        "device": "z",
+        "id": 1,
+        "ts": 10,
+        "value": 10
+      }
+    ],
+    "label": "output ordered by device"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "A",
+          "ts": 1,
+          "value": 10
+        },
+        {
+          "id": 2,
+          "device": "a",
+          "ts": 1,
+          "value": 10
+        }
+      ],
+      "cutoff": 100
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 1,
+        "ts": 1,
+        "value": 10
+      },
+      {
+        "device": "a",
+        "id": 2,
+        "ts": 1,
+        "value": 10
+      }
+    ],
+    "label": "case-sensitive partitions"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "a",
+          "ts": 1,
+          "value": -7
+        }
+      ],
+      "cutoff": 100
+    },
+    "expected": [
+      {
+        "device": "a",
+        "id": 1,
+        "ts": 1,
+        "value": -7
+      }
+    ],
+    "label": "negative reading value"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "O'Reilly",
+          "ts": 3,
+          "value": 10
+        }
+      ],
+      "cutoff": 100
+    },
+    "expected": [
+      {
+        "device": "O'Reilly",
+        "id": 1,
+        "ts": 3,
+        "value": 10
+      }
+    ],
+    "label": "quoted device name"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 2,
+          "device": "a",
+          "ts": 5,
+          "value": 0
+        },
+        {
+          "id": 10,
+          "device": "a",
+          "ts": 5,
+          "value": 1
+        }
+      ],
+      "cutoff": 100
+    },
+    "expected": [
+      {
+        "device": "a",
+        "id": 10,
+        "ts": 5,
+        "value": 1
+      }
+    ],
+    "label": "numeric id comparison"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "b",
+          "ts": 8,
+          "value": 0
+        },
+        {
+          "id": 2,
+          "device": "A",
+          "ts": 2,
+          "value": 0
+        }
+      ],
+      "cutoff": 0
+    },
+    "expected": [],
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "A",
+          "ts": 2,
+          "value": 0
+        },
+        {
+          "id": 2,
+          "device": "z",
+          "ts": 6,
+          "value": 0
+        },
+        {
+          "id": 3,
+          "device": "a",
+          "ts": 9,
+          "value": null
+        }
+      ],
+      "cutoff": 1
+    },
+    "expected": [],
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "z",
+          "ts": 11,
+          "value": 0
+        },
+        {
+          "id": 2,
+          "device": "a",
+          "ts": 10,
+          "value": 0
+        },
+        {
+          "id": 3,
+          "device": "b",
+          "ts": 11,
+          "value": null
+        },
+        {
+          "id": 4,
+          "device": "A",
+          "ts": 5,
+          "value": null
+        }
+      ],
+      "cutoff": 2
+    },
+    "expected": [],
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "a",
+          "ts": 8,
+          "value": null
+        },
+        {
+          "id": 2,
+          "device": "b",
+          "ts": 1,
+          "value": 10
+        },
+        {
+          "id": 3,
+          "device": "A",
+          "ts": 5,
+          "value": null
+        },
+        {
+          "id": 4,
+          "device": "z",
+          "ts": 5,
+          "value": 10
+        },
+        {
+          "id": 5,
+          "device": "a",
+          "ts": 0,
+          "value": null
+        }
+      ],
+      "cutoff": 3
+    },
+    "expected": [
+      {
+        "device": "a",
+        "id": 5,
+        "ts": 0,
+        "value": null
+      },
+      {
+        "device": "b",
+        "id": 2,
+        "ts": 1,
+        "value": 10
+      }
+    ],
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "b",
+          "ts": 3,
+          "value": 0
+        },
+        {
+          "id": 2,
+          "device": "A",
+          "ts": 1,
+          "value": -10
+        },
+        {
+          "id": 3,
+          "device": "z",
+          "ts": 5,
+          "value": -10
+        },
+        {
+          "id": 4,
+          "device": "a",
+          "ts": 9,
+          "value": null
+        },
+        {
+          "id": 5,
+          "device": "b",
+          "ts": 7,
+          "value": 0
+        },
+        {
+          "id": 6,
+          "device": "A",
+          "ts": 1,
+          "value": 0
+        }
+      ],
+      "cutoff": 4
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 6,
+        "ts": 1,
+        "value": 0
+      },
+      {
+        "device": "b",
+        "id": 1,
+        "ts": 3,
+        "value": 0
+      }
+    ],
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "A",
+          "ts": 2,
+          "value": null
+        },
+        {
+          "id": 2,
+          "device": "z",
+          "ts": 10,
+          "value": -10
+        },
+        {
+          "id": 3,
+          "device": "a",
+          "ts": 8,
+          "value": 10
+        },
+        {
+          "id": 4,
+          "device": "b",
+          "ts": 7,
+          "value": 0
+        },
+        {
+          "id": 5,
+          "device": "A",
+          "ts": 6,
+          "value": 10
+        },
+        {
+          "id": 6,
+          "device": "z",
+          "ts": 0,
+          "value": 0
+        },
+        {
+          "id": 7,
+          "device": "a",
+          "ts": 9,
+          "value": 10
+        }
+      ],
+      "cutoff": 5
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 1,
+        "ts": 2,
+        "value": null
+      },
+      {
+        "device": "z",
+        "id": 6,
+        "ts": 0,
+        "value": 0
+      }
+    ],
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "z",
+          "ts": 8,
+          "value": null
+        },
+        {
+          "id": 2,
+          "device": "a",
+          "ts": 1,
+          "value": 0
+        },
+        {
+          "id": 3,
+          "device": "b",
+          "ts": 8,
+          "value": 10
+        },
+        {
+          "id": 4,
+          "device": "A",
+          "ts": 1,
+          "value": null
+        },
+        {
+          "id": 5,
+          "device": "z",
+          "ts": 6,
+          "value": 10
+        },
+        {
+          "id": 6,
+          "device": "a",
+          "ts": 3,
+          "value": 10
+        },
+        {
+          "id": 7,
+          "device": "b",
+          "ts": 6,
+          "value": null
+        },
+        {
+          "id": 8,
+          "device": "A",
+          "ts": 4,
+          "value": -10
+        }
+      ],
+      "cutoff": 6
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 8,
+        "ts": 4,
+        "value": -10
+      },
+      {
+        "device": "a",
+        "id": 6,
+        "ts": 3,
+        "value": 10
+      },
+      {
+        "device": "b",
+        "id": 7,
+        "ts": 6,
+        "value": null
+      },
+      {
+        "device": "z",
+        "id": 5,
+        "ts": 6,
+        "value": 10
+      }
+    ],
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "a",
+          "ts": 3,
+          "value": -10
+        },
+        {
+          "id": 2,
+          "device": "b",
+          "ts": 0,
+          "value": null
+        },
+        {
+          "id": 3,
+          "device": "A",
+          "ts": 1,
+          "value": null
+        },
+        {
+          "id": 4,
+          "device": "z",
+          "ts": 11,
+          "value": -10
+        },
+        {
+          "id": 5,
+          "device": "a",
+          "ts": 0,
+          "value": -10
+        },
+        {
+          "id": 6,
+          "device": "b",
+          "ts": 11,
+          "value": 10
+        },
+        {
+          "id": 7,
+          "device": "A",
+          "ts": 9,
+          "value": null
+        },
+        {
+          "id": 8,
+          "device": "z",
+          "ts": 10,
+          "value": 10
+        },
+        {
+          "id": 9,
+          "device": "a",
+          "ts": 8,
+          "value": -10
+        }
+      ],
+      "cutoff": 7
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 3,
+        "ts": 1,
+        "value": null
+      },
+      {
+        "device": "a",
+        "id": 1,
+        "ts": 3,
+        "value": -10
+      },
+      {
+        "device": "b",
+        "id": 2,
+        "ts": 0,
+        "value": null
+      }
+    ],
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "b",
+          "ts": 8,
+          "value": 0
+        },
+        {
+          "id": 2,
+          "device": "A",
+          "ts": 8,
+          "value": 10
+        },
+        {
+          "id": 3,
+          "device": "z",
+          "ts": 11,
+          "value": 10
+        },
+        {
+          "id": 4,
+          "device": "a",
+          "ts": 0,
+          "value": 10
+        },
+        {
+          "id": 5,
+          "device": "b",
+          "ts": 8,
+          "value": 0
+        },
+        {
+          "id": 6,
+          "device": "A",
+          "ts": 8,
+          "value": -10
+        },
+        {
+          "id": 7,
+          "device": "z",
+          "ts": 5,
+          "value": 10
+        },
+        {
+          "id": 8,
+          "device": "a",
+          "ts": 4,
+          "value": 10
+        },
+        {
+          "id": 9,
+          "device": "b",
+          "ts": 10,
+          "value": null
+        },
+        {
+          "id": 10,
+          "device": "A",
+          "ts": 5,
+          "value": null
+        }
+      ],
+      "cutoff": 8
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 6,
+        "ts": 8,
+        "value": -10
+      },
+      {
+        "device": "a",
+        "id": 8,
+        "ts": 4,
+        "value": 10
+      },
+      {
+        "device": "b",
+        "id": 5,
+        "ts": 8,
+        "value": 0
+      },
+      {
+        "device": "z",
+        "id": 7,
+        "ts": 5,
+        "value": 10
+      }
+    ],
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "A",
+          "ts": 9,
+          "value": 0
+        },
+        {
+          "id": 2,
+          "device": "z",
+          "ts": 11,
+          "value": 10
+        },
+        {
+          "id": 3,
+          "device": "a",
+          "ts": 10,
+          "value": 10
+        },
+        {
+          "id": 4,
+          "device": "b",
+          "ts": 0,
+          "value": 10
+        },
+        {
+          "id": 5,
+          "device": "A",
+          "ts": 9,
+          "value": 10
+        },
+        {
+          "id": 6,
+          "device": "z",
+          "ts": 1,
+          "value": -10
+        },
+        {
+          "id": 7,
+          "device": "a",
+          "ts": 11,
+          "value": 0
+        },
+        {
+          "id": 8,
+          "device": "b",
+          "ts": 10,
+          "value": -10
+        },
+        {
+          "id": 9,
+          "device": "A",
+          "ts": 7,
+          "value": null
+        },
+        {
+          "id": 10,
+          "device": "z",
+          "ts": 3,
+          "value": 0
+        },
+        {
+          "id": 11,
+          "device": "a",
+          "ts": 1,
+          "value": -10
+        }
+      ],
+      "cutoff": 9
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 5,
+        "ts": 9,
+        "value": 10
+      },
+      {
+        "device": "a",
+        "id": 11,
+        "ts": 1,
+        "value": -10
+      },
+      {
+        "device": "b",
+        "id": 4,
+        "ts": 0,
+        "value": 10
+      },
+      {
+        "device": "z",
+        "id": 10,
+        "ts": 3,
+        "value": 0
+      }
+    ],
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "z",
+          "ts": 6,
+          "value": null
+        },
+        {
+          "id": 2,
+          "device": "a",
+          "ts": 6,
+          "value": 0
+        },
+        {
+          "id": 3,
+          "device": "b",
+          "ts": 7,
+          "value": null
+        },
+        {
+          "id": 4,
+          "device": "A",
+          "ts": 2,
+          "value": null
+        },
+        {
+          "id": 5,
+          "device": "z",
+          "ts": 7,
+          "value": 0
+        },
+        {
+          "id": 6,
+          "device": "a",
+          "ts": 8,
+          "value": null
+        },
+        {
+          "id": 7,
+          "device": "b",
+          "ts": 11,
+          "value": -10
+        },
+        {
+          "id": 8,
+          "device": "A",
+          "ts": 11,
+          "value": 10
+        },
+        {
+          "id": 9,
+          "device": "z",
+          "ts": 3,
+          "value": -10
+        },
+        {
+          "id": 10,
+          "device": "a",
+          "ts": 3,
+          "value": 10
+        },
+        {
+          "id": 11,
+          "device": "b",
+          "ts": 3,
+          "value": 0
+        },
+        {
+          "id": 12,
+          "device": "A",
+          "ts": 11,
+          "value": -10
+        }
+      ],
+      "cutoff": 10
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 4,
+        "ts": 2,
+        "value": null
+      },
+      {
+        "device": "a",
+        "id": 6,
+        "ts": 8,
+        "value": null
+      },
+      {
+        "device": "b",
+        "id": 3,
+        "ts": 7,
+        "value": null
+      },
+      {
+        "device": "z",
+        "id": 5,
+        "ts": 7,
+        "value": 0
+      }
+    ],
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "a",
+          "ts": 11,
+          "value": 10
+        },
+        {
+          "id": 2,
+          "device": "b",
+          "ts": 7,
+          "value": -10
+        },
+        {
+          "id": 3,
+          "device": "A",
+          "ts": 2,
+          "value": 10
+        },
+        {
+          "id": 4,
+          "device": "z",
+          "ts": 1,
+          "value": 10
+        },
+        {
+          "id": 5,
+          "device": "a",
+          "ts": 9,
+          "value": -10
+        },
+        {
+          "id": 6,
+          "device": "b",
+          "ts": 9,
+          "value": null
+        },
+        {
+          "id": 7,
+          "device": "A",
+          "ts": 9,
+          "value": 0
+        },
+        {
+          "id": 8,
+          "device": "z",
+          "ts": 11,
+          "value": 10
+        },
+        {
+          "id": 9,
+          "device": "a",
+          "ts": 9,
+          "value": 0
+        },
+        {
+          "id": 10,
+          "device": "b",
+          "ts": 3,
+          "value": -10
+        },
+        {
+          "id": 11,
+          "device": "A",
+          "ts": 5,
+          "value": 0
+        },
+        {
+          "id": 12,
+          "device": "z",
+          "ts": 0,
+          "value": -10
+        },
+        {
+          "id": 13,
+          "device": "a",
+          "ts": 0,
+          "value": 10
+        }
+      ],
+      "cutoff": 11
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 7,
+        "ts": 9,
+        "value": 0
+      },
+      {
+        "device": "a",
+        "id": 1,
+        "ts": 11,
+        "value": 10
+      },
+      {
+        "device": "b",
+        "id": 6,
+        "ts": 9,
+        "value": null
+      },
+      {
+        "device": "z",
+        "id": 8,
+        "ts": 11,
+        "value": 10
+      }
+    ],
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "b",
+          "ts": 5,
+          "value": 0
+        },
+        {
+          "id": 2,
+          "device": "A",
+          "ts": 1,
+          "value": null
+        },
+        {
+          "id": 3,
+          "device": "z",
+          "ts": 6,
+          "value": 10
+        },
+        {
+          "id": 4,
+          "device": "a",
+          "ts": 9,
+          "value": null
+        },
+        {
+          "id": 5,
+          "device": "b",
+          "ts": 0,
+          "value": 10
+        },
+        {
+          "id": 6,
+          "device": "A",
+          "ts": 6,
+          "value": null
+        },
+        {
+          "id": 7,
+          "device": "z",
+          "ts": 5,
+          "value": 0
+        },
+        {
+          "id": 8,
+          "device": "a",
+          "ts": 0,
+          "value": -10
+        },
+        {
+          "id": 9,
+          "device": "b",
+          "ts": 11,
+          "value": -10
+        },
+        {
+          "id": 10,
+          "device": "A",
+          "ts": 11,
+          "value": 10
+        },
+        {
+          "id": 11,
+          "device": "z",
+          "ts": 7,
+          "value": null
+        },
+        {
+          "id": 12,
+          "device": "a",
+          "ts": 4,
+          "value": 0
+        },
+        {
+          "id": 13,
+          "device": "b",
+          "ts": 7,
+          "value": 10
+        },
+        {
+          "id": 14,
+          "device": "A",
+          "ts": 1,
+          "value": null
+        }
+      ],
+      "cutoff": 12
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 10,
+        "ts": 11,
+        "value": 10
+      },
+      {
+        "device": "a",
+        "id": 4,
+        "ts": 9,
+        "value": null
+      },
+      {
+        "device": "b",
+        "id": 9,
+        "ts": 11,
+        "value": -10
+      },
+      {
+        "device": "z",
+        "id": 11,
+        "ts": 7,
+        "value": null
+      }
+    ],
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "A",
+          "ts": 9,
+          "value": null
+        },
+        {
+          "id": 2,
+          "device": "z",
+          "ts": 2,
+          "value": 0
+        },
+        {
+          "id": 3,
+          "device": "a",
+          "ts": 8,
+          "value": 0
+        },
+        {
+          "id": 4,
+          "device": "b",
+          "ts": 8,
+          "value": null
+        },
+        {
+          "id": 5,
+          "device": "A",
+          "ts": 3,
+          "value": 0
+        },
+        {
+          "id": 6,
+          "device": "z",
+          "ts": 7,
+          "value": 0
+        },
+        {
+          "id": 7,
+          "device": "a",
+          "ts": 6,
+          "value": 10
+        },
+        {
+          "id": 8,
+          "device": "b",
+          "ts": 1,
+          "value": null
+        },
+        {
+          "id": 9,
+          "device": "A",
+          "ts": 1,
+          "value": 0
+        },
+        {
+          "id": 10,
+          "device": "z",
+          "ts": 1,
+          "value": null
+        },
+        {
+          "id": 11,
+          "device": "a",
+          "ts": 11,
+          "value": -10
+        },
+        {
+          "id": 12,
+          "device": "b",
+          "ts": 6,
+          "value": -10
+        },
+        {
+          "id": 13,
+          "device": "A",
+          "ts": 1,
+          "value": 10
+        },
+        {
+          "id": 14,
+          "device": "z",
+          "ts": 4,
+          "value": null
+        },
+        {
+          "id": 15,
+          "device": "a",
+          "ts": 5,
+          "value": 0
+        }
+      ],
+      "cutoff": 0
+    },
+    "expected": [],
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "z",
+          "ts": 11,
+          "value": -10
+        },
+        {
+          "id": 2,
+          "device": "a",
+          "ts": 4,
+          "value": 10
+        },
+        {
+          "id": 3,
+          "device": "b",
+          "ts": 4,
+          "value": -10
+        },
+        {
+          "id": 4,
+          "device": "A",
+          "ts": 3,
+          "value": 10
+        },
+        {
+          "id": 5,
+          "device": "z",
+          "ts": 7,
+          "value": 0
+        },
+        {
+          "id": 6,
+          "device": "a",
+          "ts": 1,
+          "value": 10
+        },
+        {
+          "id": 7,
+          "device": "b",
+          "ts": 2,
+          "value": 10
+        },
+        {
+          "id": 8,
+          "device": "A",
+          "ts": 2,
+          "value": 0
+        },
+        {
+          "id": 9,
+          "device": "z",
+          "ts": 6,
+          "value": -10
+        },
+        {
+          "id": 10,
+          "device": "a",
+          "ts": 10,
+          "value": 10
+        },
+        {
+          "id": 11,
+          "device": "b",
+          "ts": 3,
+          "value": null
+        },
+        {
+          "id": 12,
+          "device": "A",
+          "ts": 3,
+          "value": -10
+        },
+        {
+          "id": 13,
+          "device": "z",
+          "ts": 4,
+          "value": -10
+        },
+        {
+          "id": 14,
+          "device": "a",
+          "ts": 0,
+          "value": -10
+        },
+        {
+          "id": 15,
+          "device": "b",
+          "ts": 0,
+          "value": 0
+        },
+        {
+          "id": 16,
+          "device": "A",
+          "ts": 7,
+          "value": -10
+        }
+      ],
+      "cutoff": 1
+    },
+    "expected": [
+      {
+        "device": "a",
+        "id": 6,
+        "ts": 1,
+        "value": 10
+      },
+      {
+        "device": "b",
+        "id": 15,
+        "ts": 0,
+        "value": 0
+      }
+    ],
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "a",
+          "ts": 11,
+          "value": 0
+        },
+        {
+          "id": 2,
+          "device": "b",
+          "ts": 8,
+          "value": 0
+        },
+        {
+          "id": 3,
+          "device": "A",
+          "ts": 8,
+          "value": 10
+        },
+        {
+          "id": 4,
+          "device": "z",
+          "ts": 0,
+          "value": 10
+        },
+        {
+          "id": 5,
+          "device": "a",
+          "ts": 10,
+          "value": 0
+        },
+        {
+          "id": 6,
+          "device": "b",
+          "ts": 5,
+          "value": 0
+        },
+        {
+          "id": 7,
+          "device": "A",
+          "ts": 7,
+          "value": 0
+        },
+        {
+          "id": 8,
+          "device": "z",
+          "ts": 4,
+          "value": -10
+        },
+        {
+          "id": 9,
+          "device": "a",
+          "ts": 2,
+          "value": 0
+        },
+        {
+          "id": 10,
+          "device": "b",
+          "ts": 2,
+          "value": 10
+        },
+        {
+          "id": 11,
+          "device": "A",
+          "ts": 3,
+          "value": -10
+        },
+        {
+          "id": 12,
+          "device": "z",
+          "ts": 9,
+          "value": null
+        },
+        {
+          "id": 13,
+          "device": "a",
+          "ts": 1,
+          "value": 0
+        },
+        {
+          "id": 14,
+          "device": "b",
+          "ts": 3,
+          "value": -10
+        },
+        {
+          "id": 15,
+          "device": "A",
+          "ts": 2,
+          "value": -10
+        },
+        {
+          "id": 16,
+          "device": "z",
+          "ts": 4,
+          "value": 10
+        },
+        {
+          "id": 17,
+          "device": "a",
+          "ts": 7,
+          "value": -10
+        }
+      ],
+      "cutoff": 2
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 15,
+        "ts": 2,
+        "value": -10
+      },
+      {
+        "device": "a",
+        "id": 9,
+        "ts": 2,
+        "value": 0
+      },
+      {
+        "device": "b",
+        "id": 10,
+        "ts": 2,
+        "value": 10
+      },
+      {
+        "device": "z",
+        "id": 4,
+        "ts": 0,
+        "value": 10
+      }
+    ],
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "b",
+          "ts": 5,
+          "value": -10
+        },
+        {
+          "id": 2,
+          "device": "A",
+          "ts": 9,
+          "value": null
+        },
+        {
+          "id": 3,
+          "device": "z",
+          "ts": 7,
+          "value": 10
+        },
+        {
+          "id": 4,
+          "device": "a",
+          "ts": 11,
+          "value": 0
+        },
+        {
+          "id": 5,
+          "device": "b",
+          "ts": 6,
+          "value": null
+        },
+        {
+          "id": 6,
+          "device": "A",
+          "ts": 7,
+          "value": 10
+        },
+        {
+          "id": 7,
+          "device": "z",
+          "ts": 2,
+          "value": 10
+        },
+        {
+          "id": 8,
+          "device": "a",
+          "ts": 11,
+          "value": 0
+        },
+        {
+          "id": 9,
+          "device": "b",
+          "ts": 4,
+          "value": null
+        },
+        {
+          "id": 10,
+          "device": "A",
+          "ts": 2,
+          "value": 10
+        },
+        {
+          "id": 11,
+          "device": "z",
+          "ts": 9,
+          "value": -10
+        },
+        {
+          "id": 12,
+          "device": "a",
+          "ts": 9,
+          "value": 0
+        },
+        {
+          "id": 13,
+          "device": "b",
+          "ts": 9,
+          "value": null
+        },
+        {
+          "id": 14,
+          "device": "A",
+          "ts": 1,
+          "value": -10
+        },
+        {
+          "id": 15,
+          "device": "z",
+          "ts": 8,
+          "value": -10
+        },
+        {
+          "id": 16,
+          "device": "a",
+          "ts": 5,
+          "value": 0
+        },
+        {
+          "id": 17,
+          "device": "b",
+          "ts": 9,
+          "value": null
+        },
+        {
+          "id": 18,
+          "device": "A",
+          "ts": 3,
+          "value": null
+        }
+      ],
+      "cutoff": 3
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 18,
+        "ts": 3,
+        "value": null
+      },
+      {
+        "device": "z",
+        "id": 7,
+        "ts": 2,
+        "value": 10
+      }
+    ],
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "device": "A",
+          "ts": 3,
+          "value": -10
+        },
+        {
+          "id": 2,
+          "device": "z",
+          "ts": 2,
+          "value": 0
+        },
+        {
+          "id": 3,
+          "device": "a",
+          "ts": 4,
+          "value": -10
+        },
+        {
+          "id": 4,
+          "device": "b",
+          "ts": 2,
+          "value": null
+        },
+        {
+          "id": 5,
+          "device": "A",
+          "ts": 5,
+          "value": 10
+        },
+        {
+          "id": 6,
+          "device": "z",
+          "ts": 4,
+          "value": -10
+        },
+        {
+          "id": 7,
+          "device": "a",
+          "ts": 10,
+          "value": null
+        },
+        {
+          "id": 8,
+          "device": "b",
+          "ts": 7,
+          "value": 10
+        },
+        {
+          "id": 9,
+          "device": "A",
+          "ts": 6,
+          "value": 0
+        },
+        {
+          "id": 10,
+          "device": "z",
+          "ts": 6,
+          "value": 0
+        },
+        {
+          "id": 11,
+          "device": "a",
+          "ts": 4,
+          "value": null
+        },
+        {
+          "id": 12,
+          "device": "b",
+          "ts": 0,
+          "value": 10
+        },
+        {
+          "id": 13,
+          "device": "A",
+          "ts": 6,
+          "value": 0
+        },
+        {
+          "id": 14,
+          "device": "z",
+          "ts": 4,
+          "value": 0
+        },
+        {
+          "id": 15,
+          "device": "a",
+          "ts": 8,
+          "value": 10
+        },
+        {
+          "id": 16,
+          "device": "b",
+          "ts": 1,
+          "value": -10
+        },
+        {
+          "id": 17,
+          "device": "A",
+          "ts": 9,
+          "value": 0
+        },
+        {
+          "id": 18,
+          "device": "z",
+          "ts": 5,
+          "value": 10
+        },
+        {
+          "id": 19,
+          "device": "a",
+          "ts": 8,
+          "value": null
+        }
+      ],
+      "cutoff": 4
+    },
+    "expected": [
+      {
+        "device": "A",
+        "id": 1,
+        "ts": 3,
+        "value": -10
+      },
+      {
+        "device": "a",
+        "id": 11,
+        "ts": 4,
+        "value": null
+      },
+      {
+        "device": "b",
+        "id": 4,
+        "ts": 2,
+        "value": null
+      },
+      {
+        "device": "z",
+        "id": 14,
+        "ts": 4,
+        "value": 0
+      }
+    ],
+    "label": "additional-18"
+  }
+]

@@ -1,0 +1,5219 @@
+[
+  {
+    "input": {
+      "stock": 5,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "confirm",
+          "at": 4,
+          "id": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "held",
+        "confirmed"
+      ],
+      "available": 3,
+      "reservations": [
+        [
+          "a",
+          "confirmed"
+        ]
+      ]
+    },
+    "label": "confirm before expiry consumes stock"
+  },
+  {
+    "input": {
+      "stock": 5,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "held",
+        "expired"
+      ],
+      "available": 5,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ]
+      ]
+    },
+    "label": "confirmation at expiry is too late"
+  },
+  {
+    "input": {
+      "stock": 5,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 1,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 2,
+          "id": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "held",
+        "released",
+        "released"
+      ],
+      "available": 5,
+      "reservations": [
+        [
+          "a",
+          "released"
+        ]
+      ]
+    },
+    "label": "release restores stock only once"
+  },
+  {
+    "input": {
+      "stock": 0,
+      "ops": []
+    },
+    "expected": {
+      "results": [],
+      "available": 0,
+      "reservations": []
+    },
+    "label": "empty stock and trace"
+  },
+  {
+    "input": {
+      "stock": 1,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "insufficient"
+      ],
+      "available": 1,
+      "reservations": []
+    },
+    "label": "insufficient request reserves no ID"
+  },
+  {
+    "input": {
+      "stock": 2,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "held"
+      ],
+      "available": 0,
+      "reservations": [
+        [
+          "a",
+          "held"
+        ]
+      ]
+    },
+    "label": "reserve exact remaining stock"
+  },
+  {
+    "input": {
+      "stock": 5,
+      "ops": [
+        {
+          "op": "confirm",
+          "at": 0,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 0,
+          "id": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "missing",
+        "missing"
+      ],
+      "available": 5,
+      "reservations": []
+    },
+    "label": "unknown ID"
+  },
+  {
+    "input": {
+      "stock": 5,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 4,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "held",
+        "held",
+        "expired"
+      ],
+      "available": 5,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ]
+      ]
+    },
+    "label": "replay does not extend deadline"
+  },
+  {
+    "input": {
+      "stock": 5,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 1,
+          "id": "a",
+          "qty": 3,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 2,
+          "id": "a",
+          "qty": 2,
+          "ttl": 6
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "held",
+        "conflict",
+        "conflict"
+      ],
+      "available": 3,
+      "reservations": [
+        [
+          "a",
+          "held"
+        ]
+      ]
+    },
+    "label": "payload conflict covers quantity and TTL"
+  },
+  {
+    "input": {
+      "stock": 5,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "confirm",
+          "at": 1,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 2,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 10,
+          "id": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "held",
+        "confirmed",
+        "confirmed",
+        "confirmed"
+      ],
+      "available": 3,
+      "reservations": [
+        [
+          "a",
+          "confirmed"
+        ]
+      ]
+    },
+    "label": "confirmed reservation never expires or refunds"
+  },
+  {
+    "input": {
+      "stock": 5,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 1,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 2,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 3,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "held",
+        "released",
+        "released",
+        "released"
+      ],
+      "available": 5,
+      "reservations": [
+        [
+          "a",
+          "released"
+        ]
+      ]
+    },
+    "label": "terminal release blocks reuse"
+  },
+  {
+    "input": {
+      "stock": 2,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 5,
+          "id": "b",
+          "qty": 2,
+          "ttl": 5
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "held",
+        "held"
+      ],
+      "available": 0,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ],
+        [
+          "b",
+          "held"
+        ]
+      ]
+    },
+    "label": "expiry frees stock before next reserve"
+  },
+  {
+    "input": {
+      "stock": 2,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 1,
+          "id": "b",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 2,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 3,
+          "id": "b",
+          "qty": 2,
+          "ttl": 5
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "held",
+        "insufficient",
+        "released",
+        "held"
+      ],
+      "available": 0,
+      "reservations": [
+        [
+          "a",
+          "released"
+        ],
+        [
+          "b",
+          "held"
+        ]
+      ]
+    },
+    "label": "insufficient attempt may retry after release"
+  },
+  {
+    "input": {
+      "stock": 5,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 5,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 6,
+          "id": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "held",
+        "expired",
+        "expired"
+      ],
+      "available": 5,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ]
+      ]
+    },
+    "label": "expired ID remains terminal"
+  },
+  {
+    "input": {
+      "stock": 5,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 1,
+          "id": "b",
+          "qty": 3,
+          "ttl": 5
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "b"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "held",
+        "held",
+        "confirmed"
+      ],
+      "available": 2,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ],
+        [
+          "b",
+          "confirmed"
+        ]
+      ]
+    },
+    "label": "expiry cleanup isolates reservations"
+  },
+  {
+    "input": {
+      "stock": 0,
+      "ops": [
+        {
+          "op": "confirm",
+          "at": 0,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 0,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 2,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 2,
+          "id": "c",
+          "qty": 4,
+          "ttl": 6
+        },
+        {
+          "op": "release",
+          "at": 2,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 3,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 6,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 7,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 8,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 8,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 10,
+          "id": "c",
+          "qty": 4,
+          "ttl": 2
+        },
+        {
+          "op": "release",
+          "at": 11,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 12,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 14,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 15,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 15,
+          "id": "a",
+          "qty": 1,
+          "ttl": 3
+        },
+        {
+          "op": "release",
+          "at": 15,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 17,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 19,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 20,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 20,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 22,
+          "id": "d",
+          "qty": 3,
+          "ttl": 4
+        }
+      ]
+    },
+    "expected": {
+      "available": 0,
+      "reservations": [],
+      "results": [
+        "missing",
+        "missing",
+        "missing",
+        "insufficient",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "insufficient",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "insufficient",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "insufficient"
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "stock": 1,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 1,
+          "id": "a",
+          "qty": 4,
+          "ttl": 4
+        },
+        {
+          "op": "release",
+          "at": 2,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 4,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 4,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 5,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 5,
+          "id": "a",
+          "qty": 5,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 7,
+          "id": "d",
+          "qty": 3,
+          "ttl": 3
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 11,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 12,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 14,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 14,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 14,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 16,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 18,
+          "id": "b",
+          "qty": 2,
+          "ttl": 1
+        },
+        {
+          "op": "confirm",
+          "at": 19,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 20,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 20,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 22,
+          "id": "c",
+          "qty": 4,
+          "ttl": 2
+        },
+        {
+          "op": "release",
+          "at": 22,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 22,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 22,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 22,
+          "id": "b",
+          "qty": 5,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 23,
+          "id": "b",
+          "qty": 1,
+          "ttl": 4
+        }
+      ]
+    },
+    "expected": {
+      "available": 0,
+      "reservations": [
+        [
+          "b",
+          "held"
+        ]
+      ],
+      "results": [
+        "insufficient",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "insufficient",
+        "insufficient",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "insufficient",
+        "missing",
+        "missing",
+        "missing",
+        "insufficient",
+        "missing",
+        "missing",
+        "missing",
+        "insufficient",
+        "held"
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "stock": 2,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "a",
+          "qty": 1,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 1,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 7,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 9,
+          "id": "b",
+          "qty": 3,
+          "ttl": 2
+        },
+        {
+          "op": "reserve",
+          "at": 9,
+          "id": "a",
+          "qty": 3,
+          "ttl": 1
+        },
+        {
+          "op": "release",
+          "at": 11,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 11,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 11,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 12,
+          "id": "a",
+          "qty": 3,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 12,
+          "id": "b",
+          "qty": 1,
+          "ttl": 1
+        },
+        {
+          "op": "release",
+          "at": 13,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 14,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 15,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 17,
+          "id": "a",
+          "qty": 4,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 18,
+          "id": "a",
+          "qty": 4,
+          "ttl": 2
+        },
+        {
+          "op": "reserve",
+          "at": 19,
+          "id": "b",
+          "qty": 1,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 19,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 19,
+          "id": "d",
+          "qty": 5,
+          "ttl": 2
+        },
+        {
+          "op": "reserve",
+          "at": 19,
+          "id": "c",
+          "qty": 1,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 20,
+          "id": "d",
+          "qty": 3,
+          "ttl": 2
+        },
+        {
+          "op": "confirm",
+          "at": 22,
+          "id": "d"
+        }
+      ]
+    },
+    "expected": {
+      "available": 2,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ],
+        [
+          "b",
+          "expired"
+        ],
+        [
+          "c",
+          "expired"
+        ]
+      ],
+      "results": [
+        "held",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "expired",
+        "insufficient",
+        "conflict",
+        "missing",
+        "expired",
+        "missing",
+        "conflict",
+        "held",
+        "expired",
+        "expired",
+        "missing",
+        "expired",
+        "conflict",
+        "conflict",
+        "conflict",
+        "missing",
+        "insufficient",
+        "held",
+        "insufficient",
+        "missing"
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "stock": 3,
+      "ops": [
+        {
+          "op": "release",
+          "at": 0,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 1,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 1,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 2,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 4,
+          "id": "a",
+          "qty": 4,
+          "ttl": 4
+        },
+        {
+          "op": "release",
+          "at": 4,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 4,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 4,
+          "id": "a",
+          "qty": 1,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 5,
+          "id": "a",
+          "qty": 5,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 7,
+          "id": "d",
+          "qty": 4,
+          "ttl": 1
+        },
+        {
+          "op": "confirm",
+          "at": 8,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 11,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 14,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 14,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 14,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 16,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 16,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 18,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 20,
+          "id": "c",
+          "qty": 1,
+          "ttl": 2
+        },
+        {
+          "op": "confirm",
+          "at": 20,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 22,
+          "id": "c",
+          "qty": 1,
+          "ttl": 3
+        },
+        {
+          "op": "release",
+          "at": 24,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 26,
+          "id": "d"
+        }
+      ]
+    },
+    "expected": {
+      "available": 2,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ],
+        [
+          "c",
+          "confirmed"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "insufficient",
+        "missing",
+        "missing",
+        "held",
+        "conflict",
+        "insufficient",
+        "missing",
+        "expired",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "expired",
+        "expired",
+        "held",
+        "confirmed",
+        "conflict",
+        "missing",
+        "missing"
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "stock": 4,
+      "ops": [
+        {
+          "op": "release",
+          "at": 1,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 1,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 1,
+          "id": "b",
+          "qty": 5,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 1,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 3,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 6,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 8,
+          "id": "c",
+          "qty": 3,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 9,
+          "id": "c",
+          "qty": 4,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 11,
+          "id": "d",
+          "qty": 5,
+          "ttl": 3
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 15,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 17,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 19,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 21,
+          "id": "c",
+          "qty": 4,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 21,
+          "id": "d",
+          "qty": 3,
+          "ttl": 3
+        },
+        {
+          "op": "release",
+          "at": 22,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 22,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 22,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 24,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 25,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 26,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 27,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 29,
+          "id": "c"
+        }
+      ]
+    },
+    "expected": {
+      "available": 1,
+      "reservations": [
+        [
+          "c",
+          "expired"
+        ],
+        [
+          "d",
+          "confirmed"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "insufficient",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "conflict",
+        "insufficient",
+        "missing",
+        "expired",
+        "missing",
+        "missing",
+        "conflict",
+        "held",
+        "missing",
+        "confirmed",
+        "missing",
+        "confirmed",
+        "missing",
+        "expired",
+        "missing",
+        "expired"
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "stock": 5,
+      "ops": [
+        {
+          "op": "release",
+          "at": 1,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 3,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 4,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 6,
+          "id": "d",
+          "qty": 4,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 7,
+          "id": "b",
+          "qty": 3,
+          "ttl": 1
+        },
+        {
+          "op": "reserve",
+          "at": 7,
+          "id": "b",
+          "qty": 3,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 9,
+          "id": "d",
+          "qty": 1,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 9,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 10,
+          "id": "b",
+          "qty": 3,
+          "ttl": 4
+        },
+        {
+          "op": "confirm",
+          "at": 11,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 11,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 13,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 15,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 16,
+          "id": "c",
+          "qty": 2,
+          "ttl": 4
+        },
+        {
+          "op": "release",
+          "at": 16,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 18,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 18,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 19,
+          "id": "a",
+          "qty": 5,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 21,
+          "id": "c",
+          "qty": 2,
+          "ttl": 2
+        },
+        {
+          "op": "reserve",
+          "at": 22,
+          "id": "a",
+          "qty": 5,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 22,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 22,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 23,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 24,
+          "id": "c"
+        }
+      ]
+    },
+    "expected": {
+      "available": 2,
+      "reservations": [
+        [
+          "a",
+          "released"
+        ],
+        [
+          "b",
+          "confirmed"
+        ],
+        [
+          "c",
+          "expired"
+        ],
+        [
+          "d",
+          "expired"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "insufficient",
+        "insufficient",
+        "conflict",
+        "missing",
+        "missing",
+        "held",
+        "confirmed",
+        "missing",
+        "confirmed",
+        "held",
+        "insufficient",
+        "released",
+        "confirmed",
+        "released",
+        "conflict",
+        "held",
+        "conflict",
+        "confirmed",
+        "released",
+        "expired",
+        "expired"
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "stock": 6,
+      "ops": [
+        {
+          "op": "confirm",
+          "at": 0,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 1,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 7,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 11,
+          "id": "b",
+          "qty": 4,
+          "ttl": 1
+        },
+        {
+          "op": "reserve",
+          "at": 11,
+          "id": "a",
+          "qty": 3,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 13,
+          "id": "a",
+          "qty": 3,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 15,
+          "id": "a",
+          "qty": 2,
+          "ttl": 6
+        },
+        {
+          "op": "release",
+          "at": 15,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 15,
+          "id": "a",
+          "qty": 1,
+          "ttl": 1
+        },
+        {
+          "op": "release",
+          "at": 16,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 16,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 17,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 18,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 20,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 22,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 23,
+          "id": "d",
+          "qty": 5,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 23,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 24,
+          "id": "d",
+          "qty": 2,
+          "ttl": 1
+        },
+        {
+          "op": "confirm",
+          "at": 24,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 26,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 28,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 30,
+          "id": "b"
+        }
+      ]
+    },
+    "expected": {
+      "available": 1,
+      "reservations": [
+        [
+          "a",
+          "released"
+        ],
+        [
+          "b",
+          "expired"
+        ],
+        [
+          "d",
+          "confirmed"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "insufficient",
+        "held",
+        "conflict",
+        "released",
+        "conflict",
+        "missing",
+        "missing",
+        "expired",
+        "expired",
+        "expired",
+        "expired",
+        "held",
+        "expired",
+        "conflict",
+        "confirmed",
+        "confirmed",
+        "confirmed",
+        "expired"
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "stock": 7,
+      "ops": [
+        {
+          "op": "confirm",
+          "at": 0,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "b",
+          "qty": 4,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "b",
+          "qty": 4,
+          "ttl": 6
+        },
+        {
+          "op": "release",
+          "at": 1,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 1,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 3,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 6,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 8,
+          "id": "c",
+          "qty": 4,
+          "ttl": 6
+        },
+        {
+          "op": "release",
+          "at": 9,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 11,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 13,
+          "id": "c",
+          "qty": 5,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 14,
+          "id": "c",
+          "qty": 5,
+          "ttl": 2
+        },
+        {
+          "op": "confirm",
+          "at": 16,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 17,
+          "id": "d",
+          "qty": 1,
+          "ttl": 1
+        },
+        {
+          "op": "release",
+          "at": 17,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 19,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 20,
+          "id": "d",
+          "qty": 4,
+          "ttl": 2
+        },
+        {
+          "op": "confirm",
+          "at": 22,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 23,
+          "id": "a",
+          "qty": 5,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 25,
+          "id": "a",
+          "qty": 2,
+          "ttl": 3
+        },
+        {
+          "op": "release",
+          "at": 27,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 27,
+          "id": "a",
+          "qty": 4,
+          "ttl": 6
+        },
+        {
+          "op": "confirm",
+          "at": 28,
+          "id": "b"
+        }
+      ]
+    },
+    "expected": {
+      "available": 7,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ],
+        [
+          "b",
+          "released"
+        ],
+        [
+          "c",
+          "expired"
+        ],
+        [
+          "d",
+          "expired"
+        ]
+      ],
+      "results": [
+        "missing",
+        "held",
+        "held",
+        "released",
+        "missing",
+        "missing",
+        "released",
+        "missing",
+        "missing",
+        "held",
+        "released",
+        "missing",
+        "conflict",
+        "conflict",
+        "missing",
+        "held",
+        "missing",
+        "released",
+        "conflict",
+        "expired",
+        "held",
+        "conflict",
+        "expired",
+        "conflict",
+        "released"
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "stock": 8,
+      "ops": [
+        {
+          "op": "release",
+          "at": 0,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 0,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 2,
+          "id": "c",
+          "qty": 1,
+          "ttl": 4
+        },
+        {
+          "op": "release",
+          "at": 4,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 4,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 4,
+          "id": "d",
+          "qty": 5,
+          "ttl": 2
+        },
+        {
+          "op": "release",
+          "at": 4,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 4,
+          "id": "c",
+          "qty": 4,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 6,
+          "id": "d",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "confirm",
+          "at": 7,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 11,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 15,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 15,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 16,
+          "id": "b",
+          "qty": 5,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 18,
+          "id": "b",
+          "qty": 3,
+          "ttl": 5
+        },
+        {
+          "op": "confirm",
+          "at": 19,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 20,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 22,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 24,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 26,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 28,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 29,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 31,
+          "id": "b",
+          "qty": 2,
+          "ttl": 1
+        }
+      ]
+    },
+    "expected": {
+      "available": 3,
+      "reservations": [
+        [
+          "b",
+          "confirmed"
+        ],
+        [
+          "c",
+          "expired"
+        ],
+        [
+          "d",
+          "released"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "held",
+        "missing",
+        "missing",
+        "held",
+        "released",
+        "conflict",
+        "conflict",
+        "released",
+        "expired",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "conflict",
+        "confirmed",
+        "released",
+        "released",
+        "missing",
+        "confirmed",
+        "missing",
+        "released",
+        "conflict"
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "stock": 9,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "c",
+          "qty": 2,
+          "ttl": 3
+        },
+        {
+          "op": "confirm",
+          "at": 2,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 4,
+          "id": "a",
+          "qty": 4,
+          "ttl": 2
+        },
+        {
+          "op": "reserve",
+          "at": 6,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "confirm",
+          "at": 7,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 7,
+          "id": "a",
+          "qty": 1,
+          "ttl": 6
+        },
+        {
+          "op": "release",
+          "at": 9,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 10,
+          "id": "d",
+          "qty": 5,
+          "ttl": 2
+        },
+        {
+          "op": "confirm",
+          "at": 11,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 11,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 11,
+          "id": "b",
+          "qty": 4,
+          "ttl": 4
+        },
+        {
+          "op": "release",
+          "at": 12,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 12,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 15,
+          "id": "c",
+          "qty": 5,
+          "ttl": 4
+        },
+        {
+          "op": "confirm",
+          "at": 17,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 19,
+          "id": "b",
+          "qty": 3,
+          "ttl": 2
+        },
+        {
+          "op": "confirm",
+          "at": 19,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 20,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 21,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 21,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 23,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 25,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 27,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 29,
+          "id": "d"
+        }
+      ]
+    },
+    "expected": {
+      "available": 9,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ],
+        [
+          "b",
+          "expired"
+        ],
+        [
+          "c",
+          "expired"
+        ],
+        [
+          "d",
+          "released"
+        ]
+      ],
+      "results": [
+        "held",
+        "missing",
+        "held",
+        "conflict",
+        "missing",
+        "conflict",
+        "missing",
+        "held",
+        "missing",
+        "released",
+        "held",
+        "expired",
+        "released",
+        "expired",
+        "conflict",
+        "expired",
+        "conflict",
+        "expired",
+        "expired",
+        "expired",
+        "expired",
+        "expired",
+        "expired",
+        "released",
+        "released"
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "stock": 10,
+      "ops": [
+        {
+          "op": "release",
+          "at": 2,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 3,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 4,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 4,
+          "id": "b",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 6,
+          "id": "b",
+          "qty": 3,
+          "ttl": 6
+        },
+        {
+          "op": "confirm",
+          "at": 6,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 8,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 9,
+          "id": "c",
+          "qty": 5,
+          "ttl": 1
+        },
+        {
+          "op": "release",
+          "at": 11,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 11,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 12,
+          "id": "a",
+          "qty": 2,
+          "ttl": 4
+        },
+        {
+          "op": "release",
+          "at": 13,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 15,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 16,
+          "id": "d",
+          "qty": 3,
+          "ttl": 6
+        },
+        {
+          "op": "confirm",
+          "at": 17,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 19,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 21,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 23,
+          "id": "b",
+          "qty": 3,
+          "ttl": 6
+        },
+        {
+          "op": "release",
+          "at": 25,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 25,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 27,
+          "id": "a",
+          "qty": 2,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 29,
+          "id": "a",
+          "qty": 2,
+          "ttl": 2
+        },
+        {
+          "op": "confirm",
+          "at": 30,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 30,
+          "id": "c"
+        }
+      ]
+    },
+    "expected": {
+      "available": 10,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ],
+        [
+          "b",
+          "released"
+        ],
+        [
+          "c",
+          "expired"
+        ],
+        [
+          "d",
+          "expired"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "conflict",
+        "missing",
+        "released",
+        "held",
+        "released",
+        "missing",
+        "held",
+        "released",
+        "missing",
+        "expired",
+        "held",
+        "expired",
+        "expired",
+        "expired",
+        "conflict",
+        "expired",
+        "expired",
+        "conflict",
+        "conflict",
+        "expired",
+        "expired"
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "stock": 11,
+      "ops": [
+        {
+          "op": "release",
+          "at": 1,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 1,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 5,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 6,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 8,
+          "id": "b",
+          "qty": 4,
+          "ttl": 2
+        },
+        {
+          "op": "reserve",
+          "at": 10,
+          "id": "d",
+          "qty": 4,
+          "ttl": 1
+        },
+        {
+          "op": "reserve",
+          "at": 10,
+          "id": "d",
+          "qty": 1,
+          "ttl": 6
+        },
+        {
+          "op": "release",
+          "at": 11,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 12,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 14,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 14,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 14,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 16,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 16,
+          "id": "c",
+          "qty": 4,
+          "ttl": 1
+        },
+        {
+          "op": "release",
+          "at": 18,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 19,
+          "id": "c",
+          "qty": 2,
+          "ttl": 1
+        },
+        {
+          "op": "reserve",
+          "at": 20,
+          "id": "d",
+          "qty": 4,
+          "ttl": 1
+        },
+        {
+          "op": "confirm",
+          "at": 22,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 23,
+          "id": "a",
+          "qty": 5,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 23,
+          "id": "d",
+          "qty": 3,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 24,
+          "id": "d",
+          "qty": 2,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 24,
+          "id": "c",
+          "qty": 3,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 26,
+          "id": "d",
+          "qty": 4,
+          "ttl": 1
+        }
+      ]
+    },
+    "expected": {
+      "available": 6,
+      "reservations": [
+        [
+          "a",
+          "held"
+        ],
+        [
+          "b",
+          "expired"
+        ],
+        [
+          "c",
+          "expired"
+        ],
+        [
+          "d",
+          "expired"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "held",
+        "conflict",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "expired",
+        "conflict",
+        "expired",
+        "expired",
+        "held",
+        "conflict",
+        "conflict",
+        "conflict",
+        "expired"
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "stock": 12,
+      "ops": [
+        {
+          "op": "confirm",
+          "at": 2,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 4,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 6,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 7,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 7,
+          "id": "b",
+          "qty": 3,
+          "ttl": 1
+        },
+        {
+          "op": "confirm",
+          "at": 7,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 7,
+          "id": "a",
+          "qty": 1,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 7,
+          "id": "b",
+          "qty": 5,
+          "ttl": 3
+        },
+        {
+          "op": "release",
+          "at": 9,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 10,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 10,
+          "id": "c",
+          "qty": 4,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 12,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 12,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 14,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 16,
+          "id": "b",
+          "qty": 3,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 17,
+          "id": "d",
+          "qty": 5,
+          "ttl": 1
+        },
+        {
+          "op": "confirm",
+          "at": 18,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 18,
+          "id": "c",
+          "qty": 3,
+          "ttl": 3
+        },
+        {
+          "op": "confirm",
+          "at": 20,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 21,
+          "id": "c",
+          "qty": 4,
+          "ttl": 1
+        },
+        {
+          "op": "reserve",
+          "at": 23,
+          "id": "a",
+          "qty": 1,
+          "ttl": 2
+        },
+        {
+          "op": "confirm",
+          "at": 25,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 27,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 27,
+          "id": "d",
+          "qty": 3,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 29,
+          "id": "b",
+          "qty": 1,
+          "ttl": 1
+        }
+      ]
+    },
+    "expected": {
+      "available": 9,
+      "reservations": [
+        [
+          "a",
+          "released"
+        ],
+        [
+          "b",
+          "confirmed"
+        ],
+        [
+          "c",
+          "released"
+        ],
+        [
+          "d",
+          "expired"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "confirmed",
+        "held",
+        "conflict",
+        "released",
+        "missing",
+        "held",
+        "released",
+        "released",
+        "confirmed",
+        "conflict",
+        "held",
+        "confirmed",
+        "conflict",
+        "released",
+        "conflict",
+        "conflict",
+        "released",
+        "expired",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "stock": 13,
+      "ops": [
+        {
+          "op": "release",
+          "at": 0,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 1,
+          "id": "d",
+          "qty": 3,
+          "ttl": 2
+        },
+        {
+          "op": "reserve",
+          "at": 2,
+          "id": "d",
+          "qty": 2,
+          "ttl": 3
+        },
+        {
+          "op": "release",
+          "at": 4,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 4,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 6,
+          "id": "b",
+          "qty": 2,
+          "ttl": 6
+        },
+        {
+          "op": "release",
+          "at": 6,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 6,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 6,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 7,
+          "id": "a",
+          "qty": 5,
+          "ttl": 1
+        },
+        {
+          "op": "confirm",
+          "at": 8,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 10,
+          "id": "d",
+          "qty": 5,
+          "ttl": 2
+        },
+        {
+          "op": "release",
+          "at": 12,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 13,
+          "id": "b",
+          "qty": 1,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 15,
+          "id": "c",
+          "qty": 2,
+          "ttl": 6
+        },
+        {
+          "op": "release",
+          "at": 16,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 16,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 16,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 18,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 20,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 22,
+          "id": "d",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 23,
+          "id": "a",
+          "qty": 1,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 25,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 25,
+          "id": "c"
+        }
+      ]
+    },
+    "expected": {
+      "available": 13,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ],
+        [
+          "b",
+          "expired"
+        ],
+        [
+          "c",
+          "released"
+        ],
+        [
+          "d",
+          "expired"
+        ]
+      ],
+      "results": [
+        "missing",
+        "held",
+        "conflict",
+        "missing",
+        "missing",
+        "expired",
+        "held",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "expired",
+        "conflict",
+        "expired",
+        "conflict",
+        "held",
+        "released",
+        "expired",
+        "expired",
+        "released",
+        "expired",
+        "conflict",
+        "conflict",
+        "expired",
+        "released"
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "stock": 14,
+      "ops": [
+        {
+          "op": "confirm",
+          "at": 0,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 0,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 2,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 4,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 6,
+          "id": "d",
+          "qty": 3,
+          "ttl": 2
+        },
+        {
+          "op": "release",
+          "at": 8,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 8,
+          "id": "a",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 9,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 9,
+          "id": "c",
+          "qty": 4,
+          "ttl": 4
+        },
+        {
+          "op": "release",
+          "at": 10,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 10,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 10,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 12,
+          "id": "c",
+          "qty": 3,
+          "ttl": 1
+        },
+        {
+          "op": "release",
+          "at": 13,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 14,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 15,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 15,
+          "id": "a",
+          "qty": 4,
+          "ttl": 5
+        },
+        {
+          "op": "confirm",
+          "at": 16,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 18,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 18,
+          "id": "d",
+          "qty": 2,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 19,
+          "id": "d",
+          "qty": 4,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 20,
+          "id": "b",
+          "qty": 2,
+          "ttl": 2
+        },
+        {
+          "op": "release",
+          "at": 20,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 20,
+          "id": "d",
+          "qty": 1,
+          "ttl": 4
+        }
+      ]
+    },
+    "expected": {
+      "available": 8,
+      "reservations": [
+        [
+          "a",
+          "released"
+        ],
+        [
+          "b",
+          "held"
+        ],
+        [
+          "c",
+          "confirmed"
+        ],
+        [
+          "d",
+          "expired"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "missing",
+        "held",
+        "released",
+        "held",
+        "missing",
+        "confirmed",
+        "missing",
+        "conflict",
+        "released",
+        "released",
+        "missing",
+        "conflict",
+        "missing",
+        "expired",
+        "conflict",
+        "conflict",
+        "held",
+        "confirmed",
+        "conflict"
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "stock": 15,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "c",
+          "qty": 1,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 1,
+          "id": "b",
+          "qty": 3,
+          "ttl": 4
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 4,
+          "id": "d",
+          "qty": 4,
+          "ttl": 2
+        },
+        {
+          "op": "reserve",
+          "at": 4,
+          "id": "b",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "confirm",
+          "at": 4,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 4,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 4,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 6,
+          "id": "c",
+          "qty": 2,
+          "ttl": 3
+        },
+        {
+          "op": "confirm",
+          "at": 7,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 8,
+          "id": "c",
+          "qty": 4,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 8,
+          "id": "c",
+          "qty": 3,
+          "ttl": 1
+        },
+        {
+          "op": "confirm",
+          "at": 10,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 10,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 10,
+          "id": "a",
+          "qty": 2,
+          "ttl": 1
+        },
+        {
+          "op": "release",
+          "at": 10,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 12,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 14,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 16,
+          "id": "a",
+          "qty": 4,
+          "ttl": 3
+        },
+        {
+          "op": "confirm",
+          "at": 16,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 17,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 18,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 18,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 20,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 20,
+          "id": "b"
+        }
+      ]
+    },
+    "expected": {
+      "available": 11,
+      "reservations": [
+        [
+          "a",
+          "released"
+        ],
+        [
+          "b",
+          "confirmed"
+        ],
+        [
+          "c",
+          "confirmed"
+        ],
+        [
+          "d",
+          "released"
+        ]
+      ],
+      "results": [
+        "held",
+        "held",
+        "confirmed",
+        "held",
+        "conflict",
+        "missing",
+        "confirmed",
+        "released",
+        "conflict",
+        "released",
+        "conflict",
+        "conflict",
+        "confirmed",
+        "confirmed",
+        "held",
+        "released",
+        "confirmed",
+        "released",
+        "conflict",
+        "confirmed",
+        "released",
+        "confirmed",
+        "confirmed",
+        "confirmed",
+        "confirmed"
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "stock": 16,
+      "ops": [
+        {
+          "op": "release",
+          "at": 1,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 2,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 4,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 6,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 8,
+          "id": "a",
+          "qty": 5,
+          "ttl": 4
+        },
+        {
+          "op": "release",
+          "at": 9,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 11,
+          "id": "d",
+          "qty": 4,
+          "ttl": 2
+        },
+        {
+          "op": "reserve",
+          "at": 13,
+          "id": "d",
+          "qty": 5,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 13,
+          "id": "b",
+          "qty": 4,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 15,
+          "id": "b",
+          "qty": 1,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 17,
+          "id": "d",
+          "qty": 2,
+          "ttl": 2
+        },
+        {
+          "op": "reserve",
+          "at": 17,
+          "id": "d",
+          "qty": 2,
+          "ttl": 4
+        },
+        {
+          "op": "confirm",
+          "at": 17,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 18,
+          "id": "c",
+          "qty": 5,
+          "ttl": 6
+        },
+        {
+          "op": "confirm",
+          "at": 19,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 21,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 23,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 23,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 24,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 26,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 28,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 29,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 30,
+          "id": "a",
+          "qty": 2,
+          "ttl": 6
+        }
+      ]
+    },
+    "expected": {
+      "available": 12,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ],
+        [
+          "b",
+          "confirmed"
+        ],
+        [
+          "c",
+          "released"
+        ],
+        [
+          "d",
+          "expired"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "conflict",
+        "held",
+        "conflict",
+        "conflict",
+        "conflict",
+        "confirmed",
+        "held",
+        "expired",
+        "expired",
+        "released",
+        "expired",
+        "expired",
+        "expired",
+        "expired",
+        "expired",
+        "conflict"
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "stock": 17,
+      "ops": [
+        {
+          "op": "confirm",
+          "at": 1,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 5,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 5,
+          "id": "b",
+          "qty": 3,
+          "ttl": 1
+        },
+        {
+          "op": "release",
+          "at": 6,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 6,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 7,
+          "id": "d",
+          "qty": 5,
+          "ttl": 2
+        },
+        {
+          "op": "release",
+          "at": 7,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 10,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 11,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 12,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 13,
+          "id": "d",
+          "qty": 4,
+          "ttl": 3
+        },
+        {
+          "op": "release",
+          "at": 15,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 17,
+          "id": "b",
+          "qty": 2,
+          "ttl": 3
+        },
+        {
+          "op": "confirm",
+          "at": 17,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 18,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 18,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 20,
+          "id": "d",
+          "qty": 1,
+          "ttl": 6
+        },
+        {
+          "op": "confirm",
+          "at": 20,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 20,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 20,
+          "id": "d",
+          "qty": 5,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 21,
+          "id": "d",
+          "qty": 3,
+          "ttl": 4
+        }
+      ]
+    },
+    "expected": {
+      "available": 17,
+      "reservations": [
+        [
+          "b",
+          "expired"
+        ],
+        [
+          "d",
+          "released"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "expired",
+        "missing",
+        "held",
+        "released",
+        "released",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "released",
+        "conflict",
+        "released",
+        "conflict",
+        "missing",
+        "released",
+        "missing",
+        "conflict",
+        "missing",
+        "expired",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-18"
+  },
+  {
+    "input": {
+      "stock": 18,
+      "ops": [
+        {
+          "op": "release",
+          "at": 1,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 1,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 1,
+          "id": "a",
+          "qty": 4,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 1,
+          "id": "b",
+          "qty": 2,
+          "ttl": 3
+        },
+        {
+          "op": "confirm",
+          "at": 2,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 2,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 4,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 5,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 5,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 7,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 11,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 15,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 15,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 15,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 16,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 17,
+          "id": "b",
+          "qty": 2,
+          "ttl": 1
+        },
+        {
+          "op": "release",
+          "at": 17,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 18,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 18,
+          "id": "b",
+          "qty": 2,
+          "ttl": 2
+        },
+        {
+          "op": "reserve",
+          "at": 18,
+          "id": "d",
+          "qty": 4,
+          "ttl": 4
+        },
+        {
+          "op": "release",
+          "at": 18,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 20,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 20,
+          "id": "b",
+          "qty": 5,
+          "ttl": 3
+        }
+      ]
+    },
+    "expected": {
+      "available": 14,
+      "reservations": [
+        [
+          "a",
+          "released"
+        ],
+        [
+          "b",
+          "expired"
+        ],
+        [
+          "d",
+          "held"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "held",
+        "held",
+        "missing",
+        "released",
+        "missing",
+        "missing",
+        "expired",
+        "expired",
+        "released",
+        "released",
+        "missing",
+        "missing",
+        "released",
+        "expired",
+        "missing",
+        "conflict",
+        "missing",
+        "released",
+        "conflict",
+        "held",
+        "expired",
+        "missing",
+        "conflict"
+      ]
+    },
+    "label": "additional-19"
+  },
+  {
+    "input": {
+      "stock": 19,
+      "ops": [
+        {
+          "op": "release",
+          "at": 1,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 5,
+          "id": "a",
+          "qty": 3,
+          "ttl": 1
+        },
+        {
+          "op": "release",
+          "at": 7,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 10,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 10,
+          "id": "a",
+          "qty": 5,
+          "ttl": 6
+        },
+        {
+          "op": "release",
+          "at": 11,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 11,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 12,
+          "id": "c",
+          "qty": 2,
+          "ttl": 1
+        },
+        {
+          "op": "release",
+          "at": 12,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 14,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 14,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 16,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 17,
+          "id": "b",
+          "qty": 4,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 19,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 21,
+          "id": "a",
+          "qty": 2,
+          "ttl": 4
+        },
+        {
+          "op": "release",
+          "at": 23,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 25,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 25,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 27,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 29,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 29,
+          "id": "d",
+          "qty": 2,
+          "ttl": 1
+        }
+      ]
+    },
+    "expected": {
+      "available": 17,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ],
+        [
+          "b",
+          "expired"
+        ],
+        [
+          "c",
+          "released"
+        ],
+        [
+          "d",
+          "held"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "held",
+        "missing",
+        "missing",
+        "expired",
+        "conflict",
+        "expired",
+        "missing",
+        "held",
+        "released",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "missing",
+        "conflict",
+        "expired",
+        "expired",
+        "missing",
+        "missing",
+        "expired",
+        "held"
+      ]
+    },
+    "label": "additional-20"
+  },
+  {
+    "input": {
+      "stock": 20,
+      "ops": [
+        {
+          "op": "release",
+          "at": 0,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 1,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 4,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 4,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 4,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 4,
+          "id": "c",
+          "qty": 2,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 6,
+          "id": "a",
+          "qty": 2,
+          "ttl": 3
+        },
+        {
+          "op": "reserve",
+          "at": 8,
+          "id": "b",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 10,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 10,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 12,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 13,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 14,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 16,
+          "id": "b",
+          "qty": 5,
+          "ttl": 6
+        },
+        {
+          "op": "release",
+          "at": 16,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 16,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 18,
+          "id": "b",
+          "qty": 2,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 18,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 20,
+          "id": "d",
+          "qty": 2,
+          "ttl": 1
+        },
+        {
+          "op": "reserve",
+          "at": 21,
+          "id": "d",
+          "qty": 4,
+          "ttl": 5
+        },
+        {
+          "op": "reserve",
+          "at": 23,
+          "id": "a",
+          "qty": 2,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 25,
+          "id": "a",
+          "qty": 4,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 25,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 25,
+          "id": "a"
+        }
+      ]
+    },
+    "expected": {
+      "available": 20,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ],
+        [
+          "b",
+          "released"
+        ],
+        [
+          "c",
+          "expired"
+        ],
+        [
+          "d",
+          "expired"
+        ]
+      ],
+      "results": [
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "held",
+        "held",
+        "released",
+        "released",
+        "expired",
+        "expired",
+        "released",
+        "conflict",
+        "missing",
+        "expired",
+        "released",
+        "released",
+        "held",
+        "conflict",
+        "conflict",
+        "conflict",
+        "expired",
+        "expired"
+      ]
+    },
+    "label": "additional-21"
+  },
+  {
+    "input": {
+      "stock": 21,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "d",
+          "qty": 2,
+          "ttl": 2
+        },
+        {
+          "op": "reserve",
+          "at": 0,
+          "id": "d",
+          "qty": 1,
+          "ttl": 2
+        },
+        {
+          "op": "confirm",
+          "at": 1,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 2,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 2,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 5,
+          "id": "c",
+          "qty": 2,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 7,
+          "id": "d",
+          "qty": 3,
+          "ttl": 2
+        },
+        {
+          "op": "release",
+          "at": 8,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 11,
+          "id": "d",
+          "qty": 2,
+          "ttl": 1
+        },
+        {
+          "op": "reserve",
+          "at": 13,
+          "id": "a",
+          "qty": 5,
+          "ttl": 2
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 13,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 13,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 15,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 17,
+          "id": "b",
+          "qty": 1,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 18,
+          "id": "d",
+          "qty": 2,
+          "ttl": 1
+        },
+        {
+          "op": "confirm",
+          "at": 18,
+          "id": "b"
+        },
+        {
+          "op": "confirm",
+          "at": 20,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 22,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 22,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 24,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 24,
+          "id": "a",
+          "qty": 2,
+          "ttl": 4
+        }
+      ]
+    },
+    "expected": {
+      "available": 15,
+      "reservations": [
+        [
+          "a",
+          "confirmed"
+        ],
+        [
+          "b",
+          "confirmed"
+        ],
+        [
+          "c",
+          "expired"
+        ],
+        [
+          "d",
+          "expired"
+        ]
+      ],
+      "results": [
+        "held",
+        "conflict",
+        "missing",
+        "expired",
+        "missing",
+        "expired",
+        "held",
+        "conflict",
+        "missing",
+        "missing",
+        "conflict",
+        "held",
+        "confirmed",
+        "expired",
+        "expired",
+        "expired",
+        "expired",
+        "held",
+        "conflict",
+        "confirmed",
+        "expired",
+        "confirmed",
+        "confirmed",
+        "expired",
+        "conflict"
+      ]
+    },
+    "label": "additional-22"
+  },
+  {
+    "input": {
+      "stock": 22,
+      "ops": [
+        {
+          "op": "reserve",
+          "at": 1,
+          "id": "a",
+          "qty": 2,
+          "ttl": 4
+        },
+        {
+          "op": "confirm",
+          "at": 2,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 3,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 5,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 5,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 6,
+          "id": "b"
+        },
+        {
+          "op": "release",
+          "at": 7,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 8,
+          "id": "d",
+          "qty": 3,
+          "ttl": 2
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 10,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 11,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 13,
+          "id": "b",
+          "qty": 1,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 15,
+          "id": "c",
+          "qty": 1,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 17,
+          "id": "b",
+          "qty": 2,
+          "ttl": 3
+        },
+        {
+          "op": "confirm",
+          "at": 19,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 21,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 23,
+          "id": "a",
+          "qty": 2,
+          "ttl": 2
+        },
+        {
+          "op": "release",
+          "at": 24,
+          "id": "d"
+        },
+        {
+          "op": "confirm",
+          "at": 26,
+          "id": "a"
+        },
+        {
+          "op": "reserve",
+          "at": 28,
+          "id": "c",
+          "qty": 5,
+          "ttl": 2
+        },
+        {
+          "op": "confirm",
+          "at": 29,
+          "id": "c"
+        },
+        {
+          "op": "release",
+          "at": 31,
+          "id": "a"
+        },
+        {
+          "op": "confirm",
+          "at": 33,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 35,
+          "id": "d",
+          "qty": 4,
+          "ttl": 5
+        },
+        {
+          "op": "confirm",
+          "at": 35,
+          "id": "b"
+        }
+      ]
+    },
+    "expected": {
+      "available": 20,
+      "reservations": [
+        [
+          "a",
+          "confirmed"
+        ],
+        [
+          "b",
+          "expired"
+        ],
+        [
+          "c",
+          "expired"
+        ],
+        [
+          "d",
+          "expired"
+        ]
+      ],
+      "results": [
+        "held",
+        "confirmed",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "held",
+        "confirmed",
+        "confirmed",
+        "confirmed",
+        "held",
+        "held",
+        "conflict",
+        "confirmed",
+        "expired",
+        "conflict",
+        "expired",
+        "confirmed",
+        "conflict",
+        "expired",
+        "confirmed",
+        "expired",
+        "conflict",
+        "expired"
+      ]
+    },
+    "label": "additional-23"
+  },
+  {
+    "input": {
+      "stock": 23,
+      "ops": [
+        {
+          "op": "confirm",
+          "at": 2,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 3,
+          "id": "d",
+          "qty": 1,
+          "ttl": 4
+        },
+        {
+          "op": "reserve",
+          "at": 4,
+          "id": "d",
+          "qty": 5,
+          "ttl": 2
+        },
+        {
+          "op": "release",
+          "at": 6,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 7,
+          "id": "a",
+          "qty": 3,
+          "ttl": 4
+        },
+        {
+          "op": "confirm",
+          "at": 9,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 9,
+          "id": "d",
+          "qty": 2,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 11,
+          "id": "c",
+          "qty": 2,
+          "ttl": 2
+        },
+        {
+          "op": "release",
+          "at": 13,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 15,
+          "id": "d",
+          "qty": 3,
+          "ttl": 5
+        },
+        {
+          "op": "confirm",
+          "at": 16,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 17,
+          "id": "c"
+        },
+        {
+          "op": "reserve",
+          "at": 19,
+          "id": "c",
+          "qty": 4,
+          "ttl": 5
+        },
+        {
+          "op": "release",
+          "at": 21,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 21,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 23,
+          "id": "a"
+        },
+        {
+          "op": "release",
+          "at": 23,
+          "id": "c"
+        },
+        {
+          "op": "confirm",
+          "at": 24,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 25,
+          "id": "b",
+          "qty": 5,
+          "ttl": 6
+        },
+        {
+          "op": "reserve",
+          "at": 26,
+          "id": "b",
+          "qty": 4,
+          "ttl": 2
+        },
+        {
+          "op": "release",
+          "at": 26,
+          "id": "d"
+        },
+        {
+          "op": "release",
+          "at": 27,
+          "id": "d"
+        },
+        {
+          "op": "reserve",
+          "at": 29,
+          "id": "b",
+          "qty": 3,
+          "ttl": 3
+        },
+        {
+          "op": "release",
+          "at": 31,
+          "id": "b"
+        },
+        {
+          "op": "reserve",
+          "at": 32,
+          "id": "a",
+          "qty": 4,
+          "ttl": 5
+        }
+      ]
+    },
+    "expected": {
+      "available": 23,
+      "reservations": [
+        [
+          "a",
+          "expired"
+        ],
+        [
+          "b",
+          "expired"
+        ],
+        [
+          "c",
+          "expired"
+        ],
+        [
+          "d",
+          "released"
+        ]
+      ],
+      "results": [
+        "missing",
+        "held",
+        "conflict",
+        "released",
+        "held",
+        "missing",
+        "conflict",
+        "held",
+        "expired",
+        "conflict",
+        "released",
+        "expired",
+        "conflict",
+        "expired",
+        "expired",
+        "expired",
+        "expired",
+        "missing",
+        "held",
+        "conflict",
+        "released",
+        "released",
+        "conflict",
+        "expired",
+        "conflict"
+      ]
+    },
+    "label": "additional-24"
+  }
+]

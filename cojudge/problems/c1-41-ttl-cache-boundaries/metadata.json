@@ -1,0 +1,50 @@
+{
+  "id": "c1-41-ttl-cache-boundaries",
+  "title": "41. Expire and invalidate cache entries",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "05-system-components",
+  "examples": [
+    {
+      "input": "{\"ops\": [{\"op\": \"put\", \"at\": 0, \"key\": \"a\", \"value\": 7, \"ttl\": 5}, {\"op\": \"get\", \"at\": 4, \"key\": \"a\"}]}",
+      "output": "{\"results\": [\"stored\", 7], \"keys\": [\"a\"]}",
+      "explanation": "read before expiration"
+    },
+    {
+      "input": "{\"ops\": [{\"op\": \"put\", \"at\": 0, \"key\": \"a\", \"value\": 7, \"ttl\": 5}, {\"op\": \"get\", \"at\": 5, \"key\": \"a\"}]}",
+      "output": "{\"results\": [\"stored\", null], \"keys\": []}",
+      "explanation": "exact expiration is a miss"
+    },
+    {
+      "input": "{\"ops\": [{\"op\": \"put\", \"at\": 0, \"key\": \"a\", \"value\": 7, \"ttl\": 5}, {\"op\": \"invalidate\", \"at\": 1, \"key\": \"a\"}, {\"op\": \"get\", \"at\": 2, \"key\": \"a\"}]}",
+      "output": "{\"results\": [\"stored\", true, null], \"keys\": []}",
+      "explanation": "explicit invalidation"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    # data['ops'] is a deterministic event trace.\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"ops\":[{\"at\":0,\"key\":\"a\",\"op\":\"put\",\"ttl\":5,\"value\":7},{\"at\":4,\"key\":\"a\",\"op\":\"get\"}]}"
+    },
+    {
+      "payload": "{\"ops\":[{\"at\":0,\"key\":\"a\",\"op\":\"put\",\"ttl\":5,\"value\":7},{\"at\":5,\"key\":\"a\",\"op\":\"get\"}]}"
+    },
+    {
+      "payload": "{\"ops\":[{\"at\":0,\"key\":\"a\",\"op\":\"put\",\"ttl\":5,\"value\":7},{\"at\":1,\"key\":\"a\",\"op\":\"invalidate\"},{\"at\":2,\"key\":\"a\",\"op\":\"get\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Expiration is an exclusive boundary.",
+    "Store value and expiration together; clean before every operation."
+  ]
+}

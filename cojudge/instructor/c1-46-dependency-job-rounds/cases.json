@@ -1,0 +1,1642 @@
+[
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": [
+            "a"
+          ]
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "rounds": [
+        [
+          "a"
+        ],
+        [
+          "b",
+          "c"
+        ]
+      ],
+      "blocked": [],
+      "has_cycle": false
+    },
+    "label": "dependencies finish before next round"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "c",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "a",
+          "depends": []
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "rounds": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "c"
+        ]
+      ],
+      "blocked": [],
+      "has_cycle": false
+    },
+    "label": "worker limit and ASCII tie break"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "b"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": [
+            "a"
+          ]
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "rounds": [],
+      "blocked": [
+        "a",
+        "b"
+      ],
+      "has_cycle": true
+    },
+    "label": "cycle blocks both jobs"
+  },
+  {
+    "input": {
+      "jobs": [],
+      "workers": 3
+    },
+    "expected": {
+      "rounds": [],
+      "blocked": [],
+      "has_cycle": false
+    },
+    "label": "empty graph"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        }
+      ],
+      "workers": 1
+    },
+    "expected": {
+      "rounds": [
+        [
+          "a"
+        ]
+      ],
+      "blocked": [],
+      "has_cycle": false
+    },
+    "label": "single job"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "a"
+          ]
+        }
+      ],
+      "workers": 1
+    },
+    "expected": {
+      "rounds": [],
+      "blocked": [
+        "a"
+      ],
+      "has_cycle": true
+    },
+    "label": "self cycle"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": [
+            "b"
+          ]
+        }
+      ],
+      "workers": 5
+    },
+    "expected": {
+      "rounds": [
+        [
+          "a"
+        ],
+        [
+          "b"
+        ],
+        [
+          "c"
+        ]
+      ],
+      "blocked": [],
+      "has_cycle": false
+    },
+    "label": "chain cannot use spare workers"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "c",
+          "depends": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "workers": 1
+    },
+    "expected": {
+      "rounds": [
+        [
+          "a"
+        ],
+        [
+          "b"
+        ],
+        [
+          "c"
+        ]
+      ],
+      "blocked": [],
+      "has_cycle": false
+    },
+    "label": "join waits for all prerequisites"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "d",
+          "depends": [
+            "b",
+            "c"
+          ]
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "rounds": [
+        [
+          "a"
+        ],
+        [
+          "b",
+          "c"
+        ],
+        [
+          "d"
+        ]
+      ],
+      "blocked": [],
+      "has_cycle": false
+    },
+    "label": "diamond dependency"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": [
+            "c"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": [
+            "b"
+          ]
+        },
+        {
+          "id": "d",
+          "depends": [
+            "c"
+          ]
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "rounds": [
+        [
+          "a"
+        ]
+      ],
+      "blocked": [
+        "b",
+        "c",
+        "d"
+      ],
+      "has_cycle": true
+    },
+    "label": "cycle also blocks downstream job"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": []
+        }
+      ],
+      "workers": 1
+    },
+    "expected": {
+      "rounds": [
+        [
+          "a"
+        ],
+        [
+          "b"
+        ],
+        [
+          "c"
+        ]
+      ],
+      "blocked": [],
+      "has_cycle": false
+    },
+    "label": "newly ready job can outrank waiting job"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "b"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": []
+        },
+        {
+          "id": "d",
+          "depends": [
+            "c"
+          ]
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "rounds": [
+        [
+          "c"
+        ],
+        [
+          "d"
+        ]
+      ],
+      "blocked": [
+        "a",
+        "b"
+      ],
+      "has_cycle": true
+    },
+    "label": "independent work completes beside cycle"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "d",
+          "depends": [
+            "a",
+            "b",
+            "c"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "a",
+          "depends": []
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "rounds": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "c"
+        ],
+        [
+          "d"
+        ]
+      ],
+      "blocked": [],
+      "has_cycle": false
+    },
+    "label": "unfinished prerequisite across rounds"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": [
+            "a"
+          ]
+        }
+      ],
+      "workers": 1
+    },
+    "expected": {
+      "blocked": [
+        "a",
+        "b"
+      ],
+      "has_cycle": true,
+      "rounds": []
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "c",
+          "depends": [
+            "a",
+            "b",
+            "c"
+          ]
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "blocked": [
+        "c"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "a",
+          "b"
+        ]
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "b",
+            "c"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "c",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "d",
+          "depends": [
+            "d"
+          ]
+        }
+      ],
+      "workers": 3
+    },
+    "expected": {
+      "blocked": [
+        "a",
+        "c",
+        "d"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "b"
+        ]
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "d"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "c",
+          "depends": [
+            "b",
+            "e"
+          ]
+        },
+        {
+          "id": "d",
+          "depends": []
+        },
+        {
+          "id": "e",
+          "depends": [
+            "e"
+          ]
+        }
+      ],
+      "workers": 4
+    },
+    "expected": {
+      "blocked": [
+        "c",
+        "e"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "b",
+          "d"
+        ],
+        [
+          "a"
+        ]
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "e"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": [
+            "f"
+          ]
+        },
+        {
+          "id": "d",
+          "depends": [
+            "b",
+            "f"
+          ]
+        },
+        {
+          "id": "e",
+          "depends": [
+            "e"
+          ]
+        },
+        {
+          "id": "f",
+          "depends": [
+            "a",
+            "e",
+            "f"
+          ]
+        }
+      ],
+      "workers": 1
+    },
+    "expected": {
+      "blocked": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f"
+      ],
+      "has_cycle": true,
+      "rounds": []
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "c",
+          "depends": [
+            "b",
+            "c",
+            "d",
+            "f"
+          ]
+        },
+        {
+          "id": "d",
+          "depends": [
+            "f"
+          ]
+        },
+        {
+          "id": "e",
+          "depends": []
+        },
+        {
+          "id": "f",
+          "depends": [
+            "a",
+            "c"
+          ]
+        },
+        {
+          "id": "g",
+          "depends": [
+            "a",
+            "e"
+          ]
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "blocked": [
+        "c",
+        "d",
+        "f"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "e"
+        ],
+        [
+          "g"
+        ]
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "c",
+            "d"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": [
+            "a",
+            "e",
+            "f"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": [
+            "a",
+            "e",
+            "h"
+          ]
+        },
+        {
+          "id": "d",
+          "depends": [
+            "d"
+          ]
+        },
+        {
+          "id": "e",
+          "depends": [
+            "e"
+          ]
+        },
+        {
+          "id": "f",
+          "depends": [
+            "g"
+          ]
+        },
+        {
+          "id": "g",
+          "depends": []
+        },
+        {
+          "id": "h",
+          "depends": [
+            "g"
+          ]
+        }
+      ],
+      "workers": 3
+    },
+    "expected": {
+      "blocked": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "g"
+        ],
+        [
+          "f",
+          "h"
+        ]
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": [
+            "b"
+          ]
+        }
+      ],
+      "workers": 4
+    },
+    "expected": {
+      "blocked": [
+        "b"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "a"
+        ]
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "b"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": [
+            "b"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": [
+            "c"
+          ]
+        }
+      ],
+      "workers": 1
+    },
+    "expected": {
+      "blocked": [
+        "a",
+        "b",
+        "c"
+      ],
+      "has_cycle": true,
+      "rounds": []
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "b"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "c",
+          "depends": []
+        },
+        {
+          "id": "d",
+          "depends": []
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "blocked": [],
+      "has_cycle": false,
+      "rounds": [
+        [
+          "b",
+          "c"
+        ],
+        [
+          "a",
+          "d"
+        ]
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": [
+            "c"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": [
+            "a",
+            "d"
+          ]
+        },
+        {
+          "id": "d",
+          "depends": [
+            "b"
+          ]
+        },
+        {
+          "id": "e",
+          "depends": [
+            "a"
+          ]
+        }
+      ],
+      "workers": 3
+    },
+    "expected": {
+      "blocked": [
+        "b",
+        "c",
+        "d"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "a"
+        ],
+        [
+          "e"
+        ]
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "c",
+            "d"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "c",
+          "depends": [
+            "f"
+          ]
+        },
+        {
+          "id": "d",
+          "depends": [
+            "c"
+          ]
+        },
+        {
+          "id": "e",
+          "depends": [
+            "a",
+            "b",
+            "e"
+          ]
+        },
+        {
+          "id": "f",
+          "depends": [
+            "e",
+            "f"
+          ]
+        }
+      ],
+      "workers": 4
+    },
+    "expected": {
+      "blocked": [
+        "a",
+        "c",
+        "d",
+        "e",
+        "f"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "b"
+        ]
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "e",
+            "f"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "c",
+          "depends": []
+        },
+        {
+          "id": "d",
+          "depends": [
+            "a",
+            "d",
+            "e"
+          ]
+        },
+        {
+          "id": "e",
+          "depends": [
+            "a",
+            "e",
+            "g"
+          ]
+        },
+        {
+          "id": "f",
+          "depends": [
+            "e"
+          ]
+        },
+        {
+          "id": "g",
+          "depends": []
+        }
+      ],
+      "workers": 1
+    },
+    "expected": {
+      "blocked": [
+        "a",
+        "d",
+        "e",
+        "f"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "b"
+        ],
+        [
+          "c"
+        ],
+        [
+          "g"
+        ]
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "h"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "c",
+          "depends": []
+        },
+        {
+          "id": "d",
+          "depends": []
+        },
+        {
+          "id": "e",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "f",
+          "depends": [
+            "a",
+            "e"
+          ]
+        },
+        {
+          "id": "g",
+          "depends": [
+            "c",
+            "g"
+          ]
+        },
+        {
+          "id": "h",
+          "depends": [
+            "h"
+          ]
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "blocked": [
+        "a",
+        "e",
+        "f",
+        "g",
+        "h"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "b",
+          "c"
+        ],
+        [
+          "d"
+        ]
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": []
+        }
+      ],
+      "workers": 3
+    },
+    "expected": {
+      "blocked": [],
+      "has_cycle": false,
+      "rounds": [
+        [
+          "a",
+          "b"
+        ]
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "c",
+          "depends": []
+        }
+      ],
+      "workers": 4
+    },
+    "expected": {
+      "blocked": [],
+      "has_cycle": false,
+      "rounds": [
+        [
+          "a",
+          "b",
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "b"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": []
+        },
+        {
+          "id": "c",
+          "depends": []
+        },
+        {
+          "id": "d",
+          "depends": [
+            "c"
+          ]
+        }
+      ],
+      "workers": 1
+    },
+    "expected": {
+      "blocked": [],
+      "has_cycle": false,
+      "rounds": [
+        [
+          "b"
+        ],
+        [
+          "a"
+        ],
+        [
+          "c"
+        ],
+        [
+          "d"
+        ]
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": [
+            "e"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": [
+            "d"
+          ]
+        },
+        {
+          "id": "d",
+          "depends": [
+            "b",
+            "e"
+          ]
+        },
+        {
+          "id": "e",
+          "depends": []
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "blocked": [],
+      "has_cycle": false,
+      "rounds": [
+        [
+          "a",
+          "e"
+        ],
+        [
+          "b"
+        ],
+        [
+          "d"
+        ],
+        [
+          "c"
+        ]
+      ]
+    },
+    "label": "additional-18"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "a",
+            "f"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": [
+            "e"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": [
+            "a",
+            "c",
+            "f"
+          ]
+        },
+        {
+          "id": "d",
+          "depends": []
+        },
+        {
+          "id": "e",
+          "depends": [
+            "b"
+          ]
+        },
+        {
+          "id": "f",
+          "depends": []
+        }
+      ],
+      "workers": 3
+    },
+    "expected": {
+      "blocked": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "d",
+          "f"
+        ]
+      ]
+    },
+    "label": "additional-19"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "e",
+            "f"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": [
+            "e",
+            "f"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": [
+            "a",
+            "c",
+            "e"
+          ]
+        },
+        {
+          "id": "d",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "e",
+          "depends": [
+            "a",
+            "g"
+          ]
+        },
+        {
+          "id": "f",
+          "depends": [
+            "a",
+            "c",
+            "e",
+            "f",
+            "g"
+          ]
+        },
+        {
+          "id": "g",
+          "depends": [
+            "g"
+          ]
+        }
+      ],
+      "workers": 4
+    },
+    "expected": {
+      "blocked": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "has_cycle": true,
+      "rounds": []
+    },
+    "label": "additional-20"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "c",
+            "g",
+            "h"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": [
+            "b"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": []
+        },
+        {
+          "id": "d",
+          "depends": []
+        },
+        {
+          "id": "e",
+          "depends": [
+            "a",
+            "f"
+          ]
+        },
+        {
+          "id": "f",
+          "depends": [
+            "c"
+          ]
+        },
+        {
+          "id": "g",
+          "depends": [
+            "a",
+            "c",
+            "e"
+          ]
+        },
+        {
+          "id": "h",
+          "depends": [
+            "a",
+            "e",
+            "g"
+          ]
+        }
+      ],
+      "workers": 1
+    },
+    "expected": {
+      "blocked": [
+        "a",
+        "b",
+        "e",
+        "g",
+        "h"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "c"
+        ],
+        [
+          "d"
+        ],
+        [
+          "f"
+        ]
+      ]
+    },
+    "label": "additional-21"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": []
+        }
+      ],
+      "workers": 2
+    },
+    "expected": {
+      "blocked": [
+        "a"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "b"
+        ]
+      ]
+    },
+    "label": "additional-22"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": []
+        },
+        {
+          "id": "b",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": []
+        }
+      ],
+      "workers": 3
+    },
+    "expected": {
+      "blocked": [],
+      "has_cycle": false,
+      "rounds": [
+        [
+          "a",
+          "c"
+        ],
+        [
+          "b"
+        ]
+      ]
+    },
+    "label": "additional-23"
+  },
+  {
+    "input": {
+      "jobs": [
+        {
+          "id": "a",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "b",
+          "depends": [
+            "a"
+          ]
+        },
+        {
+          "id": "c",
+          "depends": []
+        },
+        {
+          "id": "d",
+          "depends": []
+        }
+      ],
+      "workers": 4
+    },
+    "expected": {
+      "blocked": [
+        "a",
+        "b"
+      ],
+      "has_cycle": true,
+      "rounds": [
+        [
+          "c",
+          "d"
+        ]
+      ]
+    },
+    "label": "additional-24"
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "id": "c1-39-sql-savepoint-import",
+  "title": "39. Isolate failed import rows with savepoints",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "04-sql-and-transactions",
+  "examples": [
+    {
+      "input": "{\"batches\": [{\"rows\": [{\"id\": \"a\", \"qty\": 1, \"fail\": false}], \"abort\": false}]}",
+      "output": "{\"batches\": [{\"rows\": [\"ok\"], \"committed\": true}], \"rows\": [[\"a\", 1]]}",
+      "explanation": "valid item commits"
+    },
+    {
+      "input": "{\"batches\": [{\"rows\": [{\"id\": \"a\", \"qty\": 1, \"fail\": false}, {\"id\": \"b\", \"qty\": -1, \"fail\": false}, {\"id\": \"c\", \"qty\": 3, \"fail\": false}], \"abort\": false}]}",
+      "output": "{\"batches\": [{\"rows\": [\"ok\", \"invalid\", \"ok\"], \"committed\": true}], \"rows\": [[\"a\", 1], [\"c\", 3]]}",
+      "explanation": "one invalid item does not cancel batch"
+    },
+    {
+      "input": "{\"batches\": [{\"rows\": [{\"id\": \"a\", \"qty\": 1, \"fail\": false}], \"abort\": true}]}",
+      "output": "{\"batches\": [{\"rows\": [\"ok\"], \"committed\": false}], \"rows\": []}",
+      "explanation": "outer abort cancels released savepoint"
+    }
+  ],
+  "starterCode": {
+    "python": "import sqlite3\n\ndef solve(data: dict) -> dict:\n    db = sqlite3.connect(\":memory:\")\n    db.execute(\"CREATE TABLE items(id TEXT PRIMARY KEY, qty INTEGER CHECK(qty >= 0))\")\n    # TODO: use one outer transaction per batch and one savepoint per row.\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"batches\":[{\"abort\":false,\"rows\":[{\"fail\":false,\"id\":\"a\",\"qty\":1}]}]}"
+    },
+    {
+      "payload": "{\"batches\":[{\"abort\":false,\"rows\":[{\"fail\":false,\"id\":\"a\",\"qty\":1},{\"fail\":false,\"id\":\"b\",\"qty\":-1},{\"fail\":false,\"id\":\"c\",\"qty\":3}]}]}"
+    },
+    {
+      "payload": "{\"batches\":[{\"abort\":true,\"rows\":[{\"fail\":false,\"id\":\"a\",\"qty\":1}]}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "ROLLBACK TO keeps the outer transaction active.",
+    "Release the row savepoint after both success and rollback."
+  ]
+}

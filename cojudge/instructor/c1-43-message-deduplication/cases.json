@@ -1,0 +1,4403 @@
+[
+  {
+    "input": {
+      "total": 0,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ack",
+        "ack"
+      ],
+      "total": 2,
+      "processed": [
+        "a"
+      ]
+    },
+    "label": "duplicate delivery has one effect"
+  },
+  {
+    "input": {
+      "total": 0,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "retry",
+        "ack"
+      ],
+      "total": 2,
+      "processed": [
+        "a"
+      ]
+    },
+    "label": "failure before commit can retry"
+  },
+  {
+    "input": {
+      "total": 0,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "retry",
+        "ack"
+      ],
+      "total": 2,
+      "processed": [
+        "a"
+      ]
+    },
+    "label": "lost acknowledgement after commit"
+  },
+  {
+    "input": {
+      "total": 7,
+      "deliveries": []
+    },
+    "expected": {
+      "results": [],
+      "total": 7,
+      "processed": []
+    },
+    "label": "no deliveries"
+  },
+  {
+    "input": {
+      "total": 0,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "before"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "retry"
+      ],
+      "total": 0,
+      "processed": []
+    },
+    "label": "failed attempt is not processed"
+  },
+  {
+    "input": {
+      "total": 0,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "after"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "retry"
+      ],
+      "total": 2,
+      "processed": [
+        "a"
+      ]
+    },
+    "label": "commit survives lost acknowledgement"
+  },
+  {
+    "input": {
+      "total": 0,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "before"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ack",
+        "ack"
+      ],
+      "total": 2,
+      "processed": [
+        "a"
+      ]
+    },
+    "label": "dedup precedes fault"
+  },
+  {
+    "input": {
+      "total": 0,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "after"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ack",
+        "ack"
+      ],
+      "total": 2,
+      "processed": [
+        "a"
+      ]
+    },
+    "label": "duplicate is acknowledged without work"
+  },
+  {
+    "input": {
+      "total": 3,
+      "deliveries": [
+        {
+          "id": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ack",
+        "ack"
+      ],
+      "total": 7,
+      "processed": [
+        "a",
+        "b"
+      ]
+    },
+    "label": "equal amounts have distinct IDs"
+  },
+  {
+    "input": {
+      "total": 0,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": 0,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 0,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ack",
+        "ack"
+      ],
+      "total": 0,
+      "processed": [
+        "a"
+      ]
+    },
+    "label": "zero effect still records ID"
+  },
+  {
+    "input": {
+      "total": 5,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": -3,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -3,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ack",
+        "ack"
+      ],
+      "total": 2,
+      "processed": [
+        "a"
+      ]
+    },
+    "label": "signed delta applied once"
+  },
+  {
+    "input": {
+      "total": 0,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "ack"
+      ],
+      "total": 6,
+      "processed": [
+        "a",
+        "b"
+      ]
+    },
+    "label": "interleaved retries"
+  },
+  {
+    "input": {
+      "total": 0,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "ack",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 20
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "total": 1,
+      "deliveries": [
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 21
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "total": 2,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 22
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "total": 3,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 23
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "total": 4,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "ack",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 24
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "total": 5,
+      "deliveries": [
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "retry",
+        "retry",
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 15
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "total": 6,
+      "deliveries": [
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 26
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "total": 7,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "results": [
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 20
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "total": 8,
+      "deliveries": [
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 28
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "total": 9,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 29
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "total": 10,
+      "deliveries": [
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 30
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "total": 11,
+      "deliveries": [
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 31
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "total": 12,
+      "deliveries": [
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 32
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "total": 13,
+      "deliveries": [
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 33
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "total": 14,
+      "deliveries": [
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 36
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "total": 15,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 35
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "total": 16,
+      "deliveries": [
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 36
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "total": 17,
+      "deliveries": [
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 37
+    },
+    "label": "additional-18"
+  },
+  {
+    "input": {
+      "total": 18,
+      "deliveries": [
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "results": [
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 28
+    },
+    "label": "additional-19"
+  },
+  {
+    "input": {
+      "total": 19,
+      "deliveries": [
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 39
+    },
+    "label": "additional-20"
+  },
+  {
+    "input": {
+      "total": 20,
+      "deliveries": [
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "retry",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 40
+    },
+    "label": "additional-21"
+  },
+  {
+    "input": {
+      "total": 21,
+      "deliveries": [
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack"
+      ],
+      "total": 41
+    },
+    "label": "additional-22"
+  },
+  {
+    "input": {
+      "total": 22,
+      "deliveries": [
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "after"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "results": [
+        "retry",
+        "retry",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack"
+      ],
+      "total": 42
+    },
+    "label": "additional-23"
+  },
+  {
+    "input": {
+      "total": 23,
+      "deliveries": [
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "after"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "none"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "before"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "before"
+        },
+        {
+          "id": "d",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "e",
+          "amount": 10,
+          "fail": "after"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "c",
+          "amount": 4,
+          "fail": "before"
+        },
+        {
+          "id": "a",
+          "amount": -2,
+          "fail": "none"
+        },
+        {
+          "id": "b",
+          "amount": 1,
+          "fail": "after"
+        }
+      ]
+    },
+    "expected": {
+      "processed": [
+        "a",
+        "b",
+        "d",
+        "e"
+      ],
+      "results": [
+        "ack",
+        "retry",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "ack",
+        "retry",
+        "ack",
+        "ack",
+        "retry",
+        "retry",
+        "ack",
+        "ack"
+      ],
+      "total": 39
+    },
+    "label": "additional-24"
+  }
+]

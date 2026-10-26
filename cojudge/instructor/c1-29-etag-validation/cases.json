@@ -1,0 +1,1224 @@
+[
+  {
+    "input": {
+      "initial": {
+        "version": 1,
+        "body": "hello"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": null
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 200,
+        "etag": "\"v1\"",
+        "body": "hello"
+      }
+    ],
+    "label": "unconditional read returns representation"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 1,
+        "body": "hello"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v1\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 304,
+        "etag": "\"v1\"",
+        "body": null
+      }
+    ],
+    "label": "matching tag avoids body"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 1,
+        "body": "hello"
+      },
+      "requests": [
+        {
+          "op": "put",
+          "body": "new"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v1\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 200,
+        "etag": "\"v2\"",
+        "body": "new"
+      },
+      {
+        "status": 200,
+        "etag": "\"v2\"",
+        "body": "new"
+      }
+    ],
+    "label": "write invalidates old validator"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 1,
+        "body": "hello"
+      },
+      "requests": []
+    },
+    "expected": [],
+    "label": "empty batch"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 1,
+        "body": "hello"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": []
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 200,
+        "etag": "\"v1\"",
+        "body": "hello"
+      }
+    ],
+    "label": "empty validator set"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 1,
+        "body": "hello"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v1\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 304,
+        "etag": "\"v1\"",
+        "body": null
+      }
+    ],
+    "label": "weak tag matches for GET"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 1,
+        "body": "hello"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "*"
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 304,
+        "etag": "\"v1\"",
+        "body": null
+      }
+    ],
+    "label": "wildcard matches existing representation"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 1,
+        "body": "hello"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v9\"",
+            "\"v1\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 304,
+        "etag": "\"v1\"",
+        "body": null
+      }
+    ],
+    "label": "any listed tag can match"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 1,
+        "body": "hello"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v9\"",
+            "W/\"v2\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 200,
+        "etag": "\"v1\"",
+        "body": "hello"
+      }
+    ],
+    "label": "all tags stale"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 1,
+        "body": "hello"
+      },
+      "requests": [
+        {
+          "op": "put",
+          "body": "hello"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v1\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v2\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 200,
+        "etag": "\"v2\"",
+        "body": "hello"
+      },
+      {
+        "status": 200,
+        "etag": "\"v2\"",
+        "body": "hello"
+      },
+      {
+        "status": 304,
+        "etag": "\"v2\"",
+        "body": null
+      }
+    ],
+    "label": "same body still increments version by local policy"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 1,
+        "body": ""
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": null
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 200,
+        "etag": "\"v1\"",
+        "body": ""
+      }
+    ],
+    "label": "empty string is still a body"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 10,
+        "body": "hello"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v10\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 304,
+        "etag": "\"v10\"",
+        "body": null
+      }
+    ],
+    "label": "multi-digit version"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 1,
+        "body": "hello"
+      },
+      "requests": [
+        {
+          "op": "put",
+          "body": "a"
+        },
+        {
+          "op": "put",
+          "body": "b"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v3\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 200,
+        "etag": "\"v2\"",
+        "body": "a"
+      },
+      {
+        "status": 200,
+        "etag": "\"v3\"",
+        "body": "b"
+      },
+      {
+        "status": 304,
+        "etag": "\"v3\"",
+        "body": null
+      }
+    ],
+    "label": "successive writes and weak validation"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 2,
+        "body": "body0"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v2\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next0"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v3\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v2\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v2\"",
+        "status": 304
+      },
+      {
+        "body": "next0",
+        "etag": "\"v3\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v3\"",
+        "status": 304
+      },
+      {
+        "body": "next0",
+        "etag": "\"v3\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 3,
+        "body": "body1"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v3\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next1"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v4\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v3\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v3\"",
+        "status": 304
+      },
+      {
+        "body": "next1",
+        "etag": "\"v4\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v4\"",
+        "status": 304
+      },
+      {
+        "body": "next1",
+        "etag": "\"v4\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 4,
+        "body": "body2"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v4\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next2"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v5\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v4\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v4\"",
+        "status": 304
+      },
+      {
+        "body": "next2",
+        "etag": "\"v5\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v5\"",
+        "status": 304
+      },
+      {
+        "body": "next2",
+        "etag": "\"v5\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 5,
+        "body": "body3"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v5\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next3"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v6\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v5\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v5\"",
+        "status": 304
+      },
+      {
+        "body": "next3",
+        "etag": "\"v6\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v6\"",
+        "status": 304
+      },
+      {
+        "body": "next3",
+        "etag": "\"v6\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 6,
+        "body": "body4"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v6\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next4"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v7\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v6\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v6\"",
+        "status": 304
+      },
+      {
+        "body": "next4",
+        "etag": "\"v7\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v7\"",
+        "status": 304
+      },
+      {
+        "body": "next4",
+        "etag": "\"v7\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 7,
+        "body": "body5"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v7\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next5"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v8\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v7\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v7\"",
+        "status": 304
+      },
+      {
+        "body": "next5",
+        "etag": "\"v8\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v8\"",
+        "status": 304
+      },
+      {
+        "body": "next5",
+        "etag": "\"v8\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 8,
+        "body": "body6"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v8\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next6"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v9\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v8\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v8\"",
+        "status": 304
+      },
+      {
+        "body": "next6",
+        "etag": "\"v9\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v9\"",
+        "status": 304
+      },
+      {
+        "body": "next6",
+        "etag": "\"v9\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 9,
+        "body": "body7"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v9\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next7"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v10\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v9\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v9\"",
+        "status": 304
+      },
+      {
+        "body": "next7",
+        "etag": "\"v10\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v10\"",
+        "status": 304
+      },
+      {
+        "body": "next7",
+        "etag": "\"v10\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 10,
+        "body": "body8"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v10\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next8"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v11\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v10\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v10\"",
+        "status": 304
+      },
+      {
+        "body": "next8",
+        "etag": "\"v11\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v11\"",
+        "status": 304
+      },
+      {
+        "body": "next8",
+        "etag": "\"v11\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 11,
+        "body": "body9"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v11\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next9"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v12\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v11\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v11\"",
+        "status": 304
+      },
+      {
+        "body": "next9",
+        "etag": "\"v12\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v12\"",
+        "status": 304
+      },
+      {
+        "body": "next9",
+        "etag": "\"v12\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 12,
+        "body": "body10"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v12\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next10"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v13\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v12\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v12\"",
+        "status": 304
+      },
+      {
+        "body": "next10",
+        "etag": "\"v13\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v13\"",
+        "status": 304
+      },
+      {
+        "body": "next10",
+        "etag": "\"v13\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 13,
+        "body": "body11"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v13\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next11"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v14\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v13\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v13\"",
+        "status": 304
+      },
+      {
+        "body": "next11",
+        "etag": "\"v14\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v14\"",
+        "status": 304
+      },
+      {
+        "body": "next11",
+        "etag": "\"v14\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 14,
+        "body": "body12"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v14\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next12"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v15\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v14\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v14\"",
+        "status": 304
+      },
+      {
+        "body": "next12",
+        "etag": "\"v15\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v15\"",
+        "status": 304
+      },
+      {
+        "body": "next12",
+        "etag": "\"v15\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 15,
+        "body": "body13"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v15\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next13"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v16\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v15\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v15\"",
+        "status": 304
+      },
+      {
+        "body": "next13",
+        "etag": "\"v16\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v16\"",
+        "status": 304
+      },
+      {
+        "body": "next13",
+        "etag": "\"v16\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 16,
+        "body": "body14"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v16\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next14"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v17\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v16\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v16\"",
+        "status": 304
+      },
+      {
+        "body": "next14",
+        "etag": "\"v17\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v17\"",
+        "status": 304
+      },
+      {
+        "body": "next14",
+        "etag": "\"v17\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "initial": {
+        "version": 17,
+        "body": "body15"
+      },
+      "requests": [
+        {
+          "op": "get",
+          "tags": [
+            "\"v17\""
+          ]
+        },
+        {
+          "op": "put",
+          "body": "next15"
+        },
+        {
+          "op": "get",
+          "tags": [
+            "W/\"v18\""
+          ]
+        },
+        {
+          "op": "get",
+          "tags": [
+            "\"v17\""
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": null,
+        "etag": "\"v17\"",
+        "status": 304
+      },
+      {
+        "body": "next15",
+        "etag": "\"v18\"",
+        "status": 200
+      },
+      {
+        "body": null,
+        "etag": "\"v18\"",
+        "status": 304
+      },
+      {
+        "body": "next15",
+        "etag": "\"v18\"",
+        "status": 200
+      }
+    ],
+    "label": "additional-16"
+  }
+]

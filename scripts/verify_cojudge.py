@@ -6,7 +6,7 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from cojudge.authoring.support import check_java, check_python, load_specs
+from cojudge.authoring.support import check_java, check_python, check_review_cases, load_specs
 
 
 def main():
@@ -27,16 +27,18 @@ def main():
                 report = check_python(spec)
                 if not args.python_only:
                     report["java"] = check_java(spec, work)
+                report["review"] = check_review_cases(spec, work, run_java=not args.python_only)
                 reports.append(report)
                 print(f"PASS {report['id']}: {report['cases']} cases; {len(report['mutations'])} mutations rejected", flush=True)
             except Exception as error:
                 failures.append({"number": spec["number"], "error": str(error)})
                 print(f"FAIL {spec['number']:02d}: {error}", flush=True)
     result = {"problems": len(reports), "cases": sum(r["cases"] for r in reports),
+              "review_cases": sum(r["review"]["cases"] for r in reports),
               "mutations": sum(len(r["mutations"]) for r in reports), "reports": reports, "failures": failures}
     if args.report:
         args.report.write_text(json.dumps(result, indent=2) + "\n")
-    print(f"Verified {result['problems']} problems, {result['cases']} cases, {result['mutations']} mutations; {len(failures)} failures.")
+    print(f"Verified {result['problems']} problems, {result['cases']} official cases, {result['review_cases']} reviewer cases, {result['mutations']} mutations; {len(failures)} failures.")
     raise SystemExit(bool(failures))
 
 

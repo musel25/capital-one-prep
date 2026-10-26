@@ -1,0 +1,19 @@
+[
+  {
+    "name": "allows replica one version below client token",
+    "detected_by": [
+      1,
+      9,
+      11,
+      12,
+      13,
+      14,
+      16,
+      19,
+      23,
+      25,
+      28,
+      35
+    ]
+  }
+]

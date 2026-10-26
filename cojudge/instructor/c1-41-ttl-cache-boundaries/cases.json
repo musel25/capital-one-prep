@@ -1,0 +1,3909 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 0,
+          "key": "a",
+          "value": 7,
+          "ttl": 5
+        },
+        {
+          "op": "get",
+          "at": 4,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "stored",
+        7
+      ],
+      "keys": [
+        "a"
+      ]
+    },
+    "label": "read before expiration"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 0,
+          "key": "a",
+          "value": 7,
+          "ttl": 5
+        },
+        {
+          "op": "get",
+          "at": 5,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "stored",
+        null
+      ],
+      "keys": []
+    },
+    "label": "exact expiration is a miss"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 0,
+          "key": "a",
+          "value": 7,
+          "ttl": 5
+        },
+        {
+          "op": "invalidate",
+          "at": 1,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 2,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "stored",
+        true,
+        null
+      ],
+      "keys": []
+    },
+    "label": "explicit invalidation"
+  },
+  {
+    "input": {
+      "ops": []
+    },
+    "expected": {
+      "results": [],
+      "keys": []
+    },
+    "label": "empty trace"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "get",
+          "at": 0,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null
+      ],
+      "keys": []
+    },
+    "label": "missing key"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 0,
+          "key": "a",
+          "value": 7,
+          "ttl": 0
+        },
+        {
+          "op": "get",
+          "at": 0,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "stored",
+        null
+      ],
+      "keys": []
+    },
+    "label": "zero lifetime"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 0,
+          "key": "a",
+          "value": 0,
+          "ttl": 5
+        },
+        {
+          "op": "get",
+          "at": 0,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "stored",
+        0
+      ],
+      "keys": [
+        "a"
+      ]
+    },
+    "label": "zero is a cached value"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 0,
+          "key": "a",
+          "value": 7,
+          "ttl": 5
+        },
+        {
+          "op": "put",
+          "at": 4,
+          "key": "a",
+          "value": 8,
+          "ttl": 3
+        },
+        {
+          "op": "get",
+          "at": 5,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 7,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "stored",
+        "stored",
+        8,
+        null
+      ],
+      "keys": []
+    },
+    "label": "replacement resets expiration"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 0,
+          "key": "a",
+          "value": 7,
+          "ttl": 5
+        },
+        {
+          "op": "get",
+          "at": 4,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 5,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "stored",
+        7,
+        null
+      ],
+      "keys": []
+    },
+    "label": "reads do not extend lifetime"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "invalidate",
+          "at": 0,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 1,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        false,
+        false
+      ],
+      "keys": []
+    },
+    "label": "repeated missing invalidation"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 0,
+          "key": "a",
+          "value": 7,
+          "ttl": 5
+        },
+        {
+          "op": "invalidate",
+          "at": 5,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "stored",
+        false
+      ],
+      "keys": []
+    },
+    "label": "expired entry is already absent"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 0,
+          "key": "b",
+          "value": 7,
+          "ttl": 5
+        },
+        {
+          "op": "put",
+          "at": 0,
+          "key": "a",
+          "value": 7,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 1,
+          "key": "b"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "stored",
+        "stored",
+        7
+      ],
+      "keys": [
+        "b"
+      ]
+    },
+    "label": "cleanup removes other expired keys"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 0,
+          "key": "a",
+          "value": 7,
+          "ttl": 5
+        },
+        {
+          "op": "put",
+          "at": 1,
+          "key": "a",
+          "value": 7,
+          "ttl": 0
+        },
+        {
+          "op": "get",
+          "at": 1,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "stored",
+        "stored",
+        null
+      ],
+      "keys": []
+    },
+    "label": "zero lifetime overwrites existing entry"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 1,
+          "key": "b",
+          "value": -1,
+          "ttl": 3
+        },
+        {
+          "op": "get",
+          "at": 3,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 5,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 7,
+          "key": "c",
+          "value": 0,
+          "ttl": 0
+        },
+        {
+          "op": "put",
+          "at": 8,
+          "key": "a",
+          "value": 2,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 9,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 11,
+          "key": "c",
+          "value": -2,
+          "ttl": 4
+        },
+        {
+          "op": "get",
+          "at": 11,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 13,
+          "key": "a",
+          "value": 2,
+          "ttl": 3
+        },
+        {
+          "op": "invalidate",
+          "at": 13,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 13,
+          "key": "a",
+          "value": -1,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 13,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 13,
+          "key": "c",
+          "value": 6,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 13,
+          "key": "b",
+          "value": 1,
+          "ttl": 3
+        },
+        {
+          "op": "invalidate",
+          "at": 13,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 13,
+          "key": "b",
+          "value": 7,
+          "ttl": 3
+        },
+        {
+          "op": "put",
+          "at": 14,
+          "key": "a",
+          "value": -2,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 14,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 15,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 17,
+          "key": "b"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [],
+      "results": [
+        "stored",
+        null,
+        null,
+        "stored",
+        "stored",
+        false,
+        "stored",
+        null,
+        "stored",
+        true,
+        "stored",
+        null,
+        "stored",
+        "stored",
+        true,
+        "stored",
+        "stored",
+        true,
+        false,
+        false
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "invalidate",
+          "at": 1,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 2,
+          "key": "b",
+          "value": -1,
+          "ttl": 0
+        },
+        {
+          "op": "invalidate",
+          "at": 4,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 6,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 8,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 10,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 10,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 11,
+          "key": "c",
+          "value": 0,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 12,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 13,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 14,
+          "key": "b",
+          "value": 7,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 16,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 16,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 18,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 19,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 21,
+          "key": "a",
+          "value": 5,
+          "ttl": 1
+        },
+        {
+          "op": "put",
+          "at": 21,
+          "key": "a",
+          "value": -1,
+          "ttl": 3
+        },
+        {
+          "op": "put",
+          "at": 23,
+          "key": "a",
+          "value": 0,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 25,
+          "key": "c",
+          "value": 4,
+          "ttl": 2
+        },
+        {
+          "op": "get",
+          "at": 25,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "a",
+        "c"
+      ],
+      "results": [
+        false,
+        "stored",
+        false,
+        false,
+        null,
+        false,
+        false,
+        "stored",
+        false,
+        false,
+        "stored",
+        false,
+        null,
+        false,
+        null,
+        "stored",
+        "stored",
+        "stored",
+        "stored",
+        0
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 4,
+          "key": "c",
+          "value": 4,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 6,
+          "key": "c",
+          "value": 5,
+          "ttl": 3
+        },
+        {
+          "op": "get",
+          "at": 7,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 8,
+          "key": "a",
+          "value": 6,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 10,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 12,
+          "key": "c",
+          "value": 3,
+          "ttl": 0
+        },
+        {
+          "op": "invalidate",
+          "at": 12,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 14,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 14,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 15,
+          "key": "b",
+          "value": 1,
+          "ttl": 3
+        },
+        {
+          "op": "put",
+          "at": 17,
+          "key": "a",
+          "value": 1,
+          "ttl": 4
+        },
+        {
+          "op": "get",
+          "at": 19,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 20,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 20,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 21,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 21,
+          "key": "b",
+          "value": 4,
+          "ttl": 2
+        },
+        {
+          "op": "get",
+          "at": 21,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 22,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 22,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 24,
+          "key": "c",
+          "value": 7,
+          "ttl": 1
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "c"
+      ],
+      "results": [
+        "stored",
+        "stored",
+        null,
+        "stored",
+        false,
+        "stored",
+        false,
+        null,
+        null,
+        "stored",
+        "stored",
+        null,
+        false,
+        true,
+        null,
+        "stored",
+        null,
+        null,
+        false,
+        "stored"
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "get",
+          "at": 4,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 5,
+          "key": "c",
+          "value": 3,
+          "ttl": 0
+        },
+        {
+          "op": "invalidate",
+          "at": 5,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 7,
+          "key": "b",
+          "value": -3,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 9,
+          "key": "b",
+          "value": 0,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 11,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 13,
+          "key": "c",
+          "value": 3,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 13,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 15,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 15,
+          "key": "b",
+          "value": 6,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 17,
+          "key": "a",
+          "value": 2,
+          "ttl": 1
+        },
+        {
+          "op": "put",
+          "at": 18,
+          "key": "b",
+          "value": 7,
+          "ttl": 3
+        },
+        {
+          "op": "get",
+          "at": 18,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 18,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 18,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 20,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 21,
+          "key": "c",
+          "value": -2,
+          "ttl": 0
+        },
+        {
+          "op": "get",
+          "at": 22,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 22,
+          "key": "b",
+          "value": 1,
+          "ttl": 1
+        },
+        {
+          "op": "put",
+          "at": 22,
+          "key": "a",
+          "value": 2,
+          "ttl": 2
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "a",
+        "b"
+      ],
+      "results": [
+        null,
+        "stored",
+        false,
+        "stored",
+        "stored",
+        false,
+        "stored",
+        3,
+        false,
+        "stored",
+        "stored",
+        "stored",
+        null,
+        7,
+        null,
+        true,
+        "stored",
+        null,
+        "stored",
+        "stored"
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 5,
+          "key": "b",
+          "value": 0,
+          "ttl": 0
+        },
+        {
+          "op": "put",
+          "at": 6,
+          "key": "c",
+          "value": -3,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 8,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 9,
+          "key": "b",
+          "value": 4,
+          "ttl": 4
+        },
+        {
+          "op": "invalidate",
+          "at": 10,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 11,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 13,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 14,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 14,
+          "key": "a",
+          "value": 1,
+          "ttl": 4
+        },
+        {
+          "op": "invalidate",
+          "at": 14,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 15,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 16,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 17,
+          "key": "a",
+          "value": 1,
+          "ttl": 4
+        },
+        {
+          "op": "get",
+          "at": 18,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 20,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 20,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 20,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 22,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 23,
+          "key": "c",
+          "value": -3,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 23,
+          "key": "b"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "c"
+      ],
+      "results": [
+        "stored",
+        "stored",
+        false,
+        "stored",
+        true,
+        false,
+        false,
+        false,
+        "stored",
+        true,
+        null,
+        null,
+        "stored",
+        1,
+        false,
+        false,
+        null,
+        null,
+        "stored",
+        false
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 6,
+          "key": "a",
+          "value": 4,
+          "ttl": 3
+        },
+        {
+          "op": "invalidate",
+          "at": 8,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 10,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 12,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 12,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 13,
+          "key": "c",
+          "value": 5,
+          "ttl": 0
+        },
+        {
+          "op": "put",
+          "at": 15,
+          "key": "a",
+          "value": 7,
+          "ttl": 4
+        },
+        {
+          "op": "get",
+          "at": 16,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 17,
+          "key": "b",
+          "value": -1,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 19,
+          "key": "c",
+          "value": 5,
+          "ttl": 3
+        },
+        {
+          "op": "get",
+          "at": 20,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 20,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 22,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 24,
+          "key": "c",
+          "value": 7,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 24,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 25,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 26,
+          "key": "c",
+          "value": 0,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 26,
+          "key": "a",
+          "value": 7,
+          "ttl": 0
+        },
+        {
+          "op": "get",
+          "at": 26,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 26,
+          "key": "a",
+          "value": 1,
+          "ttl": 1
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "a",
+        "c"
+      ],
+      "results": [
+        "stored",
+        true,
+        null,
+        false,
+        null,
+        "stored",
+        "stored",
+        null,
+        "stored",
+        "stored",
+        -1,
+        true,
+        false,
+        "stored",
+        false,
+        null,
+        "stored",
+        "stored",
+        null,
+        "stored"
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "invalidate",
+          "at": 6,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 6,
+          "key": "b",
+          "value": -2,
+          "ttl": 0
+        },
+        {
+          "op": "put",
+          "at": 8,
+          "key": "c",
+          "value": 2,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 8,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 9,
+          "key": "a",
+          "value": -1,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 9,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 9,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 10,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 10,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 10,
+          "key": "b",
+          "value": 2,
+          "ttl": 4
+        },
+        {
+          "op": "get",
+          "at": 11,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 12,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 13,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 13,
+          "key": "a",
+          "value": 4,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 14,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 15,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 16,
+          "key": "a",
+          "value": 2,
+          "ttl": 0
+        },
+        {
+          "op": "get",
+          "at": 16,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 17,
+          "key": "b",
+          "value": 2,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 17,
+          "key": "c"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "b"
+      ],
+      "results": [
+        false,
+        "stored",
+        "stored",
+        null,
+        "stored",
+        true,
+        false,
+        false,
+        null,
+        "stored",
+        2,
+        2,
+        null,
+        "stored",
+        null,
+        null,
+        "stored",
+        null,
+        "stored",
+        false
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "get",
+          "at": 9,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 11,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 13,
+          "key": "b",
+          "value": 6,
+          "ttl": 4
+        },
+        {
+          "op": "invalidate",
+          "at": 14,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 14,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 14,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 14,
+          "key": "c",
+          "value": -3,
+          "ttl": 3
+        },
+        {
+          "op": "put",
+          "at": 16,
+          "key": "a",
+          "value": 3,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 17,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 18,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 19,
+          "key": "b",
+          "value": 3,
+          "ttl": 2
+        },
+        {
+          "op": "put",
+          "at": 19,
+          "key": "b",
+          "value": 7,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 21,
+          "key": "a",
+          "value": 2,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 22,
+          "key": "c",
+          "value": 4,
+          "ttl": 0
+        },
+        {
+          "op": "get",
+          "at": 24,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 25,
+          "key": "b",
+          "value": 7,
+          "ttl": 4
+        },
+        {
+          "op": "get",
+          "at": 26,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 27,
+          "key": "a",
+          "value": 4,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 27,
+          "key": "a",
+          "value": -1,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 27,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "b"
+      ],
+      "results": [
+        null,
+        false,
+        "stored",
+        false,
+        null,
+        true,
+        "stored",
+        "stored",
+        true,
+        null,
+        "stored",
+        "stored",
+        "stored",
+        "stored",
+        null,
+        "stored",
+        null,
+        "stored",
+        "stored",
+        true
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "invalidate",
+          "at": 9,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 11,
+          "key": "c",
+          "value": 6,
+          "ttl": 2
+        },
+        {
+          "op": "get",
+          "at": 12,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 13,
+          "key": "b",
+          "value": -2,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 13,
+          "key": "a",
+          "value": 3,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 14,
+          "key": "a",
+          "value": 4,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 14,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 16,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 18,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 20,
+          "key": "b",
+          "value": 5,
+          "ttl": 0
+        },
+        {
+          "op": "put",
+          "at": 20,
+          "key": "c",
+          "value": 4,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 22,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 22,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 23,
+          "key": "a",
+          "value": -3,
+          "ttl": 0
+        },
+        {
+          "op": "invalidate",
+          "at": 23,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 23,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 24,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 25,
+          "key": "b",
+          "value": -1,
+          "ttl": 2
+        },
+        {
+          "op": "put",
+          "at": 26,
+          "key": "b",
+          "value": 4,
+          "ttl": 3
+        },
+        {
+          "op": "get",
+          "at": 27,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "b"
+      ],
+      "results": [
+        false,
+        "stored",
+        null,
+        "stored",
+        "stored",
+        "stored",
+        false,
+        false,
+        null,
+        "stored",
+        "stored",
+        false,
+        false,
+        "stored",
+        false,
+        null,
+        false,
+        "stored",
+        "stored",
+        null
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 10,
+          "key": "a",
+          "value": -3,
+          "ttl": 3
+        },
+        {
+          "op": "invalidate",
+          "at": 11,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 13,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 14,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 14,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 16,
+          "key": "b",
+          "value": 6,
+          "ttl": 3
+        },
+        {
+          "op": "get",
+          "at": 18,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 20,
+          "key": "a",
+          "value": 4,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 22,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 22,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 22,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 22,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 22,
+          "key": "b",
+          "value": 7,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 23,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 23,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 25,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 26,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 27,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 29,
+          "key": "b",
+          "value": -2,
+          "ttl": 3
+        },
+        {
+          "op": "invalidate",
+          "at": 31,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "b"
+      ],
+      "results": [
+        "stored",
+        false,
+        null,
+        null,
+        false,
+        "stored",
+        null,
+        "stored",
+        null,
+        false,
+        null,
+        false,
+        "stored",
+        false,
+        null,
+        false,
+        false,
+        false,
+        "stored",
+        false
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "invalidate",
+          "at": 12,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 14,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 14,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 14,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 14,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 16,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 18,
+          "key": "b",
+          "value": 6,
+          "ttl": 1
+        },
+        {
+          "op": "put",
+          "at": 20,
+          "key": "b",
+          "value": 2,
+          "ttl": 1
+        },
+        {
+          "op": "put",
+          "at": 20,
+          "key": "a",
+          "value": 6,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 21,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 22,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 24,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 26,
+          "key": "c",
+          "value": 1,
+          "ttl": 3
+        },
+        {
+          "op": "invalidate",
+          "at": 27,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 28,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 30,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 32,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 33,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 34,
+          "key": "c",
+          "value": 6,
+          "ttl": 4
+        },
+        {
+          "op": "invalidate",
+          "at": 36,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "c"
+      ],
+      "results": [
+        false,
+        null,
+        false,
+        null,
+        null,
+        false,
+        "stored",
+        "stored",
+        "stored",
+        null,
+        null,
+        null,
+        "stored",
+        true,
+        null,
+        null,
+        false,
+        false,
+        "stored",
+        false
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 12,
+          "key": "c",
+          "value": -2,
+          "ttl": 2
+        },
+        {
+          "op": "put",
+          "at": 12,
+          "key": "c",
+          "value": -2,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 12,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 12,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 14,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 15,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 17,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 17,
+          "key": "a",
+          "value": 3,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 18,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 19,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 19,
+          "key": "c",
+          "value": 6,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 21,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 21,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 21,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 21,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 21,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 21,
+          "key": "c",
+          "value": 6,
+          "ttl": 3
+        },
+        {
+          "op": "get",
+          "at": 21,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 23,
+          "key": "c",
+          "value": 1,
+          "ttl": 4
+        },
+        {
+          "op": "invalidate",
+          "at": 23,
+          "key": "b"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "c"
+      ],
+      "results": [
+        "stored",
+        "stored",
+        true,
+        null,
+        null,
+        null,
+        null,
+        "stored",
+        true,
+        false,
+        "stored",
+        null,
+        null,
+        null,
+        null,
+        false,
+        "stored",
+        null,
+        "stored",
+        false
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "invalidate",
+          "at": 14,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 15,
+          "key": "c",
+          "value": 3,
+          "ttl": 0
+        },
+        {
+          "op": "get",
+          "at": 16,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 17,
+          "key": "c",
+          "value": 0,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 18,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 20,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 21,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 21,
+          "key": "c",
+          "value": 3,
+          "ttl": 3
+        },
+        {
+          "op": "invalidate",
+          "at": 23,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 24,
+          "key": "a",
+          "value": -1,
+          "ttl": 4
+        },
+        {
+          "op": "invalidate",
+          "at": 26,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 28,
+          "key": "c",
+          "value": 0,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 29,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 31,
+          "key": "b",
+          "value": 2,
+          "ttl": 1
+        },
+        {
+          "op": "put",
+          "at": 33,
+          "key": "c",
+          "value": 4,
+          "ttl": 0
+        },
+        {
+          "op": "invalidate",
+          "at": 34,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 35,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 36,
+          "key": "b",
+          "value": 1,
+          "ttl": 3
+        },
+        {
+          "op": "get",
+          "at": 36,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 38,
+          "key": "b"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [],
+      "results": [
+        false,
+        "stored",
+        null,
+        "stored",
+        null,
+        false,
+        null,
+        "stored",
+        true,
+        "stored",
+        true,
+        "stored",
+        false,
+        "stored",
+        "stored",
+        false,
+        false,
+        "stored",
+        1,
+        true
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "invalidate",
+          "at": 15,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 15,
+          "key": "a",
+          "value": -1,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 16,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 17,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 18,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 18,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 19,
+          "key": "c",
+          "value": 4,
+          "ttl": 3
+        },
+        {
+          "op": "invalidate",
+          "at": 21,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 21,
+          "key": "a",
+          "value": 1,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 23,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 23,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 24,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 26,
+          "key": "a",
+          "value": 4,
+          "ttl": 4
+        },
+        {
+          "op": "get",
+          "at": 27,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 27,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 29,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 31,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 31,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 32,
+          "key": "b",
+          "value": -2,
+          "ttl": 3
+        },
+        {
+          "op": "put",
+          "at": 33,
+          "key": "a",
+          "value": 6,
+          "ttl": 0
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "b"
+      ],
+      "results": [
+        false,
+        "stored",
+        false,
+        false,
+        null,
+        null,
+        "stored",
+        false,
+        "stored",
+        false,
+        false,
+        false,
+        "stored",
+        null,
+        false,
+        null,
+        false,
+        false,
+        "stored",
+        "stored"
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 15,
+          "key": "a",
+          "value": -2,
+          "ttl": 0
+        },
+        {
+          "op": "get",
+          "at": 17,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 18,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 18,
+          "key": "a",
+          "value": 7,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 18,
+          "key": "c",
+          "value": 2,
+          "ttl": 0
+        },
+        {
+          "op": "get",
+          "at": 18,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 20,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 20,
+          "key": "b",
+          "value": 1,
+          "ttl": 3
+        },
+        {
+          "op": "get",
+          "at": 21,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 22,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 23,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 24,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 25,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 26,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 27,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 27,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 29,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 29,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 29,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 31,
+          "key": "a",
+          "value": -1,
+          "ttl": 0
+        }
+      ]
+    },
+    "expected": {
+      "keys": [],
+      "results": [
+        "stored",
+        null,
+        null,
+        "stored",
+        "stored",
+        7,
+        false,
+        "stored",
+        1,
+        true,
+        false,
+        false,
+        null,
+        false,
+        null,
+        null,
+        null,
+        false,
+        false,
+        "stored"
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 15,
+          "key": "c",
+          "value": 5,
+          "ttl": 4
+        },
+        {
+          "op": "invalidate",
+          "at": 16,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 16,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 17,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 17,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 17,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 19,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 20,
+          "key": "b",
+          "value": -1,
+          "ttl": 2
+        },
+        {
+          "op": "put",
+          "at": 22,
+          "key": "b",
+          "value": -3,
+          "ttl": 3
+        },
+        {
+          "op": "invalidate",
+          "at": 23,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 24,
+          "key": "c",
+          "value": -2,
+          "ttl": 3
+        },
+        {
+          "op": "put",
+          "at": 25,
+          "key": "b",
+          "value": -3,
+          "ttl": 0
+        },
+        {
+          "op": "put",
+          "at": 26,
+          "key": "b",
+          "value": 7,
+          "ttl": 4
+        },
+        {
+          "op": "get",
+          "at": 26,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 26,
+          "key": "b",
+          "value": 3,
+          "ttl": 3
+        },
+        {
+          "op": "put",
+          "at": 28,
+          "key": "a",
+          "value": -2,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 29,
+          "key": "a",
+          "value": -3,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 30,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 30,
+          "key": "a",
+          "value": 5,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 32,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [],
+      "results": [
+        "stored",
+        false,
+        true,
+        null,
+        false,
+        null,
+        null,
+        "stored",
+        "stored",
+        true,
+        "stored",
+        "stored",
+        "stored",
+        7,
+        "stored",
+        "stored",
+        "stored",
+        false,
+        "stored",
+        false
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "get",
+          "at": 18,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 18,
+          "key": "b",
+          "value": 2,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 20,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 20,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 22,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 22,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 22,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 22,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 24,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 26,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 27,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 29,
+          "key": "b",
+          "value": 7,
+          "ttl": 3
+        },
+        {
+          "op": "get",
+          "at": 31,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 32,
+          "key": "a",
+          "value": 0,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 34,
+          "key": "a",
+          "value": 3,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 35,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 36,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 38,
+          "key": "a",
+          "value": -1,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 39,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 41,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [],
+      "results": [
+        null,
+        "stored",
+        null,
+        false,
+        null,
+        null,
+        false,
+        false,
+        false,
+        false,
+        false,
+        "stored",
+        7,
+        "stored",
+        "stored",
+        null,
+        null,
+        "stored",
+        null,
+        false
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "invalidate",
+          "at": 18,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 20,
+          "key": "c",
+          "value": 3,
+          "ttl": 0
+        },
+        {
+          "op": "invalidate",
+          "at": 21,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 22,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 24,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 24,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 25,
+          "key": "b",
+          "value": -3,
+          "ttl": 3
+        },
+        {
+          "op": "invalidate",
+          "at": 25,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 26,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 28,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 29,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 29,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 29,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 30,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 31,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 31,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 33,
+          "key": "c",
+          "value": -1,
+          "ttl": 2
+        },
+        {
+          "op": "get",
+          "at": 34,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 34,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 35,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [],
+      "results": [
+        false,
+        "stored",
+        false,
+        null,
+        false,
+        false,
+        "stored",
+        true,
+        false,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "stored",
+        -1,
+        null,
+        null
+      ]
+    },
+    "label": "additional-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "put",
+          "at": 18,
+          "key": "a",
+          "value": -1,
+          "ttl": 3
+        },
+        {
+          "op": "put",
+          "at": 18,
+          "key": "a",
+          "value": 1,
+          "ttl": 3
+        },
+        {
+          "op": "put",
+          "at": 18,
+          "key": "b",
+          "value": 4,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 19,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 20,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 20,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 22,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 23,
+          "key": "b",
+          "value": 4,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 24,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 26,
+          "key": "a",
+          "value": -2,
+          "ttl": 1
+        },
+        {
+          "op": "put",
+          "at": 28,
+          "key": "a",
+          "value": -3,
+          "ttl": 3
+        },
+        {
+          "op": "put",
+          "at": 30,
+          "key": "c",
+          "value": -2,
+          "ttl": 3
+        },
+        {
+          "op": "put",
+          "at": 32,
+          "key": "b",
+          "value": -3,
+          "ttl": 4
+        },
+        {
+          "op": "invalidate",
+          "at": 32,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 32,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 32,
+          "key": "c",
+          "value": -1,
+          "ttl": 1
+        },
+        {
+          "op": "put",
+          "at": 33,
+          "key": "c",
+          "value": 2,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 33,
+          "key": "a",
+          "value": 0,
+          "ttl": 0
+        },
+        {
+          "op": "invalidate",
+          "at": 33,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 35,
+          "key": "c",
+          "value": -2,
+          "ttl": 3
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "b",
+        "c"
+      ],
+      "results": [
+        "stored",
+        "stored",
+        "stored",
+        true,
+        null,
+        false,
+        null,
+        "stored",
+        false,
+        "stored",
+        "stored",
+        "stored",
+        "stored",
+        false,
+        null,
+        "stored",
+        "stored",
+        "stored",
+        true,
+        "stored"
+      ]
+    },
+    "label": "additional-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "get",
+          "at": 19,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 19,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 20,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 20,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 21,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 23,
+          "key": "c",
+          "value": 3,
+          "ttl": 3
+        },
+        {
+          "op": "put",
+          "at": 24,
+          "key": "b",
+          "value": 4,
+          "ttl": 2
+        },
+        {
+          "op": "get",
+          "at": 25,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 26,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 28,
+          "key": "a",
+          "value": -1,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 29,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 29,
+          "key": "b",
+          "value": -3,
+          "ttl": 4
+        },
+        {
+          "op": "invalidate",
+          "at": 30,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 31,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 31,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 32,
+          "key": "c",
+          "value": 1,
+          "ttl": 0
+        },
+        {
+          "op": "invalidate",
+          "at": 33,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 34,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 36,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 38,
+          "key": "b",
+          "value": 5,
+          "ttl": 4
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "b"
+      ],
+      "results": [
+        null,
+        null,
+        null,
+        false,
+        false,
+        "stored",
+        "stored",
+        3,
+        false,
+        "stored",
+        false,
+        "stored",
+        true,
+        false,
+        null,
+        "stored",
+        false,
+        false,
+        null,
+        "stored"
+      ]
+    },
+    "label": "additional-20"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "get",
+          "at": 22,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 23,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 24,
+          "key": "b",
+          "value": -2,
+          "ttl": 4
+        },
+        {
+          "op": "put",
+          "at": 26,
+          "key": "b",
+          "value": 6,
+          "ttl": 4
+        },
+        {
+          "op": "get",
+          "at": 26,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 27,
+          "key": "b",
+          "value": 7,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 29,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 30,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 32,
+          "key": "a",
+          "value": 6,
+          "ttl": 4
+        },
+        {
+          "op": "invalidate",
+          "at": 34,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 34,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 36,
+          "key": "c",
+          "value": 1,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 37,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 37,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 37,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 37,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 38,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 38,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 38,
+          "key": "b",
+          "value": 4,
+          "ttl": 2
+        },
+        {
+          "op": "put",
+          "at": 39,
+          "key": "a",
+          "value": -1,
+          "ttl": 1
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "a",
+        "b"
+      ],
+      "results": [
+        null,
+        null,
+        "stored",
+        "stored",
+        null,
+        "stored",
+        false,
+        false,
+        "stored",
+        false,
+        6,
+        "stored",
+        false,
+        null,
+        null,
+        false,
+        null,
+        null,
+        "stored",
+        "stored"
+      ]
+    },
+    "label": "additional-21"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "get",
+          "at": 23,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 24,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 25,
+          "key": "c",
+          "value": 4,
+          "ttl": 4
+        },
+        {
+          "op": "get",
+          "at": 26,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 27,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 29,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 30,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 31,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 31,
+          "key": "c",
+          "value": 4,
+          "ttl": 3
+        },
+        {
+          "op": "invalidate",
+          "at": 32,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 34,
+          "key": "c",
+          "value": 7,
+          "ttl": 0
+        },
+        {
+          "op": "get",
+          "at": 36,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 36,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 37,
+          "key": "c",
+          "value": 3,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 38,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 40,
+          "key": "c",
+          "value": 1,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 41,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 43,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 43,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 43,
+          "key": "c",
+          "value": 7,
+          "ttl": 2
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "c"
+      ],
+      "results": [
+        null,
+        null,
+        "stored",
+        null,
+        false,
+        null,
+        null,
+        false,
+        "stored",
+        false,
+        "stored",
+        null,
+        false,
+        "stored",
+        false,
+        "stored",
+        false,
+        null,
+        false,
+        "stored"
+      ]
+    },
+    "label": "additional-22"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "invalidate",
+          "at": 24,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 24,
+          "key": "a",
+          "value": 6,
+          "ttl": 2
+        },
+        {
+          "op": "put",
+          "at": 26,
+          "key": "c",
+          "value": -2,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 27,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 27,
+          "key": "b",
+          "value": 2,
+          "ttl": 4
+        },
+        {
+          "op": "invalidate",
+          "at": 28,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 30,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 32,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 33,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 35,
+          "key": "a",
+          "value": 5,
+          "ttl": 2
+        },
+        {
+          "op": "invalidate",
+          "at": 37,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 38,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 39,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 39,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 39,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 40,
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "at": 40,
+          "key": "b",
+          "value": 3,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 40,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 40,
+          "key": "a"
+        },
+        {
+          "op": "get",
+          "at": 40,
+          "key": "c"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [
+        "b"
+      ],
+      "results": [
+        false,
+        "stored",
+        "stored",
+        false,
+        "stored",
+        false,
+        null,
+        null,
+        false,
+        "stored",
+        false,
+        false,
+        false,
+        null,
+        false,
+        false,
+        "stored",
+        3,
+        false,
+        null
+      ]
+    },
+    "label": "additional-23"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "op": "invalidate",
+          "at": 24,
+          "key": "b"
+        },
+        {
+          "op": "invalidate",
+          "at": 24,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 24,
+          "key": "a",
+          "value": 0,
+          "ttl": 0
+        },
+        {
+          "op": "put",
+          "at": 25,
+          "key": "a",
+          "value": 1,
+          "ttl": 0
+        },
+        {
+          "op": "put",
+          "at": 25,
+          "key": "c",
+          "value": 2,
+          "ttl": 1
+        },
+        {
+          "op": "invalidate",
+          "at": 26,
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "at": 26,
+          "key": "b",
+          "value": -3,
+          "ttl": 1
+        },
+        {
+          "op": "get",
+          "at": 26,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 26,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 27,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 27,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 29,
+          "key": "c"
+        },
+        {
+          "op": "invalidate",
+          "at": 30,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 32,
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "at": 33,
+          "key": "b",
+          "value": 0,
+          "ttl": 4
+        },
+        {
+          "op": "invalidate",
+          "at": 35,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 35,
+          "key": "b"
+        },
+        {
+          "op": "get",
+          "at": 36,
+          "key": "c"
+        },
+        {
+          "op": "get",
+          "at": 38,
+          "key": "a"
+        },
+        {
+          "op": "invalidate",
+          "at": 39,
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "keys": [],
+      "results": [
+        false,
+        false,
+        "stored",
+        "stored",
+        "stored",
+        false,
+        "stored",
+        null,
+        null,
+        false,
+        false,
+        false,
+        false,
+        null,
+        "stored",
+        false,
+        true,
+        null,
+        null,
+        false
+      ]
+    },
+    "label": "additional-24"
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "id": "c1-36-atomic-transfer-rollback",
+  "title": "36. Repair an atomic SQL transfer",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "04-sql-and-transactions",
+  "examples": [
+    {
+      "input": "{\"balances\": {\"a\": 10, \"b\": 0}, \"transfers\": [{\"from\": \"a\", \"to\": \"b\", \"amount\": 4, \"fail\": false}]}",
+      "output": "{\"results\": [\"ok\"], \"balances\": {\"a\": 6, \"b\": 4}}",
+      "explanation": "transfer commits both entries"
+    },
+    {
+      "input": "{\"balances\": {\"a\": 10, \"b\": 0}, \"transfers\": [{\"from\": \"a\", \"to\": \"b\", \"amount\": 4, \"fail\": true}]}",
+      "output": "{\"results\": [\"failed\"], \"balances\": {\"a\": 10, \"b\": 0}}",
+      "explanation": "failure restores debit"
+    },
+    {
+      "input": "{\"balances\": {\"a\": 3, \"b\": 2}, \"transfers\": [{\"from\": \"a\", \"to\": \"b\", \"amount\": 4, \"fail\": false}]}",
+      "output": "{\"results\": [\"insufficient\"], \"balances\": {\"a\": 3, \"b\": 2}}",
+      "explanation": "insufficient funds change neither balance"
+    }
+  ],
+  "starterCode": {
+    "python": "import sqlite3\n\ndef solve(data: dict) -> dict:\n    db = sqlite3.connect(\":memory:\")\n    db.execute(\"CREATE TABLE accounts (id TEXT PRIMARY KEY, balance INTEGER NOT NULL CHECK(balance >= 0))\")\n    db.executemany(\"INSERT INTO accounts VALUES (?, ?)\", data[\"balances\"].items())\n    db.commit()\n    results = []\n    for op in data[\"transfers\"]:\n        try:\n            db.execute(\"BEGIN\")\n            changed = db.execute(\"UPDATE accounts SET balance = balance - ? WHERE id = ? AND balance >= ?\", (op[\"amount\"], op[\"from\"], op[\"amount\"])).rowcount\n            if not changed:\n                db.rollback()\n                results.append(\"insufficient\")\n                continue\n            if op[\"fail\"]:\n                raise RuntimeError(\"injected after debit\")\n            db.execute(\"UPDATE accounts SET balance = balance + ? WHERE id = ?\", (op[\"amount\"], op[\"to\"]))\n            db.commit()\n            results.append(\"ok\")\n        except RuntimeError:\n            db.commit()  # BUG: commits only the debit\n            results.append(\"failed\")\n    balances = dict(db.execute(\"SELECT id, balance FROM accounts ORDER BY id\"))\n    db.close()\n    return {\"results\": results, \"balances\": balances}\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"balances\":{\"a\":10,\"b\":0},\"transfers\":[{\"amount\":4,\"fail\":false,\"from\":\"a\",\"to\":\"b\"}]}"
+    },
+    {
+      "payload": "{\"balances\":{\"a\":10,\"b\":0},\"transfers\":[{\"amount\":4,\"fail\":true,\"from\":\"a\",\"to\":\"b\"}]}"
+    },
+    {
+      "payload": "{\"balances\":{\"a\":3,\"b\":2},\"transfers\":[{\"amount\":4,\"fail\":false,\"from\":\"a\",\"to\":\"b\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "A caught exception does not undo an earlier SQL statement.",
+    "The exception handler must end the current transaction without retaining its writes."
+  ]
+}

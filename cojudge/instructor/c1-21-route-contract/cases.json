@@ -1,0 +1,2443 @@
+[
+  {
+    "input": {
+      "items": [
+        {
+          "id": 2,
+          "name": "book"
+        },
+        {
+          "id": 1,
+          "name": "pen"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 200,
+        "body": [
+          {
+            "id": 1,
+            "name": "pen"
+          },
+          {
+            "id": 2,
+            "name": "book"
+          }
+        ]
+      }
+    ],
+    "label": "collection is ordered by numeric id"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "pen"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items/1",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items/1",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 204,
+        "body": null
+      },
+      {
+        "status": 404,
+        "body": {
+          "error": "not_found"
+        }
+      }
+    ],
+    "label": "delete then read"
+  },
+  {
+    "input": {
+      "items": [],
+      "requests": [
+        {
+          "path": "/items/9",
+          "method": "POST"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 405,
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "allow": [
+          "GET",
+          "DELETE"
+        ]
+      }
+    ],
+    "label": "method check precedes item lookup"
+  },
+  {
+    "input": {
+      "items": [],
+      "requests": []
+    },
+    "expected": [],
+    "label": "empty request batch"
+  },
+  {
+    "input": {
+      "items": [],
+      "requests": [
+        {
+          "path": "/items",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 200,
+        "body": []
+      }
+    ],
+    "label": "empty collection"
+  },
+  {
+    "input": {
+      "items": [],
+      "requests": [
+        {
+          "path": "/health",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 200,
+        "body": {
+          "status": "ok"
+        }
+      }
+    ],
+    "label": "health route"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "pen"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items/1",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "name": "pen"
+        }
+      }
+    ],
+    "label": "one item"
+  },
+  {
+    "input": {
+      "items": [],
+      "requests": [
+        {
+          "path": "/items/1",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 404,
+        "body": {
+          "error": "not_found"
+        }
+      }
+    ],
+    "label": "missing item"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "pen"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items/1",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items/1",
+          "method": "DELETE"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 204,
+        "body": null
+      },
+      {
+        "status": 404,
+        "body": {
+          "error": "not_found"
+        }
+      }
+    ],
+    "label": "repeated delete"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "pen"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items/01",
+          "method": "GET"
+        },
+        {
+          "path": "/items/0",
+          "method": "GET"
+        },
+        {
+          "path": "/items/1/",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 404,
+        "body": {
+          "error": "not_found"
+        }
+      },
+      {
+        "status": 404,
+        "body": {
+          "error": "not_found"
+        }
+      },
+      {
+        "status": 404,
+        "body": {
+          "error": "not_found"
+        }
+      }
+    ],
+    "label": "noncanonical paths"
+  },
+  {
+    "input": {
+      "items": [],
+      "requests": [
+        {
+          "path": "/health",
+          "method": "HEAD"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 405,
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "allow": [
+          "GET"
+        ]
+      }
+    ],
+    "label": "no implicit HEAD in this contract"
+  },
+  {
+    "input": {
+      "items": [],
+      "requests": [
+        {
+          "path": "/other",
+          "method": "POST"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 404,
+        "body": {
+          "error": "not_found"
+        }
+      }
+    ],
+    "label": "unknown route before method"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "pen"
+        },
+        {
+          "id": 2,
+          "name": "book"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/items/1",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 200,
+        "body": [
+          {
+            "id": 1,
+            "name": "pen"
+          },
+          {
+            "id": 2,
+            "name": "book"
+          }
+        ]
+      },
+      {
+        "status": 204,
+        "body": null
+      },
+      {
+        "status": 200,
+        "body": [
+          {
+            "id": 2,
+            "name": "book"
+          }
+        ]
+      }
+    ],
+    "label": "earlier response is a snapshot"
+  },
+  {
+    "input": {
+      "items": [],
+      "requests": [
+        {
+          "path": "/items",
+          "method": "POST"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 405,
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "allow": [
+          "GET"
+        ]
+      }
+    ],
+    "label": "collection rejects POST"
+  },
+  {
+    "input": {
+      "items": [],
+      "requests": [
+        {
+          "path": "/bad",
+          "method": "POST"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      }
+    ],
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items/7",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "POST"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      }
+    ],
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        },
+        {
+          "id": 2,
+          "name": "item-2"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/items/1",
+          "method": "POST"
+        },
+        {
+          "path": "/health",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          },
+          {
+            "id": 2,
+            "name": "item-2"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET",
+          "DELETE"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "status": "ok"
+        },
+        "status": 200
+      }
+    ],
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        },
+        {
+          "id": 2,
+          "name": "item-2"
+        },
+        {
+          "id": 3,
+          "name": "item-3"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items",
+          "method": "POST"
+        },
+        {
+          "path": "/bad",
+          "method": "POST"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/bad",
+          "method": "POST"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      }
+    ],
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        },
+        {
+          "id": 2,
+          "name": "item-2"
+        },
+        {
+          "id": 3,
+          "name": "item-3"
+        },
+        {
+          "id": 4,
+          "name": "item-4"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items/2",
+          "method": "GET"
+        },
+        {
+          "path": "/health",
+          "method": "GET"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/items/9",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "id": 2,
+          "name": "item-2"
+        },
+        "status": 200
+      },
+      {
+        "body": {
+          "status": "ok"
+        },
+        "status": 200
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          },
+          {
+            "id": 2,
+            "name": "item-2"
+          },
+          {
+            "id": 3,
+            "name": "item-3"
+          },
+          {
+            "id": 4,
+            "name": "item-4"
+          }
+        ],
+        "status": 200
+      }
+    ],
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        },
+        {
+          "id": 2,
+          "name": "item-2"
+        },
+        {
+          "id": 3,
+          "name": "item-3"
+        },
+        {
+          "id": 4,
+          "name": "item-4"
+        },
+        {
+          "id": 5,
+          "name": "item-5"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/health",
+          "method": "POST"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "POST"
+        },
+        {
+          "path": "/items/7",
+          "method": "DELETE"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          },
+          {
+            "id": 2,
+            "name": "item-2"
+          },
+          {
+            "id": 3,
+            "name": "item-3"
+          },
+          {
+            "id": 4,
+            "name": "item-4"
+          },
+          {
+            "id": 5,
+            "name": "item-5"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      }
+    ],
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        },
+        {
+          "id": 2,
+          "name": "item-2"
+        },
+        {
+          "id": 3,
+          "name": "item-3"
+        },
+        {
+          "id": 4,
+          "name": "item-4"
+        },
+        {
+          "id": 5,
+          "name": "item-5"
+        },
+        {
+          "id": 6,
+          "name": "item-6"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        },
+        {
+          "path": "/health",
+          "method": "GET"
+        },
+        {
+          "path": "/health",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "POST"
+        },
+        {
+          "path": "/health",
+          "method": "GET"
+        },
+        {
+          "path": "/items/3",
+          "method": "DELETE"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "status": "ok"
+        },
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "status": "ok"
+        },
+        "status": 200
+      },
+      {
+        "body": null,
+        "status": 204
+      }
+    ],
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "items": [],
+      "requests": [
+        {
+          "path": "/items/6",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        },
+        {
+          "path": "/health",
+          "method": "POST"
+        },
+        {
+          "path": "/items",
+          "method": "DELETE"
+        },
+        {
+          "path": "/health",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "POST"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": [],
+        "status": 200
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": [],
+        "status": 200
+      }
+    ],
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/health",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/health",
+          "method": "DELETE"
+        },
+        {
+          "path": "/health",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items/2",
+          "method": "POST"
+        },
+        {
+          "path": "/items",
+          "method": "POST"
+        },
+        {
+          "path": "/health",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET",
+          "DELETE"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      }
+    ],
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        },
+        {
+          "id": 2,
+          "name": "item-2"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items/4",
+          "method": "GET"
+        },
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items/8",
+          "method": "GET"
+        },
+        {
+          "path": "/items/9",
+          "method": "GET"
+        },
+        {
+          "path": "/bad",
+          "method": "POST"
+        },
+        {
+          "path": "/health",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "POST"
+        },
+        {
+          "path": "/items/7",
+          "method": "POST"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/health",
+          "method": "DELETE"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET",
+          "DELETE"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          },
+          {
+            "id": 2,
+            "name": "item-2"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      }
+    ],
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        },
+        {
+          "id": 2,
+          "name": "item-2"
+        },
+        {
+          "id": 3,
+          "name": "item-3"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/items/2",
+          "method": "GET"
+        },
+        {
+          "path": "/items/5",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "POST"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "POST"
+        },
+        {
+          "path": "/health",
+          "method": "POST"
+        },
+        {
+          "path": "/health",
+          "method": "GET"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "POST"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          },
+          {
+            "id": 2,
+            "name": "item-2"
+          },
+          {
+            "id": 3,
+            "name": "item-3"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          },
+          {
+            "id": 2,
+            "name": "item-2"
+          },
+          {
+            "id": 3,
+            "name": "item-3"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "body": {
+          "id": 2,
+          "name": "item-2"
+        },
+        "status": 200
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          },
+          {
+            "id": 2,
+            "name": "item-2"
+          },
+          {
+            "id": 3,
+            "name": "item-3"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "status": "ok"
+        },
+        "status": 200
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      }
+    ],
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        },
+        {
+          "id": 2,
+          "name": "item-2"
+        },
+        {
+          "id": 3,
+          "name": "item-3"
+        },
+        {
+          "id": 4,
+          "name": "item-4"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items/4",
+          "method": "POST"
+        },
+        {
+          "path": "/health",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "POST"
+        },
+        {
+          "path": "/health",
+          "method": "POST"
+        },
+        {
+          "path": "/items/6",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items/2",
+          "method": "POST"
+        },
+        {
+          "path": "/health",
+          "method": "GET"
+        },
+        {
+          "path": "/bad",
+          "method": "POST"
+        },
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allow": [
+          "GET",
+          "DELETE"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "status": "ok"
+        },
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          },
+          {
+            "id": 2,
+            "name": "item-2"
+          },
+          {
+            "id": 3,
+            "name": "item-3"
+          },
+          {
+            "id": 4,
+            "name": "item-4"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET",
+          "DELETE"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "status": "ok"
+        },
+        "status": 200
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      }
+    ],
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        },
+        {
+          "id": 2,
+          "name": "item-2"
+        },
+        {
+          "id": 3,
+          "name": "item-3"
+        },
+        {
+          "id": 4,
+          "name": "item-4"
+        },
+        {
+          "id": 5,
+          "name": "item-5"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/items/4",
+          "method": "POST"
+        },
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/health",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "POST"
+        },
+        {
+          "path": "/items",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        },
+        {
+          "path": "/health",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          },
+          {
+            "id": 2,
+            "name": "item-2"
+          },
+          {
+            "id": 3,
+            "name": "item-3"
+          },
+          {
+            "id": 4,
+            "name": "item-4"
+          },
+          {
+            "id": 5,
+            "name": "item-5"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET",
+          "DELETE"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "status": "ok"
+        },
+        "status": 200
+      }
+    ],
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        },
+        {
+          "id": 2,
+          "name": "item-2"
+        },
+        {
+          "id": 3,
+          "name": "item-3"
+        },
+        {
+          "id": 4,
+          "name": "item-4"
+        },
+        {
+          "id": 5,
+          "name": "item-5"
+        },
+        {
+          "id": 6,
+          "name": "item-6"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/items/9",
+          "method": "POST"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/items/6",
+          "method": "POST"
+        },
+        {
+          "path": "/items/4",
+          "method": "GET"
+        },
+        {
+          "path": "/items/1",
+          "method": "POST"
+        },
+        {
+          "path": "/items",
+          "method": "POST"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "POST"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          },
+          {
+            "id": 2,
+            "name": "item-2"
+          },
+          {
+            "id": 3,
+            "name": "item-3"
+          },
+          {
+            "id": 4,
+            "name": "item-4"
+          },
+          {
+            "id": 5,
+            "name": "item-5"
+          },
+          {
+            "id": 6,
+            "name": "item-6"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          },
+          {
+            "id": 2,
+            "name": "item-2"
+          },
+          {
+            "id": 3,
+            "name": "item-3"
+          },
+          {
+            "id": 4,
+            "name": "item-4"
+          },
+          {
+            "id": 5,
+            "name": "item-5"
+          },
+          {
+            "id": 6,
+            "name": "item-6"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET",
+          "DELETE"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET",
+          "DELETE"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "id": 4,
+          "name": "item-4"
+        },
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET",
+          "DELETE"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          },
+          {
+            "id": 2,
+            "name": "item-2"
+          },
+          {
+            "id": 3,
+            "name": "item-3"
+          },
+          {
+            "id": 4,
+            "name": "item-4"
+          },
+          {
+            "id": 5,
+            "name": "item-5"
+          },
+          {
+            "id": 6,
+            "name": "item-6"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      }
+    ],
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "items": [],
+      "requests": [
+        {
+          "path": "/items",
+          "method": "POST"
+        },
+        {
+          "path": "/items/7",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/items/6",
+          "method": "GET"
+        },
+        {
+          "path": "/health",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "DELETE"
+        },
+        {
+          "path": "/health",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "POST"
+        },
+        {
+          "path": "/health",
+          "method": "DELETE"
+        },
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/health",
+          "method": "POST"
+        },
+        {
+          "path": "/health",
+          "method": "DELETE"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": [],
+        "status": 200
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": [],
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": [],
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      }
+    ],
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "items": [
+        {
+          "id": 1,
+          "name": "item-1"
+        }
+      ],
+      "requests": [
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/bad",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items/3",
+          "method": "DELETE"
+        },
+        {
+          "path": "/health",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "POST"
+        },
+        {
+          "path": "/items",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items/5",
+          "method": "GET"
+        },
+        {
+          "path": "/health",
+          "method": "POST"
+        },
+        {
+          "path": "/items/8",
+          "method": "POST"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items/9",
+          "method": "DELETE"
+        },
+        {
+          "path": "/items",
+          "method": "POST"
+        },
+        {
+          "path": "/bad",
+          "method": "GET"
+        },
+        {
+          "path": "/items",
+          "method": "GET"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": {
+          "status": "ok"
+        },
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "allow": [
+          "GET",
+          "DELETE"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          }
+        ],
+        "status": 200
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "allow": [
+          "GET"
+        ],
+        "body": {
+          "error": "method_not_allowed"
+        },
+        "status": 405
+      },
+      {
+        "body": {
+          "error": "not_found"
+        },
+        "status": 404
+      },
+      {
+        "body": [
+          {
+            "id": 1,
+            "name": "item-1"
+          }
+        ],
+        "status": 200
+      }
+    ],
+    "label": "additional-16"
+  }
+]

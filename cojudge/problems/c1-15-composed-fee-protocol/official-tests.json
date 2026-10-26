@@ -1,0 +1,77 @@
+[
+  {
+    "payload": "{\"amounts\":[0,10],\"policy\":{\"cents\":3,\"kind\":\"flat\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[100,200,1],\"policy\":{\"bps\":250,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[],\"policy\":{\"bps\":10,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[0,5],\"policy\":{\"cents\":0,\"kind\":\"flat\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[0,1000000],\"policy\":{\"bps\":0,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[1,99],\"policy\":{\"bps\":10000,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[1,9999,10000,10001],\"policy\":{\"bps\":1,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[0,1],\"policy\":{\"bps\":9999,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[3,3,3],\"policy\":{\"cents\":2,\"kind\":\"flat\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[1,2,3],\"policy\":{\"bps\":5000,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[1000000000000],\"policy\":{\"bps\":123,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[1000000000000],\"policy\":{\"cents\":1000000000000,\"kind\":\"flat\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[],\"policy\":{\"cents\":7,\"kind\":\"flat\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[0,10000,10000,1],\"policy\":{\"bps\":1,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[1,9999,10001,101],\"policy\":{\"bps\":138,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[2,9998,10002,201],\"policy\":{\"bps\":275,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[3,9997,10003,301],\"policy\":{\"bps\":412,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[4,9996,10004,401],\"policy\":{\"bps\":549,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[5,9995,10005,501],\"policy\":{\"bps\":686,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[6,9994,10006,601],\"policy\":{\"bps\":823,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[7,9993,10007,701],\"policy\":{\"bps\":960,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[8,9992,10008,801],\"policy\":{\"bps\":1097,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[9,9991,10009,901],\"policy\":{\"bps\":1234,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[10,9990,10010,1001],\"policy\":{\"bps\":1371,\"kind\":\"rate\"}}"
+  },
+  {
+    "payload": "{\"amounts\":[11,9989,10011,1101],\"policy\":{\"bps\":1508,\"kind\":\"rate\"}}"
+  }
+]

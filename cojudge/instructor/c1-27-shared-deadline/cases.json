@@ -1,0 +1,994 @@
+[
+  {
+    "input": {
+      "budget": 10,
+      "steps": [
+        {
+          "duration": 4,
+          "timeout": 10,
+          "outcome": "ok"
+        },
+        {
+          "duration": 7,
+          "timeout": 10,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "result": "deadline",
+      "elapsed": 10,
+      "completed": 1,
+      "started": 2
+    },
+    "label": "second step gets only remaining budget"
+  },
+  {
+    "input": {
+      "budget": 20,
+      "steps": [
+        {
+          "duration": 8,
+          "timeout": 5,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "result": "timeout",
+      "elapsed": 5,
+      "completed": 0,
+      "started": 1
+    },
+    "label": "per-step timeout can expire first"
+  },
+  {
+    "input": {
+      "budget": 10,
+      "steps": [
+        {
+          "duration": 10,
+          "timeout": 10,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "result": "success",
+      "elapsed": 10,
+      "completed": 1,
+      "started": 1
+    },
+    "label": "completion at deadline succeeds"
+  },
+  {
+    "input": {
+      "budget": 0,
+      "steps": []
+    },
+    "expected": {
+      "result": "success",
+      "elapsed": 0,
+      "completed": 0,
+      "started": 0
+    },
+    "label": "no work needs no time"
+  },
+  {
+    "input": {
+      "budget": 0,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 10,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "result": "deadline",
+      "elapsed": 0,
+      "completed": 0,
+      "started": 0
+    },
+    "label": "no step starts without budget"
+  },
+  {
+    "input": {
+      "budget": 1,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 10,
+          "outcome": "ok"
+        },
+        {
+          "duration": 0,
+          "timeout": 10,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "result": "success",
+      "elapsed": 0,
+      "completed": 2,
+      "started": 2
+    },
+    "label": "zero-duration work"
+  },
+  {
+    "input": {
+      "budget": 10,
+      "steps": [
+        {
+          "duration": 3,
+          "timeout": 10,
+          "outcome": "error"
+        },
+        {
+          "duration": 1,
+          "timeout": 10,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "result": "error",
+      "elapsed": 3,
+      "completed": 0,
+      "started": 1
+    },
+    "label": "upstream error stops sequence"
+  },
+  {
+    "input": {
+      "budget": 5,
+      "steps": [
+        {
+          "duration": 9,
+          "timeout": 5,
+          "outcome": "error"
+        }
+      ]
+    },
+    "expected": {
+      "result": "deadline",
+      "elapsed": 5,
+      "completed": 0,
+      "started": 1
+    },
+    "label": "unobserved error loses to time limit"
+  },
+  {
+    "input": {
+      "budget": 10,
+      "steps": [
+        {
+          "duration": 5,
+          "timeout": 5,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "result": "success",
+      "elapsed": 5,
+      "completed": 1,
+      "started": 1
+    },
+    "label": "completion at per-step timeout"
+  },
+  {
+    "input": {
+      "budget": 5,
+      "steps": [
+        {
+          "duration": 5,
+          "timeout": 10,
+          "outcome": "ok"
+        },
+        {
+          "duration": 0,
+          "timeout": 10,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "result": "deadline",
+      "elapsed": 5,
+      "completed": 1,
+      "started": 1
+    },
+    "label": "later zero-time step still needs start budget"
+  },
+  {
+    "input": {
+      "budget": 10,
+      "steps": [
+        {
+          "duration": 2,
+          "timeout": 10,
+          "outcome": "ok"
+        },
+        {
+          "duration": 3,
+          "timeout": 10,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "result": "success",
+      "elapsed": 5,
+      "completed": 2,
+      "started": 2
+    },
+    "label": "successful sequence"
+  },
+  {
+    "input": {
+      "budget": 10,
+      "steps": [
+        {
+          "duration": 2,
+          "timeout": 10,
+          "outcome": "ok"
+        },
+        {
+          "duration": 8,
+          "timeout": 3,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "result": "timeout",
+      "elapsed": 5,
+      "completed": 1,
+      "started": 2
+    },
+    "label": "elapsed includes failed wait"
+  },
+  {
+    "input": {
+      "budget": 10,
+      "steps": [
+        {
+          "duration": 10,
+          "timeout": 10,
+          "outcome": "error"
+        }
+      ]
+    },
+    "expected": {
+      "result": "error",
+      "elapsed": 10,
+      "completed": 0,
+      "started": 1
+    },
+    "label": "error observed exactly at deadline"
+  },
+  {
+    "input": {
+      "budget": 1,
+      "steps": [
+        {
+          "duration": 2,
+          "timeout": 10,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "result": "deadline",
+      "elapsed": 1,
+      "completed": 0,
+      "started": 1
+    },
+    "label": "small shared budget"
+  },
+  {
+    "input": {
+      "budget": 0,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 1,
+          "outcome": "error"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 0,
+      "elapsed": 0,
+      "result": "deadline",
+      "started": 0
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "budget": 1,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 2,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 3,
+          "outcome": "error"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 1,
+      "elapsed": 1,
+      "result": "error",
+      "started": 2
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "budget": 2,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 3,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 4,
+          "outcome": "ok"
+        },
+        {
+          "duration": 2,
+          "timeout": 5,
+          "outcome": "error"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 2,
+      "elapsed": 2,
+      "result": "deadline",
+      "started": 3
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "budget": 3,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 4,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 5,
+          "outcome": "ok"
+        },
+        {
+          "duration": 2,
+          "timeout": 6,
+          "outcome": "ok"
+        },
+        {
+          "duration": 3,
+          "timeout": 7,
+          "outcome": "error"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 3,
+      "elapsed": 3,
+      "result": "deadline",
+      "started": 3
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "budget": 4,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 5,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 6,
+          "outcome": "ok"
+        },
+        {
+          "duration": 2,
+          "timeout": 7,
+          "outcome": "ok"
+        },
+        {
+          "duration": 3,
+          "timeout": 8,
+          "outcome": "ok"
+        },
+        {
+          "duration": 4,
+          "timeout": 1,
+          "outcome": "error"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 3,
+      "elapsed": 4,
+      "result": "deadline",
+      "started": 4
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "budget": 5,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 6,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 7,
+          "outcome": "ok"
+        },
+        {
+          "duration": 2,
+          "timeout": 8,
+          "outcome": "ok"
+        },
+        {
+          "duration": 3,
+          "timeout": 1,
+          "outcome": "ok"
+        },
+        {
+          "duration": 4,
+          "timeout": 2,
+          "outcome": "ok"
+        },
+        {
+          "duration": 5,
+          "timeout": 3,
+          "outcome": "error"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 3,
+      "elapsed": 4,
+      "result": "timeout",
+      "started": 4
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "budget": 6,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 7,
+          "outcome": "error"
+        },
+        {
+          "duration": 1,
+          "timeout": 8,
+          "outcome": "ok"
+        },
+        {
+          "duration": 2,
+          "timeout": 1,
+          "outcome": "ok"
+        },
+        {
+          "duration": 3,
+          "timeout": 2,
+          "outcome": "ok"
+        },
+        {
+          "duration": 4,
+          "timeout": 3,
+          "outcome": "ok"
+        },
+        {
+          "duration": 5,
+          "timeout": 4,
+          "outcome": "ok"
+        },
+        {
+          "duration": 6,
+          "timeout": 5,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 0,
+      "elapsed": 0,
+      "result": "error",
+      "started": 1
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "budget": 7,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 8,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 1,
+          "outcome": "error"
+        },
+        {
+          "duration": 2,
+          "timeout": 2,
+          "outcome": "ok"
+        },
+        {
+          "duration": 3,
+          "timeout": 3,
+          "outcome": "ok"
+        },
+        {
+          "duration": 4,
+          "timeout": 4,
+          "outcome": "ok"
+        },
+        {
+          "duration": 5,
+          "timeout": 5,
+          "outcome": "ok"
+        },
+        {
+          "duration": 6,
+          "timeout": 6,
+          "outcome": "ok"
+        },
+        {
+          "duration": 0,
+          "timeout": 7,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 1,
+      "elapsed": 1,
+      "result": "error",
+      "started": 2
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "budget": 8,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 1,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 2,
+          "outcome": "ok"
+        },
+        {
+          "duration": 2,
+          "timeout": 3,
+          "outcome": "error"
+        },
+        {
+          "duration": 3,
+          "timeout": 4,
+          "outcome": "ok"
+        },
+        {
+          "duration": 4,
+          "timeout": 5,
+          "outcome": "ok"
+        },
+        {
+          "duration": 5,
+          "timeout": 6,
+          "outcome": "ok"
+        },
+        {
+          "duration": 6,
+          "timeout": 7,
+          "outcome": "ok"
+        },
+        {
+          "duration": 0,
+          "timeout": 8,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 1,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 2,
+      "elapsed": 3,
+      "result": "error",
+      "started": 3
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "budget": 9,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 2,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 1,
+      "elapsed": 0,
+      "result": "success",
+      "started": 1
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "budget": 10,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 3,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 4,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 2,
+      "elapsed": 1,
+      "result": "success",
+      "started": 2
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "budget": 11,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 4,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 5,
+          "outcome": "ok"
+        },
+        {
+          "duration": 2,
+          "timeout": 6,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 3,
+      "elapsed": 3,
+      "result": "success",
+      "started": 3
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "budget": 12,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 5,
+          "outcome": "error"
+        },
+        {
+          "duration": 1,
+          "timeout": 6,
+          "outcome": "ok"
+        },
+        {
+          "duration": 2,
+          "timeout": 7,
+          "outcome": "ok"
+        },
+        {
+          "duration": 3,
+          "timeout": 8,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 0,
+      "elapsed": 0,
+      "result": "error",
+      "started": 1
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "budget": 13,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 6,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 7,
+          "outcome": "error"
+        },
+        {
+          "duration": 2,
+          "timeout": 8,
+          "outcome": "ok"
+        },
+        {
+          "duration": 3,
+          "timeout": 1,
+          "outcome": "ok"
+        },
+        {
+          "duration": 4,
+          "timeout": 2,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 1,
+      "elapsed": 1,
+      "result": "error",
+      "started": 2
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "budget": 14,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 7,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 8,
+          "outcome": "ok"
+        },
+        {
+          "duration": 2,
+          "timeout": 1,
+          "outcome": "error"
+        },
+        {
+          "duration": 3,
+          "timeout": 2,
+          "outcome": "ok"
+        },
+        {
+          "duration": 4,
+          "timeout": 3,
+          "outcome": "ok"
+        },
+        {
+          "duration": 5,
+          "timeout": 4,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 2,
+      "elapsed": 2,
+      "result": "timeout",
+      "started": 3
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "budget": 15,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 8,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 1,
+          "outcome": "ok"
+        },
+        {
+          "duration": 2,
+          "timeout": 2,
+          "outcome": "ok"
+        },
+        {
+          "duration": 3,
+          "timeout": 3,
+          "outcome": "error"
+        },
+        {
+          "duration": 4,
+          "timeout": 4,
+          "outcome": "ok"
+        },
+        {
+          "duration": 5,
+          "timeout": 5,
+          "outcome": "ok"
+        },
+        {
+          "duration": 6,
+          "timeout": 6,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 3,
+      "elapsed": 6,
+      "result": "error",
+      "started": 4
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "budget": 16,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 1,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 2,
+          "outcome": "ok"
+        },
+        {
+          "duration": 2,
+          "timeout": 3,
+          "outcome": "ok"
+        },
+        {
+          "duration": 3,
+          "timeout": 4,
+          "outcome": "ok"
+        },
+        {
+          "duration": 4,
+          "timeout": 5,
+          "outcome": "error"
+        },
+        {
+          "duration": 5,
+          "timeout": 6,
+          "outcome": "ok"
+        },
+        {
+          "duration": 6,
+          "timeout": 7,
+          "outcome": "ok"
+        },
+        {
+          "duration": 0,
+          "timeout": 8,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 4,
+      "elapsed": 10,
+      "result": "error",
+      "started": 5
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "budget": 17,
+      "steps": [
+        {
+          "duration": 0,
+          "timeout": 2,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 3,
+          "outcome": "ok"
+        },
+        {
+          "duration": 2,
+          "timeout": 4,
+          "outcome": "ok"
+        },
+        {
+          "duration": 3,
+          "timeout": 5,
+          "outcome": "ok"
+        },
+        {
+          "duration": 4,
+          "timeout": 6,
+          "outcome": "ok"
+        },
+        {
+          "duration": 5,
+          "timeout": 7,
+          "outcome": "error"
+        },
+        {
+          "duration": 6,
+          "timeout": 8,
+          "outcome": "ok"
+        },
+        {
+          "duration": 0,
+          "timeout": 1,
+          "outcome": "ok"
+        },
+        {
+          "duration": 1,
+          "timeout": 2,
+          "outcome": "ok"
+        }
+      ]
+    },
+    "expected": {
+      "completed": 5,
+      "elapsed": 15,
+      "result": "error",
+      "started": 6
+    },
+    "label": "additional-18"
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "name": "exclude exact minimum",
+    "detected_by": [
+      2,
+      8,
+      13,
+      16
+    ]
+  }
+]

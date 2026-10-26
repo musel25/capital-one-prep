@@ -1,0 +1,50 @@
+{
+  "id": "c1-22-body-validation",
+  "title": "22. Validate a request body",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "03-apis-and-clients",
+  "examples": [
+    {
+      "input": "{\"bodies\": [{\"account\": \"acct_1\", \"amount\": 25}]}",
+      "output": "[{\"status\": 201, \"body\": {\"account\": \"acct_1\", \"amount\": 25, \"note\": null}}]",
+      "explanation": "valid body gets default null note"
+    },
+    {
+      "input": "{\"bodies\": [{\"account\": \"A\", \"amount\": 0, \"note\": false, \"extra\": 1}]}",
+      "output": "[{\"status\": 422, \"errors\": [\"account\", \"amount\", \"note\", \"unknown\"]}]",
+      "explanation": "all field errors have fixed order"
+    },
+    {
+      "input": "{\"bodies\": [null]}",
+      "output": "[{\"status\": 400, \"errors\": [\"body\"]}]",
+      "explanation": "JSON null is not an object"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> list:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"bodies\":[{\"account\":\"acct_1\",\"amount\":25}]}"
+    },
+    {
+      "payload": "{\"bodies\":[{\"account\":\"A\",\"amount\":0,\"extra\":1,\"note\":false}]}"
+    },
+    {
+      "payload": "{\"bodies\":[null]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Check body shape before reading fields.",
+    "Use type(value) is int to exclude booleans."
+  ]
+}

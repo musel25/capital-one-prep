@@ -1,0 +1,4353 @@
+[
+  {
+    "input": {
+      "capacity": 2,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": 1
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 2
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 3
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null,
+        null,
+        "a"
+      ],
+      "entries": [
+        [
+          "b",
+          2
+        ],
+        [
+          "c",
+          3
+        ]
+      ]
+    },
+    "label": "evict oldest use"
+  },
+  {
+    "input": {
+      "capacity": 2,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": 1
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 2
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 3
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null,
+        null,
+        1,
+        "b"
+      ],
+      "entries": [
+        [
+          "a",
+          1
+        ],
+        [
+          "c",
+          3
+        ]
+      ]
+    },
+    "label": "read refreshes recency"
+  },
+  {
+    "input": {
+      "capacity": 2,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": 1
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 2
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 9
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null,
+        null,
+        null
+      ],
+      "entries": [
+        [
+          "b",
+          2
+        ],
+        [
+          "a",
+          9
+        ]
+      ]
+    },
+    "label": "overwrite refreshes recency"
+  },
+  {
+    "input": {
+      "capacity": 0,
+      "ops": []
+    },
+    "expected": {
+      "results": [],
+      "entries": []
+    },
+    "label": "empty zero capacity"
+  },
+  {
+    "input": {
+      "capacity": 0,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "a",
+        null
+      ],
+      "entries": []
+    },
+    "label": "zero capacity evicts inserted key"
+  },
+  {
+    "input": {
+      "capacity": 1,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": 1
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 2
+        },
+        {
+          "op": "get",
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null,
+        "a",
+        null
+      ],
+      "entries": [
+        [
+          "b",
+          2
+        ]
+      ]
+    },
+    "label": "capacity one"
+  },
+  {
+    "input": {
+      "capacity": 2,
+      "ops": [
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null,
+        false
+      ],
+      "entries": []
+    },
+    "label": "missing read and delete"
+  },
+  {
+    "input": {
+      "capacity": 2,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null,
+        0
+      ],
+      "entries": [
+        [
+          "a",
+          0
+        ]
+      ]
+    },
+    "label": "zero is present"
+  },
+  {
+    "input": {
+      "capacity": 2,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": 1
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 2
+        },
+        {
+          "op": "get",
+          "key": "z"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 3
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null,
+        null,
+        null,
+        "a"
+      ],
+      "entries": [
+        [
+          "b",
+          2
+        ],
+        [
+          "c",
+          3
+        ]
+      ]
+    },
+    "label": "miss does not change recency"
+  },
+  {
+    "input": {
+      "capacity": 2,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": 1
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null,
+        true,
+        false
+      ],
+      "entries": []
+    },
+    "label": "delete is idempotent"
+  },
+  {
+    "input": {
+      "capacity": 2,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": 1
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 2
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 3
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null,
+        null,
+        true,
+        null
+      ],
+      "entries": [
+        [
+          "b",
+          2
+        ],
+        [
+          "c",
+          3
+        ]
+      ]
+    },
+    "label": "delete frees capacity"
+  },
+  {
+    "input": {
+      "capacity": 1,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": 1
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 2
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 3
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null,
+        null,
+        null
+      ],
+      "entries": [
+        [
+          "a",
+          3
+        ]
+      ]
+    },
+    "label": "repeated overwrite does not evict"
+  },
+  {
+    "input": {
+      "capacity": 3,
+      "ops": [
+        {
+          "op": "put",
+          "key": "c",
+          "value": 3
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 2
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "c"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        null,
+        null,
+        null,
+        3
+      ],
+      "entries": [
+        [
+          "b",
+          2
+        ],
+        [
+          "a",
+          1
+        ],
+        [
+          "c",
+          3
+        ]
+      ]
+    },
+    "label": "order is recency rather than key order"
+  },
+  {
+    "input": {
+      "capacity": 0,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": -9
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -9
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [],
+      "results": [
+        "a",
+        null,
+        false,
+        "b",
+        null,
+        false,
+        "a",
+        null,
+        false,
+        "a",
+        null,
+        false,
+        "e",
+        null,
+        false
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "capacity": 1,
+      "ops": [
+        {
+          "op": "put",
+          "key": "e",
+          "value": 4
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -1
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -6
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -1
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "e",
+          -1
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        "e",
+        null,
+        false,
+        "d",
+        null,
+        false,
+        "b",
+        null,
+        false,
+        "d"
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "capacity": 2,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": 5
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 2
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -8
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 5
+        },
+        {
+          "op": "get",
+          "key": "c"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "a",
+          -2
+        ],
+        [
+          "c",
+          5
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        true,
+        null,
+        null,
+        false,
+        null,
+        2,
+        false,
+        "d",
+        null,
+        false,
+        null,
+        -2,
+        false,
+        "e",
+        5
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "capacity": 3,
+      "ops": [
+        {
+          "op": "put",
+          "key": "b",
+          "value": 2
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -1
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -8
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 3
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "d",
+          -1
+        ],
+        [
+          "e",
+          -2
+        ],
+        [
+          "c",
+          3
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        true,
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        -2,
+        false,
+        null,
+        null,
+        false,
+        null,
+        3,
+        false
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "capacity": 4,
+      "ops": [
+        {
+          "op": "put",
+          "key": "b",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 3
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -1
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 3
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 7
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -6
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "e",
+          3
+        ],
+        [
+          "c",
+          -5
+        ],
+        [
+          "b",
+          7
+        ],
+        [
+          "a",
+          -6
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        true,
+        null,
+        3,
+        false,
+        null,
+        null,
+        false,
+        null,
+        -1,
+        true,
+        null,
+        -5,
+        false,
+        null,
+        null,
+        false,
+        null
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "capacity": 5,
+      "ops": [
+        {
+          "op": "put",
+          "key": "b",
+          "value": -4
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 3
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 7
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -6
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -6
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 5
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -4
+        },
+        {
+          "op": "get",
+          "key": "e"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "b",
+          5
+        ],
+        [
+          "a",
+          -6
+        ],
+        [
+          "e",
+          -4
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        -6,
+        true,
+        null,
+        -6,
+        true,
+        null,
+        -4
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "capacity": 0,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 7
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 6
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [],
+      "results": [
+        "a",
+        null,
+        false,
+        "b",
+        null,
+        false,
+        "e",
+        null,
+        false,
+        "c",
+        null,
+        false,
+        "c",
+        null,
+        false,
+        "b",
+        null,
+        false,
+        "d",
+        null,
+        false
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "capacity": 1,
+      "ops": [
+        {
+          "op": "put",
+          "key": "b",
+          "value": 6
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 7
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 8
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 2
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -6
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -7
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "a",
+          -7
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        true,
+        null,
+        null,
+        false,
+        "c",
+        8,
+        false,
+        "b",
+        2,
+        false,
+        null,
+        null,
+        false,
+        "d",
+        1,
+        false,
+        "a",
+        -2,
+        false,
+        "e"
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "capacity": 2,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 6
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 6
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -6
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 4
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -8
+        },
+        {
+          "op": "get",
+          "key": "d"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "a",
+          -8
+        ],
+        [
+          "d",
+          4
+        ]
+      ],
+      "results": [
+        null,
+        -2,
+        true,
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        null,
+        true,
+        null,
+        null,
+        true,
+        null,
+        4,
+        true,
+        null,
+        4
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "capacity": 3,
+      "ops": [
+        {
+          "op": "put",
+          "key": "c",
+          "value": -6
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 8
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -4
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -8
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 6
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -4
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "b",
+          -7
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        false,
+        null,
+        null,
+        true,
+        null,
+        -6,
+        true,
+        null,
+        null,
+        false,
+        null,
+        null,
+        true,
+        null,
+        -7,
+        false,
+        "c",
+        -7,
+        true,
+        null,
+        null,
+        true
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "capacity": 4,
+      "ops": [
+        {
+          "op": "put",
+          "key": "d",
+          "value": -1
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 8
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 8
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -8
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 7
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 9
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "e",
+          -7
+        ],
+        [
+          "b",
+          0
+        ],
+        [
+          "a",
+          9
+        ]
+      ],
+      "results": [
+        null,
+        -1,
+        false,
+        null,
+        8,
+        false,
+        null,
+        0,
+        false,
+        null,
+        null,
+        false,
+        null,
+        8,
+        true,
+        null,
+        0,
+        true,
+        null,
+        0,
+        false,
+        null,
+        0,
+        false,
+        null
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "capacity": 5,
+      "ops": [
+        {
+          "op": "put",
+          "key": "b",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 7
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -3
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 2
+        },
+        {
+          "op": "get",
+          "key": "a"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "e",
+          -3
+        ],
+        [
+          "b",
+          2
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        false,
+        null,
+        null,
+        true,
+        null,
+        null,
+        false,
+        null,
+        1,
+        false,
+        null,
+        null,
+        true,
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        -3,
+        true,
+        null,
+        null
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "capacity": 0,
+      "ops": [
+        {
+          "op": "put",
+          "key": "b",
+          "value": 2
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 8
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -9
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 8
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -3
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 7
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -9
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [],
+      "results": [
+        "b",
+        null,
+        false,
+        "d",
+        null,
+        false,
+        "e",
+        null,
+        false,
+        "a",
+        null,
+        false,
+        "a",
+        null,
+        false,
+        "c",
+        null,
+        false,
+        "c",
+        null,
+        false,
+        "a",
+        null,
+        false,
+        "a",
+        null,
+        false
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "capacity": 1,
+      "ops": [
+        {
+          "op": "put",
+          "key": "c",
+          "value": -4
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 8
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -8
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -6
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 4
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 4
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "c",
+          4
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        false,
+        "c",
+        null,
+        false,
+        "d",
+        null,
+        true,
+        null,
+        null,
+        false,
+        "c",
+        null,
+        false,
+        "d",
+        -8,
+        false,
+        "c",
+        null,
+        false,
+        "b",
+        null,
+        false,
+        "d",
+        null,
+        true,
+        null
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "capacity": 2,
+      "ops": [
+        {
+          "op": "put",
+          "key": "b",
+          "value": -1
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -8
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 5
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 2
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -4
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -6
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "d"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "e",
+          1
+        ],
+        [
+          "c",
+          1
+        ]
+      ],
+      "results": [
+        null,
+        -1,
+        false,
+        null,
+        -8,
+        true,
+        null,
+        null,
+        false,
+        null,
+        null,
+        true,
+        null,
+        null,
+        false,
+        null,
+        null,
+        true,
+        null,
+        null,
+        false,
+        null,
+        1,
+        true,
+        null,
+        1,
+        false,
+        "a",
+        null
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "capacity": 3,
+      "ops": [
+        {
+          "op": "put",
+          "key": "e",
+          "value": 7
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -3
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -9
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 2
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 4
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -9
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "e",
+          -9
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        -3,
+        true,
+        null,
+        -9,
+        false,
+        null,
+        null,
+        true,
+        null,
+        -9,
+        false,
+        null,
+        0,
+        true,
+        null,
+        0,
+        true,
+        null,
+        null,
+        true,
+        null,
+        null,
+        false
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "capacity": 4,
+      "ops": [
+        {
+          "op": "put",
+          "key": "b",
+          "value": 4
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 5
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 7
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -3
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 5
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 3
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -2
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "b",
+          -5
+        ],
+        [
+          "d",
+          -2
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        null,
+        true,
+        null,
+        null,
+        false,
+        null,
+        null,
+        true,
+        null,
+        -3,
+        true,
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        5,
+        true,
+        null
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "capacity": 5,
+      "ops": [
+        {
+          "op": "put",
+          "key": "b",
+          "value": 7
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 5
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 4
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 6
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -1
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -1
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 8
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "d"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "e",
+          4
+        ],
+        [
+          "c",
+          8
+        ],
+        [
+          "b",
+          -2
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        -2,
+        true,
+        null,
+        null,
+        true,
+        null,
+        4,
+        false,
+        null,
+        null,
+        false,
+        null,
+        4,
+        false,
+        null,
+        null,
+        false,
+        null,
+        -2,
+        true,
+        null,
+        null,
+        true,
+        null,
+        null
+      ]
+    },
+    "label": "additional-18"
+  },
+  {
+    "input": {
+      "capacity": 0,
+      "ops": [
+        {
+          "op": "put",
+          "key": "b",
+          "value": -3
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -8
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 6
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 3
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 4
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 3
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [],
+      "results": [
+        "b",
+        null,
+        false,
+        "d",
+        null,
+        false,
+        "d",
+        null,
+        false,
+        "d",
+        null,
+        false,
+        "d",
+        null,
+        false,
+        "c",
+        null,
+        false,
+        "e",
+        null,
+        false,
+        "c",
+        null,
+        false,
+        "d",
+        null,
+        false,
+        "d",
+        null,
+        false,
+        "a",
+        null,
+        false
+      ]
+    },
+    "label": "additional-19"
+  },
+  {
+    "input": {
+      "capacity": 1,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -4
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -1
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 8
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -3
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 2
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -6
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "e",
+          -6
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        false,
+        "a",
+        null,
+        false,
+        null,
+        null,
+        true,
+        null,
+        null,
+        true,
+        null,
+        null,
+        true,
+        null,
+        8,
+        false,
+        "a",
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        -2,
+        false,
+        "b",
+        null,
+        false,
+        "a",
+        null,
+        false,
+        "c"
+      ]
+    },
+    "label": "additional-20"
+  },
+  {
+    "input": {
+      "capacity": 2,
+      "ops": [
+        {
+          "op": "put",
+          "key": "b",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -3
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -6
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 4
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -6
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -1
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 5
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "b"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "d",
+          5
+        ],
+        [
+          "c",
+          1
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        "b",
+        0,
+        false,
+        "d",
+        null,
+        false,
+        null,
+        9,
+        false,
+        "b",
+        null,
+        true,
+        null,
+        null,
+        false,
+        null,
+        -6,
+        false,
+        null,
+        -5,
+        false,
+        null,
+        -1,
+        true,
+        null,
+        5,
+        false,
+        null,
+        null
+      ]
+    },
+    "label": "additional-21"
+  },
+  {
+    "input": {
+      "capacity": 3,
+      "ops": [
+        {
+          "op": "put",
+          "key": "a",
+          "value": -1
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -9
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 6
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 8
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 8
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 5
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 7
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "e",
+          7
+        ],
+        [
+          "c",
+          9
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        false,
+        null,
+        null,
+        true,
+        null,
+        null,
+        true,
+        null,
+        6,
+        false,
+        null,
+        1,
+        false,
+        null,
+        -1,
+        false,
+        null,
+        -7,
+        false,
+        "c",
+        -7,
+        true,
+        null,
+        -1,
+        true,
+        null,
+        5,
+        true,
+        null,
+        9,
+        true,
+        null,
+        9,
+        false
+      ]
+    },
+    "label": "additional-22"
+  },
+  {
+    "input": {
+      "capacity": 4,
+      "ops": [
+        {
+          "op": "put",
+          "key": "e",
+          "value": 1
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -3
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": -4
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -1
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "e",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -9
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -8
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 9
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 5
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -1
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "d",
+          5
+        ],
+        [
+          "c",
+          -5
+        ],
+        [
+          "a",
+          -1
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        false,
+        null,
+        0,
+        false,
+        null,
+        0,
+        true,
+        null,
+        null,
+        false,
+        null,
+        -4,
+        true,
+        null,
+        null,
+        false,
+        null,
+        -2,
+        false,
+        null,
+        0,
+        false,
+        null,
+        null,
+        true,
+        null,
+        -1,
+        false,
+        null,
+        -5,
+        true,
+        null,
+        -5,
+        false,
+        null
+      ]
+    },
+    "label": "additional-23"
+  },
+  {
+    "input": {
+      "capacity": 5,
+      "ops": [
+        {
+          "op": "put",
+          "key": "d",
+          "value": -6
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "a"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": -5
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "c"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": -2
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "d"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 5
+        },
+        {
+          "op": "get",
+          "key": "c"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "e"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": -6
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": -7
+        },
+        {
+          "op": "get",
+          "key": "b"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "b",
+          "value": 8
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "a",
+          "value": 4
+        },
+        {
+          "op": "get",
+          "key": "d"
+        },
+        {
+          "op": "delete",
+          "key": "e"
+        },
+        {
+          "op": "put",
+          "key": "d",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "a"
+        },
+        {
+          "op": "delete",
+          "key": "b"
+        },
+        {
+          "op": "put",
+          "key": "c",
+          "value": 0
+        },
+        {
+          "op": "get",
+          "key": "d"
+        }
+      ]
+    },
+    "expected": {
+      "entries": [
+        [
+          "a",
+          4
+        ],
+        [
+          "c",
+          0
+        ],
+        [
+          "d",
+          0
+        ]
+      ],
+      "results": [
+        null,
+        null,
+        true,
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        -2,
+        false,
+        null,
+        null,
+        true,
+        null,
+        null,
+        false,
+        null,
+        null,
+        false,
+        null,
+        -5,
+        true,
+        null,
+        null,
+        false,
+        null,
+        -6,
+        true,
+        null,
+        0,
+        false,
+        null,
+        4,
+        false,
+        null,
+        0
+      ]
+    },
+    "label": "additional-24"
+  }
+]

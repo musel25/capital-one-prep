@@ -1,0 +1,1418 @@
+[
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 10
+        },
+        "tags": [
+          "base"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 2
+        },
+        {
+          "tag": "new"
+        }
+      ]
+    },
+    "expected": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 10
+        },
+        "tags": [
+          "base"
+        ]
+      },
+      "copies": [
+        {
+          "limits": {
+            "daily": 2,
+            "monthly": 10
+          },
+          "tags": [
+            "base"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 1,
+            "monthly": 10
+          },
+          "tags": [
+            "base",
+            "new"
+          ]
+        }
+      ]
+    },
+    "label": "copies and template stay independent"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 5,
+          "monthly": 50
+        },
+        "tags": []
+      },
+      "changes": [
+        {
+          "daily": 0,
+          "monthly": 0,
+          "tag": "x"
+        }
+      ]
+    },
+    "expected": {
+      "template": {
+        "limits": {
+          "daily": 5,
+          "monthly": 50
+        },
+        "tags": []
+      },
+      "copies": [
+        {
+          "limits": {
+            "daily": 0,
+            "monthly": 0
+          },
+          "tags": [
+            "x"
+          ]
+        }
+      ]
+    },
+    "label": "one change can update all fields"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 0,
+          "monthly": 0
+        },
+        "tags": []
+      },
+      "changes": []
+    },
+    "expected": {
+      "template": {
+        "limits": {
+          "daily": 0,
+          "monthly": 0
+        },
+        "tags": []
+      },
+      "copies": []
+    },
+    "label": "no requested copies"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 2
+        },
+        "tags": [
+          "a"
+        ]
+      },
+      "changes": [
+        {}
+      ]
+    },
+    "expected": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 2
+        },
+        "tags": [
+          "a"
+        ]
+      },
+      "copies": [
+        {
+          "limits": {
+            "daily": 1,
+            "monthly": 2
+          },
+          "tags": [
+            "a"
+          ]
+        }
+      ]
+    },
+    "label": "unchanged copy"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 2
+        },
+        "tags": [
+          "a"
+        ]
+      },
+      "changes": [
+        {
+          "tag": "a"
+        }
+      ]
+    },
+    "expected": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 2
+        },
+        "tags": [
+          "a"
+        ]
+      },
+      "copies": [
+        {
+          "limits": {
+            "daily": 1,
+            "monthly": 2
+          },
+          "tags": [
+            "a",
+            "a"
+          ]
+        }
+      ]
+    },
+    "label": "duplicate tag appended"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 2
+        },
+        "tags": []
+      },
+      "changes": [
+        {
+          "tag": ""
+        }
+      ]
+    },
+    "expected": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 2
+        },
+        "tags": []
+      },
+      "copies": [
+        {
+          "limits": {
+            "daily": 1,
+            "monthly": 2
+          },
+          "tags": [
+            ""
+          ]
+        }
+      ]
+    },
+    "label": "empty tag is present"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 2
+        },
+        "tags": []
+      },
+      "changes": [
+        {
+          "monthly": 9
+        }
+      ]
+    },
+    "expected": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 2
+        },
+        "tags": []
+      },
+      "copies": [
+        {
+          "limits": {
+            "daily": 1,
+            "monthly": 9
+          },
+          "tags": []
+        }
+      ]
+    },
+    "label": "monthly only"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 2
+        },
+        "tags": []
+      },
+      "changes": [
+        {
+          "daily": 3
+        },
+        {
+          "daily": 4
+        }
+      ]
+    },
+    "expected": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 2
+        },
+        "tags": []
+      },
+      "copies": [
+        {
+          "limits": {
+            "daily": 3,
+            "monthly": 2
+          },
+          "tags": []
+        },
+        {
+          "limits": {
+            "daily": 4,
+            "monthly": 2
+          },
+          "tags": []
+        }
+      ]
+    },
+    "label": "later copy cannot rewrite earlier copy"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 2
+        },
+        "tags": []
+      },
+      "changes": [
+        {
+          "tag": "x"
+        },
+        {
+          "tag": "y"
+        }
+      ]
+    },
+    "expected": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 2
+        },
+        "tags": []
+      },
+      "copies": [
+        {
+          "limits": {
+            "daily": 1,
+            "monthly": 2
+          },
+          "tags": [
+            "x"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 1,
+            "monthly": 2
+          },
+          "tags": [
+            "y"
+          ]
+        }
+      ]
+    },
+    "label": "tags do not accumulate across copies"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 0,
+          "monthly": 10
+        },
+        "tags": [
+          "x",
+          "y"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 0
+        }
+      ]
+    },
+    "expected": {
+      "template": {
+        "limits": {
+          "daily": 0,
+          "monthly": 10
+        },
+        "tags": [
+          "x",
+          "y"
+        ]
+      },
+      "copies": [
+        {
+          "limits": {
+            "daily": 0,
+            "monthly": 10
+          },
+          "tags": [
+            "x",
+            "y"
+          ]
+        }
+      ]
+    },
+    "label": "assign existing value"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 1000000,
+          "monthly": 1000000
+        },
+        "tags": []
+      },
+      "changes": [
+        {
+          "daily": 1
+        }
+      ]
+    },
+    "expected": {
+      "template": {
+        "limits": {
+          "daily": 1000000,
+          "monthly": 1000000
+        },
+        "tags": []
+      },
+      "copies": [
+        {
+          "limits": {
+            "daily": 1,
+            "monthly": 1000000
+          },
+          "tags": []
+        }
+      ]
+    },
+    "label": "large template values"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 2,
+          "monthly": 3
+        },
+        "tags": [
+          "\u96ea"
+        ]
+      },
+      "changes": [
+        {},
+        {
+          "tag": "\u6c34"
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "template": {
+        "limits": {
+          "daily": 2,
+          "monthly": 3
+        },
+        "tags": [
+          "\u96ea"
+        ]
+      },
+      "copies": [
+        {
+          "limits": {
+            "daily": 2,
+            "monthly": 3
+          },
+          "tags": [
+            "\u96ea"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 2,
+            "monthly": 3
+          },
+          "tags": [
+            "\u96ea",
+            "\u6c34"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 2,
+            "monthly": 3
+          },
+          "tags": [
+            "\u96ea"
+          ]
+        }
+      ]
+    },
+    "label": "unchanged copies surround mutation"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 0,
+          "monthly": 0
+        },
+        "tags": [
+          "t0"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 1
+        },
+        {
+          "tag": "0"
+        },
+        {
+          "monthly": 0
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "copies": [
+        {
+          "limits": {
+            "daily": 1,
+            "monthly": 0
+          },
+          "tags": [
+            "t0"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 0,
+            "monthly": 0
+          },
+          "tags": [
+            "t0",
+            "0"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 0,
+            "monthly": 0
+          },
+          "tags": [
+            "t0"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 0,
+            "monthly": 0
+          },
+          "tags": [
+            "t0"
+          ]
+        }
+      ],
+      "template": {
+        "limits": {
+          "daily": 0,
+          "monthly": 0
+        },
+        "tags": [
+          "t0"
+        ]
+      }
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 10
+        },
+        "tags": [
+          "t1"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 2
+        },
+        {
+          "tag": "1"
+        },
+        {
+          "monthly": 0
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "copies": [
+        {
+          "limits": {
+            "daily": 2,
+            "monthly": 10
+          },
+          "tags": [
+            "t1"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 1,
+            "monthly": 10
+          },
+          "tags": [
+            "t1",
+            "1"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 1,
+            "monthly": 0
+          },
+          "tags": [
+            "t1"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 1,
+            "monthly": 10
+          },
+          "tags": [
+            "t1"
+          ]
+        }
+      ],
+      "template": {
+        "limits": {
+          "daily": 1,
+          "monthly": 10
+        },
+        "tags": [
+          "t1"
+        ]
+      }
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 2,
+          "monthly": 20
+        },
+        "tags": [
+          "t2"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 3
+        },
+        {
+          "tag": "2"
+        },
+        {
+          "monthly": 0
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "copies": [
+        {
+          "limits": {
+            "daily": 3,
+            "monthly": 20
+          },
+          "tags": [
+            "t2"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 2,
+            "monthly": 20
+          },
+          "tags": [
+            "t2",
+            "2"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 2,
+            "monthly": 0
+          },
+          "tags": [
+            "t2"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 2,
+            "monthly": 20
+          },
+          "tags": [
+            "t2"
+          ]
+        }
+      ],
+      "template": {
+        "limits": {
+          "daily": 2,
+          "monthly": 20
+        },
+        "tags": [
+          "t2"
+        ]
+      }
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 3,
+          "monthly": 30
+        },
+        "tags": [
+          "t3"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 4
+        },
+        {
+          "tag": "3"
+        },
+        {
+          "monthly": 0
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "copies": [
+        {
+          "limits": {
+            "daily": 4,
+            "monthly": 30
+          },
+          "tags": [
+            "t3"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 3,
+            "monthly": 30
+          },
+          "tags": [
+            "t3",
+            "3"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 3,
+            "monthly": 0
+          },
+          "tags": [
+            "t3"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 3,
+            "monthly": 30
+          },
+          "tags": [
+            "t3"
+          ]
+        }
+      ],
+      "template": {
+        "limits": {
+          "daily": 3,
+          "monthly": 30
+        },
+        "tags": [
+          "t3"
+        ]
+      }
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 4,
+          "monthly": 40
+        },
+        "tags": [
+          "t4"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 5
+        },
+        {
+          "tag": "4"
+        },
+        {
+          "monthly": 0
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "copies": [
+        {
+          "limits": {
+            "daily": 5,
+            "monthly": 40
+          },
+          "tags": [
+            "t4"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 4,
+            "monthly": 40
+          },
+          "tags": [
+            "t4",
+            "4"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 4,
+            "monthly": 0
+          },
+          "tags": [
+            "t4"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 4,
+            "monthly": 40
+          },
+          "tags": [
+            "t4"
+          ]
+        }
+      ],
+      "template": {
+        "limits": {
+          "daily": 4,
+          "monthly": 40
+        },
+        "tags": [
+          "t4"
+        ]
+      }
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 5,
+          "monthly": 50
+        },
+        "tags": [
+          "t5"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 6
+        },
+        {
+          "tag": "5"
+        },
+        {
+          "monthly": 0
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "copies": [
+        {
+          "limits": {
+            "daily": 6,
+            "monthly": 50
+          },
+          "tags": [
+            "t5"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 5,
+            "monthly": 50
+          },
+          "tags": [
+            "t5",
+            "5"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 5,
+            "monthly": 0
+          },
+          "tags": [
+            "t5"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 5,
+            "monthly": 50
+          },
+          "tags": [
+            "t5"
+          ]
+        }
+      ],
+      "template": {
+        "limits": {
+          "daily": 5,
+          "monthly": 50
+        },
+        "tags": [
+          "t5"
+        ]
+      }
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 6,
+          "monthly": 60
+        },
+        "tags": [
+          "t6"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 7
+        },
+        {
+          "tag": "6"
+        },
+        {
+          "monthly": 0
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "copies": [
+        {
+          "limits": {
+            "daily": 7,
+            "monthly": 60
+          },
+          "tags": [
+            "t6"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 6,
+            "monthly": 60
+          },
+          "tags": [
+            "t6",
+            "6"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 6,
+            "monthly": 0
+          },
+          "tags": [
+            "t6"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 6,
+            "monthly": 60
+          },
+          "tags": [
+            "t6"
+          ]
+        }
+      ],
+      "template": {
+        "limits": {
+          "daily": 6,
+          "monthly": 60
+        },
+        "tags": [
+          "t6"
+        ]
+      }
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 7,
+          "monthly": 70
+        },
+        "tags": [
+          "t7"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 8
+        },
+        {
+          "tag": "7"
+        },
+        {
+          "monthly": 0
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "copies": [
+        {
+          "limits": {
+            "daily": 8,
+            "monthly": 70
+          },
+          "tags": [
+            "t7"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 7,
+            "monthly": 70
+          },
+          "tags": [
+            "t7",
+            "7"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 7,
+            "monthly": 0
+          },
+          "tags": [
+            "t7"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 7,
+            "monthly": 70
+          },
+          "tags": [
+            "t7"
+          ]
+        }
+      ],
+      "template": {
+        "limits": {
+          "daily": 7,
+          "monthly": 70
+        },
+        "tags": [
+          "t7"
+        ]
+      }
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 8,
+          "monthly": 80
+        },
+        "tags": [
+          "t8"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 9
+        },
+        {
+          "tag": "8"
+        },
+        {
+          "monthly": 0
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "copies": [
+        {
+          "limits": {
+            "daily": 9,
+            "monthly": 80
+          },
+          "tags": [
+            "t8"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 8,
+            "monthly": 80
+          },
+          "tags": [
+            "t8",
+            "8"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 8,
+            "monthly": 0
+          },
+          "tags": [
+            "t8"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 8,
+            "monthly": 80
+          },
+          "tags": [
+            "t8"
+          ]
+        }
+      ],
+      "template": {
+        "limits": {
+          "daily": 8,
+          "monthly": 80
+        },
+        "tags": [
+          "t8"
+        ]
+      }
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 9,
+          "monthly": 90
+        },
+        "tags": [
+          "t9"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 10
+        },
+        {
+          "tag": "9"
+        },
+        {
+          "monthly": 0
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "copies": [
+        {
+          "limits": {
+            "daily": 10,
+            "monthly": 90
+          },
+          "tags": [
+            "t9"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 9,
+            "monthly": 90
+          },
+          "tags": [
+            "t9",
+            "9"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 9,
+            "monthly": 0
+          },
+          "tags": [
+            "t9"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 9,
+            "monthly": 90
+          },
+          "tags": [
+            "t9"
+          ]
+        }
+      ],
+      "template": {
+        "limits": {
+          "daily": 9,
+          "monthly": 90
+        },
+        "tags": [
+          "t9"
+        ]
+      }
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 10,
+          "monthly": 100
+        },
+        "tags": [
+          "t10"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 11
+        },
+        {
+          "tag": "10"
+        },
+        {
+          "monthly": 0
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "copies": [
+        {
+          "limits": {
+            "daily": 11,
+            "monthly": 100
+          },
+          "tags": [
+            "t10"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 10,
+            "monthly": 100
+          },
+          "tags": [
+            "t10",
+            "10"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 10,
+            "monthly": 0
+          },
+          "tags": [
+            "t10"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 10,
+            "monthly": 100
+          },
+          "tags": [
+            "t10"
+          ]
+        }
+      ],
+      "template": {
+        "limits": {
+          "daily": 10,
+          "monthly": 100
+        },
+        "tags": [
+          "t10"
+        ]
+      }
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "template": {
+        "limits": {
+          "daily": 11,
+          "monthly": 110
+        },
+        "tags": [
+          "t11"
+        ]
+      },
+      "changes": [
+        {
+          "daily": 12
+        },
+        {
+          "tag": "11"
+        },
+        {
+          "monthly": 0
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "copies": [
+        {
+          "limits": {
+            "daily": 12,
+            "monthly": 110
+          },
+          "tags": [
+            "t11"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 11,
+            "monthly": 110
+          },
+          "tags": [
+            "t11",
+            "11"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 11,
+            "monthly": 0
+          },
+          "tags": [
+            "t11"
+          ]
+        },
+        {
+          "limits": {
+            "daily": 11,
+            "monthly": 110
+          },
+          "tags": [
+            "t11"
+          ]
+        }
+      ],
+      "template": {
+        "limits": {
+          "daily": 11,
+          "monthly": 110
+        },
+        "tags": [
+          "t11"
+        ]
+      }
+    },
+    "label": "additional-12"
+  }
+]

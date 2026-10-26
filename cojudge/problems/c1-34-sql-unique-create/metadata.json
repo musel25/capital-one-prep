@@ -1,0 +1,50 @@
+{
+  "id": "c1-34-sql-unique-create",
+  "title": "34. Create accounts with stable conflict rules",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "04-sql-and-transactions",
+  "examples": [
+    {
+      "input": "{\"initial\": [], \"requests\": [{\"username\": \"ada\", \"quota\": 10}, {\"username\": \"ada\", \"quota\": 10}]}",
+      "output": "{\"responses\": [{\"status\": 201, \"record\": {\"username\": \"ada\", \"quota\": 10}}, {\"status\": 200, \"record\": {\"username\": \"ada\", \"quota\": 10}}], \"accounts\": [{\"username\": \"ada\", \"quota\": 10}]}",
+      "explanation": "duplicate identical create is a replay"
+    },
+    {
+      "input": "{\"initial\": [{\"username\": \"ada\", \"quota\": 10}], \"requests\": [{\"username\": \"ada\", \"quota\": 20}]}",
+      "output": "{\"responses\": [{\"status\": 409, \"record\": {\"username\": \"ada\", \"quota\": 10}}], \"accounts\": [{\"username\": \"ada\", \"quota\": 10}]}",
+      "explanation": "conflicting quota preserves original"
+    },
+    {
+      "input": "{\"initial\": [], \"requests\": [{\"username\": \"O'Reilly\", \"quota\": 10}]}",
+      "output": "{\"responses\": [{\"status\": 201, \"record\": {\"username\": \"O'Reilly\", \"quota\": 10}}], \"accounts\": [{\"username\": \"O'Reilly\", \"quota\": 10}]}",
+      "explanation": "quote in bound username"
+    }
+  ],
+  "starterCode": {
+    "python": "import sqlite3\n\ndef solve(data):\n    connection = sqlite3.connect(\":memory:\")\n    connection.row_factory = sqlite3.Row\n    try:\n        connection.execute(\"CREATE TABLE accounts(username TEXT PRIMARY KEY NOT NULL, quota INTEGER NOT NULL)\")\n        connection.executemany(\"INSERT INTO accounts VALUES (?, ?)\", [(r[\"username\"], r[\"quota\"]) for r in data[\"initial\"]])\n        responses = [create_account(connection, r[\"username\"], r[\"quota\"]) for r in data[\"requests\"]]\n        rows = [dict(r) for r in connection.execute(\"SELECT username, quota FROM accounts ORDER BY username ASC\")]\n        return {\"responses\": responses, \"accounts\": rows}\n    finally:\n        connection.close()\n\ndef create_account(connection, username, quota):\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"initial\":[],\"requests\":[{\"quota\":10,\"username\":\"ada\"},{\"quota\":10,\"username\":\"ada\"}]}"
+    },
+    {
+      "payload": "{\"initial\":[{\"quota\":10,\"username\":\"ada\"}],\"requests\":[{\"quota\":20,\"username\":\"ada\"}]}"
+    },
+    {
+      "payload": "{\"initial\":[],\"requests\":[{\"quota\":10,\"username\":\"O'Reilly\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "ON CONFLICT(username) DO NOTHING preserves an existing row.",
+    "Read the stored row after the insert attempt, then compare its quota with the requested quota."
+  ]
+}

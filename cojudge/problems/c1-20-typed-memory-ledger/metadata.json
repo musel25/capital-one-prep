@@ -1,0 +1,50 @@
+{
+  "id": "c1-20-typed-memory-ledger",
+  "title": "20. Build a typed in-memory ledger",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "02-objects-and-state",
+  "examples": [
+    {
+      "input": "{\"accounts\": {\"A\": 10, \"B\": 0}, \"events\": [{\"id\": \"x\", \"from\": \"A\", \"to\": \"B\", \"cents\": 4}, {\"id\": \"x\", \"from\": \"A\", \"to\": \"B\", \"cents\": 4}, {\"id\": \"x\", \"from\": \"A\", \"to\": \"B\", \"cents\": 5}]}",
+      "output": "{\"status\": [\"applied\", \"duplicate\", \"conflict\"], \"balances\": {\"A\": 6, \"B\": 4}}",
+      "explanation": "transfer, duplicate, and conflict"
+    },
+    {
+      "input": "{\"accounts\": {\"A\": 0, \"B\": 10}, \"events\": [{\"id\": \"x\", \"from\": \"A\", \"to\": \"B\", \"cents\": 5}, {\"id\": \"fund\", \"from\": \"B\", \"to\": \"A\", \"cents\": 10}, {\"id\": \"x\", \"from\": \"A\", \"to\": \"B\", \"cents\": 5}, {\"id\": \"new\", \"from\": \"A\", \"to\": \"B\", \"cents\": 5}]}",
+      "output": "{\"status\": [\"insufficient\", \"applied\", \"duplicate\", \"applied\"], \"balances\": {\"A\": 5, \"B\": 5}}",
+      "explanation": "failed ID stays reserved after new funds arrive"
+    },
+    {
+      "input": "{\"accounts\": {}, \"events\": []}",
+      "output": "{\"status\": [], \"balances\": {}}",
+      "explanation": "empty ledger"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"accounts\":{\"A\":10,\"B\":0},\"events\":[{\"cents\":4,\"from\":\"A\",\"id\":\"x\",\"to\":\"B\"},{\"cents\":4,\"from\":\"A\",\"id\":\"x\",\"to\":\"B\"},{\"cents\":5,\"from\":\"A\",\"id\":\"x\",\"to\":\"B\"}]}"
+    },
+    {
+      "payload": "{\"accounts\":{\"A\":0,\"B\":10},\"events\":[{\"cents\":5,\"from\":\"A\",\"id\":\"x\",\"to\":\"B\"},{\"cents\":10,\"from\":\"B\",\"id\":\"fund\",\"to\":\"A\"},{\"cents\":5,\"from\":\"A\",\"id\":\"x\",\"to\":\"B\"},{\"cents\":5,\"from\":\"A\",\"id\":\"new\",\"to\":\"B\"}]}"
+    },
+    {
+      "payload": "{\"accounts\":{},\"events\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Store the original payload before attempting the first transfer.",
+    "Let one ledger method coordinate duplicate checks and both balance changes."
+  ]
+}

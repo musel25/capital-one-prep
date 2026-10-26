@@ -1,0 +1,3624 @@
+[
+  {
+    "input": {
+      "initial": [],
+      "requests": [
+        {
+          "username": "ada",
+          "quota": 10
+        },
+        {
+          "username": "ada",
+          "quota": 10
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "record": {
+            "username": "ada",
+            "quota": 10
+          }
+        },
+        {
+          "status": 200,
+          "record": {
+            "username": "ada",
+            "quota": 10
+          }
+        }
+      ],
+      "accounts": [
+        {
+          "username": "ada",
+          "quota": 10
+        }
+      ]
+    },
+    "label": "duplicate identical create is a replay"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "ada",
+          "quota": 10
+        }
+      ],
+      "requests": [
+        {
+          "username": "ada",
+          "quota": 20
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 409,
+          "record": {
+            "username": "ada",
+            "quota": 10
+          }
+        }
+      ],
+      "accounts": [
+        {
+          "username": "ada",
+          "quota": 10
+        }
+      ]
+    },
+    "label": "conflicting quota preserves original"
+  },
+  {
+    "input": {
+      "initial": [],
+      "requests": [
+        {
+          "username": "O'Reilly",
+          "quota": 10
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "record": {
+            "username": "O'Reilly",
+            "quota": 10
+          }
+        }
+      ],
+      "accounts": [
+        {
+          "username": "O'Reilly",
+          "quota": 10
+        }
+      ]
+    },
+    "label": "quote in bound username"
+  },
+  {
+    "input": {
+      "initial": [],
+      "requests": []
+    },
+    "expected": {
+      "responses": [],
+      "accounts": []
+    },
+    "label": "empty database and requests"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "b",
+          "quota": 10
+        },
+        {
+          "username": "a",
+          "quota": 10
+        }
+      ],
+      "requests": []
+    },
+    "expected": {
+      "responses": [],
+      "accounts": [
+        {
+          "username": "a",
+          "quota": 10
+        },
+        {
+          "username": "b",
+          "quota": 10
+        }
+      ]
+    },
+    "label": "final rows ordered even with no writes"
+  },
+  {
+    "input": {
+      "initial": [],
+      "requests": [
+        {
+          "username": "a",
+          "quota": 0
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "record": {
+            "username": "a",
+            "quota": 0
+          }
+        }
+      ],
+      "accounts": [
+        {
+          "username": "a",
+          "quota": 0
+        }
+      ]
+    },
+    "label": "zero quota"
+  },
+  {
+    "input": {
+      "initial": [],
+      "requests": [
+        {
+          "username": "a",
+          "quota": 1000000
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "record": {
+            "username": "a",
+            "quota": 1000000
+          }
+        }
+      ],
+      "accounts": [
+        {
+          "username": "a",
+          "quota": 1000000
+        }
+      ]
+    },
+    "label": "maximum quota"
+  },
+  {
+    "input": {
+      "initial": [],
+      "requests": [
+        {
+          "username": "a",
+          "quota": 10
+        },
+        {
+          "username": "A",
+          "quota": 10
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "record": {
+            "username": "a",
+            "quota": 10
+          }
+        },
+        {
+          "status": 201,
+          "record": {
+            "username": "A",
+            "quota": 10
+          }
+        }
+      ],
+      "accounts": [
+        {
+          "username": "A",
+          "quota": 10
+        },
+        {
+          "username": "a",
+          "quota": 10
+        }
+      ]
+    },
+    "label": "case-sensitive uniqueness"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "a",
+          "quota": 10
+        }
+      ],
+      "requests": [
+        {
+          "username": "a",
+          "quota": 11
+        },
+        {
+          "username": "a",
+          "quota": 10
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 409,
+          "record": {
+            "username": "a",
+            "quota": 10
+          }
+        },
+        {
+          "status": 200,
+          "record": {
+            "username": "a",
+            "quota": 10
+          }
+        }
+      ],
+      "accounts": [
+        {
+          "username": "a",
+          "quota": 10
+        }
+      ]
+    },
+    "label": "conflict does not replace stored value"
+  },
+  {
+    "input": {
+      "initial": [],
+      "requests": [
+        {
+          "username": "'; DROP TABLE accounts; --",
+          "quota": 10
+        },
+        {
+          "username": "safe",
+          "quota": 10
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "record": {
+            "username": "'; DROP TABLE accounts; --",
+            "quota": 10
+          }
+        },
+        {
+          "status": 201,
+          "record": {
+            "username": "safe",
+            "quota": 10
+          }
+        }
+      ],
+      "accounts": [
+        {
+          "username": "'; DROP TABLE accounts; --",
+          "quota": 10
+        },
+        {
+          "username": "safe",
+          "quota": 10
+        }
+      ]
+    },
+    "label": "SQL-looking username remains data"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "a",
+          "quota": 0
+        }
+      ],
+      "requests": [
+        {
+          "username": "a",
+          "quota": 0
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 200,
+          "record": {
+            "username": "a",
+            "quota": 0
+          }
+        }
+      ],
+      "accounts": [
+        {
+          "username": "a",
+          "quota": 0
+        }
+      ]
+    },
+    "label": "existing zero quota compares by value"
+  },
+  {
+    "input": {
+      "initial": [],
+      "requests": [
+        {
+          "username": "a",
+          "quota": 10
+        },
+        {
+          "username": "a",
+          "quota": 10
+        },
+        {
+          "username": "a",
+          "quota": 10
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "record": {
+            "username": "a",
+            "quota": 10
+          }
+        },
+        {
+          "status": 200,
+          "record": {
+            "username": "a",
+            "quota": 10
+          }
+        },
+        {
+          "status": 200,
+          "record": {
+            "username": "a",
+            "quota": 10
+          }
+        }
+      ],
+      "accounts": [
+        {
+          "username": "a",
+          "quota": 10
+        }
+      ]
+    },
+    "label": "repeated requests do not add rows"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "a",
+          "quota": 10
+        }
+      ],
+      "requests": [
+        {
+          "username": "b",
+          "quota": 20
+        },
+        {
+          "username": "a",
+          "quota": 10
+        },
+        {
+          "username": "c",
+          "quota": 30
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "record": {
+            "username": "b",
+            "quota": 20
+          }
+        },
+        {
+          "status": 200,
+          "record": {
+            "username": "a",
+            "quota": 10
+          }
+        },
+        {
+          "status": 201,
+          "record": {
+            "username": "c",
+            "quota": 30
+          }
+        }
+      ],
+      "accounts": [
+        {
+          "username": "a",
+          "quota": 10
+        },
+        {
+          "username": "b",
+          "quota": 20
+        },
+        {
+          "username": "c",
+          "quota": 30
+        }
+      ]
+    },
+    "label": "new and existing accounts interleave"
+  },
+  {
+    "input": {
+      "initial": [],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 0
+        },
+        {
+          "username": "user1",
+          "quota": 1
+        },
+        {
+          "username": "quoted'0",
+          "quota": 0
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 0,
+          "username": "quoted'0"
+        },
+        {
+          "quota": 0,
+          "username": "user0"
+        },
+        {
+          "quota": 1,
+          "username": "user1"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 0,
+            "username": "user0"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 1,
+            "username": "user1"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 0,
+            "username": "quoted'0"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 1
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 1
+        },
+        {
+          "username": "user1",
+          "quota": 2
+        },
+        {
+          "username": "user2",
+          "quota": 3
+        },
+        {
+          "username": "quoted'1",
+          "quota": 1
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 1,
+          "username": "quoted'1"
+        },
+        {
+          "quota": 1,
+          "username": "user0"
+        },
+        {
+          "quota": 2,
+          "username": "user1"
+        },
+        {
+          "quota": 3,
+          "username": "user2"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 1,
+            "username": "user0"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 2,
+            "username": "user1"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 3,
+            "username": "user2"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 1,
+            "username": "quoted'1"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 2
+        },
+        {
+          "username": "user1",
+          "quota": 3
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 2
+        },
+        {
+          "username": "user1",
+          "quota": 3
+        },
+        {
+          "username": "user2",
+          "quota": 4
+        },
+        {
+          "username": "user3",
+          "quota": 5
+        },
+        {
+          "username": "quoted'2",
+          "quota": 2
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 2,
+          "username": "quoted'2"
+        },
+        {
+          "quota": 2,
+          "username": "user0"
+        },
+        {
+          "quota": 3,
+          "username": "user1"
+        },
+        {
+          "quota": 4,
+          "username": "user2"
+        },
+        {
+          "quota": 5,
+          "username": "user3"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 2,
+            "username": "user0"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 3,
+            "username": "user1"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 4,
+            "username": "user2"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 2,
+            "username": "quoted'2"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 3
+        },
+        {
+          "username": "user1",
+          "quota": 4
+        },
+        {
+          "username": "user2",
+          "quota": 5
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 3
+        },
+        {
+          "username": "user1",
+          "quota": 4
+        },
+        {
+          "username": "user2",
+          "quota": 5
+        },
+        {
+          "username": "user3",
+          "quota": 6
+        },
+        {
+          "username": "user4",
+          "quota": 7
+        },
+        {
+          "username": "quoted'3",
+          "quota": 3
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 3,
+          "username": "quoted'3"
+        },
+        {
+          "quota": 3,
+          "username": "user0"
+        },
+        {
+          "quota": 4,
+          "username": "user1"
+        },
+        {
+          "quota": 5,
+          "username": "user2"
+        },
+        {
+          "quota": 6,
+          "username": "user3"
+        },
+        {
+          "quota": 7,
+          "username": "user4"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 3,
+            "username": "user0"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 4,
+            "username": "user1"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user2"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 3,
+            "username": "quoted'3"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 4
+        },
+        {
+          "username": "user1",
+          "quota": 5
+        },
+        {
+          "username": "user2",
+          "quota": 6
+        },
+        {
+          "username": "user3",
+          "quota": 7
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 4
+        },
+        {
+          "username": "user1",
+          "quota": 5
+        },
+        {
+          "username": "user2",
+          "quota": 6
+        },
+        {
+          "username": "user3",
+          "quota": 7
+        },
+        {
+          "username": "user4",
+          "quota": 8
+        },
+        {
+          "username": "user5",
+          "quota": 9
+        },
+        {
+          "username": "quoted'4",
+          "quota": 4
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 4,
+          "username": "quoted'4"
+        },
+        {
+          "quota": 4,
+          "username": "user0"
+        },
+        {
+          "quota": 5,
+          "username": "user1"
+        },
+        {
+          "quota": 6,
+          "username": "user2"
+        },
+        {
+          "quota": 7,
+          "username": "user3"
+        },
+        {
+          "quota": 8,
+          "username": "user4"
+        },
+        {
+          "quota": 9,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 4,
+            "username": "user0"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user1"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user2"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user3"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 4,
+            "username": "quoted'4"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "initial": [],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 5
+        },
+        {
+          "username": "user1",
+          "quota": 6
+        },
+        {
+          "username": "user2",
+          "quota": 7
+        },
+        {
+          "username": "user3",
+          "quota": 8
+        },
+        {
+          "username": "user4",
+          "quota": 9
+        },
+        {
+          "username": "user5",
+          "quota": 10
+        },
+        {
+          "username": "user0",
+          "quota": 0
+        },
+        {
+          "username": "quoted'5",
+          "quota": 5
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 5,
+          "username": "quoted'5"
+        },
+        {
+          "quota": 5,
+          "username": "user0"
+        },
+        {
+          "quota": 6,
+          "username": "user1"
+        },
+        {
+          "quota": 7,
+          "username": "user2"
+        },
+        {
+          "quota": 8,
+          "username": "user3"
+        },
+        {
+          "quota": 9,
+          "username": "user4"
+        },
+        {
+          "quota": 10,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 5,
+            "username": "user0"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user1"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user2"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "quoted'5"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 6
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 6
+        },
+        {
+          "username": "user1",
+          "quota": 7
+        },
+        {
+          "username": "user2",
+          "quota": 8
+        },
+        {
+          "username": "user3",
+          "quota": 9
+        },
+        {
+          "username": "user4",
+          "quota": 10
+        },
+        {
+          "username": "user5",
+          "quota": 0
+        },
+        {
+          "username": "user0",
+          "quota": 1
+        },
+        {
+          "username": "user1",
+          "quota": 2
+        },
+        {
+          "username": "quoted'6",
+          "quota": 6
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 6,
+          "username": "quoted'6"
+        },
+        {
+          "quota": 6,
+          "username": "user0"
+        },
+        {
+          "quota": 7,
+          "username": "user1"
+        },
+        {
+          "quota": 8,
+          "username": "user2"
+        },
+        {
+          "quota": 9,
+          "username": "user3"
+        },
+        {
+          "quota": 10,
+          "username": "user4"
+        },
+        {
+          "quota": 0,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 6,
+            "username": "user0"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user1"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user2"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 0,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "quoted'6"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 7
+        },
+        {
+          "username": "user1",
+          "quota": 8
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 7
+        },
+        {
+          "username": "user1",
+          "quota": 8
+        },
+        {
+          "username": "user2",
+          "quota": 9
+        },
+        {
+          "username": "user3",
+          "quota": 10
+        },
+        {
+          "username": "user4",
+          "quota": 0
+        },
+        {
+          "username": "user5",
+          "quota": 1
+        },
+        {
+          "username": "user0",
+          "quota": 2
+        },
+        {
+          "username": "user1",
+          "quota": 3
+        },
+        {
+          "username": "user2",
+          "quota": 4
+        },
+        {
+          "username": "quoted'7",
+          "quota": 7
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 7,
+          "username": "quoted'7"
+        },
+        {
+          "quota": 7,
+          "username": "user0"
+        },
+        {
+          "quota": 8,
+          "username": "user1"
+        },
+        {
+          "quota": 9,
+          "username": "user2"
+        },
+        {
+          "quota": 10,
+          "username": "user3"
+        },
+        {
+          "quota": 0,
+          "username": "user4"
+        },
+        {
+          "quota": 1,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 7,
+            "username": "user0"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user1"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user2"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 0,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 1,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "quoted'7"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 8
+        },
+        {
+          "username": "user1",
+          "quota": 9
+        },
+        {
+          "username": "user2",
+          "quota": 10
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 8
+        },
+        {
+          "username": "user1",
+          "quota": 9
+        },
+        {
+          "username": "user2",
+          "quota": 10
+        },
+        {
+          "username": "user3",
+          "quota": 0
+        },
+        {
+          "username": "user4",
+          "quota": 1
+        },
+        {
+          "username": "user5",
+          "quota": 2
+        },
+        {
+          "username": "user0",
+          "quota": 3
+        },
+        {
+          "username": "user1",
+          "quota": 4
+        },
+        {
+          "username": "user2",
+          "quota": 5
+        },
+        {
+          "username": "user3",
+          "quota": 6
+        },
+        {
+          "username": "quoted'8",
+          "quota": 8
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 8,
+          "username": "quoted'8"
+        },
+        {
+          "quota": 8,
+          "username": "user0"
+        },
+        {
+          "quota": 9,
+          "username": "user1"
+        },
+        {
+          "quota": 10,
+          "username": "user2"
+        },
+        {
+          "quota": 0,
+          "username": "user3"
+        },
+        {
+          "quota": 1,
+          "username": "user4"
+        },
+        {
+          "quota": 2,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 8,
+            "username": "user0"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user1"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user2"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 0,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 1,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 2,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 0,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "quoted'8"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 9
+        },
+        {
+          "username": "user1",
+          "quota": 10
+        },
+        {
+          "username": "user2",
+          "quota": 11
+        },
+        {
+          "username": "user3",
+          "quota": 12
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 9
+        },
+        {
+          "username": "user1",
+          "quota": 10
+        },
+        {
+          "username": "user2",
+          "quota": 0
+        },
+        {
+          "username": "user3",
+          "quota": 1
+        },
+        {
+          "username": "user4",
+          "quota": 2
+        },
+        {
+          "username": "user5",
+          "quota": 3
+        },
+        {
+          "username": "user0",
+          "quota": 4
+        },
+        {
+          "username": "user1",
+          "quota": 5
+        },
+        {
+          "username": "user2",
+          "quota": 6
+        },
+        {
+          "username": "user3",
+          "quota": 7
+        },
+        {
+          "username": "user4",
+          "quota": 8
+        },
+        {
+          "username": "quoted'9",
+          "quota": 9
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 9,
+          "username": "quoted'9"
+        },
+        {
+          "quota": 9,
+          "username": "user0"
+        },
+        {
+          "quota": 10,
+          "username": "user1"
+        },
+        {
+          "quota": 11,
+          "username": "user2"
+        },
+        {
+          "quota": 12,
+          "username": "user3"
+        },
+        {
+          "quota": 2,
+          "username": "user4"
+        },
+        {
+          "quota": 3,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 9,
+            "username": "user0"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user1"
+          },
+          "status": 200
+        },
+        {
+          "record": {
+            "quota": 11,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 12,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 2,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 3,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 11,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 12,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 2,
+            "username": "user4"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "quoted'9"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "initial": [],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 10
+        },
+        {
+          "username": "user1",
+          "quota": 0
+        },
+        {
+          "username": "user2",
+          "quota": 1
+        },
+        {
+          "username": "user3",
+          "quota": 2
+        },
+        {
+          "username": "user4",
+          "quota": 3
+        },
+        {
+          "username": "user5",
+          "quota": 4
+        },
+        {
+          "username": "user0",
+          "quota": 5
+        },
+        {
+          "username": "user1",
+          "quota": 6
+        },
+        {
+          "username": "user2",
+          "quota": 7
+        },
+        {
+          "username": "user3",
+          "quota": 8
+        },
+        {
+          "username": "user4",
+          "quota": 9
+        },
+        {
+          "username": "user5",
+          "quota": 10
+        },
+        {
+          "username": "quoted'10",
+          "quota": 10
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 10,
+          "username": "quoted'10"
+        },
+        {
+          "quota": 10,
+          "username": "user0"
+        },
+        {
+          "quota": 0,
+          "username": "user1"
+        },
+        {
+          "quota": 1,
+          "username": "user2"
+        },
+        {
+          "quota": 2,
+          "username": "user3"
+        },
+        {
+          "quota": 3,
+          "username": "user4"
+        },
+        {
+          "quota": 4,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 10,
+            "username": "user0"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 0,
+            "username": "user1"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 1,
+            "username": "user2"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 2,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 3,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 4,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 0,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 1,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 2,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 3,
+            "username": "user4"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 4,
+            "username": "user5"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "quoted'10"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 11
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 0
+        },
+        {
+          "username": "user1",
+          "quota": 1
+        },
+        {
+          "username": "user2",
+          "quota": 2
+        },
+        {
+          "username": "user3",
+          "quota": 3
+        },
+        {
+          "username": "user4",
+          "quota": 4
+        },
+        {
+          "username": "user5",
+          "quota": 5
+        },
+        {
+          "username": "user0",
+          "quota": 6
+        },
+        {
+          "username": "user1",
+          "quota": 7
+        },
+        {
+          "username": "user2",
+          "quota": 8
+        },
+        {
+          "username": "user3",
+          "quota": 9
+        },
+        {
+          "username": "user4",
+          "quota": 10
+        },
+        {
+          "username": "user5",
+          "quota": 0
+        },
+        {
+          "username": "user0",
+          "quota": 1
+        },
+        {
+          "username": "quoted'11",
+          "quota": 11
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 11,
+          "username": "quoted'11"
+        },
+        {
+          "quota": 11,
+          "username": "user0"
+        },
+        {
+          "quota": 1,
+          "username": "user1"
+        },
+        {
+          "quota": 2,
+          "username": "user2"
+        },
+        {
+          "quota": 3,
+          "username": "user3"
+        },
+        {
+          "quota": 4,
+          "username": "user4"
+        },
+        {
+          "quota": 5,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 11,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 1,
+            "username": "user1"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 2,
+            "username": "user2"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 3,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 4,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 11,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 1,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 2,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 3,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 4,
+            "username": "user4"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user5"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 11,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 11,
+            "username": "quoted'11"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 12
+        },
+        {
+          "username": "user1",
+          "quota": 13
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 1
+        },
+        {
+          "username": "user1",
+          "quota": 2
+        },
+        {
+          "username": "user2",
+          "quota": 3
+        },
+        {
+          "username": "user3",
+          "quota": 4
+        },
+        {
+          "username": "user4",
+          "quota": 5
+        },
+        {
+          "username": "user5",
+          "quota": 6
+        },
+        {
+          "username": "user0",
+          "quota": 7
+        },
+        {
+          "username": "user1",
+          "quota": 8
+        },
+        {
+          "username": "user2",
+          "quota": 9
+        },
+        {
+          "username": "user3",
+          "quota": 10
+        },
+        {
+          "username": "user4",
+          "quota": 0
+        },
+        {
+          "username": "user5",
+          "quota": 1
+        },
+        {
+          "username": "user0",
+          "quota": 2
+        },
+        {
+          "username": "user1",
+          "quota": 3
+        },
+        {
+          "username": "quoted'12",
+          "quota": 12
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 12,
+          "username": "quoted'12"
+        },
+        {
+          "quota": 12,
+          "username": "user0"
+        },
+        {
+          "quota": 13,
+          "username": "user1"
+        },
+        {
+          "quota": 3,
+          "username": "user2"
+        },
+        {
+          "quota": 4,
+          "username": "user3"
+        },
+        {
+          "quota": 5,
+          "username": "user4"
+        },
+        {
+          "quota": 6,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 12,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 13,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 3,
+            "username": "user2"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 4,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 12,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 13,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 3,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 4,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user4"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user5"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 12,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 13,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 12,
+            "username": "quoted'12"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 13
+        },
+        {
+          "username": "user1",
+          "quota": 14
+        },
+        {
+          "username": "user2",
+          "quota": 15
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 2
+        },
+        {
+          "username": "user1",
+          "quota": 3
+        },
+        {
+          "username": "user2",
+          "quota": 4
+        },
+        {
+          "username": "user3",
+          "quota": 5
+        },
+        {
+          "username": "user4",
+          "quota": 6
+        },
+        {
+          "username": "user5",
+          "quota": 7
+        },
+        {
+          "username": "user0",
+          "quota": 8
+        },
+        {
+          "username": "user1",
+          "quota": 9
+        },
+        {
+          "username": "user2",
+          "quota": 10
+        },
+        {
+          "username": "user3",
+          "quota": 0
+        },
+        {
+          "username": "user4",
+          "quota": 1
+        },
+        {
+          "username": "user5",
+          "quota": 2
+        },
+        {
+          "username": "user0",
+          "quota": 3
+        },
+        {
+          "username": "user1",
+          "quota": 4
+        },
+        {
+          "username": "user2",
+          "quota": 5
+        },
+        {
+          "username": "quoted'13",
+          "quota": 13
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 13,
+          "username": "quoted'13"
+        },
+        {
+          "quota": 13,
+          "username": "user0"
+        },
+        {
+          "quota": 14,
+          "username": "user1"
+        },
+        {
+          "quota": 15,
+          "username": "user2"
+        },
+        {
+          "quota": 5,
+          "username": "user3"
+        },
+        {
+          "quota": 6,
+          "username": "user4"
+        },
+        {
+          "quota": 7,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 13,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 14,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 15,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 13,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 14,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 15,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user4"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user5"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 13,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 14,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 15,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 13,
+            "username": "quoted'13"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 14
+        },
+        {
+          "username": "user1",
+          "quota": 15
+        },
+        {
+          "username": "user2",
+          "quota": 16
+        },
+        {
+          "username": "user3",
+          "quota": 17
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 3
+        },
+        {
+          "username": "user1",
+          "quota": 4
+        },
+        {
+          "username": "user2",
+          "quota": 5
+        },
+        {
+          "username": "user3",
+          "quota": 6
+        },
+        {
+          "username": "user4",
+          "quota": 7
+        },
+        {
+          "username": "user5",
+          "quota": 8
+        },
+        {
+          "username": "user0",
+          "quota": 9
+        },
+        {
+          "username": "user1",
+          "quota": 10
+        },
+        {
+          "username": "user2",
+          "quota": 0
+        },
+        {
+          "username": "user3",
+          "quota": 1
+        },
+        {
+          "username": "user4",
+          "quota": 2
+        },
+        {
+          "username": "user5",
+          "quota": 3
+        },
+        {
+          "username": "user0",
+          "quota": 4
+        },
+        {
+          "username": "user1",
+          "quota": 5
+        },
+        {
+          "username": "user2",
+          "quota": 6
+        },
+        {
+          "username": "user3",
+          "quota": 7
+        },
+        {
+          "username": "quoted'14",
+          "quota": 14
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 14,
+          "username": "quoted'14"
+        },
+        {
+          "quota": 14,
+          "username": "user0"
+        },
+        {
+          "quota": 15,
+          "username": "user1"
+        },
+        {
+          "quota": 16,
+          "username": "user2"
+        },
+        {
+          "quota": 17,
+          "username": "user3"
+        },
+        {
+          "quota": 7,
+          "username": "user4"
+        },
+        {
+          "quota": 8,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 14,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 15,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 16,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 17,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 14,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 15,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 16,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 17,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user4"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user5"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 14,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 15,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 16,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 17,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 14,
+            "username": "quoted'14"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "initial": [],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 4
+        },
+        {
+          "username": "user1",
+          "quota": 5
+        },
+        {
+          "username": "user2",
+          "quota": 6
+        },
+        {
+          "username": "user3",
+          "quota": 7
+        },
+        {
+          "username": "user4",
+          "quota": 8
+        },
+        {
+          "username": "user5",
+          "quota": 9
+        },
+        {
+          "username": "user0",
+          "quota": 10
+        },
+        {
+          "username": "user1",
+          "quota": 0
+        },
+        {
+          "username": "user2",
+          "quota": 1
+        },
+        {
+          "username": "user3",
+          "quota": 2
+        },
+        {
+          "username": "user4",
+          "quota": 3
+        },
+        {
+          "username": "user5",
+          "quota": 4
+        },
+        {
+          "username": "user0",
+          "quota": 5
+        },
+        {
+          "username": "user1",
+          "quota": 6
+        },
+        {
+          "username": "user2",
+          "quota": 7
+        },
+        {
+          "username": "user3",
+          "quota": 8
+        },
+        {
+          "username": "user4",
+          "quota": 9
+        },
+        {
+          "username": "quoted'15",
+          "quota": 15
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 15,
+          "username": "quoted'15"
+        },
+        {
+          "quota": 4,
+          "username": "user0"
+        },
+        {
+          "quota": 5,
+          "username": "user1"
+        },
+        {
+          "quota": 6,
+          "username": "user2"
+        },
+        {
+          "quota": 7,
+          "username": "user3"
+        },
+        {
+          "quota": 8,
+          "username": "user4"
+        },
+        {
+          "quota": 9,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 4,
+            "username": "user0"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user1"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user2"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 4,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user4"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user5"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 4,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 5,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user4"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 15,
+            "username": "quoted'15"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 16
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 5
+        },
+        {
+          "username": "user1",
+          "quota": 6
+        },
+        {
+          "username": "user2",
+          "quota": 7
+        },
+        {
+          "username": "user3",
+          "quota": 8
+        },
+        {
+          "username": "user4",
+          "quota": 9
+        },
+        {
+          "username": "user5",
+          "quota": 10
+        },
+        {
+          "username": "user0",
+          "quota": 0
+        },
+        {
+          "username": "user1",
+          "quota": 1
+        },
+        {
+          "username": "user2",
+          "quota": 2
+        },
+        {
+          "username": "user3",
+          "quota": 3
+        },
+        {
+          "username": "user4",
+          "quota": 4
+        },
+        {
+          "username": "user5",
+          "quota": 5
+        },
+        {
+          "username": "user0",
+          "quota": 6
+        },
+        {
+          "username": "user1",
+          "quota": 7
+        },
+        {
+          "username": "user2",
+          "quota": 8
+        },
+        {
+          "username": "user3",
+          "quota": 9
+        },
+        {
+          "username": "user4",
+          "quota": 10
+        },
+        {
+          "username": "user5",
+          "quota": 0
+        },
+        {
+          "username": "quoted'16",
+          "quota": 16
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 16,
+          "username": "quoted'16"
+        },
+        {
+          "quota": 16,
+          "username": "user0"
+        },
+        {
+          "quota": 6,
+          "username": "user1"
+        },
+        {
+          "quota": 7,
+          "username": "user2"
+        },
+        {
+          "quota": 8,
+          "username": "user3"
+        },
+        {
+          "quota": 9,
+          "username": "user4"
+        },
+        {
+          "quota": 10,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 16,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user1"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user2"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 16,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user4"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user5"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 16,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 6,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 7,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user4"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user5"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 16,
+            "username": "quoted'16"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "initial": [
+        {
+          "username": "user0",
+          "quota": 17
+        },
+        {
+          "username": "user1",
+          "quota": 18
+        }
+      ],
+      "requests": [
+        {
+          "username": "user0",
+          "quota": 6
+        },
+        {
+          "username": "user1",
+          "quota": 7
+        },
+        {
+          "username": "user2",
+          "quota": 8
+        },
+        {
+          "username": "user3",
+          "quota": 9
+        },
+        {
+          "username": "user4",
+          "quota": 10
+        },
+        {
+          "username": "user5",
+          "quota": 0
+        },
+        {
+          "username": "user0",
+          "quota": 1
+        },
+        {
+          "username": "user1",
+          "quota": 2
+        },
+        {
+          "username": "user2",
+          "quota": 3
+        },
+        {
+          "username": "user3",
+          "quota": 4
+        },
+        {
+          "username": "user4",
+          "quota": 5
+        },
+        {
+          "username": "user5",
+          "quota": 6
+        },
+        {
+          "username": "user0",
+          "quota": 7
+        },
+        {
+          "username": "user1",
+          "quota": 8
+        },
+        {
+          "username": "user2",
+          "quota": 9
+        },
+        {
+          "username": "user3",
+          "quota": 10
+        },
+        {
+          "username": "user4",
+          "quota": 0
+        },
+        {
+          "username": "user5",
+          "quota": 1
+        },
+        {
+          "username": "user0",
+          "quota": 2
+        },
+        {
+          "username": "quoted'17",
+          "quota": 17
+        }
+      ]
+    },
+    "expected": {
+      "accounts": [
+        {
+          "quota": 17,
+          "username": "quoted'17"
+        },
+        {
+          "quota": 17,
+          "username": "user0"
+        },
+        {
+          "quota": 18,
+          "username": "user1"
+        },
+        {
+          "quota": 8,
+          "username": "user2"
+        },
+        {
+          "quota": 9,
+          "username": "user3"
+        },
+        {
+          "quota": 10,
+          "username": "user4"
+        },
+        {
+          "quota": 0,
+          "username": "user5"
+        }
+      ],
+      "responses": [
+        {
+          "record": {
+            "quota": 17,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 18,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user2"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user3"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user4"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 0,
+            "username": "user5"
+          },
+          "status": 201
+        },
+        {
+          "record": {
+            "quota": 17,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 18,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user4"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 0,
+            "username": "user5"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 17,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 18,
+            "username": "user1"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 8,
+            "username": "user2"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 9,
+            "username": "user3"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 10,
+            "username": "user4"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 0,
+            "username": "user5"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 17,
+            "username": "user0"
+          },
+          "status": 409
+        },
+        {
+          "record": {
+            "quota": 17,
+            "username": "quoted'17"
+          },
+          "status": 201
+        }
+      ]
+    },
+    "label": "additional-18"
+  }
+]

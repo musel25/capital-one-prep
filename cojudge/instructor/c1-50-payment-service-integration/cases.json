@@ -1,0 +1,7409 @@
+[
+  {
+    "input": {
+      "balances": {
+        "a": 5,
+        "b": 0
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok"
+      ],
+      "balances": {
+        "a": 3,
+        "b": 2
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "b",
+          2
+        ]
+      ]
+    },
+    "label": "payment commits balance changes and event"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 5,
+        "b": 0
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "replay"
+      ],
+      "balances": {
+        "a": 3,
+        "b": 2
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "b",
+          2
+        ]
+      ]
+    },
+    "label": "retry has no duplicate effect or event"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 5,
+        "b": 0
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "failed",
+        "ok"
+      ],
+      "balances": {
+        "a": 3,
+        "b": 2
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "b",
+          2
+        ]
+      ]
+    },
+    "label": "retry after partial staged debit"
+  },
+  {
+    "input": {
+      "balances": {},
+      "payments": []
+    },
+    "expected": {
+      "results": [],
+      "balances": {},
+      "events": []
+    },
+    "label": "empty service"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 0,
+        "b": 0
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "insufficient"
+      ],
+      "balances": {
+        "a": 0,
+        "b": 0
+      },
+      "events": []
+    },
+    "label": "insufficient funds reserve no key"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 2,
+        "b": 1
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok"
+      ],
+      "balances": {
+        "a": 0,
+        "b": 3
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "b",
+          2
+        ]
+      ]
+    },
+    "label": "exact balance"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 5,
+        "b": 0
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "outbox"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "failed"
+      ],
+      "balances": {
+        "a": 5,
+        "b": 0
+      },
+      "events": []
+    },
+    "label": "outbox failure rolls back all state"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 5,
+        "b": 0
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "conflict"
+      ],
+      "balances": {
+        "a": 3,
+        "b": 2
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "b",
+          2
+        ]
+      ]
+    },
+    "label": "changed amount conflicts"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 5,
+        "b": 0,
+        "c": 0
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "conflict"
+      ],
+      "balances": {
+        "a": 3,
+        "b": 2,
+        "c": 0
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "b",
+          2
+        ]
+      ]
+    },
+    "label": "changed destination conflicts"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 5,
+        "b": 5,
+        "c": 0
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "conflict"
+      ],
+      "balances": {
+        "a": 3,
+        "b": 5,
+        "c": 2
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "c",
+          2
+        ]
+      ]
+    },
+    "label": "changed source conflicts"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 2,
+        "b": 0
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "outbox"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "replay"
+      ],
+      "balances": {
+        "a": 0,
+        "b": 2
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "b",
+          2
+        ]
+      ]
+    },
+    "label": "replay precedes balance and fault checks"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 1,
+        "b": 4
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "fund",
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "insufficient",
+        "ok",
+        "ok"
+      ],
+      "balances": {
+        "a": 2,
+        "b": 3
+      },
+      "events": [
+        [
+          "fund",
+          "b",
+          "a",
+          3
+        ],
+        [
+          "k",
+          "a",
+          "b",
+          2
+        ]
+      ]
+    },
+    "label": "retry after incoming funds"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 10,
+        "b": 0
+      },
+      "payments": [
+        {
+          "key": "z",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "a",
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "a",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "failed",
+        "ok"
+      ],
+      "balances": {
+        "a": 5,
+        "b": 5
+      },
+      "events": [
+        [
+          "z",
+          "a",
+          "b",
+          3
+        ],
+        [
+          "a",
+          "a",
+          "b",
+          2
+        ]
+      ]
+    },
+    "label": "events preserve commit order and failed payload can change"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 1,
+        "b": 0
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "debit"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "insufficient"
+      ],
+      "balances": {
+        "a": 1,
+        "b": 0
+      },
+      "events": []
+    },
+    "label": "funds rejection precedes fault"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 5,
+        "b": 0
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "conflict"
+      ],
+      "balances": {
+        "a": 3,
+        "b": 2
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "b",
+          2
+        ]
+      ]
+    },
+    "label": "conflict precedes funds and fault"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 10,
+        "b": 0,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 2,
+        "b": 0,
+        "c": 13
+      },
+      "events": [
+        [
+          "l",
+          "a",
+          "c",
+          6
+        ],
+        [
+          "n",
+          "c",
+          "b",
+          1
+        ],
+        [
+          "m",
+          "b",
+          "a",
+          1
+        ],
+        [
+          "k",
+          "a",
+          "c",
+          3
+        ]
+      ],
+      "results": [
+        "insufficient",
+        "insufficient",
+        "ok",
+        "conflict",
+        "insufficient",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "insufficient",
+        "insufficient",
+        "conflict",
+        "ok",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 11,
+        "b": 1,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 14,
+        "b": 1,
+        "c": 2
+      },
+      "events": [
+        [
+          "l",
+          "c",
+          "a",
+          5
+        ],
+        [
+          "k",
+          "a",
+          "c",
+          6
+        ],
+        [
+          "n",
+          "c",
+          "a",
+          4
+        ]
+      ],
+      "results": [
+        "insufficient",
+        "failed",
+        "ok",
+        "conflict",
+        "insufficient",
+        "conflict",
+        "insufficient",
+        "conflict",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "failed",
+        "insufficient",
+        "conflict",
+        "insufficient",
+        "insufficient",
+        "conflict",
+        "insufficient",
+        "ok",
+        "conflict",
+        "conflict",
+        "insufficient"
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 12,
+        "b": 2,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "outbox"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 8,
+        "b": 3,
+        "c": 8
+      },
+      "events": [
+        [
+          "l",
+          "c",
+          "b",
+          1
+        ],
+        [
+          "k",
+          "a",
+          "c",
+          4
+        ]
+      ],
+      "results": [
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "failed",
+        "failed",
+        "failed",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "ok",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "failed",
+        "failed",
+        "conflict",
+        "insufficient",
+        "ok",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 13,
+        "b": 3,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 11,
+        "b": 2,
+        "c": 8
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "b",
+          4
+        ],
+        [
+          "l",
+          "a",
+          "b",
+          5
+        ],
+        [
+          "n",
+          "b",
+          "a",
+          7
+        ],
+        [
+          "m",
+          "b",
+          "c",
+          3
+        ]
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "ok",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 14,
+        "b": 4,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 8,
+        "b": 5,
+        "c": 10
+      },
+      "events": [
+        [
+          "k",
+          "c",
+          "b",
+          1
+        ],
+        [
+          "m",
+          "a",
+          "c",
+          6
+        ]
+      ],
+      "results": [
+        "failed",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "failed",
+        "insufficient",
+        "conflict",
+        "failed",
+        "failed",
+        "insufficient",
+        "conflict",
+        "ok",
+        "insufficient",
+        "conflict",
+        "insufficient",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "insufficient",
+        "failed",
+        "conflict",
+        "failed",
+        "insufficient",
+        "failed",
+        "conflict"
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 15,
+        "b": 5,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 18,
+        "b": 7,
+        "c": 0
+      },
+      "events": [
+        [
+          "k",
+          "b",
+          "c",
+          2
+        ],
+        [
+          "l",
+          "b",
+          "a",
+          3
+        ],
+        [
+          "n",
+          "c",
+          "b",
+          7
+        ]
+      ],
+      "results": [
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "insufficient",
+        "failed",
+        "failed",
+        "failed",
+        "insufficient",
+        "failed",
+        "ok",
+        "ok",
+        "conflict",
+        "insufficient",
+        "insufficient",
+        "conflict"
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 16,
+        "b": 6,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 9,
+        "b": 12,
+        "c": 6
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "b",
+          9
+        ],
+        [
+          "n",
+          "b",
+          "c",
+          1
+        ],
+        [
+          "l",
+          "a",
+          "b",
+          4
+        ],
+        [
+          "m",
+          "b",
+          "a",
+          6
+        ]
+      ],
+      "results": [
+        "failed",
+        "insufficient",
+        "ok",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "insufficient",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 17,
+        "b": 7,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 14,
+        "b": 2,
+        "c": 13
+      },
+      "events": [
+        [
+          "m",
+          "b",
+          "c",
+          3
+        ],
+        [
+          "k",
+          "a",
+          "c",
+          2
+        ],
+        [
+          "l",
+          "a",
+          "c",
+          3
+        ],
+        [
+          "n",
+          "b",
+          "a",
+          2
+        ]
+      ],
+      "results": [
+        "insufficient",
+        "failed",
+        "insufficient",
+        "ok",
+        "conflict",
+        "insufficient",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "failed",
+        "ok",
+        "insufficient",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "insufficient",
+        "ok"
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 18,
+        "b": 8,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 14,
+        "b": 5,
+        "c": 12
+      },
+      "events": [
+        [
+          "n",
+          "b",
+          "c",
+          5
+        ],
+        [
+          "k",
+          "c",
+          "a",
+          1
+        ],
+        [
+          "m",
+          "b",
+          "c",
+          3
+        ],
+        [
+          "l",
+          "a",
+          "b",
+          5
+        ]
+      ],
+      "results": [
+        "ok",
+        "ok",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 19,
+        "b": 9,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 23,
+        "b": 0,
+        "c": 10
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "c",
+          3
+        ],
+        [
+          "m",
+          "b",
+          "c",
+          9
+        ],
+        [
+          "l",
+          "c",
+          "a",
+          7
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "failed",
+        "insufficient",
+        "conflict",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "failed",
+        "insufficient",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 20,
+        "b": 10,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "outbox"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 9,
+        "b": 21,
+        "c": 5
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "c",
+          8
+        ],
+        [
+          "m",
+          "a",
+          "b",
+          2
+        ],
+        [
+          "n",
+          "c",
+          "b",
+          9
+        ],
+        [
+          "l",
+          "a",
+          "c",
+          1
+        ]
+      ],
+      "results": [
+        "insufficient",
+        "insufficient",
+        "ok",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict",
+        "insufficient",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "insufficient",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 21,
+        "b": 11,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": "debit"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 2,
+        "b": 19,
+        "c": 16
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "c",
+          5
+        ],
+        [
+          "n",
+          "a",
+          "b",
+          8
+        ],
+        [
+          "m",
+          "a",
+          "c",
+          6
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "insufficient",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 22,
+        "b": 12,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": "outbox"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 6,
+        "b": 14,
+        "c": 19
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "c",
+          3
+        ],
+        [
+          "n",
+          "a",
+          "c",
+          2
+        ],
+        [
+          "l",
+          "a",
+          "c",
+          9
+        ],
+        [
+          "m",
+          "a",
+          "b",
+          2
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 23,
+        "b": 13,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "debit"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 24,
+        "b": 12,
+        "c": 5
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "b",
+          9
+        ],
+        [
+          "l",
+          "b",
+          "a",
+          7
+        ],
+        [
+          "n",
+          "a",
+          "b",
+          5
+        ],
+        [
+          "m",
+          "b",
+          "a",
+          8
+        ]
+      ],
+      "results": [
+        "ok",
+        "conflict",
+        "failed",
+        "insufficient",
+        "conflict",
+        "failed",
+        "insufficient",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 24,
+        "b": 14,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 23,
+        "b": 12,
+        "c": 8
+      },
+      "events": [
+        [
+          "n",
+          "a",
+          "c",
+          6
+        ],
+        [
+          "l",
+          "b",
+          "a",
+          2
+        ],
+        [
+          "m",
+          "c",
+          "a",
+          9
+        ],
+        [
+          "k",
+          "a",
+          "c",
+          6
+        ]
+      ],
+      "results": [
+        "insufficient",
+        "failed",
+        "insufficient",
+        "ok",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "failed",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict"
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 25,
+        "b": 15,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "debit"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 30,
+        "b": 1,
+        "c": 14
+      },
+      "events": [
+        [
+          "k",
+          "b",
+          "c",
+          7
+        ],
+        [
+          "n",
+          "b",
+          "a",
+          7
+        ],
+        [
+          "m",
+          "a",
+          "c",
+          2
+        ]
+      ],
+      "results": [
+        "insufficient",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "ok",
+        "insufficient",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "insufficient",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 26,
+        "b": 16,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "outbox"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 20,
+        "b": 18,
+        "c": 9
+      },
+      "events": [
+        [
+          "n",
+          "a",
+          "b",
+          4
+        ],
+        [
+          "k",
+          "b",
+          "c",
+          1
+        ],
+        [
+          "m",
+          "b",
+          "c",
+          1
+        ],
+        [
+          "l",
+          "a",
+          "c",
+          2
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "failed",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "failed",
+        "ok",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "insufficient",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 27,
+        "b": 17,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 31,
+        "b": 4,
+        "c": 14
+      },
+      "events": [
+        [
+          "k",
+          "b",
+          "c",
+          8
+        ],
+        [
+          "n",
+          "b",
+          "a",
+          4
+        ],
+        [
+          "m",
+          "c",
+          "b",
+          2
+        ],
+        [
+          "l",
+          "b",
+          "c",
+          3
+        ]
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-18"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 28,
+        "b": 18,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "none"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 17,
+        "b": 20,
+        "c": 14
+      },
+      "events": [
+        [
+          "l",
+          "a",
+          "c",
+          6
+        ],
+        [
+          "n",
+          "b",
+          "c",
+          3
+        ],
+        [
+          "m",
+          "a",
+          "b",
+          7
+        ],
+        [
+          "k",
+          "b",
+          "a",
+          2
+        ]
+      ],
+      "results": [
+        "ok",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-19"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 29,
+        "b": 19,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "debit"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 30,
+        "b": 17,
+        "c": 6
+      },
+      "events": [
+        [
+          "k",
+          "a",
+          "c",
+          1
+        ],
+        [
+          "m",
+          "a",
+          "b",
+          1
+        ],
+        [
+          "n",
+          "b",
+          "a",
+          8
+        ],
+        [
+          "l",
+          "a",
+          "b",
+          5
+        ]
+      ],
+      "results": [
+        "ok",
+        "conflict",
+        "failed",
+        "failed",
+        "failed",
+        "replay",
+        "conflict",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-20"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 30,
+        "b": 20,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "debit"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 25,
+        "b": 29,
+        "c": 1
+      },
+      "events": [
+        [
+          "m",
+          "a",
+          "b",
+          3
+        ],
+        [
+          "n",
+          "a",
+          "b",
+          2
+        ],
+        [
+          "k",
+          "c",
+          "b",
+          4
+        ]
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "ok",
+        "conflict",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict"
+      ]
+    },
+    "label": "additional-21"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 31,
+        "b": 21,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": "outbox"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 19,
+        "b": 27,
+        "c": 11
+      },
+      "events": [
+        [
+          "l",
+          "c",
+          "b",
+          1
+        ],
+        [
+          "k",
+          "a",
+          "b",
+          5
+        ],
+        [
+          "m",
+          "a",
+          "c",
+          6
+        ],
+        [
+          "n",
+          "a",
+          "c",
+          1
+        ]
+      ],
+      "results": [
+        "failed",
+        "ok",
+        "conflict",
+        "failed",
+        "conflict",
+        "failed",
+        "ok",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-22"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 32,
+        "b": 22,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 3,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": "debit"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 34,
+        "b": 20,
+        "c": 5
+      },
+      "events": [
+        [
+          "m",
+          "b",
+          "a",
+          2
+        ],
+        [
+          "n",
+          "a",
+          "c",
+          9
+        ],
+        [
+          "k",
+          "c",
+          "a",
+          9
+        ]
+      ],
+      "results": [
+        "insufficient",
+        "failed",
+        "ok",
+        "failed",
+        "conflict",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "conflict",
+        "ok",
+        "failed",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "conflict",
+        "failed",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-23"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 33,
+        "b": 23,
+        "c": 5
+      },
+      "payments": [
+        {
+          "key": "m",
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "a",
+          "amount": 2,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": "outbox"
+        },
+        {
+          "key": "n",
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": "outbox"
+        },
+        {
+          "key": "m",
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": "debit"
+        },
+        {
+          "key": "l",
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": "debit"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": "none"
+        },
+        {
+          "key": "n",
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": "none"
+        },
+        {
+          "key": "m",
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": "debit"
+        },
+        {
+          "key": "n",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "none"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": "outbox"
+        },
+        {
+          "key": "k",
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": "none"
+        },
+        {
+          "key": "l",
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": "debit"
+        },
+        {
+          "key": "k",
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": "debit"
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 50,
+        "b": 7,
+        "c": 4
+      },
+      "events": [
+        [
+          "l",
+          "b",
+          "c",
+          8
+        ],
+        [
+          "m",
+          "c",
+          "a",
+          2
+        ],
+        [
+          "n",
+          "c",
+          "a",
+          7
+        ],
+        [
+          "k",
+          "b",
+          "a",
+          8
+        ]
+      ],
+      "results": [
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "failed",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "failed",
+        "failed",
+        "conflict",
+        "failed",
+        "conflict",
+        "conflict",
+        "conflict",
+        "ok",
+        "conflict",
+        "conflict",
+        "failed",
+        "ok",
+        "conflict",
+        "conflict"
+      ]
+    },
+    "label": "additional-24"
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "payload": "{\"actions\":[{\"cents\":7,\"op\":\"withdraw\"},{\"cents\":4,\"op\":\"withdraw\"}],\"balance\":10}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":5,\"op\":\"deposit\"},{\"cents\":5,\"op\":\"withdraw\"}],\"balance\":0}"
+  },
+  {
+    "payload": "{\"actions\":[],\"balance\":9}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":0}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":1,\"op\":\"withdraw\"}],\"balance\":0}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":0,\"op\":\"deposit\"}],\"balance\":10}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":10,\"op\":\"withdraw\"}],\"balance\":10}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":2,\"op\":\"withdraw\"},{\"cents\":1,\"op\":\"deposit\"},{\"cents\":2,\"op\":\"withdraw\"}],\"balance\":1}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":6,\"op\":\"withdraw\"},{\"cents\":6,\"op\":\"withdraw\"}],\"balance\":5}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":1,\"op\":\"deposit\"},{\"cents\":2,\"op\":\"deposit\"},{\"cents\":3,\"op\":\"deposit\"}],\"balance\":0}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":1,\"op\":\"withdraw\"},{\"cents\":2,\"op\":\"deposit\"}],\"balance\":1000000000000}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":1,\"op\":\"withdraw\"},{\"cents\":1,\"op\":\"withdraw\"},{\"cents\":1,\"op\":\"withdraw\"},{\"cents\":1,\"op\":\"withdraw\"}],\"balance\":3}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":21,\"op\":\"withdraw\"},{\"cents\":20,\"op\":\"withdraw\"},{\"cents\":0,\"op\":\"deposit\"},{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":20}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":22,\"op\":\"withdraw\"},{\"cents\":21,\"op\":\"withdraw\"},{\"cents\":1,\"op\":\"deposit\"},{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":21}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":23,\"op\":\"withdraw\"},{\"cents\":22,\"op\":\"withdraw\"},{\"cents\":2,\"op\":\"deposit\"},{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":22}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":24,\"op\":\"withdraw\"},{\"cents\":23,\"op\":\"withdraw\"},{\"cents\":3,\"op\":\"deposit\"},{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":23}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":25,\"op\":\"withdraw\"},{\"cents\":24,\"op\":\"withdraw\"},{\"cents\":4,\"op\":\"deposit\"},{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":24}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":26,\"op\":\"withdraw\"},{\"cents\":25,\"op\":\"withdraw\"},{\"cents\":5,\"op\":\"deposit\"},{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":25}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":27,\"op\":\"withdraw\"},{\"cents\":26,\"op\":\"withdraw\"},{\"cents\":6,\"op\":\"deposit\"},{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":26}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":28,\"op\":\"withdraw\"},{\"cents\":27,\"op\":\"withdraw\"},{\"cents\":7,\"op\":\"deposit\"},{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":27}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":29,\"op\":\"withdraw\"},{\"cents\":28,\"op\":\"withdraw\"},{\"cents\":8,\"op\":\"deposit\"},{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":28}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":30,\"op\":\"withdraw\"},{\"cents\":29,\"op\":\"withdraw\"},{\"cents\":9,\"op\":\"deposit\"},{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":29}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":31,\"op\":\"withdraw\"},{\"cents\":30,\"op\":\"withdraw\"},{\"cents\":10,\"op\":\"deposit\"},{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":30}"
+  },
+  {
+    "payload": "{\"actions\":[{\"cents\":32,\"op\":\"withdraw\"},{\"cents\":31,\"op\":\"withdraw\"},{\"cents\":11,\"op\":\"deposit\"},{\"cents\":0,\"op\":\"withdraw\"}],\"balance\":31}"
+  }
+]

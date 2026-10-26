@@ -1,0 +1,3860 @@
+[
+  {
+    "input": {
+      "balances": {
+        "a": 10,
+        "b": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok"
+      ],
+      "balances": {
+        "a": 6,
+        "b": 4
+      }
+    },
+    "label": "transfer commits both entries"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 10,
+        "b": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "failed"
+      ],
+      "balances": {
+        "a": 10,
+        "b": 0
+      }
+    },
+    "label": "failure restores debit"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 3,
+        "b": 2
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "insufficient"
+      ],
+      "balances": {
+        "a": 3,
+        "b": 2
+      }
+    },
+    "label": "insufficient funds change neither balance"
+  },
+  {
+    "input": {
+      "balances": {},
+      "transfers": []
+    },
+    "expected": {
+      "results": [],
+      "balances": {}
+    },
+    "label": "empty ledger"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 8
+      },
+      "transfers": []
+    },
+    "expected": {
+      "results": [],
+      "balances": {
+        "a": 8
+      }
+    },
+    "label": "account without transfers"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 5,
+        "b": 1
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok"
+      ],
+      "balances": {
+        "a": 0,
+        "b": 6
+      }
+    },
+    "label": "exact balance"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 0,
+        "b": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 1,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "insufficient"
+      ],
+      "balances": {
+        "a": 0,
+        "b": 0
+      }
+    },
+    "label": "zero balance"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 5,
+        "b": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "failed",
+        "ok"
+      ],
+      "balances": {
+        "a": 0,
+        "b": 5
+      }
+    },
+    "label": "retry after rollback"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 5,
+        "b": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "insufficient"
+      ],
+      "balances": {
+        "a": 1,
+        "b": 4
+      }
+    },
+    "label": "prior commit survives rejection"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 5,
+        "b": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "ok"
+      ],
+      "balances": {
+        "a": 3,
+        "b": 2
+      }
+    },
+    "label": "reverse transfer"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 1,
+        "b": 9,
+        "c": 4
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 3,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "insufficient",
+        "ok"
+      ],
+      "balances": {
+        "a": 1,
+        "b": 12,
+        "c": 1
+      }
+    },
+    "label": "validation precedes fault and isolates accounts"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 10,
+        "b": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "results": [
+        "ok",
+        "failed",
+        "ok"
+      ],
+      "balances": {
+        "a": 1,
+        "b": 9
+      }
+    },
+    "label": "rollback preserves earlier commit"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 20,
+        "b": 0,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 11,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 29,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 12,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 19,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 12,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 23,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 23,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 29,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 14,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 30,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 15,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 24,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 23,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 8,
+        "b": 12,
+        "c": 0
+      },
+      "results": [
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient"
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 21,
+        "b": 1,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 12,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 16,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 10,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 13,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 13,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 27,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 15,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 22,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 21,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 16,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 14,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 12,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 9,
+        "b": 13,
+        "c": 0
+      },
+      "results": [
+        "ok",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "failed",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient"
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 22,
+        "b": 2,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 20,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 13,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 22,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 16,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 13,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 24,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 30,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 21,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 12,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 17,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 11,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 13,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 19,
+        "b": 2,
+        "c": 3
+      },
+      "results": [
+        "insufficient",
+        "failed",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed"
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 23,
+        "b": 3,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 24,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 13,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 10,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 25,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 15,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 15,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 23,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 25,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 21,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 29,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 17,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 12,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 16,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 23,
+        "b": 3,
+        "c": 0
+      },
+      "results": [
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient"
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 24,
+        "b": 4,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 17,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 12,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 22,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 22,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 22,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 30,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 26,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 12,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 16,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 20,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 12,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 12,
+        "b": 16,
+        "c": 0
+      },
+      "results": [
+        "insufficient",
+        "failed",
+        "insufficient",
+        "failed",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "failed",
+        "failed"
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 25,
+        "b": 5,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 23,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 29,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 22,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 27,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 26,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 27,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 12,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 23,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 19,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 17,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 12,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 10,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 18,
+        "b": 5,
+        "c": 7
+      },
+      "results": [
+        "insufficient",
+        "insufficient",
+        "ok",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient"
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 26,
+        "b": 6,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 12,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 17,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 17,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 26,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 12,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 28,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 16,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 11,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 15,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 30,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 12,
+        "b": 16,
+        "c": 4
+      },
+      "results": [
+        "ok",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "failed",
+        "insufficient",
+        "failed",
+        "insufficient"
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 27,
+        "b": 7,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 21,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 28,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 19,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 28,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 13,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 19,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 28,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 15,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 21,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 12,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 25,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 24,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 21,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 14,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 19,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 24,
+        "b": 7,
+        "c": 3
+      },
+      "results": [
+        "insufficient",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "failed",
+        "insufficient",
+        "failed",
+        "failed",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed"
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 28,
+        "b": 8,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 21,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 26,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 14,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 25,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 11,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 28,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 12,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 10,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 20,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 22,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 18,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 23,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 19,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 11,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 10,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 15,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 27,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 28,
+        "b": 8,
+        "c": 0
+      },
+      "results": [
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient"
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 29,
+        "b": 9,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 12,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 13,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 29,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 13,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 10,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 22,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 20,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 8,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 12,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 20,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 17,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 13,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 28,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 17,
+        "b": 3,
+        "c": 18
+      },
+      "results": [
+        "ok",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "ok",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient"
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 30,
+        "b": 10,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 13,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 26,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 26,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 24,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 19,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 23,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 29,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 23,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 27,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 18,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 11,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 17,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 21,
+        "b": 17,
+        "c": 2
+      },
+      "results": [
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "ok",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "ok",
+        "ok",
+        "failed",
+        "insufficient",
+        "failed",
+        "failed",
+        "failed"
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 31,
+        "b": 11,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 15,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 16,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 18,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 15,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 24,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 17,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 23,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 18,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 18,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 24,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 20,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 12,
+        "b": 5,
+        "c": 25
+      },
+      "results": [
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "ok",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "failed",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "failed"
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 32,
+        "b": 12,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 28,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 25,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 20,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 16,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 17,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 19,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 13,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 29,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 13,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 9,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 32,
+        "b": 12,
+        "c": 0
+      },
+      "results": [
+        "failed",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient"
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 33,
+        "b": 13,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 20,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 28,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 11,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 11,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 10,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 30,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 21,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 22,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 14,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 9,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 21,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 29,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 7,
+        "b": 13,
+        "c": 26
+      },
+      "results": [
+        "insufficient",
+        "ok",
+        "failed",
+        "failed",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "ok",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient"
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 34,
+        "b": 14,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 9,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 21,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 23,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 29,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 14,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 19,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 25,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 16,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 14,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 29,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 30,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 2,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 17,
+        "b": 31,
+        "c": 0
+      },
+      "results": [
+        "failed",
+        "ok",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "insufficient"
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 35,
+        "b": 15,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 28,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 14,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 12,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 28,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 24,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 23,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 10,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 28,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 27,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 23,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 27,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 17,
+        "b": 22,
+        "c": 11
+      },
+      "results": [
+        "ok",
+        "insufficient",
+        "ok",
+        "ok",
+        "ok",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "failed",
+        "failed",
+        "ok",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "failed",
+        "ok",
+        "ok",
+        "insufficient"
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 36,
+        "b": 16,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 22,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 25,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 9,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 12,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 12,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 16,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 13,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 19,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 27,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 11,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 3,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 43,
+        "b": 9,
+        "c": 0
+      },
+      "results": [
+        "failed",
+        "insufficient",
+        "failed",
+        "failed",
+        "insufficient",
+        "failed",
+        "failed",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient"
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 37,
+        "b": 17,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 21,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 23,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 20,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 21,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 26,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 17,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 19,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 16,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 9,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 24,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 12,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 9,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 28,
+        "b": 26,
+        "c": 0
+      },
+      "results": [
+        "insufficient",
+        "failed",
+        "failed",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "ok",
+        "failed",
+        "failed",
+        "failed",
+        "insufficient",
+        "failed",
+        "ok",
+        "ok",
+        "insufficient",
+        "ok",
+        "failed",
+        "ok"
+      ]
+    },
+    "label": "additional-18"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 38,
+        "b": 18,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 23,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 27,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 24,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 28,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 26,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 21,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 30,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 5,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 16,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 17,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 24,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 18,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 18,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 26,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 29,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 0,
+        "b": 23,
+        "c": 33
+      },
+      "results": [
+        "insufficient",
+        "ok",
+        "ok",
+        "ok",
+        "ok",
+        "ok",
+        "failed",
+        "insufficient",
+        "ok",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "ok",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "insufficient"
+      ]
+    },
+    "label": "additional-19"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 39,
+        "b": 19,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 29,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 29,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 8,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 27,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 8,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 16,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 12,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 15,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 2,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 18,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 20,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 4,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 28,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 47,
+        "b": 11,
+        "c": 0
+      },
+      "results": [
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "failed",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient"
+      ]
+    },
+    "label": "additional-20"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 40,
+        "b": 20,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 17,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 23,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 29,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 19,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 13,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 24,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 20,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 19,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 1,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 8,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 17,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 19,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 15,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 16,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 17,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 2,
+        "b": 57,
+        "c": 1
+      },
+      "results": [
+        "ok",
+        "ok",
+        "insufficient",
+        "failed",
+        "ok",
+        "failed",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "failed"
+      ]
+    },
+    "label": "additional-21"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 41,
+        "b": 21,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 11,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 20,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 25,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 20,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 24,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 12,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 19,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 27,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 14,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 17,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 23,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 1,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 30,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 28,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 5,
+        "b": 20,
+        "c": 37
+      },
+      "results": [
+        "failed",
+        "insufficient",
+        "ok",
+        "ok",
+        "failed",
+        "ok",
+        "ok",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "failed",
+        "failed",
+        "insufficient",
+        "failed",
+        "failed"
+      ]
+    },
+    "label": "additional-22"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 42,
+        "b": 22,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 29,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 11,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 30,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 20,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 15,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 4,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 26,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 16,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 12,
+          "fail": false
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "amount": 21,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 28,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 7,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 25,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 10,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 27,
+          "fail": false
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 20,
+        "b": 44,
+        "c": 0
+      },
+      "results": [
+        "insufficient",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "failed",
+        "failed",
+        "failed",
+        "ok",
+        "insufficient",
+        "failed",
+        "ok",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "ok",
+        "insufficient",
+        "insufficient",
+        "insufficient"
+      ]
+    },
+    "label": "additional-23"
+  },
+  {
+    "input": {
+      "balances": {
+        "a": 43,
+        "b": 23,
+        "c": 0
+      },
+      "transfers": [
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 7,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 3,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 13,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 23,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 15,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 20,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 22,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 6,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 10,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 6,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 24,
+          "fail": true
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "amount": 19,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "amount": 22,
+          "fail": false
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "amount": 5,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": true
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "amount": 15,
+          "fail": false
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 8,
+          "fail": true
+        },
+        {
+          "from": "a",
+          "to": "c",
+          "amount": 6,
+          "fail": true
+        }
+      ]
+    },
+    "expected": {
+      "balances": {
+        "a": 40,
+        "b": 26,
+        "c": 0
+      },
+      "results": [
+        "insufficient",
+        "failed",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "insufficient",
+        "failed",
+        "failed",
+        "insufficient",
+        "ok",
+        "ok",
+        "insufficient",
+        "failed",
+        "insufficient",
+        "failed",
+        "failed"
+      ]
+    },
+    "label": "additional-24"
+  }
+]

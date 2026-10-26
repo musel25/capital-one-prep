@@ -1,0 +1,534 @@
+[
+  {
+    "input": {
+      "kind": "standard",
+      "balance": 20,
+      "fee": 2,
+      "threshold": 10,
+      "withdrawals": [
+        10,
+        8
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false
+      ],
+      "balance": 8
+    },
+    "label": "fee is part of the funds check"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 20,
+      "fee": 2,
+      "threshold": 10,
+      "withdrawals": [
+        10,
+        8
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true
+      ],
+      "balance": 0
+    },
+    "label": "premium fee override"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 10,
+      "fee": 3,
+      "threshold": 10,
+      "withdrawals": []
+    },
+    "expected": {
+      "accepted": [],
+      "balance": 10
+    },
+    "label": "no withdrawals"
+  },
+  {
+    "input": {
+      "kind": "standard",
+      "balance": 0,
+      "fee": 0,
+      "threshold": 0,
+      "withdrawals": [
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false
+      ],
+      "balance": 0
+    },
+    "label": "empty account"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 10,
+      "fee": 3,
+      "threshold": 10,
+      "withdrawals": [
+        10
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balance": 0
+    },
+    "label": "threshold equality waives fee"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 10,
+      "fee": 3,
+      "threshold": 10,
+      "withdrawals": [
+        9
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false
+      ],
+      "balance": 10
+    },
+    "label": "below threshold still pays fee"
+  },
+  {
+    "input": {
+      "kind": "standard",
+      "balance": 12,
+      "fee": 2,
+      "threshold": 0,
+      "withdrawals": [
+        10
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balance": 0
+    },
+    "label": "exact amount plus fee"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 5,
+      "fee": 100,
+      "threshold": 0,
+      "withdrawals": [
+        5
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balance": 0
+    },
+    "label": "zero threshold"
+  },
+  {
+    "input": {
+      "kind": "standard",
+      "balance": 10,
+      "fee": 0,
+      "threshold": 100,
+      "withdrawals": [
+        5,
+        5
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true
+      ],
+      "balance": 0
+    },
+    "label": "zero fee"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 10,
+      "fee": 1,
+      "threshold": 100,
+      "withdrawals": [
+        11,
+        9
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true
+      ],
+      "balance": 0
+    },
+    "label": "failure charges nothing"
+  },
+  {
+    "input": {
+      "kind": "standard",
+      "balance": 10,
+      "fee": 1,
+      "threshold": 1,
+      "withdrawals": [
+        10,
+        9
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true
+      ],
+      "balance": 0
+    },
+    "label": "standard ignores threshold"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 30,
+      "fee": 2,
+      "threshold": 10,
+      "withdrawals": [
+        5,
+        10,
+        5
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true
+      ],
+      "balance": 6
+    },
+    "label": "mixed waived and charged fees"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 1000000000000,
+      "fee": 10,
+      "threshold": 1000000000000,
+      "withdrawals": [
+        1000000000000
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balance": 0
+    },
+    "label": "large threshold boundary"
+  },
+  {
+    "input": {
+      "kind": "standard",
+      "balance": 30,
+      "fee": 0,
+      "threshold": 5,
+      "withdrawals": [
+        4,
+        5,
+        20,
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balance": 0
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 37,
+      "fee": 1,
+      "threshold": 6,
+      "withdrawals": [
+        5,
+        6,
+        21,
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balance": 2
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "kind": "standard",
+      "balance": 44,
+      "fee": 2,
+      "threshold": 7,
+      "withdrawals": [
+        6,
+        7,
+        22,
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balance": 0
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 51,
+      "fee": 3,
+      "threshold": 8,
+      "withdrawals": [
+        7,
+        8,
+        23,
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balance": 6
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "kind": "standard",
+      "balance": 58,
+      "fee": 0,
+      "threshold": 9,
+      "withdrawals": [
+        8,
+        9,
+        24,
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balance": 16
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 65,
+      "fee": 1,
+      "threshold": 10,
+      "withdrawals": [
+        9,
+        10,
+        25,
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balance": 18
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "kind": "standard",
+      "balance": 72,
+      "fee": 2,
+      "threshold": 11,
+      "withdrawals": [
+        10,
+        11,
+        26,
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balance": 16
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 79,
+      "fee": 3,
+      "threshold": 12,
+      "withdrawals": [
+        11,
+        12,
+        27,
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balance": 22
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "kind": "standard",
+      "balance": 86,
+      "fee": 0,
+      "threshold": 13,
+      "withdrawals": [
+        12,
+        13,
+        28,
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balance": 32
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 93,
+      "fee": 1,
+      "threshold": 14,
+      "withdrawals": [
+        13,
+        14,
+        29,
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balance": 34
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "kind": "standard",
+      "balance": 100,
+      "fee": 2,
+      "threshold": 15,
+      "withdrawals": [
+        14,
+        15,
+        30,
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balance": 32
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "kind": "premium",
+      "balance": 107,
+      "fee": 3,
+      "threshold": 16,
+      "withdrawals": [
+        15,
+        16,
+        31,
+        1
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balance": 38
+    },
+    "label": "additional-12"
+  }
+]

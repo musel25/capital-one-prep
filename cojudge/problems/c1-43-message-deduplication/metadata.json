@@ -1,0 +1,50 @@
+{
+  "id": "c1-43-message-deduplication",
+  "title": "43. Deduplicate at-least-once message delivery",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "05-system-components",
+  "examples": [
+    {
+      "input": "{\"total\": 0, \"deliveries\": [{\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}, {\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}]}",
+      "output": "{\"results\": [\"ack\", \"ack\"], \"total\": 2, \"processed\": [\"a\"]}",
+      "explanation": "duplicate delivery has one effect"
+    },
+    {
+      "input": "{\"total\": 0, \"deliveries\": [{\"id\": \"a\", \"amount\": 2, \"fail\": \"before\"}, {\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}]}",
+      "output": "{\"results\": [\"retry\", \"ack\"], \"total\": 2, \"processed\": [\"a\"]}",
+      "explanation": "failure before commit can retry"
+    },
+    {
+      "input": "{\"total\": 0, \"deliveries\": [{\"id\": \"a\", \"amount\": 2, \"fail\": \"after\"}, {\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}]}",
+      "output": "{\"results\": [\"retry\", \"ack\"], \"total\": 2, \"processed\": [\"a\"]}",
+      "explanation": "lost acknowledgement after commit"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    # Model atomic effect + processed ID, then acknowledgement.\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"deliveries\":[{\"amount\":2,\"fail\":\"none\",\"id\":\"a\"},{\"amount\":2,\"fail\":\"none\",\"id\":\"a\"}],\"total\":0}"
+    },
+    {
+      "payload": "{\"deliveries\":[{\"amount\":2,\"fail\":\"before\",\"id\":\"a\"},{\"amount\":2,\"fail\":\"none\",\"id\":\"a\"}],\"total\":0}"
+    },
+    {
+      "payload": "{\"deliveries\":[{\"amount\":2,\"fail\":\"after\",\"id\":\"a\"},{\"amount\":2,\"fail\":\"none\",\"id\":\"a\"}],\"total\":0}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "An acknowledgement can fail after the effect is already durable in the model.",
+    "Only the before failure leaves the ID unprocessed."
+  ]
+}

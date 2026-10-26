@@ -1,0 +1,1649 @@
+[
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 3,
+          "amount": 20,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 1,
+          "amount": 20,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 10,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": 0,
+      "limit": 2
+    },
+    "expected": [
+      {
+        "id": 1,
+        "amount": 20
+      },
+      {
+        "id": 3,
+        "amount": 20
+      }
+    ],
+    "label": "sort before taking limit"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 5,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 9,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "O'Reilly",
+      "minimum": 0,
+      "limit": 10
+    },
+    "expected": [
+      {
+        "id": 1,
+        "amount": 5
+      }
+    ],
+    "label": "quoted owner is a bound value"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 10,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 9,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 3,
+          "amount": 20,
+          "owner": "a",
+          "posted": false
+        }
+      ],
+      "owner": "a",
+      "minimum": 10,
+      "limit": 10
+    },
+    "expected": [
+      {
+        "id": 1,
+        "amount": 10
+      }
+    ],
+    "label": "inclusive minimum and posted filter"
+  },
+  {
+    "input": {
+      "rows": [],
+      "owner": "a",
+      "minimum": 0,
+      "limit": 10
+    },
+    "expected": [],
+    "label": "empty table"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 1,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": 0,
+      "limit": 0
+    },
+    "expected": [],
+    "label": "zero row limit"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 1,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": 0,
+      "limit": 10
+    },
+    "expected": [
+      {
+        "id": 1,
+        "amount": 1
+      }
+    ],
+    "label": "single match"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 1,
+          "owner": "b",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": 0,
+      "limit": 10
+    },
+    "expected": [],
+    "label": "other owner"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 1,
+          "owner": "a",
+          "posted": false
+        }
+      ],
+      "owner": "a",
+      "minimum": 0,
+      "limit": 10
+    },
+    "expected": [],
+    "label": "pending transfer"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": -2,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 0,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 3,
+          "amount": -5,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": -2,
+      "limit": 10
+    },
+    "expected": [
+      {
+        "id": 2,
+        "amount": 0
+      },
+      {
+        "id": 1,
+        "amount": -2
+      }
+    ],
+    "label": "negative amount boundary"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 2,
+          "owner": "A",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 1,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": 0,
+      "limit": 10
+    },
+    "expected": [
+      {
+        "id": 2,
+        "amount": 1
+      }
+    ],
+    "label": "owner is case sensitive"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 100,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 99,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": 101,
+      "limit": 10
+    },
+    "expected": [],
+    "label": "minimum above all rows"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 5,
+          "owner": "' OR 1=1 --",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 99,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "' OR 1=1 --",
+      "minimum": 0,
+      "limit": 10
+    },
+    "expected": [
+      {
+        "id": 1,
+        "amount": 5
+      }
+    ],
+    "label": "SQL-looking text is data"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 10,
+          "amount": 5,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 5,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": 0,
+      "limit": 10
+    },
+    "expected": [
+      {
+        "id": 2,
+        "amount": 5
+      },
+      {
+        "id": 10,
+        "amount": 5
+      }
+    ],
+    "label": "numeric id tie break"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 0,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": -1,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": 0,
+      "limit": 10
+    },
+    "expected": [
+      {
+        "id": 1,
+        "amount": 0
+      }
+    ],
+    "label": "zero amount meets zero minimum"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": -10,
+          "owner": "b",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": -8,
+      "limit": 0
+    },
+    "expected": [],
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 5,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 2,
+          "amount": -7,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "b",
+      "minimum": -7,
+      "limit": 1
+    },
+    "expected": [],
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 14,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 2,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 3,
+          "amount": -6,
+          "owner": "O'Reilly",
+          "posted": true
+        }
+      ],
+      "owner": "O'Reilly",
+      "minimum": -6,
+      "limit": 2
+    },
+    "expected": [
+      {
+        "amount": -6,
+        "id": 3
+      }
+    ],
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 11,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 2,
+          "amount": -9,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 3,
+          "amount": -6,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 4,
+          "amount": 20,
+          "owner": "b",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": -5,
+      "limit": 3
+    },
+    "expected": [],
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": -7,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 7,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 3,
+          "amount": -3,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 4,
+          "amount": 12,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 5,
+          "amount": 14,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "b",
+      "minimum": -4,
+      "limit": 4
+    },
+    "expected": [
+      {
+        "amount": -3,
+        "id": 3
+      }
+    ],
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": -6,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 2,
+          "amount": -6,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 3,
+          "amount": 13,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 4,
+          "amount": -9,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 5,
+          "amount": 11,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 6,
+          "amount": -9,
+          "owner": "O'Reilly",
+          "posted": true
+        }
+      ],
+      "owner": "O'Reilly",
+      "minimum": -3,
+      "limit": 5
+    },
+    "expected": [],
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": -6,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": -3,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 3,
+          "amount": 7,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 4,
+          "amount": 13,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 5,
+          "amount": 4,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 6,
+          "amount": 6,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 7,
+          "amount": 3,
+          "owner": "b",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": -2,
+      "limit": 0
+    },
+    "expected": [],
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": -4,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 2,
+          "amount": 8,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 3,
+          "amount": -8,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 4,
+          "amount": -7,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 5,
+          "amount": -10,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 6,
+          "amount": 14,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 7,
+          "amount": 20,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 8,
+          "amount": 18,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "b",
+      "minimum": -1,
+      "limit": 1
+    },
+    "expected": [
+      {
+        "amount": 14,
+        "id": 6
+      }
+    ],
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 2,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 0,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 3,
+          "amount": -4,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 4,
+          "amount": -4,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 5,
+          "amount": 0,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 6,
+          "amount": 2,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 7,
+          "amount": 1,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 8,
+          "amount": 9,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 9,
+          "amount": 20,
+          "owner": "O'Reilly",
+          "posted": true
+        }
+      ],
+      "owner": "O'Reilly",
+      "minimum": 0,
+      "limit": 2
+    },
+    "expected": [
+      {
+        "amount": 20,
+        "id": 9
+      }
+    ],
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": -3,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 2,
+          "amount": -4,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 3,
+          "amount": 13,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 4,
+          "amount": -4,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 5,
+          "amount": 3,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 6,
+          "amount": 8,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 7,
+          "amount": 11,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 8,
+          "amount": 7,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 9,
+          "amount": -9,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 10,
+          "amount": 20,
+          "owner": "b",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": 1,
+      "limit": 3
+    },
+    "expected": [
+      {
+        "amount": 8,
+        "id": 6
+      }
+    ],
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": -9,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 16,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 3,
+          "amount": -5,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 4,
+          "amount": 1,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 5,
+          "amount": -6,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 6,
+          "amount": -4,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 7,
+          "amount": -6,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 8,
+          "amount": 16,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 9,
+          "amount": 15,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 10,
+          "amount": 2,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 11,
+          "amount": -10,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "b",
+      "minimum": 2,
+      "limit": 4
+    },
+    "expected": [
+      {
+        "amount": 15,
+        "id": 9
+      }
+    ],
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": -8,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 2,
+          "amount": 13,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 3,
+          "amount": 6,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 4,
+          "amount": 17,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 5,
+          "amount": 4,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 6,
+          "amount": 10,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 7,
+          "amount": 15,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 8,
+          "amount": -4,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 9,
+          "amount": -4,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 10,
+          "amount": 15,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 11,
+          "amount": 3,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 12,
+          "amount": 13,
+          "owner": "O'Reilly",
+          "posted": true
+        }
+      ],
+      "owner": "O'Reilly",
+      "minimum": 3,
+      "limit": 5
+    },
+    "expected": [
+      {
+        "amount": 13,
+        "id": 12
+      },
+      {
+        "amount": 10,
+        "id": 6
+      }
+    ],
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 1,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": -4,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 3,
+          "amount": 0,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 4,
+          "amount": 10,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 5,
+          "amount": 16,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 6,
+          "amount": -3,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 7,
+          "amount": 5,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 8,
+          "amount": -9,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 9,
+          "amount": -2,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 10,
+          "amount": 0,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 11,
+          "amount": -1,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 12,
+          "amount": 0,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 13,
+          "amount": 8,
+          "owner": "b",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": 4,
+      "limit": 0
+    },
+    "expected": [],
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 2,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 2,
+          "amount": 5,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 3,
+          "amount": 10,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 4,
+          "amount": 10,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 5,
+          "amount": 16,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 6,
+          "amount": 0,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 7,
+          "amount": 20,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 8,
+          "amount": -4,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 9,
+          "amount": 13,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 10,
+          "amount": -7,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 11,
+          "amount": 15,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 12,
+          "amount": 14,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 13,
+          "amount": -1,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 14,
+          "amount": 18,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "b",
+      "minimum": 5,
+      "limit": 1
+    },
+    "expected": [
+      {
+        "amount": 14,
+        "id": 12
+      }
+    ],
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": -5,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 7,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 3,
+          "amount": 9,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 4,
+          "amount": 19,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 5,
+          "amount": 7,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 6,
+          "amount": 16,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 7,
+          "amount": 11,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 8,
+          "amount": -1,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 9,
+          "amount": -8,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 10,
+          "amount": -5,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 11,
+          "amount": -4,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 12,
+          "amount": -10,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 13,
+          "amount": 19,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 14,
+          "amount": 15,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 15,
+          "amount": 9,
+          "owner": "O'Reilly",
+          "posted": true
+        }
+      ],
+      "owner": "O'Reilly",
+      "minimum": 6,
+      "limit": 2
+    },
+    "expected": [
+      {
+        "amount": 9,
+        "id": 3
+      },
+      {
+        "amount": 9,
+        "id": 15
+      }
+    ],
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 1,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 2,
+          "amount": 12,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 3,
+          "amount": 20,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 4,
+          "amount": -7,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 5,
+          "amount": 11,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 6,
+          "amount": 2,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 7,
+          "amount": -1,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 8,
+          "amount": 19,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 9,
+          "amount": -1,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 10,
+          "amount": 10,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 11,
+          "amount": 16,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 12,
+          "amount": 18,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 13,
+          "amount": -4,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 14,
+          "amount": -7,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 15,
+          "amount": 4,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 16,
+          "amount": -4,
+          "owner": "b",
+          "posted": true
+        }
+      ],
+      "owner": "a",
+      "minimum": 7,
+      "limit": 3
+    },
+    "expected": [
+      {
+        "amount": 18,
+        "id": 12
+      }
+    ],
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 15,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 2,
+          "amount": 0,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 3,
+          "amount": 4,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 4,
+          "amount": 2,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 5,
+          "amount": 15,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 6,
+          "amount": -9,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 7,
+          "amount": 7,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 8,
+          "amount": 12,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 9,
+          "amount": -7,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 10,
+          "amount": -2,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 11,
+          "amount": -7,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 12,
+          "amount": 17,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 13,
+          "amount": 10,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 14,
+          "amount": -7,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 15,
+          "amount": 20,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 16,
+          "amount": -4,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 17,
+          "amount": -4,
+          "owner": "a",
+          "posted": true
+        }
+      ],
+      "owner": "b",
+      "minimum": 8,
+      "limit": 4
+    },
+    "expected": [
+      {
+        "amount": 20,
+        "id": 15
+      }
+    ],
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "rows": [
+        {
+          "id": 1,
+          "amount": 0,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 2,
+          "amount": -5,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 3,
+          "amount": 12,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 4,
+          "amount": 17,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 5,
+          "amount": -6,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 6,
+          "amount": 5,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 7,
+          "amount": -9,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 8,
+          "amount": 5,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 9,
+          "amount": 9,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 10,
+          "amount": 15,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 11,
+          "amount": 6,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 12,
+          "amount": -2,
+          "owner": "O'Reilly",
+          "posted": true
+        },
+        {
+          "id": 13,
+          "amount": 17,
+          "owner": "a",
+          "posted": false
+        },
+        {
+          "id": 14,
+          "amount": 1,
+          "owner": "b",
+          "posted": true
+        },
+        {
+          "id": 15,
+          "amount": 9,
+          "owner": "O'Reilly",
+          "posted": false
+        },
+        {
+          "id": 16,
+          "amount": 5,
+          "owner": "a",
+          "posted": true
+        },
+        {
+          "id": 17,
+          "amount": 10,
+          "owner": "b",
+          "posted": false
+        },
+        {
+          "id": 18,
+          "amount": 8,
+          "owner": "O'Reilly",
+          "posted": true
+        }
+      ],
+      "owner": "O'Reilly",
+      "minimum": 9,
+      "limit": 5
+    },
+    "expected": [],
+    "label": "additional-18"
+  }
+]

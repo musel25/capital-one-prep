@@ -1,0 +1,50 @@
+{
+  "id": "c1-44-queue-visibility-tokens",
+  "title": "44. Reject stale queue acknowledgements",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "05-system-components",
+  "examples": [
+    {
+      "input": "{\"messages\": [\"a\"], \"timeout\": 5, \"ops\": [{\"op\": \"receive\", \"at\": 0}, {\"op\": \"ack\", \"at\": 4, \"id\": \"a\", \"token\": 1}]}",
+      "output": "{\"results\": [{\"id\": \"a\", \"token\": 1}, true], \"pending\": []}",
+      "explanation": "ack before visibility timeout"
+    },
+    {
+      "input": "{\"messages\": [\"a\"], \"timeout\": 5, \"ops\": [{\"op\": \"receive\", \"at\": 0}, {\"op\": \"receive\", \"at\": 5}, {\"op\": \"ack\", \"at\": 6, \"id\": \"a\", \"token\": 1}, {\"op\": \"ack\", \"at\": 6, \"id\": \"a\", \"token\": 2}]}",
+      "output": "{\"results\": [{\"id\": \"a\", \"token\": 1}, {\"id\": \"a\", \"token\": 2}, false, true], \"pending\": []}",
+      "explanation": "redelivery invalidates stale token"
+    },
+    {
+      "input": "{\"messages\": [\"a\"], \"timeout\": 5, \"ops\": [{\"op\": \"receive\", \"at\": 0}, {\"op\": \"ack\", \"at\": 5, \"id\": \"a\", \"token\": 1}]}",
+      "output": "{\"results\": [{\"id\": \"a\", \"token\": 1}, false], \"pending\": [\"a\"]}",
+      "explanation": "ack at timeout is too late"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    # Model ordered messages, receipt versions, and visibility deadlines.\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"messages\":[\"a\"],\"ops\":[{\"at\":0,\"op\":\"receive\"},{\"at\":4,\"id\":\"a\",\"op\":\"ack\",\"token\":1}],\"timeout\":5}"
+    },
+    {
+      "payload": "{\"messages\":[\"a\"],\"ops\":[{\"at\":0,\"op\":\"receive\"},{\"at\":5,\"op\":\"receive\"},{\"at\":6,\"id\":\"a\",\"op\":\"ack\",\"token\":1},{\"at\":6,\"id\":\"a\",\"op\":\"ack\",\"token\":2}],\"timeout\":5}"
+    },
+    {
+      "payload": "{\"messages\":[\"a\"],\"ops\":[{\"at\":0,\"op\":\"receive\"},{\"at\":5,\"id\":\"a\",\"op\":\"ack\",\"token\":1}],\"timeout\":5}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Visibility and acknowledgement are separate state properties.",
+    "Check both token equality and the exclusive deadline before accepting an ack."
+  ]
+}

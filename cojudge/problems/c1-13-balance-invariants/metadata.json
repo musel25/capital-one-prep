@@ -1,0 +1,50 @@
+{
+  "id": "c1-13-balance-invariants",
+  "title": "13. Keep an account balance nonnegative",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "02-objects-and-state",
+  "examples": [
+    {
+      "input": "{\"balance\": 10, \"actions\": [{\"op\": \"withdraw\", \"cents\": 7}, {\"op\": \"withdraw\", \"cents\": 4}]}",
+      "output": "{\"accepted\": [true, false], \"balance\": 3}",
+      "explanation": "failed withdrawal preserves balance"
+    },
+    {
+      "input": "{\"balance\": 0, \"actions\": [{\"op\": \"deposit\", \"cents\": 5}, {\"op\": \"withdraw\", \"cents\": 5}]}",
+      "output": "{\"accepted\": [true, true], \"balance\": 0}",
+      "explanation": "deposit then exact withdrawal"
+    },
+    {
+      "input": "{\"balance\": 9, \"actions\": []}",
+      "output": "{\"accepted\": [], \"balance\": 9}",
+      "explanation": "no actions"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"actions\":[{\"cents\":7,\"op\":\"withdraw\"},{\"cents\":4,\"op\":\"withdraw\"}],\"balance\":10}"
+    },
+    {
+      "payload": "{\"actions\":[{\"cents\":5,\"op\":\"deposit\"},{\"cents\":5,\"op\":\"withdraw\"}],\"balance\":0}"
+    },
+    {
+      "payload": "{\"actions\":[],\"balance\":9}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Check the invariant before changing the stored balance.",
+    "A failed method must leave the previous balance intact."
+  ]
+}

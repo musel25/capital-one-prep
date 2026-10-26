@@ -1,0 +1,50 @@
+{
+  "id": "c1-05-counter-reconciliation",
+  "title": "05. Reconcile repeated item IDs",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-python-data-and-libraries",
+  "examples": [
+    {
+      "input": "{\"expected\": [\"A\", \"A\", \"B\"], \"observed\": [\"A\", \"C\"]}",
+      "output": "{\"missing\": [{\"id\": \"A\", \"count\": 1}, {\"id\": \"B\", \"count\": 1}], \"extra\": [{\"id\": \"C\", \"count\": 1}]}",
+      "explanation": "counts in both directions"
+    },
+    {
+      "input": "{\"expected\": [\"B\", \"A\"], \"observed\": [\"A\", \"B\"]}",
+      "output": "{\"missing\": [], \"extra\": []}",
+      "explanation": "order does not matter"
+    },
+    {
+      "input": "{\"expected\": [], \"observed\": []}",
+      "output": "{\"missing\": [], \"extra\": []}",
+      "explanation": "empty batches"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"expected\":[\"A\",\"A\",\"B\"],\"observed\":[\"A\",\"C\"]}"
+    },
+    {
+      "payload": "{\"expected\":[\"B\",\"A\"],\"observed\":[\"A\",\"B\"]}"
+    },
+    {
+      "payload": "{\"expected\":[],\"observed\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Build one Counter per batch.",
+    "Subtract in both directions, then sort the positive result keys."
+  ]
+}

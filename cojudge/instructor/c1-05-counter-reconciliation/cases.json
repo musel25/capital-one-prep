@@ -1,0 +1,740 @@
+[
+  {
+    "input": {
+      "expected": [
+        "A",
+        "A",
+        "B"
+      ],
+      "observed": [
+        "A",
+        "C"
+      ]
+    },
+    "expected": {
+      "missing": [
+        {
+          "id": "A",
+          "count": 1
+        },
+        {
+          "id": "B",
+          "count": 1
+        }
+      ],
+      "extra": [
+        {
+          "id": "C",
+          "count": 1
+        }
+      ]
+    },
+    "label": "counts in both directions"
+  },
+  {
+    "input": {
+      "expected": [
+        "B",
+        "A"
+      ],
+      "observed": [
+        "A",
+        "B"
+      ]
+    },
+    "expected": {
+      "missing": [],
+      "extra": []
+    },
+    "label": "order does not matter"
+  },
+  {
+    "input": {
+      "expected": [],
+      "observed": []
+    },
+    "expected": {
+      "missing": [],
+      "extra": []
+    },
+    "label": "empty batches"
+  },
+  {
+    "input": {
+      "expected": [
+        "x"
+      ],
+      "observed": []
+    },
+    "expected": {
+      "missing": [
+        {
+          "id": "x",
+          "count": 1
+        }
+      ],
+      "extra": []
+    },
+    "label": "only missing"
+  },
+  {
+    "input": {
+      "expected": [],
+      "observed": [
+        "x",
+        "x"
+      ]
+    },
+    "expected": {
+      "missing": [],
+      "extra": [
+        {
+          "id": "x",
+          "count": 2
+        }
+      ]
+    },
+    "label": "only extra"
+  },
+  {
+    "input": {
+      "expected": [
+        "x",
+        "x",
+        "x"
+      ],
+      "observed": [
+        "x"
+      ]
+    },
+    "expected": {
+      "missing": [
+        {
+          "id": "x",
+          "count": 2
+        }
+      ],
+      "extra": []
+    },
+    "label": "set comparison loses units"
+  },
+  {
+    "input": {
+      "expected": [
+        "x"
+      ],
+      "observed": [
+        "x",
+        "x",
+        "x"
+      ]
+    },
+    "expected": {
+      "missing": [],
+      "extra": [
+        {
+          "id": "x",
+          "count": 2
+        }
+      ]
+    },
+    "label": "extra duplicates"
+  },
+  {
+    "input": {
+      "expected": [
+        "b",
+        "A",
+        "a"
+      ],
+      "observed": []
+    },
+    "expected": {
+      "missing": [
+        {
+          "id": "A",
+          "count": 1
+        },
+        {
+          "id": "a",
+          "count": 1
+        },
+        {
+          "id": "b",
+          "count": 1
+        }
+      ],
+      "extra": []
+    },
+    "label": "ASCII order"
+  },
+  {
+    "input": {
+      "expected": [
+        ""
+      ],
+      "observed": [
+        ""
+      ]
+    },
+    "expected": {
+      "missing": [],
+      "extra": []
+    },
+    "label": "empty ID"
+  },
+  {
+    "input": {
+      "expected": [
+        "a",
+        "a",
+        "b"
+      ],
+      "observed": [
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    "expected": {
+      "missing": [],
+      "extra": []
+    },
+    "label": "equal multiplicities"
+  },
+  {
+    "input": {
+      "expected": [
+        "z",
+        "z"
+      ],
+      "observed": [
+        "a",
+        "a"
+      ]
+    },
+    "expected": {
+      "missing": [
+        {
+          "id": "z",
+          "count": 2
+        }
+      ],
+      "extra": [
+        {
+          "id": "a",
+          "count": 2
+        }
+      ]
+    },
+    "label": "disjoint batches"
+  },
+  {
+    "input": {
+      "expected": [
+        "2",
+        "10",
+        "2"
+      ],
+      "observed": [
+        "10",
+        "3"
+      ]
+    },
+    "expected": {
+      "missing": [
+        {
+          "id": "2",
+          "count": 2
+        }
+      ],
+      "extra": [
+        {
+          "id": "3",
+          "count": 1
+        }
+      ]
+    },
+    "label": "numeric-looking string IDs"
+  },
+  {
+    "input": {
+      "expected": [
+        "A",
+        "C"
+      ],
+      "observed": [
+        "B",
+        "B"
+      ]
+    },
+    "expected": {
+      "extra": [
+        {
+          "count": 2,
+          "id": "B"
+        }
+      ],
+      "missing": [
+        {
+          "count": 1,
+          "id": "A"
+        },
+        {
+          "count": 1,
+          "id": "C"
+        }
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "expected": [
+        "A",
+        "A",
+        "B",
+        "C"
+      ],
+      "observed": [
+        "A",
+        "B",
+        "B",
+        "D"
+      ]
+    },
+    "expected": {
+      "extra": [
+        {
+          "count": 1,
+          "id": "B"
+        },
+        {
+          "count": 1,
+          "id": "D"
+        }
+      ],
+      "missing": [
+        {
+          "count": 1,
+          "id": "A"
+        },
+        {
+          "count": 1,
+          "id": "C"
+        }
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "expected": [
+        "A",
+        "A",
+        "A",
+        "B",
+        "B",
+        "C"
+      ],
+      "observed": [
+        "A",
+        "A",
+        "B",
+        "B"
+      ]
+    },
+    "expected": {
+      "extra": [],
+      "missing": [
+        {
+          "count": 1,
+          "id": "A"
+        },
+        {
+          "count": 1,
+          "id": "C"
+        }
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "expected": [
+        "A",
+        "A",
+        "A",
+        "A",
+        "C"
+      ],
+      "observed": [
+        "A",
+        "A",
+        "A",
+        "B",
+        "B",
+        "D"
+      ]
+    },
+    "expected": {
+      "extra": [
+        {
+          "count": 2,
+          "id": "B"
+        },
+        {
+          "count": 1,
+          "id": "D"
+        }
+      ],
+      "missing": [
+        {
+          "count": 1,
+          "id": "A"
+        },
+        {
+          "count": 1,
+          "id": "C"
+        }
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "expected": [
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "B",
+        "C"
+      ],
+      "observed": [
+        "B",
+        "B"
+      ]
+    },
+    "expected": {
+      "extra": [
+        {
+          "count": 1,
+          "id": "B"
+        }
+      ],
+      "missing": [
+        {
+          "count": 5,
+          "id": "A"
+        },
+        {
+          "count": 1,
+          "id": "C"
+        }
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "expected": [
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "B",
+        "B",
+        "C"
+      ],
+      "observed": [
+        "A",
+        "B",
+        "B",
+        "D"
+      ]
+    },
+    "expected": {
+      "extra": [
+        {
+          "count": 1,
+          "id": "D"
+        }
+      ],
+      "missing": [
+        {
+          "count": 5,
+          "id": "A"
+        },
+        {
+          "count": 1,
+          "id": "C"
+        }
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "expected": [
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "C"
+      ],
+      "observed": [
+        "A",
+        "A",
+        "B",
+        "B"
+      ]
+    },
+    "expected": {
+      "extra": [
+        {
+          "count": 2,
+          "id": "B"
+        }
+      ],
+      "missing": [
+        {
+          "count": 5,
+          "id": "A"
+        },
+        {
+          "count": 1,
+          "id": "C"
+        }
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "expected": [
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "B",
+        "C"
+      ],
+      "observed": [
+        "A",
+        "A",
+        "A",
+        "B",
+        "B",
+        "D"
+      ]
+    },
+    "expected": {
+      "extra": [
+        {
+          "count": 1,
+          "id": "B"
+        },
+        {
+          "count": 1,
+          "id": "D"
+        }
+      ],
+      "missing": [
+        {
+          "count": 5,
+          "id": "A"
+        },
+        {
+          "count": 1,
+          "id": "C"
+        }
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "expected": [
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "B",
+        "B",
+        "C"
+      ],
+      "observed": [
+        "B",
+        "B"
+      ]
+    },
+    "expected": {
+      "extra": [],
+      "missing": [
+        {
+          "count": 9,
+          "id": "A"
+        },
+        {
+          "count": 1,
+          "id": "C"
+        }
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "expected": [
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "C"
+      ],
+      "observed": [
+        "A",
+        "B",
+        "B",
+        "D"
+      ]
+    },
+    "expected": {
+      "extra": [
+        {
+          "count": 2,
+          "id": "B"
+        },
+        {
+          "count": 1,
+          "id": "D"
+        }
+      ],
+      "missing": [
+        {
+          "count": 9,
+          "id": "A"
+        },
+        {
+          "count": 1,
+          "id": "C"
+        }
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "expected": [
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "B",
+        "C"
+      ],
+      "observed": [
+        "A",
+        "A",
+        "B",
+        "B"
+      ]
+    },
+    "expected": {
+      "extra": [
+        {
+          "count": 1,
+          "id": "B"
+        }
+      ],
+      "missing": [
+        {
+          "count": 9,
+          "id": "A"
+        },
+        {
+          "count": 1,
+          "id": "C"
+        }
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "expected": [
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "A",
+        "B",
+        "B",
+        "C"
+      ],
+      "observed": [
+        "A",
+        "A",
+        "A",
+        "B",
+        "B",
+        "D"
+      ]
+    },
+    "expected": {
+      "extra": [
+        {
+          "count": 1,
+          "id": "D"
+        }
+      ],
+      "missing": [
+        {
+          "count": 9,
+          "id": "A"
+        },
+        {
+          "count": 1,
+          "id": "C"
+        }
+      ]
+    },
+    "label": "additional-12"
+  }
+]

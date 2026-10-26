@@ -1,0 +1,50 @@
+{
+  "id": "c1-14-inheritance-fee-policy",
+  "title": "14. Extend an account with a fee rule",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "02-objects-and-state",
+  "examples": [
+    {
+      "input": "{\"kind\": \"standard\", \"balance\": 20, \"fee\": 2, \"threshold\": 10, \"withdrawals\": [10, 8]}",
+      "output": "{\"accepted\": [true, false], \"balance\": 8}",
+      "explanation": "fee is part of the funds check"
+    },
+    {
+      "input": "{\"kind\": \"premium\", \"balance\": 20, \"fee\": 2, \"threshold\": 10, \"withdrawals\": [10, 8]}",
+      "output": "{\"accepted\": [true, true], \"balance\": 0}",
+      "explanation": "premium fee override"
+    },
+    {
+      "input": "{\"kind\": \"premium\", \"balance\": 10, \"fee\": 3, \"threshold\": 10, \"withdrawals\": []}",
+      "output": "{\"accepted\": [], \"balance\": 10}",
+      "explanation": "no withdrawals"
+    }
+  ],
+  "starterCode": {
+    "python": "def solve(data: dict) -> dict:\n    raise NotImplementedError\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"balance\":20,\"fee\":2,\"kind\":\"standard\",\"threshold\":10,\"withdrawals\":[10,8]}"
+    },
+    {
+      "payload": "{\"balance\":20,\"fee\":2,\"kind\":\"premium\",\"threshold\":10,\"withdrawals\":[10,8]}"
+    },
+    {
+      "payload": "{\"balance\":10,\"fee\":3,\"kind\":\"premium\",\"threshold\":10,\"withdrawals\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Let the base withdrawal method call a fee method.",
+    "Initialize base fields with super(), then store the premium threshold."
+  ]
+}

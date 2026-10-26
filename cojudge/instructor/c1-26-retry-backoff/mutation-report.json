@@ -1,0 +1,9 @@
+[
+  {
+    "name": "retry every server error",
+    "detected_by": [
+      8,
+      12
+    ]
+  }
+]

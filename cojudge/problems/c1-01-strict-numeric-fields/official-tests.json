@@ -1,0 +1,77 @@
+[
+  {
+    "payload": "{\"values\":[7,true,0,-2,\"4\"]}"
+  },
+  {
+    "payload": "{\"values\":[2,3,5]}"
+  },
+  {
+    "payload": "{\"values\":[]}"
+  },
+  {
+    "payload": "{\"values\":[0]}"
+  },
+  {
+    "payload": "{\"values\":[false]}"
+  },
+  {
+    "payload": "{\"values\":[1.0]}"
+  },
+  {
+    "payload": "{\"values\":[null]}"
+  },
+  {
+    "payload": "{\"values\":[[],{}]}"
+  },
+  {
+    "payload": "{\"values\":[-1,-100]}"
+  },
+  {
+    "payload": "{\"values\":[1000000000,1000000000]}"
+  },
+  {
+    "payload": "{\"values\":[3,3,3]}"
+  },
+  {
+    "payload": "{\"values\":[\"0\",\"\",0.5,2]}"
+  },
+  {
+    "payload": "{\"values\":[true,1,false,0]}"
+  },
+  {
+    "payload": "{\"values\":[0,false,-1,\"0\",0,null]}"
+  },
+  {
+    "payload": "{\"values\":[1,false,-2,\"1\",1,null]}"
+  },
+  {
+    "payload": "{\"values\":[2,false,-3,\"2\",4,null]}"
+  },
+  {
+    "payload": "{\"values\":[3,false,-4,\"3\",9,null]}"
+  },
+  {
+    "payload": "{\"values\":[4,false,-5,\"4\",16,null]}"
+  },
+  {
+    "payload": "{\"values\":[5,false,-6,\"5\",25,null]}"
+  },
+  {
+    "payload": "{\"values\":[6,false,-7,\"6\",36,null]}"
+  },
+  {
+    "payload": "{\"values\":[7,false,-8,\"7\",49,null]}"
+  },
+  {
+    "payload": "{\"values\":[8,false,-9,\"8\",64,null]}"
+  },
+  {
+    "payload": "{\"values\":[9,false,-10,\"9\",81,null]}"
+  },
+  {
+    "payload": "{\"values\":[10,false,-11,\"10\",100,null]}"
+  },
+  {
+    "payload": "{\"values\":[11,false,-12,\"11\",121,null]}"
+  }
+]

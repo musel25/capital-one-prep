@@ -1,0 +1,50 @@
+{
+  "id": "c1-32-sql-left-join-fix",
+  "title": "32. Fix a LEFT JOIN that loses customers",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "04-sql-and-transactions",
+  "examples": [
+    {
+      "input": "{\"customers\": [{\"id\": 1, \"name\": \"1\"}, {\"id\": 2, \"name\": \"2\"}], \"payments\": [{\"id\": 1, \"customer_id\": 1, \"amount\": 10, \"status\": \"paid\"}]}",
+      "output": "[{\"customer_id\": 1, \"name\": \"1\", \"payment_id\": 1, \"amount\": 10}, {\"customer_id\": 2, \"name\": \"2\", \"payment_id\": null, \"amount\": null}]",
+      "explanation": "keep customer with no payments"
+    },
+    {
+      "input": "{\"customers\": [{\"id\": 1, \"name\": \"1\"}], \"payments\": [{\"id\": 1, \"customer_id\": 1, \"amount\": 10, \"status\": \"pending\"}]}",
+      "output": "[{\"customer_id\": 1, \"name\": \"1\", \"payment_id\": null, \"amount\": null}]",
+      "explanation": "pending-only customer remains with nulls"
+    },
+    {
+      "input": "{\"customers\": [{\"id\": 1, \"name\": \"1\"}], \"payments\": [{\"id\": 3, \"customer_id\": 1, \"amount\": 30, \"status\": \"paid\"}, {\"id\": 2, \"customer_id\": 1, \"amount\": 20, \"status\": \"paid\"}]}",
+      "output": "[{\"customer_id\": 1, \"name\": \"1\", \"payment_id\": 2, \"amount\": 20}, {\"customer_id\": 1, \"name\": \"1\", \"payment_id\": 3, \"amount\": 30}]",
+      "explanation": "one output row per paid payment"
+    }
+  ],
+  "starterCode": {
+    "python": "import sqlite3\n\ndef solve(data):\n    connection = sqlite3.connect(\":memory:\")\n    connection.row_factory = sqlite3.Row\n    try:\n        connection.execute(\"CREATE TABLE customers(id INTEGER PRIMARY KEY, name TEXT NOT NULL)\")\n        connection.execute(\"CREATE TABLE payments(id INTEGER PRIMARY KEY, customer_id INTEGER, amount INTEGER NOT NULL, status TEXT NOT NULL)\")\n        connection.executemany(\"INSERT INTO customers VALUES (?, ?)\", [(r[\"id\"], r[\"name\"]) for r in data[\"customers\"]])\n        connection.executemany(\"INSERT INTO payments VALUES (?, ?, ?, ?)\", [(r[\"id\"], r[\"customer_id\"], r[\"amount\"], r[\"status\"]) for r in data[\"payments\"]])\n        return [dict(r) for r in report_rows(connection)]\n    finally:\n        connection.close()\n\ndef report_rows(connection):\n    # BUG: customers without paid payments disappear. Fix this query.\n    return connection.execute(\"SELECT c.id AS customer_id, c.name AS name, p.id AS payment_id, p.amount AS amount FROM customers AS c LEFT JOIN payments AS p ON p.customer_id = c.id WHERE p.status = 'paid' ORDER BY c.id ASC, p.id ASC\").fetchall()\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"customers\":[{\"id\":1,\"name\":\"1\"},{\"id\":2,\"name\":\"2\"}],\"payments\":[{\"amount\":10,\"customer_id\":1,\"id\":1,\"status\":\"paid\"}]}"
+    },
+    {
+      "payload": "{\"customers\":[{\"id\":1,\"name\":\"1\"}],\"payments\":[{\"amount\":10,\"customer_id\":1,\"id\":1,\"status\":\"pending\"}]}"
+    },
+    {
+      "payload": "{\"customers\":[{\"id\":1,\"name\":\"1\"}],\"payments\":[{\"amount\":30,\"customer_id\":1,\"id\":3,\"status\":\"paid\"},{\"amount\":20,\"customer_id\":1,\"id\":2,\"status\":\"paid\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "An unmatched right row contains SQL NULL in every selected payment column.",
+    "The paid condition belongs in the match rule, not a later filter that removes unmatched customers."
+  ]
+}

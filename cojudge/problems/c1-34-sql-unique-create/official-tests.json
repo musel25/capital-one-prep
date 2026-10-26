@@ -1,0 +1,95 @@
+[
+  {
+    "payload": "{\"initial\":[],\"requests\":[{\"quota\":10,\"username\":\"ada\"},{\"quota\":10,\"username\":\"ada\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":10,\"username\":\"ada\"}],\"requests\":[{\"quota\":20,\"username\":\"ada\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[],\"requests\":[{\"quota\":10,\"username\":\"O'Reilly\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[],\"requests\":[]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":10,\"username\":\"b\"},{\"quota\":10,\"username\":\"a\"}],\"requests\":[]}"
+  },
+  {
+    "payload": "{\"initial\":[],\"requests\":[{\"quota\":0,\"username\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[],\"requests\":[{\"quota\":1000000,\"username\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[],\"requests\":[{\"quota\":10,\"username\":\"a\"},{\"quota\":10,\"username\":\"A\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":10,\"username\":\"a\"}],\"requests\":[{\"quota\":11,\"username\":\"a\"},{\"quota\":10,\"username\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[],\"requests\":[{\"quota\":10,\"username\":\"'; DROP TABLE accounts; --\"},{\"quota\":10,\"username\":\"safe\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":0,\"username\":\"a\"}],\"requests\":[{\"quota\":0,\"username\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[],\"requests\":[{\"quota\":10,\"username\":\"a\"},{\"quota\":10,\"username\":\"a\"},{\"quota\":10,\"username\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":10,\"username\":\"a\"}],\"requests\":[{\"quota\":20,\"username\":\"b\"},{\"quota\":10,\"username\":\"a\"},{\"quota\":30,\"username\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[],\"requests\":[{\"quota\":0,\"username\":\"user0\"},{\"quota\":1,\"username\":\"user1\"},{\"quota\":0,\"username\":\"quoted'0\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":1,\"username\":\"user0\"}],\"requests\":[{\"quota\":1,\"username\":\"user0\"},{\"quota\":2,\"username\":\"user1\"},{\"quota\":3,\"username\":\"user2\"},{\"quota\":1,\"username\":\"quoted'1\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":2,\"username\":\"user0\"},{\"quota\":3,\"username\":\"user1\"}],\"requests\":[{\"quota\":2,\"username\":\"user0\"},{\"quota\":3,\"username\":\"user1\"},{\"quota\":4,\"username\":\"user2\"},{\"quota\":5,\"username\":\"user3\"},{\"quota\":2,\"username\":\"quoted'2\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":3,\"username\":\"user0\"},{\"quota\":4,\"username\":\"user1\"},{\"quota\":5,\"username\":\"user2\"}],\"requests\":[{\"quota\":3,\"username\":\"user0\"},{\"quota\":4,\"username\":\"user1\"},{\"quota\":5,\"username\":\"user2\"},{\"quota\":6,\"username\":\"user3\"},{\"quota\":7,\"username\":\"user4\"},{\"quota\":3,\"username\":\"quoted'3\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":4,\"username\":\"user0\"},{\"quota\":5,\"username\":\"user1\"},{\"quota\":6,\"username\":\"user2\"},{\"quota\":7,\"username\":\"user3\"}],\"requests\":[{\"quota\":4,\"username\":\"user0\"},{\"quota\":5,\"username\":\"user1\"},{\"quota\":6,\"username\":\"user2\"},{\"quota\":7,\"username\":\"user3\"},{\"quota\":8,\"username\":\"user4\"},{\"quota\":9,\"username\":\"user5\"},{\"quota\":4,\"username\":\"quoted'4\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[],\"requests\":[{\"quota\":5,\"username\":\"user0\"},{\"quota\":6,\"username\":\"user1\"},{\"quota\":7,\"username\":\"user2\"},{\"quota\":8,\"username\":\"user3\"},{\"quota\":9,\"username\":\"user4\"},{\"quota\":10,\"username\":\"user5\"},{\"quota\":0,\"username\":\"user0\"},{\"quota\":5,\"username\":\"quoted'5\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":6,\"username\":\"user0\"}],\"requests\":[{\"quota\":6,\"username\":\"user0\"},{\"quota\":7,\"username\":\"user1\"},{\"quota\":8,\"username\":\"user2\"},{\"quota\":9,\"username\":\"user3\"},{\"quota\":10,\"username\":\"user4\"},{\"quota\":0,\"username\":\"user5\"},{\"quota\":1,\"username\":\"user0\"},{\"quota\":2,\"username\":\"user1\"},{\"quota\":6,\"username\":\"quoted'6\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":7,\"username\":\"user0\"},{\"quota\":8,\"username\":\"user1\"}],\"requests\":[{\"quota\":7,\"username\":\"user0\"},{\"quota\":8,\"username\":\"user1\"},{\"quota\":9,\"username\":\"user2\"},{\"quota\":10,\"username\":\"user3\"},{\"quota\":0,\"username\":\"user4\"},{\"quota\":1,\"username\":\"user5\"},{\"quota\":2,\"username\":\"user0\"},{\"quota\":3,\"username\":\"user1\"},{\"quota\":4,\"username\":\"user2\"},{\"quota\":7,\"username\":\"quoted'7\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":8,\"username\":\"user0\"},{\"quota\":9,\"username\":\"user1\"},{\"quota\":10,\"username\":\"user2\"}],\"requests\":[{\"quota\":8,\"username\":\"user0\"},{\"quota\":9,\"username\":\"user1\"},{\"quota\":10,\"username\":\"user2\"},{\"quota\":0,\"username\":\"user3\"},{\"quota\":1,\"username\":\"user4\"},{\"quota\":2,\"username\":\"user5\"},{\"quota\":3,\"username\":\"user0\"},{\"quota\":4,\"username\":\"user1\"},{\"quota\":5,\"username\":\"user2\"},{\"quota\":6,\"username\":\"user3\"},{\"quota\":8,\"username\":\"quoted'8\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":9,\"username\":\"user0\"},{\"quota\":10,\"username\":\"user1\"},{\"quota\":11,\"username\":\"user2\"},{\"quota\":12,\"username\":\"user3\"}],\"requests\":[{\"quota\":9,\"username\":\"user0\"},{\"quota\":10,\"username\":\"user1\"},{\"quota\":0,\"username\":\"user2\"},{\"quota\":1,\"username\":\"user3\"},{\"quota\":2,\"username\":\"user4\"},{\"quota\":3,\"username\":\"user5\"},{\"quota\":4,\"username\":\"user0\"},{\"quota\":5,\"username\":\"user1\"},{\"quota\":6,\"username\":\"user2\"},{\"quota\":7,\"username\":\"user3\"},{\"quota\":8,\"username\":\"user4\"},{\"quota\":9,\"username\":\"quoted'9\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[],\"requests\":[{\"quota\":10,\"username\":\"user0\"},{\"quota\":0,\"username\":\"user1\"},{\"quota\":1,\"username\":\"user2\"},{\"quota\":2,\"username\":\"user3\"},{\"quota\":3,\"username\":\"user4\"},{\"quota\":4,\"username\":\"user5\"},{\"quota\":5,\"username\":\"user0\"},{\"quota\":6,\"username\":\"user1\"},{\"quota\":7,\"username\":\"user2\"},{\"quota\":8,\"username\":\"user3\"},{\"quota\":9,\"username\":\"user4\"},{\"quota\":10,\"username\":\"user5\"},{\"quota\":10,\"username\":\"quoted'10\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":11,\"username\":\"user0\"}],\"requests\":[{\"quota\":0,\"username\":\"user0\"},{\"quota\":1,\"username\":\"user1\"},{\"quota\":2,\"username\":\"user2\"},{\"quota\":3,\"username\":\"user3\"},{\"quota\":4,\"username\":\"user4\"},{\"quota\":5,\"username\":\"user5\"},{\"quota\":6,\"username\":\"user0\"},{\"quota\":7,\"username\":\"user1\"},{\"quota\":8,\"username\":\"user2\"},{\"quota\":9,\"username\":\"user3\"},{\"quota\":10,\"username\":\"user4\"},{\"quota\":0,\"username\":\"user5\"},{\"quota\":1,\"username\":\"user0\"},{\"quota\":11,\"username\":\"quoted'11\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":12,\"username\":\"user0\"},{\"quota\":13,\"username\":\"user1\"}],\"requests\":[{\"quota\":1,\"username\":\"user0\"},{\"quota\":2,\"username\":\"user1\"},{\"quota\":3,\"username\":\"user2\"},{\"quota\":4,\"username\":\"user3\"},{\"quota\":5,\"username\":\"user4\"},{\"quota\":6,\"username\":\"user5\"},{\"quota\":7,\"username\":\"user0\"},{\"quota\":8,\"username\":\"user1\"},{\"quota\":9,\"username\":\"user2\"},{\"quota\":10,\"username\":\"user3\"},{\"quota\":0,\"username\":\"user4\"},{\"quota\":1,\"username\":\"user5\"},{\"quota\":2,\"username\":\"user0\"},{\"quota\":3,\"username\":\"user1\"},{\"quota\":12,\"username\":\"quoted'12\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":13,\"username\":\"user0\"},{\"quota\":14,\"username\":\"user1\"},{\"quota\":15,\"username\":\"user2\"}],\"requests\":[{\"quota\":2,\"username\":\"user0\"},{\"quota\":3,\"username\":\"user1\"},{\"quota\":4,\"username\":\"user2\"},{\"quota\":5,\"username\":\"user3\"},{\"quota\":6,\"username\":\"user4\"},{\"quota\":7,\"username\":\"user5\"},{\"quota\":8,\"username\":\"user0\"},{\"quota\":9,\"username\":\"user1\"},{\"quota\":10,\"username\":\"user2\"},{\"quota\":0,\"username\":\"user3\"},{\"quota\":1,\"username\":\"user4\"},{\"quota\":2,\"username\":\"user5\"},{\"quota\":3,\"username\":\"user0\"},{\"quota\":4,\"username\":\"user1\"},{\"quota\":5,\"username\":\"user2\"},{\"quota\":13,\"username\":\"quoted'13\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":14,\"username\":\"user0\"},{\"quota\":15,\"username\":\"user1\"},{\"quota\":16,\"username\":\"user2\"},{\"quota\":17,\"username\":\"user3\"}],\"requests\":[{\"quota\":3,\"username\":\"user0\"},{\"quota\":4,\"username\":\"user1\"},{\"quota\":5,\"username\":\"user2\"},{\"quota\":6,\"username\":\"user3\"},{\"quota\":7,\"username\":\"user4\"},{\"quota\":8,\"username\":\"user5\"},{\"quota\":9,\"username\":\"user0\"},{\"quota\":10,\"username\":\"user1\"},{\"quota\":0,\"username\":\"user2\"},{\"quota\":1,\"username\":\"user3\"},{\"quota\":2,\"username\":\"user4\"},{\"quota\":3,\"username\":\"user5\"},{\"quota\":4,\"username\":\"user0\"},{\"quota\":5,\"username\":\"user1\"},{\"quota\":6,\"username\":\"user2\"},{\"quota\":7,\"username\":\"user3\"},{\"quota\":14,\"username\":\"quoted'14\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[],\"requests\":[{\"quota\":4,\"username\":\"user0\"},{\"quota\":5,\"username\":\"user1\"},{\"quota\":6,\"username\":\"user2\"},{\"quota\":7,\"username\":\"user3\"},{\"quota\":8,\"username\":\"user4\"},{\"quota\":9,\"username\":\"user5\"},{\"quota\":10,\"username\":\"user0\"},{\"quota\":0,\"username\":\"user1\"},{\"quota\":1,\"username\":\"user2\"},{\"quota\":2,\"username\":\"user3\"},{\"quota\":3,\"username\":\"user4\"},{\"quota\":4,\"username\":\"user5\"},{\"quota\":5,\"username\":\"user0\"},{\"quota\":6,\"username\":\"user1\"},{\"quota\":7,\"username\":\"user2\"},{\"quota\":8,\"username\":\"user3\"},{\"quota\":9,\"username\":\"user4\"},{\"quota\":15,\"username\":\"quoted'15\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":16,\"username\":\"user0\"}],\"requests\":[{\"quota\":5,\"username\":\"user0\"},{\"quota\":6,\"username\":\"user1\"},{\"quota\":7,\"username\":\"user2\"},{\"quota\":8,\"username\":\"user3\"},{\"quota\":9,\"username\":\"user4\"},{\"quota\":10,\"username\":\"user5\"},{\"quota\":0,\"username\":\"user0\"},{\"quota\":1,\"username\":\"user1\"},{\"quota\":2,\"username\":\"user2\"},{\"quota\":3,\"username\":\"user3\"},{\"quota\":4,\"username\":\"user4\"},{\"quota\":5,\"username\":\"user5\"},{\"quota\":6,\"username\":\"user0\"},{\"quota\":7,\"username\":\"user1\"},{\"quota\":8,\"username\":\"user2\"},{\"quota\":9,\"username\":\"user3\"},{\"quota\":10,\"username\":\"user4\"},{\"quota\":0,\"username\":\"user5\"},{\"quota\":16,\"username\":\"quoted'16\"}]}"
+  },
+  {
+    "payload": "{\"initial\":[{\"quota\":17,\"username\":\"user0\"},{\"quota\":18,\"username\":\"user1\"}],\"requests\":[{\"quota\":6,\"username\":\"user0\"},{\"quota\":7,\"username\":\"user1\"},{\"quota\":8,\"username\":\"user2\"},{\"quota\":9,\"username\":\"user3\"},{\"quota\":10,\"username\":\"user4\"},{\"quota\":0,\"username\":\"user5\"},{\"quota\":1,\"username\":\"user0\"},{\"quota\":2,\"username\":\"user1\"},{\"quota\":3,\"username\":\"user2\"},{\"quota\":4,\"username\":\"user3\"},{\"quota\":5,\"username\":\"user4\"},{\"quota\":6,\"username\":\"user5\"},{\"quota\":7,\"username\":\"user0\"},{\"quota\":8,\"username\":\"user1\"},{\"quota\":9,\"username\":\"user2\"},{\"quota\":10,\"username\":\"user3\"},{\"quota\":0,\"username\":\"user4\"},{\"quota\":1,\"username\":\"user5\"},{\"quota\":2,\"username\":\"user0\"},{\"quota\":17,\"username\":\"quoted'17\"}]}"
+  }
+]

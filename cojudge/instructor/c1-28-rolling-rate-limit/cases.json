@@ -1,0 +1,2501 @@
+[
+  {
+    "input": {
+      "limit": 2,
+      "window": 10,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 1,
+          "user": "a"
+        },
+        {
+          "time": 2,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 8
+      }
+    ],
+    "label": "third call exceeds window"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 10,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 10,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      }
+    ],
+    "label": "timestamp at left boundary expires"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 10,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 1,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 9
+      }
+    ],
+    "label": "users have independent windows"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 1,
+      "events": []
+    },
+    "expected": [],
+    "label": "empty event list"
+  },
+  {
+    "input": {
+      "limit": 3,
+      "window": 10,
+      "events": [
+        {
+          "time": 5,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      }
+    ],
+    "label": "remaining after accepted call"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 10,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 10
+      }
+    ],
+    "label": "same timestamp counts twice"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 10,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 9,
+          "user": "a"
+        },
+        {
+          "time": 10,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 1
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      }
+    ],
+    "label": "rejection does not extend window"
+  },
+  {
+    "input": {
+      "limit": 2,
+      "window": 10,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 5,
+          "user": "a"
+        },
+        {
+          "time": 10,
+          "user": "a"
+        },
+        {
+          "time": 11,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 4
+      }
+    ],
+    "label": "only oldest event expires"
+  },
+  {
+    "input": {
+      "limit": 2,
+      "window": 10,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 1,
+          "user": "a"
+        },
+        {
+          "time": 100,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      }
+    ],
+    "label": "large jump expires all"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 1,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 1,
+          "user": "a"
+        },
+        {
+          "time": 2,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      }
+    ],
+    "label": "smallest window"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 10,
+      "events": [
+        {
+          "time": 0,
+          "user": "A"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      }
+    ],
+    "label": "case-sensitive user keys"
+  },
+  {
+    "input": {
+      "limit": 2,
+      "window": 3,
+      "events": [
+        {
+          "time": 2,
+          "user": "a"
+        },
+        {
+          "time": 2,
+          "user": "a"
+        },
+        {
+          "time": 2,
+          "user": "a"
+        },
+        {
+          "time": 5,
+          "user": "a"
+        },
+        {
+          "time": 5,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 3
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      }
+    ],
+    "label": "multiple expirations at same boundary"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 10,
+      "events": [
+        {
+          "time": 999990,
+          "user": "a"
+        },
+        {
+          "time": 1000000,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      }
+    ],
+    "label": "large absolute clock"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 1,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 1
+      }
+    ],
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "limit": 2,
+      "window": 2,
+      "events": [
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 1,
+          "user": "a"
+        },
+        {
+          "time": 2,
+          "user": "c"
+        },
+        {
+          "time": 3,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      }
+    ],
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "limit": 3,
+      "window": 3,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 2,
+          "user": "c"
+        },
+        {
+          "time": 4,
+          "user": "a"
+        },
+        {
+          "time": 6,
+          "user": "b"
+        },
+        {
+          "time": 8,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      }
+    ],
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "limit": 4,
+      "window": 4,
+      "events": [
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      }
+    ],
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 5,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 1,
+          "user": "b"
+        },
+        {
+          "time": 2,
+          "user": "a"
+        },
+        {
+          "time": 3,
+          "user": "c"
+        },
+        {
+          "time": 4,
+          "user": "a"
+        },
+        {
+          "time": 5,
+          "user": "b"
+        },
+        {
+          "time": 6,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 3
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 1
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 1
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      }
+    ],
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "limit": 2,
+      "window": 6,
+      "events": [
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 2,
+          "user": "a"
+        },
+        {
+          "time": 4,
+          "user": "c"
+        },
+        {
+          "time": 6,
+          "user": "a"
+        },
+        {
+          "time": 8,
+          "user": "b"
+        },
+        {
+          "time": 10,
+          "user": "a"
+        },
+        {
+          "time": 12,
+          "user": "c"
+        },
+        {
+          "time": 14,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      }
+    ],
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "limit": 3,
+      "window": 7,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 7
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 7
+      }
+    ],
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "limit": 4,
+      "window": 1,
+      "events": [
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 1,
+          "user": "a"
+        },
+        {
+          "time": 2,
+          "user": "b"
+        },
+        {
+          "time": 3,
+          "user": "a"
+        },
+        {
+          "time": 4,
+          "user": "c"
+        },
+        {
+          "time": 5,
+          "user": "a"
+        },
+        {
+          "time": 6,
+          "user": "b"
+        },
+        {
+          "time": 7,
+          "user": "a"
+        },
+        {
+          "time": 8,
+          "user": "c"
+        },
+        {
+          "time": 9,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      }
+    ],
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 2,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 2,
+          "user": "b"
+        },
+        {
+          "time": 4,
+          "user": "a"
+        },
+        {
+          "time": 6,
+          "user": "c"
+        },
+        {
+          "time": 8,
+          "user": "a"
+        },
+        {
+          "time": 10,
+          "user": "b"
+        },
+        {
+          "time": 12,
+          "user": "a"
+        },
+        {
+          "time": 14,
+          "user": "c"
+        },
+        {
+          "time": 16,
+          "user": "a"
+        },
+        {
+          "time": 18,
+          "user": "b"
+        },
+        {
+          "time": 20,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      }
+    ],
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "limit": 2,
+      "window": 3,
+      "events": [
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 3
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 3
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 3
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 3
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 3
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 3
+      }
+    ],
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "limit": 3,
+      "window": 4,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 1,
+          "user": "c"
+        },
+        {
+          "time": 2,
+          "user": "a"
+        },
+        {
+          "time": 3,
+          "user": "b"
+        },
+        {
+          "time": 4,
+          "user": "a"
+        },
+        {
+          "time": 5,
+          "user": "c"
+        },
+        {
+          "time": 6,
+          "user": "a"
+        },
+        {
+          "time": 7,
+          "user": "b"
+        },
+        {
+          "time": 8,
+          "user": "a"
+        },
+        {
+          "time": 9,
+          "user": "c"
+        },
+        {
+          "time": 10,
+          "user": "a"
+        },
+        {
+          "time": 11,
+          "user": "b"
+        },
+        {
+          "time": 12,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      }
+    ],
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "limit": 4,
+      "window": 5,
+      "events": [
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 2,
+          "user": "a"
+        },
+        {
+          "time": 4,
+          "user": "b"
+        },
+        {
+          "time": 6,
+          "user": "a"
+        },
+        {
+          "time": 8,
+          "user": "c"
+        },
+        {
+          "time": 10,
+          "user": "a"
+        },
+        {
+          "time": 12,
+          "user": "b"
+        },
+        {
+          "time": 14,
+          "user": "a"
+        },
+        {
+          "time": 16,
+          "user": "c"
+        },
+        {
+          "time": 18,
+          "user": "a"
+        },
+        {
+          "time": 20,
+          "user": "b"
+        },
+        {
+          "time": 22,
+          "user": "a"
+        },
+        {
+          "time": 24,
+          "user": "c"
+        },
+        {
+          "time": 26,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      }
+    ],
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 6,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 6
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 6
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 6
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 6
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 6
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 6
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 6
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 6
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 6
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 6
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 6
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 6
+      }
+    ],
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "limit": 2,
+      "window": 7,
+      "events": [
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 1,
+          "user": "a"
+        },
+        {
+          "time": 2,
+          "user": "c"
+        },
+        {
+          "time": 3,
+          "user": "a"
+        },
+        {
+          "time": 4,
+          "user": "b"
+        },
+        {
+          "time": 5,
+          "user": "a"
+        },
+        {
+          "time": 6,
+          "user": "c"
+        },
+        {
+          "time": 7,
+          "user": "a"
+        },
+        {
+          "time": 8,
+          "user": "b"
+        },
+        {
+          "time": 9,
+          "user": "a"
+        },
+        {
+          "time": 10,
+          "user": "c"
+        },
+        {
+          "time": 11,
+          "user": "a"
+        },
+        {
+          "time": 12,
+          "user": "b"
+        },
+        {
+          "time": 13,
+          "user": "a"
+        },
+        {
+          "time": 14,
+          "user": "c"
+        },
+        {
+          "time": 15,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 3
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 1
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 3
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 1
+      }
+    ],
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "limit": 3,
+      "window": 1,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 2,
+          "user": "c"
+        },
+        {
+          "time": 4,
+          "user": "a"
+        },
+        {
+          "time": 6,
+          "user": "b"
+        },
+        {
+          "time": 8,
+          "user": "a"
+        },
+        {
+          "time": 10,
+          "user": "c"
+        },
+        {
+          "time": 12,
+          "user": "a"
+        },
+        {
+          "time": 14,
+          "user": "b"
+        },
+        {
+          "time": 16,
+          "user": "a"
+        },
+        {
+          "time": 18,
+          "user": "c"
+        },
+        {
+          "time": 20,
+          "user": "a"
+        },
+        {
+          "time": 22,
+          "user": "b"
+        },
+        {
+          "time": 24,
+          "user": "a"
+        },
+        {
+          "time": 26,
+          "user": "c"
+        },
+        {
+          "time": 28,
+          "user": "a"
+        },
+        {
+          "time": 30,
+          "user": "b"
+        },
+        {
+          "time": 32,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      }
+    ],
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "limit": 4,
+      "window": 2,
+      "events": [
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 0,
+          "user": "c"
+        },
+        {
+          "time": 0,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 3,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 2,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 2
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 2
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 2
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 2
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 2
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 2
+      }
+    ],
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "limit": 1,
+      "window": 3,
+      "events": [
+        {
+          "time": 0,
+          "user": "a"
+        },
+        {
+          "time": 1,
+          "user": "b"
+        },
+        {
+          "time": 2,
+          "user": "a"
+        },
+        {
+          "time": 3,
+          "user": "c"
+        },
+        {
+          "time": 4,
+          "user": "a"
+        },
+        {
+          "time": 5,
+          "user": "b"
+        },
+        {
+          "time": 6,
+          "user": "a"
+        },
+        {
+          "time": 7,
+          "user": "c"
+        },
+        {
+          "time": 8,
+          "user": "a"
+        },
+        {
+          "time": 9,
+          "user": "b"
+        },
+        {
+          "time": 10,
+          "user": "a"
+        },
+        {
+          "time": 11,
+          "user": "c"
+        },
+        {
+          "time": 12,
+          "user": "a"
+        },
+        {
+          "time": 13,
+          "user": "b"
+        },
+        {
+          "time": 14,
+          "user": "a"
+        },
+        {
+          "time": 15,
+          "user": "c"
+        },
+        {
+          "time": 16,
+          "user": "a"
+        },
+        {
+          "time": 17,
+          "user": "b"
+        },
+        {
+          "time": 18,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 1
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 1
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 1
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 1
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 0,
+        "retry_after": 0
+      },
+      {
+        "allowed": false,
+        "remaining": 0,
+        "retry_after": 1
+      }
+    ],
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "limit": 2,
+      "window": 4,
+      "events": [
+        {
+          "time": 0,
+          "user": "b"
+        },
+        {
+          "time": 2,
+          "user": "a"
+        },
+        {
+          "time": 4,
+          "user": "c"
+        },
+        {
+          "time": 6,
+          "user": "a"
+        },
+        {
+          "time": 8,
+          "user": "b"
+        },
+        {
+          "time": 10,
+          "user": "a"
+        },
+        {
+          "time": 12,
+          "user": "c"
+        },
+        {
+          "time": 14,
+          "user": "a"
+        },
+        {
+          "time": 16,
+          "user": "b"
+        },
+        {
+          "time": 18,
+          "user": "a"
+        },
+        {
+          "time": 20,
+          "user": "c"
+        },
+        {
+          "time": 22,
+          "user": "a"
+        },
+        {
+          "time": 24,
+          "user": "b"
+        },
+        {
+          "time": 26,
+          "user": "a"
+        },
+        {
+          "time": 28,
+          "user": "c"
+        },
+        {
+          "time": 30,
+          "user": "a"
+        },
+        {
+          "time": 32,
+          "user": "b"
+        },
+        {
+          "time": 34,
+          "user": "a"
+        },
+        {
+          "time": 36,
+          "user": "c"
+        },
+        {
+          "time": 38,
+          "user": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      },
+      {
+        "allowed": true,
+        "remaining": 1,
+        "retry_after": 0
+      }
+    ],
+    "label": "additional-18"
+  }
+]

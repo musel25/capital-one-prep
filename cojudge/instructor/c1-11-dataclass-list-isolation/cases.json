@@ -1,0 +1,1073 @@
+[
+  {
+    "input": {
+      "names": [
+        "A",
+        "B"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "pen"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "name": "A",
+        "items": [
+          "pen"
+        ]
+      },
+      {
+        "name": "B",
+        "items": []
+      }
+    ],
+    "label": "one box must not change another"
+  },
+  {
+    "input": {
+      "names": [
+        "A",
+        "B"
+      ],
+      "actions": [
+        {
+          "box": 1,
+          "item": "book"
+        },
+        {
+          "box": 0,
+          "item": "pen"
+        },
+        {
+          "box": 1,
+          "item": "paper"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "name": "A",
+        "items": [
+          "pen"
+        ]
+      },
+      {
+        "name": "B",
+        "items": [
+          "book",
+          "paper"
+        ]
+      }
+    ],
+    "label": "independent item order"
+  },
+  {
+    "input": {
+      "names": [],
+      "actions": []
+    },
+    "expected": [],
+    "label": "no boxes"
+  },
+  {
+    "input": {
+      "names": [
+        "A"
+      ],
+      "actions": []
+    },
+    "expected": [
+      {
+        "name": "A",
+        "items": []
+      }
+    ],
+    "label": "empty single box"
+  },
+  {
+    "input": {
+      "names": [
+        "A",
+        "B",
+        "C"
+      ],
+      "actions": []
+    },
+    "expected": [
+      {
+        "name": "A",
+        "items": []
+      },
+      {
+        "name": "B",
+        "items": []
+      },
+      {
+        "name": "C",
+        "items": []
+      }
+    ],
+    "label": "several empty boxes"
+  },
+  {
+    "input": {
+      "names": [
+        "A"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "x"
+        },
+        {
+          "box": 0,
+          "item": "x"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "name": "A",
+        "items": [
+          "x",
+          "x"
+        ]
+      }
+    ],
+    "label": "duplicates are retained"
+  },
+  {
+    "input": {
+      "names": [
+        "A",
+        "B",
+        "C"
+      ],
+      "actions": [
+        {
+          "box": 2,
+          "item": "last"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "name": "A",
+        "items": []
+      },
+      {
+        "name": "B",
+        "items": []
+      },
+      {
+        "name": "C",
+        "items": [
+          "last"
+        ]
+      }
+    ],
+    "label": "last box index"
+  },
+  {
+    "input": {
+      "names": [
+        ""
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": ""
+        }
+      ]
+    },
+    "expected": [
+      {
+        "name": "",
+        "items": [
+          ""
+        ]
+      }
+    ],
+    "label": "empty strings are values"
+  },
+  {
+    "input": {
+      "names": [
+        "B",
+        "A"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "1"
+        },
+        {
+          "box": 1,
+          "item": "2"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "name": "B",
+        "items": [
+          "1"
+        ]
+      },
+      {
+        "name": "A",
+        "items": [
+          "2"
+        ]
+      }
+    ],
+    "label": "name order is preserved"
+  },
+  {
+    "input": {
+      "names": [
+        "A",
+        "B"
+      ],
+      "actions": [
+        {
+          "box": 1,
+          "item": "x"
+        },
+        {
+          "box": 1,
+          "item": "y"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "name": "A",
+        "items": []
+      },
+      {
+        "name": "B",
+        "items": [
+          "x",
+          "y"
+        ]
+      }
+    ],
+    "label": "first box remains empty"
+  },
+  {
+    "input": {
+      "names": [
+        "A",
+        "B",
+        "C"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "x"
+        },
+        {
+          "box": 1,
+          "item": "x"
+        },
+        {
+          "box": 2,
+          "item": "x"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "name": "A",
+        "items": [
+          "x"
+        ]
+      },
+      {
+        "name": "B",
+        "items": [
+          "x"
+        ]
+      },
+      {
+        "name": "C",
+        "items": [
+          "x"
+        ]
+      }
+    ],
+    "label": "same item in separate boxes"
+  },
+  {
+    "input": {
+      "names": [
+        "\u03b1",
+        "\u03b2"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "\u96ea"
+        },
+        {
+          "box": 1,
+          "item": "\ud83d\ude80"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "name": "\u03b1",
+        "items": [
+          "\u96ea"
+        ]
+      },
+      {
+        "name": "\u03b2",
+        "items": [
+          "\ud83d\ude80"
+        ]
+      }
+    ],
+    "label": "Unicode text"
+  },
+  {
+    "input": {
+      "names": [
+        "A0",
+        "B0",
+        "C0"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "0:0"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "items": [
+          "0:0"
+        ],
+        "name": "A0"
+      },
+      {
+        "items": [],
+        "name": "B0"
+      },
+      {
+        "items": [],
+        "name": "C0"
+      }
+    ],
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "names": [
+        "A1",
+        "B1",
+        "C1"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "1:0"
+        },
+        {
+          "box": 1,
+          "item": "1:1"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "items": [
+          "1:0"
+        ],
+        "name": "A1"
+      },
+      {
+        "items": [
+          "1:1"
+        ],
+        "name": "B1"
+      },
+      {
+        "items": [],
+        "name": "C1"
+      }
+    ],
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "names": [
+        "A2",
+        "B2",
+        "C2"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "2:0"
+        },
+        {
+          "box": 1,
+          "item": "2:1"
+        },
+        {
+          "box": 2,
+          "item": "2:2"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "items": [
+          "2:0"
+        ],
+        "name": "A2"
+      },
+      {
+        "items": [
+          "2:1"
+        ],
+        "name": "B2"
+      },
+      {
+        "items": [
+          "2:2"
+        ],
+        "name": "C2"
+      }
+    ],
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "names": [
+        "A3",
+        "B3",
+        "C3"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "3:0"
+        },
+        {
+          "box": 1,
+          "item": "3:1"
+        },
+        {
+          "box": 2,
+          "item": "3:2"
+        },
+        {
+          "box": 0,
+          "item": "3:3"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "items": [
+          "3:0",
+          "3:3"
+        ],
+        "name": "A3"
+      },
+      {
+        "items": [
+          "3:1"
+        ],
+        "name": "B3"
+      },
+      {
+        "items": [
+          "3:2"
+        ],
+        "name": "C3"
+      }
+    ],
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "names": [
+        "A4",
+        "B4",
+        "C4"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "4:0"
+        },
+        {
+          "box": 1,
+          "item": "4:1"
+        },
+        {
+          "box": 2,
+          "item": "4:2"
+        },
+        {
+          "box": 0,
+          "item": "4:3"
+        },
+        {
+          "box": 1,
+          "item": "4:4"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "items": [
+          "4:0",
+          "4:3"
+        ],
+        "name": "A4"
+      },
+      {
+        "items": [
+          "4:1",
+          "4:4"
+        ],
+        "name": "B4"
+      },
+      {
+        "items": [
+          "4:2"
+        ],
+        "name": "C4"
+      }
+    ],
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "names": [
+        "A5",
+        "B5",
+        "C5"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "5:0"
+        },
+        {
+          "box": 1,
+          "item": "5:1"
+        },
+        {
+          "box": 2,
+          "item": "5:2"
+        },
+        {
+          "box": 0,
+          "item": "5:3"
+        },
+        {
+          "box": 1,
+          "item": "5:4"
+        },
+        {
+          "box": 2,
+          "item": "5:5"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "items": [
+          "5:0",
+          "5:3"
+        ],
+        "name": "A5"
+      },
+      {
+        "items": [
+          "5:1",
+          "5:4"
+        ],
+        "name": "B5"
+      },
+      {
+        "items": [
+          "5:2",
+          "5:5"
+        ],
+        "name": "C5"
+      }
+    ],
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "names": [
+        "A6",
+        "B6",
+        "C6"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "6:0"
+        },
+        {
+          "box": 1,
+          "item": "6:1"
+        },
+        {
+          "box": 2,
+          "item": "6:2"
+        },
+        {
+          "box": 0,
+          "item": "6:3"
+        },
+        {
+          "box": 1,
+          "item": "6:4"
+        },
+        {
+          "box": 2,
+          "item": "6:5"
+        },
+        {
+          "box": 0,
+          "item": "6:6"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "items": [
+          "6:0",
+          "6:3",
+          "6:6"
+        ],
+        "name": "A6"
+      },
+      {
+        "items": [
+          "6:1",
+          "6:4"
+        ],
+        "name": "B6"
+      },
+      {
+        "items": [
+          "6:2",
+          "6:5"
+        ],
+        "name": "C6"
+      }
+    ],
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "names": [
+        "A7",
+        "B7",
+        "C7"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "7:0"
+        },
+        {
+          "box": 1,
+          "item": "7:1"
+        },
+        {
+          "box": 2,
+          "item": "7:2"
+        },
+        {
+          "box": 0,
+          "item": "7:3"
+        },
+        {
+          "box": 1,
+          "item": "7:4"
+        },
+        {
+          "box": 2,
+          "item": "7:5"
+        },
+        {
+          "box": 0,
+          "item": "7:6"
+        },
+        {
+          "box": 1,
+          "item": "7:7"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "items": [
+          "7:0",
+          "7:3",
+          "7:6"
+        ],
+        "name": "A7"
+      },
+      {
+        "items": [
+          "7:1",
+          "7:4",
+          "7:7"
+        ],
+        "name": "B7"
+      },
+      {
+        "items": [
+          "7:2",
+          "7:5"
+        ],
+        "name": "C7"
+      }
+    ],
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "names": [
+        "A8",
+        "B8",
+        "C8"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "8:0"
+        },
+        {
+          "box": 1,
+          "item": "8:1"
+        },
+        {
+          "box": 2,
+          "item": "8:2"
+        },
+        {
+          "box": 0,
+          "item": "8:3"
+        },
+        {
+          "box": 1,
+          "item": "8:4"
+        },
+        {
+          "box": 2,
+          "item": "8:5"
+        },
+        {
+          "box": 0,
+          "item": "8:6"
+        },
+        {
+          "box": 1,
+          "item": "8:7"
+        },
+        {
+          "box": 2,
+          "item": "8:8"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "items": [
+          "8:0",
+          "8:3",
+          "8:6"
+        ],
+        "name": "A8"
+      },
+      {
+        "items": [
+          "8:1",
+          "8:4",
+          "8:7"
+        ],
+        "name": "B8"
+      },
+      {
+        "items": [
+          "8:2",
+          "8:5",
+          "8:8"
+        ],
+        "name": "C8"
+      }
+    ],
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "names": [
+        "A9",
+        "B9",
+        "C9"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "9:0"
+        },
+        {
+          "box": 1,
+          "item": "9:1"
+        },
+        {
+          "box": 2,
+          "item": "9:2"
+        },
+        {
+          "box": 0,
+          "item": "9:3"
+        },
+        {
+          "box": 1,
+          "item": "9:4"
+        },
+        {
+          "box": 2,
+          "item": "9:5"
+        },
+        {
+          "box": 0,
+          "item": "9:6"
+        },
+        {
+          "box": 1,
+          "item": "9:7"
+        },
+        {
+          "box": 2,
+          "item": "9:8"
+        },
+        {
+          "box": 0,
+          "item": "9:9"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "items": [
+          "9:0",
+          "9:3",
+          "9:6",
+          "9:9"
+        ],
+        "name": "A9"
+      },
+      {
+        "items": [
+          "9:1",
+          "9:4",
+          "9:7"
+        ],
+        "name": "B9"
+      },
+      {
+        "items": [
+          "9:2",
+          "9:5",
+          "9:8"
+        ],
+        "name": "C9"
+      }
+    ],
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "names": [
+        "A10",
+        "B10",
+        "C10"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "10:0"
+        },
+        {
+          "box": 1,
+          "item": "10:1"
+        },
+        {
+          "box": 2,
+          "item": "10:2"
+        },
+        {
+          "box": 0,
+          "item": "10:3"
+        },
+        {
+          "box": 1,
+          "item": "10:4"
+        },
+        {
+          "box": 2,
+          "item": "10:5"
+        },
+        {
+          "box": 0,
+          "item": "10:6"
+        },
+        {
+          "box": 1,
+          "item": "10:7"
+        },
+        {
+          "box": 2,
+          "item": "10:8"
+        },
+        {
+          "box": 0,
+          "item": "10:9"
+        },
+        {
+          "box": 1,
+          "item": "10:10"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "items": [
+          "10:0",
+          "10:3",
+          "10:6",
+          "10:9"
+        ],
+        "name": "A10"
+      },
+      {
+        "items": [
+          "10:1",
+          "10:4",
+          "10:7",
+          "10:10"
+        ],
+        "name": "B10"
+      },
+      {
+        "items": [
+          "10:2",
+          "10:5",
+          "10:8"
+        ],
+        "name": "C10"
+      }
+    ],
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "names": [
+        "A11",
+        "B11",
+        "C11"
+      ],
+      "actions": [
+        {
+          "box": 0,
+          "item": "11:0"
+        },
+        {
+          "box": 1,
+          "item": "11:1"
+        },
+        {
+          "box": 2,
+          "item": "11:2"
+        },
+        {
+          "box": 0,
+          "item": "11:3"
+        },
+        {
+          "box": 1,
+          "item": "11:4"
+        },
+        {
+          "box": 2,
+          "item": "11:5"
+        },
+        {
+          "box": 0,
+          "item": "11:6"
+        },
+        {
+          "box": 1,
+          "item": "11:7"
+        },
+        {
+          "box": 2,
+          "item": "11:8"
+        },
+        {
+          "box": 0,
+          "item": "11:9"
+        },
+        {
+          "box": 1,
+          "item": "11:10"
+        },
+        {
+          "box": 2,
+          "item": "11:11"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "items": [
+          "11:0",
+          "11:3",
+          "11:6",
+          "11:9"
+        ],
+        "name": "A11"
+      },
+      {
+        "items": [
+          "11:1",
+          "11:4",
+          "11:7",
+          "11:10"
+        ],
+        "name": "B11"
+      },
+      {
+        "items": [
+          "11:2",
+          "11:5",
+          "11:8",
+          "11:11"
+        ],
+        "name": "C11"
+      }
+    ],
+    "label": "additional-12"
+  }
+]

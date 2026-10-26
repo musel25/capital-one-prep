@@ -1,0 +1,774 @@
+[
+  {
+    "input": {
+      "outcomes": [
+        503,
+        503,
+        200
+      ],
+      "max_attempts": 3,
+      "base": 2,
+      "cap": 3
+    },
+    "expected": {
+      "attempts": 3,
+      "delays": [
+        2,
+        3
+      ],
+      "result": "success"
+    },
+    "label": "backoff is capped"
+  },
+  {
+    "input": {
+      "outcomes": [
+        400,
+        200
+      ],
+      "max_attempts": 2,
+      "base": 1,
+      "cap": 10
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "failed"
+    },
+    "label": "do not retry a client error"
+  },
+  {
+    "input": {
+      "outcomes": [
+        "timeout",
+        504
+      ],
+      "max_attempts": 2,
+      "base": 4,
+      "cap": 20
+    },
+    "expected": {
+      "attempts": 2,
+      "delays": [
+        4
+      ],
+      "result": "exhausted"
+    },
+    "label": "no delay after final failure"
+  },
+  {
+    "input": {
+      "outcomes": [
+        200
+      ],
+      "max_attempts": 1,
+      "base": 1,
+      "cap": 1
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "success"
+    },
+    "label": "immediate success"
+  },
+  {
+    "input": {
+      "outcomes": [
+        429
+      ],
+      "max_attempts": 1,
+      "base": 1,
+      "cap": 10
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "exhausted"
+    },
+    "label": "one allowed attempt"
+  },
+  {
+    "input": {
+      "outcomes": [
+        201,
+        500
+      ],
+      "max_attempts": 2,
+      "base": 10,
+      "cap": 5
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "success"
+    },
+    "label": "all 2xx responses succeed"
+  },
+  {
+    "input": {
+      "outcomes": [
+        299
+      ],
+      "max_attempts": 1,
+      "base": 1,
+      "cap": 1
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "success"
+    },
+    "label": "upper success boundary"
+  },
+  {
+    "input": {
+      "outcomes": [
+        300
+      ],
+      "max_attempts": 1,
+      "base": 1,
+      "cap": 1
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "failed"
+    },
+    "label": "redirect is terminal here"
+  },
+  {
+    "input": {
+      "outcomes": [
+        501,
+        200
+      ],
+      "max_attempts": 2,
+      "base": 1,
+      "cap": 10
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "failed"
+    },
+    "label": "not all server errors are retryable"
+  },
+  {
+    "input": {
+      "outcomes": [
+        502,
+        200
+      ],
+      "max_attempts": 2,
+      "base": 9,
+      "cap": 3
+    },
+    "expected": {
+      "attempts": 2,
+      "delays": [
+        3
+      ],
+      "result": "success"
+    },
+    "label": "cap applies from first delay"
+  },
+  {
+    "input": {
+      "outcomes": [
+        500,
+        502,
+        503,
+        504,
+        429,
+        "timeout"
+      ],
+      "max_attempts": 6,
+      "base": 1,
+      "cap": 8
+    },
+    "expected": {
+      "attempts": 6,
+      "delays": [
+        1,
+        2,
+        4,
+        8,
+        8
+      ],
+      "result": "exhausted"
+    },
+    "label": "all specified transient outcomes"
+  },
+  {
+    "input": {
+      "outcomes": [
+        "timeout",
+        403,
+        200
+      ],
+      "max_attempts": 3,
+      "base": 2,
+      "cap": 20
+    },
+    "expected": {
+      "attempts": 2,
+      "delays": [
+        2
+      ],
+      "result": "failed"
+    },
+    "label": "terminal error after retry"
+  },
+  {
+    "input": {
+      "outcomes": [
+        599
+      ],
+      "max_attempts": 1,
+      "base": 2,
+      "cap": 4
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "failed"
+    },
+    "label": "unlisted server error"
+  },
+  {
+    "input": {
+      "outcomes": [
+        199
+      ],
+      "max_attempts": 1,
+      "base": 2,
+      "cap": 4
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "failed"
+    },
+    "label": "below success range"
+  },
+  {
+    "input": {
+      "outcomes": [
+        422,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 1,
+      "base": 1,
+      "cap": 1
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "failed"
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "outcomes": [
+        502,
+        200,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 2,
+      "base": 2,
+      "cap": 2
+    },
+    "expected": {
+      "attempts": 2,
+      "delays": [
+        2
+      ],
+      "result": "success"
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "outcomes": [
+        503,
+        504,
+        422,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 3,
+      "base": 3,
+      "cap": 3
+    },
+    "expected": {
+      "attempts": 3,
+      "delays": [
+        3,
+        3
+      ],
+      "result": "failed"
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "outcomes": [
+        504,
+        429,
+        "timeout",
+        200,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 4,
+      "base": 4,
+      "cap": 4
+    },
+    "expected": {
+      "attempts": 4,
+      "delays": [
+        4,
+        4,
+        4
+      ],
+      "result": "success"
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "outcomes": [
+        429,
+        "timeout",
+        500,
+        502,
+        422,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 5,
+      "base": 5,
+      "cap": 5
+    },
+    "expected": {
+      "attempts": 5,
+      "delays": [
+        5,
+        5,
+        5,
+        5
+      ],
+      "result": "failed"
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "outcomes": [
+        "timeout",
+        500,
+        502,
+        503,
+        504,
+        200,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 6,
+      "base": 6,
+      "cap": 1
+    },
+    "expected": {
+      "attempts": 6,
+      "delays": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "result": "success"
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "outcomes": [
+        422,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 7,
+      "base": 7,
+      "cap": 2
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "failed"
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "outcomes": [
+        502,
+        200,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 8,
+      "base": 8,
+      "cap": 3
+    },
+    "expected": {
+      "attempts": 2,
+      "delays": [
+        3
+      ],
+      "result": "success"
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "outcomes": [
+        503,
+        504,
+        422,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 1,
+      "base": 9,
+      "cap": 4
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "exhausted"
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "outcomes": [
+        504,
+        429,
+        "timeout",
+        200,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 2,
+      "base": 10,
+      "cap": 5
+    },
+    "expected": {
+      "attempts": 2,
+      "delays": [
+        5
+      ],
+      "result": "exhausted"
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "outcomes": [
+        429,
+        "timeout",
+        500,
+        502,
+        422,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 3,
+      "base": 11,
+      "cap": 1
+    },
+    "expected": {
+      "attempts": 3,
+      "delays": [
+        1,
+        1
+      ],
+      "result": "exhausted"
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "outcomes": [
+        "timeout",
+        500,
+        502,
+        503,
+        504,
+        200,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 4,
+      "base": 12,
+      "cap": 2
+    },
+    "expected": {
+      "attempts": 4,
+      "delays": [
+        2,
+        2,
+        2
+      ],
+      "result": "exhausted"
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "outcomes": [
+        422,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 5,
+      "base": 13,
+      "cap": 3
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "failed"
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "outcomes": [
+        502,
+        200,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 6,
+      "base": 14,
+      "cap": 4
+    },
+    "expected": {
+      "attempts": 2,
+      "delays": [
+        4
+      ],
+      "result": "success"
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "outcomes": [
+        503,
+        504,
+        422,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 7,
+      "base": 15,
+      "cap": 5
+    },
+    "expected": {
+      "attempts": 3,
+      "delays": [
+        5,
+        5
+      ],
+      "result": "failed"
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "outcomes": [
+        504,
+        429,
+        "timeout",
+        200,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 8,
+      "base": 16,
+      "cap": 1
+    },
+    "expected": {
+      "attempts": 4,
+      "delays": [
+        1,
+        1,
+        1
+      ],
+      "result": "success"
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "outcomes": [
+        429,
+        "timeout",
+        500,
+        502,
+        422,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 1,
+      "base": 17,
+      "cap": 2
+    },
+    "expected": {
+      "attempts": 1,
+      "delays": [],
+      "result": "exhausted"
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "outcomes": [
+        "timeout",
+        500,
+        502,
+        503,
+        504,
+        200,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503,
+        503
+      ],
+      "max_attempts": 2,
+      "base": 18,
+      "cap": 3
+    },
+    "expected": {
+      "attempts": 2,
+      "delays": [
+        3
+      ],
+      "result": "exhausted"
+    },
+    "label": "additional-18"
+  }
+]
