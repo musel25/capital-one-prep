@@ -47,6 +47,13 @@ The existing server loads the pack from its persistent content volume.
   Verify explicit cases and mutations.
 - [x] Review contracts, pedagogy, independent references, and test diversity.
   Build all content; run `uv run python scripts/verify_cojudge.py` and focused pytest.
-- [ ] Stage content on the server, run every reference through the live judge,
+- [x] Stage content on the server, run every reference through the live judge,
   and reject a wrong solution for every problem. Publish the course index last.
   Verify the course and problem HTML. Add a repository README link. Commit and push.
+
+## Verification record
+
+Completed 2026-10-26. See `cojudge/verification.md`, `cojudge/verification.json`,
+and `cojudge/review.md`. There are 1,515 official cases and 51 separate reviewer
+cases. All 50 reference solutions passed the live judge. A faulty variant was
+rejected for every problem. The repository suite passed 55 tests.
