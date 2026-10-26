@@ -4,7 +4,9 @@ Original constructed practice. No code execution during the attempt.
 
 ## Product discussion
 
-A bank is considering merchant-locked virtual cards with expiration and spending controls. Who benefits, what can go wrong for legitimate customers, and how would you decide whether to roll out? Propose one success metric, one harm metric and a next step. Do not invent measured results.
+A bank is considering virtual card numbers that charge the customer’s existing account but work only at one chosen merchant. Each number can expire and has a per-purchase limit plus a remaining spending budget. Customers want tighter control of online spending, but legitimate purchases could be rejected if a merchant identity or limit does not match their expectations.
+
+In 60–90 seconds, recommend whether and how to pilot this product. Explain who benefits, one risk for legitimate customers, one success metric, one harm metric, and a next step. State any assumptions about merchant matching or recurring purchases. Do not invent measured results.
 
 ## Rules and examples
 

@@ -18,3 +18,13 @@ Cada archivo de caso contiene enunciado y contrato. Los archivos en `cases/instr
 | 10 | [Mock B: reservas de equipo con cancelaciones](d10.md) |
 
 Each session is 60 minutes. Follow its phase timer and reveal stages progressively. Save a prediction before the answer key. The original day-6 API case and the later authorization case remain available in Previous exercises with their original notes. Card-number rules are invented practice, not real payment-card standards or confirmed interview questions.
+
+## Case authoring and review
+
+- The product discussion must stand on its own: identify the user, the situation or proposed product, the customer impact, and the decision to discuss.
+- State the event order. A rejected attempt causing a balance decrease is a different problem from a successful retry decreasing it. Do not require learners to guess which happened.
+- Define unfamiliar terms in plain language. Leave room for product assumptions and clarification without hiding essential facts.
+- Specify technical inputs, units, return shapes, ordering, validation precedence, mutation rules, and relevant boundaries before asking for predictions.
+- Start actual and required traces independently from the same initial state. Name the state or output used by each extension.
+- Check that examples, tasks, and instructor answers agree. Keep intentional code defects and answer-key material out of the product setup.
+- Update both the Markdown case and its full or staged copy in `curriculum/plan.json`. Preserve block IDs, learner attempts, saved progress, and reveal gates.

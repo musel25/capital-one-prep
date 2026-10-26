@@ -6,7 +6,9 @@ Start with the business discussion, then reveal the number rules and classify ex
 
 # Product discussion
 
-A bank is considering offering digital card numbers for online purchases. Explain potential customer and business benefits, one limitation or risk, and a way to evaluate a pilot. Clarify what the product would actually do; do not assume implementation details. Give a 60–90 second recommendation before moving on.
+A bank is considering letting customers generate an alternative card number in its app for online purchases. Purchases would still charge the same underlying account; the customer would give the merchant the generated number instead of the primary card number. The bank has not yet decided whether these numbers should be single-use, tied to one merchant, or reusable.
+
+In 60–90 seconds, recommend a pilot, explain a customer benefit and a business benefit, identify one limitation or risk, and propose one success metric and one harm metric. State which usage model you assume and what you would clarify. Do not invent measured results. The later eight-digit validation rules are a separate fictional coding exercise, not a proposed payment-card format.
 
 # Rules and examples
 
