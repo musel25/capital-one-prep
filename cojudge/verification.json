@@ -375,5 +375,524 @@
       "mutation_rejected": "stages debit in live committed balances",
       "execution_ms": 1.538368
     }
-  ]
+  ],
+  "followup": {
+    "verified_at_utc": "2026-10-26T21:54:01.059238+00:00",
+    "container": "cojudge-vps",
+    "problems": 50,
+    "official_cases": 1515,
+    "sample_cases": 150,
+    "review_cases": 51,
+    "mutations_rejected_by_wrong_answer": 51,
+    "failures": 0,
+    "repository_pytest_passed": 61,
+    "published_hashes": {
+      "container": "cojudge-vps",
+      "matching_problem_files": 250,
+      "matching_course_files": 1
+    },
+    "checks": [
+      {
+        "id": "c1-01-strict-numeric-fields",
+        "sample_cases": 3,
+        "official_cases": 25,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "accepts booleans"
+        ],
+        "execution_ms": 0.265163
+      },
+      {
+        "id": "c1-02-exact-money-parser",
+        "sample_cases": 3,
+        "official_cases": 27,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "drops fractional cents before scaling"
+        ],
+        "execution_ms": 0.450045
+      },
+      {
+        "id": "c1-03-missing-null-zero",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "replaces explicit zero with default"
+        ],
+        "execution_ms": 0.261003
+      },
+      {
+        "id": "c1-04-stable-ticket-order",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "reverses priority order"
+        ],
+        "execution_ms": 0.404205
+      },
+      {
+        "id": "c1-05-counter-reconciliation",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "collapses expected duplicates"
+        ],
+        "execution_ms": 0.599527
+      },
+      {
+        "id": "c1-06-csv-account-totals",
+        "sample_cases": 3,
+        "official_cases": 27,
+        "review_cases": 2,
+        "mutations_rejected": [
+          "overwrites repeated account total"
+        ],
+        "execution_ms": 0.481127
+      },
+      {
+        "id": "c1-07-typed-json-boundary",
+        "sample_cases": 3,
+        "official_cases": 25,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "accepts bool as integer"
+        ],
+        "execution_ms": 0.370765
+      },
+      {
+        "id": "c1-08-aware-utc-normalization",
+        "sample_cases": 3,
+        "official_cases": 25,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "relabels local clock as UTC"
+        ],
+        "execution_ms": 0.393404
+      },
+      {
+        "id": "c1-09-iterator-batches",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "drops short final batch"
+        ],
+        "execution_ms": 0.323642
+      },
+      {
+        "id": "c1-10-stable-priority-jobs",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "uses newest job first on equal priorities"
+        ],
+        "execution_ms": 0.336164
+      },
+      {
+        "id": "c1-11-dataclass-list-isolation",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "factory returns shared list"
+        ],
+        "execution_ms": 0.463164
+      },
+      {
+        "id": "c1-12-nested-copy-isolation",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "copies only outer dictionary"
+        ],
+        "execution_ms": 0.823728
+      },
+      {
+        "id": "c1-13-balance-invariants",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "rejects an exact-balance withdrawal"
+        ],
+        "execution_ms": 0.33268
+      },
+      {
+        "id": "c1-14-inheritance-fee-policy",
+        "sample_cases": 3,
+        "official_cases": 25,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "excludes the waiver threshold"
+        ],
+        "execution_ms": 0.317644
+      },
+      {
+        "id": "c1-15-composed-fee-protocol",
+        "sample_cases": 3,
+        "official_cases": 25,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "rounds rate fees down"
+        ],
+        "execution_ms": 0.548045
+      },
+      {
+        "id": "c1-16-explicit-order-states",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "allows cancel after capture"
+        ],
+        "execution_ms": 0.296803
+      },
+      {
+        "id": "c1-17-atomic-memory-batch",
+        "sample_cases": 3,
+        "official_cases": 25,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "writes directly to live balances"
+        ],
+        "execution_ms": 0.387285
+      },
+      {
+        "id": "c1-18-event-id-conflicts",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "treats every repeated ID as an exact duplicate"
+        ],
+        "execution_ms": 0.353363
+      },
+      {
+        "id": "c1-19-exact-partial-refunds",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "compares each refund only with original charge"
+        ],
+        "execution_ms": 0.480566
+      },
+      {
+        "id": "c1-20-typed-memory-ledger",
+        "sample_cases": 3,
+        "official_cases": 25,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "credits destination without debiting source"
+        ],
+        "execution_ms": 0.500803
+      },
+      {
+        "id": "c1-21-route-contract",
+        "sample_cases": 3,
+        "official_cases": 30,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "treat successful delete as missing"
+        ],
+        "execution_ms": 0.94713
+      },
+      {
+        "id": "c1-22-body-validation",
+        "sample_cases": 3,
+        "official_cases": 37,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "accept booleans as integer amounts",
+          "accept integral and fractional floats as amounts"
+        ],
+        "execution_ms": 0.634167
+      },
+      {
+        "id": "c1-23-put-patch-fields",
+        "sample_cases": 3,
+        "official_cases": 31,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "drop explicit null patch"
+        ],
+        "execution_ms": 0.729005
+      },
+      {
+        "id": "c1-24-idempotency-conflicts",
+        "sample_cases": 3,
+        "official_cases": 29,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "replay a key even when the amount changed"
+        ],
+        "execution_ms": 0.936329
+      },
+      {
+        "id": "c1-25-cursor-tie-breaks",
+        "sample_cases": 3,
+        "official_cases": 30,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "include cursor row again"
+        ],
+        "execution_ms": 0.685528
+      },
+      {
+        "id": "c1-26-retry-backoff",
+        "sample_cases": 3,
+        "official_cases": 32,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "retry every server error"
+        ],
+        "execution_ms": 0.394764
+      },
+      {
+        "id": "c1-27-shared-deadline",
+        "sample_cases": 3,
+        "official_cases": 32,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "reject responses exactly at allowance"
+        ],
+        "execution_ms": 0.457325
+      },
+      {
+        "id": "c1-28-rolling-rate-limit",
+        "sample_cases": 3,
+        "official_cases": 31,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "keep timestamp at expired boundary"
+        ],
+        "execution_ms": 0.758926
+      },
+      {
+        "id": "c1-29-etag-validation",
+        "sample_cases": 3,
+        "official_cases": 29,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "ignore weak validators"
+        ],
+        "execution_ms": 0.466843
+      },
+      {
+        "id": "c1-30-upstream-page-client",
+        "sample_cases": 3,
+        "official_cases": 32,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "stop at an empty page despite its next cursor"
+        ],
+        "execution_ms": 0.619846
+      },
+      {
+        "id": "c1-31-sql-filter-order",
+        "sample_cases": 3,
+        "official_cases": 32,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "exclude exact minimum"
+        ],
+        "execution_ms": 6.314296
+      },
+      {
+        "id": "c1-32-sql-left-join-fix",
+        "sample_cases": 3,
+        "official_cases": 32,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "move paid qualification to WHERE"
+        ],
+        "execution_ms": 8.535872
+      },
+      {
+        "id": "c1-33-sql-group-having",
+        "sample_cases": 3,
+        "official_cases": 32,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "deduplicate equal payment amounts"
+        ],
+        "execution_ms": 6.858497
+      },
+      {
+        "id": "c1-34-sql-unique-create",
+        "sample_cases": 3,
+        "official_cases": 31,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "overwrite quota on duplicate username"
+        ],
+        "execution_ms": 8.194194
+      },
+      {
+        "id": "c1-35-sql-latest-per-device",
+        "sample_cases": 3,
+        "official_cases": 32,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "choose smallest id on a timestamp tie"
+        ],
+        "execution_ms": 7.880071
+      },
+      {
+        "id": "c1-36-atomic-transfer-rollback",
+        "sample_cases": 3,
+        "official_cases": 36,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "commits partial debit after exception"
+        ],
+        "execution_ms": 10.607453
+      },
+      {
+        "id": "c1-37-sql-optimistic-locking",
+        "sample_cases": 3,
+        "official_cases": 36,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "accepts stale versions"
+        ],
+        "execution_ms": 9.004721
+      },
+      {
+        "id": "c1-38-sql-idempotency-key",
+        "sample_cases": 3,
+        "official_cases": 36,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "ignores payload conflict"
+        ],
+        "execution_ms": 12.50679
+      },
+      {
+        "id": "c1-39-sql-savepoint-import",
+        "sample_cases": 3,
+        "official_cases": 37,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "releases failed insert without rollback"
+        ],
+        "execution_ms": 12.211026
+      },
+      {
+        "id": "c1-40-transactional-outbox",
+        "sample_cases": 3,
+        "official_cases": 36,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "commits business record before event"
+        ],
+        "execution_ms": 13.217397
+      },
+      {
+        "id": "c1-41-ttl-cache-boundaries",
+        "sample_cases": 3,
+        "official_cases": 37,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "serves an entry at its expiration time"
+        ],
+        "execution_ms": 0.926849
+      },
+      {
+        "id": "c1-42-bounded-lru-cache",
+        "sample_cases": 3,
+        "official_cases": 37,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "evicts most recent entry"
+        ],
+        "execution_ms": 1.094126
+      },
+      {
+        "id": "c1-43-message-deduplication",
+        "sample_cases": 3,
+        "official_cases": 36,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "forgets to record processed ID"
+        ],
+        "execution_ms": 0.953128
+      },
+      {
+        "id": "c1-44-queue-visibility-tokens",
+        "sample_cases": 3,
+        "official_cases": 36,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "accepts stale receipt tokens"
+        ],
+        "execution_ms": 1.412532
+      },
+      {
+        "id": "c1-45-circuit-breaker-state",
+        "sample_cases": 3,
+        "official_cases": 36,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "blocks the recovery probe at the exact deadline"
+        ],
+        "execution_ms": 1.428855
+      },
+      {
+        "id": "c1-46-dependency-job-rounds",
+        "sample_cases": 3,
+        "official_cases": 37,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "runs a job when only one prerequisite is done"
+        ],
+        "execution_ms": 1.310929
+      },
+      {
+        "id": "c1-47-consistent-hash-ring",
+        "sample_cases": 3,
+        "official_cases": 36,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "routes exact matches to the next node"
+        ],
+        "execution_ms": 0.949329
+      },
+      {
+        "id": "c1-48-replica-version-reads",
+        "sample_cases": 3,
+        "official_cases": 36,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "allows replica one version below client token"
+        ],
+        "execution_ms": 1.744012
+      },
+      {
+        "id": "c1-49-reservation-expiry",
+        "sample_cases": 3,
+        "official_cases": 39,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "confirms a hold at its expiration boundary"
+        ],
+        "execution_ms": 1.23353
+      },
+      {
+        "id": "c1-50-payment-service-integration",
+        "sample_cases": 3,
+        "official_cases": 39,
+        "review_cases": 1,
+        "mutations_rejected": [
+          "stages debit in live committed balances"
+        ],
+        "execution_ms": 2.145938
+      }
+    ]
+  }
 }

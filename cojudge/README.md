@@ -77,8 +77,15 @@ authorized local SSH tunnel:
 
 ```bash
 uv run python scripts/check_cojudge_live.py \
-  --base-url http://127.0.0.1:15376 --report /tmp/cojudge-live.json
+  --base-url http://127.0.0.1:15378 --include-review \
+  --report /tmp/cojudge-live.json
 ```
+
+Use the local port of the authorized tunnel for the current deployment.
+The script submits every prepared faulty variant. A wrong answer must reject
+each variant; a runner failure does not count. `--include-review` also checks
+both the reference output and the judge answer against the manual expectations
+for the 51 review cases.
 
 Publish only `problems/` and `courses/` to the CoJudge content directory.
 Keep the new course index unpublished until all its problems pass live checks.

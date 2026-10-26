@@ -60,6 +60,28 @@ files and volume were retained. The full 50-problem live verification then
 passed. Do not run the two instances together until their orphan cleanup is
 scoped to the owning session. No upstream CoJudge source was changed.
 
+## Supplemental verification on the replacement deployment
+
+After the original publication, the site moved to `cojudge-vps` on server port
+5378. This follow-up used that existing deployment. It did not change deployment
+settings. All 250 problem files and the course file matched local SHA-256 hashes.
+
+The full live run passed again: 50 references, 1,515 official cases, and 150
+sample executions. It also passed all 51 independent reviewer cases. Both the
+Python output and Java judge answer matched each manual expected result.
+All 51 prepared faulty variants were rejected by a wrong answer. A runner error
+does not count as mutation evidence. The repository suite passed 61 tests.
+Detailed follow-up results are in `verification.json` under `followup`.
+
+```bash
+uv run python scripts/check_cojudge_live.py \
+  --base-url http://127.0.0.1:15378 --include-review \
+  --report /tmp/cojudge-current-live.json
+uv run pytest -q
+```
+
+Port 15378 was an authorized local SSH tunnel to server port 5378.
+
 ## Verification limits
 
 The page checks inspected HTTP responses, rendered headings, the active course
