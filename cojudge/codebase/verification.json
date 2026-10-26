@@ -1,0 +1,944 @@
+{
+  "verified_at_utc": "2026-10-26T22:11:48.557181+00:00",
+  "content_commit": "7d180f178eef6801d5f2ab9aa895089a7adcf17f",
+  "course_url": "https://cojudge.musel.dev/?course=capital-one-codebase-practice",
+  "local_browser": {
+    "command": "verify",
+    "checks": [
+      {
+        "id": "cb-01-missing-null-zero",
+        "cases": 24,
+        "explicit": 12,
+        "mutations": [
+          {
+            "name": "replaces explicit zero with default",
+            "detected_by": [
+              0,
+              4,
+              5,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23
+            ]
+          }
+        ],
+        "java": {
+          "cases": 24,
+          "wrong_rejected": 360
+        },
+        "review": {
+          "cases": 3,
+          "java": {
+            "cases": 3,
+            "wrong_rejected": 45
+          }
+        },
+        "starter_wrong_answers": 17
+      },
+      {
+        "id": "cb-02-typed-json-boundary",
+        "cases": 25,
+        "explicit": 13,
+        "mutations": [
+          {
+            "name": "accepts bool as integer",
+            "detected_by": [
+              0,
+              9,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24
+            ]
+          }
+        ],
+        "java": {
+          "cases": 25,
+          "wrong_rejected": 375
+        },
+        "review": {
+          "cases": 3,
+          "java": {
+            "cases": 3,
+            "wrong_rejected": 45
+          }
+        },
+        "starter_wrong_answers": 14
+      },
+      {
+        "id": "cb-03-dataclass-list-isolation",
+        "cases": 24,
+        "explicit": 12,
+        "mutations": [
+          {
+            "name": "factory returns shared list",
+            "detected_by": [
+              0,
+              1,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23
+            ]
+          }
+        ],
+        "java": {
+          "cases": 24,
+          "wrong_rejected": 359
+        },
+        "review": {
+          "cases": 3,
+          "java": {
+            "cases": 3,
+            "wrong_rejected": 45
+          }
+        },
+        "starter_wrong_answers": 23
+      },
+      {
+        "id": "cb-04-nested-copy-isolation",
+        "cases": 24,
+        "explicit": 12,
+        "mutations": [
+          {
+            "name": "copies only outer dictionary",
+            "detected_by": [
+              0,
+              1,
+              4,
+              5,
+              6,
+              7,
+              8,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23
+            ]
+          }
+        ],
+        "java": {
+          "cases": 24,
+          "wrong_rejected": 360
+        },
+        "review": {
+          "cases": 3,
+          "java": {
+            "cases": 3,
+            "wrong_rejected": 45
+          }
+        },
+        "starter_wrong_answers": 21
+      },
+      {
+        "id": "cb-05-inheritance-fee-policy",
+        "cases": 25,
+        "explicit": 13,
+        "mutations": [
+          {
+            "name": "excludes the waiver threshold",
+            "detected_by": [
+              1,
+              4,
+              11,
+              12,
+              14,
+              16,
+              18,
+              20,
+              22,
+              24
+            ]
+          }
+        ],
+        "java": {
+          "cases": 25,
+          "wrong_rejected": 375
+        },
+        "review": {
+          "cases": 4,
+          "java": {
+            "cases": 4,
+            "wrong_rejected": 60
+          }
+        },
+        "starter_wrong_answers": 10
+      },
+      {
+        "id": "cb-06-composed-fee-protocol",
+        "cases": 25,
+        "explicit": 13,
+        "mutations": [
+          {
+            "name": "rounds rate fees down",
+            "detected_by": [
+              1,
+              6,
+              7,
+              9,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24
+            ]
+          }
+        ],
+        "java": {
+          "cases": 25,
+          "wrong_rejected": 373
+        },
+        "review": {
+          "cases": 4,
+          "java": {
+            "cases": 4,
+            "wrong_rejected": 60
+          }
+        },
+        "starter_wrong_answers": 16
+      },
+      {
+        "id": "cb-07-explicit-order-states",
+        "cases": 24,
+        "explicit": 12,
+        "mutations": [
+          {
+            "name": "allows cancel after capture",
+            "detected_by": [
+              8,
+              13,
+              15,
+              17,
+              19,
+              21,
+              23
+            ]
+          }
+        ],
+        "java": {
+          "cases": 24,
+          "wrong_rejected": 360
+        },
+        "review": {
+          "cases": 3,
+          "java": {
+            "cases": 3,
+            "wrong_rejected": 45
+          }
+        },
+        "starter_wrong_answers": 7
+      },
+      {
+        "id": "cb-08-atomic-memory-batch",
+        "cases": 25,
+        "explicit": 13,
+        "mutations": [
+          {
+            "name": "writes directly to live balances",
+            "detected_by": [
+              0,
+              9,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24
+            ]
+          }
+        ],
+        "java": {
+          "cases": 25,
+          "wrong_rejected": 375
+        },
+        "review": {
+          "cases": 3,
+          "java": {
+            "cases": 3,
+            "wrong_rejected": 45
+          }
+        },
+        "starter_wrong_answers": 14
+      },
+      {
+        "id": "cb-09-route-contract",
+        "cases": 30,
+        "explicit": 14,
+        "mutations": [
+          {
+            "name": "treat successful delete as missing",
+            "detected_by": [
+              1,
+              8,
+              12,
+              20
+            ]
+          }
+        ],
+        "java": {
+          "cases": 30,
+          "wrong_rejected": 449
+        },
+        "review": {
+          "cases": 3,
+          "java": {
+            "cases": 3,
+            "wrong_rejected": 45
+          }
+        },
+        "starter_wrong_answers": 4
+      },
+      {
+        "id": "cb-10-body-validation",
+        "cases": 37,
+        "explicit": 19,
+        "mutations": [
+          {
+            "name": "accept booleans as integer amounts",
+            "detected_by": [
+              5
+            ]
+          },
+          {
+            "name": "accept integral and fractional floats as amounts",
+            "detected_by": [
+              6,
+              7,
+              8,
+              19,
+              20,
+              23,
+              27,
+              31
+            ]
+          }
+        ],
+        "java": {
+          "cases": 37,
+          "wrong_rejected": 554
+        },
+        "review": {
+          "cases": 3,
+          "java": {
+            "cases": 3,
+            "wrong_rejected": 45
+          }
+        },
+        "starter_wrong_answers": 1
+      },
+      {
+        "id": "cb-11-put-patch-fields",
+        "cases": 31,
+        "explicit": 15,
+        "mutations": [
+          {
+            "name": "drop explicit null patch",
+            "detected_by": [
+              2,
+              17,
+              25,
+              27
+            ]
+          }
+        ],
+        "java": {
+          "cases": 31,
+          "wrong_rejected": 465
+        },
+        "review": {
+          "cases": 5,
+          "java": {
+            "cases": 5,
+            "wrong_rejected": 75
+          }
+        },
+        "starter_wrong_answers": 4
+      },
+      {
+        "id": "cb-12-idempotency-conflicts",
+        "cases": 29,
+        "explicit": 13,
+        "mutations": [
+          {
+            "name": "replay a key even when the amount changed",
+            "detected_by": [
+              1,
+              8,
+              24,
+              25,
+              26,
+              27,
+              28
+            ]
+          }
+        ],
+        "java": {
+          "cases": 29,
+          "wrong_rejected": 435
+        },
+        "review": {
+          "cases": 3,
+          "java": {
+            "cases": 3,
+            "wrong_rejected": 45
+          }
+        },
+        "starter_wrong_answers": 7
+      },
+      {
+        "id": "cb-13-cursor-tie-breaks",
+        "cases": 30,
+        "explicit": 14,
+        "mutations": [
+          {
+            "name": "include cursor row again",
+            "detected_by": [
+              1,
+              2,
+              6,
+              13,
+              22
+            ]
+          }
+        ],
+        "java": {
+          "cases": 30,
+          "wrong_rejected": 449
+        },
+        "review": {
+          "cases": 4,
+          "java": {
+            "cases": 4,
+            "wrong_rejected": 60
+          }
+        },
+        "starter_wrong_answers": 5
+      },
+      {
+        "id": "cb-14-retry-backoff",
+        "cases": 32,
+        "explicit": 14,
+        "mutations": [
+          {
+            "name": "retry every server error",
+            "detected_by": [
+              8,
+              12
+            ]
+          }
+        ],
+        "java": {
+          "cases": 32,
+          "wrong_rejected": 480
+        },
+        "review": {
+          "cases": 4,
+          "java": {
+            "cases": 4,
+            "wrong_rejected": 60
+          }
+        },
+        "starter_wrong_answers": 2
+      },
+      {
+        "id": "cb-15-shared-deadline",
+        "cases": 32,
+        "explicit": 14,
+        "mutations": [
+          {
+            "name": "reject responses exactly at allowance",
+            "detected_by": [
+              2,
+              8,
+              9,
+              12,
+              15,
+              17,
+              21,
+              29
+            ]
+          }
+        ],
+        "java": {
+          "cases": 32,
+          "wrong_rejected": 480
+        },
+        "review": {
+          "cases": 5,
+          "java": {
+            "cases": 5,
+            "wrong_rejected": 75
+          }
+        },
+        "starter_wrong_answers": 8
+      },
+      {
+        "id": "cb-16-upstream-page-client",
+        "cases": 32,
+        "explicit": 14,
+        "mutations": [
+          {
+            "name": "stop at an empty page despite its next cursor",
+            "detected_by": [
+              9
+            ]
+          }
+        ],
+        "java": {
+          "cases": 32,
+          "wrong_rejected": 480
+        },
+        "review": {
+          "cases": 3,
+          "java": {
+            "cases": 3,
+            "wrong_rejected": 45
+          }
+        },
+        "starter_wrong_answers": 1
+      }
+    ],
+    "failures": []
+  },
+  "live_browser": {
+    "command": "live",
+    "checks": [
+      {
+        "id": "cb-01-missing-null-zero",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 3,
+        "mutations_rejected": [
+          "replaces explicit zero with default"
+        ],
+        "execution_ms": 0.294522
+      },
+      {
+        "id": "cb-02-typed-json-boundary",
+        "sample_cases": 3,
+        "official_cases": 25,
+        "review_cases": 3,
+        "mutations_rejected": [
+          "accepts bool as integer"
+        ],
+        "execution_ms": 0.350403
+      },
+      {
+        "id": "cb-03-dataclass-list-isolation",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 3,
+        "mutations_rejected": [
+          "factory returns shared list"
+        ],
+        "execution_ms": 0.378084
+      },
+      {
+        "id": "cb-04-nested-copy-isolation",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 3,
+        "mutations_rejected": [
+          "copies only outer dictionary"
+        ],
+        "execution_ms": 0.770806
+      },
+      {
+        "id": "cb-05-inheritance-fee-policy",
+        "sample_cases": 3,
+        "official_cases": 25,
+        "review_cases": 4,
+        "mutations_rejected": [
+          "excludes the waiver threshold"
+        ],
+        "execution_ms": 0.341163
+      },
+      {
+        "id": "cb-06-composed-fee-protocol",
+        "sample_cases": 3,
+        "official_cases": 25,
+        "review_cases": 4,
+        "mutations_rejected": [
+          "rounds rate fees down"
+        ],
+        "execution_ms": 0.361203
+      },
+      {
+        "id": "cb-07-explicit-order-states",
+        "sample_cases": 3,
+        "official_cases": 24,
+        "review_cases": 3,
+        "mutations_rejected": [
+          "allows cancel after capture"
+        ],
+        "execution_ms": 0.288483
+      },
+      {
+        "id": "cb-08-atomic-memory-batch",
+        "sample_cases": 3,
+        "official_cases": 25,
+        "review_cases": 3,
+        "mutations_rejected": [
+          "writes directly to live balances"
+        ],
+        "execution_ms": 0.356322
+      },
+      {
+        "id": "cb-09-route-contract",
+        "sample_cases": 3,
+        "official_cases": 30,
+        "review_cases": 3,
+        "mutations_rejected": [
+          "treat successful delete as missing"
+        ],
+        "execution_ms": 0.95717
+      },
+      {
+        "id": "cb-10-body-validation",
+        "sample_cases": 3,
+        "official_cases": 37,
+        "review_cases": 3,
+        "mutations_rejected": [
+          "accept booleans as integer amounts",
+          "accept integral and fractional floats as amounts"
+        ],
+        "execution_ms": 0.668286
+      },
+      {
+        "id": "cb-11-put-patch-fields",
+        "sample_cases": 3,
+        "official_cases": 31,
+        "review_cases": 5,
+        "mutations_rejected": [
+          "drop explicit null patch"
+        ],
+        "execution_ms": 0.817083
+      },
+      {
+        "id": "cb-12-idempotency-conflicts",
+        "sample_cases": 3,
+        "official_cases": 29,
+        "review_cases": 3,
+        "mutations_rejected": [
+          "replay a key even when the amount changed"
+        ],
+        "execution_ms": 0.881088
+      },
+      {
+        "id": "cb-13-cursor-tie-breaks",
+        "sample_cases": 3,
+        "official_cases": 30,
+        "review_cases": 4,
+        "mutations_rejected": [
+          "include cursor row again"
+        ],
+        "execution_ms": 0.642245
+      },
+      {
+        "id": "cb-14-retry-backoff",
+        "sample_cases": 3,
+        "official_cases": 32,
+        "review_cases": 4,
+        "mutations_rejected": [
+          "retry every server error"
+        ],
+        "execution_ms": 0.370165
+      },
+      {
+        "id": "cb-15-shared-deadline",
+        "sample_cases": 3,
+        "official_cases": 32,
+        "review_cases": 5,
+        "mutations_rejected": [
+          "reject responses exactly at allowance"
+        ],
+        "execution_ms": 0.439762
+      },
+      {
+        "id": "cb-16-upstream-page-client",
+        "sample_cases": 3,
+        "official_cases": 32,
+        "review_cases": 3,
+        "mutations_rejected": [
+          "stop at an empty page despite its next cursor"
+        ],
+        "execution_ms": 0.661805
+      }
+    ],
+    "failures": []
+  },
+  "local_labs": {
+    "labs": [
+      {
+        "status": "passed",
+        "phase": "complete",
+        "lab_id": "lab01",
+        "reference_tests_passed": 4,
+        "mutations_rejected": [
+          "zero is replaced by the default",
+          "owner case is not normalized",
+          "blank owner is accepted"
+        ],
+        "starter_public_tests": 1,
+        "starter_contract_assertions": 0
+      },
+      {
+        "status": "passed",
+        "phase": "complete",
+        "lab_id": "lab02",
+        "reference_tests_passed": 14,
+        "mutations_rejected": [
+          "booleans pass as integers",
+          "numeric strings are coerced",
+          "floats are coerced to integers",
+          "upper boundary admits six"
+        ],
+        "starter_public_tests": 2,
+        "starter_contract_assertions": 0
+      },
+      {
+        "status": "passed",
+        "phase": "complete",
+        "lab_id": "lab03",
+        "reference_tests_passed": 4,
+        "mutations_rejected": [
+          "seeded shared class list",
+          "new instance clears the shared list",
+          "snapshot exposes the owned list"
+        ],
+        "starter_public_tests": 1,
+        "starter_contract_assertions": 8
+      },
+      {
+        "status": "passed",
+        "phase": "complete",
+        "lab_id": "lab04",
+        "reference_tests_passed": 5,
+        "mutations_rejected": [
+          "all gateway exceptions become retry results",
+          "gateway receives the raw request",
+          "successful record is sent twice",
+          "blank owner reaches the gateway"
+        ],
+        "starter_public_tests": 1,
+        "starter_contract_assertions": 0
+      },
+      {
+        "status": "passed",
+        "phase": "complete",
+        "lab_id": "lab05",
+        "reference_tests_passed": 10,
+        "mutations_rejected": [
+          "writes before priority validation",
+          "accepts boolean priorities",
+          "stores padded titles"
+        ],
+        "starter_public_tests": 2,
+        "starter_contract_assertions": 9
+      },
+      {
+        "status": "passed",
+        "phase": "complete",
+        "lab_id": "lab06",
+        "reference_tests_passed": 13,
+        "mutations_rejected": [
+          "rejects the new field",
+          "ignores explicit null",
+          "falls back when effort is zero",
+          "accepts boolean effort"
+        ],
+        "starter_public_tests": 2,
+        "starter_contract_assertions": 18
+      },
+      {
+        "status": "passed",
+        "phase": "complete",
+        "lab_id": "lab07",
+        "reference_tests_passed": 11,
+        "mutations_rejected": [
+          "resets the budget on each page",
+          "shares attempts across pages",
+          "retries fatal statuses",
+          "waits when no request time remains"
+        ],
+        "starter_public_tests": 1,
+        "starter_contract_assertions": 0
+      },
+      {
+        "status": "passed",
+        "phase": "complete",
+        "lab_id": "lab08",
+        "reference_tests_passed": 8,
+        "mutations_rejected": [
+          "treats the empty cursor as terminal",
+          "treats empty items as terminal",
+          "skips loop checks for empty cursors"
+        ],
+        "starter_public_tests": 1,
+        "starter_contract_assertions": 5
+      }
+    ],
+    "failures": [],
+    "verified_at_utc": "2026-10-26T22:04:38.620845+00:00",
+    "python_version": "3.13.5",
+    "sample_learner_tests": 69,
+    "faulty_variants_rejected": 28
+  },
+  "page_checks": {
+    "pages": [
+      {
+        "id": "cb-01-missing-null-zero",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-02-typed-json-boundary",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-03-dataclass-list-isolation",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-04-nested-copy-isolation",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-05-inheritance-fee-policy",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-06-composed-fee-protocol",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-07-explicit-order-states",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-08-atomic-memory-batch",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-09-route-contract",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-10-body-validation",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-11-put-patch-fields",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-12-idempotency-conflicts",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-13-cursor-tie-breaks",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-14-retry-backoff",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-15-shared-deadline",
+        "http_status": 200,
+        "title_and_lesson": true
+      },
+      {
+        "id": "cb-16-upstream-page-client",
+        "http_status": 200,
+        "title_and_lesson": true
+      }
+    ],
+    "matching_problem_files": 80,
+    "container": "cojudge-profiles",
+    "port": 5379
+  },
+  "publication": {
+    "selected_course": "capital-one-codebase-practice",
+    "ordered_problems": 16,
+    "course_title_in_html": true,
+    "matching_course_files": 1,
+    "existing_courses_unchanged": 6,
+    "guide_on_main": true
+  },
+  "repository_tests_passed": 77,
+  "old_problem_files_unchanged_by_regeneration": 250,
+  "browser_ui_automation": false
+}

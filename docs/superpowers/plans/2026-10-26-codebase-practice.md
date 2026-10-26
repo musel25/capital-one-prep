@@ -1,6 +1,6 @@
 # Codebase Practice Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Publish a progressive course for reading code, writing effective tests, making scoped changes, and checking AI claims.
 
@@ -102,6 +102,9 @@
 - [x] Run repository Python tests and any affected frontend checks.
 - [x] Publish new problem directories to the current runtime volume.
 - [x] Run all sixteen references, examples, review cases, and faulty variants through live endpoints.
-- [ ] Publish the new course index only after live verification passes.
-- [ ] Verify file hashes, course order, guide links, and preservation of existing courses.
-- [ ] Save actual evidence and limits. Commit and push.
+- [x] Publish the new course index only after live verification passes.
+- [x] Verify file hashes, course order, guide links, and preservation of existing courses.
+- [x] Save actual evidence and limits. Commit and push.
+
+Completed October 26, 2026. See `cojudge/codebase/verification.md` and
+`cojudge/codebase/verification.json` for actual checks and limits.
