@@ -1,0 +1,117 @@
+{
+  "labs": [
+    {
+      "status": "passed",
+      "phase": "complete",
+      "lab_id": "lab01",
+      "reference_tests_passed": 4,
+      "mutations_rejected": [
+        "zero is replaced by the default",
+        "owner case is not normalized",
+        "blank owner is accepted"
+      ],
+      "starter_public_tests": 1,
+      "starter_contract_assertions": 0
+    },
+    {
+      "status": "passed",
+      "phase": "complete",
+      "lab_id": "lab02",
+      "reference_tests_passed": 14,
+      "mutations_rejected": [
+        "booleans pass as integers",
+        "numeric strings are coerced",
+        "floats are coerced to integers",
+        "upper boundary admits six"
+      ],
+      "starter_public_tests": 2,
+      "starter_contract_assertions": 0
+    },
+    {
+      "status": "passed",
+      "phase": "complete",
+      "lab_id": "lab03",
+      "reference_tests_passed": 4,
+      "mutations_rejected": [
+        "seeded shared class list",
+        "new instance clears the shared list",
+        "snapshot exposes the owned list"
+      ],
+      "starter_public_tests": 1,
+      "starter_contract_assertions": 8
+    },
+    {
+      "status": "passed",
+      "phase": "complete",
+      "lab_id": "lab04",
+      "reference_tests_passed": 5,
+      "mutations_rejected": [
+        "all gateway exceptions become retry results",
+        "gateway receives the raw request",
+        "successful record is sent twice",
+        "blank owner reaches the gateway"
+      ],
+      "starter_public_tests": 1,
+      "starter_contract_assertions": 0
+    },
+    {
+      "status": "passed",
+      "phase": "complete",
+      "lab_id": "lab05",
+      "reference_tests_passed": 10,
+      "mutations_rejected": [
+        "writes before priority validation",
+        "accepts boolean priorities",
+        "stores padded titles"
+      ],
+      "starter_public_tests": 2,
+      "starter_contract_assertions": 9
+    },
+    {
+      "status": "passed",
+      "phase": "complete",
+      "lab_id": "lab06",
+      "reference_tests_passed": 13,
+      "mutations_rejected": [
+        "rejects the new field",
+        "ignores explicit null",
+        "falls back when effort is zero",
+        "accepts boolean effort"
+      ],
+      "starter_public_tests": 2,
+      "starter_contract_assertions": 18
+    },
+    {
+      "status": "passed",
+      "phase": "complete",
+      "lab_id": "lab07",
+      "reference_tests_passed": 11,
+      "mutations_rejected": [
+        "resets the budget on each page",
+        "shares attempts across pages",
+        "retries fatal statuses",
+        "waits when no request time remains"
+      ],
+      "starter_public_tests": 1,
+      "starter_contract_assertions": 0
+    },
+    {
+      "status": "passed",
+      "phase": "complete",
+      "lab_id": "lab08",
+      "reference_tests_passed": 8,
+      "mutations_rejected": [
+        "treats the empty cursor as terminal",
+        "treats empty items as terminal",
+        "skips loop checks for empty cursors"
+      ],
+      "starter_public_tests": 1,
+      "starter_contract_assertions": 5
+    }
+  ],
+  "failures": [],
+  "verified_at_utc": "2026-10-26T22:04:38.620845+00:00",
+  "python_version": "3.13.5",
+  "sample_learner_tests": 69,
+  "faulty_variants_rejected": 28
+}
