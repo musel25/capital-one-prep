@@ -1,0 +1,50 @@
+{
+  "id": "cb-02-typed-json-boundary",
+  "title": "02. Find the runtime validation boundary",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-read-data-and-state",
+  "examples": [
+    {
+      "input": "{\"records\": [{\"id\": \"A\", \"amount\": 0}, {\"id\": \"B\", \"amount\": true}, {\"id\": \"C\"}]}",
+      "output": "{\"valid\": [{\"id\": \"A\", \"amount\": 0}], \"rejected\": [1, 2]}",
+      "explanation": "validate fields at the boundary"
+    },
+    {
+      "input": "{\"records\": [{\"id\": \"X\", \"amount\": 4, \"debug\": true}]}",
+      "output": "{\"valid\": [{\"id\": \"X\", \"amount\": 4}], \"rejected\": []}",
+      "explanation": "drop extra fields"
+    },
+    {
+      "input": "{\"records\": []}",
+      "output": "{\"valid\": [], \"rejected\": []}",
+      "explanation": "empty list"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\nfrom typing import TypedDict\n\nclass Entry(TypedDict):\n    id: str\n    amount: int\n\ndef validate(value: object) -> Entry | None:\n    if not isinstance(value, dict):\n        return None\n    identifier = value.get('id')\n    amount = value.get('amount')\n    if not isinstance(identifier, str) or not identifier:\n        return None\n    if not isinstance(amount, int) or amount < 0:\n        return None\n    return {'id': identifier, 'amount': amount}\n\ndef solve(data: dict) -> dict:\n    valid: list[Entry] = []\n    rejected: list[int] = []\n    for index, value in enumerate(data['records']):\n        entry = validate(value)\n        if entry is None:\n            rejected.append(index)\n        else:\n            valid.append(entry)\n    return {'valid': valid, 'rejected': rejected}\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"records\":[{\"amount\":0,\"id\":\"A\"},{\"amount\":true,\"id\":\"B\"},{\"id\":\"C\"}]}"
+    },
+    {
+      "payload": "{\"records\":[{\"amount\":4,\"debug\":true,\"id\":\"X\"}]}"
+    },
+    {
+      "payload": "{\"records\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "TypedDict does not replace runtime checks.",
+    "Return a newly constructed Entry only after all checks pass."
+  ]
+}

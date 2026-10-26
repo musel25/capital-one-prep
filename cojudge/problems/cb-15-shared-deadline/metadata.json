@@ -1,0 +1,50 @@
+{
+  "id": "cb-15-shared-deadline",
+  "title": "15. Track a shared time budget across calls",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "04-test-client-boundaries",
+  "examples": [
+    {
+      "input": "{\"budget\": 10, \"steps\": [{\"duration\": 4, \"timeout\": 10, \"outcome\": \"ok\"}, {\"duration\": 7, \"timeout\": 10, \"outcome\": \"ok\"}]}",
+      "output": "{\"result\": \"deadline\", \"elapsed\": 10, \"completed\": 1, \"started\": 2}",
+      "explanation": "second step gets only remaining budget"
+    },
+    {
+      "input": "{\"budget\": 20, \"steps\": [{\"duration\": 8, \"timeout\": 5, \"outcome\": \"ok\"}]}",
+      "output": "{\"result\": \"timeout\", \"elapsed\": 5, \"completed\": 0, \"started\": 1}",
+      "explanation": "per-step timeout can expire first"
+    },
+    {
+      "input": "{\"budget\": 10, \"steps\": [{\"duration\": 10, \"timeout\": 10, \"outcome\": \"ok\"}]}",
+      "output": "{\"result\": \"success\", \"elapsed\": 10, \"completed\": 1, \"started\": 1}",
+      "explanation": "completion at deadline succeeds"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\ndef solve(data):\n    elapsed = completed = started = 0\n    for step in data[\"steps\"]:\n        remaining = data[\"budget\"] - elapsed\n        if remaining <= 0:\n            return {\"result\": \"deadline\", \"elapsed\": elapsed, \"completed\": completed, \"started\": started}\n        started += 1\n        allowance = min(step[\"timeout\"], remaining)\n        if step[\"duration\"] >= allowance:\n            elapsed += allowance\n            result = \"deadline\" if allowance == remaining else \"timeout\"\n            return {\"result\": result, \"elapsed\": elapsed, \"completed\": completed, \"started\": started}\n        elapsed += step[\"duration\"]\n        if step[\"outcome\"] == \"error\":\n            return {\"result\": \"error\", \"elapsed\": elapsed, \"completed\": completed, \"started\": started}\n        completed += 1\n    return {\"result\": \"success\", \"elapsed\": elapsed, \"completed\": completed, \"started\": started}\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"budget\":10,\"steps\":[{\"duration\":4,\"outcome\":\"ok\",\"timeout\":10},{\"duration\":7,\"outcome\":\"ok\",\"timeout\":10}]}"
+    },
+    {
+      "payload": "{\"budget\":20,\"steps\":[{\"duration\":8,\"outcome\":\"ok\",\"timeout\":5}]}"
+    },
+    {
+      "payload": "{\"budget\":10,\"steps\":[{\"duration\":10,\"outcome\":\"ok\",\"timeout\":10}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Compute remaining from one accumulated elapsed value.",
+    "Check response arrival before deciding whether its outcome is an error."
+  ]
+}

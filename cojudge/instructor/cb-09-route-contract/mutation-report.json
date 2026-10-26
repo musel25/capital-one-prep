@@ -1,0 +1,11 @@
+[
+  {
+    "name": "treat successful delete as missing",
+    "detected_by": [
+      1,
+      8,
+      12,
+      20
+    ]
+  }
+]

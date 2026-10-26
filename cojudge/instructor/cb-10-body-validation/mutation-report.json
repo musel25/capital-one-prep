@@ -1,0 +1,21 @@
+[
+  {
+    "name": "accept booleans as integer amounts",
+    "detected_by": [
+      5
+    ]
+  },
+  {
+    "name": "accept integral and fractional floats as amounts",
+    "detected_by": [
+      6,
+      7,
+      8,
+      19,
+      20,
+      23,
+      27,
+      31
+    ]
+  }
+]

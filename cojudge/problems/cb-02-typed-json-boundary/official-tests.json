@@ -1,0 +1,77 @@
+[
+  {
+    "payload": "{\"records\":[{\"amount\":0,\"id\":\"A\"},{\"amount\":true,\"id\":\"B\"},{\"id\":\"C\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":4,\"debug\":true,\"id\":\"X\"}]}"
+  },
+  {
+    "payload": "{\"records\":[]}"
+  },
+  {
+    "payload": "{\"records\":[null,[],4,\"text\",false]}"
+  },
+  {
+    "payload": "{\"records\":[{}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":1,\"id\":\"\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":1,\"id\":0},{\"amount\":1,\"id\":null}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":-1,\"id\":\"A\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":1.0,\"id\":\"A\"},{\"amount\":\"1\",\"id\":\"B\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":null,\"id\":\"A\"},{\"amount\":false,\"id\":\"B\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":1000000,\"id\":\"A\"},{\"amount\":2,\"id\":\"A\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":3,\"id\":\" \"},{\"amount\":1,\"id\":\"\\u00e9\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":0},{\"amount\":2,\"id\":\"ok\"},null]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":0,\"id\":\"id0\"},{\"amount\":false,\"id\":\"bad0\"},{\"amount\":0,\"id\":\"\"},{\"amount\":9,\"extra\":[0],\"id\":\"end0\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":1,\"id\":\"id1\"},{\"amount\":false,\"id\":\"bad1\"},{\"amount\":1,\"id\":\"\"},{\"amount\":10,\"extra\":[1],\"id\":\"end1\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":2,\"id\":\"id2\"},{\"amount\":false,\"id\":\"bad2\"},{\"amount\":2,\"id\":\"\"},{\"amount\":11,\"extra\":[2],\"id\":\"end2\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":3,\"id\":\"id3\"},{\"amount\":false,\"id\":\"bad3\"},{\"amount\":3,\"id\":\"\"},{\"amount\":12,\"extra\":[3],\"id\":\"end3\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":4,\"id\":\"id4\"},{\"amount\":false,\"id\":\"bad4\"},{\"amount\":4,\"id\":\"\"},{\"amount\":13,\"extra\":[4],\"id\":\"end4\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":5,\"id\":\"id5\"},{\"amount\":false,\"id\":\"bad5\"},{\"amount\":5,\"id\":\"\"},{\"amount\":14,\"extra\":[5],\"id\":\"end5\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":6,\"id\":\"id6\"},{\"amount\":false,\"id\":\"bad6\"},{\"amount\":6,\"id\":\"\"},{\"amount\":15,\"extra\":[6],\"id\":\"end6\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":7,\"id\":\"id7\"},{\"amount\":false,\"id\":\"bad7\"},{\"amount\":7,\"id\":\"\"},{\"amount\":16,\"extra\":[7],\"id\":\"end7\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":8,\"id\":\"id8\"},{\"amount\":false,\"id\":\"bad8\"},{\"amount\":8,\"id\":\"\"},{\"amount\":17,\"extra\":[8],\"id\":\"end8\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":9,\"id\":\"id9\"},{\"amount\":false,\"id\":\"bad9\"},{\"amount\":9,\"id\":\"\"},{\"amount\":18,\"extra\":[9],\"id\":\"end9\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":10,\"id\":\"id10\"},{\"amount\":false,\"id\":\"bad10\"},{\"amount\":10,\"id\":\"\"},{\"amount\":19,\"extra\":[10],\"id\":\"end10\"}]}"
+  },
+  {
+    "payload": "{\"records\":[{\"amount\":11,\"id\":\"id11\"},{\"amount\":false,\"id\":\"bad11\"},{\"amount\":11,\"id\":\"\"},{\"amount\":20,\"extra\":[11],\"id\":\"end11\"}]}"
+  }
+]

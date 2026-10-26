@@ -1,0 +1,603 @@
+[
+  {
+    "input": {
+      "default": 10,
+      "records": [
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "limit": 4
+        }
+      ]
+    },
+    "expected": {
+      "limits": [
+        10,
+        null,
+        0,
+        4
+      ],
+      "configured": 2
+    },
+    "label": "three distinct field states"
+  },
+  {
+    "input": {
+      "default": 5,
+      "records": [
+        {
+          "limit": 2
+        },
+        {
+          "limit": 2
+        }
+      ]
+    },
+    "expected": {
+      "limits": [
+        2,
+        2
+      ],
+      "configured": 2
+    },
+    "label": "count records, not distinct values"
+  },
+  {
+    "input": {
+      "default": 9,
+      "records": []
+    },
+    "expected": {
+      "limits": [],
+      "configured": 0
+    },
+    "label": "empty records"
+  },
+  {
+    "input": {
+      "default": 0,
+      "records": [
+        {}
+      ]
+    },
+    "expected": {
+      "limits": [
+        0
+      ],
+      "configured": 0
+    },
+    "label": "default zero is not configured"
+  },
+  {
+    "input": {
+      "default": 8,
+      "records": [
+        {
+          "limit": 0
+        }
+      ]
+    },
+    "expected": {
+      "limits": [
+        0
+      ],
+      "configured": 1
+    },
+    "label": "explicit zero is configured"
+  },
+  {
+    "input": {
+      "default": 3,
+      "records": [
+        {
+          "limit": null
+        }
+      ]
+    },
+    "expected": {
+      "limits": [
+        null
+      ],
+      "configured": 0
+    },
+    "label": "explicit null"
+  },
+  {
+    "input": {
+      "default": 6,
+      "records": [
+        {},
+        {}
+      ]
+    },
+    "expected": {
+      "limits": [
+        6,
+        6
+      ],
+      "configured": 0
+    },
+    "label": "several missing fields"
+  },
+  {
+    "input": {
+      "default": 1,
+      "records": [
+        {
+          "other": 0
+        }
+      ]
+    },
+    "expected": {
+      "limits": [
+        1
+      ],
+      "configured": 0
+    },
+    "label": "unrelated key"
+  },
+  {
+    "input": {
+      "default": 7,
+      "records": [
+        {
+          "limit": 8,
+          "other": null
+        }
+      ]
+    },
+    "expected": {
+      "limits": [
+        8
+      ],
+      "configured": 1
+    },
+    "label": "ignore extra fields"
+  },
+  {
+    "input": {
+      "default": 1000000,
+      "records": [
+        {},
+        {
+          "limit": 1000001
+        }
+      ]
+    },
+    "expected": {
+      "limits": [
+        1000000,
+        1000001
+      ],
+      "configured": 1
+    },
+    "label": "large values"
+  },
+  {
+    "input": {
+      "default": 4,
+      "records": [
+        {
+          "limit": null
+        },
+        {
+          "limit": null
+        },
+        {}
+      ]
+    },
+    "expected": {
+      "limits": [
+        null,
+        null,
+        4
+      ],
+      "configured": 0
+    },
+    "label": "null and missing repeat"
+  },
+  {
+    "input": {
+      "default": 0,
+      "records": [
+        {
+          "limit": 0
+        },
+        {
+          "limit": null
+        },
+        {},
+        {
+          "limit": 1
+        }
+      ]
+    },
+    "expected": {
+      "limits": [
+        0,
+        null,
+        0,
+        1
+      ],
+      "configured": 2
+    },
+    "label": "same output value has different origin"
+  },
+  {
+    "input": {
+      "default": 20,
+      "records": [
+        {
+          "limit": 0
+        },
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "x": 0
+        }
+      ]
+    },
+    "expected": {
+      "configured": 2,
+      "limits": [
+        0,
+        20,
+        null,
+        0,
+        20
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "default": 21,
+      "records": [
+        {
+          "limit": 1
+        },
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "x": 1
+        }
+      ]
+    },
+    "expected": {
+      "configured": 2,
+      "limits": [
+        1,
+        21,
+        null,
+        0,
+        21
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "default": 22,
+      "records": [
+        {
+          "limit": 2
+        },
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "x": 2
+        }
+      ]
+    },
+    "expected": {
+      "configured": 2,
+      "limits": [
+        2,
+        22,
+        null,
+        0,
+        22
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "default": 23,
+      "records": [
+        {
+          "limit": 3
+        },
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "x": 3
+        }
+      ]
+    },
+    "expected": {
+      "configured": 2,
+      "limits": [
+        3,
+        23,
+        null,
+        0,
+        23
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "default": 24,
+      "records": [
+        {
+          "limit": 4
+        },
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "x": 4
+        }
+      ]
+    },
+    "expected": {
+      "configured": 2,
+      "limits": [
+        4,
+        24,
+        null,
+        0,
+        24
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "default": 25,
+      "records": [
+        {
+          "limit": 5
+        },
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "x": 5
+        }
+      ]
+    },
+    "expected": {
+      "configured": 2,
+      "limits": [
+        5,
+        25,
+        null,
+        0,
+        25
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "default": 26,
+      "records": [
+        {
+          "limit": 6
+        },
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "x": 6
+        }
+      ]
+    },
+    "expected": {
+      "configured": 2,
+      "limits": [
+        6,
+        26,
+        null,
+        0,
+        26
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "default": 27,
+      "records": [
+        {
+          "limit": 7
+        },
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "x": 7
+        }
+      ]
+    },
+    "expected": {
+      "configured": 2,
+      "limits": [
+        7,
+        27,
+        null,
+        0,
+        27
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "default": 28,
+      "records": [
+        {
+          "limit": 8
+        },
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "x": 8
+        }
+      ]
+    },
+    "expected": {
+      "configured": 2,
+      "limits": [
+        8,
+        28,
+        null,
+        0,
+        28
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "default": 29,
+      "records": [
+        {
+          "limit": 9
+        },
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "x": 9
+        }
+      ]
+    },
+    "expected": {
+      "configured": 2,
+      "limits": [
+        9,
+        29,
+        null,
+        0,
+        29
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "default": 30,
+      "records": [
+        {
+          "limit": 10
+        },
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "x": 10
+        }
+      ]
+    },
+    "expected": {
+      "configured": 2,
+      "limits": [
+        10,
+        30,
+        null,
+        0,
+        30
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "default": 31,
+      "records": [
+        {
+          "limit": 11
+        },
+        {},
+        {
+          "limit": null
+        },
+        {
+          "limit": 0
+        },
+        {
+          "x": 11
+        }
+      ]
+    },
+    "expected": {
+      "configured": 2,
+      "limits": [
+        11,
+        31,
+        null,
+        0,
+        31
+      ]
+    },
+    "label": "additional-12"
+  }
+]

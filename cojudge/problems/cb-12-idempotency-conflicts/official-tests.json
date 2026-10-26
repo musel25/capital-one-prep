@@ -1,0 +1,89 @@
+[
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":11,\"to\":\"a\"},\"key\":\"k\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"j\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"a\"},\"key\":\"one\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1000000,\"to\":\"a\"},\"key\":\"one\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"b\"},\"key\":\"k\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"b\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":11,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"j\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"K\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"a\"},{\"body\":{\"amount\":20,\"to\":\"b\"},\"key\":\"b\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"x\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"x\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":1,\"to\":\"recipient1\"},\"key\":\"k1\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":2,\"to\":\"recipient2\"},\"key\":\"k1\"},{\"body\":{\"amount\":3,\"to\":\"recipient0\"},\"key\":\"k2\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":3,\"to\":\"recipient0\"},\"key\":\"k1\"},{\"body\":{\"amount\":5,\"to\":\"recipient1\"},\"key\":\"k2\"},{\"body\":{\"amount\":7,\"to\":\"recipient2\"},\"key\":\"k3\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":4,\"to\":\"recipient1\"},\"key\":\"k1\"},{\"body\":{\"amount\":7,\"to\":\"recipient2\"},\"key\":\"k2\"},{\"body\":{\"amount\":10,\"to\":\"recipient0\"},\"key\":\"k3\"},{\"body\":{\"amount\":13,\"to\":\"recipient1\"},\"key\":\"k0\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":5,\"to\":\"recipient2\"},\"key\":\"k1\"},{\"body\":{\"amount\":9,\"to\":\"recipient0\"},\"key\":\"k2\"},{\"body\":{\"amount\":13,\"to\":\"recipient1\"},\"key\":\"k3\"},{\"body\":{\"amount\":17,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":4,\"to\":\"recipient0\"},\"key\":\"k1\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":6,\"to\":\"recipient0\"},\"key\":\"k1\"},{\"body\":{\"amount\":11,\"to\":\"recipient1\"},\"key\":\"k2\"},{\"body\":{\"amount\":16,\"to\":\"recipient2\"},\"key\":\"k3\"},{\"body\":{\"amount\":4,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":9,\"to\":\"recipient1\"},\"key\":\"k1\"},{\"body\":{\"amount\":14,\"to\":\"recipient2\"},\"key\":\"k2\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":7,\"to\":\"recipient1\"},\"key\":\"k1\"},{\"body\":{\"amount\":13,\"to\":\"recipient2\"},\"key\":\"k2\"},{\"body\":{\"amount\":2,\"to\":\"recipient0\"},\"key\":\"k3\"},{\"body\":{\"amount\":8,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":14,\"to\":\"recipient2\"},\"key\":\"k1\"},{\"body\":{\"amount\":3,\"to\":\"recipient0\"},\"key\":\"k2\"},{\"body\":{\"amount\":9,\"to\":\"recipient1\"},\"key\":\"k3\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":8,\"to\":\"recipient2\"},\"key\":\"k1\"},{\"body\":{\"amount\":15,\"to\":\"recipient0\"},\"key\":\"k2\"},{\"body\":{\"amount\":5,\"to\":\"recipient1\"},\"key\":\"k3\"},{\"body\":{\"amount\":12,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":2,\"to\":\"recipient0\"},\"key\":\"k1\"},{\"body\":{\"amount\":9,\"to\":\"recipient1\"},\"key\":\"k2\"},{\"body\":{\"amount\":16,\"to\":\"recipient2\"},\"key\":\"k3\"},{\"body\":{\"amount\":6,\"to\":\"recipient0\"},\"key\":\"k0\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":9,\"to\":\"recipient0\"},\"key\":\"k1\"},{\"body\":{\"amount\":17,\"to\":\"recipient1\"},\"key\":\"k2\"},{\"body\":{\"amount\":8,\"to\":\"recipient2\"},\"key\":\"k3\"},{\"body\":{\"amount\":16,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":7,\"to\":\"recipient1\"},\"key\":\"k1\"},{\"body\":{\"amount\":15,\"to\":\"recipient2\"},\"key\":\"k2\"},{\"body\":{\"amount\":6,\"to\":\"recipient0\"},\"key\":\"k3\"},{\"body\":{\"amount\":14,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":5,\"to\":\"recipient2\"},\"key\":\"k1\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":10,\"to\":\"recipient1\"},\"key\":\"k1\"},{\"body\":{\"amount\":2,\"to\":\"recipient2\"},\"key\":\"k2\"},{\"body\":{\"amount\":11,\"to\":\"recipient0\"},\"key\":\"k3\"},{\"body\":{\"amount\":3,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":12,\"to\":\"recipient2\"},\"key\":\"k1\"},{\"body\":{\"amount\":4,\"to\":\"recipient0\"},\"key\":\"k2\"},{\"body\":{\"amount\":13,\"to\":\"recipient1\"},\"key\":\"k3\"},{\"body\":{\"amount\":5,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":14,\"to\":\"recipient0\"},\"key\":\"k1\"},{\"body\":{\"amount\":6,\"to\":\"recipient1\"},\"key\":\"k2\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":11,\"to\":\"recipient2\"},\"key\":\"k1\"},{\"body\":{\"amount\":4,\"to\":\"recipient0\"},\"key\":\"k2\"},{\"body\":{\"amount\":14,\"to\":\"recipient1\"},\"key\":\"k3\"},{\"body\":{\"amount\":7,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":17,\"to\":\"recipient0\"},\"key\":\"k1\"},{\"body\":{\"amount\":10,\"to\":\"recipient1\"},\"key\":\"k2\"},{\"body\":{\"amount\":3,\"to\":\"recipient2\"},\"key\":\"k3\"},{\"body\":{\"amount\":13,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":6,\"to\":\"recipient1\"},\"key\":\"k1\"},{\"body\":{\"amount\":16,\"to\":\"recipient2\"},\"key\":\"k2\"},{\"body\":{\"amount\":9,\"to\":\"recipient0\"},\"key\":\"k3\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":12,\"to\":\"recipient0\"},\"key\":\"k1\"},{\"body\":{\"amount\":6,\"to\":\"recipient1\"},\"key\":\"k2\"},{\"body\":{\"amount\":17,\"to\":\"recipient2\"},\"key\":\"k3\"},{\"body\":{\"amount\":11,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":5,\"to\":\"recipient1\"},\"key\":\"k1\"},{\"body\":{\"amount\":16,\"to\":\"recipient2\"},\"key\":\"k2\"},{\"body\":{\"amount\":10,\"to\":\"recipient0\"},\"key\":\"k3\"},{\"body\":{\"amount\":4,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":15,\"to\":\"recipient2\"},\"key\":\"k1\"},{\"body\":{\"amount\":9,\"to\":\"recipient0\"},\"key\":\"k2\"},{\"body\":{\"amount\":3,\"to\":\"recipient1\"},\"key\":\"k3\"},{\"body\":{\"amount\":14,\"to\":\"recipient2\"},\"key\":\"k0\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":13,\"to\":\"recipient1\"},\"key\":\"k1\"},{\"body\":{\"amount\":8,\"to\":\"recipient2\"},\"key\":\"k2\"},{\"body\":{\"amount\":3,\"to\":\"recipient0\"},\"key\":\"k3\"},{\"body\":{\"amount\":15,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":10,\"to\":\"recipient2\"},\"key\":\"k1\"},{\"body\":{\"amount\":5,\"to\":\"recipient0\"},\"key\":\"k2\"},{\"body\":{\"amount\":17,\"to\":\"recipient1\"},\"key\":\"k3\"},{\"body\":{\"amount\":12,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":7,\"to\":\"recipient0\"},\"key\":\"k1\"},{\"body\":{\"amount\":2,\"to\":\"recipient1\"},\"key\":\"k2\"},{\"body\":{\"amount\":14,\"to\":\"recipient2\"},\"key\":\"k3\"},{\"body\":{\"amount\":9,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":4,\"to\":\"recipient1\"},\"key\":\"k1\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":14,\"to\":\"recipient2\"},\"key\":\"k1\"},{\"body\":{\"amount\":10,\"to\":\"recipient0\"},\"key\":\"k2\"},{\"body\":{\"amount\":6,\"to\":\"recipient1\"},\"key\":\"k3\"},{\"body\":{\"amount\":2,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":15,\"to\":\"recipient0\"},\"key\":\"k1\"},{\"body\":{\"amount\":11,\"to\":\"recipient1\"},\"key\":\"k2\"},{\"body\":{\"amount\":7,\"to\":\"recipient2\"},\"key\":\"k3\"},{\"body\":{\"amount\":3,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":16,\"to\":\"recipient1\"},\"key\":\"k1\"},{\"body\":{\"amount\":12,\"to\":\"recipient2\"},\"key\":\"k2\"},{\"body\":{\"amount\":8,\"to\":\"recipient0\"},\"key\":\"k3\"},{\"body\":{\"amount\":4,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":17,\"to\":\"recipient2\"},\"key\":\"k1\"},{\"body\":{\"amount\":13,\"to\":\"recipient0\"},\"key\":\"k2\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":15,\"to\":\"recipient0\"},\"key\":\"k1\"},{\"body\":{\"amount\":12,\"to\":\"recipient1\"},\"key\":\"k2\"},{\"body\":{\"amount\":9,\"to\":\"recipient2\"},\"key\":\"k3\"},{\"body\":{\"amount\":6,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":3,\"to\":\"recipient1\"},\"key\":\"k1\"},{\"body\":{\"amount\":17,\"to\":\"recipient2\"},\"key\":\"k2\"},{\"body\":{\"amount\":14,\"to\":\"recipient0\"},\"key\":\"k3\"},{\"body\":{\"amount\":11,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":8,\"to\":\"recipient2\"},\"key\":\"k1\"},{\"body\":{\"amount\":5,\"to\":\"recipient0\"},\"key\":\"k2\"},{\"body\":{\"amount\":2,\"to\":\"recipient1\"},\"key\":\"k3\"},{\"body\":{\"amount\":16,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":13,\"to\":\"recipient0\"},\"key\":\"k1\"},{\"body\":{\"amount\":10,\"to\":\"recipient1\"},\"key\":\"k2\"},{\"body\":{\"amount\":7,\"to\":\"recipient2\"},\"key\":\"k3\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"body\":{\"amount\":1,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":16,\"to\":\"recipient1\"},\"key\":\"k1\"},{\"body\":{\"amount\":14,\"to\":\"recipient2\"},\"key\":\"k2\"},{\"body\":{\"amount\":12,\"to\":\"recipient0\"},\"key\":\"k3\"},{\"body\":{\"amount\":10,\"to\":\"recipient1\"},\"key\":\"k0\"},{\"body\":{\"amount\":8,\"to\":\"recipient2\"},\"key\":\"k1\"},{\"body\":{\"amount\":6,\"to\":\"recipient0\"},\"key\":\"k2\"},{\"body\":{\"amount\":4,\"to\":\"recipient1\"},\"key\":\"k3\"},{\"body\":{\"amount\":2,\"to\":\"recipient2\"},\"key\":\"k0\"},{\"body\":{\"amount\":17,\"to\":\"recipient0\"},\"key\":\"k1\"},{\"body\":{\"amount\":15,\"to\":\"recipient1\"},\"key\":\"k2\"},{\"body\":{\"amount\":13,\"to\":\"recipient2\"},\"key\":\"k3\"},{\"body\":{\"amount\":11,\"to\":\"recipient0\"},\"key\":\"k0\"},{\"body\":{\"amount\":9,\"to\":\"recipient1\"},\"key\":\"k1\"},{\"body\":{\"amount\":7,\"to\":\"recipient2\"},\"key\":\"k2\"},{\"body\":{\"amount\":5,\"to\":\"recipient0\"},\"key\":\"k3\"},{\"body\":{\"amount\":3,\"to\":\"recipient1\"},\"key\":\"k0\"}]}"
+  }
+]

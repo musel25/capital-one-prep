@@ -1,0 +1,74 @@
+[
+  {
+    "payload": "{\"changes\":[{\"daily\":2},{\"tag\":\"new\"}],\"template\":{\"limits\":{\"daily\":1,\"monthly\":10},\"tags\":[\"base\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":0,\"monthly\":0,\"tag\":\"x\"}],\"template\":{\"limits\":{\"daily\":5,\"monthly\":50},\"tags\":[]}}"
+  },
+  {
+    "payload": "{\"changes\":[],\"template\":{\"limits\":{\"daily\":0,\"monthly\":0},\"tags\":[]}}"
+  },
+  {
+    "payload": "{\"changes\":[{}],\"template\":{\"limits\":{\"daily\":1,\"monthly\":2},\"tags\":[\"a\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"tag\":\"a\"}],\"template\":{\"limits\":{\"daily\":1,\"monthly\":2},\"tags\":[\"a\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"tag\":\"\"}],\"template\":{\"limits\":{\"daily\":1,\"monthly\":2},\"tags\":[]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"monthly\":9}],\"template\":{\"limits\":{\"daily\":1,\"monthly\":2},\"tags\":[]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":3},{\"daily\":4}],\"template\":{\"limits\":{\"daily\":1,\"monthly\":2},\"tags\":[]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"tag\":\"x\"},{\"tag\":\"y\"}],\"template\":{\"limits\":{\"daily\":1,\"monthly\":2},\"tags\":[]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":0}],\"template\":{\"limits\":{\"daily\":0,\"monthly\":10},\"tags\":[\"x\",\"y\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":1}],\"template\":{\"limits\":{\"daily\":1000000,\"monthly\":1000000},\"tags\":[]}}"
+  },
+  {
+    "payload": "{\"changes\":[{},{\"tag\":\"\\u6c34\"},{}],\"template\":{\"limits\":{\"daily\":2,\"monthly\":3},\"tags\":[\"\\u96ea\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":1},{\"tag\":\"0\"},{\"monthly\":0},{}],\"template\":{\"limits\":{\"daily\":0,\"monthly\":0},\"tags\":[\"t0\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":2},{\"tag\":\"1\"},{\"monthly\":0},{}],\"template\":{\"limits\":{\"daily\":1,\"monthly\":10},\"tags\":[\"t1\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":3},{\"tag\":\"2\"},{\"monthly\":0},{}],\"template\":{\"limits\":{\"daily\":2,\"monthly\":20},\"tags\":[\"t2\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":4},{\"tag\":\"3\"},{\"monthly\":0},{}],\"template\":{\"limits\":{\"daily\":3,\"monthly\":30},\"tags\":[\"t3\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":5},{\"tag\":\"4\"},{\"monthly\":0},{}],\"template\":{\"limits\":{\"daily\":4,\"monthly\":40},\"tags\":[\"t4\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":6},{\"tag\":\"5\"},{\"monthly\":0},{}],\"template\":{\"limits\":{\"daily\":5,\"monthly\":50},\"tags\":[\"t5\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":7},{\"tag\":\"6\"},{\"monthly\":0},{}],\"template\":{\"limits\":{\"daily\":6,\"monthly\":60},\"tags\":[\"t6\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":8},{\"tag\":\"7\"},{\"monthly\":0},{}],\"template\":{\"limits\":{\"daily\":7,\"monthly\":70},\"tags\":[\"t7\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":9},{\"tag\":\"8\"},{\"monthly\":0},{}],\"template\":{\"limits\":{\"daily\":8,\"monthly\":80},\"tags\":[\"t8\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":10},{\"tag\":\"9\"},{\"monthly\":0},{}],\"template\":{\"limits\":{\"daily\":9,\"monthly\":90},\"tags\":[\"t9\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":11},{\"tag\":\"10\"},{\"monthly\":0},{}],\"template\":{\"limits\":{\"daily\":10,\"monthly\":100},\"tags\":[\"t10\"]}}"
+  },
+  {
+    "payload": "{\"changes\":[{\"daily\":12},{\"tag\":\"11\"},{\"monthly\":0},{}],\"template\":{\"limits\":{\"daily\":11,\"monthly\":110},\"tags\":[\"t11\"]}}"
+  }
+]

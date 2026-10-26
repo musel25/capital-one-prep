@@ -1,0 +1,50 @@
+{
+  "id": "cb-07-explicit-order-states",
+  "title": "07. Check accepted and rejected state transitions",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "02-follow-objects-and-control-flow",
+  "examples": [
+    {
+      "input": "{\"actions\": [\"authorize\", \"capture\", \"refund\"]}",
+      "output": "{\"accepted\": [true, true, true], \"state\": \"REFUNDED\"}",
+      "explanation": "complete valid path"
+    },
+    {
+      "input": "{\"actions\": [\"capture\", \"authorize\", \"authorize\", \"capture\"]}",
+      "output": "{\"accepted\": [false, true, false, true], \"state\": \"CAPTURED\"}",
+      "explanation": "invalid order and repeated action"
+    },
+    {
+      "input": "{\"actions\": []}",
+      "output": "{\"accepted\": [], \"state\": \"NEW\"}",
+      "explanation": "no events"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\nclass Order:\n    TRANSITIONS = {\n        ('NEW', 'authorize'): 'AUTHORIZED',\n        ('NEW', 'cancel'): 'CANCELLED',\n        ('AUTHORIZED', 'capture'): 'CAPTURED',\n        ('AUTHORIZED', 'cancel'): 'CANCELLED',\n        ('CAPTURED', 'refund'): 'REFUNDED',\n        ('CAPTURED', 'cancel'): 'CANCELLED',\n    }\n\n    def __init__(self):\n        self.state = 'NEW'\n\n    def apply(self, action: str) -> bool:\n        next_state = self.TRANSITIONS.get((self.state, action))\n        if next_state is None:\n            return False\n        self.state = next_state\n        return True\n\ndef solve(data: dict) -> dict:\n    order = Order()\n    accepted = [order.apply(action) for action in data['actions']]\n    return {'accepted': accepted, 'state': order.state}\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"actions\":[\"authorize\",\"capture\",\"refund\"]}"
+    },
+    {
+      "payload": "{\"actions\":[\"capture\",\"authorize\",\"authorize\",\"capture\"]}"
+    },
+    {
+      "payload": "{\"actions\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Use the pair of current state and action as a lookup key.",
+    "Change state only when that lookup has a result."
+  ]
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"budget\":10,\"steps\":[{\"duration\":4,\"outcome\":\"ok\",\"timeout\":10},{\"duration\":7,\"outcome\":\"ok\",\"timeout\":10}]}"
+  },
+  {
+    "payload": "{\"budget\":20,\"steps\":[{\"duration\":8,\"outcome\":\"ok\",\"timeout\":5}]}"
+  },
+  {
+    "payload": "{\"budget\":10,\"steps\":[{\"duration\":10,\"outcome\":\"ok\",\"timeout\":10}]}"
+  },
+  {
+    "payload": "{\"budget\":0,\"steps\":[]}"
+  },
+  {
+    "payload": "{\"budget\":0,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":10}]}"
+  },
+  {
+    "payload": "{\"budget\":1,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":10},{\"duration\":0,\"outcome\":\"ok\",\"timeout\":10}]}"
+  },
+  {
+    "payload": "{\"budget\":10,\"steps\":[{\"duration\":3,\"outcome\":\"error\",\"timeout\":10},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":10}]}"
+  },
+  {
+    "payload": "{\"budget\":5,\"steps\":[{\"duration\":9,\"outcome\":\"error\",\"timeout\":5}]}"
+  },
+  {
+    "payload": "{\"budget\":10,\"steps\":[{\"duration\":5,\"outcome\":\"ok\",\"timeout\":5}]}"
+  },
+  {
+    "payload": "{\"budget\":5,\"steps\":[{\"duration\":5,\"outcome\":\"ok\",\"timeout\":10},{\"duration\":0,\"outcome\":\"ok\",\"timeout\":10}]}"
+  },
+  {
+    "payload": "{\"budget\":10,\"steps\":[{\"duration\":2,\"outcome\":\"ok\",\"timeout\":10},{\"duration\":3,\"outcome\":\"ok\",\"timeout\":10}]}"
+  },
+  {
+    "payload": "{\"budget\":10,\"steps\":[{\"duration\":2,\"outcome\":\"ok\",\"timeout\":10},{\"duration\":8,\"outcome\":\"ok\",\"timeout\":3}]}"
+  },
+  {
+    "payload": "{\"budget\":10,\"steps\":[{\"duration\":10,\"outcome\":\"error\",\"timeout\":10}]}"
+  },
+  {
+    "payload": "{\"budget\":1,\"steps\":[{\"duration\":2,\"outcome\":\"ok\",\"timeout\":10}]}"
+  },
+  {
+    "payload": "{\"budget\":0,\"steps\":[{\"duration\":0,\"outcome\":\"error\",\"timeout\":1}]}"
+  },
+  {
+    "payload": "{\"budget\":1,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":2},{\"duration\":1,\"outcome\":\"error\",\"timeout\":3}]}"
+  },
+  {
+    "payload": "{\"budget\":2,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":3},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":4},{\"duration\":2,\"outcome\":\"error\",\"timeout\":5}]}"
+  },
+  {
+    "payload": "{\"budget\":3,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":4},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":5},{\"duration\":2,\"outcome\":\"ok\",\"timeout\":6},{\"duration\":3,\"outcome\":\"error\",\"timeout\":7}]}"
+  },
+  {
+    "payload": "{\"budget\":4,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":5},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":6},{\"duration\":2,\"outcome\":\"ok\",\"timeout\":7},{\"duration\":3,\"outcome\":\"ok\",\"timeout\":8},{\"duration\":4,\"outcome\":\"error\",\"timeout\":1}]}"
+  },
+  {
+    "payload": "{\"budget\":5,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":6},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":7},{\"duration\":2,\"outcome\":\"ok\",\"timeout\":8},{\"duration\":3,\"outcome\":\"ok\",\"timeout\":1},{\"duration\":4,\"outcome\":\"ok\",\"timeout\":2},{\"duration\":5,\"outcome\":\"error\",\"timeout\":3}]}"
+  },
+  {
+    "payload": "{\"budget\":6,\"steps\":[{\"duration\":0,\"outcome\":\"error\",\"timeout\":7},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":8},{\"duration\":2,\"outcome\":\"ok\",\"timeout\":1},{\"duration\":3,\"outcome\":\"ok\",\"timeout\":2},{\"duration\":4,\"outcome\":\"ok\",\"timeout\":3},{\"duration\":5,\"outcome\":\"ok\",\"timeout\":4},{\"duration\":6,\"outcome\":\"ok\",\"timeout\":5}]}"
+  },
+  {
+    "payload": "{\"budget\":7,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":8},{\"duration\":1,\"outcome\":\"error\",\"timeout\":1},{\"duration\":2,\"outcome\":\"ok\",\"timeout\":2},{\"duration\":3,\"outcome\":\"ok\",\"timeout\":3},{\"duration\":4,\"outcome\":\"ok\",\"timeout\":4},{\"duration\":5,\"outcome\":\"ok\",\"timeout\":5},{\"duration\":6,\"outcome\":\"ok\",\"timeout\":6},{\"duration\":0,\"outcome\":\"ok\",\"timeout\":7}]}"
+  },
+  {
+    "payload": "{\"budget\":8,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":1},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":2},{\"duration\":2,\"outcome\":\"error\",\"timeout\":3},{\"duration\":3,\"outcome\":\"ok\",\"timeout\":4},{\"duration\":4,\"outcome\":\"ok\",\"timeout\":5},{\"duration\":5,\"outcome\":\"ok\",\"timeout\":6},{\"duration\":6,\"outcome\":\"ok\",\"timeout\":7},{\"duration\":0,\"outcome\":\"ok\",\"timeout\":8},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":1}]}"
+  },
+  {
+    "payload": "{\"budget\":9,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":2}]}"
+  },
+  {
+    "payload": "{\"budget\":10,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":3},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":4}]}"
+  },
+  {
+    "payload": "{\"budget\":11,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":4},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":5},{\"duration\":2,\"outcome\":\"ok\",\"timeout\":6}]}"
+  },
+  {
+    "payload": "{\"budget\":12,\"steps\":[{\"duration\":0,\"outcome\":\"error\",\"timeout\":5},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":6},{\"duration\":2,\"outcome\":\"ok\",\"timeout\":7},{\"duration\":3,\"outcome\":\"ok\",\"timeout\":8}]}"
+  },
+  {
+    "payload": "{\"budget\":13,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":6},{\"duration\":1,\"outcome\":\"error\",\"timeout\":7},{\"duration\":2,\"outcome\":\"ok\",\"timeout\":8},{\"duration\":3,\"outcome\":\"ok\",\"timeout\":1},{\"duration\":4,\"outcome\":\"ok\",\"timeout\":2}]}"
+  },
+  {
+    "payload": "{\"budget\":14,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":7},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":8},{\"duration\":2,\"outcome\":\"error\",\"timeout\":1},{\"duration\":3,\"outcome\":\"ok\",\"timeout\":2},{\"duration\":4,\"outcome\":\"ok\",\"timeout\":3},{\"duration\":5,\"outcome\":\"ok\",\"timeout\":4}]}"
+  },
+  {
+    "payload": "{\"budget\":15,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":8},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":1},{\"duration\":2,\"outcome\":\"ok\",\"timeout\":2},{\"duration\":3,\"outcome\":\"error\",\"timeout\":3},{\"duration\":4,\"outcome\":\"ok\",\"timeout\":4},{\"duration\":5,\"outcome\":\"ok\",\"timeout\":5},{\"duration\":6,\"outcome\":\"ok\",\"timeout\":6}]}"
+  },
+  {
+    "payload": "{\"budget\":16,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":1},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":2},{\"duration\":2,\"outcome\":\"ok\",\"timeout\":3},{\"duration\":3,\"outcome\":\"ok\",\"timeout\":4},{\"duration\":4,\"outcome\":\"error\",\"timeout\":5},{\"duration\":5,\"outcome\":\"ok\",\"timeout\":6},{\"duration\":6,\"outcome\":\"ok\",\"timeout\":7},{\"duration\":0,\"outcome\":\"ok\",\"timeout\":8}]}"
+  },
+  {
+    "payload": "{\"budget\":17,\"steps\":[{\"duration\":0,\"outcome\":\"ok\",\"timeout\":2},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":3},{\"duration\":2,\"outcome\":\"ok\",\"timeout\":4},{\"duration\":3,\"outcome\":\"ok\",\"timeout\":5},{\"duration\":4,\"outcome\":\"ok\",\"timeout\":6},{\"duration\":5,\"outcome\":\"error\",\"timeout\":7},{\"duration\":6,\"outcome\":\"ok\",\"timeout\":8},{\"duration\":0,\"outcome\":\"ok\",\"timeout\":1},{\"duration\":1,\"outcome\":\"ok\",\"timeout\":2}]}"
+  }
+]

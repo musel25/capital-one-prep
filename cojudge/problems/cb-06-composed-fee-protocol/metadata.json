@@ -1,0 +1,50 @@
+{
+  "id": "cb-06-composed-fee-protocol",
+  "title": "06. Trace a composed fee dependency",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "02-follow-objects-and-control-flow",
+  "examples": [
+    {
+      "input": "{\"policy\": {\"kind\": \"flat\", \"cents\": 3}, \"amounts\": [0, 10]}",
+      "output": "[{\"fee\": 3, \"total\": 3}, {\"fee\": 3, \"total\": 13}]",
+      "explanation": "flat fee includes zero amount"
+    },
+    {
+      "input": "{\"policy\": {\"kind\": \"rate\", \"bps\": 250}, \"amounts\": [100, 200, 1]}",
+      "output": "[{\"fee\": 3, \"total\": 103}, {\"fee\": 5, \"total\": 205}, {\"fee\": 1, \"total\": 2}]",
+      "explanation": "rate fees round upward"
+    },
+    {
+      "input": "{\"policy\": {\"kind\": \"rate\", \"bps\": 10}, \"amounts\": []}",
+      "output": "[]",
+      "explanation": "no quotes"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\nfrom dataclasses import dataclass\nfrom typing import Protocol\n\nclass FeePolicy(Protocol):\n    def fee(self, amount: int) -> int: ...\n\n@dataclass\nclass FlatFee:\n    cents: int\n    def fee(self, amount: int) -> int:\n        return self.cents\n\n@dataclass\nclass RateFee:\n    bps: int\n    def fee(self, amount: int) -> int:\n        return (amount * self.bps) // 10000\n\nclass Calculator:\n    def __init__(self, policy: FeePolicy):\n        self.policy = policy\n    def quote(self, amount: int) -> dict:\n        fee = self.policy.fee(amount)\n        return {'fee': fee, 'total': amount + fee}\n\ndef solve(data: dict) -> list[dict]:\n    raw = data['policy']\n    policy: FeePolicy = FlatFee(raw['cents']) if raw['kind'] == 'flat' else RateFee(raw['bps'])\n    calculator = Calculator(policy)\n    return [calculator.quote(amount) for amount in data['amounts']]\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"amounts\":[0,10],\"policy\":{\"cents\":3,\"kind\":\"flat\"}}"
+    },
+    {
+      "payload": "{\"amounts\":[100,200,1],\"policy\":{\"bps\":250,\"kind\":\"rate\"}}"
+    },
+    {
+      "payload": "{\"amounts\":[],\"policy\":{\"bps\":10,\"kind\":\"rate\"}}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Each policy can implement the same fee method.",
+    "Keep integer cents throughout the percentage calculation."
+  ]
+}

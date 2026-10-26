@@ -1,0 +1,786 @@
+[
+  {
+    "input": {
+      "records": [
+        {
+          "id": "A",
+          "amount": 0
+        },
+        {
+          "id": "B",
+          "amount": true
+        },
+        {
+          "id": "C"
+        }
+      ]
+    },
+    "expected": {
+      "valid": [
+        {
+          "id": "A",
+          "amount": 0
+        }
+      ],
+      "rejected": [
+        1,
+        2
+      ]
+    },
+    "label": "validate fields at the boundary"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "X",
+          "amount": 4,
+          "debug": true
+        }
+      ]
+    },
+    "expected": {
+      "valid": [
+        {
+          "id": "X",
+          "amount": 4
+        }
+      ],
+      "rejected": []
+    },
+    "label": "drop extra fields"
+  },
+  {
+    "input": {
+      "records": []
+    },
+    "expected": {
+      "valid": [],
+      "rejected": []
+    },
+    "label": "empty list"
+  },
+  {
+    "input": {
+      "records": [
+        null,
+        [],
+        4,
+        "text",
+        false
+      ]
+    },
+    "expected": {
+      "valid": [],
+      "rejected": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "label": "wrong record types"
+  },
+  {
+    "input": {
+      "records": [
+        {}
+      ]
+    },
+    "expected": {
+      "valid": [],
+      "rejected": [
+        0
+      ]
+    },
+    "label": "both keys missing"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "",
+          "amount": 1
+        }
+      ]
+    },
+    "expected": {
+      "valid": [],
+      "rejected": [
+        0
+      ]
+    },
+    "label": "empty ID"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": 0,
+          "amount": 1
+        },
+        {
+          "id": null,
+          "amount": 1
+        }
+      ]
+    },
+    "expected": {
+      "valid": [],
+      "rejected": [
+        0,
+        1
+      ]
+    },
+    "label": "wrong ID types"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "A",
+          "amount": -1
+        }
+      ]
+    },
+    "expected": {
+      "valid": [],
+      "rejected": [
+        0
+      ]
+    },
+    "label": "negative amount"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "A",
+          "amount": 1.0
+        },
+        {
+          "id": "B",
+          "amount": "1"
+        }
+      ]
+    },
+    "expected": {
+      "valid": [],
+      "rejected": [
+        0,
+        1
+      ]
+    },
+    "label": "no numeric coercion"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "A",
+          "amount": null
+        },
+        {
+          "id": "B",
+          "amount": false
+        }
+      ]
+    },
+    "expected": {
+      "valid": [],
+      "rejected": [
+        0,
+        1
+      ]
+    },
+    "label": "null and false"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "A",
+          "amount": 1000000
+        },
+        {
+          "id": "A",
+          "amount": 2
+        }
+      ]
+    },
+    "expected": {
+      "valid": [
+        {
+          "id": "A",
+          "amount": 1000000
+        },
+        {
+          "id": "A",
+          "amount": 2
+        }
+      ],
+      "rejected": []
+    },
+    "label": "duplicate ID is permitted"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": " ",
+          "amount": 3
+        },
+        {
+          "id": "\u00e9",
+          "amount": 1
+        }
+      ]
+    },
+    "expected": {
+      "valid": [
+        {
+          "id": " ",
+          "amount": 3
+        },
+        {
+          "id": "\u00e9",
+          "amount": 1
+        }
+      ],
+      "rejected": []
+    },
+    "label": "nonempty is the only ID text rule"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "amount": 0
+        },
+        {
+          "id": "ok",
+          "amount": 2
+        },
+        null
+      ]
+    },
+    "expected": {
+      "valid": [
+        {
+          "id": "ok",
+          "amount": 2
+        }
+      ],
+      "rejected": [
+        0,
+        2
+      ]
+    },
+    "label": "accepted position in middle"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "id0",
+          "amount": 0
+        },
+        {
+          "id": "bad0",
+          "amount": false
+        },
+        {
+          "id": "",
+          "amount": 0
+        },
+        {
+          "id": "end0",
+          "amount": 9,
+          "extra": [
+            0
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "rejected": [
+        1,
+        2
+      ],
+      "valid": [
+        {
+          "amount": 0,
+          "id": "id0"
+        },
+        {
+          "amount": 9,
+          "id": "end0"
+        }
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "id1",
+          "amount": 1
+        },
+        {
+          "id": "bad1",
+          "amount": false
+        },
+        {
+          "id": "",
+          "amount": 1
+        },
+        {
+          "id": "end1",
+          "amount": 10,
+          "extra": [
+            1
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "rejected": [
+        1,
+        2
+      ],
+      "valid": [
+        {
+          "amount": 1,
+          "id": "id1"
+        },
+        {
+          "amount": 10,
+          "id": "end1"
+        }
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "id2",
+          "amount": 2
+        },
+        {
+          "id": "bad2",
+          "amount": false
+        },
+        {
+          "id": "",
+          "amount": 2
+        },
+        {
+          "id": "end2",
+          "amount": 11,
+          "extra": [
+            2
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "rejected": [
+        1,
+        2
+      ],
+      "valid": [
+        {
+          "amount": 2,
+          "id": "id2"
+        },
+        {
+          "amount": 11,
+          "id": "end2"
+        }
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "id3",
+          "amount": 3
+        },
+        {
+          "id": "bad3",
+          "amount": false
+        },
+        {
+          "id": "",
+          "amount": 3
+        },
+        {
+          "id": "end3",
+          "amount": 12,
+          "extra": [
+            3
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "rejected": [
+        1,
+        2
+      ],
+      "valid": [
+        {
+          "amount": 3,
+          "id": "id3"
+        },
+        {
+          "amount": 12,
+          "id": "end3"
+        }
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "id4",
+          "amount": 4
+        },
+        {
+          "id": "bad4",
+          "amount": false
+        },
+        {
+          "id": "",
+          "amount": 4
+        },
+        {
+          "id": "end4",
+          "amount": 13,
+          "extra": [
+            4
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "rejected": [
+        1,
+        2
+      ],
+      "valid": [
+        {
+          "amount": 4,
+          "id": "id4"
+        },
+        {
+          "amount": 13,
+          "id": "end4"
+        }
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "id5",
+          "amount": 5
+        },
+        {
+          "id": "bad5",
+          "amount": false
+        },
+        {
+          "id": "",
+          "amount": 5
+        },
+        {
+          "id": "end5",
+          "amount": 14,
+          "extra": [
+            5
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "rejected": [
+        1,
+        2
+      ],
+      "valid": [
+        {
+          "amount": 5,
+          "id": "id5"
+        },
+        {
+          "amount": 14,
+          "id": "end5"
+        }
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "id6",
+          "amount": 6
+        },
+        {
+          "id": "bad6",
+          "amount": false
+        },
+        {
+          "id": "",
+          "amount": 6
+        },
+        {
+          "id": "end6",
+          "amount": 15,
+          "extra": [
+            6
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "rejected": [
+        1,
+        2
+      ],
+      "valid": [
+        {
+          "amount": 6,
+          "id": "id6"
+        },
+        {
+          "amount": 15,
+          "id": "end6"
+        }
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "id7",
+          "amount": 7
+        },
+        {
+          "id": "bad7",
+          "amount": false
+        },
+        {
+          "id": "",
+          "amount": 7
+        },
+        {
+          "id": "end7",
+          "amount": 16,
+          "extra": [
+            7
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "rejected": [
+        1,
+        2
+      ],
+      "valid": [
+        {
+          "amount": 7,
+          "id": "id7"
+        },
+        {
+          "amount": 16,
+          "id": "end7"
+        }
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "id8",
+          "amount": 8
+        },
+        {
+          "id": "bad8",
+          "amount": false
+        },
+        {
+          "id": "",
+          "amount": 8
+        },
+        {
+          "id": "end8",
+          "amount": 17,
+          "extra": [
+            8
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "rejected": [
+        1,
+        2
+      ],
+      "valid": [
+        {
+          "amount": 8,
+          "id": "id8"
+        },
+        {
+          "amount": 17,
+          "id": "end8"
+        }
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "id9",
+          "amount": 9
+        },
+        {
+          "id": "bad9",
+          "amount": false
+        },
+        {
+          "id": "",
+          "amount": 9
+        },
+        {
+          "id": "end9",
+          "amount": 18,
+          "extra": [
+            9
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "rejected": [
+        1,
+        2
+      ],
+      "valid": [
+        {
+          "amount": 9,
+          "id": "id9"
+        },
+        {
+          "amount": 18,
+          "id": "end9"
+        }
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "id10",
+          "amount": 10
+        },
+        {
+          "id": "bad10",
+          "amount": false
+        },
+        {
+          "id": "",
+          "amount": 10
+        },
+        {
+          "id": "end10",
+          "amount": 19,
+          "extra": [
+            10
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "rejected": [
+        1,
+        2
+      ],
+      "valid": [
+        {
+          "amount": 10,
+          "id": "id10"
+        },
+        {
+          "amount": 19,
+          "id": "end10"
+        }
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "records": [
+        {
+          "id": "id11",
+          "amount": 11
+        },
+        {
+          "id": "bad11",
+          "amount": false
+        },
+        {
+          "id": "",
+          "amount": 11
+        },
+        {
+          "id": "end11",
+          "amount": 20,
+          "extra": [
+            11
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "rejected": [
+        1,
+        2
+      ],
+      "valid": [
+        {
+          "amount": 11,
+          "id": "id11"
+        },
+        {
+          "amount": 20,
+          "id": "end11"
+        }
+      ]
+    },
+    "label": "additional-12"
+  }
+]

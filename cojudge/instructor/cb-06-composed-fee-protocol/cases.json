@@ -1,0 +1,688 @@
+[
+  {
+    "input": {
+      "policy": {
+        "kind": "flat",
+        "cents": 3
+      },
+      "amounts": [
+        0,
+        10
+      ]
+    },
+    "expected": [
+      {
+        "fee": 3,
+        "total": 3
+      },
+      {
+        "fee": 3,
+        "total": 13
+      }
+    ],
+    "label": "flat fee includes zero amount"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 250
+      },
+      "amounts": [
+        100,
+        200,
+        1
+      ]
+    },
+    "expected": [
+      {
+        "fee": 3,
+        "total": 103
+      },
+      {
+        "fee": 5,
+        "total": 205
+      },
+      {
+        "fee": 1,
+        "total": 2
+      }
+    ],
+    "label": "rate fees round upward"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 10
+      },
+      "amounts": []
+    },
+    "expected": [],
+    "label": "no quotes"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "flat",
+        "cents": 0
+      },
+      "amounts": [
+        0,
+        5
+      ]
+    },
+    "expected": [
+      {
+        "fee": 0,
+        "total": 0
+      },
+      {
+        "fee": 0,
+        "total": 5
+      }
+    ],
+    "label": "zero flat fee"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 0
+      },
+      "amounts": [
+        0,
+        1000000
+      ]
+    },
+    "expected": [
+      {
+        "fee": 0,
+        "total": 0
+      },
+      {
+        "fee": 0,
+        "total": 1000000
+      }
+    ],
+    "label": "zero rate"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 10000
+      },
+      "amounts": [
+        1,
+        99
+      ]
+    },
+    "expected": [
+      {
+        "fee": 1,
+        "total": 2
+      },
+      {
+        "fee": 99,
+        "total": 198
+      }
+    ],
+    "label": "full rate"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 1
+      },
+      "amounts": [
+        1,
+        9999,
+        10000,
+        10001
+      ]
+    },
+    "expected": [
+      {
+        "fee": 1,
+        "total": 2
+      },
+      {
+        "fee": 1,
+        "total": 10000
+      },
+      {
+        "fee": 1,
+        "total": 10001
+      },
+      {
+        "fee": 2,
+        "total": 10003
+      }
+    ],
+    "label": "one basis point boundaries"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 9999
+      },
+      "amounts": [
+        0,
+        1
+      ]
+    },
+    "expected": [
+      {
+        "fee": 0,
+        "total": 0
+      },
+      {
+        "fee": 1,
+        "total": 2
+      }
+    ],
+    "label": "zero amount at high rate"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "flat",
+        "cents": 2
+      },
+      "amounts": [
+        3,
+        3,
+        3
+      ]
+    },
+    "expected": [
+      {
+        "fee": 2,
+        "total": 5
+      },
+      {
+        "fee": 2,
+        "total": 5
+      },
+      {
+        "fee": 2,
+        "total": 5
+      }
+    ],
+    "label": "repeated quotes"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 5000
+      },
+      "amounts": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expected": [
+      {
+        "fee": 1,
+        "total": 2
+      },
+      {
+        "fee": 1,
+        "total": 3
+      },
+      {
+        "fee": 2,
+        "total": 5
+      }
+    ],
+    "label": "half-cent rounds upward"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 123
+      },
+      "amounts": [
+        1000000000000
+      ]
+    },
+    "expected": [
+      {
+        "fee": 12300000000,
+        "total": 1012300000000
+      }
+    ],
+    "label": "large integer arithmetic"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "flat",
+        "cents": 1000000000000
+      },
+      "amounts": [
+        1000000000000
+      ]
+    },
+    "expected": [
+      {
+        "fee": 1000000000000,
+        "total": 2000000000000
+      }
+    ],
+    "label": "large flat fee"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "flat",
+        "cents": 7
+      },
+      "amounts": []
+    },
+    "expected": [],
+    "label": "unused policy"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 1
+      },
+      "amounts": [
+        0,
+        10000,
+        10000,
+        1
+      ]
+    },
+    "expected": [
+      {
+        "fee": 0,
+        "total": 0
+      },
+      {
+        "fee": 1,
+        "total": 10001
+      },
+      {
+        "fee": 1,
+        "total": 10001
+      },
+      {
+        "fee": 1,
+        "total": 2
+      }
+    ],
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 138
+      },
+      "amounts": [
+        1,
+        9999,
+        10001,
+        101
+      ]
+    },
+    "expected": [
+      {
+        "fee": 1,
+        "total": 2
+      },
+      {
+        "fee": 138,
+        "total": 10137
+      },
+      {
+        "fee": 139,
+        "total": 10140
+      },
+      {
+        "fee": 2,
+        "total": 103
+      }
+    ],
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 275
+      },
+      "amounts": [
+        2,
+        9998,
+        10002,
+        201
+      ]
+    },
+    "expected": [
+      {
+        "fee": 1,
+        "total": 3
+      },
+      {
+        "fee": 275,
+        "total": 10273
+      },
+      {
+        "fee": 276,
+        "total": 10278
+      },
+      {
+        "fee": 6,
+        "total": 207
+      }
+    ],
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 412
+      },
+      "amounts": [
+        3,
+        9997,
+        10003,
+        301
+      ]
+    },
+    "expected": [
+      {
+        "fee": 1,
+        "total": 4
+      },
+      {
+        "fee": 412,
+        "total": 10409
+      },
+      {
+        "fee": 413,
+        "total": 10416
+      },
+      {
+        "fee": 13,
+        "total": 314
+      }
+    ],
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 549
+      },
+      "amounts": [
+        4,
+        9996,
+        10004,
+        401
+      ]
+    },
+    "expected": [
+      {
+        "fee": 1,
+        "total": 5
+      },
+      {
+        "fee": 549,
+        "total": 10545
+      },
+      {
+        "fee": 550,
+        "total": 10554
+      },
+      {
+        "fee": 23,
+        "total": 424
+      }
+    ],
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 686
+      },
+      "amounts": [
+        5,
+        9995,
+        10005,
+        501
+      ]
+    },
+    "expected": [
+      {
+        "fee": 1,
+        "total": 6
+      },
+      {
+        "fee": 686,
+        "total": 10681
+      },
+      {
+        "fee": 687,
+        "total": 10692
+      },
+      {
+        "fee": 35,
+        "total": 536
+      }
+    ],
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 823
+      },
+      "amounts": [
+        6,
+        9994,
+        10006,
+        601
+      ]
+    },
+    "expected": [
+      {
+        "fee": 1,
+        "total": 7
+      },
+      {
+        "fee": 823,
+        "total": 10817
+      },
+      {
+        "fee": 824,
+        "total": 10830
+      },
+      {
+        "fee": 50,
+        "total": 651
+      }
+    ],
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 960
+      },
+      "amounts": [
+        7,
+        9993,
+        10007,
+        701
+      ]
+    },
+    "expected": [
+      {
+        "fee": 1,
+        "total": 8
+      },
+      {
+        "fee": 960,
+        "total": 10953
+      },
+      {
+        "fee": 961,
+        "total": 10968
+      },
+      {
+        "fee": 68,
+        "total": 769
+      }
+    ],
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 1097
+      },
+      "amounts": [
+        8,
+        9992,
+        10008,
+        801
+      ]
+    },
+    "expected": [
+      {
+        "fee": 1,
+        "total": 9
+      },
+      {
+        "fee": 1097,
+        "total": 11089
+      },
+      {
+        "fee": 1098,
+        "total": 11106
+      },
+      {
+        "fee": 88,
+        "total": 889
+      }
+    ],
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 1234
+      },
+      "amounts": [
+        9,
+        9991,
+        10009,
+        901
+      ]
+    },
+    "expected": [
+      {
+        "fee": 2,
+        "total": 11
+      },
+      {
+        "fee": 1233,
+        "total": 11224
+      },
+      {
+        "fee": 1236,
+        "total": 11245
+      },
+      {
+        "fee": 112,
+        "total": 1013
+      }
+    ],
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 1371
+      },
+      "amounts": [
+        10,
+        9990,
+        10010,
+        1001
+      ]
+    },
+    "expected": [
+      {
+        "fee": 2,
+        "total": 12
+      },
+      {
+        "fee": 1370,
+        "total": 11360
+      },
+      {
+        "fee": 1373,
+        "total": 11383
+      },
+      {
+        "fee": 138,
+        "total": 1139
+      }
+    ],
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "policy": {
+        "kind": "rate",
+        "bps": 1508
+      },
+      "amounts": [
+        11,
+        9989,
+        10011,
+        1101
+      ]
+    },
+    "expected": [
+      {
+        "fee": 2,
+        "total": 13
+      },
+      {
+        "fee": 1507,
+        "total": 11496
+      },
+      {
+        "fee": 1510,
+        "total": 11521
+      },
+      {
+        "fee": 167,
+        "total": 1268
+      }
+    ],
+    "label": "additional-12"
+  }
+]

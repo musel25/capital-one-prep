@@ -1,0 +1,1373 @@
+{
+  "1": [
+    {
+      "input": {
+        "default": 12,
+        "records": [
+          {},
+          {
+            "limit": 0
+          },
+          {
+            "limit": null
+          }
+        ]
+      },
+      "expected": {
+        "limits": [
+          12,
+          0,
+          null
+        ],
+        "configured": 1
+      },
+      "label": "trace: absent, zero, and null have distinct effects"
+    },
+    {
+      "input": {
+        "default": 0,
+        "records": [
+          {},
+          {
+            "limit": 0
+          },
+          {
+            "other": 0
+          }
+        ]
+      },
+      "expected": {
+        "limits": [
+          0,
+          0,
+          0
+        ],
+        "configured": 1
+      },
+      "label": "AI audit: equal zero outputs have different origins"
+    }
+  ],
+  "2": [
+    {
+      "input": {
+        "records": [
+          7,
+          {
+            "id": "Q",
+            "amount": 0,
+            "debug": true
+          },
+          {
+            "id": "R",
+            "amount": 1.0
+          }
+        ]
+      },
+      "expected": {
+        "valid": [
+          {
+            "id": "Q",
+            "amount": 0
+          }
+        ],
+        "rejected": [
+          0,
+          2
+        ]
+      },
+      "label": "trace: shape rejection, projection, and float rejection"
+    },
+    {
+      "input": {
+        "records": [
+          {
+            "id": " ",
+            "amount": 6
+          },
+          {
+            "id": "",
+            "amount": 6
+          }
+        ]
+      },
+      "expected": {
+        "valid": [
+          {
+            "id": " ",
+            "amount": 6
+          }
+        ],
+        "rejected": [
+          1
+        ]
+      },
+      "label": "AI audit: a space-only ID is nonempty"
+    }
+  ],
+  "3": [
+    {
+      "input": {
+        "names": [
+          "left",
+          "middle",
+          "right"
+        ],
+        "actions": [
+          {
+            "box": 2,
+            "item": "red"
+          },
+          {
+            "box": 0,
+            "item": "blue"
+          },
+          {
+            "box": 2,
+            "item": "red"
+          }
+        ]
+      },
+      "expected": [
+        {
+          "name": "left",
+          "items": [
+            "blue"
+          ]
+        },
+        {
+          "name": "middle",
+          "items": []
+        },
+        {
+          "name": "right",
+          "items": [
+            "red",
+            "red"
+          ]
+        }
+      ],
+      "label": "trace: three boxes preserve ownership and duplicates"
+    },
+    {
+      "input": {
+        "names": [
+          "north",
+          "south"
+        ],
+        "actions": [
+          {
+            "box": 1,
+            "item": "x"
+          }
+        ]
+      },
+      "expected": [
+        {
+          "name": "north",
+          "items": []
+        },
+        {
+          "name": "south",
+          "items": [
+            "x"
+          ]
+        }
+      ],
+      "label": "AI audit: a factory must return independent lists"
+    }
+  ],
+  "4": [
+    {
+      "input": {
+        "template": {
+          "limits": {
+            "daily": 5,
+            "monthly": 30
+          },
+          "tags": [
+            "base"
+          ]
+        },
+        "changes": [
+          {
+            "daily": 0
+          },
+          {
+            "tag": ""
+          },
+          {}
+        ]
+      },
+      "expected": {
+        "template": {
+          "limits": {
+            "daily": 5,
+            "monthly": 30
+          },
+          "tags": [
+            "base"
+          ]
+        },
+        "copies": [
+          {
+            "limits": {
+              "daily": 0,
+              "monthly": 30
+            },
+            "tags": [
+              "base"
+            ]
+          },
+          {
+            "limits": {
+              "daily": 5,
+              "monthly": 30
+            },
+            "tags": [
+              "base",
+              ""
+            ]
+          },
+          {
+            "limits": {
+              "daily": 5,
+              "monthly": 30
+            },
+            "tags": [
+              "base"
+            ]
+          }
+        ]
+      },
+      "label": "trace: every copy starts from the unchanged template"
+    },
+    {
+      "input": {
+        "template": {
+          "limits": {
+            "daily": 2,
+            "monthly": 9
+          },
+          "tags": []
+        },
+        "changes": [
+          {
+            "tag": "new"
+          },
+          {}
+        ]
+      },
+      "expected": {
+        "template": {
+          "limits": {
+            "daily": 2,
+            "monthly": 9
+          },
+          "tags": []
+        },
+        "copies": [
+          {
+            "limits": {
+              "daily": 2,
+              "monthly": 9
+            },
+            "tags": [
+              "new"
+            ]
+          },
+          {
+            "limits": {
+              "daily": 2,
+              "monthly": 9
+            },
+            "tags": []
+          }
+        ]
+      },
+      "label": "AI audit: immutable tag strings do not make their list immutable"
+    }
+  ],
+  "5": [
+    {
+      "input": {
+        "kind": "premium",
+        "balance": 24,
+        "fee": 3,
+        "threshold": 10,
+        "withdrawals": [
+          9,
+          10,
+          3
+        ]
+      },
+      "expected": {
+        "accepted": [
+          true,
+          true,
+          false
+        ],
+        "balance": 2
+      },
+      "label": "trace: inherited withdrawal uses the premium fee rule"
+    },
+    {
+      "input": {
+        "kind": "premium",
+        "balance": 11,
+        "fee": 4,
+        "threshold": 11,
+        "withdrawals": [
+          11
+        ]
+      },
+      "expected": {
+        "accepted": [
+          true
+        ],
+        "balance": 0
+      },
+      "label": "AI audit: premium override waives the fee at the threshold"
+    },
+    {
+      "input": {
+        "kind": "standard",
+        "balance": 11,
+        "fee": 4,
+        "threshold": 11,
+        "withdrawals": [
+          11
+        ]
+      },
+      "expected": {
+        "accepted": [
+          false
+        ],
+        "balance": 11
+      },
+      "label": "AI audit comparison: standard account still charges its fee"
+    }
+  ],
+  "6": [
+    {
+      "input": {
+        "policy": {
+          "kind": "rate",
+          "bps": 125
+        },
+        "amounts": [
+          0,
+          80,
+          81
+        ]
+      },
+      "expected": [
+        {
+          "fee": 0,
+          "total": 0
+        },
+        {
+          "fee": 1,
+          "total": 81
+        },
+        {
+          "fee": 2,
+          "total": 83
+        }
+      ],
+      "label": "trace: zero, exact cents, and fractional cents"
+    },
+    {
+      "input": {
+        "policy": {
+          "kind": "flat",
+          "cents": 7
+        },
+        "amounts": [
+          0
+        ]
+      },
+      "expected": [
+        {
+          "fee": 7,
+          "total": 7
+        }
+      ],
+      "label": "AI audit: a flat fee applies to amount zero"
+    },
+    {
+      "input": {
+        "policy": {
+          "kind": "rate",
+          "bps": 7
+        },
+        "amounts": [
+          0
+        ]
+      },
+      "expected": [
+        {
+          "fee": 0,
+          "total": 0
+        }
+      ],
+      "label": "AI audit comparison: a rate fee is zero on amount zero"
+    }
+  ],
+  "7": [
+    {
+      "input": {
+        "actions": [
+          "capture",
+          "authorize",
+          "capture",
+          "authorize",
+          "refund"
+        ]
+      },
+      "expected": {
+        "accepted": [
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "state": "REFUNDED"
+      },
+      "label": "trace: rejected operations preserve the next valid transition"
+    },
+    {
+      "input": {
+        "actions": [
+          "authorize",
+          "authorize",
+          "capture"
+        ]
+      },
+      "expected": {
+        "accepted": [
+          true,
+          false,
+          true
+        ],
+        "state": "CAPTURED"
+      },
+      "label": "AI audit: repeated authorization is rejected"
+    }
+  ],
+  "8": [
+    {
+      "input": {
+        "accounts": {
+          "A": 5,
+          "B": 0,
+          "C": 0
+        },
+        "batches": [
+          [
+            {
+              "from": "A",
+              "to": "B",
+              "cents": 4
+            },
+            {
+              "from": "B",
+              "to": "C",
+              "cents": 6
+            }
+          ],
+          [
+            {
+              "from": "A",
+              "to": "C",
+              "cents": 5
+            }
+          ]
+        ]
+      },
+      "expected": {
+        "accepted": [
+          false,
+          true
+        ],
+        "balances": {
+          "A": 0,
+          "B": 0,
+          "C": 5
+        }
+      },
+      "label": "trace: late failure restores funds for the next batch"
+    },
+    {
+      "input": {
+        "accounts": {
+          "A": 4,
+          "B": 0,
+          "C": 0
+        },
+        "batches": [
+          [
+            {
+              "from": "A",
+              "to": "B",
+              "cents": 4
+            },
+            {
+              "from": "B",
+              "to": "C",
+              "cents": 4
+            }
+          ]
+        ]
+      },
+      "expected": {
+        "accepted": [
+          true
+        ],
+        "balances": {
+          "A": 0,
+          "B": 0,
+          "C": 4
+        }
+      },
+      "label": "AI audit: an earlier transfer can fund a later transfer in its batch"
+    }
+  ],
+  "9": [
+    {
+      "input": {
+        "items": [
+          {
+            "id": 4,
+            "name": "pen"
+          }
+        ],
+        "requests": [
+          {
+            "path": "/items/4",
+            "method": "DELETE"
+          },
+          {
+            "path": "/items/4",
+            "method": "GET"
+          },
+          {
+            "path": "/items/4",
+            "method": "POST"
+          }
+        ]
+      },
+      "expected": [
+        {
+          "status": 204,
+          "body": null
+        },
+        {
+          "status": 404,
+          "body": {
+            "error": "not_found"
+          }
+        },
+        {
+          "status": 405,
+          "body": {
+            "error": "method_not_allowed"
+          },
+          "allow": [
+            "GET",
+            "DELETE"
+          ]
+        }
+      ],
+      "label": "trace: deletion changes record existence but not route methods"
+    },
+    {
+      "input": {
+        "items": [],
+        "requests": [
+          {
+            "path": "/items/73",
+            "method": "PUT"
+          },
+          {
+            "path": "/unknown",
+            "method": "PUT"
+          }
+        ]
+      },
+      "expected": [
+        {
+          "status": 405,
+          "body": {
+            "error": "method_not_allowed"
+          },
+          "allow": [
+            "GET",
+            "DELETE"
+          ]
+        },
+        {
+          "status": 404,
+          "body": {
+            "error": "not_found"
+          }
+        }
+      ],
+      "label": "AI audit: route recognition precedes method checks and record lookup"
+    }
+  ],
+  "10": [
+    {
+      "input": {
+        "bodies": [
+          {
+            "account": "ok_2",
+            "amount": 3,
+            "note": ""
+          },
+          {
+            "account": "Bad",
+            "amount": 0,
+            "note": 7,
+            "extra": true
+          }
+        ]
+      },
+      "expected": [
+        {
+          "status": 201,
+          "body": {
+            "account": "ok_2",
+            "amount": 3,
+            "note": ""
+          }
+        },
+        {
+          "status": 422,
+          "errors": [
+            "account",
+            "amount",
+            "note",
+            "unknown"
+          ]
+        }
+      ],
+      "label": "trace: preserve an empty note and ordered validation errors"
+    },
+    {
+      "input": {
+        "bodies": [
+          {
+            "account": "z",
+            "amount": 1.0
+          },
+          {
+            "account": "z",
+            "amount": 1
+          }
+        ]
+      },
+      "expected": [
+        {
+          "status": 422,
+          "errors": [
+            "amount"
+          ]
+        },
+        {
+          "status": 201,
+          "body": {
+            "account": "z",
+            "amount": 1,
+            "note": null
+          }
+        }
+      ],
+      "label": "AI audit: integral float and integer have different acceptance"
+    }
+  ],
+  "11": [
+    {
+      "input": {
+        "initial": {
+          "name": "Mia",
+          "email": "m@x"
+        },
+        "requests": [
+          {
+            "method": "PATCH",
+            "body": {
+              "email": ""
+            }
+          },
+          {
+            "method": "PATCH",
+            "body": {}
+          },
+          {
+            "method": "PATCH",
+            "body": {
+              "email": null
+            }
+          },
+          {
+            "method": "PUT",
+            "body": {
+              "name": "Noa"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "responses": [
+          {
+            "status": 200,
+            "body": {
+              "name": "Mia",
+              "email": ""
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "name": "Mia",
+              "email": ""
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "name": "Mia",
+              "email": null
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "name": "Noa",
+              "email": null
+            }
+          }
+        ],
+        "state": {
+          "name": "Noa",
+          "email": null
+        }
+      },
+      "label": "trace: empty, absent, and null email preserve earlier snapshots"
+    },
+    {
+      "input": {
+        "initial": {
+          "name": "Ira",
+          "email": "i@x"
+        },
+        "requests": [
+          {
+            "method": "PATCH",
+            "body": {}
+          },
+          {
+            "method": "PUT",
+            "body": {}
+          }
+        ]
+      },
+      "expected": {
+        "responses": [
+          {
+            "status": 200,
+            "body": {
+              "name": "Ira",
+              "email": "i@x"
+            }
+          },
+          {
+            "status": 422,
+            "body": {
+              "error": "invalid"
+            }
+          }
+        ],
+        "state": {
+          "name": "Ira",
+          "email": "i@x"
+        }
+      },
+      "label": "AI audit: empty PATCH succeeds but empty PUT fails"
+    },
+    {
+      "input": {
+        "initial": {
+          "name": "Ira",
+          "email": "i@x"
+        },
+        "requests": [
+          {
+            "method": "PUT",
+            "body": {
+              "name": "Jo"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "responses": [
+          {
+            "status": 200,
+            "body": {
+              "name": "Jo",
+              "email": null
+            }
+          }
+        ],
+        "state": {
+          "name": "Jo",
+          "email": null
+        }
+      },
+      "label": "AI audit comparison: PUT with an omitted email"
+    },
+    {
+      "input": {
+        "initial": {
+          "name": "Ira",
+          "email": "i@x"
+        },
+        "requests": [
+          {
+            "method": "PATCH",
+            "body": {
+              "name": "Jo"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "responses": [
+          {
+            "status": 200,
+            "body": {
+              "name": "Jo",
+              "email": "i@x"
+            }
+          }
+        ],
+        "state": {
+          "name": "Jo",
+          "email": "i@x"
+        }
+      },
+      "label": "AI audit comparison: PATCH with an omitted email"
+    }
+  ],
+  "12": [
+    {
+      "input": {
+        "requests": [
+          {
+            "key": "k",
+            "body": {
+              "to": "Ada",
+              "amount": 4
+            }
+          },
+          {
+            "key": "k",
+            "body": {
+              "to": "Ada",
+              "amount": 4
+            }
+          },
+          {
+            "key": "k",
+            "body": {
+              "to": "Ada",
+              "amount": 5
+            }
+          },
+          {
+            "key": "m",
+            "body": {
+              "to": "Bo",
+              "amount": 2
+            }
+          }
+        ]
+      },
+      "expected": {
+        "responses": [
+          {
+            "status": 201,
+            "body": {
+              "id": 1,
+              "to": "Ada",
+              "amount": 4
+            },
+            "replayed": false
+          },
+          {
+            "status": 201,
+            "body": {
+              "id": 1,
+              "to": "Ada",
+              "amount": 4
+            },
+            "replayed": true
+          },
+          {
+            "status": 409,
+            "body": {
+              "error": "key_conflict"
+            },
+            "replayed": false
+          },
+          {
+            "status": 201,
+            "body": {
+              "id": 2,
+              "to": "Bo",
+              "amount": 2
+            },
+            "replayed": false
+          }
+        ],
+        "transfers": [
+          {
+            "id": 1,
+            "to": "Ada",
+            "amount": 4
+          },
+          {
+            "id": 2,
+            "to": "Bo",
+            "amount": 2
+          }
+        ]
+      },
+      "label": "trace: replay and conflict consume no transfer IDs"
+    },
+    {
+      "input": {
+        "requests": [
+          {
+            "key": "A",
+            "body": {
+              "to": "Lee",
+              "amount": 8
+            }
+          },
+          {
+            "key": "B",
+            "body": {
+              "to": "Lee",
+              "amount": 8
+            }
+          }
+        ]
+      },
+      "expected": {
+        "responses": [
+          {
+            "status": 201,
+            "body": {
+              "id": 1,
+              "to": "Lee",
+              "amount": 8
+            },
+            "replayed": false
+          },
+          {
+            "status": 201,
+            "body": {
+              "id": 2,
+              "to": "Lee",
+              "amount": 8
+            },
+            "replayed": false
+          }
+        ],
+        "transfers": [
+          {
+            "id": 1,
+            "to": "Lee",
+            "amount": 8
+          },
+          {
+            "id": 2,
+            "to": "Lee",
+            "amount": 8
+          }
+        ]
+      },
+      "label": "AI audit: equal bodies under different keys create distinct transfers"
+    }
+  ],
+  "13": [
+    {
+      "input": {
+        "records": [
+          {
+            "id": 8,
+            "ts": 6
+          },
+          {
+            "id": 3,
+            "ts": 6
+          },
+          {
+            "id": 2,
+            "ts": 7
+          }
+        ],
+        "actions": [
+          {
+            "op": "page",
+            "after": [
+              6,
+              3
+            ],
+            "limit": 1
+          },
+          {
+            "op": "page",
+            "after": [
+              6,
+              8
+            ],
+            "limit": 1
+          }
+        ]
+      },
+      "expected": [
+        {
+          "ids": [
+            8
+          ],
+          "next": [
+            6,
+            8
+          ]
+        },
+        {
+          "ids": [
+            2
+          ],
+          "next": null
+        }
+      ],
+      "label": "trace: composite cursor and remaining-row continuation"
+    },
+    {
+      "input": {
+        "records": [
+          {
+            "id": 4,
+            "ts": 9
+          },
+          {
+            "id": 7,
+            "ts": 9
+          }
+        ],
+        "actions": [
+          {
+            "op": "page",
+            "after": null,
+            "limit": 2
+          }
+        ]
+      },
+      "expected": [
+        {
+          "ids": [
+            4,
+            7
+          ],
+          "next": null
+        }
+      ],
+      "label": "AI audit: an exact full final page has no next cursor"
+    },
+    {
+      "input": {
+        "records": [
+          {
+            "id": 4,
+            "ts": 9
+          },
+          {
+            "id": 7,
+            "ts": 9
+          },
+          {
+            "id": 1,
+            "ts": 10
+          }
+        ],
+        "actions": [
+          {
+            "op": "page",
+            "after": null,
+            "limit": 2
+          }
+        ]
+      },
+      "expected": [
+        {
+          "ids": [
+            4,
+            7
+          ],
+          "next": [
+            9,
+            7
+          ]
+        }
+      ],
+      "label": "AI audit comparison: one extra eligible row requires a next cursor"
+    }
+  ],
+  "14": [
+    {
+      "input": {
+        "outcomes": [
+          503,
+          "timeout",
+          204,
+          500
+        ],
+        "max_attempts": 4,
+        "base": 3,
+        "cap": 5
+      },
+      "expected": {
+        "attempts": 3,
+        "delays": [
+          3,
+          5
+        ],
+        "result": "success"
+      },
+      "label": "trace: capped delays precede actual retries and ignore unused outcomes"
+    },
+    {
+      "input": {
+        "outcomes": [
+          501,
+          204
+        ],
+        "max_attempts": 2,
+        "base": 4,
+        "cap": 9
+      },
+      "expected": {
+        "attempts": 1,
+        "delays": [],
+        "result": "failed"
+      },
+      "label": "AI audit: 501 is terminal despite an available later success"
+    },
+    {
+      "input": {
+        "outcomes": [
+          502,
+          204
+        ],
+        "max_attempts": 2,
+        "base": 4,
+        "cap": 9
+      },
+      "expected": {
+        "attempts": 2,
+        "delays": [
+          4
+        ],
+        "result": "success"
+      },
+      "label": "AI audit comparison: 502 retries and consumes the later success"
+    }
+  ],
+  "15": [
+    {
+      "input": {
+        "budget": 9,
+        "steps": [
+          {
+            "duration": 4,
+            "timeout": 8,
+            "outcome": "ok"
+          },
+          {
+            "duration": 5,
+            "timeout": 7,
+            "outcome": "ok"
+          }
+        ]
+      },
+      "expected": {
+        "result": "success",
+        "elapsed": 9,
+        "completed": 2,
+        "started": 2
+      },
+      "label": "trace: final response exactly at the shared deadline succeeds"
+    },
+    {
+      "input": {
+        "budget": 9,
+        "steps": [
+          {
+            "duration": 4,
+            "timeout": 8,
+            "outcome": "ok"
+          },
+          {
+            "duration": 5,
+            "timeout": 7,
+            "outcome": "ok"
+          },
+          {
+            "duration": 0,
+            "timeout": 7,
+            "outcome": "ok"
+          }
+        ]
+      },
+      "expected": {
+        "result": "deadline",
+        "elapsed": 9,
+        "completed": 2,
+        "started": 2
+      },
+      "label": "trace comparison: a later zero-duration step cannot start at the deadline"
+    },
+    {
+      "input": {
+        "budget": 0,
+        "steps": [
+          {
+            "duration": 0,
+            "timeout": 1,
+            "outcome": "ok"
+          }
+        ]
+      },
+      "expected": {
+        "result": "deadline",
+        "elapsed": 0,
+        "completed": 0,
+        "started": 0
+      },
+      "label": "AI audit: zero budget prevents even a zero-duration operation"
+    },
+    {
+      "input": {
+        "budget": 0,
+        "steps": []
+      },
+      "expected": {
+        "result": "success",
+        "elapsed": 0,
+        "completed": 0,
+        "started": 0
+      },
+      "label": "AI audit comparison: empty work succeeds with zero budget"
+    }
+  ],
+  "16": [
+    {
+      "input": {
+        "start": "a",
+        "max_pages": 3,
+        "pages": {
+          "a": {
+            "status": 200,
+            "items": [
+              {
+                "id": 5,
+                "value": "first"
+              }
+            ],
+            "next": "b"
+          },
+          "b": {
+            "status": 200,
+            "items": [],
+            "next": "c"
+          },
+          "c": {
+            "status": 200,
+            "items": [
+              {
+                "id": 5,
+                "value": "later"
+              },
+              {
+                "id": 8,
+                "value": "eight"
+              }
+            ],
+            "next": null
+          }
+        }
+      },
+      "expected": {
+        "items": [
+          {
+            "id": 5,
+            "value": "first"
+          },
+          {
+            "id": 8,
+            "value": "eight"
+          }
+        ],
+        "requests": [
+          "a",
+          "b",
+          "c"
+        ],
+        "error": null
+      },
+      "label": "trace: an empty middle page preserves traversal and first-value wins"
+    },
+    {
+      "input": {
+        "start": "a",
+        "max_pages": 2,
+        "pages": {
+          "a": {
+            "status": 200,
+            "items": [],
+            "next": "b"
+          },
+          "b": {
+            "status": 200,
+            "items": [
+              {
+                "id": 9,
+                "value": "kept"
+              }
+            ],
+            "next": "a"
+          }
+        }
+      },
+      "expected": {
+        "items": [
+          {
+            "id": 9,
+            "value": "kept"
+          }
+        ],
+        "requests": [
+          "a",
+          "b"
+        ],
+        "error": "cycle"
+      },
+      "label": "AI audit: cycle precedes limit after an empty page and accepted data"
+    }
+  ]
+}

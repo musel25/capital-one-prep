@@ -1,0 +1,114 @@
+[
+  {
+    "id": "cb-01-missing-null-zero",
+    "number": 1,
+    "title": "Trace a configuration default",
+    "cases": 24,
+    "category": "01-read-data-and-state"
+  },
+  {
+    "id": "cb-02-typed-json-boundary",
+    "number": 2,
+    "title": "Find the runtime validation boundary",
+    "cases": 25,
+    "category": "01-read-data-and-state"
+  },
+  {
+    "id": "cb-03-dataclass-list-isolation",
+    "number": 3,
+    "title": "Trace state owned by an instance",
+    "cases": 24,
+    "category": "01-read-data-and-state"
+  },
+  {
+    "id": "cb-04-nested-copy-isolation",
+    "number": 4,
+    "title": "Follow ownership through a nested copy",
+    "cases": 24,
+    "category": "01-read-data-and-state"
+  },
+  {
+    "id": "cb-05-inheritance-fee-policy",
+    "number": 5,
+    "title": "Follow an inherited call to an override",
+    "cases": 25,
+    "category": "02-follow-objects-and-control-flow"
+  },
+  {
+    "id": "cb-06-composed-fee-protocol",
+    "number": 6,
+    "title": "Trace a composed fee dependency",
+    "cases": 25,
+    "category": "02-follow-objects-and-control-flow"
+  },
+  {
+    "id": "cb-07-explicit-order-states",
+    "number": 7,
+    "title": "Check accepted and rejected state transitions",
+    "cases": 24,
+    "category": "02-follow-objects-and-control-flow"
+  },
+  {
+    "id": "cb-08-atomic-memory-batch",
+    "number": 8,
+    "title": "Locate a batch commit boundary",
+    "cases": 25,
+    "category": "02-follow-objects-and-control-flow"
+  },
+  {
+    "id": "cb-09-route-contract",
+    "number": 9,
+    "title": "Trace route, method, and record dispatch",
+    "cases": 30,
+    "category": "03-trace-api-contracts"
+  },
+  {
+    "id": "cb-10-body-validation",
+    "number": 10,
+    "title": "Validate a body before building success",
+    "cases": 37,
+    "category": "03-trace-api-contracts"
+  },
+  {
+    "id": "cb-11-put-patch-fields",
+    "number": 11,
+    "title": "Preserve field presence in a partial update",
+    "cases": 31,
+    "category": "03-trace-api-contracts"
+  },
+  {
+    "id": "cb-12-idempotency-conflicts",
+    "number": 12,
+    "title": "Trace request identity through a replay cache",
+    "cases": 29,
+    "category": "03-trace-api-contracts"
+  },
+  {
+    "id": "cb-13-cursor-tie-breaks",
+    "number": 13,
+    "title": "Test the boundary of a composite cursor",
+    "cases": 30,
+    "category": "04-test-client-boundaries"
+  },
+  {
+    "id": "cb-14-retry-backoff",
+    "number": 14,
+    "title": "Separate failure classification from retry scheduling",
+    "cases": 32,
+    "category": "04-test-client-boundaries"
+  },
+  {
+    "id": "cb-15-shared-deadline",
+    "number": 15,
+    "title": "Track a shared time budget across calls",
+    "cases": 32,
+    "category": "04-test-client-boundaries"
+  },
+  {
+    "id": "cb-16-upstream-page-client",
+    "number": 16,
+    "title": "Review the full path through a paged client",
+    "cases": 32,
+    "category": "04-test-client-boundaries"
+  }
+]

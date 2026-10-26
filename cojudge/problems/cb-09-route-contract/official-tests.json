@@ -1,0 +1,92 @@
+[
+  {
+    "payload": "{\"items\":[{\"id\":2,\"name\":\"book\"},{\"id\":1,\"name\":\"pen\"}],\"requests\":[{\"method\":\"GET\",\"path\":\"/items\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"pen\"}],\"requests\":[{\"method\":\"DELETE\",\"path\":\"/items/1\"},{\"method\":\"GET\",\"path\":\"/items/1\"}]}"
+  },
+  {
+    "payload": "{\"items\":[],\"requests\":[{\"method\":\"POST\",\"path\":\"/items/9\"}]}"
+  },
+  {
+    "payload": "{\"items\":[],\"requests\":[]}"
+  },
+  {
+    "payload": "{\"items\":[],\"requests\":[{\"method\":\"GET\",\"path\":\"/items\"}]}"
+  },
+  {
+    "payload": "{\"items\":[],\"requests\":[{\"method\":\"GET\",\"path\":\"/health\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"pen\"}],\"requests\":[{\"method\":\"GET\",\"path\":\"/items/1\"}]}"
+  },
+  {
+    "payload": "{\"items\":[],\"requests\":[{\"method\":\"GET\",\"path\":\"/items/1\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"pen\"}],\"requests\":[{\"method\":\"DELETE\",\"path\":\"/items/1\"},{\"method\":\"DELETE\",\"path\":\"/items/1\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"pen\"}],\"requests\":[{\"method\":\"GET\",\"path\":\"/items/01\"},{\"method\":\"GET\",\"path\":\"/items/0\"},{\"method\":\"GET\",\"path\":\"/items/1/\"}]}"
+  },
+  {
+    "payload": "{\"items\":[],\"requests\":[{\"method\":\"HEAD\",\"path\":\"/health\"}]}"
+  },
+  {
+    "payload": "{\"items\":[],\"requests\":[{\"method\":\"POST\",\"path\":\"/other\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"pen\"},{\"id\":2,\"name\":\"book\"}],\"requests\":[{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/items/1\"},{\"method\":\"GET\",\"path\":\"/items\"}]}"
+  },
+  {
+    "payload": "{\"items\":[],\"requests\":[{\"method\":\"POST\",\"path\":\"/items\"}]}"
+  },
+  {
+    "payload": "{\"items\":[],\"requests\":[{\"method\":\"POST\",\"path\":\"/bad\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"}],\"requests\":[{\"method\":\"DELETE\",\"path\":\"/items/7\"},{\"method\":\"POST\",\"path\":\"/bad\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"},{\"id\":2,\"name\":\"item-2\"}],\"requests\":[{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"POST\",\"path\":\"/items/1\"},{\"method\":\"GET\",\"path\":\"/health\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"},{\"id\":2,\"name\":\"item-2\"},{\"id\":3,\"name\":\"item-3\"}],\"requests\":[{\"method\":\"POST\",\"path\":\"/items\"},{\"method\":\"POST\",\"path\":\"/bad\"},{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"POST\",\"path\":\"/bad\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"},{\"id\":2,\"name\":\"item-2\"},{\"id\":3,\"name\":\"item-3\"},{\"id\":4,\"name\":\"item-4\"}],\"requests\":[{\"method\":\"GET\",\"path\":\"/items/2\"},{\"method\":\"GET\",\"path\":\"/health\"},{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"DELETE\",\"path\":\"/items/9\"},{\"method\":\"GET\",\"path\":\"/items\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"},{\"id\":2,\"name\":\"item-2\"},{\"id\":3,\"name\":\"item-3\"},{\"id\":4,\"name\":\"item-4\"},{\"id\":5,\"name\":\"item-5\"}],\"requests\":[{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"POST\",\"path\":\"/health\"},{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"POST\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/items/7\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"},{\"id\":2,\"name\":\"item-2\"},{\"id\":3,\"name\":\"item-3\"},{\"id\":4,\"name\":\"item-4\"},{\"id\":5,\"name\":\"item-5\"},{\"id\":6,\"name\":\"item-6\"}],\"requests\":[{\"method\":\"DELETE\",\"path\":\"/bad\"},{\"method\":\"DELETE\",\"path\":\"/bad\"},{\"method\":\"GET\",\"path\":\"/health\"},{\"method\":\"DELETE\",\"path\":\"/health\"},{\"method\":\"POST\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/health\"},{\"method\":\"DELETE\",\"path\":\"/items/3\"}]}"
+  },
+  {
+    "payload": "{\"items\":[],\"requests\":[{\"method\":\"GET\",\"path\":\"/items/6\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/bad\"},{\"method\":\"POST\",\"path\":\"/health\"},{\"method\":\"DELETE\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/health\"},{\"method\":\"POST\",\"path\":\"/bad\"},{\"method\":\"GET\",\"path\":\"/items\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"}],\"requests\":[{\"method\":\"DELETE\",\"path\":\"/health\"},{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"DELETE\",\"path\":\"/health\"},{\"method\":\"DELETE\",\"path\":\"/health\"},{\"method\":\"DELETE\",\"path\":\"/items\"},{\"method\":\"POST\",\"path\":\"/items/2\"},{\"method\":\"POST\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/health\"},{\"method\":\"GET\",\"path\":\"/bad\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"},{\"id\":2,\"name\":\"item-2\"}],\"requests\":[{\"method\":\"GET\",\"path\":\"/items/4\"},{\"method\":\"DELETE\",\"path\":\"/bad\"},{\"method\":\"GET\",\"path\":\"/items/8\"},{\"method\":\"GET\",\"path\":\"/items/9\"},{\"method\":\"POST\",\"path\":\"/bad\"},{\"method\":\"DELETE\",\"path\":\"/health\"},{\"method\":\"POST\",\"path\":\"/items\"},{\"method\":\"POST\",\"path\":\"/items/7\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/health\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"},{\"id\":2,\"name\":\"item-2\"},{\"id\":3,\"name\":\"item-3\"}],\"requests\":[{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/items/2\"},{\"method\":\"DELETE\",\"path\":\"/items/5\"},{\"method\":\"POST\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"POST\",\"path\":\"/items\"},{\"method\":\"POST\",\"path\":\"/health\"},{\"method\":\"GET\",\"path\":\"/health\"},{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"POST\",\"path\":\"/items\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"},{\"id\":2,\"name\":\"item-2\"},{\"id\":3,\"name\":\"item-3\"},{\"id\":4,\"name\":\"item-4\"}],\"requests\":[{\"method\":\"POST\",\"path\":\"/items/4\"},{\"method\":\"GET\",\"path\":\"/health\"},{\"method\":\"DELETE\",\"path\":\"/items\"},{\"method\":\"POST\",\"path\":\"/bad\"},{\"method\":\"POST\",\"path\":\"/health\"},{\"method\":\"DELETE\",\"path\":\"/items/6\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/items\"},{\"method\":\"POST\",\"path\":\"/items/2\"},{\"method\":\"GET\",\"path\":\"/health\"},{\"method\":\"POST\",\"path\":\"/bad\"},{\"method\":\"DELETE\",\"path\":\"/bad\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"},{\"id\":2,\"name\":\"item-2\"},{\"id\":3,\"name\":\"item-3\"},{\"id\":4,\"name\":\"item-4\"},{\"id\":5,\"name\":\"item-5\"}],\"requests\":[{\"method\":\"DELETE\",\"path\":\"/bad\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"POST\",\"path\":\"/items/4\"},{\"method\":\"DELETE\",\"path\":\"/bad\"},{\"method\":\"DELETE\",\"path\":\"/bad\"},{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"DELETE\",\"path\":\"/health\"},{\"method\":\"DELETE\",\"path\":\"/bad\"},{\"method\":\"POST\",\"path\":\"/bad\"},{\"method\":\"DELETE\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/bad\"},{\"method\":\"GET\",\"path\":\"/health\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"},{\"id\":2,\"name\":\"item-2\"},{\"id\":3,\"name\":\"item-3\"},{\"id\":4,\"name\":\"item-4\"},{\"id\":5,\"name\":\"item-5\"},{\"id\":6,\"name\":\"item-6\"}],\"requests\":[{\"method\":\"DELETE\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"POST\",\"path\":\"/items/9\"},{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"POST\",\"path\":\"/items/6\"},{\"method\":\"GET\",\"path\":\"/items/4\"},{\"method\":\"POST\",\"path\":\"/items/1\"},{\"method\":\"POST\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"DELETE\",\"path\":\"/bad\"},{\"method\":\"POST\",\"path\":\"/bad\"}]}"
+  },
+  {
+    "payload": "{\"items\":[],\"requests\":[{\"method\":\"POST\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/items/7\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/items/6\"},{\"method\":\"DELETE\",\"path\":\"/health\"},{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/health\"},{\"method\":\"POST\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/health\"},{\"method\":\"DELETE\",\"path\":\"/bad\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"POST\",\"path\":\"/health\"},{\"method\":\"DELETE\",\"path\":\"/health\"}]}"
+  },
+  {
+    "payload": "{\"items\":[{\"id\":1,\"name\":\"item-1\"}],\"requests\":[{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/bad\"},{\"method\":\"DELETE\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/items/3\"},{\"method\":\"GET\",\"path\":\"/health\"},{\"method\":\"POST\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/items/5\"},{\"method\":\"POST\",\"path\":\"/health\"},{\"method\":\"POST\",\"path\":\"/items/8\"},{\"method\":\"GET\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/items\"},{\"method\":\"DELETE\",\"path\":\"/items/9\"},{\"method\":\"POST\",\"path\":\"/items\"},{\"method\":\"GET\",\"path\":\"/bad\"},{\"method\":\"GET\",\"path\":\"/items\"}]}"
+  }
+]

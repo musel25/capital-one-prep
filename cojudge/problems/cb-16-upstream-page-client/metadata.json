@@ -1,0 +1,50 @@
+{
+  "id": "cb-16-upstream-page-client",
+  "title": "16. Review the full path through a paged client",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "04-test-client-boundaries",
+  "examples": [
+    {
+      "input": "{\"pages\": {\"a\": {\"status\": 200, \"items\": [{\"id\": 1, \"value\": \"1\"}], \"next\": \"b\"}, \"b\": {\"status\": 200, \"items\": [{\"id\": 1, \"value\": \"1\"}, {\"id\": 2, \"value\": \"2\"}], \"next\": null}}, \"start\": \"a\", \"max_pages\": 5}",
+      "output": "{\"items\": [{\"id\": 1, \"value\": \"1\"}, {\"id\": 2, \"value\": \"2\"}], \"requests\": [\"a\", \"b\"], \"error\": null}",
+      "explanation": "deduplicate across pages"
+    },
+    {
+      "input": "{\"pages\": {\"a\": {\"status\": 200, \"items\": [{\"id\": 1, \"value\": \"1\"}], \"next\": \"a\"}}, \"start\": \"a\", \"max_pages\": 5}",
+      "output": "{\"items\": [{\"id\": 1, \"value\": \"1\"}], \"requests\": [\"a\"], \"error\": \"cycle\"}",
+      "explanation": "stop before fetching a repeated cursor"
+    },
+    {
+      "input": "{\"pages\": {\"a\": {\"status\": 200, \"items\": [{\"id\": 1, \"value\": \"1\"}], \"next\": \"b\"}, \"b\": {\"status\": 503}}, \"start\": \"a\", \"max_pages\": 5}",
+      "output": "{\"items\": [{\"id\": 1, \"value\": \"1\"}], \"requests\": [\"a\", \"b\"], \"error\": \"upstream\"}",
+      "explanation": "preserve earlier data on failure"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\ndef solve(data):\n    cursor = data[\"start\"]\n    seen_cursors = set()\n    seen_ids = set()\n    requests = []\n    items = []\n    error = None\n    while cursor is not None:\n        if cursor in seen_cursors:\n            error = \"cycle\"\n            break\n        if len(requests) >= data[\"max_pages\"]:\n            error = \"limit\"\n            break\n        seen_cursors.add(cursor)\n        requests.append(cursor)\n        page = data[\"pages\"].get(cursor)\n        if page is None:\n            error = \"missing\"\n            break\n        if page[\"status\"] != 200:\n            error = \"upstream\"\n            break\n        for item in page[\"items\"]:\n            if item[\"id\"] not in seen_ids:\n                seen_ids.add(item[\"id\"])\n                items.append(dict(item))\n        cursor = page[\"next\"] if page[\"items\"] else None\n    return {\"items\": items, \"requests\": requests, \"error\": error}\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"max_pages\":5,\"pages\":{\"a\":{\"items\":[{\"id\":1,\"value\":\"1\"}],\"next\":\"b\",\"status\":200},\"b\":{\"items\":[{\"id\":1,\"value\":\"1\"},{\"id\":2,\"value\":\"2\"}],\"next\":null,\"status\":200}},\"start\":\"a\"}"
+    },
+    {
+      "payload": "{\"max_pages\":5,\"pages\":{\"a\":{\"items\":[{\"id\":1,\"value\":\"1\"}],\"next\":\"a\",\"status\":200}},\"start\":\"a\"}"
+    },
+    {
+      "payload": "{\"max_pages\":5,\"pages\":{\"a\":{\"items\":[{\"id\":1,\"value\":\"1\"}],\"next\":\"b\",\"status\":200},\"b\":{\"status\":503}},\"start\":\"a\"}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Use separate sets for visited cursors and accepted item ids.",
+    "Check cycle before limit, then record an attempted fetch before looking up its fixture."
+  ]
+}

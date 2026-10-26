@@ -1,0 +1,50 @@
+{
+  "id": "cb-11-put-patch-fields",
+  "title": "11. Preserve field presence in a partial update",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "03-trace-api-contracts",
+  "examples": [
+    {
+      "input": "{\"initial\": {\"name\": \"Ada\", \"email\": \"a@x\"}, \"requests\": [{\"method\": \"PATCH\", \"body\": {\"name\": \"Bo\"}}]}",
+      "output": "{\"responses\": [{\"status\": 200, \"body\": {\"name\": \"Bo\", \"email\": \"a@x\"}}], \"state\": {\"name\": \"Bo\", \"email\": \"a@x\"}}",
+      "explanation": "PATCH keeps omitted email"
+    },
+    {
+      "input": "{\"initial\": {\"name\": \"Ada\", \"email\": \"a@x\"}, \"requests\": [{\"method\": \"PUT\", \"body\": {\"name\": \"Bo\"}}]}",
+      "output": "{\"responses\": [{\"status\": 200, \"body\": {\"name\": \"Bo\", \"email\": null}}], \"state\": {\"name\": \"Bo\", \"email\": null}}",
+      "explanation": "PUT resets omitted email"
+    },
+    {
+      "input": "{\"initial\": {\"name\": \"Ada\", \"email\": \"a@x\"}, \"requests\": [{\"method\": \"PATCH\", \"body\": {\"email\": null}}]}",
+      "output": "{\"responses\": [{\"status\": 200, \"body\": {\"name\": \"Ada\", \"email\": null}}], \"state\": {\"name\": \"Ada\", \"email\": null}}",
+      "explanation": "explicit null clears email"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\ndef solve(data):\n    state = dict(data[\"initial\"])\n    out = []\n    for request in data[\"requests\"]:\n        body = request[\"body\"]\n        valid = isinstance(body, dict)\n        if valid:\n            valid = not (set(body) - {\"name\", \"email\"})\n            valid = valid and (request[\"method\"] != \"PUT\" or \"name\" in body)\n            valid = valid and (\"name\" not in body or (isinstance(body[\"name\"], str) and 1 <= len(body[\"name\"]) <= 20))\n            valid = valid and (\"email\" not in body or body[\"email\"] is None or (isinstance(body[\"email\"], str) and len(body[\"email\"]) <= 30))\n        if not valid:\n            out.append({\"status\": 422, \"body\": {\"error\": \"invalid\"}})\n            continue\n        if request[\"method\"] == \"PUT\":\n            state = {\"name\": body[\"name\"], \"email\": body.get(\"email\")}\n        else:\n            for key in (\"name\", \"email\"):\n                if key in body and body[key] is not None:\n                    state[key] = body[key]\n        out.append({\"status\": 200, \"body\": dict(state)})\n    return {\"responses\": out, \"state\": state}\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"name\":\"Bo\"},\"method\":\"PATCH\"}]}"
+    },
+    {
+      "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"name\":\"Bo\"},\"method\":\"PUT\"}]}"
+    },
+    {
+      "payload": "{\"initial\":{\"email\":\"a@x\",\"name\":\"Ada\"},\"requests\":[{\"body\":{\"email\":null},\"method\":\"PATCH\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Membership tests distinguish absent fields from null values.",
+    "Build or validate a candidate state before committing it."
+  ]
+}

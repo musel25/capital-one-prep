@@ -1,0 +1,614 @@
+[
+  {
+    "input": {
+      "actions": [
+        "authorize",
+        "capture",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "complete valid path"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "authorize",
+        "authorize",
+        "capture"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "state": "CAPTURED"
+    },
+    "label": "invalid order and repeated action"
+  },
+  {
+    "input": {
+      "actions": []
+    },
+    "expected": {
+      "accepted": [],
+      "state": "NEW"
+    },
+    "label": "no events"
+  },
+  {
+    "input": {
+      "actions": [
+        "authorize"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "state": "AUTHORIZED"
+    },
+    "label": "first transition"
+  },
+  {
+    "input": {
+      "actions": [
+        "cancel"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "state": "CANCELLED"
+    },
+    "label": "cancel new order"
+  },
+  {
+    "input": {
+      "actions": [
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false
+      ],
+      "state": "NEW"
+    },
+    "label": "cannot refund new order"
+  },
+  {
+    "input": {
+      "actions": [
+        "authorize",
+        "cancel"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true
+      ],
+      "state": "CANCELLED"
+    },
+    "label": "cancel authorized order"
+  },
+  {
+    "input": {
+      "actions": [
+        "authorize",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false
+      ],
+      "state": "AUTHORIZED"
+    },
+    "label": "capture must precede refund"
+  },
+  {
+    "input": {
+      "actions": [
+        "authorize",
+        "capture",
+        "cancel"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        false
+      ],
+      "state": "CAPTURED"
+    },
+    "label": "captured order cannot cancel"
+  },
+  {
+    "input": {
+      "actions": [
+        "cancel",
+        "authorize",
+        "capture",
+        "cancel",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "state": "CANCELLED"
+    },
+    "label": "cancelled is terminal"
+  },
+  {
+    "input": {
+      "actions": [
+        "authorize",
+        "capture",
+        "refund",
+        "refund",
+        "authorize"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "refunded is terminal"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "capture",
+        "refund",
+        "cancel"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "state": "CANCELLED"
+    },
+    "label": "invalid events preserve new state"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "authorize",
+        "capture",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "capture",
+        "authorize",
+        "refund",
+        "capture",
+        "cancel",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "capture",
+        "capture",
+        "authorize",
+        "refund",
+        "refund",
+        "capture",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "authorize",
+        "capture",
+        "cancel",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "authorize",
+        "refund",
+        "capture",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        true,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "authorize",
+        "refund",
+        "refund",
+        "capture",
+        "cancel",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "authorize",
+        "capture",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "authorize",
+        "refund",
+        "capture",
+        "cancel",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "authorize",
+        "refund",
+        "refund",
+        "capture",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "authorize",
+        "capture",
+        "cancel",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "authorize",
+        "refund",
+        "capture",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        true,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "actions": [
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "capture",
+        "authorize",
+        "refund",
+        "refund",
+        "capture",
+        "cancel",
+        "refund"
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        true
+      ],
+      "state": "REFUNDED"
+    },
+    "label": "additional-12"
+  }
+]

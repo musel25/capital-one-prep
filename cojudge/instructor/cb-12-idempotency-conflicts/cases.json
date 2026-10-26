@@ -1,0 +1,3435 @@
+[
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        },
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": true
+        }
+      ],
+      "transfers": [
+        {
+          "id": 1,
+          "to": "a",
+          "amount": 10
+        }
+      ]
+    },
+    "label": "same key and body replay one transfer"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 11
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        },
+        {
+          "status": 409,
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false
+        }
+      ],
+      "transfers": [
+        {
+          "id": 1,
+          "to": "a",
+          "amount": 10
+        }
+      ]
+    },
+    "label": "same key with changed amount conflicts"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        },
+        {
+          "key": "j",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        },
+        {
+          "status": 201,
+          "body": {
+            "id": 2,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        }
+      ],
+      "transfers": [
+        {
+          "id": 1,
+          "to": "a",
+          "amount": 10
+        },
+        {
+          "id": 2,
+          "to": "a",
+          "amount": 10
+        }
+      ]
+    },
+    "label": "different keys permit same body"
+  },
+  {
+    "input": {
+      "requests": []
+    },
+    "expected": {
+      "responses": [],
+      "transfers": []
+    },
+    "label": "empty batch"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "one",
+          "body": {
+            "to": "a",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 1
+          },
+          "replayed": false
+        }
+      ],
+      "transfers": [
+        {
+          "id": 1,
+          "to": "a",
+          "amount": 1
+        }
+      ]
+    },
+    "label": "minimum amount"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "one",
+          "body": {
+            "to": "a",
+            "amount": 1000000
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 1000000
+          },
+          "replayed": false
+        }
+      ],
+      "transfers": [
+        {
+          "id": 1,
+          "to": "a",
+          "amount": 1000000
+        }
+      ]
+    },
+    "label": "maximum amount"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k",
+          "body": {
+            "to": "b",
+            "amount": 10
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        },
+        {
+          "status": 409,
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false
+        }
+      ],
+      "transfers": [
+        {
+          "id": 1,
+          "to": "a",
+          "amount": 10
+        }
+      ]
+    },
+    "label": "recipient conflict"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k",
+          "body": {
+            "to": "b",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        },
+        {
+          "status": 409,
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false
+        },
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": true
+        }
+      ],
+      "transfers": [
+        {
+          "id": 1,
+          "to": "a",
+          "amount": 10
+        }
+      ]
+    },
+    "label": "conflict does not replace cache"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 11
+          }
+        },
+        {
+          "key": "j",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        },
+        {
+          "status": 409,
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false
+        },
+        {
+          "status": 201,
+          "body": {
+            "id": 2,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        }
+      ],
+      "transfers": [
+        {
+          "id": 1,
+          "to": "a",
+          "amount": 10
+        },
+        {
+          "id": 2,
+          "to": "a",
+          "amount": 10
+        }
+      ]
+    },
+    "label": "conflict does not consume id"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        },
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": true
+        },
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": true
+        },
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": true
+        }
+      ],
+      "transfers": [
+        {
+          "id": 1,
+          "to": "a",
+          "amount": 10
+        }
+      ]
+    },
+    "label": "many retries"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "K",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        },
+        {
+          "status": 201,
+          "body": {
+            "id": 2,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        }
+      ],
+      "transfers": [
+        {
+          "id": 1,
+          "to": "a",
+          "amount": 10
+        },
+        {
+          "id": 2,
+          "to": "a",
+          "amount": 10
+        }
+      ]
+    },
+    "label": "keys are case sensitive"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "a",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        },
+        {
+          "key": "b",
+          "body": {
+            "to": "b",
+            "amount": 20
+          }
+        },
+        {
+          "key": "a",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        },
+        {
+          "status": 201,
+          "body": {
+            "id": 2,
+            "to": "b",
+            "amount": 20
+          },
+          "replayed": false
+        },
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": true
+        }
+      ],
+      "transfers": [
+        {
+          "id": 1,
+          "to": "a",
+          "amount": 10
+        },
+        {
+          "id": 2,
+          "to": "b",
+          "amount": 20
+        }
+      ]
+    },
+    "label": "nonadjacent replay"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "x",
+          "body": {
+            "to": "a",
+            "amount": 10
+          }
+        },
+        {
+          "key": "x",
+          "body": {
+            "amount": 10,
+            "to": "a"
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": false
+        },
+        {
+          "status": 201,
+          "body": {
+            "id": 1,
+            "to": "a",
+            "amount": 10
+          },
+          "replayed": true
+        }
+      ],
+      "transfers": [
+        {
+          "id": 1,
+          "to": "a",
+          "amount": 10
+        }
+      ]
+    },
+    "label": "object field order does not matter"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 1,
+            "id": 2,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient0"
+        },
+        {
+          "amount": 1,
+          "id": 2,
+          "to": "recipient1"
+        }
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 2
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient0",
+            "amount": 3
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 2,
+            "id": 2,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 3,
+            "id": 3,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient1"
+        },
+        {
+          "amount": 2,
+          "id": 2,
+          "to": "recipient2"
+        },
+        {
+          "amount": 3,
+          "id": 3,
+          "to": "recipient0"
+        }
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 3
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient1",
+            "amount": 5
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient2",
+            "amount": 7
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 3,
+            "id": 2,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 5,
+            "id": 3,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 7,
+            "id": 4,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient2"
+        },
+        {
+          "amount": 3,
+          "id": 2,
+          "to": "recipient0"
+        },
+        {
+          "amount": 5,
+          "id": 3,
+          "to": "recipient1"
+        },
+        {
+          "amount": 7,
+          "id": 4,
+          "to": "recipient2"
+        }
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 4
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient2",
+            "amount": 7
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient0",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 13
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 4,
+            "id": 2,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 7,
+            "id": 3,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 10,
+            "id": 4,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient0"
+        },
+        {
+          "amount": 4,
+          "id": 2,
+          "to": "recipient1"
+        },
+        {
+          "amount": 7,
+          "id": 3,
+          "to": "recipient2"
+        },
+        {
+          "amount": 10,
+          "id": 4,
+          "to": "recipient0"
+        }
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 5
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient0",
+            "amount": 9
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient1",
+            "amount": 13
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 17
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 4
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 5,
+            "id": 2,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 9,
+            "id": 3,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 13,
+            "id": 4,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient1"
+        },
+        {
+          "amount": 5,
+          "id": 2,
+          "to": "recipient2"
+        },
+        {
+          "amount": 9,
+          "id": 3,
+          "to": "recipient0"
+        },
+        {
+          "amount": 13,
+          "id": 4,
+          "to": "recipient1"
+        }
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 6
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient1",
+            "amount": 11
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient2",
+            "amount": 16
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 4
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 9
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient2",
+            "amount": 14
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 6,
+            "id": 2,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 11,
+            "id": 3,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 16,
+            "id": 4,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient2"
+        },
+        {
+          "amount": 6,
+          "id": 2,
+          "to": "recipient0"
+        },
+        {
+          "amount": 11,
+          "id": 3,
+          "to": "recipient1"
+        },
+        {
+          "amount": 16,
+          "id": 4,
+          "to": "recipient2"
+        }
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 7
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient2",
+            "amount": 13
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient0",
+            "amount": 2
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 8
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 14
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient0",
+            "amount": 3
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient1",
+            "amount": 9
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 7,
+            "id": 2,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 13,
+            "id": 3,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 2,
+            "id": 4,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient0"
+        },
+        {
+          "amount": 7,
+          "id": 2,
+          "to": "recipient1"
+        },
+        {
+          "amount": 13,
+          "id": 3,
+          "to": "recipient2"
+        },
+        {
+          "amount": 2,
+          "id": 4,
+          "to": "recipient0"
+        }
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 8
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient0",
+            "amount": 15
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient1",
+            "amount": 5
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 12
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 2
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient1",
+            "amount": 9
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient2",
+            "amount": 16
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 6
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 8,
+            "id": 2,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 15,
+            "id": 3,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 5,
+            "id": 4,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient1"
+        },
+        {
+          "amount": 8,
+          "id": 2,
+          "to": "recipient2"
+        },
+        {
+          "amount": 15,
+          "id": 3,
+          "to": "recipient0"
+        },
+        {
+          "amount": 5,
+          "id": 4,
+          "to": "recipient1"
+        }
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 9
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient1",
+            "amount": 17
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient2",
+            "amount": 8
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 16
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 7
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient2",
+            "amount": 15
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient0",
+            "amount": 6
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 14
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 5
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 9,
+            "id": 2,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 17,
+            "id": 3,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 8,
+            "id": 4,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient2"
+        },
+        {
+          "amount": 9,
+          "id": 2,
+          "to": "recipient0"
+        },
+        {
+          "amount": 17,
+          "id": 3,
+          "to": "recipient1"
+        },
+        {
+          "amount": 8,
+          "id": 4,
+          "to": "recipient2"
+        }
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient2",
+            "amount": 2
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient0",
+            "amount": 11
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 3
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 12
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient0",
+            "amount": 4
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient1",
+            "amount": 13
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 5
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 14
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient1",
+            "amount": 6
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 10,
+            "id": 2,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 2,
+            "id": 3,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 11,
+            "id": 4,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient0"
+        },
+        {
+          "amount": 10,
+          "id": 2,
+          "to": "recipient1"
+        },
+        {
+          "amount": 2,
+          "id": 3,
+          "to": "recipient2"
+        },
+        {
+          "amount": 11,
+          "id": 4,
+          "to": "recipient0"
+        }
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 11
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient0",
+            "amount": 4
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient1",
+            "amount": 14
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 7
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 17
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient1",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient2",
+            "amount": 3
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 13
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 6
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient2",
+            "amount": 16
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient0",
+            "amount": 9
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 11,
+            "id": 2,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 4,
+            "id": 3,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 14,
+            "id": 4,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient1"
+        },
+        {
+          "amount": 11,
+          "id": 2,
+          "to": "recipient2"
+        },
+        {
+          "amount": 4,
+          "id": 3,
+          "to": "recipient0"
+        },
+        {
+          "amount": 14,
+          "id": 4,
+          "to": "recipient1"
+        }
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 12
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient1",
+            "amount": 6
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient2",
+            "amount": 17
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 11
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 5
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient2",
+            "amount": 16
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient0",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 4
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 15
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient0",
+            "amount": 9
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient1",
+            "amount": 3
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 14
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 12,
+            "id": 2,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 6,
+            "id": 3,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 17,
+            "id": 4,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient2"
+        },
+        {
+          "amount": 12,
+          "id": 2,
+          "to": "recipient0"
+        },
+        {
+          "amount": 6,
+          "id": 3,
+          "to": "recipient1"
+        },
+        {
+          "amount": 17,
+          "id": 4,
+          "to": "recipient2"
+        }
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 13
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient2",
+            "amount": 8
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient0",
+            "amount": 3
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 15
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient0",
+            "amount": 5
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient1",
+            "amount": 17
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 12
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 7
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient1",
+            "amount": 2
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient2",
+            "amount": 14
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 9
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 4
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 13,
+            "id": 2,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 8,
+            "id": 3,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 3,
+            "id": 4,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient0"
+        },
+        {
+          "amount": 13,
+          "id": 2,
+          "to": "recipient1"
+        },
+        {
+          "amount": 8,
+          "id": 3,
+          "to": "recipient2"
+        },
+        {
+          "amount": 3,
+          "id": 4,
+          "to": "recipient0"
+        }
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 14
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient0",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient1",
+            "amount": 6
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 2
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 15
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient1",
+            "amount": 11
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient2",
+            "amount": 7
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 3
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 16
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient2",
+            "amount": 12
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient0",
+            "amount": 8
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 4
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 17
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient0",
+            "amount": 13
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 14,
+            "id": 2,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 10,
+            "id": 3,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 6,
+            "id": 4,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient1"
+        },
+        {
+          "amount": 14,
+          "id": 2,
+          "to": "recipient2"
+        },
+        {
+          "amount": 10,
+          "id": 3,
+          "to": "recipient0"
+        },
+        {
+          "amount": 6,
+          "id": 4,
+          "to": "recipient1"
+        }
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 15
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient1",
+            "amount": 12
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient2",
+            "amount": 9
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 6
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 3
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient2",
+            "amount": 17
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient0",
+            "amount": 14
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 11
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 8
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient0",
+            "amount": 5
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient1",
+            "amount": 2
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 16
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 13
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient1",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient2",
+            "amount": 7
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 15,
+            "id": 2,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 12,
+            "id": 3,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 9,
+            "id": 4,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient2"
+        },
+        {
+          "amount": 15,
+          "id": 2,
+          "to": "recipient0"
+        },
+        {
+          "amount": 12,
+          "id": 3,
+          "to": "recipient1"
+        },
+        {
+          "amount": 9,
+          "id": 4,
+          "to": "recipient2"
+        }
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "requests": [
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 1
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 16
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient2",
+            "amount": 14
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient0",
+            "amount": 12
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 10
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient2",
+            "amount": 8
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient0",
+            "amount": 6
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient1",
+            "amount": 4
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient2",
+            "amount": 2
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient0",
+            "amount": 17
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient1",
+            "amount": 15
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient2",
+            "amount": 13
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient0",
+            "amount": 11
+          }
+        },
+        {
+          "key": "k1",
+          "body": {
+            "to": "recipient1",
+            "amount": 9
+          }
+        },
+        {
+          "key": "k2",
+          "body": {
+            "to": "recipient2",
+            "amount": 7
+          }
+        },
+        {
+          "key": "k3",
+          "body": {
+            "to": "recipient0",
+            "amount": 5
+          }
+        },
+        {
+          "key": "k0",
+          "body": {
+            "to": "recipient1",
+            "amount": 3
+          }
+        }
+      ]
+    },
+    "expected": {
+      "responses": [
+        {
+          "body": {
+            "amount": 1,
+            "id": 1,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 16,
+            "id": 2,
+            "to": "recipient1"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 14,
+            "id": 3,
+            "to": "recipient2"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "amount": 12,
+            "id": 4,
+            "to": "recipient0"
+          },
+          "replayed": false,
+          "status": 201
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        },
+        {
+          "body": {
+            "error": "key_conflict"
+          },
+          "replayed": false,
+          "status": 409
+        }
+      ],
+      "transfers": [
+        {
+          "amount": 1,
+          "id": 1,
+          "to": "recipient0"
+        },
+        {
+          "amount": 16,
+          "id": 2,
+          "to": "recipient1"
+        },
+        {
+          "amount": 14,
+          "id": 3,
+          "to": "recipient2"
+        },
+        {
+          "amount": 12,
+          "id": 4,
+          "to": "recipient0"
+        }
+      ]
+    },
+    "label": "additional-16"
+  }
+]

@@ -1,0 +1,943 @@
+[
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_1",
+          "amount": 25
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 201,
+        "body": {
+          "account": "acct_1",
+          "amount": 25,
+          "note": null
+        }
+      }
+    ],
+    "label": "valid body gets default null note"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "A",
+          "amount": 0,
+          "note": false,
+          "extra": 1
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 422,
+        "errors": [
+          "account",
+          "amount",
+          "note",
+          "unknown"
+        ]
+      }
+    ],
+    "label": "all field errors have fixed order"
+  },
+  {
+    "input": {
+      "bodies": [
+        null
+      ]
+    },
+    "expected": [
+      {
+        "status": 400,
+        "errors": [
+          "body"
+        ]
+      }
+    ],
+    "label": "JSON null is not an object"
+  },
+  {
+    "input": {
+      "bodies": []
+    },
+    "expected": [],
+    "label": "empty batch"
+  },
+  {
+    "input": {
+      "bodies": [
+        {}
+      ]
+    },
+    "expected": [
+      {
+        "status": 422,
+        "errors": [
+          "account",
+          "amount"
+        ]
+      }
+    ],
+    "label": "required fields absent"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "a",
+          "amount": true
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 422,
+        "errors": [
+          "amount"
+        ]
+      }
+    ],
+    "label": "boolean is not an amount"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "a",
+          "amount": 1.0
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 422,
+        "errors": [
+          "amount"
+        ]
+      }
+    ],
+    "label": "integral float is not an integer token"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "a",
+          "amount": 1.5
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 422,
+        "errors": [
+          "amount"
+        ]
+      }
+    ],
+    "label": "fractional amount is rejected"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "a",
+          "amount": 100.0,
+          "note": "exponent"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 422,
+        "errors": [
+          "amount"
+        ]
+      }
+    ],
+    "label": "exponent-decoded float is rejected"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "a",
+          "amount": 10000
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 201,
+        "body": {
+          "account": "a",
+          "amount": 10000,
+          "note": null
+        }
+      }
+    ],
+    "label": "upper amount boundary"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "a",
+          "amount": 10001
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 422,
+        "errors": [
+          "amount"
+        ]
+      }
+    ],
+    "label": "amount exceeds boundary"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "a",
+          "amount": 1,
+          "note": "xxxxxxxxxxxxxxxxxxxx"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 201,
+        "body": {
+          "account": "a",
+          "amount": 1,
+          "note": "xxxxxxxxxxxxxxxxxxxx"
+        }
+      }
+    ],
+    "label": "note length boundary"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "a",
+          "amount": 1,
+          "note": "xxxxxxxxxxxxxxxxxxxxx"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 422,
+        "errors": [
+          "note"
+        ]
+      }
+    ],
+    "label": "note too long"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "aaaaaaaaaaaa",
+          "amount": 1
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 201,
+        "body": {
+          "account": "aaaaaaaaaaaa",
+          "amount": 1,
+          "note": null
+        }
+      }
+    ],
+    "label": "account length boundary"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "aaaaaaaaaaaaa",
+          "amount": 1
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 422,
+        "errors": [
+          "account"
+        ]
+      }
+    ],
+    "label": "account too long"
+  },
+  {
+    "input": {
+      "bodies": [
+        [],
+        "text",
+        7
+      ]
+    },
+    "expected": [
+      {
+        "status": 400,
+        "errors": [
+          "body"
+        ]
+      },
+      {
+        "status": 400,
+        "errors": [
+          "body"
+        ]
+      },
+      {
+        "status": 400,
+        "errors": [
+          "body"
+        ]
+      }
+    ],
+    "label": "non-object shapes"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "a",
+          "amount": "1"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 422,
+        "errors": [
+          "amount"
+        ]
+      }
+    ],
+    "label": "do not coerce strings"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "a\n",
+          "amount": 1
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 422,
+        "errors": [
+          "account"
+        ]
+      }
+    ],
+    "label": "full string match"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "a",
+          "amount": 1,
+          "note": ""
+        },
+        {
+          "account": "a",
+          "amount": 1,
+          "note": null
+        }
+      ]
+    },
+    "expected": [
+      {
+        "status": 201,
+        "body": {
+          "account": "a",
+          "amount": 1,
+          "note": ""
+        }
+      },
+      {
+        "status": 201,
+        "body": {
+          "account": "a",
+          "amount": 1,
+          "note": null
+        }
+      }
+    ],
+    "label": "empty and null notes remain distinct"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_0",
+          "amount": 1.0,
+          "note": ""
+        },
+        {
+          "account": "bad-0",
+          "amount": 1
+        }
+      ]
+    },
+    "expected": [
+      {
+        "errors": [
+          "amount"
+        ],
+        "status": 422
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_1",
+          "amount": 1.5,
+          "note": "n"
+        },
+        {
+          "account": "bad-1",
+          "amount": 2
+        }
+      ]
+    },
+    "expected": [
+      {
+        "errors": [
+          "amount"
+        ],
+        "status": 422
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_2",
+          "amount": 0,
+          "note": "nn"
+        },
+        {
+          "account": "bad-2",
+          "amount": 3
+        }
+      ]
+    },
+    "expected": [
+      {
+        "errors": [
+          "amount"
+        ],
+        "status": 422
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_3",
+          "amount": false,
+          "note": "nnn"
+        },
+        {
+          "account": "bad-3",
+          "amount": 4
+        }
+      ]
+    },
+    "expected": [
+      {
+        "errors": [
+          "amount"
+        ],
+        "status": 422
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_4",
+          "amount": 1.0,
+          "note": "nnnn"
+        },
+        {
+          "account": "bad-4",
+          "amount": 5
+        }
+      ]
+    },
+    "expected": [
+      {
+        "errors": [
+          "amount"
+        ],
+        "status": 422
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_5",
+          "amount": 1,
+          "note": "nnnnn"
+        },
+        {
+          "account": "bad-5",
+          "amount": 6
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "account": "acct_5",
+          "amount": 1,
+          "note": "nnnnn"
+        },
+        "status": 201
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_6",
+          "amount": 10000,
+          "note": "nnnnnn"
+        },
+        {
+          "account": "bad-6",
+          "amount": 7
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "account": "acct_6",
+          "amount": 10000,
+          "note": "nnnnnn"
+        },
+        "status": 201
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_7",
+          "amount": 1,
+          "note": "nnnnnnn"
+        },
+        {
+          "account": "bad-7",
+          "amount": 8
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "account": "acct_7",
+          "amount": 1,
+          "note": "nnnnnnn"
+        },
+        "status": 201
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_8",
+          "amount": 1.5,
+          "note": "nnnnnnnn"
+        },
+        {
+          "account": "bad-8",
+          "amount": 9
+        }
+      ]
+    },
+    "expected": [
+      {
+        "errors": [
+          "amount"
+        ],
+        "status": 422
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_9",
+          "amount": 9999,
+          "note": "nnnnnnnnn"
+        },
+        {
+          "account": "bad-9",
+          "amount": 10
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "account": "acct_9",
+          "amount": 9999,
+          "note": "nnnnnnnnn"
+        },
+        "status": 201
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_10",
+          "amount": 0,
+          "note": "nnnnnnnnnn"
+        },
+        {
+          "account": "bad-10",
+          "amount": 11
+        }
+      ]
+    },
+    "expected": [
+      {
+        "errors": [
+          "amount"
+        ],
+        "status": 422
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_11",
+          "amount": 10000,
+          "note": "nnnnnnnnnnn"
+        },
+        {
+          "account": "bad-11",
+          "amount": 12
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "account": "acct_11",
+          "amount": 10000,
+          "note": "nnnnnnnnnnn"
+        },
+        "status": 201
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_12",
+          "amount": 1.0,
+          "note": "nnnnnnnnnnnn"
+        },
+        {
+          "account": "bad-12",
+          "amount": 13
+        }
+      ]
+    },
+    "expected": [
+      {
+        "errors": [
+          "amount"
+        ],
+        "status": 422
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_13",
+          "amount": 10001,
+          "note": "nnnnnnnnnnnnn"
+        },
+        {
+          "account": "bad-13",
+          "amount": 14
+        }
+      ]
+    },
+    "expected": [
+      {
+        "errors": [
+          "amount"
+        ],
+        "status": 422
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_14",
+          "amount": 0,
+          "note": "nnnnnnnnnnnnnn"
+        },
+        {
+          "account": "bad-14",
+          "amount": 15
+        }
+      ]
+    },
+    "expected": [
+      {
+        "errors": [
+          "amount"
+        ],
+        "status": 422
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_15",
+          "amount": 0,
+          "note": "nnnnnnnnnnnnnnn"
+        },
+        {
+          "account": "bad-15",
+          "amount": 16
+        }
+      ]
+    },
+    "expected": [
+      {
+        "errors": [
+          "amount"
+        ],
+        "status": 422
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_16",
+          "amount": 9999,
+          "note": "nnnnnnnnnnnnnnnn"
+        },
+        {
+          "account": "bad-16",
+          "amount": 17
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "account": "acct_16",
+          "amount": 9999,
+          "note": "nnnnnnnnnnnnnnnn"
+        },
+        "status": 201
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "bodies": [
+        {
+          "account": "acct_17",
+          "amount": 9999,
+          "note": "nnnnnnnnnnnnnnnnn"
+        },
+        {
+          "account": "bad-17",
+          "amount": 18
+        }
+      ]
+    },
+    "expected": [
+      {
+        "body": {
+          "account": "acct_17",
+          "amount": 9999,
+          "note": "nnnnnnnnnnnnnnnnn"
+        },
+        "status": 201
+      },
+      {
+        "errors": [
+          "account"
+        ],
+        "status": 422
+      }
+    ],
+    "label": "additional-18"
+  }
+]

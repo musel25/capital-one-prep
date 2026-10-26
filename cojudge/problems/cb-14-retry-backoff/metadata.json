@@ -1,0 +1,50 @@
+{
+  "id": "cb-14-retry-backoff",
+  "title": "14. Separate failure classification from retry scheduling",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "04-test-client-boundaries",
+  "examples": [
+    {
+      "input": "{\"outcomes\": [503, 503, 200], \"max_attempts\": 3, \"base\": 2, \"cap\": 3}",
+      "output": "{\"attempts\": 3, \"delays\": [2, 3], \"result\": \"success\"}",
+      "explanation": "backoff is capped"
+    },
+    {
+      "input": "{\"outcomes\": [400, 200], \"max_attempts\": 2, \"base\": 1, \"cap\": 10}",
+      "output": "{\"attempts\": 1, \"delays\": [], \"result\": \"failed\"}",
+      "explanation": "do not retry a client error"
+    },
+    {
+      "input": "{\"outcomes\": [\"timeout\", 504], \"max_attempts\": 2, \"base\": 4, \"cap\": 20}",
+      "output": "{\"attempts\": 2, \"delays\": [4], \"result\": \"exhausted\"}",
+      "explanation": "no delay after final failure"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\ndef solve(data):\n    delays = []\n    for index in range(data[\"max_attempts\"]):\n        outcome = data[\"outcomes\"][index]\n        attempts = index + 1\n        if isinstance(outcome, int) and 200 <= outcome < 300:\n            return {\"attempts\": attempts, \"delays\": delays, \"result\": \"success\"}\n        retryable = outcome == \"timeout\" or (isinstance(outcome, int) and (outcome == 429 or outcome >= 500))\n        if not retryable:\n            return {\"attempts\": attempts, \"delays\": delays, \"result\": \"failed\"}\n        if attempts == data[\"max_attempts\"]:\n            return {\"attempts\": attempts, \"delays\": delays, \"result\": \"exhausted\"}\n        delays.append(min(data[\"cap\"], data[\"base\"] * 2 ** index))\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"base\":2,\"cap\":3,\"max_attempts\":3,\"outcomes\":[503,503,200]}"
+    },
+    {
+      "payload": "{\"base\":1,\"cap\":10,\"max_attempts\":2,\"outcomes\":[400,200]}"
+    },
+    {
+      "payload": "{\"base\":4,\"cap\":20,\"max_attempts\":2,\"outcomes\":[\"timeout\",504]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Return immediately for success and permanent failure.",
+    "The first delay is base, subject to the cap."
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "cb-09-route-contract",
+  "title": "09. Trace route, method, and record dispatch",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "03-trace-api-contracts",
+  "examples": [
+    {
+      "input": "{\"items\": [{\"id\": 2, \"name\": \"book\"}, {\"id\": 1, \"name\": \"pen\"}], \"requests\": [{\"path\": \"/items\", \"method\": \"GET\"}]}",
+      "output": "[{\"status\": 200, \"body\": [{\"id\": 1, \"name\": \"pen\"}, {\"id\": 2, \"name\": \"book\"}]}]",
+      "explanation": "collection is ordered by numeric id"
+    },
+    {
+      "input": "{\"items\": [{\"id\": 1, \"name\": \"pen\"}], \"requests\": [{\"path\": \"/items/1\", \"method\": \"DELETE\"}, {\"path\": \"/items/1\", \"method\": \"GET\"}]}",
+      "output": "[{\"status\": 204, \"body\": null}, {\"status\": 404, \"body\": {\"error\": \"not_found\"}}]",
+      "explanation": "delete then read"
+    },
+    {
+      "input": "{\"items\": [], \"requests\": [{\"path\": \"/items/9\", \"method\": \"POST\"}]}",
+      "output": "[{\"status\": 405, \"body\": {\"error\": \"method_not_allowed\"}, \"allow\": [\"GET\", \"DELETE\"]}]",
+      "explanation": "method check precedes item lookup"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\nimport re\n\ndef solve(data):\n    items = {item[\"id\"]: dict(item) for item in data[\"items\"]}\n    out = []\n    for request in data[\"requests\"]:\n        path, method = request[\"path\"], request[\"method\"]\n        match = re.fullmatch(r\"/items/([1-9][0-9]*)\", path)\n        if path == \"/health\":\n            allowed = [\"GET\"]\n        elif path == \"/items\":\n            allowed = [\"GET\"]\n        elif match:\n            allowed = [\"GET\", \"DELETE\"]\n        else:\n            out.append({\"status\": 404, \"body\": {\"error\": \"not_found\"}})\n            continue\n        if method not in allowed:\n            out.append({\"status\": 405, \"body\": {\"error\": \"method_not_allowed\"}, \"allow\": allowed})\n        elif path == \"/health\":\n            out.append({\"status\": 200, \"body\": {\"status\": \"ok\"}})\n        elif path == \"/items\":\n            out.append({\"status\": 200, \"body\": [dict(items[k]) for k in sorted(items)]})\n        elif int(match[1]) not in items:\n            out.append({\"status\": 404, \"body\": {\"error\": \"not_found\"}})\n        elif method == \"GET\":\n            out.append({\"status\": 200, \"body\": dict(items[int(match[1])])})\n        else:\n            del items[int(match[1])]\n            out.append({\"status\": 404, \"body\": None})\n    return out\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"items\":[{\"id\":2,\"name\":\"book\"},{\"id\":1,\"name\":\"pen\"}],\"requests\":[{\"method\":\"GET\",\"path\":\"/items\"}]}"
+    },
+    {
+      "payload": "{\"items\":[{\"id\":1,\"name\":\"pen\"}],\"requests\":[{\"method\":\"DELETE\",\"path\":\"/items/1\"},{\"method\":\"GET\",\"path\":\"/items/1\"}]}"
+    },
+    {
+      "payload": "{\"items\":[],\"requests\":[{\"method\":\"POST\",\"path\":\"/items/9\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Resolve the route before checking its method.",
+    "Copy each response representation before later mutations."
+  ]
+}

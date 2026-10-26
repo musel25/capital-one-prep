@@ -1,0 +1,50 @@
+{
+  "id": "cb-03-dataclass-list-isolation",
+  "title": "03. Trace state owned by an instance",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-read-data-and-state",
+  "examples": [
+    {
+      "input": "{\"names\": [\"A\", \"B\"], \"actions\": [{\"box\": 0, \"item\": \"pen\"}]}",
+      "output": "[{\"name\": \"A\", \"items\": [\"pen\"]}, {\"name\": \"B\", \"items\": []}]",
+      "explanation": "one box must not change another"
+    },
+    {
+      "input": "{\"names\": [\"A\", \"B\"], \"actions\": [{\"box\": 1, \"item\": \"book\"}, {\"box\": 0, \"item\": \"pen\"}, {\"box\": 1, \"item\": \"paper\"}]}",
+      "output": "[{\"name\": \"A\", \"items\": [\"pen\"]}, {\"name\": \"B\", \"items\": [\"book\", \"paper\"]}]",
+      "explanation": "independent item order"
+    },
+    {
+      "input": "{\"names\": [], \"actions\": []}",
+      "output": "[]",
+      "explanation": "no boxes"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\nfrom dataclasses import dataclass, field\n\n@dataclass\nclass Box:\n    name: str\n    items: list[str] = field(default_factory=lambda items=[]: items)\n\ndef solve(data: dict) -> list[dict]:\n    boxes = [Box(name) for name in data['names']]\n    for action in data['actions']:\n        boxes[action['box']].items.append(action['item'])\n    return [{'name': box.name, 'items': box.items} for box in boxes]\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"actions\":[{\"box\":0,\"item\":\"pen\"}],\"names\":[\"A\",\"B\"]}"
+    },
+    {
+      "payload": "{\"actions\":[{\"box\":1,\"item\":\"book\"},{\"box\":0,\"item\":\"pen\"},{\"box\":1,\"item\":\"paper\"}],\"names\":[\"A\",\"B\"]}"
+    },
+    {
+      "payload": "{\"actions\":[],\"names\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "A default factory runs once per new instance.",
+    "Check whether the factory creates a list or returns an existing list."
+  ]
+}

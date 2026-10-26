@@ -1,0 +1,74 @@
+[
+  {
+    "payload": "{\"default\":10,\"records\":[{},{\"limit\":null},{\"limit\":0},{\"limit\":4}]}"
+  },
+  {
+    "payload": "{\"default\":5,\"records\":[{\"limit\":2},{\"limit\":2}]}"
+  },
+  {
+    "payload": "{\"default\":9,\"records\":[]}"
+  },
+  {
+    "payload": "{\"default\":0,\"records\":[{}]}"
+  },
+  {
+    "payload": "{\"default\":8,\"records\":[{\"limit\":0}]}"
+  },
+  {
+    "payload": "{\"default\":3,\"records\":[{\"limit\":null}]}"
+  },
+  {
+    "payload": "{\"default\":6,\"records\":[{},{}]}"
+  },
+  {
+    "payload": "{\"default\":1,\"records\":[{\"other\":0}]}"
+  },
+  {
+    "payload": "{\"default\":7,\"records\":[{\"limit\":8,\"other\":null}]}"
+  },
+  {
+    "payload": "{\"default\":1000000,\"records\":[{},{\"limit\":1000001}]}"
+  },
+  {
+    "payload": "{\"default\":4,\"records\":[{\"limit\":null},{\"limit\":null},{}]}"
+  },
+  {
+    "payload": "{\"default\":0,\"records\":[{\"limit\":0},{\"limit\":null},{},{\"limit\":1}]}"
+  },
+  {
+    "payload": "{\"default\":20,\"records\":[{\"limit\":0},{},{\"limit\":null},{\"limit\":0},{\"x\":0}]}"
+  },
+  {
+    "payload": "{\"default\":21,\"records\":[{\"limit\":1},{},{\"limit\":null},{\"limit\":0},{\"x\":1}]}"
+  },
+  {
+    "payload": "{\"default\":22,\"records\":[{\"limit\":2},{},{\"limit\":null},{\"limit\":0},{\"x\":2}]}"
+  },
+  {
+    "payload": "{\"default\":23,\"records\":[{\"limit\":3},{},{\"limit\":null},{\"limit\":0},{\"x\":3}]}"
+  },
+  {
+    "payload": "{\"default\":24,\"records\":[{\"limit\":4},{},{\"limit\":null},{\"limit\":0},{\"x\":4}]}"
+  },
+  {
+    "payload": "{\"default\":25,\"records\":[{\"limit\":5},{},{\"limit\":null},{\"limit\":0},{\"x\":5}]}"
+  },
+  {
+    "payload": "{\"default\":26,\"records\":[{\"limit\":6},{},{\"limit\":null},{\"limit\":0},{\"x\":6}]}"
+  },
+  {
+    "payload": "{\"default\":27,\"records\":[{\"limit\":7},{},{\"limit\":null},{\"limit\":0},{\"x\":7}]}"
+  },
+  {
+    "payload": "{\"default\":28,\"records\":[{\"limit\":8},{},{\"limit\":null},{\"limit\":0},{\"x\":8}]}"
+  },
+  {
+    "payload": "{\"default\":29,\"records\":[{\"limit\":9},{},{\"limit\":null},{\"limit\":0},{\"x\":9}]}"
+  },
+  {
+    "payload": "{\"default\":30,\"records\":[{\"limit\":10},{},{\"limit\":null},{\"limit\":0},{\"x\":10}]}"
+  },
+  {
+    "payload": "{\"default\":31,\"records\":[{\"limit\":11},{},{\"limit\":null},{\"limit\":0},{\"x\":11}]}"
+  }
+]

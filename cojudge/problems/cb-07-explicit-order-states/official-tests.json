@@ -1,0 +1,74 @@
+[
+  {
+    "payload": "{\"actions\":[\"authorize\",\"capture\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"authorize\",\"authorize\",\"capture\"]}"
+  },
+  {
+    "payload": "{\"actions\":[]}"
+  },
+  {
+    "payload": "{\"actions\":[\"authorize\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"cancel\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"authorize\",\"cancel\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"authorize\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"authorize\",\"capture\",\"cancel\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"cancel\",\"authorize\",\"capture\",\"cancel\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"authorize\",\"capture\",\"refund\",\"refund\",\"authorize\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"capture\",\"refund\",\"cancel\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"authorize\",\"capture\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"capture\",\"authorize\",\"refund\",\"capture\",\"cancel\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"capture\",\"capture\",\"authorize\",\"refund\",\"refund\",\"capture\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"capture\",\"capture\",\"capture\",\"authorize\",\"capture\",\"cancel\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"authorize\",\"refund\",\"capture\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"authorize\",\"refund\",\"refund\",\"capture\",\"cancel\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"authorize\",\"capture\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"authorize\",\"refund\",\"capture\",\"cancel\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"authorize\",\"refund\",\"refund\",\"capture\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"authorize\",\"capture\",\"cancel\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"authorize\",\"refund\",\"capture\",\"refund\"]}"
+  },
+  {
+    "payload": "{\"actions\":[\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"capture\",\"authorize\",\"refund\",\"refund\",\"capture\",\"cancel\",\"refund\"]}"
+  }
+]

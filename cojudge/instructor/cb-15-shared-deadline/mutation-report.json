@@ -1,0 +1,15 @@
+[
+  {
+    "name": "reject responses exactly at allowance",
+    "detected_by": [
+      2,
+      8,
+      9,
+      12,
+      15,
+      17,
+      21,
+      29
+    ]
+  }
+]

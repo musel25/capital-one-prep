@@ -1,0 +1,50 @@
+{
+  "id": "cb-05-inheritance-fee-policy",
+  "title": "05. Follow an inherited call to an override",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "02-follow-objects-and-control-flow",
+  "examples": [
+    {
+      "input": "{\"kind\": \"standard\", \"balance\": 20, \"fee\": 2, \"threshold\": 10, \"withdrawals\": [10, 8]}",
+      "output": "{\"accepted\": [true, false], \"balance\": 8}",
+      "explanation": "fee is part of the funds check"
+    },
+    {
+      "input": "{\"kind\": \"premium\", \"balance\": 20, \"fee\": 2, \"threshold\": 10, \"withdrawals\": [10, 8]}",
+      "output": "{\"accepted\": [true, true], \"balance\": 0}",
+      "explanation": "premium fee override"
+    },
+    {
+      "input": "{\"kind\": \"premium\", \"balance\": 10, \"fee\": 3, \"threshold\": 10, \"withdrawals\": []}",
+      "output": "{\"accepted\": [], \"balance\": 10}",
+      "explanation": "no withdrawals"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\nclass Account:\n    def __init__(self, balance: int, fee: int):\n        self.balance = balance\n        self.fee = fee\n\n    def withdrawal_fee(self, amount: int) -> int:\n        return self.fee\n\n    def withdraw(self, amount: int) -> bool:\n        total = amount + self.withdrawal_fee(amount)\n        if total > self.balance:\n            return False\n        self.balance -= total\n        return True\n\nclass PremiumAccount(Account):\n    def __init__(self, balance: int, fee: int, threshold: int):\n        super().__init__(balance, fee)\n        self.threshold = threshold\n\n    def withdrawal_fee(self, amount: int) -> int:\n        return 0 if amount > self.threshold else super().withdrawal_fee(amount)\n\ndef solve(data: dict) -> dict:\n    account = (PremiumAccount(data['balance'], data['fee'], data['threshold'])\n               if data['kind'] == 'premium' else Account(data['balance'], data['fee']))\n    accepted = [account.withdraw(amount) for amount in data['withdrawals']]\n    return {'accepted': accepted, 'balance': account.balance}\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"balance\":20,\"fee\":2,\"kind\":\"standard\",\"threshold\":10,\"withdrawals\":[10,8]}"
+    },
+    {
+      "payload": "{\"balance\":20,\"fee\":2,\"kind\":\"premium\",\"threshold\":10,\"withdrawals\":[10,8]}"
+    },
+    {
+      "payload": "{\"balance\":10,\"fee\":3,\"kind\":\"premium\",\"threshold\":10,\"withdrawals\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Let the base withdrawal method call a fee method.",
+    "Initialize base fields with super(), then store the premium threshold."
+  ]
+}

@@ -46,7 +46,7 @@ def json_equal(a, b):
 
 
 def slug(spec):
-    return f"c1-{spec['number']:02d}-{spec['slug']}"
+    return f"{spec.get('prefix', 'c1')}-{spec['number']:02d}-{spec['slug']}"
 
 
 def load_specs(numbers=None):
@@ -73,6 +73,12 @@ def validate_spec(spec):
         raise ValueError(f"Missing fields: {sorted(missing)}")
     if not 1 <= spec["number"] <= 50 or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", spec["slug"]):
         raise ValueError("Invalid problem number or slug")
+    for name in ("prefix", "course_id", "category"):
+        if name in spec and (not isinstance(spec[name], str) or not re.fullmatch(
+                r"[a-z0-9]+(?:-[a-z0-9]+)*", spec[name])):
+            raise ValueError(f"Invalid course metadata: {name}")
+    if "level" in spec and (type(spec["level"]) is not int or spec["level"] < 1):
+        raise ValueError("Invalid course metadata: level")
     if spec["difficulty"] not in {"Easy", "Medium", "Hard"}:
         raise ValueError("Invalid difficulty")
     if len(spec["cases"]) < 12 or len(spec["generated"]) < 12:
@@ -227,7 +233,7 @@ def check_java(spec, work_root):
 def check_review_cases(spec, work_root, run_java=True):
     """Keep independently authored expectations separate from generated cases."""
     path = ROOT / "cojudge/authoring/review-cases.json"
-    cases = json.loads(path.read_text())[str(spec["number"])]
+    cases = json.loads(path.read_text())[str(spec.get("source_number", spec["number"]))]
     solve = python_solver(spec["reference"])
     official_inputs = {encode(c["input"]) for c in all_cases(spec)}
     for case in cases:
@@ -264,7 +270,7 @@ def build_problem(spec, destination):
         "difficulty": spec["difficulty"],
         # CoJudge labels this optional link as LeetCode. These are original tasks.
         "link": "",
-        "category": LEVELS[(spec["number"] - 1) // 10],
+        "category": spec.get("category", LEVELS[(spec["number"] - 1) // 10]),
         "examples": examples, "starterCode": {"python": spec["starter"].rstrip() + ADAPTER},
         "testCases": [{"payload": encode(c["input"])} for c in cases[:3]],
         "functionName": "run", "params": [{"name": "payload", "type": "string"}],
@@ -276,9 +282,9 @@ def build_problem(spec, destination):
     )
     statement = f"""# {metadata['title']}
 
-[Back to the course list](/?course=capital-one-engineering-50)
+[Back to the course list](/?course={spec.get('course_id', 'capital-one-engineering-50')})
 
-**Level {(spec['number'] - 1) // 10 + 1} · {spec['difficulty']} · About {spec['time']} minutes**
+**Level {spec.get('level', (spec['number'] - 1) // 10 + 1)} · {spec['difficulty']} · About {spec['time']} minutes**
 
 **Before this problem:** {spec['prerequisites']}
 

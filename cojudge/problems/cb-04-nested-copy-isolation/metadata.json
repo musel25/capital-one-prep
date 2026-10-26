@@ -1,0 +1,50 @@
+{
+  "id": "cb-04-nested-copy-isolation",
+  "title": "04. Follow ownership through a nested copy",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-read-data-and-state",
+  "examples": [
+    {
+      "input": "{\"template\": {\"limits\": {\"daily\": 1, \"monthly\": 10}, \"tags\": [\"base\"]}, \"changes\": [{\"daily\": 2}, {\"tag\": \"new\"}]}",
+      "output": "{\"template\": {\"limits\": {\"daily\": 1, \"monthly\": 10}, \"tags\": [\"base\"]}, \"copies\": [{\"limits\": {\"daily\": 2, \"monthly\": 10}, \"tags\": [\"base\"]}, {\"limits\": {\"daily\": 1, \"monthly\": 10}, \"tags\": [\"base\", \"new\"]}]}",
+      "explanation": "copies and template stay independent"
+    },
+    {
+      "input": "{\"template\": {\"limits\": {\"daily\": 5, \"monthly\": 50}, \"tags\": []}, \"changes\": [{\"daily\": 0, \"monthly\": 0, \"tag\": \"x\"}]}",
+      "output": "{\"template\": {\"limits\": {\"daily\": 5, \"monthly\": 50}, \"tags\": []}, \"copies\": [{\"limits\": {\"daily\": 0, \"monthly\": 0}, \"tags\": [\"x\"]}]}",
+      "explanation": "one change can update all fields"
+    },
+    {
+      "input": "{\"template\": {\"limits\": {\"daily\": 0, \"monthly\": 0}, \"tags\": []}, \"changes\": []}",
+      "output": "{\"template\": {\"limits\": {\"daily\": 0, \"monthly\": 0}, \"tags\": []}, \"copies\": []}",
+      "explanation": "no requested copies"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\nfrom copy import deepcopy\n\ndef solve(data: dict) -> dict:\n    template = data['template']\n    copies = []\n    for change in data['changes']:\n        config = template.copy()\n        for key in ('daily', 'monthly'):\n            if key in change:\n                config['limits'][key] = change[key]\n        if 'tag' in change:\n            config['tags'].append(change['tag'])\n        copies.append(config)\n    return {'template': template, 'copies': copies}\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"changes\":[{\"daily\":2},{\"tag\":\"new\"}],\"template\":{\"limits\":{\"daily\":1,\"monthly\":10},\"tags\":[\"base\"]}}"
+    },
+    {
+      "payload": "{\"changes\":[{\"daily\":0,\"monthly\":0,\"tag\":\"x\"}],\"template\":{\"limits\":{\"daily\":5,\"monthly\":50},\"tags\":[]}}"
+    },
+    {
+      "payload": "{\"changes\":[],\"template\":{\"limits\":{\"daily\":0,\"monthly\":0},\"tags\":[]}}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Inspect the objects inside limits and tags.",
+    "Each change starts from the original template."
+  ]
+}

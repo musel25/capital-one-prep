@@ -1,0 +1,50 @@
+{
+  "id": "cb-12-idempotency-conflicts",
+  "title": "12. Trace request identity through a replay cache",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "03-trace-api-contracts",
+  "examples": [
+    {
+      "input": "{\"requests\": [{\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 10}}, {\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 10}}]}",
+      "output": "{\"responses\": [{\"status\": 201, \"body\": {\"id\": 1, \"to\": \"a\", \"amount\": 10}, \"replayed\": false}, {\"status\": 201, \"body\": {\"id\": 1, \"to\": \"a\", \"amount\": 10}, \"replayed\": true}], \"transfers\": [{\"id\": 1, \"to\": \"a\", \"amount\": 10}]}",
+      "explanation": "same key and body replay one transfer"
+    },
+    {
+      "input": "{\"requests\": [{\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 10}}, {\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 11}}]}",
+      "output": "{\"responses\": [{\"status\": 201, \"body\": {\"id\": 1, \"to\": \"a\", \"amount\": 10}, \"replayed\": false}, {\"status\": 409, \"body\": {\"error\": \"key_conflict\"}, \"replayed\": false}], \"transfers\": [{\"id\": 1, \"to\": \"a\", \"amount\": 10}]}",
+      "explanation": "same key with changed amount conflicts"
+    },
+    {
+      "input": "{\"requests\": [{\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 10}}, {\"key\": \"j\", \"body\": {\"to\": \"a\", \"amount\": 10}}]}",
+      "output": "{\"responses\": [{\"status\": 201, \"body\": {\"id\": 1, \"to\": \"a\", \"amount\": 10}, \"replayed\": false}, {\"status\": 201, \"body\": {\"id\": 2, \"to\": \"a\", \"amount\": 10}, \"replayed\": false}], \"transfers\": [{\"id\": 1, \"to\": \"a\", \"amount\": 10}, {\"id\": 2, \"to\": \"a\", \"amount\": 10}]}",
+      "explanation": "different keys permit same body"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\ndef solve(data):\n    cache = {}\n    transfers = []\n    out = []\n    for request in data[\"requests\"]:\n        key, body = request[\"key\"], request[\"body\"]\n        if key in cache:\n            saved_body, result = cache[key]\n            if body['to'] != saved_body['to']:\n                out.append({\"status\": 409, \"body\": {\"error\": \"key_conflict\"}, \"replayed\": False})\n            else:\n                out.append({\"status\": 201, \"body\": dict(result), \"replayed\": True})\n        else:\n            result = {\"id\": len(transfers) + 1, \"to\": body[\"to\"], \"amount\": body[\"amount\"]}\n            transfers.append(dict(result))\n            cache[key] = (dict(body), dict(result))\n            out.append({\"status\": 201, \"body\": dict(result), \"replayed\": False})\n    return {\"responses\": out, \"transfers\": transfers}\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"}]}"
+    },
+    {
+      "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":11,\"to\":\"a\"},\"key\":\"k\"}]}"
+    },
+    {
+      "payload": "{\"requests\":[{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"k\"},{\"body\":{\"amount\":10,\"to\":\"a\"},\"key\":\"j\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Store the original body together with the successful result.",
+    "Allocate an id only after deciding the key is new."
+  ]
+}

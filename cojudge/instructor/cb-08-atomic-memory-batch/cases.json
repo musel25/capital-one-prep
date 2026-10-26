@@ -1,0 +1,901 @@
+[
+  {
+    "input": {
+      "accounts": {
+        "A": 10,
+        "B": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 6
+          },
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 5
+          }
+        ]
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false
+      ],
+      "balances": {
+        "A": 10,
+        "B": 0
+      }
+    },
+    "label": "late failure rolls back earlier transfer"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 10,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 7
+          },
+          {
+            "from": "B",
+            "to": "C",
+            "cents": 7
+          }
+        ]
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balances": {
+        "A": 3,
+        "B": 0,
+        "C": 7
+      }
+    },
+    "label": "earlier transfer funds later transfer"
+  },
+  {
+    "input": {
+      "accounts": {},
+      "batches": []
+    },
+    "expected": {
+      "accepted": [],
+      "balances": {}
+    },
+    "label": "no accounts or batches"
+  },
+  {
+    "input": {
+      "accounts": {},
+      "batches": [
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balances": {}
+    },
+    "label": "empty batch succeeds"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 5,
+        "B": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 5
+          }
+        ]
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 5
+      }
+    },
+    "label": "exact available funds"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 0,
+        "B": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 1
+          }
+        ]
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0
+      }
+    },
+    "label": "failure on first transfer"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 0,
+        "B": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 0
+          }
+        ]
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0
+      }
+    },
+    "label": "zero transfer"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 5
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "A",
+            "cents": 5
+          }
+        ]
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balances": {
+        "A": 5
+      }
+    },
+    "label": "funded self-transfer"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 5
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "A",
+            "cents": 6
+          }
+        ]
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false
+      ],
+      "balances": {
+        "A": 5
+      }
+    },
+    "label": "self-transfer still checks funds"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 10,
+        "B": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 6
+          },
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 5
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 10
+          }
+        ]
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 10
+      }
+    },
+    "label": "next batch sees restored funds"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 5,
+        "B": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 2
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 4
+          }
+        ],
+        [
+          {
+            "from": "B",
+            "to": "A",
+            "cents": 1
+          }
+        ]
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        false,
+        true
+      ],
+      "balances": {
+        "A": 4,
+        "B": 1
+      }
+    },
+    "label": "successful batches survive a rejected batch"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 1000000000000,
+        "B": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 1000000000000
+          },
+          {
+            "from": "B",
+            "to": "A",
+            "cents": 1000000000000
+          }
+        ]
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true
+      ],
+      "balances": {
+        "A": 1000000000000,
+        "B": 0
+      }
+    },
+    "label": "large round trip"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 1,
+        "B": 2
+      },
+      "batches": [
+        [],
+        [],
+        [
+          {
+            "from": "B",
+            "to": "A",
+            "cents": 2
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 3,
+        "B": 0
+      }
+    },
+    "label": "empty batches around real work"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 10,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 4
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 7
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 10
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0,
+        "C": 10
+      }
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 11,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 5
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 7
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 11
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0,
+        "C": 11
+      }
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 12,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 6
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 7
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 12
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0,
+        "C": 12
+      }
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 13,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 7
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 7
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 13
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0,
+        "C": 13
+      }
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 14,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 8
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 7
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 14
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0,
+        "C": 14
+      }
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 15,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 9
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 7
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 15
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0,
+        "C": 15
+      }
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 16,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 10
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 7
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 16
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0,
+        "C": 16
+      }
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 17,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 11
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 7
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 17
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0,
+        "C": 17
+      }
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 18,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 12
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 7
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 18
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0,
+        "C": 18
+      }
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 19,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 13
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 7
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 19
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0,
+        "C": 19
+      }
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 20,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 14
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 7
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 20
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0,
+        "C": 20
+      }
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "accounts": {
+        "A": 21,
+        "B": 0,
+        "C": 0
+      },
+      "batches": [
+        [
+          {
+            "from": "A",
+            "to": "B",
+            "cents": 15
+          },
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 7
+          }
+        ],
+        [
+          {
+            "from": "A",
+            "to": "C",
+            "cents": 21
+          }
+        ],
+        []
+      ]
+    },
+    "expected": {
+      "accepted": [
+        false,
+        true,
+        true
+      ],
+      "balances": {
+        "A": 0,
+        "B": 0,
+        "C": 21
+      }
+    },
+    "label": "additional-12"
+  }
+]

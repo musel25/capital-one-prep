@@ -1,0 +1,12 @@
+[
+  {
+    "name": "include cursor row again",
+    "detected_by": [
+      1,
+      2,
+      6,
+      13,
+      22
+    ]
+  }
+]

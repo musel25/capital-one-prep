@@ -1,0 +1,1966 @@
+[
+  {
+    "input": {
+      "pages": {
+        "a": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            }
+          ],
+          "next": "b"
+        },
+        "b": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 2,
+              "value": "2"
+            }
+          ],
+          "next": null
+        }
+      },
+      "start": "a",
+      "max_pages": 5
+    },
+    "expected": {
+      "items": [
+        {
+          "id": 1,
+          "value": "1"
+        },
+        {
+          "id": 2,
+          "value": "2"
+        }
+      ],
+      "requests": [
+        "a",
+        "b"
+      ],
+      "error": null
+    },
+    "label": "deduplicate across pages"
+  },
+  {
+    "input": {
+      "pages": {
+        "a": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            }
+          ],
+          "next": "a"
+        }
+      },
+      "start": "a",
+      "max_pages": 5
+    },
+    "expected": {
+      "items": [
+        {
+          "id": 1,
+          "value": "1"
+        }
+      ],
+      "requests": [
+        "a"
+      ],
+      "error": "cycle"
+    },
+    "label": "stop before fetching a repeated cursor"
+  },
+  {
+    "input": {
+      "pages": {
+        "a": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            }
+          ],
+          "next": "b"
+        },
+        "b": {
+          "status": 503
+        }
+      },
+      "start": "a",
+      "max_pages": 5
+    },
+    "expected": {
+      "items": [
+        {
+          "id": 1,
+          "value": "1"
+        }
+      ],
+      "requests": [
+        "a",
+        "b"
+      ],
+      "error": "upstream"
+    },
+    "label": "preserve earlier data on failure"
+  },
+  {
+    "input": {
+      "pages": {
+        "a": {
+          "status": 200,
+          "items": [],
+          "next": null
+        }
+      },
+      "start": "a",
+      "max_pages": 1
+    },
+    "expected": {
+      "items": [],
+      "requests": [
+        "a"
+      ],
+      "error": null
+    },
+    "label": "empty final page"
+  },
+  {
+    "input": {
+      "pages": {},
+      "start": "a",
+      "max_pages": 2
+    },
+    "expected": {
+      "items": [],
+      "requests": [
+        "a"
+      ],
+      "error": "missing"
+    },
+    "label": "missing initial fixture"
+  },
+  {
+    "input": {
+      "pages": {
+        "a": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            }
+          ],
+          "next": "b"
+        }
+      },
+      "start": "a",
+      "max_pages": 2
+    },
+    "expected": {
+      "items": [
+        {
+          "id": 1,
+          "value": "1"
+        }
+      ],
+      "requests": [
+        "a",
+        "b"
+      ],
+      "error": "missing"
+    },
+    "label": "missing later page"
+  },
+  {
+    "input": {
+      "pages": {
+        "a": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            }
+          ],
+          "next": "b"
+        },
+        "b": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            }
+          ],
+          "next": null
+        }
+      },
+      "start": "a",
+      "max_pages": 1
+    },
+    "expected": {
+      "items": [
+        {
+          "id": 1,
+          "value": "1"
+        }
+      ],
+      "requests": [
+        "a"
+      ],
+      "error": "limit"
+    },
+    "label": "limit prevents next request"
+  },
+  {
+    "input": {
+      "pages": {
+        "a": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            }
+          ],
+          "next": null
+        }
+      },
+      "start": "a",
+      "max_pages": 1
+    },
+    "expected": {
+      "items": [
+        {
+          "id": 1,
+          "value": "1"
+        }
+      ],
+      "requests": [
+        "a"
+      ],
+      "error": null
+    },
+    "label": "final page exactly at limit succeeds"
+  },
+  {
+    "input": {
+      "pages": {
+        "a": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 1,
+              "value": "changed"
+            },
+            {
+              "id": 2,
+              "value": "2"
+            }
+          ],
+          "next": null
+        }
+      },
+      "start": "a",
+      "max_pages": 2
+    },
+    "expected": {
+      "items": [
+        {
+          "id": 1,
+          "value": "1"
+        },
+        {
+          "id": 2,
+          "value": "2"
+        }
+      ],
+      "requests": [
+        "a"
+      ],
+      "error": null
+    },
+    "label": "first occurrence wins within page"
+  },
+  {
+    "input": {
+      "pages": {
+        "a": {
+          "status": 200,
+          "items": [],
+          "next": "b"
+        },
+        "b": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            }
+          ],
+          "next": null
+        }
+      },
+      "start": "a",
+      "max_pages": 2
+    },
+    "expected": {
+      "items": [
+        {
+          "id": 2,
+          "value": "2"
+        }
+      ],
+      "requests": [
+        "a",
+        "b"
+      ],
+      "error": null
+    },
+    "label": "empty page with next is not completion"
+  },
+  {
+    "input": {
+      "pages": {
+        "a": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            }
+          ],
+          "next": "b"
+        },
+        "b": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            }
+          ],
+          "next": "a"
+        }
+      },
+      "start": "a",
+      "max_pages": 2
+    },
+    "expected": {
+      "items": [
+        {
+          "id": 1,
+          "value": "1"
+        },
+        {
+          "id": 2,
+          "value": "2"
+        }
+      ],
+      "requests": [
+        "a",
+        "b"
+      ],
+      "error": "cycle"
+    },
+    "label": "cycle has priority over page limit"
+  },
+  {
+    "input": {
+      "pages": {
+        "a": {
+          "status": 429
+        }
+      },
+      "start": "a",
+      "max_pages": 3
+    },
+    "expected": {
+      "items": [],
+      "requests": [
+        "a"
+      ],
+      "error": "upstream"
+    },
+    "label": "client does not retry upstream errors"
+  },
+  {
+    "input": {
+      "pages": {
+        "other": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            }
+          ],
+          "next": null
+        },
+        "a": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            }
+          ],
+          "next": null
+        }
+      },
+      "start": "other",
+      "max_pages": 2
+    },
+    "expected": {
+      "items": [
+        {
+          "id": 2,
+          "value": "2"
+        }
+      ],
+      "requests": [
+        "other"
+      ],
+      "error": null
+    },
+    "label": "supplied start cursor"
+  },
+  {
+    "input": {
+      "pages": {
+        "a": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            }
+          ],
+          "next": "b"
+        },
+        "b": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "new"
+            }
+          ],
+          "next": null
+        }
+      },
+      "start": "a",
+      "max_pages": 2
+    },
+    "expected": {
+      "items": [
+        {
+          "id": 1,
+          "value": "1"
+        }
+      ],
+      "requests": [
+        "a",
+        "b"
+      ],
+      "error": null
+    },
+    "label": "do not replace first item value"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 0,
+              "value": "v0"
+            }
+          ],
+          "next": "p0"
+        }
+      },
+      "max_pages": 1
+    },
+    "expected": {
+      "error": "cycle",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        }
+      ],
+      "requests": [
+        "p0"
+      ]
+    },
+    "label": "additional-1"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 1,
+              "value": "v1"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 2,
+              "value": "v1"
+            }
+          ],
+          "next": null
+        }
+      },
+      "max_pages": 2
+    },
+    "expected": {
+      "error": null,
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 1,
+          "value": "v1"
+        },
+        {
+          "id": 2,
+          "value": "v1"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1"
+      ]
+    },
+    "label": "additional-2"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 2,
+              "value": "v2"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 3,
+              "value": "v2"
+            }
+          ],
+          "next": "p2"
+        },
+        "p2": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            },
+            {
+              "id": 4,
+              "value": "v2"
+            }
+          ],
+          "next": null
+        }
+      },
+      "max_pages": 3
+    },
+    "expected": {
+      "error": null,
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 2,
+          "value": "v2"
+        },
+        {
+          "id": 1,
+          "value": "1"
+        },
+        {
+          "id": 3,
+          "value": "v2"
+        },
+        {
+          "id": 4,
+          "value": "v2"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1",
+        "p2"
+      ]
+    },
+    "label": "additional-3"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 3,
+              "value": "v3"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 4,
+              "value": "v3"
+            }
+          ],
+          "next": "p2"
+        },
+        "p2": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            },
+            {
+              "id": 0,
+              "value": "v3"
+            }
+          ],
+          "next": "p3"
+        },
+        "p3": {
+          "status": 200,
+          "items": [
+            {
+              "id": 3,
+              "value": "3"
+            },
+            {
+              "id": 1,
+              "value": "v3"
+            }
+          ],
+          "next": "p0"
+        }
+      },
+      "max_pages": 4
+    },
+    "expected": {
+      "error": "cycle",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 3,
+          "value": "v3"
+        },
+        {
+          "id": 1,
+          "value": "1"
+        },
+        {
+          "id": 4,
+          "value": "v3"
+        },
+        {
+          "id": 2,
+          "value": "2"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1",
+        "p2",
+        "p3"
+      ]
+    },
+    "label": "additional-4"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 4,
+              "value": "v4"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 0,
+              "value": "v4"
+            }
+          ],
+          "next": "p2"
+        },
+        "p2": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            },
+            {
+              "id": 1,
+              "value": "v4"
+            }
+          ],
+          "next": "p3"
+        },
+        "p3": {
+          "status": 200,
+          "items": [
+            {
+              "id": 3,
+              "value": "3"
+            },
+            {
+              "id": 2,
+              "value": "v4"
+            }
+          ],
+          "next": "p4"
+        },
+        "p4": {
+          "status": 200,
+          "items": [
+            {
+              "id": 4,
+              "value": "4"
+            },
+            {
+              "id": 3,
+              "value": "v4"
+            }
+          ],
+          "next": null
+        }
+      },
+      "max_pages": 5
+    },
+    "expected": {
+      "error": null,
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 4,
+          "value": "v4"
+        },
+        {
+          "id": 1,
+          "value": "1"
+        },
+        {
+          "id": 2,
+          "value": "2"
+        },
+        {
+          "id": 3,
+          "value": "3"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ]
+    },
+    "label": "additional-5"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 0,
+              "value": "v5"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 1,
+              "value": "v5"
+            }
+          ],
+          "next": "p2"
+        },
+        "p2": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            },
+            {
+              "id": 2,
+              "value": "v5"
+            }
+          ],
+          "next": "p3"
+        },
+        "p3": {
+          "status": 200,
+          "items": [
+            {
+              "id": 3,
+              "value": "3"
+            },
+            {
+              "id": 3,
+              "value": "v5"
+            }
+          ],
+          "next": "p4"
+        },
+        "p4": {
+          "status": 200,
+          "items": [
+            {
+              "id": 4,
+              "value": "4"
+            },
+            {
+              "id": 4,
+              "value": "v5"
+            }
+          ],
+          "next": "p5"
+        },
+        "p5": {
+          "status": 200,
+          "items": [
+            {
+              "id": 5,
+              "value": "5"
+            },
+            {
+              "id": 0,
+              "value": "v5"
+            }
+          ],
+          "next": null
+        }
+      },
+      "max_pages": 6
+    },
+    "expected": {
+      "error": null,
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 1,
+          "value": "1"
+        },
+        {
+          "id": 2,
+          "value": "2"
+        },
+        {
+          "id": 3,
+          "value": "3"
+        },
+        {
+          "id": 4,
+          "value": "4"
+        },
+        {
+          "id": 5,
+          "value": "5"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5"
+      ]
+    },
+    "label": "additional-6"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 1,
+              "value": "v6"
+            }
+          ],
+          "next": "p0"
+        }
+      },
+      "max_pages": 7
+    },
+    "expected": {
+      "error": "cycle",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 1,
+          "value": "v6"
+        }
+      ],
+      "requests": [
+        "p0"
+      ]
+    },
+    "label": "additional-7"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 2,
+              "value": "v7"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 3,
+              "value": "v7"
+            }
+          ],
+          "next": null
+        }
+      },
+      "max_pages": 1
+    },
+    "expected": {
+      "error": "limit",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 2,
+          "value": "v7"
+        }
+      ],
+      "requests": [
+        "p0"
+      ]
+    },
+    "label": "additional-8"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 3,
+              "value": "v8"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 4,
+              "value": "v8"
+            }
+          ],
+          "next": "p2"
+        },
+        "p2": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            },
+            {
+              "id": 0,
+              "value": "v8"
+            }
+          ],
+          "next": null
+        }
+      },
+      "max_pages": 2
+    },
+    "expected": {
+      "error": "limit",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 3,
+          "value": "v8"
+        },
+        {
+          "id": 1,
+          "value": "1"
+        },
+        {
+          "id": 4,
+          "value": "v8"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1"
+      ]
+    },
+    "label": "additional-9"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 4,
+              "value": "v9"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 0,
+              "value": "v9"
+            }
+          ],
+          "next": "p2"
+        },
+        "p2": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            },
+            {
+              "id": 1,
+              "value": "v9"
+            }
+          ],
+          "next": "p3"
+        },
+        "p3": {
+          "status": 200,
+          "items": [
+            {
+              "id": 3,
+              "value": "3"
+            },
+            {
+              "id": 2,
+              "value": "v9"
+            }
+          ],
+          "next": "p0"
+        }
+      },
+      "max_pages": 3
+    },
+    "expected": {
+      "error": "limit",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 4,
+          "value": "v9"
+        },
+        {
+          "id": 1,
+          "value": "1"
+        },
+        {
+          "id": 2,
+          "value": "2"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1",
+        "p2"
+      ]
+    },
+    "label": "additional-10"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 0,
+              "value": "v10"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 1,
+              "value": "v10"
+            }
+          ],
+          "next": "p2"
+        },
+        "p2": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            },
+            {
+              "id": 2,
+              "value": "v10"
+            }
+          ],
+          "next": "p3"
+        },
+        "p3": {
+          "status": 200,
+          "items": [
+            {
+              "id": 3,
+              "value": "3"
+            },
+            {
+              "id": 3,
+              "value": "v10"
+            }
+          ],
+          "next": "p4"
+        },
+        "p4": {
+          "status": 200,
+          "items": [
+            {
+              "id": 4,
+              "value": "4"
+            },
+            {
+              "id": 4,
+              "value": "v10"
+            }
+          ],
+          "next": null
+        }
+      },
+      "max_pages": 4
+    },
+    "expected": {
+      "error": "limit",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 1,
+          "value": "1"
+        },
+        {
+          "id": 2,
+          "value": "2"
+        },
+        {
+          "id": 3,
+          "value": "3"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1",
+        "p2",
+        "p3"
+      ]
+    },
+    "label": "additional-11"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 1,
+              "value": "v11"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 2,
+              "value": "v11"
+            }
+          ],
+          "next": "p2"
+        },
+        "p2": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            },
+            {
+              "id": 3,
+              "value": "v11"
+            }
+          ],
+          "next": "p3"
+        },
+        "p3": {
+          "status": 200,
+          "items": [
+            {
+              "id": 3,
+              "value": "3"
+            },
+            {
+              "id": 4,
+              "value": "v11"
+            }
+          ],
+          "next": "p4"
+        },
+        "p4": {
+          "status": 200,
+          "items": [
+            {
+              "id": 4,
+              "value": "4"
+            },
+            {
+              "id": 0,
+              "value": "v11"
+            }
+          ],
+          "next": "p5"
+        },
+        "p5": {
+          "status": 200,
+          "items": [
+            {
+              "id": 5,
+              "value": "5"
+            },
+            {
+              "id": 1,
+              "value": "v11"
+            }
+          ],
+          "next": null
+        }
+      },
+      "max_pages": 5
+    },
+    "expected": {
+      "error": "limit",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 1,
+          "value": "v11"
+        },
+        {
+          "id": 2,
+          "value": "v11"
+        },
+        {
+          "id": 3,
+          "value": "v11"
+        },
+        {
+          "id": 4,
+          "value": "v11"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ]
+    },
+    "label": "additional-12"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 2,
+              "value": "v12"
+            }
+          ],
+          "next": "p0"
+        }
+      },
+      "max_pages": 6
+    },
+    "expected": {
+      "error": "cycle",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 2,
+          "value": "v12"
+        }
+      ],
+      "requests": [
+        "p0"
+      ]
+    },
+    "label": "additional-13"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 3,
+              "value": "v13"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 4,
+              "value": "v13"
+            }
+          ],
+          "next": null
+        }
+      },
+      "max_pages": 7
+    },
+    "expected": {
+      "error": null,
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 3,
+          "value": "v13"
+        },
+        {
+          "id": 1,
+          "value": "1"
+        },
+        {
+          "id": 4,
+          "value": "v13"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1"
+      ]
+    },
+    "label": "additional-14"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 4,
+              "value": "v14"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 0,
+              "value": "v14"
+            }
+          ],
+          "next": "p2"
+        },
+        "p2": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            },
+            {
+              "id": 1,
+              "value": "v14"
+            }
+          ],
+          "next": null
+        }
+      },
+      "max_pages": 1
+    },
+    "expected": {
+      "error": "limit",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 4,
+          "value": "v14"
+        }
+      ],
+      "requests": [
+        "p0"
+      ]
+    },
+    "label": "additional-15"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 0,
+              "value": "v15"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 1,
+              "value": "v15"
+            }
+          ],
+          "next": "p2"
+        },
+        "p2": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            },
+            {
+              "id": 2,
+              "value": "v15"
+            }
+          ],
+          "next": "p3"
+        },
+        "p3": {
+          "status": 200,
+          "items": [
+            {
+              "id": 3,
+              "value": "3"
+            },
+            {
+              "id": 3,
+              "value": "v15"
+            }
+          ],
+          "next": "p0"
+        }
+      },
+      "max_pages": 2
+    },
+    "expected": {
+      "error": "limit",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 1,
+          "value": "1"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1"
+      ]
+    },
+    "label": "additional-16"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 1,
+              "value": "v16"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 2,
+              "value": "v16"
+            }
+          ],
+          "next": "p2"
+        },
+        "p2": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            },
+            {
+              "id": 3,
+              "value": "v16"
+            }
+          ],
+          "next": "p3"
+        },
+        "p3": {
+          "status": 200,
+          "items": [
+            {
+              "id": 3,
+              "value": "3"
+            },
+            {
+              "id": 4,
+              "value": "v16"
+            }
+          ],
+          "next": "p4"
+        },
+        "p4": {
+          "status": 200,
+          "items": [
+            {
+              "id": 4,
+              "value": "4"
+            },
+            {
+              "id": 0,
+              "value": "v16"
+            }
+          ],
+          "next": null
+        }
+      },
+      "max_pages": 3
+    },
+    "expected": {
+      "error": "limit",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 1,
+          "value": "v16"
+        },
+        {
+          "id": 2,
+          "value": "v16"
+        },
+        {
+          "id": 3,
+          "value": "v16"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1",
+        "p2"
+      ]
+    },
+    "label": "additional-17"
+  },
+  {
+    "input": {
+      "start": "p0",
+      "pages": {
+        "p0": {
+          "status": 200,
+          "items": [
+            {
+              "id": 0,
+              "value": "0"
+            },
+            {
+              "id": 2,
+              "value": "v17"
+            }
+          ],
+          "next": "p1"
+        },
+        "p1": {
+          "status": 200,
+          "items": [
+            {
+              "id": 1,
+              "value": "1"
+            },
+            {
+              "id": 3,
+              "value": "v17"
+            }
+          ],
+          "next": "p2"
+        },
+        "p2": {
+          "status": 200,
+          "items": [
+            {
+              "id": 2,
+              "value": "2"
+            },
+            {
+              "id": 4,
+              "value": "v17"
+            }
+          ],
+          "next": "p3"
+        },
+        "p3": {
+          "status": 200,
+          "items": [
+            {
+              "id": 3,
+              "value": "3"
+            },
+            {
+              "id": 0,
+              "value": "v17"
+            }
+          ],
+          "next": "p4"
+        },
+        "p4": {
+          "status": 200,
+          "items": [
+            {
+              "id": 4,
+              "value": "4"
+            },
+            {
+              "id": 1,
+              "value": "v17"
+            }
+          ],
+          "next": "p5"
+        },
+        "p5": {
+          "status": 200,
+          "items": [
+            {
+              "id": 5,
+              "value": "5"
+            },
+            {
+              "id": 2,
+              "value": "v17"
+            }
+          ],
+          "next": null
+        }
+      },
+      "max_pages": 4
+    },
+    "expected": {
+      "error": "limit",
+      "items": [
+        {
+          "id": 0,
+          "value": "0"
+        },
+        {
+          "id": 2,
+          "value": "v17"
+        },
+        {
+          "id": 1,
+          "value": "1"
+        },
+        {
+          "id": 3,
+          "value": "v17"
+        },
+        {
+          "id": 4,
+          "value": "v17"
+        }
+      ],
+      "requests": [
+        "p0",
+        "p1",
+        "p2",
+        "p3"
+      ]
+    },
+    "label": "additional-18"
+  }
+]

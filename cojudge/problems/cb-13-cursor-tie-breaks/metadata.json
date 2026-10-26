@@ -1,0 +1,50 @@
+{
+  "id": "cb-13-cursor-tie-breaks",
+  "title": "13. Test the boundary of a composite cursor",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "04-test-client-boundaries",
+  "examples": [
+    {
+      "input": "{\"records\": [{\"id\": 3, \"ts\": 2}, {\"id\": 2, \"ts\": 1}, {\"id\": 1, \"ts\": 1}], \"actions\": [{\"op\": \"page\", \"after\": null, \"limit\": 2}]}",
+      "output": "[{\"ids\": [1, 2], \"next\": [1, 2]}]",
+      "explanation": "timestamp ties use id"
+    },
+    {
+      "input": "{\"records\": [{\"id\": 1, \"ts\": 10}, {\"id\": 2, \"ts\": 20}], \"actions\": [{\"op\": \"page\", \"after\": null, \"limit\": 1}, {\"op\": \"insert\", \"record\": {\"id\": 3, \"ts\": 5}}, {\"op\": \"page\", \"after\": [10, 1], \"limit\": 1}]}",
+      "output": "[{\"ids\": [1], \"next\": [10, 1]}, {\"ids\": [2], \"next\": null}]",
+      "explanation": "insertion before cursor does not shift page"
+    },
+    {
+      "input": "{\"records\": [{\"id\": 1, \"ts\": 10}, {\"id\": 2, \"ts\": 20}], \"actions\": [{\"op\": \"page\", \"after\": null, \"limit\": 1}, {\"op\": \"insert\", \"record\": {\"id\": 3, \"ts\": 15}}, {\"op\": \"page\", \"after\": [10, 1], \"limit\": 1}]}",
+      "output": "[{\"ids\": [1], \"next\": [10, 1]}, {\"ids\": [3], \"next\": [15, 3]}]",
+      "explanation": "new row after cursor can appear"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\ndef solve(data):\n    records = [dict(row) for row in data[\"records\"]]\n    out = []\n    for action in data[\"actions\"]:\n        if action[\"op\"] == \"insert\":\n            records.append(dict(action[\"record\"]))\n            continue\n        after = action[\"after\"]\n        eligible = sorted((r for r in records if after is None or (r[\"ts\"], r[\"id\"]) >= tuple(after)), key=lambda r: (r[\"ts\"], r[\"id\"]))\n        selected = eligible[:action[\"limit\"]]\n        more = len(eligible) > len(selected)\n        cursor = [selected[-1][\"ts\"], selected[-1][\"id\"]] if more else None\n        out.append({\"ids\": [r[\"id\"] for r in selected], \"next\": cursor})\n    return out\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"actions\":[{\"after\":null,\"limit\":2,\"op\":\"page\"}],\"records\":[{\"id\":3,\"ts\":2},{\"id\":2,\"ts\":1},{\"id\":1,\"ts\":1}]}"
+    },
+    {
+      "payload": "{\"actions\":[{\"after\":null,\"limit\":1,\"op\":\"page\"},{\"op\":\"insert\",\"record\":{\"id\":3,\"ts\":5}},{\"after\":[10,1],\"limit\":1,\"op\":\"page\"}],\"records\":[{\"id\":1,\"ts\":10},{\"id\":2,\"ts\":20}]}"
+    },
+    {
+      "payload": "{\"actions\":[{\"after\":null,\"limit\":1,\"op\":\"page\"},{\"op\":\"insert\",\"record\":{\"id\":3,\"ts\":15}},{\"after\":[10,1],\"limit\":1,\"op\":\"page\"}],\"records\":[{\"id\":1,\"ts\":10},{\"id\":2,\"ts\":20}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Compare the full pair, not just the timestamp.",
+    "Use one extra eligible row, or the eligible count, to determine whether next is needed."
+  ]
+}

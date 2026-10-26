@@ -1,0 +1,36 @@
+{
+  "title": "Codebase Practice: Read, Test, Change",
+  "description": "Start at 01. Read existing Python code, predict its behavior, write a regression case, and make one scoped repair. Four levels cover data and state, objects and control flow, API contracts, and client boundaries. After each four browser exercises, complete two short local pytest labs. You write the code and tests. AI is optional for explanations and reviews. The full 24-step guide is at https://github.com/musel25/capital-one-prep/blob/main/codebase_labs/README.md. Select Python. SQL is optional extended practice. This is constructed training, not an official Capital One syllabus or a readiness score.",
+  "category-order": [
+    "01-read-data-and-state",
+    "02-follow-objects-and-control-flow",
+    "03-trace-api-contracts",
+    "04-test-client-boundaries"
+  ],
+  "problems-of-category": {
+    "01-read-data-and-state": [
+      "cb-01-missing-null-zero",
+      "cb-02-typed-json-boundary",
+      "cb-03-dataclass-list-isolation",
+      "cb-04-nested-copy-isolation"
+    ],
+    "02-follow-objects-and-control-flow": [
+      "cb-05-inheritance-fee-policy",
+      "cb-06-composed-fee-protocol",
+      "cb-07-explicit-order-states",
+      "cb-08-atomic-memory-batch"
+    ],
+    "03-trace-api-contracts": [
+      "cb-09-route-contract",
+      "cb-10-body-validation",
+      "cb-11-put-patch-fields",
+      "cb-12-idempotency-conflicts"
+    ],
+    "04-test-client-boundaries": [
+      "cb-13-cursor-tie-breaks",
+      "cb-14-retry-backoff",
+      "cb-15-shared-deadline",
+      "cb-16-upstream-page-client"
+    ]
+  }
+}

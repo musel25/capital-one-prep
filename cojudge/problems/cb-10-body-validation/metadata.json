@@ -1,0 +1,50 @@
+{
+  "id": "cb-10-body-validation",
+  "title": "10. Validate a body before building success",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "03-trace-api-contracts",
+  "examples": [
+    {
+      "input": "{\"bodies\": [{\"account\": \"acct_1\", \"amount\": 25}]}",
+      "output": "[{\"status\": 201, \"body\": {\"account\": \"acct_1\", \"amount\": 25, \"note\": null}}]",
+      "explanation": "valid body gets default null note"
+    },
+    {
+      "input": "{\"bodies\": [{\"account\": \"A\", \"amount\": 0, \"note\": false, \"extra\": 1}]}",
+      "output": "[{\"status\": 422, \"errors\": [\"account\", \"amount\", \"note\", \"unknown\"]}]",
+      "explanation": "all field errors have fixed order"
+    },
+    {
+      "input": "{\"bodies\": [null]}",
+      "output": "[{\"status\": 400, \"errors\": [\"body\"]}]",
+      "explanation": "JSON null is not an object"
+    }
+  ],
+  "starterCode": {
+    "python": "# This existing program has one intentional behavior defect.\n# Read the task. Write a regression case before changing it.\nimport re\n\ndef solve(data):\n    out = []\n    for body in data[\"bodies\"]:\n        if not isinstance(body, dict):\n            out.append({\"status\": 400, \"errors\": [\"body\"]})\n            continue\n        errors = []\n        account = body.get(\"account\")\n        amount = body.get(\"amount\")\n        note = body.get(\"note\")\n        if not isinstance(account, str) or not re.fullmatch(r\"[a-z][a-z0-9_]{0,11}\", account):\n            errors.append(\"account\")\n        if not isinstance(amount, int) or not 1 <= amount <= 10000:\n            errors.append(\"amount\")\n        if note is not None and (not isinstance(note, str) or len(note) > 20):\n            errors.append(\"note\")\n        if set(body) - {\"account\", \"amount\", \"note\"}:\n            errors.append(\"unknown\")\n        if errors:\n            out.append({\"status\": 422, \"errors\": errors})\n        else:\n            out.append({\"status\": 201, \"body\": {\"account\": account, \"amount\": amount, \"note\": note}})\n    return out\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"bodies\":[{\"account\":\"acct_1\",\"amount\":25}]}"
+    },
+    {
+      "payload": "{\"bodies\":[{\"account\":\"A\",\"amount\":0,\"extra\":1,\"note\":false}]}"
+    },
+    {
+      "payload": "{\"bodies\":[null]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Check body shape before reading fields.",
+    "Use type(value) is int to exclude booleans."
+  ]
+}
