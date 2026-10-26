@@ -56,13 +56,13 @@
 
 **Interfaces:** Lesson entries contain `number`, `source_number`, `title`, `orientation`, `read`, `scope`, `test_plan`, `ai_prompt`, `ai_claim`, `ai_answer`, and `done`. `load_codebase_specs()` produces the existing SPEC shape with `prefix='cb'`, new `course_id`, `category`, and `level`. Preserve the original input contract, cases, Java oracle, and reference. Build the starter from a verified realistic mutation plus orientation comments.
 
-- [ ] Test a new problem has new ID/category/course links while old metadata remains unchanged.
-- [ ] Add optional validated metadata overrides in the shared builder with old defaults.
-- [ ] Write sixteen concrete lesson overlays following the source mapping in the design.
-- [ ] Add source provenance and independent review-case mapping.
-- [ ] Add build/verify/live subcommands. Live checks reuse `check_live` with review cases.
-- [ ] Verify all new starters expose wrong behavior, all references pass, and all Java oracles agree.
-- [ ] Commit the verified course authoring and generated content; push.
+- [x] Test a new problem has new ID/category/course links while old metadata remains unchanged.
+- [x] Add optional validated metadata overrides in the shared builder with old defaults.
+- [x] Write sixteen concrete lesson overlays following the source mapping in the design.
+- [x] Add source provenance and independent review-case mapping.
+- [x] Add build/verify/live subcommands. Live checks reuse `check_live` with review cases.
+- [x] Verify all new starters expose wrong behavior, all references pass, and all Java oracles agree.
+- [x] Commit the verified course authoring and generated content; push.
 
 ### Task 4: Author the local labs
 
@@ -70,12 +70,12 @@
 
 **Interfaces:** Follow `codebase_labs/CONTRACT.md`. Each exports a self-contained LAB dictionary. Author labs 01–04 and 05–08 independently. No agent changes the runner or other lab files.
 
-- [ ] Write exact contracts, small multi-file source snapshots, public tests, learner test stubs, sample instructor tests, and realistic faulty variants.
-- [ ] Include hand-derived expectations for empty, boundary, invalid, repeated, isolation, and side-effect cases where valid.
-- [ ] Verify every public test passes the assigned starter and the correct reference.
-- [ ] Verify sample learner tests accept correct code and reject every named faulty variant through assertions.
-- [ ] Keep all instructor code outside the generated learner files.
-- [ ] Review the lesson scope, technical accuracy, and AI claim counterexamples.
+- [x] Write exact contracts, small multi-file source snapshots, public tests, learner test stubs, sample instructor tests, and realistic faulty variants.
+- [x] Include hand-derived expectations for empty, boundary, invalid, repeated, isolation, and side-effect cases where valid.
+- [x] Verify every public test passes the assigned starter and the correct reference.
+- [x] Verify sample learner tests accept correct code and reject every named faulty variant through assertions.
+- [x] Keep all instructor code outside the generated learner files.
+- [x] Review the lesson scope, technical accuracy, and AI claim counterexamples.
 
 ### Task 5: Implement the local runner
 
@@ -83,25 +83,25 @@
 
 **Interfaces:** `load_labs() -> list[dict]`, `start(lab_id, output_root) -> Path`, `check(path) -> dict`, `verify() -> dict`. CLI list/start/check/verify; exit 0 success, 1 missing behavior/test evidence, 2 setup/execution error.
 
-- [ ] Test two starts create different folders and preserve the first folder's contents.
-- [ ] Test generated attempts exclude reference, contracts, variants, and sample answer tests.
-- [ ] Test manifests and symlinks reject unsafe paths; check leaves all attempt hashes unchanged.
-- [ ] Test empty/skipped tests, correct tests, weak tests, and collection failures produce distinct failures.
-- [ ] Copy attempts to temporary directories and run uv/pytest with local imports.
-- [ ] Grade learner tests against reference and faulty variants using pytest JUnit results; require assertion failures and at least one passing learner test on the reference.
-- [ ] Run separate contract checks for repair/feature labs on learner code.
-- [ ] Verify all eight starter/reference/sample-test combinations with the same checker used by learners.
-- [ ] Commit labs and runner together after integrated review; push.
+- [x] Test two starts create different folders and preserve the first folder's contents.
+- [x] Test generated attempts exclude reference, contracts, variants, and sample answer tests.
+- [x] Test manifests and symlinks reject unsafe paths; check leaves all attempt hashes unchanged.
+- [x] Test empty/skipped tests, correct tests, weak tests, and collection failures produce distinct failures.
+- [x] Copy attempts to temporary directories and run uv/pytest with local imports.
+- [x] Grade learner tests against reference and faulty variants using pytest JUnit results; require assertion failures and at least one passing learner test on the reference.
+- [x] Run separate contract checks for repair/feature labs on learner code.
+- [x] Verify all eight starter/reference/sample-test combinations with the same checker used by learners.
+- [x] Commit labs and runner together after integrated review; push.
 
 ### Task 6: Publish the guide and course
 
 **Files:** `codebase_labs/README.md`, repository README, course description and statements, `cojudge/codebase/verification.json`, `cojudge/codebase/verification.md`.
 
-- [ ] Write the exact interleaved sequence: four browser tasks, two local labs, repeated four times.
-- [ ] Give start/check commands, technical skill map, and how to use AI without delegating implementation.
-- [ ] Run repository Python tests and any affected frontend checks.
-- [ ] Publish new problem directories to the current runtime volume.
-- [ ] Run all sixteen references, examples, review cases, and faulty variants through live endpoints.
+- [x] Write the exact interleaved sequence: four browser tasks, two local labs, repeated four times.
+- [x] Give start/check commands, technical skill map, and how to use AI without delegating implementation.
+- [x] Run repository Python tests and any affected frontend checks.
+- [x] Publish new problem directories to the current runtime volume.
+- [x] Run all sixteen references, examples, review cases, and faulty variants through live endpoints.
 - [ ] Publish the new course index only after live verification passes.
 - [ ] Verify file hashes, course order, guide links, and preservation of existing courses.
 - [ ] Save actual evidence and limits. Commit and push.

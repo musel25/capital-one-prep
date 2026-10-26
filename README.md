@@ -1,18 +1,36 @@
 # Capital One Prep
 
-A ten-day preparation workspace for Capital One TDP Mexico, October 23–November 1, 2026. Three hours and forty-five minutes each day: AI-assisted debugging and feature work, technical business cases, behavioral practice, and targeted Python exercises.
+A technical preparation workspace for Capital One TDP Mexico. The main course
+teaches you to read existing Python code, write effective tests, make scoped
+changes, and check AI explanations. You write the implementations and tests.
 
-The daily page provides the agenda. Code is practiced in your own editor, with independent attempt folders that preserve your work. The website and interview exercises are in English.
+## Start the revised technical course
 
-**Open the planner:** [timer.musel.dev/grind/capital-one/](https://timer.musel.dev/grind/capital-one/)
+**[Codebase Practice: Read, Test, Change on CoJudge](https://cojudge.musel.dev/?course=capital-one-codebase-practice)**
 
-## Start practicing
+Start with browser exercise 01. The [ordered course guide](codebase_labs/README.md)
+combines 16 guided repairs with eight short repository labs. It covers Python,
+objects, state, APIs, pytest, fake dependencies, and checking AI claims. Every
+task has a precise scope and a technical completion checklist. SQL is optional.
 
-**Technical-only course:** [Capital One Engineering 50 on CoJudge](https://cojudge.musel.dev/?course=capital-one-engineering-50).
-Start at problem 01 and select Python. The five levels cover Python data,
-objects and state, APIs, SQL, and system components. Each problem includes a
-short lesson, hints, runnable tests, and an optional reference solution.
-See the [course guide](cojudge/README.md) for the skill map and test process.
+After browser exercise 04, start the first local lab:
+
+```sh
+uv sync
+uv run python scripts/codebase.py start lab01
+```
+
+The command prints a fresh attempt folder with code, public tests, an empty test
+file for your work, and instructions. It never overwrites an earlier attempt.
+The [Engineering 50 course](cojudge/README.md) is optional extended practice.
+
+## Earlier planner exercises
+
+The original ten-day planner covers October 23–November 1, 2026, with three hours
+and forty-five minutes each day. It includes cases and behavioral practice in
+addition to technical work. The revised course above is technical only.
+
+**Open the earlier planner:** [timer.musel.dev/grind/capital-one/](https://timer.musel.dev/grind/capital-one/)
 
 ```bash
 cd /home/musel/Github/capital-one-prep

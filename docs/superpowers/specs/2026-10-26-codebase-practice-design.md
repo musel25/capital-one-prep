@@ -48,13 +48,13 @@ Do not merely rename the old course. Record the source problem for provenance.
 | 07 | p16 | Find state transitions and preserve rejected-operation behavior |
 | 08 | p17 | Locate commit boundaries and prevent partial writes |
 | 09 | p21 | Trace route and method dispatch |
-| 10 | p22 | Validate an API body before side effects |
+| 10 | p22 | Recognize a pure API body validation boundary |
 | 11 | p23 | Preserve PATCH compatibility and field presence |
 | 12 | p24 | Trace replayed requests and conflicting identities |
 | 13 | p25 | Write boundary cases for pagination order |
 | 14 | p26 | Read error classification and retry policy |
 | 15 | p27 | Follow a shared timeout budget |
-| 16 | p30 | Check a client integration across several helpers |
+| 16 | p30 | Check integration across client state and control-flow regions |
 
 Four levels contain four browser exercises each. Insert two local labs after
 each level. The final guide presents this as one ordered sequence of 24 tasks.
