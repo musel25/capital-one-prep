@@ -1,0 +1,2994 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "A",
+              "B",
+              "A"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      "A",
+      1,
+      [
+        "A"
+      ]
+    ],
+    "label": "draw in order without duplicates"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "X"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      "X",
+      {
+        "error": "NoPromosLeft"
+      },
+      0
+    ],
+    "label": "exhausted rotation"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "B1",
+              "B2"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [
+            [
+              "B1",
+              "B2"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      "B1",
+      {
+        "object": "PromoRotation"
+      },
+      [],
+      "B1"
+    ],
+    "label": "rotations are independent"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "A",
+              "B",
+              "C"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            "A"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      null,
+      "B",
+      [
+        "A",
+        "B"
+      ]
+    ],
+    "label": "skip changes the next draw"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "A",
+              "B"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            "Z"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "r"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "r"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "r"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "error": "ValueError"
+      },
+      null,
+      null,
+      [
+        "B"
+      ],
+      1
+    ],
+    "label": "skip unknown and repeated"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "A",
+              "B",
+              "C"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      null,
+      "A",
+      "C",
+      {
+        "error": "NoPromosLeft"
+      },
+      [
+        "B",
+        "A",
+        "C"
+      ]
+    ],
+    "label": "skip in the middle keeps order"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "A",
+              "B"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "r"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      "A",
+      "B",
+      null,
+      2,
+      "A"
+    ],
+    "label": "reset"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            []
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "args": [
+            "A"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      0,
+      {
+        "error": "NoPromosLeft"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "empty campaign"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "A",
+              "B"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "r",
+          "save": "u"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "u"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      "A",
+      [
+        "A"
+      ],
+      null,
+      "B",
+      [
+        "A",
+        "B"
+      ]
+    ],
+    "label": "used is a copy"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "Q",
+              "Q",
+              "R",
+              "Q",
+              "R",
+              "S"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      3,
+      "Q",
+      "R",
+      "S"
+    ],
+    "label": "many duplicates"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "save10",
+              "SAVE10"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "args": [
+            "SAVE10"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      2,
+      null,
+      "save10"
+    ],
+    "label": "codes are case sensitive"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "cls": "NoPromosLeft",
+          "do": "check",
+          "is": "subclass",
+          "of": "Exception"
+        },
+        {
+          "args": [
+            [
+              "A"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "A"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      true,
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      "A",
+      "A",
+      {
+        "error": "NoPromosLeft"
+      }
+    ],
+    "label": "structure and independent exhaustion"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P1",
+              "P2",
+              "P4",
+              "P1",
+              "P2"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P2",
+              "P1",
+              "P4",
+              "P2",
+              "P1"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "P2"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "NOPE"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      3,
+      "P1",
+      "P2",
+      "P2",
+      "P1",
+      null,
+      null,
+      "P4",
+      {
+        "error": "NoPromosLeft"
+      },
+      0,
+      null,
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "NoPromosLeft"
+      },
+      "P1"
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P5",
+              "P6",
+              "P2",
+              "P2",
+              "P6",
+              "P5"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P5",
+              "P6",
+              "P2",
+              "P2",
+              "P6",
+              "P5"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "P5"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "P2"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P5"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "P5"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      "P5",
+      2,
+      "P6",
+      null,
+      "P2",
+      null,
+      [
+        "P5",
+        "P2"
+      ],
+      1,
+      [
+        "P5",
+        "P6",
+        "P2"
+      ],
+      "P6",
+      null,
+      0,
+      {
+        "error": "NoPromosLeft"
+      },
+      {
+        "error": "NoPromosLeft"
+      },
+      null
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P4",
+              "P1",
+              "P2",
+              "P6",
+              "P1",
+              "P2"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P2",
+              "P1",
+              "P6",
+              "P2",
+              "P1",
+              "P4"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "P1"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "P2"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P6"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "NOPE"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "NOPE"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      null,
+      null,
+      null,
+      null,
+      null,
+      4,
+      "P2",
+      {
+        "error": "ValueError"
+      },
+      null,
+      {
+        "error": "ValueError"
+      },
+      "P4",
+      4,
+      null,
+      []
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P4",
+              "P4",
+              "P3",
+              "P5",
+              "P3",
+              "P1"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P1",
+              "P3",
+              "P5",
+              "P3",
+              "P4",
+              "P4"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "P1"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P1"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "P1"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      null,
+      null,
+      null,
+      3,
+      4,
+      null,
+      4
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P1",
+              "P6"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P6",
+              "P1"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      null,
+      null,
+      "P1",
+      1,
+      "P6",
+      "P1",
+      "P6",
+      [
+        "P1",
+        "P6"
+      ],
+      null
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P4",
+              "P5",
+              "P2",
+              "P1",
+              "P2"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P2",
+              "P1",
+              "P2",
+              "P5",
+              "P4"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P1"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "P4"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P2"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      null,
+      null,
+      null,
+      [
+        "P1"
+      ],
+      4,
+      null,
+      null,
+      4,
+      [
+        "P4"
+      ],
+      [
+        "P4"
+      ],
+      null,
+      null,
+      4,
+      2,
+      2,
+      "P1"
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            []
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            []
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "NOPE"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "NOPE"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "error": "ValueError"
+      },
+      0,
+      [],
+      null,
+      null,
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P2"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P2"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "NOPE"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "NOPE"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      [],
+      "P2",
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "NoPromosLeft"
+      },
+      null,
+      {
+        "error": "ValueError"
+      },
+      null,
+      null,
+      []
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P6",
+              "P5",
+              "P6"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P6",
+              "P5",
+              "P6"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P6"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P6"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      [],
+      [],
+      2,
+      null,
+      "P6",
+      "P6",
+      null,
+      null,
+      null
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P6",
+              "P4",
+              "P1",
+              "P3",
+              "P3",
+              "P4"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P4",
+              "P3",
+              "P3",
+              "P1",
+              "P4",
+              "P6"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "NOPE"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "P6"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P6"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      "P6",
+      4,
+      3,
+      4,
+      "P4",
+      null,
+      [],
+      null,
+      "P4",
+      [],
+      {
+        "error": "ValueError"
+      },
+      null,
+      [],
+      null
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P1",
+              "P4",
+              "P1"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P1",
+              "P4",
+              "P1"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P1"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      "P1",
+      [],
+      "P1",
+      [
+        "P1"
+      ],
+      [
+        "P1"
+      ],
+      1,
+      1,
+      null,
+      null,
+      [
+        "P1"
+      ],
+      null,
+      null,
+      "P1",
+      [
+        "P1"
+      ]
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P4",
+              "P2"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P2",
+              "P4"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      "P4",
+      null,
+      [],
+      null,
+      "P4",
+      [
+        "P4"
+      ],
+      1,
+      null,
+      null,
+      null,
+      "P4",
+      [
+        "P4"
+      ],
+      [
+        "P4"
+      ]
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P6",
+              "P4",
+              "P1",
+              "P4",
+              "P3",
+              "P4",
+              "P2"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P2",
+              "P4",
+              "P3",
+              "P4",
+              "P1",
+              "P4",
+              "P6"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      [],
+      null,
+      5,
+      "P6",
+      null,
+      "P6",
+      null,
+      "P2",
+      4
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P5",
+              "P5",
+              "P4",
+              "P6",
+              "P3"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P3",
+              "P6",
+              "P4",
+              "P5",
+              "P5"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P3"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      [],
+      null,
+      4,
+      null,
+      [],
+      [],
+      null,
+      "P5",
+      [
+        "P5"
+      ],
+      3,
+      null,
+      [],
+      4
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            []
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            []
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "NOPE"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "error": "NoPromosLeft"
+      },
+      0,
+      {
+        "error": "ValueError"
+      },
+      0,
+      0,
+      []
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P1",
+              "P6",
+              "P4",
+              "P6",
+              "P3"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P3",
+              "P6",
+              "P4",
+              "P6",
+              "P1"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "P1"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "P6"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P1"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      4,
+      null,
+      null,
+      null,
+      null
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            []
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            []
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "NOPE"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      0,
+      0,
+      null,
+      null,
+      {
+        "error": "NoPromosLeft"
+      },
+      [],
+      0,
+      0,
+      0,
+      {
+        "error": "ValueError"
+      },
+      null
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P6",
+              "P6",
+              "P3",
+              "P4",
+              "P1"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P1",
+              "P4",
+              "P3",
+              "P6",
+              "P6"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      "P6",
+      "P3",
+      "P1",
+      "P4",
+      null,
+      4
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P5",
+              "P5",
+              "P4",
+              "P2"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P2",
+              "P4",
+              "P5",
+              "P5"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P5"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "used",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      "P2",
+      [
+        "P2"
+      ],
+      [],
+      null,
+      null,
+      null,
+      null,
+      [],
+      "P5",
+      [],
+      3,
+      null,
+      3
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "P5",
+              "P2"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              "P2",
+              "P5"
+            ]
+          ],
+          "cls": "PromoRotation",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "NOPE"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "attr": "remaining",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "P5"
+          ],
+          "do": "call",
+          "method": "skip",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "PromoRotation"
+      },
+      {
+        "object": "PromoRotation"
+      },
+      null,
+      null,
+      {
+        "error": "ValueError"
+      },
+      null,
+      2,
+      null,
+      null
+    ],
+    "label": "generated-20"
+  }
+]

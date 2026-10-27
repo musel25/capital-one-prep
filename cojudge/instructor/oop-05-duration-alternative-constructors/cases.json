@@ -1,0 +1,2543 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            90
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "a"
+        },
+        {
+          "args": [
+            "90m"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      true,
+      "1h 30m",
+      5400
+    ],
+    "label": "three formats agree"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "l"
+        },
+        {
+          "args": [
+            "1m 5s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap"
+        },
+        {
+          "do": "str",
+          "obj": "l"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Lap"
+      },
+      "2m"
+    ],
+    "label": "class methods respect the subclass"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "1h  5m"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration"
+        },
+        {
+          "args": [
+            "5m 5m"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration"
+        },
+        {
+          "args": [
+            "5s 1m"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "invalid text"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "2h 15m 10s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "d"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "d"
+        },
+        {
+          "do": "str",
+          "obj": "d"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      8110,
+      "2h 15m 10s"
+    ],
+    "label": "full text and str"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3605
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "args": [
+            0
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "z"
+        },
+        {
+          "do": "str",
+          "obj": "z"
+        },
+        {
+          "args": [
+            59
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "do": "str",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      "1h 5s",
+      {
+        "object": "Duration"
+      },
+      "0s",
+      {
+        "object": "Duration"
+      },
+      "59s"
+    ],
+    "label": "str hides zero parts"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            -1
+          ],
+          "cls": "Duration",
+          "do": "new"
+        },
+        {
+          "args": [
+            -2
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "z"
+        },
+        {
+          "do": "str",
+          "obj": "z"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Duration"
+      },
+      "0s"
+    ],
+    "label": "negative seconds"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            ""
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration"
+        },
+        {
+          "args": [
+            "h"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration"
+        },
+        {
+          "args": [
+            "-5s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration"
+        },
+        {
+          "args": [
+            "5x"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration"
+        },
+        {
+          "args": [
+            "1.5h"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "empty text and bad parts"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            " 5s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration"
+        },
+        {
+          "args": [
+            "5s "
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration"
+        },
+        {
+          "args": [
+            "1h5m"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration"
+        },
+        {
+          "args": [
+            "5 s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "spacing and unit rules"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "0h 0m 3661s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "d"
+        },
+        {
+          "do": "str",
+          "obj": "d"
+        },
+        {
+          "args": [
+            "100h"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "e"
+        },
+        {
+          "do": "str",
+          "obj": "e"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      "1h 1m 1s",
+      {
+        "object": "Duration"
+      },
+      "100h"
+    ],
+    "label": "large parts are normalized"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "1m"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "l"
+        },
+        {
+          "args": [
+            60
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "d"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "l"
+          },
+          "op": "==",
+          "right": {
+            "ref": "d"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "d"
+          },
+          "op": "==",
+          "right": 60
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "d"
+          },
+          "op": "!=",
+          "right": {
+            "ref": "l"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Duration"
+      },
+      true,
+      false,
+      false
+    ],
+    "label": "equality across classes"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            61
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "!=",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      false,
+      true
+    ],
+    "label": "unequal durations"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "attr": "from_minutes",
+          "cls": "Duration",
+          "do": "check",
+          "is": "classmethod"
+        },
+        {
+          "attr": "from_text",
+          "cls": "Duration",
+          "do": "check",
+          "is": "classmethod"
+        },
+        {
+          "cls": "Lap",
+          "do": "check",
+          "is": "subclass",
+          "of": "Duration"
+        },
+        {
+          "args": [],
+          "cls": "Lap",
+          "do": "new",
+          "kwargs": {
+            "seconds": 7
+          },
+          "save": "l"
+        },
+        {
+          "do": "str",
+          "obj": "l"
+        }
+      ]
+    },
+    "expected": [
+      true,
+      true,
+      true,
+      {
+        "object": "Lap"
+      },
+      "7s"
+    ],
+    "label": "structure"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            408
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "a"
+        },
+        {
+          "args": [
+            586
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "10s 5m"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "0s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            3599
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Duration"
+      },
+      {
+        "error": "ValueError"
+      },
+      "9h 46m",
+      {
+        "object": "Lap"
+      },
+      "1s",
+      "0s",
+      false,
+      {
+        "object": "Duration"
+      }
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            18
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "a"
+        },
+        {
+          "args": [
+            407
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "args": [
+            645609
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            86399
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Duration"
+      },
+      false,
+      false,
+      false,
+      "179h 20m 9s",
+      "6h 47m",
+      {
+        "object": "Duration"
+      },
+      "6h 47m"
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            229
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "a"
+        },
+        {
+          "args": [
+            404
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "120s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "args": [
+            "1h"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            86399
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Duration"
+      },
+      13740,
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Lap"
+      },
+      13740,
+      {
+        "object": "Duration"
+      },
+      86399,
+      "23h 59m 59s"
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            330
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "a"
+        },
+        {
+          "args": [
+            114
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "args": [
+            "0h 60m"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "args": [
+            86399
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Duration"
+      },
+      false,
+      false
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "a"
+        },
+        {
+          "args": [
+            399
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "0s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Duration"
+      },
+      120,
+      120,
+      {
+        "object": "Lap"
+      },
+      "0s",
+      false
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            177
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "a"
+        },
+        {
+          "args": [
+            179
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            86399
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "120s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "args": [
+            60
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Lap"
+      },
+      10620,
+      false,
+      10620,
+      {
+        "object": "Duration"
+      },
+      "23h 59m 59s",
+      86399,
+      false,
+      "2h 59m",
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      "2m",
+      false
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            39
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "a"
+        },
+        {
+          "args": [
+            148
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            379891
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            0
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            59
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "1 h"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      false,
+      {
+        "object": "Duration"
+      },
+      {
+        "error": "ValueError"
+      },
+      59
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            372
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "a"
+        },
+        {
+          "args": [
+            549
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "args": [
+            "1h 0m 0s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "args": [
+            3599
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "x5s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "args": [
+            "1h 1h"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Duration"
+      },
+      "59m 59s",
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      3599,
+      false,
+      3599,
+      "1h",
+      "59m 59s",
+      "1h"
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            191
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "a"
+        },
+        {
+          "args": [
+            266
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "7h 7m 7s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      false,
+      "3h 11m",
+      {
+        "object": "Lap"
+      },
+      "3h 11m",
+      false,
+      false,
+      false
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            233
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "a"
+        },
+        {
+          "args": [
+            209
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            60
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "0h 60m"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            900238
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "1 h"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      13980,
+      false,
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      false,
+      false,
+      60,
+      {
+        "object": "Duration"
+      },
+      {
+        "error": "ValueError"
+      },
+      "1h"
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            142
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "a"
+        },
+        {
+          "args": [
+            354
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            3600
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Duration"
+      },
+      8520,
+      8520,
+      false,
+      {
+        "object": "Duration"
+      }
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            595
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "a"
+        },
+        {
+          "args": [
+            430
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Lap"
+      },
+      false,
+      false,
+      35700,
+      "9h 55m",
+      "9h 55m",
+      false,
+      "9h 55m"
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            114
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "a"
+        },
+        {
+          "args": [
+            12
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            3599
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Lap"
+      },
+      6840,
+      false,
+      6840,
+      {
+        "object": "Duration"
+      },
+      3599
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            316
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "a"
+        },
+        {
+          "args": [
+            422
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "args": [
+            382687
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "1 h"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      "106h 18m 7s",
+      {
+        "error": "ValueError"
+      },
+      "106h 18m 7s",
+      382687
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            455
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "a"
+        },
+        {
+          "args": [
+            44
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "7h 7m 7s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3599
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      "44m",
+      false,
+      27300,
+      {
+        "object": "Duration"
+      },
+      "7h 7m 7s",
+      {
+        "object": "Duration"
+      }
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            268
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "a"
+        },
+        {
+          "args": [
+            599
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Lap"
+      },
+      16080,
+      16080,
+      "9h 59m",
+      16080,
+      "9h 59m",
+      "4h 28m",
+      "9h 59m",
+      16080
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            152
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "a"
+        },
+        {
+          "args": [
+            512
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "0h 60m"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "args": [
+            1
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      9120,
+      {
+        "object": "Duration"
+      },
+      "2h 32m",
+      "2h 32m",
+      {
+        "object": "Duration"
+      },
+      "1s",
+      "1h",
+      {
+        "object": "Duration"
+      },
+      0
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            489
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "a"
+        },
+        {
+          "args": [
+            430
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "0s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            ""
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Lap"
+      },
+      29340,
+      29340,
+      29340,
+      {
+        "object": "Lap"
+      },
+      false,
+      false,
+      false,
+      {
+        "error": "ValueError"
+      },
+      29340,
+      "0s"
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            270
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "a"
+        },
+        {
+          "args": [
+            500
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "args": [
+            59
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            "120s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "args": [
+            3599
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            "1h 0m 0s"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            86399
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            3599
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      false,
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      false,
+      {
+        "object": "Lap"
+      },
+      3599,
+      {
+        "object": "Duration"
+      },
+      {
+        "object": "Duration"
+      },
+      3599
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            242
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "a"
+        },
+        {
+          "args": [
+            178
+          ],
+          "do": "call",
+          "method": "from_minutes",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "args": [
+            "10s 5m"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "args": [
+            "10s 5m"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Duration",
+          "save": "b"
+        },
+        {
+          "args": [
+            "1h"
+          ],
+          "do": "call",
+          "method": "from_text",
+          "obj": "Lap",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "args": [
+            0
+          ],
+          "cls": "Duration",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Lap"
+      },
+      {
+        "object": "Lap"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Lap"
+      },
+      "4h 2m",
+      {
+        "object": "Duration"
+      },
+      "1h",
+      "0s"
+    ],
+    "label": "generated-20"
+  }
+]

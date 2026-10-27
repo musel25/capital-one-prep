@@ -1,0 +1,2718 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            100
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                50
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                -30
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null,
+          null
+        ],
+        "error": null
+      },
+      120,
+      true
+    ],
+    "label": "commit on success"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            100
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                500
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b",
+          "raise": "RuntimeError"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null
+        ],
+        "error": "RuntimeError"
+      },
+      100,
+      false
+    ],
+    "label": "error in the block discards"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            20
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -30
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null
+        ],
+        "error": "ValueError"
+      },
+      20,
+      0
+    ],
+    "label": "overdraft at exit"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "as": "x",
+          "body": [
+            {
+              "args": [
+                7
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "x"
+            },
+            {
+              "args": [
+                8
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "x"
+            },
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "x"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null,
+          null,
+          15
+        ],
+        "error": null
+      },
+      15,
+      0
+    ],
+    "label": "pending inside the block and enter returns the batch"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            10
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "add",
+          "obj": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                5
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "add",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "error": "RuntimeError"
+      },
+      {
+        "body": [
+          null
+        ],
+        "error": null
+      },
+      {
+        "error": "RuntimeError"
+      },
+      15
+    ],
+    "label": "add outside the block"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            10
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                1
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [],
+        "error": null
+      },
+      {
+        "body": [],
+        "error": "RuntimeError"
+      },
+      10,
+      true
+    ],
+    "label": "a batch is used once"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            10
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                0
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                true
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                2.5
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                4
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          {
+            "error": "ValueError"
+          },
+          {
+            "error": "ValueError"
+          },
+          {
+            "error": "ValueError"
+          },
+          null
+        ],
+        "error": null
+      },
+      14
+    ],
+    "label": "invalid amounts inside the block"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            30
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -30
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null
+        ],
+        "error": null
+      },
+      0,
+      true
+    ],
+    "label": "exact zero balance is allowed"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            5
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [],
+          "do": "with",
+          "obj": "b",
+          "raise": "KeyError"
+        },
+        {
+          "body": [],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [],
+        "error": "KeyError"
+      },
+      {
+        "body": [],
+        "error": "RuntimeError"
+      },
+      5
+    ],
+    "label": "discarded batch cannot be reused"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            50
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b1"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b2"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -40
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b1"
+            }
+          ],
+          "do": "with",
+          "obj": "b1"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -40
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b2"
+            }
+          ],
+          "do": "with",
+          "obj": "b2"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null
+        ],
+        "error": null
+      },
+      {
+        "body": [
+          null
+        ],
+        "error": "ValueError"
+      },
+      10
+    ],
+    "label": "two batches on one account"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            -1
+          ],
+          "cls": "Account",
+          "do": "new"
+        },
+        {
+          "args": [
+            0
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "body": [],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      false,
+      {
+        "body": [],
+        "error": null
+      },
+      true,
+      0
+    ],
+    "label": "invalid account and an empty batch"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            10
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -50
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                45
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null,
+          null
+        ],
+        "error": null
+      },
+      5
+    ],
+    "label": "intermediate negative sum is fine"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            50
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -10
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                0
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                25
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null,
+          {
+            "error": "ValueError"
+          },
+          null,
+          15
+        ],
+        "error": null
+      },
+      65,
+      true,
+      0
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            52
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [],
+          "do": "with",
+          "obj": "b",
+          "raise": "RuntimeError"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [],
+        "error": "RuntimeError"
+      },
+      52,
+      false,
+      0
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            22
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "add",
+          "obj": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -40
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                60
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                -1
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b",
+          "raise": "RuntimeError"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "error": "RuntimeError"
+      },
+      {
+        "body": [
+          null,
+          null,
+          null
+        ],
+        "error": "RuntimeError"
+      },
+      22,
+      false,
+      0
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            13
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                25
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                true
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null,
+          {
+            "error": "ValueError"
+          },
+          25
+        ],
+        "error": null
+      },
+      38,
+      true,
+      0
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            19
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -10
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                -1
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b",
+          "raise": "KeyError"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null,
+          null
+        ],
+        "error": "KeyError"
+      },
+      19,
+      false,
+      0
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            24
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "add",
+          "obj": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                0
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                -1
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                60
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                -1
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "error": "RuntimeError"
+      },
+      {
+        "body": [
+          {
+            "error": "ValueError"
+          },
+          null,
+          null,
+          null,
+          58
+        ],
+        "error": null
+      },
+      82,
+      true,
+      0
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            21
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [],
+          "do": "with",
+          "obj": "b",
+          "raise": "RuntimeError"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [],
+        "error": "RuntimeError"
+      },
+      21,
+      false,
+      0
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            17
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "add",
+          "obj": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -10
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                -40
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                true
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b",
+          "raise": "KeyError"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "error": "RuntimeError"
+      },
+      {
+        "body": [
+          null,
+          null,
+          {
+            "error": "ValueError"
+          },
+          -50
+        ],
+        "error": "KeyError"
+      },
+      17,
+      false,
+      0
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            52
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                0
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                25
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                -10
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                -1
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          {
+            "error": "ValueError"
+          },
+          null,
+          null,
+          null,
+          14
+        ],
+        "error": null
+      },
+      66,
+      true,
+      0
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            63
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "body": [],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          0
+        ],
+        "error": null
+      },
+      {
+        "body": [],
+        "error": "RuntimeError"
+      },
+      63,
+      true,
+      0
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            67
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -40
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                true
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                1
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                0
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null,
+          {
+            "error": "ValueError"
+          },
+          null,
+          {
+            "error": "ValueError"
+          }
+        ],
+        "error": null
+      },
+      28,
+      true,
+      0
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            55
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -10
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                1
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b",
+          "raise": "RuntimeError"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null,
+          null,
+          -9
+        ],
+        "error": "RuntimeError"
+      },
+      55,
+      false,
+      0
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            55
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -10
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                -40
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                true
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b",
+          "raise": "KeyError"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null,
+          null,
+          {
+            "error": "ValueError"
+          },
+          -50
+        ],
+        "error": "KeyError"
+      },
+      55,
+      false,
+      0
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            11
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -40
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b",
+          "raise": "RuntimeError"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null
+        ],
+        "error": "RuntimeError"
+      },
+      11,
+      false,
+      0
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            44
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "add",
+          "obj": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                1
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "error": "RuntimeError"
+      },
+      {
+        "body": [
+          null
+        ],
+        "error": null
+      },
+      45,
+      true,
+      0
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            27
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "add",
+          "obj": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                1
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b",
+          "raise": "RuntimeError"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "error": "RuntimeError"
+      },
+      {
+        "body": [
+          null,
+          1
+        ],
+        "error": "RuntimeError"
+      },
+      27,
+      false,
+      0
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            27
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                true
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                25
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                -10
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                -10
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          {
+            "error": "ValueError"
+          },
+          null,
+          null,
+          null,
+          5
+        ],
+        "error": null
+      },
+      32,
+      true,
+      0
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            8
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "add",
+          "obj": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                60
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                -40
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                true
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b",
+          "raise": "KeyError"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "error": "RuntimeError"
+      },
+      {
+        "body": [
+          null,
+          null,
+          {
+            "error": "ValueError"
+          },
+          20
+        ],
+        "error": "KeyError"
+      },
+      8,
+      false,
+      0
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            51
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "add",
+          "obj": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -10
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b",
+          "raise": "RuntimeError"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "error": "RuntimeError"
+      },
+      {
+        "body": [
+          null
+        ],
+        "error": "RuntimeError"
+      },
+      51,
+      false,
+      0
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            69
+          ],
+          "cls": "Account",
+          "do": "new",
+          "save": "acc"
+        },
+        {
+          "args": [
+            {
+              "ref": "acc"
+            }
+          ],
+          "cls": "Batch",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "body": [
+            {
+              "args": [
+                -40
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                true
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                25
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "args": [
+                60
+              ],
+              "do": "call",
+              "method": "add",
+              "obj": "b"
+            },
+            {
+              "attr": "pending",
+              "do": "get",
+              "obj": "b"
+            }
+          ],
+          "do": "with",
+          "obj": "b"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "acc"
+        },
+        {
+          "attr": "committed",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "pending",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Account"
+      },
+      {
+        "object": "Batch"
+      },
+      {
+        "body": [
+          null,
+          {
+            "error": "ValueError"
+          },
+          null,
+          null,
+          45
+        ],
+        "error": null
+      },
+      114,
+      true,
+      0
+    ],
+    "label": "generated-20"
+  }
+]

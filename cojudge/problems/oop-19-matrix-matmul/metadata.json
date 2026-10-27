@@ -1,0 +1,50 @@
+{
+  "id": "oop-19-matrix-matmul",
+  "title": "19. Matrix multiplication with @",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "04-dunder-methods-and-builtins",
+  "examples": [
+    {
+      "input": "{\"ops\": [{\"args\": [[[1, 2, 3], [4, 5, 6]]], \"cls\": \"Matrix\", \"do\": \"new\", \"save\": \"a\"}, {\"args\": [[[7, 8], [9, 10], [11, 12]]], \"cls\": \"Matrix\", \"do\": \"new\", \"save\": \"b\"}, {\"do\": \"op\", \"left\": {\"ref\": \"a\"}, \"op\": \"@\", \"right\": {\"ref\": \"b\"}, \"save\": \"c\"}, {\"do\": \"repr\", \"obj\": \"c\"}, {\"attr\": \"shape\", \"do\": \"get\", \"obj\": \"c\"}]}",
+      "output": "[{\"object\": \"Matrix\"}, {\"object\": \"Matrix\"}, {\"object\": \"Matrix\"}, \"Matrix([[58, 64], [139, 154]])\", [2, 2]]",
+      "explanation": "A 2\u00d73 matrix times a 3\u00d72 matrix gives a 2\u00d72 matrix. Entry [0][0] is 1\u00b77 + 2\u00b79 + 3\u00b711 = 58."
+    },
+    {
+      "input": "{\"ops\": [{\"args\": [[[2, -1], [0, 3]]], \"cls\": \"Matrix\", \"do\": \"new\", \"save\": \"a\"}, {\"args\": [2], \"do\": \"call\", \"method\": \"identity\", \"obj\": \"Matrix\", \"save\": \"i\"}, {\"do\": \"op\", \"left\": {\"ref\": \"a\"}, \"op\": \"@\", \"right\": {\"ref\": \"i\"}, \"save\": \"b\"}, {\"do\": \"op\", \"left\": {\"ref\": \"a\"}, \"op\": \"==\", \"right\": {\"ref\": \"b\"}}, {\"do\": \"repr\", \"obj\": \"i\"}]}",
+      "output": "[{\"object\": \"Matrix\"}, {\"object\": \"Matrix\"}, {\"object\": \"Matrix\"}, true, \"Matrix([[1, 0], [0, 1]])\"]",
+      "explanation": "Multiplying by the identity matrix returns an equal matrix."
+    },
+    {
+      "input": "{\"ops\": [{\"args\": [[[1, 2, 3], [4, 5, 6]]], \"cls\": \"Matrix\", \"do\": \"new\", \"save\": \"a\"}, {\"do\": \"op\", \"left\": {\"ref\": \"a\"}, \"op\": \"@\", \"right\": {\"ref\": \"a\"}}, {\"do\": \"op\", \"left\": {\"ref\": \"a\"}, \"op\": \"@\", \"right\": [[1], [2], [3]]}]}",
+      "output": "[{\"object\": \"Matrix\"}, {\"error\": \"ValueError\"}, {\"error\": \"TypeError\"}]",
+      "explanation": "A 2\u00d73 matrix cannot multiply another 2\u00d73 matrix: 3 columns, 2 rows. A plain list gives TypeError."
+    }
+  ],
+  "starterCode": {
+    "python": "class Matrix:\n    def __init__(self, rows: list[list[int]]):\n        raise NotImplementedError\n\n    @property\n    def shape(self) -> tuple[int, int]:\n        raise NotImplementedError\n\n    @property\n    def rows(self) -> list[list[int]]:\n        raise NotImplementedError\n\n    @classmethod\n    def identity(cls, n: int) -> \"Matrix\":\n        raise NotImplementedError\n\n    def transpose(self) -> \"Matrix\":\n        raise NotImplementedError\n\n    def __matmul__(self, other: \"Matrix\") -> \"Matrix\":\n        raise NotImplementedError\n\n    def __eq__(self, other: object) -> bool:\n        raise NotImplementedError\n\n    def __repr__(self) -> str:\n        raise NotImplementedError\n\n\n# ---------------------------------------------------------------------------\n# Supplied test driver. Do not edit below this line.\n# Each test is a list of steps. The driver runs every step on your classes and\n# records its result, or {\"error\": \"<ExceptionName>\"} when the step raises.\n# ---------------------------------------------------------------------------\nimport builtins as _builtins\nimport dataclasses as _dataclasses\nimport inspect as _inspect\nimport operator as _operator\n\n_BINARY = {\"+\": _operator.add, \"-\": _operator.sub, \"*\": _operator.mul,\n           \"@\": _operator.matmul, \"==\": _operator.eq, \"!=\": _operator.ne,\n           \"<\": _operator.lt, \"<=\": _operator.le, \">\": _operator.gt,\n           \">=\": _operator.ge, \"in\": lambda left, right: left in right}\n_BUILTIN = {\"repr\": repr, \"str\": str, \"len\": len, \"bool\": bool,\n            \"list\": list, \"sorted\": sorted}\n\n\ndef _lookup(name, env):\n    if name in env:\n        return env[name]\n    if name in globals():\n        return globals()[name]\n    return getattr(_builtins, name)\n\n\ndef _value(raw, env):\n    if isinstance(raw, dict) and list(raw) == [\"ref\"]:\n        return env[raw[\"ref\"]]\n    if isinstance(raw, list):\n        return [_value(item, env) for item in raw]\n    if isinstance(raw, dict):\n        return {key: _value(item, env) for key, item in raw.items()}\n    return raw\n\n\ndef _plain(value):\n    if value is None or isinstance(value, (bool, int, float, str)):\n        return value\n    if isinstance(value, (list, tuple)):\n        return [_plain(item) for item in value]\n    if isinstance(value, dict):\n        return {str(key): _plain(item) for key, item in value.items()}\n    return {\"object\": type(value).__name__}\n\n\ndef _check(step, env):\n    kind = step[\"is\"]\n    if kind in (\"instance\", \"callable\"):\n        target = _lookup(step[\"obj\"], env)\n        return callable(target) if kind == \"callable\" else isinstance(target, _lookup(step[\"of\"], env))\n    cls = _lookup(step[\"cls\"], env)\n    if kind == \"mro\":\n        return [klass.__name__ for klass in cls.__mro__]\n    if kind == \"subclass\":\n        return issubclass(cls, _lookup(step[\"of\"], env))\n    if kind == \"abstract\":\n        return _inspect.isabstract(cls)\n    if kind == \"dataclass\":\n        return _dataclasses.is_dataclass(cls)\n    found = _inspect.getattr_static(cls, step[\"attr\"], None)\n    return isinstance(found, {\"property\": property, \"staticmethod\": staticmethod,\n                              \"classmethod\": classmethod}[kind])\n\n\ndef _step(step, env):\n    do = step[\"do\"]\n    args = _value(step.get(\"args\", []), env)\n    kwargs = _value(step.get(\"kwargs\", {}), env)\n    if do == \"check\":\n        return _check(step, env)\n    if do == \"op\":\n        return _BINARY[step[\"op\"]](_value(step[\"left\"], env), _value(step[\"right\"], env))\n    target = _lookup(step.get(\"obj\", step.get(\"cls\")), env)\n    if do == \"new\":\n        return target(*args, **kwargs)\n    if do == \"get\":\n        return getattr(target, step[\"attr\"])\n    if do == \"set\":\n        setattr(target, step[\"attr\"], _value(step[\"value\"], env))\n        return None\n    if do == \"call\":\n        return getattr(target, step[\"method\"])(*args, **kwargs)\n    if do == \"invoke\":\n        return target(*args, **kwargs)\n    if do == \"item\":\n        return target[_value(step[\"key\"], env)]\n    if do == \"setitem\":\n        target[_value(step[\"key\"], env)] = _value(step[\"value\"], env)\n        return None\n    if do == \"with\":\n        body = []\n        try:\n            with target as entered:\n                if \"as\" in step:\n                    env[step[\"as\"]] = entered\n                body.extend(_run(inner, env) for inner in step[\"body\"])\n                if \"raise\" in step:\n                    raise getattr(_builtins, step[\"raise\"])(\"raised by the test\")\n        except Exception as error:\n            return {\"body\": body, \"error\": type(error).__name__}\n        return {\"body\": body, \"error\": None}\n    return _BUILTIN[do](target)\n\n\ndef _run(step, env):\n    try:\n        result = _step(step, env)\n    except Exception as error:\n        return {\"error\": type(error).__name__}\n    if \"save\" in step:\n        env[step[\"save\"]] = result\n    return _plain(result)\n\n\ndef solve(data):\n    env = {}\n    return [_run(step, env) for step in data[\"ops\"]]\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"ops\":[{\"args\":[[[1,2,3],[4,5,6]]],\"cls\":\"Matrix\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[[[7,8],[9,10],[11,12]]],\"cls\":\"Matrix\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"@\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"repr\",\"obj\":\"c\"},{\"attr\":\"shape\",\"do\":\"get\",\"obj\":\"c\"}]}"
+    },
+    {
+      "payload": "{\"ops\":[{\"args\":[[[2,-1],[0,3]]],\"cls\":\"Matrix\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[2],\"do\":\"call\",\"method\":\"identity\",\"obj\":\"Matrix\",\"save\":\"i\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"@\",\"right\":{\"ref\":\"i\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"repr\",\"obj\":\"i\"}]}"
+    },
+    {
+      "payload": "{\"ops\":[{\"args\":[[[1,2,3],[4,5,6]]],\"cls\":\"Matrix\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"@\",\"right\":{\"ref\":\"a\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"@\",\"right\":[[1],[2],[3]]}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "`[list(col) for col in zip(*rows)]` is the transpose.",
+    "`f\"Matrix({self._rows!r})\"` gives the required repr for a list of lists of integers."
+  ]
+}

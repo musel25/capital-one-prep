@@ -1,0 +1,2357 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ana"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 50
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 20
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      null,
+      null,
+      50,
+      [
+        0,
+        50,
+        20
+      ]
+    ],
+    "label": "accepted scores and best"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ana"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": "10"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": -1
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "ValueError"
+      },
+      0,
+      [
+        0
+      ]
+    ],
+    "label": "wrong type and negative value"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ana"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 5
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p",
+          "save": "h"
+        },
+        {
+          "args": [
+            999
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "h"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      null,
+      [
+        0,
+        5
+      ],
+      null,
+      [
+        0,
+        5
+      ]
+    ],
+    "label": "history is a copy"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ben"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": true
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": false
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      [
+        0
+      ]
+    ],
+    "label": "booleans are rejected"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ben"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 2.5
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": null
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": [
+            1
+          ]
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      0
+    ],
+    "label": "floats and null are rejected"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 300
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      null,
+      null,
+      0,
+      300,
+      [
+        0,
+        300,
+        0
+      ]
+    ],
+    "label": "reset is recorded and keeps best"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 0
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 7
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 7
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      null,
+      null,
+      null,
+      [
+        0,
+        0,
+        7,
+        7
+      ]
+    ],
+    "label": "zero and repeats are recorded"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 10
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 40
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 30
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 10000
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      null,
+      null,
+      null,
+      40,
+      null,
+      10000
+    ],
+    "label": "best rises only"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Fay"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "best",
+          "do": "set",
+          "obj": "p",
+          "value": 99
+        },
+        {
+          "attr": "history",
+          "do": "set",
+          "obj": "p",
+          "value": []
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      0
+    ],
+    "label": "read-only properties"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Gus"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 3
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": -3
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": "x"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 4
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      null,
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "TypeError"
+      },
+      null,
+      [
+        0,
+        3,
+        4
+      ],
+      4
+    ],
+    "label": "rejections between valid scores"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "a",
+          "value": 8
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      {
+        "object": "Player"
+      },
+      null,
+      [
+        0
+      ],
+      0
+    ],
+    "label": "two players are independent"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "attr": "score",
+          "cls": "Player",
+          "do": "check",
+          "is": "property"
+        },
+        {
+          "attr": "best",
+          "cls": "Player",
+          "do": "check",
+          "is": "property"
+        },
+        {
+          "attr": "history",
+          "cls": "Player",
+          "do": "check",
+          "is": "property"
+        },
+        {
+          "args": [],
+          "cls": "Player",
+          "do": "new",
+          "kwargs": {
+            "name": "Hal"
+          },
+          "save": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      true,
+      true,
+      true,
+      {
+        "object": "Player"
+      },
+      "Hal"
+    ],
+    "label": "structure"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 1.5
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 0
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 1.5
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": "7"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      0,
+      0,
+      0,
+      {
+        "error": "TypeError"
+      },
+      null,
+      null,
+      null,
+      0,
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      0
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      [
+        0
+      ],
+      0,
+      0,
+      null
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": -5
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": true
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 1.5
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": true
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      {
+        "error": "ValueError"
+      },
+      [
+        0
+      ],
+      null,
+      {
+        "error": "TypeError"
+      },
+      0,
+      null,
+      0,
+      0,
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      0,
+      0,
+      null
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": "7"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      [
+        0
+      ],
+      0,
+      {
+        "error": "TypeError"
+      },
+      [
+        0
+      ]
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      0,
+      null,
+      0,
+      null
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 0
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      [
+        0
+      ],
+      null,
+      [
+        0,
+        0
+      ],
+      0,
+      0
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": "7"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": -4
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": true
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 1.5
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": "7"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      null,
+      [
+        0,
+        0
+      ],
+      0,
+      0,
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      0,
+      0
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 0
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 0
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": "7"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": -4
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      [
+        0
+      ],
+      null,
+      null,
+      0,
+      null,
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "ValueError"
+      },
+      null
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      0,
+      null,
+      null,
+      0,
+      0,
+      null,
+      0,
+      0,
+      null,
+      0
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 1.5
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": -6
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      0,
+      {
+        "error": "TypeError"
+      },
+      0,
+      0,
+      [
+        0
+      ],
+      0,
+      null,
+      null,
+      [
+        0,
+        0,
+        0
+      ],
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 0
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 397
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      null,
+      0,
+      null,
+      0,
+      0,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      0,
+      0,
+      0,
+      null,
+      [
+        0,
+        0,
+        0,
+        397
+      ]
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 1.5
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      0,
+      null,
+      {
+        "error": "TypeError"
+      },
+      0,
+      0,
+      0,
+      null,
+      0,
+      null,
+      0,
+      0,
+      null
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 1.5
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 0
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      [
+        0
+      ],
+      {
+        "error": "TypeError"
+      },
+      0,
+      null,
+      null,
+      [
+        0,
+        0,
+        0
+      ],
+      0,
+      0
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 483
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": true
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": -2
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": -7
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      0,
+      null,
+      null,
+      {
+        "error": "TypeError"
+      },
+      0,
+      null,
+      {
+        "error": "ValueError"
+      },
+      483,
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": "7"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 1.5
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      [
+        0
+      ],
+      0,
+      [
+        0
+      ],
+      0,
+      {
+        "error": "TypeError"
+      },
+      null,
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      0,
+      {
+        "error": "TypeError"
+      },
+      0,
+      [
+        0,
+        0
+      ]
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": "7"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": -2
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      null,
+      [
+        0,
+        0
+      ],
+      0,
+      0,
+      {
+        "error": "TypeError"
+      },
+      0,
+      [
+        0,
+        0
+      ],
+      0,
+      [
+        0,
+        0
+      ],
+      {
+        "error": "ValueError"
+      },
+      [
+        0,
+        0
+      ],
+      null,
+      0,
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": "7"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": -6
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": -5
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      [
+        0
+      ],
+      null,
+      [
+        0,
+        0
+      ],
+      {
+        "error": "TypeError"
+      },
+      null,
+      0,
+      null,
+      null,
+      0,
+      {
+        "error": "ValueError"
+      },
+      0,
+      {
+        "error": "ValueError"
+      },
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      null,
+      null,
+      null,
+      0,
+      0,
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": 395
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "history",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "set",
+          "obj": "p",
+          "value": true
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      0,
+      0,
+      null,
+      395,
+      [
+        0,
+        395
+      ],
+      {
+        "error": "TypeError"
+      },
+      395,
+      null
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "P"
+          ],
+          "cls": "Player",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "score",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "best",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "reset",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Player"
+      },
+      0,
+      0,
+      0,
+      null
+    ],
+    "label": "generated-20"
+  }
+]

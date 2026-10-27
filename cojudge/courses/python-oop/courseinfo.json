@@ -1,0 +1,45 @@
+{
+  "title": "Python OOP Path",
+  "description": "22 original Python exercises on object-oriented programming. Start at 01. Five levels: classes and properties, state and behavior, inheritance and composition, dunder methods and built-ins, then three small projects. Select Python. You write classes; a supplied driver calls them and checks the results and some class structure. Open the collapsed lesson first if the topic is new.",
+  "category-order": [
+    "01-classes-and-properties",
+    "02-state-and-behavior",
+    "03-inheritance-and-composition",
+    "04-dunder-methods-and-builtins",
+    "05-small-projects"
+  ],
+  "problems-of-category": {
+    "01-classes-and-properties": [
+      "oop-01-countdown-property",
+      "oop-02-member-properties-repr",
+      "oop-03-score-property",
+      "oop-04-color-staticmethod",
+      "oop-05-duration-alternative-constructors"
+    ],
+    "02-state-and-behavior": [
+      "oop-06-promo-rotation-state",
+      "oop-07-callable-throttle",
+      "oop-08-product-dataclass",
+      "oop-09-karma-user"
+    ],
+    "03-inheritance-and-composition": [
+      "oop-10-vehicle-subclasses",
+      "oop-11-zoo-class-attributes",
+      "oop-12-mro-formatters",
+      "oop-13-abc-payment-methods",
+      "oop-14-robot-composition"
+    ],
+    "04-dunder-methods-and-builtins": [
+      "oop-15-case-insensitive-dict",
+      "oop-16-validated-list",
+      "oop-17-money-dunder-methods",
+      "oop-18-batch-context-manager",
+      "oop-19-matrix-matmul"
+    ],
+    "05-small-projects": [
+      "oop-20-ini-config-parser",
+      "oop-21-ninja-leaderboard",
+      "oop-22-bridge-hand"
+    ]
+  }
+}

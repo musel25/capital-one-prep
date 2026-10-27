@@ -1,0 +1,2072 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Bus",
+            60
+          ],
+          "cls": "Vehicle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [
+            "Cart",
+            7
+          ],
+          "cls": "Vehicle",
+          "do": "new",
+          "save": "w"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "w"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Vehicle"
+      },
+      10,
+      {
+        "object": "Vehicle"
+      },
+      9,
+      "Bus: 60 km/h"
+    ],
+    "label": "base vehicle"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Mini",
+            90,
+            4
+          ],
+          "cls": "Car",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "Isla",
+            30
+          ],
+          "cls": "Ferry",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            15
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Car"
+      },
+      "Mini: 90 km/h, 4 seats",
+      {
+        "object": "Ferry"
+      },
+      50
+    ],
+    "label": "subclasses extend the base"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Racer",
+            41
+          ],
+          "cls": "Bicycle",
+          "do": "new"
+        },
+        {
+          "args": [
+            "Slow",
+            0
+          ],
+          "cls": "Bicycle",
+          "do": "new"
+        },
+        {
+          "args": [
+            "City"
+          ],
+          "cls": "Bicycle",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Bicycle"
+      },
+      15
+    ],
+    "label": "validation in subclass and base"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Kart",
+            40,
+            0
+          ],
+          "cls": "Car",
+          "do": "new"
+        },
+        {
+          "args": [
+            "Van",
+            100,
+            10
+          ],
+          "cls": "Car",
+          "do": "new"
+        },
+        {
+          "args": [
+            "Kart",
+            40,
+            1
+          ],
+          "cls": "Car",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Car"
+      },
+      "Kart: 40 km/h, 1 seat"
+    ],
+    "label": "car seat rules and singular"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Broken",
+            0,
+            4
+          ],
+          "cls": "Car",
+          "do": "new"
+        },
+        {
+          "args": [
+            "Ok",
+            1,
+            4
+          ],
+          "cls": "Car",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Car"
+      },
+      60
+    ],
+    "label": "car speed still validated"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Quick",
+            60,
+            0
+          ],
+          "cls": "Ferry",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            60
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "Slow",
+            20
+          ],
+          "cls": "Ferry",
+          "do": "new",
+          "kwargs": {
+            "boarding": 45
+          },
+          "save": "g"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "g"
+        },
+        {
+          "args": [
+            "Bad",
+            20,
+            -1
+          ],
+          "cls": "Ferry",
+          "do": "new"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Ferry"
+      },
+      60,
+      {
+        "object": "Ferry"
+      },
+      45,
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "ferry boarding options"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Isla",
+            30
+          ],
+          "cls": "Ferry",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "f"
+        },
+        {
+          "attr": "boarding",
+          "do": "get",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Ferry"
+      },
+      "Isla: 30 km/h",
+      20
+    ],
+    "label": "ferry describe is inherited"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Fast",
+            40
+          ],
+          "cls": "Bicycle",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Bicycle"
+      },
+      15,
+      "Fast: 40 km/h",
+      0
+    ],
+    "label": "bicycle travel and boundary speed"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Mini",
+            90,
+            4
+          ],
+          "cls": "Car",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "c",
+          "value": 45
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "c"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Car"
+      },
+      null,
+      4,
+      "Mini: 45 km/h, 4 seats"
+    ],
+    "label": "speed changes later results"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Train",
+            120
+          ],
+          "cls": "Vehicle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "t"
+        },
+        {
+          "args": [
+            10000
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Vehicle"
+      },
+      1,
+      2,
+      5000
+    ],
+    "label": "rounding up"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Mini",
+            90,
+            4
+          ],
+          "cls": "Car",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "Bus",
+            60
+          ],
+          "cls": "Vehicle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "do": "check",
+          "is": "instance",
+          "obj": "c",
+          "of": "Vehicle"
+        },
+        {
+          "do": "check",
+          "is": "instance",
+          "obj": "v",
+          "of": "Car"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Car"
+      },
+      {
+        "object": "Vehicle"
+      },
+      true,
+      false
+    ],
+    "label": "instances of the base class"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "cls": "Bicycle",
+          "do": "check",
+          "is": "subclass",
+          "of": "Vehicle"
+        },
+        {
+          "cls": "Ferry",
+          "do": "check",
+          "is": "subclass",
+          "of": "Vehicle"
+        },
+        {
+          "cls": "Car",
+          "do": "check",
+          "is": "subclass",
+          "of": "Ferry"
+        },
+        {
+          "args": [],
+          "cls": "Bicycle",
+          "do": "new",
+          "kwargs": {
+            "name": "Kid",
+            "speed": 8
+          },
+          "save": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      true,
+      true,
+      false,
+      {
+        "object": "Bicycle"
+      },
+      15
+    ],
+    "label": "structure"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "B",
+            10
+          ],
+          "cls": "Bicycle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "args": [
+            7155
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 130
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [
+            61
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 133
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Bicycle"
+      },
+      42930,
+      null,
+      130,
+      29,
+      null
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "B",
+            25
+          ],
+          "cls": "Bicycle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "args": [
+            274
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 74
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Bicycle"
+      },
+      658,
+      0,
+      "B: 25 km/h",
+      null
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "B",
+            25
+          ],
+          "cls": "Bicycle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 11
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [
+            61
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [
+            61
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Bicycle"
+      },
+      null,
+      11,
+      0,
+      333,
+      "B: 11 km/h",
+      11,
+      0,
+      0,
+      333,
+      6
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "B",
+            40
+          ],
+          "cls": "Bicycle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "args": [
+            59
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [
+            59
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Bicycle"
+      },
+      89,
+      40,
+      89,
+      "B: 40 km/h",
+      "B: 40 km/h",
+      40,
+      40
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "F",
+            25,
+            -5
+          ],
+          "cls": "Ferry",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 140
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 12
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "F",
+            25,
+            20
+          ],
+          "cls": "Ferry",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 118
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Ferry"
+      },
+      null,
+      "F: 118 km/h",
+      118,
+      118
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "V",
+            60
+          ],
+          "cls": "Vehicle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 19
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 117
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Vehicle"
+      },
+      null,
+      19,
+      "V: 19 km/h",
+      null,
+      "V: 117 km/h"
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "V",
+            1
+          ],
+          "cls": "Vehicle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 56
+        },
+        {
+          "args": [
+            250
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Vehicle"
+      },
+      null,
+      268,
+      "V: 56 km/h",
+      56
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "B",
+            25
+          ],
+          "cls": "Bicycle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 50
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 53
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 134
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 117
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 60
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 4
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Bicycle"
+      },
+      null,
+      "B: 50 km/h",
+      "B: 50 km/h",
+      50,
+      null,
+      null,
+      null,
+      null,
+      60,
+      null
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "F",
+            40,
+            -5
+          ],
+          "cls": "Ferry",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [
+            61
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [
+            61
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 106
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 67
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "V",
+            0
+          ],
+          "cls": "Vehicle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 135
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 129
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "C",
+            77,
+            1
+          ],
+          "cls": "Car",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "args": [
+            250
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Car"
+      },
+      77,
+      "C: 77 km/h, 1 seat",
+      77,
+      "C: 77 km/h, 1 seat",
+      195,
+      "C: 77 km/h, 1 seat",
+      "C: 77 km/h, 1 seat"
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "C",
+            120,
+            1
+          ],
+          "cls": "Car",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 73
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 10
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Car"
+      },
+      120,
+      "C: 120 km/h, 1 seat",
+      1,
+      null,
+      73,
+      null
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "V",
+            13
+          ],
+          "cls": "Vehicle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [
+            250
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 45
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "args": [
+            2613
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Vehicle"
+      },
+      13,
+      13,
+      1154,
+      null,
+      2,
+      45,
+      "V: 45 km/h",
+      3484
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "F",
+            12,
+            -5
+          ],
+          "cls": "Ferry",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 50
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "C",
+            120,
+            0
+          ],
+          "cls": "Car",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 88
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 101
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 31
+        },
+        {
+          "args": [
+            250
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "F",
+            12,
+            15
+          ],
+          "cls": "Ferry",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "args": [
+            61
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 42
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 75
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 98
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Ferry"
+      },
+      320,
+      null,
+      "F: 42 km/h",
+      42,
+      "F: 42 km/h",
+      null,
+      75,
+      null,
+      "F: 98 km/h"
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "F",
+            40,
+            15
+          ],
+          "cls": "Ferry",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "args": [
+            59
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 6
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 95
+        },
+        {
+          "args": [
+            3430
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Ferry"
+      },
+      "F: 40 km/h",
+      104,
+      null,
+      6,
+      null,
+      2182
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "V",
+            60
+          ],
+          "cls": "Vehicle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "args": [
+            6717
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 144
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 113
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Vehicle"
+      },
+      6717,
+      null,
+      null,
+      "V: 113 km/h",
+      "V: 113 km/h",
+      113,
+      113,
+      "V: 113 km/h"
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "B",
+            25
+          ],
+          "cls": "Bicycle",
+          "do": "new",
+          "save": "v"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 140
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [
+            59
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "describe",
+          "obj": "v"
+        },
+        {
+          "args": [
+            2230
+          ],
+          "do": "call",
+          "method": "travel_minutes",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "get",
+          "obj": "v"
+        },
+        {
+          "attr": "speed",
+          "do": "set",
+          "obj": "v",
+          "value": 104
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Bicycle"
+      },
+      3,
+      25,
+      null,
+      1,
+      26,
+      "B: 140 km/h",
+      "B: 140 km/h",
+      956,
+      140,
+      null
+    ],
+    "label": "generated-20"
+  }
+]

@@ -1,0 +1,1918 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann",
+            "Lee",
+            "ann@mail.io"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "Ann Lee",
+      "alee"
+    ],
+    "label": "names and handle"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann",
+            "Lee",
+            "ann@mail.io"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "Member('Ann', 'Lee', 'ann@mail.io')",
+      "Ann Lee <ann@mail.io>"
+    ],
+    "label": "repr and str"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Bo",
+            "Kim",
+            "bo@kim.dev"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "bo@@kim.dev"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      {
+        "error": "ValueError"
+      },
+      "bo@kim.dev"
+    ],
+    "label": "rejected email keeps the old value"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann",
+            "Lee",
+            "ann.mail.io"
+          ],
+          "cls": "Member",
+          "do": "new"
+        },
+        {
+          "args": [
+            "Ann",
+            "Lee",
+            "@mail.io"
+          ],
+          "cls": "Member",
+          "do": "new"
+        },
+        {
+          "args": [
+            "Ann",
+            "Lee",
+            "ann@mailio"
+          ],
+          "cls": "Member",
+          "do": "new"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "constructor validates the email"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Cy",
+            "Ng",
+            "cy@ng.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "cy@.ng.org"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "cy@ng.org."
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "cy@ng"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      "cy@ng.org"
+    ],
+    "label": "domain dots at the edges"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann",
+            "Lee",
+            "ann@mail.io"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "a.lee@work.co.uk"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      null,
+      "a.lee@work.co.uk",
+      "Ann Lee <a.lee@work.co.uk>"
+    ],
+    "label": "valid change shows everywhere"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann",
+            "Lee",
+            "ann@mail.io"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Park"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      null,
+      "Ann Park",
+      "apark",
+      "Member('Ann', 'Park', 'ann@mail.io')"
+    ],
+    "label": "renamed member"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "MARIA",
+            "DelaCruz",
+            "m@dc.ph"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "mdelacruz",
+      "MARIA DelaCruz"
+    ],
+    "label": "handle is lowercase"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann",
+            "Lee",
+            "ann@mail.io"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "set",
+          "obj": "m",
+          "value": "Bob Ray"
+        },
+        {
+          "attr": "handle",
+          "do": "set",
+          "obj": "m",
+          "value": "bob"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      "Ann Lee"
+    ],
+    "label": "read-only computed properties"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Al",
+            "Ox",
+            "a@b.c"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "x@y..z"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "a@b.c",
+      null,
+      "x@y..z"
+    ],
+    "label": "shortest valid email and double dot"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann",
+            "Lee",
+            "ann@mail.io"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Bo",
+            "Kim",
+            "bo@kim.dev"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "a",
+          "value": "new@mail.io"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      {
+        "object": "Member"
+      },
+      null,
+      "bo@kim.dev",
+      "Ann Lee <new@mail.io>"
+    ],
+    "label": "two members are independent"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Member",
+          "do": "new",
+          "kwargs": {
+            "email": "eve@stone.net",
+            "first": "Eve",
+            "last": "Stone"
+          },
+          "save": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "@stone.net"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      {
+        "error": "ValueError"
+      },
+      "Member('Eve', 'Stone', 'eve@stone.net')"
+    ],
+    "label": "keyword arguments and empty local part"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Li",
+            "Wu",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "ok@ok.ok"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Lee"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "lwu",
+      "start@club.org",
+      null,
+      null,
+      "Li Lee <ok@ok.ok>",
+      "Li Lee",
+      "ok@ok.ok",
+      "Li Lee",
+      "ok@ok.ok",
+      "ok@ok.ok"
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Omar",
+            "Haddad",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Lee"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "Omar Haddad <start@club.org>",
+      "Omar Haddad",
+      "Omar Haddad <start@club.org>",
+      null,
+      "Omar Lee"
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Zoe",
+            "Quinn",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Haddad"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "start@club.org",
+      "Member('Zoe', 'Quinn', 'start@club.org')",
+      "Member('Zoe', 'Quinn', 'start@club.org')",
+      null
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Raj",
+            "Patel",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "x@.y"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "me@home.net"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Zoe"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Wu"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "x@y."
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Wu"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      {
+        "error": "ValueError"
+      },
+      null,
+      null,
+      null,
+      {
+        "error": "ValueError"
+      },
+      null
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann",
+            "Lee",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Kim"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Lee"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Zoe"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Ann"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "start@club.org",
+      "alee",
+      null,
+      "akim",
+      "Ann Kim",
+      "Member('Ann', 'Kim', 'start@club.org')",
+      null,
+      null,
+      "Zoe Lee",
+      null
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Zoe",
+            "Quinn",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Lee"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Omar"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "start@club.org",
+      "start@club.org",
+      "zquinn",
+      null,
+      "Member('Zoe', 'Lee', 'start@club.org')",
+      "start@club.org",
+      null
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Raj",
+            "Patel",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Wu"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Omar"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Patel"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Omar"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      null,
+      null,
+      "Member('Omar', 'Wu', 'start@club.org')",
+      "Omar Wu",
+      "Member('Omar', 'Wu', 'start@club.org')",
+      null,
+      "Omar Patel",
+      null
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Li",
+            "Wu",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Wu"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Raj"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Omar"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Wu"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      null,
+      "Li Wu <start@club.org>",
+      null,
+      "Member('Raj', 'Wu', 'start@club.org')",
+      null,
+      "owu",
+      null,
+      "start@club.org"
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Zoe",
+            "Quinn",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Quinn"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "start@club.org",
+      "Member('Zoe', 'Quinn', 'start@club.org')",
+      "Member('Zoe', 'Quinn', 'start@club.org')",
+      null,
+      "start@club.org",
+      "Zoe Quinn <start@club.org>",
+      "zquinn",
+      "Zoe Quinn <start@club.org>"
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Bo",
+            "Kim",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Ann"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "x@y"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "bkim",
+      "start@club.org",
+      null,
+      "Member('Ann', 'Kim', 'start@club.org')",
+      "Ann Kim <start@club.org>",
+      {
+        "error": "ValueError"
+      },
+      "Ann Kim <start@club.org>",
+      "Ann Kim <start@club.org>",
+      "Ann Kim <start@club.org>",
+      "Ann Kim <start@club.org>",
+      "Member('Ann', 'Kim', 'start@club.org')",
+      "start@club.org"
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Raj",
+            "Patel",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Quinn"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "x@y"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Raj"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Quinn"
+        },
+        {
+          "attr": "email",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "rpatel",
+      null,
+      {
+        "error": "ValueError"
+      },
+      "start@club.org",
+      "Raj Quinn <start@club.org>",
+      null,
+      null,
+      "start@club.org",
+      "Raj Quinn <start@club.org>",
+      "Raj Quinn <start@club.org>"
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Omar",
+            "Haddad",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Ann"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Quinn"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "ohaddad",
+      null,
+      "Member('Ann', 'Haddad', 'start@club.org')",
+      "Member('Ann', 'Haddad', 'start@club.org')",
+      null
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Bo",
+            "Kim",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Raj"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Kim"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      null,
+      "Raj Kim",
+      "rkim",
+      null,
+      "Raj Kim",
+      "rkim"
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann",
+            "Lee",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Lee"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "Ann Lee",
+      "alee",
+      null,
+      "Ann Lee",
+      "Ann Lee <start@club.org>",
+      "Ann Lee <start@club.org>"
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Bo",
+            "Kim",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Ann"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "x@.y"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Ann"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Zoe"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "x@.y"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "@y.io"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      null,
+      "Ann Kim",
+      {
+        "error": "ValueError"
+      },
+      null,
+      null,
+      "Member('Zoe', 'Kim', 'start@club.org')",
+      {
+        "error": "ValueError"
+      },
+      "Zoe Kim",
+      "zkim",
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Omar",
+            "Haddad",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "first.last@mail.example.com"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Omar"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Patel"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "ohaddad",
+      "ohaddad",
+      null,
+      null,
+      null,
+      "opatel",
+      "opatel"
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Raj",
+            "Patel",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Li"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Quinn"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Quinn"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "Raj Patel",
+      "Raj Patel",
+      null,
+      "Li Patel <start@club.org>",
+      "Li Patel <start@club.org>",
+      "Li Patel <start@club.org>",
+      null,
+      null
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Li",
+            "Wu",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "a@b@c.d"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "a@b.co"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Quinn"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "lwu",
+      "Li Wu",
+      {
+        "error": "ValueError"
+      },
+      null,
+      "Member('Li', 'Wu', 'a@b.co')",
+      "lwu",
+      "Li Wu",
+      "lwu",
+      null
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Omar",
+            "Haddad",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Haddad"
+        },
+        {
+          "attr": "full_name",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      null,
+      "Omar Haddad",
+      "Omar Haddad <start@club.org>",
+      "Omar Haddad <start@club.org>",
+      "ohaddad",
+      "ohaddad",
+      "Member('Omar', 'Haddad', 'start@club.org')",
+      "Omar Haddad <start@club.org>",
+      "Omar Haddad <start@club.org>"
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Raj",
+            "Patel",
+            "start@club.org"
+          ],
+          "cls": "Member",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "attr": "handle",
+          "do": "get",
+          "obj": "m"
+        },
+        {
+          "do": "str",
+          "obj": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Quinn"
+        },
+        {
+          "attr": "email",
+          "do": "set",
+          "obj": "m",
+          "value": "x@.y"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Raj"
+        },
+        {
+          "attr": "first",
+          "do": "set",
+          "obj": "m",
+          "value": "Raj"
+        },
+        {
+          "attr": "last",
+          "do": "set",
+          "obj": "m",
+          "value": "Kim"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Member"
+      },
+      "rpatel",
+      "rpatel",
+      "Raj Patel <start@club.org>",
+      "Member('Raj', 'Patel', 'start@club.org')",
+      null,
+      {
+        "error": "ValueError"
+      },
+      null,
+      null,
+      null
+    ],
+    "label": "generated-20"
+  }
+]

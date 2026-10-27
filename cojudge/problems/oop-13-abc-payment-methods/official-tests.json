@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Card\",\"do\":\"new\",\"save\":\"c\"},{\"args\":[1000],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"PaymentMethod\",\"do\":\"new\"},{\"args\":[],\"cls\":\"Draft\",\"do\":\"new\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[500],\"cls\":\"Wallet\",\"do\":\"new\",\"save\":\"w\"},{\"args\":[600],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"w\"},{\"args\":[200],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"w\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"w\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Card\",\"do\":\"new\",\"save\":\"c\"},{\"args\":[1],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"c\"},{\"args\":[34],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"c\"},{\"args\":[35],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"c\"},{\"args\":[2000],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"BankTransfer\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[1],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"b\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Card\",\"do\":\"new\",\"save\":\"c\"},{\"args\":[0],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"c\"},{\"args\":[-5],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"c\"},{\"args\":[true],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[100],\"cls\":\"Wallet\",\"do\":\"new\",\"save\":\"w\"},{\"args\":[-5],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"w\"},{\"args\":[0],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"w\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"w\"},{\"args\":[100],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"w\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"w\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[0],\"cls\":\"Wallet\",\"do\":\"new\",\"save\":\"w\"},{\"args\":[1],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"w\"},{\"args\":[-1],\"cls\":\"Wallet\",\"do\":\"new\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"Card\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"Wallet\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"Draft\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"cls\":\"PaymentMethod\",\"do\":\"check\",\"is\":\"abstract\"},{\"cls\":\"Draft\",\"do\":\"check\",\"is\":\"abstract\"},{\"cls\":\"Card\",\"do\":\"check\",\"is\":\"abstract\"},{\"cls\":\"Wallet\",\"do\":\"check\",\"is\":\"abstract\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Card\",\"do\":\"new\",\"save\":\"c\"},{\"args\":[10000000],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"cls\":\"Wallet\",\"do\":\"check\",\"is\":\"subclass\",\"of\":\"PaymentMethod\"},{\"cls\":\"BankTransfer\",\"do\":\"check\",\"is\":\"subclass\",\"of\":\"PaymentMethod\"},{\"args\":[],\"cls\":\"Wallet\",\"do\":\"new\",\"kwargs\":{\"balance\":70},\"save\":\"w\"},{\"args\":[70],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"w\"},{\"args\":[70],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"w\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[50],\"cls\":\"Wallet\",\"do\":\"new\",\"save\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[456],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[4967],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[1000],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[1324],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[1000],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"PaymentMethod\",\"do\":\"new\",\"save\":\"p\"},{\"args\":[33],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"PaymentMethod\",\"do\":\"new\",\"save\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[2958],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[0],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[2272],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[0],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[999],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[50],\"cls\":\"Wallet\",\"do\":\"new\",\"save\":\"p\"},{\"args\":[1000],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[1050],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Draft\",\"do\":\"new\",\"save\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"PaymentMethod\",\"do\":\"new\",\"save\":\"p\"},{\"args\":[1001],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[1000],\"cls\":\"Wallet\",\"do\":\"new\",\"save\":\"p\"},{\"args\":[826],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[33],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[35],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[4418],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[50],\"cls\":\"Wallet\",\"do\":\"new\",\"save\":\"p\"},{\"args\":[2344],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[35],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[33],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[1000],\"cls\":\"Wallet\",\"do\":\"new\",\"save\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[0],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[200],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[3803],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[1000],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Card\",\"do\":\"new\",\"save\":\"p\"},{\"args\":[34],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"PaymentMethod\",\"do\":\"new\",\"save\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[3403],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[2577],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[42191],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[3960],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[34],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Card\",\"do\":\"new\",\"save\":\"p\"},{\"args\":[999],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[35],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[1],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[3335],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[3477],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[809],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[1000],\"cls\":\"Wallet\",\"do\":\"new\",\"save\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[1000],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Card\",\"do\":\"new\",\"save\":\"p\"},{\"args\":[1371],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[0],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[1000],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Card\",\"do\":\"new\",\"save\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[0],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[1001],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Card\",\"do\":\"new\",\"save\":\"p\"},{\"args\":[230305],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[3734],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[0],\"cls\":\"Wallet\",\"do\":\"new\",\"save\":\"p\"},{\"args\":[35],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[1687],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[1333],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[0],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[0],\"cls\":\"Wallet\",\"do\":\"new\",\"save\":\"p\"},{\"args\":[1],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[4975],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Card\",\"do\":\"new\",\"save\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[2851],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"args\":[33],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[0],\"do\":\"call\",\"method\":\"charge\",\"obj\":\"p\"},{\"args\":[3673],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[1000],\"cls\":\"Wallet\",\"do\":\"new\",\"save\":\"p\"},{\"args\":[4317],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"args\":[3681],\"do\":\"call\",\"method\":\"fee\",\"obj\":\"p\"},{\"attr\":\"name\",\"do\":\"get\",\"obj\":\"p\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"p\"}]}"
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"ops\":[{\"args\":[100],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[50],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[-30],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[100],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[500],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"RuntimeError\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[20],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[-30],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[0],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"as\":\"x\",\"body\":[{\"args\":[7],\"do\":\"call\",\"method\":\"add\",\"obj\":\"x\"},{\"args\":[8],\"do\":\"call\",\"method\":\"add\",\"obj\":\"x\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"x\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[10],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[5],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"body\":[{\"args\":[5],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"args\":[5],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[10],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[],\"do\":\"with\",\"obj\":\"b\"},{\"body\":[{\"args\":[1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[10],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[0],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[true],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[2.5],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[4],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[30],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[-30],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[5],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"KeyError\"},{\"body\":[],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[50],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b1\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b2\"},{\"body\":[{\"args\":[-40],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b1\"}],\"do\":\"with\",\"obj\":\"b1\"},{\"body\":[{\"args\":[-40],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b2\"}],\"do\":\"with\",\"obj\":\"b2\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[-1],\"cls\":\"Account\",\"do\":\"new\"},{\"args\":[0],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"body\":[],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[10],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[-50],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[45],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[50],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[-10],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[0],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[25],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[52],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"RuntimeError\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[22],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"body\":[{\"args\":[-40],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[60],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[-1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"RuntimeError\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[13],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[25],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[true],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[19],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[-10],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[-1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"KeyError\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[24],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"body\":[{\"args\":[0],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[-1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[60],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[-1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[21],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"RuntimeError\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[17],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"body\":[{\"args\":[-10],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[-40],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[true],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"KeyError\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[52],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[0],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[25],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[-10],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[-1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[63],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"body\":[],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[67],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[-40],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[true],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[0],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[55],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[-10],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"RuntimeError\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[55],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[-10],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[-40],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[true],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"KeyError\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[11],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[-40],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"RuntimeError\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[44],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"body\":[{\"args\":[1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[27],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"body\":[{\"args\":[1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"RuntimeError\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[27],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[true],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[25],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[-10],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[-10],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[8],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"body\":[{\"args\":[60],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[-40],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[true],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"KeyError\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[51],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[1],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"body\":[{\"args\":[-10],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\",\"raise\":\"RuntimeError\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[69],\"cls\":\"Account\",\"do\":\"new\",\"save\":\"acc\"},{\"args\":[{\"ref\":\"acc\"}],\"cls\":\"Batch\",\"do\":\"new\",\"save\":\"b\"},{\"body\":[{\"args\":[-40],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[true],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[25],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"args\":[60],\"do\":\"call\",\"method\":\"add\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}],\"do\":\"with\",\"obj\":\"b\"},{\"attr\":\"balance\",\"do\":\"get\",\"obj\":\"acc\"},{\"attr\":\"committed\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"pending\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  }
+]

@@ -1,0 +1,2294 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Content-Type": "json",
+              "X-Id": "7"
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "item",
+          "key": "CONTENT-TYPE",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "content-type": "json",
+        "x-id": "7"
+      },
+      "json"
+    ],
+    "label": "constructor normalizes keys"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Host": "a.io"
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [
+            "HOST"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "hOsT",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "args": [
+            "HoSt"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "host",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "host": "a.io"
+      },
+      "a.io",
+      true,
+      "a.io",
+      false
+    ],
+    "label": "get, in, and pop ignore case"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Content-Type": "html",
+              "content-type": "json"
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "content-type": "json"
+      },
+      1
+    ],
+    "label": "later spelling wins"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "Accept",
+          "obj": "h",
+          "value": "text"
+        },
+        {
+          "do": "item",
+          "key": "accept",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "ACCEPT",
+          "obj": "h",
+          "value": "json"
+        },
+        {
+          "do": "item",
+          "key": "Accept",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {},
+      null,
+      "text",
+      null,
+      "json",
+      1
+    ],
+    "label": "set and read with different case"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "A": 1
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "item",
+          "key": "b",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "B",
+            0
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "B",
+            null
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "a": 1
+      },
+      {
+        "error": "KeyError"
+      },
+      null,
+      0,
+      {
+        "error": "KeyError"
+      },
+      null
+    ],
+    "label": "missing keys"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Age": 30
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [
+            {
+              "AGE": 31,
+              "City": "Lyon"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "age",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "CITY"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "age": 30
+      },
+      null,
+      [
+        "age",
+        "city"
+      ],
+      31,
+      "Lyon"
+    ],
+    "label": "update ignores case"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "K": true
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "check",
+          "is": "instance",
+          "obj": "h",
+          "of": "dict"
+        },
+        {
+          "cls": "CaseInsensitiveDict",
+          "do": "check",
+          "is": "subclass",
+          "of": "dict"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "k": true
+      },
+      true,
+      true
+    ],
+    "label": "it is a real dict"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            null
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            {}
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": "x",
+          "op": "in",
+          "right": {
+            "ref": "a"
+          }
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {},
+      {},
+      false,
+      0
+    ],
+    "label": "empty constructor and None mapping"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "List": [
+                1,
+                2
+              ],
+              "Null": null,
+              "Obj": {
+                "Inner": 1
+              }
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "item",
+          "key": "NULL",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "null",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "do": "item",
+          "key": "obj",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "list": [
+          1,
+          2
+        ],
+        "null": null,
+        "obj": {
+          "Inner": 1
+        }
+      },
+      null,
+      true,
+      {
+        "Inner": 1
+      }
+    ],
+    "label": "values of any JSON type"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Token": "abc"
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [
+            "TOKEN",
+            "none"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "token",
+            "gone"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "token": "abc"
+      },
+      "abc",
+      0,
+      "gone"
+    ],
+    "label": "pop with a default for an existing key"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "B",
+          "obj": "h",
+          "value": 1
+        },
+        {
+          "do": "setitem",
+          "key": "A",
+          "obj": "h",
+          "value": 2
+        },
+        {
+          "do": "setitem",
+          "key": "C",
+          "obj": "h",
+          "value": 3
+        },
+        {
+          "do": "setitem",
+          "key": "b",
+          "obj": "h",
+          "value": 9
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {},
+      null,
+      null,
+      null,
+      null,
+      [
+        "b",
+        "a",
+        "c"
+      ],
+      3
+    ],
+    "label": "insertion order is kept"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "X": 1,
+              "Y": 2
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [
+            "x"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            {
+              "x": 5
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "X",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "x": 1,
+        "y": 2
+      },
+      1,
+      null,
+      [
+        "y",
+        "x"
+      ],
+      5
+    ],
+    "label": "update after pop"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {}
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [
+            {
+              "id": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "NAME",
+          "obj": "h",
+          "value": 84
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "id",
+          "obj": "h",
+          "value": 80
+        },
+        {
+          "args": [
+            "Id"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "NAME",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "args": [
+            {
+              "Id": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {},
+      null,
+      null,
+      [
+        "id",
+        "name"
+      ],
+      null,
+      80,
+      true,
+      null,
+      2
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Id": 7
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "Age",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Age"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "Id",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "args": [
+            "aGe",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "ID"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "id": 7
+      },
+      [
+        "id"
+      ],
+      false,
+      [
+        "id"
+      ],
+      null,
+      true,
+      -1,
+      7
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Age": 7,
+              "NAME": 8
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [
+            "id"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "id",
+          "obj": "h"
+        },
+        {
+          "args": [
+            {
+              "id": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "Id",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "age": 7,
+        "name": 8
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      null,
+      true
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Age": 3,
+              "aGe": 8
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [
+            "id"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "ID"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Name"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "aGe"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "age": 8
+      },
+      {
+        "error": "KeyError"
+      },
+      null,
+      1,
+      null,
+      8
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Id": 1
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [
+            "id"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "aGe",
+          "obj": "h",
+          "value": 57
+        },
+        {
+          "args": [
+            {
+              "Id": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "aGe",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Age"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "Age",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "Age",
+          "obj": "h",
+          "value": 54
+        },
+        {
+          "args": [
+            "id",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "id": 1
+      },
+      1,
+      [
+        "id"
+      ],
+      null,
+      null,
+      57,
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      null,
+      "u"
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Age": 8,
+              "Id": 3
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Id"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Id"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "Age",
+          "obj": "h",
+          "value": 29
+        }
+      ]
+    },
+    "expected": [
+      {
+        "age": 8,
+        "id": 3
+      },
+      2,
+      3,
+      {
+        "error": "KeyError"
+      },
+      null
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Age": 3,
+              "ID": 6
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [
+            {
+              "Name": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "args": [
+            {
+              "Age": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "aGe"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "aGe",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "args": [
+            "id"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "args": [
+            {
+              "Id": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "age": 3,
+        "id": 6
+      },
+      null,
+      null,
+      3,
+      "u",
+      true,
+      6,
+      2,
+      null
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "ID": 1,
+              "Name": 8
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [
+            "Id",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "id",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Age"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "id"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Age"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "NAME",
+          "obj": "h",
+          "value": 88
+        },
+        {
+          "do": "op",
+          "left": "Name",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "args": [
+            "Name",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            {
+              "Name": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Age"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "id": 1,
+        "name": 8
+      },
+      1,
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      1,
+      [
+        "name"
+      ],
+      null,
+      true,
+      88,
+      null,
+      null
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Age": 5,
+              "aGe": 7
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "id",
+          "obj": "h",
+          "value": 8
+        },
+        {
+          "do": "item",
+          "key": "Id",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "Age",
+          "obj": "h",
+          "value": 22
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "age": 7
+      },
+      null,
+      8,
+      null,
+      [
+        "age",
+        "id"
+      ]
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Age": 2,
+              "Name": 2
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [
+            "aGe",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "ID"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "id",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "ID",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "do": "item",
+          "key": "ID",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "id",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "args": [
+            "id",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Age"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "age": 2,
+        "name": 2
+      },
+      2,
+      null,
+      -1,
+      false,
+      {
+        "error": "KeyError"
+      },
+      false,
+      -1,
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "ID": 9,
+              "NAME": 7
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "aGe",
+          "obj": "h"
+        },
+        {
+          "args": [
+            {
+              "id": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "aGe",
+          "obj": "h"
+        },
+        {
+          "args": [
+            {
+              "NAME": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "Id",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "id": 9,
+        "name": 7
+      },
+      [
+        "id",
+        "name"
+      ],
+      {
+        "error": "KeyError"
+      },
+      null,
+      {
+        "error": "KeyError"
+      },
+      null,
+      true
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "ID": 1,
+              "Id": 0,
+              "Name": 9
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Age",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "Age",
+          "obj": "h",
+          "value": 53
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "NAME"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Age",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "ID"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "ID",
+          "obj": "h",
+          "value": 30
+        }
+      ]
+    },
+    "expected": [
+      {
+        "id": 0,
+        "name": 9
+      },
+      [
+        "id",
+        "name"
+      ],
+      -1,
+      null,
+      3,
+      [
+        "id",
+        "name",
+        "age"
+      ],
+      9,
+      53,
+      0,
+      null
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {}
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "item",
+          "key": "ID",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "Id",
+          "obj": "h",
+          "value": 35
+        },
+        {
+          "args": [
+            {
+              "aGe": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "NAME",
+          "obj": "h",
+          "value": 97
+        },
+        {
+          "do": "op",
+          "left": "ID",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {},
+      {
+        "error": "KeyError"
+      },
+      0,
+      null,
+      null,
+      null,
+      true
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {}
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "Id",
+          "obj": "h",
+          "value": 32
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "Name",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Id"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            {
+              "NAME": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "aGe"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {},
+      null,
+      1,
+      {
+        "error": "KeyError"
+      },
+      32,
+      null,
+      null
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "NAME": 8
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Age"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "id",
+          "obj": "h",
+          "value": 82
+        },
+        {
+          "args": [
+            "Age"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "aGe"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "args": [
+            {
+              "Id": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "Age",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Id"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "args": [
+            {
+              "Name": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "name": 8
+      },
+      1,
+      null,
+      null,
+      {
+        "error": "KeyError"
+      },
+      null,
+      null,
+      2,
+      false,
+      2,
+      2,
+      "u",
+      null
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {}
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "id",
+          "obj": "h",
+          "value": 22
+        },
+        {
+          "args": [
+            "NAME"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "aGe",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {},
+      [],
+      null,
+      {
+        "error": "KeyError"
+      },
+      [
+        "id"
+      ],
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Age": 0,
+              "id": 3
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [
+            "id",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "aGe",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Age"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "ID",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "Age"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "NAME",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            {
+              "Id": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "ID",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "NAME",
+          "obj": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "NAME",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "age": 0,
+        "id": 3
+      },
+      3,
+      0,
+      0,
+      -1,
+      0,
+      -1,
+      null,
+      "u",
+      {
+        "error": "KeyError"
+      },
+      [
+        "id"
+      ],
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Age": 0,
+              "ID": 5,
+              "Id": 6
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "Name",
+          "obj": "h",
+          "value": 21
+        },
+        {
+          "args": [
+            "Age"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "NAME",
+          "obj": "h",
+          "value": 13
+        },
+        {
+          "args": [
+            "aGe",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "ID",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "ID"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "aGe",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "id",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "do": "op",
+          "left": "id",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "args": [
+            {
+              "Age": "u"
+            }
+          ],
+          "do": "call",
+          "method": "update",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "aGe",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "age": 0,
+        "id": 6
+      },
+      null,
+      0,
+      [
+        "id",
+        "name"
+      ],
+      null,
+      -1,
+      6,
+      6,
+      {
+        "error": "KeyError"
+      },
+      true,
+      true,
+      null,
+      "u"
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {}
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "list",
+          "obj": "h"
+        },
+        {
+          "do": "op",
+          "left": "id",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "do": "op",
+          "left": "Id",
+          "op": "in",
+          "right": {
+            "ref": "h"
+          }
+        },
+        {
+          "args": [
+            "aGe",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "item",
+          "key": "NAME",
+          "obj": "h"
+        },
+        {
+          "do": "setitem",
+          "key": "id",
+          "obj": "h",
+          "value": 94
+        }
+      ]
+    },
+    "expected": [
+      {},
+      [],
+      false,
+      false,
+      -1,
+      {
+        "error": "KeyError"
+      },
+      null
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            {
+              "Id": 7
+            }
+          ],
+          "cls": "CaseInsensitiveDict",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "item",
+          "key": "Name",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "NAME"
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "do": "len",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "NAME",
+            -1
+          ],
+          "do": "call",
+          "method": "pop",
+          "obj": "h"
+        },
+        {
+          "args": [
+            "id"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "id": 7
+      },
+      {
+        "error": "KeyError"
+      },
+      1,
+      {
+        "error": "KeyError"
+      },
+      1,
+      1,
+      -1,
+      7
+    ],
+    "label": "generated-20"
+  }
+]

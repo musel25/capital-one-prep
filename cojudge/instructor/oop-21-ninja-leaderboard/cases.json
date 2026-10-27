@@ -1,0 +1,3357 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            90
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            70
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      false,
+      [
+        [
+          "Kai",
+          90
+        ]
+      ]
+    ],
+    "label": "best score counts"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Bo",
+            40
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ana",
+            50
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Bo",
+            50
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      true,
+      true,
+      [
+        [
+          "Ana",
+          50
+        ],
+        [
+          "Bo",
+          50
+        ]
+      ],
+      2
+    ],
+    "label": "ties go to the earlier ninja"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "A",
+            1
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "B",
+            2
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "C",
+            3
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "A"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      true,
+      true,
+      [
+        [
+          "C",
+          3
+        ],
+        [
+          "B",
+          2
+        ]
+      ],
+      3
+    ],
+    "label": "size limits top"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            5
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "X",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Y",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "X",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "X"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      true,
+      false,
+      1
+    ],
+    "label": "equal resubmission does not move"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            7
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei",
+            9
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            8
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      "",
+      true,
+      true,
+      true,
+      "1. Mei 9\n2. Ren 8"
+    ],
+    "label": "str"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "A",
+            5
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "A",
+            6
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "B",
+            1
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": "B",
+          "op": "in",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": "Z",
+          "op": "in",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      0,
+      true,
+      true,
+      true,
+      2,
+      true,
+      false
+    ],
+    "label": "len and in"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0
+          ],
+          "cls": "Leaderboard",
+          "do": "new"
+        },
+        {
+          "args": [
+            1
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "ghost"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Leaderboard"
+      },
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "invalid size and unknown rank"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "A",
+            -5
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "B",
+            0
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "A",
+            -1
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      true,
+      true,
+      [
+        [
+          "B",
+          0
+        ],
+        [
+          "A",
+          -1
+        ]
+      ]
+    ],
+    "label": "negative and zero scores"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "A",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "B",
+            30
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "C",
+            30
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "A",
+            30
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "C",
+            31
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "C"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      true,
+      true,
+      true,
+      [
+        [
+          "B",
+          30
+        ],
+        [
+          "C",
+          30
+        ],
+        [
+          "A",
+          30
+        ]
+      ],
+      true,
+      1
+    ],
+    "label": "improvement moves up past a tie"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "A",
+            1
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "B",
+            2
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      true,
+      [
+        [
+          "B",
+          2
+        ]
+      ],
+      []
+    ],
+    "label": "top with small n"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      [],
+      0
+    ],
+    "label": "empty board"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Lin",
+            3
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kim",
+            4
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Lin"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      true,
+      "1. Kim 4",
+      2
+    ],
+    "label": "str respects size"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Mei",
+            30
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      {
+        "error": "KeyError"
+      },
+      true,
+      true,
+      {
+        "error": "KeyError"
+      },
+      [
+        [
+          "Mei",
+          30
+        ],
+        [
+          "Aya",
+          20
+        ]
+      ],
+      {
+        "error": "KeyError"
+      },
+      "1. Mei 30\n2. Aya 20",
+      {
+        "error": "KeyError"
+      },
+      [
+        [
+          "Mei",
+          30
+        ]
+      ],
+      true,
+      false,
+      "1. Mei 30\n2. Aya 20",
+      4,
+      [
+        [
+          "Mei",
+          30
+        ]
+      ]
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      "",
+      [],
+      {
+        "error": "KeyError"
+      },
+      0,
+      {
+        "error": "KeyError"
+      },
+      []
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      0,
+      {
+        "error": "KeyError"
+      },
+      0,
+      0,
+      [],
+      0,
+      {
+        "error": "KeyError"
+      },
+      [],
+      0,
+      [],
+      "",
+      0
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      [],
+      "",
+      "",
+      [],
+      "",
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      true,
+      1
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Kai"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            0
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      {
+        "error": "KeyError"
+      },
+      true,
+      [
+        [
+          "Kai",
+          10
+        ]
+      ],
+      [
+        [
+          "Kai",
+          10
+        ]
+      ],
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      "1. Kai 10",
+      false,
+      1,
+      true,
+      {
+        "error": "KeyError"
+      },
+      "1. Kai 10"
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            0
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      "",
+      [],
+      0,
+      [],
+      {
+        "error": "KeyError"
+      },
+      true,
+      [
+        [
+          "Kai",
+          10
+        ]
+      ],
+      {
+        "error": "KeyError"
+      },
+      [
+        [
+          "Kai",
+          10
+        ]
+      ],
+      [],
+      1,
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      [
+        [
+          "Kai",
+          10
+        ]
+      ],
+      true,
+      {
+        "error": "KeyError"
+      },
+      [
+        [
+          "Kai",
+          10
+        ],
+        [
+          "Ren",
+          0
+        ]
+      ],
+      false
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            8
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      0,
+      0,
+      [],
+      true,
+      true,
+      "1. Ren 20",
+      false,
+      true
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Aya"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      {
+        "error": "KeyError"
+      },
+      [],
+      true,
+      true,
+      true,
+      {
+        "error": "KeyError"
+      },
+      [
+        [
+          "Ren",
+          20
+        ],
+        [
+          "Kai",
+          10
+        ]
+      ],
+      false,
+      [
+        [
+          "Ren",
+          20
+        ],
+        [
+          "Kai",
+          10
+        ]
+      ],
+      true,
+      2,
+      3,
+      2,
+      [
+        [
+          "Ren",
+          20
+        ]
+      ],
+      [
+        [
+          "Ren",
+          20
+        ],
+        [
+          "Jin",
+          20
+        ]
+      ],
+      {
+        "error": "KeyError"
+      },
+      true,
+      2
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      "",
+      "",
+      true,
+      [
+        [
+          "Aya",
+          10
+        ]
+      ],
+      [
+        [
+          "Aya",
+          10
+        ]
+      ],
+      1,
+      [
+        [
+          "Aya",
+          10
+        ]
+      ],
+      [
+        [
+          "Aya",
+          10
+        ]
+      ],
+      "1. Aya 10",
+      "1. Aya 10",
+      "1. Aya 10",
+      1,
+      "1. Aya 10",
+      1,
+      {
+        "error": "KeyError"
+      },
+      1
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            30
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            0
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei",
+            30
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      0,
+      0,
+      [],
+      true,
+      true,
+      false,
+      2,
+      true,
+      3,
+      false,
+      "1. Kai 30\n2. Jin 20\n3. Aya 20",
+      [
+        [
+          "Kai",
+          30
+        ],
+        [
+          "Jin",
+          20
+        ],
+        [
+          "Aya",
+          20
+        ]
+      ],
+      false,
+      true,
+      false
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      "",
+      [],
+      [],
+      0,
+      {
+        "error": "KeyError"
+      },
+      [],
+      ""
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            30
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      [
+        [
+          "Kai",
+          30
+        ]
+      ],
+      [
+        [
+          "Kai",
+          30
+        ]
+      ],
+      1,
+      [
+        [
+          "Kai",
+          30
+        ]
+      ],
+      true,
+      {
+        "error": "KeyError"
+      },
+      "1. Kai 30\n2. Mei 10"
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      [],
+      [],
+      {
+        "error": "KeyError"
+      },
+      [],
+      [],
+      [],
+      [],
+      true,
+      {
+        "error": "KeyError"
+      },
+      "1. Kai 20",
+      true,
+      [
+        [
+          "Kai",
+          20
+        ]
+      ],
+      2,
+      [
+        [
+          "Kai",
+          20
+        ]
+      ]
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            0
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei",
+            30
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      [
+        [
+          "Ren",
+          20
+        ]
+      ],
+      {
+        "error": "KeyError"
+      },
+      true,
+      2,
+      1,
+      true,
+      true,
+      3,
+      3,
+      true,
+      false,
+      [
+        [
+          "Ren",
+          20
+        ],
+        [
+          "Kai",
+          20
+        ]
+      ],
+      true,
+      [
+        [
+          "Mei",
+          30
+        ],
+        [
+          "Ren",
+          20
+        ]
+      ],
+      [
+        [
+          "Mei",
+          30
+        ],
+        [
+          "Ren",
+          20
+        ]
+      ],
+      "1. Mei 30\n2. Ren 20"
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            0
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      0,
+      true,
+      1,
+      true,
+      "1. Jin 20",
+      [
+        [
+          "Jin",
+          20
+        ]
+      ],
+      true
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      "",
+      "",
+      {
+        "error": "KeyError"
+      },
+      "",
+      true,
+      [
+        [
+          "Ren",
+          10
+        ]
+      ],
+      1,
+      true,
+      2,
+      [
+        [
+          "Ren",
+          10
+        ]
+      ],
+      [
+        [
+          "Ren",
+          10
+        ]
+      ],
+      2,
+      [
+        [
+          "Ren",
+          10
+        ]
+      ],
+      "1. Ren 10",
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      1,
+      [
+        [
+          "Ren",
+          10
+        ]
+      ],
+      1,
+      "1. Ren 10"
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Aya",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      true,
+      {
+        "error": "KeyError"
+      },
+      true,
+      2,
+      [
+        [
+          "Aya",
+          20
+        ],
+        [
+          "Kai",
+          20
+        ]
+      ],
+      false,
+      [],
+      1,
+      2,
+      false,
+      "1. Aya 20\n2. Kai 20",
+      true,
+      3
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Aya",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ren",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      [],
+      true,
+      true,
+      2,
+      2,
+      [
+        [
+          "Aya",
+          10
+        ],
+        [
+          "Kai",
+          10
+        ]
+      ],
+      true,
+      [
+        [
+          "Aya",
+          10
+        ]
+      ],
+      true
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Leaderboard",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Mei"
+          ],
+          "do": "call",
+          "method": "rank",
+          "obj": "b"
+        },
+        {
+          "do": "len",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            20
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Kai",
+            10
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "top",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Jin",
+            25
+          ],
+          "do": "call",
+          "method": "submit",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Leaderboard"
+      },
+      "",
+      true,
+      1,
+      "1. Mei 20",
+      [
+        [
+          "Mei",
+          20
+        ]
+      ],
+      1,
+      1,
+      true,
+      [
+        [
+          "Mei",
+          20
+        ],
+        [
+          "Kai",
+          20
+        ]
+      ],
+      true,
+      false,
+      [
+        [
+          "Mei",
+          20
+        ],
+        [
+          "Kai",
+          20
+        ],
+        [
+          "Jin",
+          20
+        ]
+      ],
+      true,
+      "1. Jin 25\n2. Mei 20\n3. Kai 20"
+    ],
+    "label": "generated-20"
+  }
+]

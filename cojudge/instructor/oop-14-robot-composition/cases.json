@@ -1,0 +1,3917 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            100
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "attr": "charge",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      10,
+      23,
+      33,
+      1
+    ],
+    "label": "moves until the battery is low"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            100
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r1"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r2"
+        },
+        {
+          "args": [
+            60
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r1"
+        },
+        {
+          "args": [
+            60
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r2"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      60,
+      40,
+      0
+    ],
+    "label": "shared battery"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            10
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            50
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "charge",
+          "do": "get",
+          "obj": "old"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "attr": "charge",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      2,
+      {
+        "object": "Battery"
+      },
+      0,
+      9,
+      5
+    ],
+    "label": "swap battery"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "cls": "Robot",
+          "do": "check",
+          "is": "subclass",
+          "of": "Battery"
+        },
+        {
+          "cls": "Robot",
+          "do": "check",
+          "is": "subclass",
+          "of": "Motor"
+        },
+        {
+          "attr": "percent",
+          "cls": "Battery",
+          "do": "check",
+          "is": "property"
+        }
+      ]
+    },
+    "expected": [
+      false,
+      false,
+      true
+    ],
+    "label": "not inherited"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0
+          ],
+          "cls": "Battery",
+          "do": "new"
+        },
+        {
+          "args": [
+            8
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [
+            -1
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "charge",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "attr": "charge",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Battery"
+      },
+      3,
+      5,
+      {
+        "error": "ValueError"
+      },
+      0,
+      null,
+      8
+    ],
+    "label": "battery rules"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      1,
+      66,
+      1,
+      33
+    ],
+    "label": "percent rounds down"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0
+          ],
+          "cls": "Motor",
+          "do": "new"
+        },
+        {
+          "args": [
+            7
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "cost",
+          "obj": "m"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "cost",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Motor"
+      },
+      21,
+      0
+    ],
+    "label": "motor rules"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            9
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "attr": "charge",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      2,
+      0,
+      1,
+      2
+    ],
+    "label": "no partial meters"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            5
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            -1
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "attr": "charge",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "error": "ValueError"
+      },
+      0,
+      5
+    ],
+    "label": "negative and zero moves"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            20
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            100
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "args": [
+            100
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      10,
+      null,
+      10,
+      20
+    ],
+    "label": "recharge through the part"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            20
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "attr": "battery",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "attr": "motor",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      0
+    ],
+    "label": "parts are reachable"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            30
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            30
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            10
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r1"
+        },
+        {
+          "args": [],
+          "cls": "Robot",
+          "do": "new",
+          "kwargs": {
+            "battery": {
+              "ref": "b"
+            },
+            "motor": {
+              "ref": "m"
+            }
+          },
+          "save": "r2"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r1"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r2"
+        },
+        {
+          "attr": "charge",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "charge",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      3,
+      1,
+      0,
+      20
+    ],
+    "label": "one motor for two robots with separate batteries"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            132
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            2
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Battery"
+      },
+      100,
+      0,
+      0
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            197
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            53
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            9
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [
+            40
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Battery"
+      },
+      5,
+      0,
+      100,
+      {
+        "object": "Battery"
+      }
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            108
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            124
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "a"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Battery"
+      },
+      null,
+      0,
+      null,
+      50,
+      null
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            110
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            48
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "a"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [
+            39
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [
+            19
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [
+            26
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [
+            41
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      null,
+      100,
+      0,
+      {
+        "object": "Battery"
+      },
+      16,
+      0,
+      0,
+      41
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            102
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            3
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            8
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "a"
+        },
+        {
+          "args": [
+            38
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "args": [
+            25
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "a"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      100,
+      100,
+      3,
+      0,
+      null,
+      12,
+      5,
+      12,
+      0,
+      0,
+      null,
+      12
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            47
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            149
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            9
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            15
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "a"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            21
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Battery"
+      },
+      100,
+      15,
+      null,
+      100,
+      16
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            129
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            61
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            18
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [
+            8
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            30
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [
+            31
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [
+            35
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            27
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "args": [
+            36
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      18,
+      8,
+      86,
+      18,
+      86,
+      30,
+      23,
+      35,
+      0,
+      27,
+      null,
+      23,
+      36
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            128
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            172
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            37
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [
+            8
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      37,
+      null,
+      {
+        "object": "Battery"
+      },
+      0,
+      0,
+      8
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            83
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            119
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            36
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      36,
+      null,
+      0,
+      {
+        "object": "Battery"
+      },
+      9,
+      92,
+      0,
+      0,
+      92,
+      null,
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      0,
+      92
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            110
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            193
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            7
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            8
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "args": [
+            12
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [
+            11
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      8,
+      null,
+      null,
+      49,
+      null,
+      null,
+      12,
+      11,
+      null,
+      {
+        "object": "Battery"
+      }
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            41
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            111
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "a"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [
+            25
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [
+            22
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      null,
+      100,
+      3,
+      null,
+      5,
+      3,
+      100,
+      100,
+      0,
+      0
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            110
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            174
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [
+            27
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            11
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Battery"
+      },
+      27,
+      null,
+      75,
+      11,
+      75,
+      {
+        "object": "Battery"
+      },
+      93,
+      11,
+      75,
+      7,
+      null,
+      11,
+      {
+        "object": "Battery"
+      }
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            71
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            172
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            6
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Battery"
+      },
+      null,
+      100,
+      100,
+      0,
+      {
+        "object": "Battery"
+      },
+      100
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            45
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            12
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            8
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "args": [
+            33
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [
+            12
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      5,
+      5,
+      null,
+      5,
+      {
+        "object": "Battery"
+      },
+      12,
+      null,
+      null,
+      5,
+      5
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            135
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            31
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            7
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            36
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [
+            38
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      19,
+      {
+        "object": "Battery"
+      },
+      4,
+      4,
+      {
+        "object": "Battery"
+      },
+      9,
+      {
+        "object": "Battery"
+      },
+      1
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            77
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            90
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      100,
+      10,
+      null,
+      {
+        "object": "Battery"
+      }
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            159
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            105
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [
+            22
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      0,
+      22,
+      {
+        "object": "Battery"
+      },
+      0,
+      100,
+      0,
+      100,
+      {
+        "object": "Battery"
+      },
+      null
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            37
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            186
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "a"
+        },
+        {
+          "args": [
+            26
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      100,
+      0,
+      3,
+      0,
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      null,
+      26,
+      {
+        "object": "Battery"
+      },
+      0,
+      {
+        "object": "Battery"
+      }
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            176
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            21
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [
+            17
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "args": [
+            22
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "args": [
+            23
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "attr": "position",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      10,
+      5,
+      null,
+      {
+        "object": "Battery"
+      },
+      17,
+      null,
+      5,
+      27,
+      0,
+      {
+        "object": "Battery"
+      },
+      4,
+      5,
+      {
+        "object": "Battery"
+      },
+      5
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            29
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            163
+          ],
+          "cls": "Battery",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "cls": "Motor",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            {
+              "ref": "m"
+            }
+          ],
+          "cls": "Robot",
+          "do": "new",
+          "save": "q"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "args": [
+            17
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "swap_battery",
+          "obj": "r",
+          "save": "old"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "q"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "recharge",
+          "obj": "b"
+        },
+        {
+          "args": [
+            29
+          ],
+          "do": "call",
+          "method": "draw",
+          "obj": "a"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "percent",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            25
+          ],
+          "do": "call",
+          "method": "move",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Battery"
+      },
+      {
+        "object": "Motor"
+      },
+      {
+        "object": "Robot"
+      },
+      {
+        "object": "Robot"
+      },
+      100,
+      null,
+      14,
+      {
+        "object": "Battery"
+      },
+      0,
+      null,
+      1,
+      0,
+      0,
+      0
+    ],
+    "label": "generated-20"
+  }
+]

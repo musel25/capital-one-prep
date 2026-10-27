@@ -1,0 +1,3311 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "City"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "z"
+        },
+        {
+          "args": [
+            "lion",
+            "Leo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            "parrot",
+            "Polly"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "z"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "z"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      1,
+      2,
+      [
+        "#1 Leo (Lion)",
+        "#2 Polly (Parrot)"
+      ],
+      6
+    ],
+    "label": "admit and speak"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "City"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "z"
+        },
+        {
+          "args": [
+            "lion",
+            "Leo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            "lion",
+            "Nala"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "animal",
+          "obj": "z",
+          "save": "leo"
+        },
+        {
+          "attr": "sound",
+          "do": "set",
+          "obj": "leo",
+          "value": "purr"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "speak",
+          "obj": "leo"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "animal",
+          "obj": "z",
+          "save": "nala"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "speak",
+          "obj": "nala"
+        },
+        {
+          "attr": "sound",
+          "do": "get",
+          "obj": "Lion"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      1,
+      2,
+      {
+        "object": "Lion"
+      },
+      null,
+      "Leo says purr",
+      {
+        "object": "Lion"
+      },
+      "Nala says roar",
+      "roar"
+    ],
+    "label": "instance attribute shadows the class attribute"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "North"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "South"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "snake",
+            "Kaa"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "lion",
+            "Simba"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      1,
+      1,
+      [
+        "#1 Kaa (Snake)"
+      ],
+      4
+    ],
+    "label": "zoos are independent"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "City"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "z"
+        },
+        {
+          "args": [
+            "tiger",
+            "Raja"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            "Lion",
+            "Leo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            "lion",
+            "Leo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      1
+    ],
+    "label": "unknown kind"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "City"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "z"
+        },
+        {
+          "args": [
+            "lion",
+            "A"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            "lion",
+            "B"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "z"
+        },
+        {
+          "args": [
+            "snake",
+            "C"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "z"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      1,
+      2,
+      "B",
+      3,
+      [
+        "#1 A (Lion)",
+        "#3 C (Snake)"
+      ]
+    ],
+    "label": "numbers are not reused after release"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "City"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "z"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "animal",
+          "obj": "z"
+        },
+        {
+          "args": [
+            "parrot",
+            "P"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "z"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "z"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "animal",
+          "obj": "z"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "error": "KeyError"
+      },
+      1,
+      "P",
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "unknown numbers"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Thing"
+          ],
+          "cls": "Animal",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "speak",
+          "obj": "a"
+        },
+        {
+          "attr": "legs",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "sound",
+          "do": "get",
+          "obj": "Animal"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Animal"
+      },
+      "Thing says ...",
+      0,
+      "..."
+    ],
+    "label": "base animal defaults"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "attr": "legs",
+          "do": "get",
+          "obj": "Lion"
+        },
+        {
+          "attr": "legs",
+          "do": "get",
+          "obj": "Parrot"
+        },
+        {
+          "attr": "legs",
+          "do": "get",
+          "obj": "Snake"
+        },
+        {
+          "attr": "sound",
+          "do": "get",
+          "obj": "Parrot"
+        },
+        {
+          "attr": "sound",
+          "do": "get",
+          "obj": "Snake"
+        }
+      ]
+    },
+    "expected": [
+      4,
+      2,
+      0,
+      "squawk",
+      "hiss"
+    ],
+    "label": "class attributes per species"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "New"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "z"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "z"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "z"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      [],
+      0
+    ],
+    "label": "empty zoo"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "City"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "z"
+        },
+        {
+          "args": [
+            "lion",
+            "L"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            "parrot",
+            "P"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            "snake",
+            "S"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "z"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "z"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      1,
+      2,
+      3,
+      "L",
+      2
+    ],
+    "label": "legs after release"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Kiwi"
+          ],
+          "cls": "Parrot",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "speak",
+          "obj": "p"
+        },
+        {
+          "args": [
+            "Sly"
+          ],
+          "cls": "Snake",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "attr": "legs",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "attr": "sound",
+          "do": "set",
+          "obj": "p",
+          "value": "hello"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "speak",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Parrot"
+      },
+      "Kiwi says squawk",
+      {
+        "object": "Snake"
+      },
+      0,
+      null,
+      "Kiwi says hello"
+    ],
+    "label": "direct subclass instances"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "cls": "Snake",
+          "do": "check",
+          "is": "subclass",
+          "of": "Animal"
+        },
+        {
+          "args": [
+            "Big"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "z"
+        },
+        {
+          "args": [
+            "parrot",
+            "A"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            "parrot",
+            "B"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            "parrot",
+            "C"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [
+            "lion",
+            "D"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "z"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "z"
+        }
+      ]
+    },
+    "expected": [
+      true,
+      {
+        "object": "Zoo"
+      },
+      1,
+      2,
+      3,
+      4,
+      10
+    ],
+    "label": "structure and many animals"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "snake",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "parrot",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      [],
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      1,
+      {
+        "error": "KeyError"
+      },
+      1,
+      {
+        "error": "KeyError"
+      },
+      [
+        "#1 Ari (Snake)"
+      ]
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "lion",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "lion",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "parrot",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      0,
+      1,
+      [
+        "#1 Ari (Lion)"
+      ],
+      2,
+      [
+        "#1 Ari (Lion)",
+        "#2 Ari (Lion)"
+      ],
+      8,
+      [],
+      0,
+      1,
+      8
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "snake",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "parrot",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "snake",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "snake",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "snake",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "lion",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "lion",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      [],
+      0,
+      0,
+      1,
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      2,
+      1,
+      3,
+      0,
+      0,
+      "Cid",
+      2,
+      {
+        "error": "KeyError"
+      },
+      4,
+      2,
+      5
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "snake",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "parrot",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "snake",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      1,
+      0,
+      [
+        "#1 Cid (Snake)"
+      ],
+      {
+        "error": "KeyError"
+      },
+      [
+        "#1 Cid (Snake)"
+      ],
+      0,
+      0,
+      2,
+      2,
+      3
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "lion",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "lion",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "eagle",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      1,
+      2,
+      [],
+      0,
+      [
+        "#1 Ari (Lion)",
+        "#2 Cid (Lion)"
+      ],
+      0,
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      [],
+      [],
+      {
+        "error": "KeyError"
+      },
+      0,
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "parrot",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "eagle",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "parrot",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      1,
+      2,
+      [],
+      {
+        "error": "KeyError"
+      },
+      0,
+      [
+        "#1 Cid (Parrot)"
+      ],
+      2,
+      [],
+      0,
+      {
+        "error": "ValueError"
+      },
+      1,
+      2
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "eagle",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "parrot",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      0,
+      [],
+      0,
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "KeyError"
+      },
+      0,
+      {
+        "error": "KeyError"
+      },
+      1,
+      2,
+      [
+        "#1 Bo (Parrot)"
+      ],
+      "Bo",
+      [],
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      0,
+      0,
+      [],
+      {
+        "error": "KeyError"
+      },
+      [],
+      {
+        "error": "KeyError"
+      },
+      [],
+      []
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "parrot",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "lion",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "parrot",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      1,
+      [
+        "#1 Bo (Parrot)"
+      ],
+      1,
+      [
+        "#1 Bo (Parrot)"
+      ],
+      {
+        "error": "KeyError"
+      },
+      2,
+      [
+        "#1 Bo (Parrot)"
+      ],
+      [
+        "#1 Cid (Lion)"
+      ],
+      2,
+      [
+        "#1 Bo (Parrot)"
+      ],
+      "Bo",
+      6,
+      0,
+      {
+        "error": "KeyError"
+      },
+      [],
+      []
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "eagle",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "parrot",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "eagle",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      [],
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "ValueError"
+      },
+      0,
+      {
+        "error": "KeyError"
+      },
+      0,
+      [],
+      0,
+      {
+        "error": "KeyError"
+      },
+      1,
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "parrot",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "parrot",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      [],
+      0,
+      0,
+      1,
+      2
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "parrot",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "parrot",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "eagle",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "snake",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "lion",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "snake",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      1,
+      1,
+      [
+        "#1 Cid (Parrot)"
+      ],
+      2,
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "KeyError"
+      },
+      [
+        "#1 Cid (Parrot)"
+      ],
+      [
+        "#1 Cid (Parrot)"
+      ],
+      2,
+      2,
+      3,
+      [
+        "#1 Cid (Parrot)"
+      ],
+      2,
+      [
+        "#1 Cid (Parrot)",
+        "#2 Cid (Snake)"
+      ],
+      6
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "eagle",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "snake",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "snake",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "snake",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "snake",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "snake",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      0,
+      [],
+      [],
+      {
+        "error": "ValueError"
+      },
+      0,
+      {
+        "error": "KeyError"
+      },
+      [],
+      1,
+      0,
+      1,
+      {
+        "error": "KeyError"
+      },
+      2,
+      "Bo",
+      0,
+      3,
+      [
+        "#1 Ari (Snake)",
+        "#2 Cid (Snake)",
+        "#3 Cid (Snake)"
+      ],
+      0,
+      4
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "snake",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      {
+        "error": "KeyError"
+      },
+      1,
+      [],
+      0,
+      0,
+      {
+        "error": "KeyError"
+      },
+      [
+        "#1 Ari (Snake)"
+      ],
+      [],
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "lion",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "snake",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      0,
+      0,
+      1,
+      [],
+      2
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "lion",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      [],
+      [],
+      {
+        "error": "KeyError"
+      },
+      0,
+      0,
+      0,
+      0,
+      {
+        "error": "KeyError"
+      },
+      0,
+      0,
+      0,
+      1,
+      0
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      [],
+      {
+        "error": "KeyError"
+      },
+      0,
+      0,
+      0
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "snake",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "snake",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "lion",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "eagle",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      {
+        "error": "KeyError"
+      },
+      [],
+      1,
+      [
+        "#1 Cid (Snake)"
+      ],
+      2,
+      "Cid",
+      [
+        "#2 Ari (Snake)"
+      ],
+      3,
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "A"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "B"
+          ],
+          "cls": "Zoo",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "a"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "release",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "roster",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "lion",
+            "Bo"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "snake",
+            "Cid"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "snake",
+            "Ari"
+          ],
+          "do": "call",
+          "method": "admit",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "total_legs",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Zoo"
+      },
+      {
+        "object": "Zoo"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      [],
+      1,
+      4,
+      0,
+      1,
+      2,
+      0
+    ],
+    "label": "generated-20"
+  }
+]

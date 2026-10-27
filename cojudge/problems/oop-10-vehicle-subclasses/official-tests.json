@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"ops\":[{\"args\":[\"Bus\",60],\"cls\":\"Vehicle\",\"do\":\"new\",\"save\":\"v\"},{\"args\":[10],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[\"Cart\",7],\"cls\":\"Vehicle\",\"do\":\"new\",\"save\":\"w\"},{\"args\":[1],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"w\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"Mini\",90,4],\"cls\":\"Car\",\"do\":\"new\",\"save\":\"c\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"c\"},{\"args\":[\"Isla\",30],\"cls\":\"Ferry\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[15],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"Racer\",41],\"cls\":\"Bicycle\",\"do\":\"new\"},{\"args\":[\"Slow\",0],\"cls\":\"Bicycle\",\"do\":\"new\"},{\"args\":[\"City\"],\"cls\":\"Bicycle\",\"do\":\"new\",\"save\":\"b\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"Kart\",40,0],\"cls\":\"Car\",\"do\":\"new\"},{\"args\":[\"Van\",100,10],\"cls\":\"Car\",\"do\":\"new\"},{\"args\":[\"Kart\",40,1],\"cls\":\"Car\",\"do\":\"new\",\"save\":\"c\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"Broken\",0,4],\"cls\":\"Car\",\"do\":\"new\"},{\"args\":[\"Ok\",1,4],\"cls\":\"Car\",\"do\":\"new\",\"save\":\"c\"},{\"args\":[1],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"Quick\",60,0],\"cls\":\"Ferry\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[60],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"f\"},{\"args\":[\"Slow\",20],\"cls\":\"Ferry\",\"do\":\"new\",\"kwargs\":{\"boarding\":45},\"save\":\"g\"},{\"args\":[0],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"g\"},{\"args\":[\"Bad\",20,-1],\"cls\":\"Ferry\",\"do\":\"new\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"Isla\",30],\"cls\":\"Ferry\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"f\"},{\"attr\":\"boarding\",\"do\":\"get\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"Fast\",40],\"cls\":\"Bicycle\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[10],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"b\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"b\"},{\"args\":[0],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"Mini\",90,4],\"cls\":\"Car\",\"do\":\"new\",\"save\":\"c\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"c\",\"value\":45},{\"args\":[3],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"c\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"Train\",120],\"cls\":\"Vehicle\",\"do\":\"new\",\"save\":\"t\"},{\"args\":[1],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"t\"},{\"args\":[3],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"t\"},{\"args\":[10000],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"Mini\",90,4],\"cls\":\"Car\",\"do\":\"new\",\"save\":\"c\"},{\"args\":[\"Bus\",60],\"cls\":\"Vehicle\",\"do\":\"new\",\"save\":\"v\"},{\"do\":\"check\",\"is\":\"instance\",\"obj\":\"c\",\"of\":\"Vehicle\"},{\"do\":\"check\",\"is\":\"instance\",\"obj\":\"v\",\"of\":\"Car\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"cls\":\"Bicycle\",\"do\":\"check\",\"is\":\"subclass\",\"of\":\"Vehicle\"},{\"cls\":\"Ferry\",\"do\":\"check\",\"is\":\"subclass\",\"of\":\"Vehicle\"},{\"cls\":\"Car\",\"do\":\"check\",\"is\":\"subclass\",\"of\":\"Ferry\"},{\"args\":[],\"cls\":\"Bicycle\",\"do\":\"new\",\"kwargs\":{\"name\":\"Kid\",\"speed\":8},\"save\":\"b\"},{\"args\":[2],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"B\",10],\"cls\":\"Bicycle\",\"do\":\"new\",\"save\":\"v\"},{\"args\":[7155],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":130},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[61],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":133}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"B\",25],\"cls\":\"Bicycle\",\"do\":\"new\",\"save\":\"v\"},{\"args\":[274],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[0],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":74}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"B\",25],\"cls\":\"Bicycle\",\"do\":\"new\",\"save\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":11},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[0],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[61],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[0],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[0],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[61],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[1],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"B\",40],\"cls\":\"Bicycle\",\"do\":\"new\",\"save\":\"v\"},{\"args\":[59],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[59],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"F\",25,-5],\"cls\":\"Ferry\",\"do\":\"new\",\"save\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":140},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":12}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"F\",25,20],\"cls\":\"Ferry\",\"do\":\"new\",\"save\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":118},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"V\",60],\"cls\":\"Vehicle\",\"do\":\"new\",\"save\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":19},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":117},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"V\",1],\"cls\":\"Vehicle\",\"do\":\"new\",\"save\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":56},{\"args\":[250],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"B\",25],\"cls\":\"Bicycle\",\"do\":\"new\",\"save\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":50},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":53},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":134},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":117},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":60},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":4}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"F\",40,-5],\"cls\":\"Ferry\",\"do\":\"new\",\"save\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[0],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[61],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[61],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[1],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":106},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":67}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"V\",0],\"cls\":\"Vehicle\",\"do\":\"new\",\"save\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[7],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[0],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":135},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":129},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"C\",77,1],\"cls\":\"Car\",\"do\":\"new\",\"save\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"args\":[250],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"C\",120,1],\"cls\":\"Car\",\"do\":\"new\",\"save\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"args\":[1],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":73},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":10}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"V\",13],\"cls\":\"Vehicle\",\"do\":\"new\",\"save\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[250],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":45},{\"args\":[1],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"args\":[2613],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"F\",12,-5],\"cls\":\"Ferry\",\"do\":\"new\",\"save\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":50},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"C\",120,0],\"cls\":\"Car\",\"do\":\"new\",\"save\":\"v\"},{\"args\":[7],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":88},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":101},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":31},{\"args\":[250],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"F\",12,15],\"cls\":\"Ferry\",\"do\":\"new\",\"save\":\"v\"},{\"args\":[61],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":42},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":75},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":98},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"F\",40,15],\"cls\":\"Ferry\",\"do\":\"new\",\"save\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"args\":[59],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":6},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":95},{\"args\":[3430],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"V\",60],\"cls\":\"Vehicle\",\"do\":\"new\",\"save\":\"v\"},{\"args\":[6717],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":144},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":113},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"B\",25],\"cls\":\"Bicycle\",\"do\":\"new\",\"save\":\"v\"},{\"args\":[1],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":140},{\"args\":[1],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[59],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"},{\"args\":[2230],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"v\"},{\"attr\":\"speed\",\"do\":\"set\",\"obj\":\"v\",\"value\":104}]}"
+  }
+]

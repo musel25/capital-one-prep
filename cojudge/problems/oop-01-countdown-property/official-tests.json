@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"ops\":[{\"args\":[65],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[60],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":9},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[-1],\"cls\":\"Countdown\",\"do\":\"new\"},{\"args\":[5],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"display\",\"do\":\"set\",\"obj\":\"t\",\"value\":\"9:99\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[0],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[61],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[2],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[3600],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"a\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[1000000],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"b\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[600],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":607},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[1],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":30},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[10],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[20],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"a\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[3],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"finished\",\"do\":\"set\",\"obj\":\"t\",\"value\":true},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Countdown\",\"do\":\"new\",\"kwargs\":{\"seconds\":59},\"save\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"cls\":\"Countdown\",\"do\":\"check\",\"is\":\"property\"},{\"attr\":\"finished\",\"cls\":\"Countdown\",\"do\":\"check\",\"is\":\"property\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[59],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":4551},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":4622}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[59],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":6038},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":5212},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[119],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":1361},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[59],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[3599],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[5403],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":5968}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[1],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":993},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[59],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":6427},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":4010},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[60],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[0],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":3825}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[69390],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[0],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":1661},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[60],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":2460},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":6454},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":2358},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":5910},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[3600],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":3953},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":2168},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[0],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":4131},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":1502},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":2195},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":2890},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[59],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":6116},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":42},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[0],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"display\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[38903],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":4617},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[59],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":1481},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[61],\"cls\":\"Countdown\",\"do\":\"new\",\"save\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"set\",\"obj\":\"t\",\"value\":5293},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"finished\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"t\"},{\"args\":[],\"do\":\"call\",\"method\":\"tick\",\"obj\":\"t\"}]}"
+  }
+]

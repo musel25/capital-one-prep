@@ -1,0 +1,50 @@
+{
+  "id": "oop-09-karma-user",
+  "title": "09. Karma app: objects that interact",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "02-state-and-behavior",
+  "examples": [
+    {
+      "input": "{\"ops\": [{\"args\": [\"Ann\"], \"cls\": \"KarmaUser\", \"do\": \"new\", \"save\": \"a\"}, {\"args\": [\"Bo\"], \"cls\": \"KarmaUser\", \"do\": \"new\", \"save\": \"b\"}, {\"args\": [\"Cy\"], \"cls\": \"KarmaUser\", \"do\": \"new\", \"save\": \"c\"}, {\"args\": [{\"ref\": \"b\"}, 2], \"do\": \"call\", \"method\": \"thank\", \"obj\": \"a\"}, {\"args\": [{\"ref\": \"b\"}], \"do\": \"call\", \"method\": \"thank\", \"obj\": \"c\"}, {\"attr\": \"karma\", \"do\": \"get\", \"obj\": \"b\"}, {\"attr\": \"given\", \"do\": \"get\", \"obj\": \"a\"}]}",
+      "output": "[{\"object\": \"KarmaUser\"}, {\"object\": \"KarmaUser\"}, {\"object\": \"KarmaUser\"}, null, null, 3, 2]",
+      "explanation": "Bo receives 2 + 1 points from two people. Ann gave 2."
+    },
+    {
+      "input": "{\"ops\": [{\"args\": [\"Zed\"], \"cls\": \"KarmaUser\", \"do\": \"new\", \"save\": \"z\"}, {\"args\": [\"Di\"], \"cls\": \"KarmaUser\", \"do\": \"new\", \"save\": \"d\"}, {\"args\": [\"Cy\"], \"cls\": \"KarmaUser\", \"do\": \"new\", \"save\": \"c\"}, {\"args\": [\"Al\"], \"cls\": \"KarmaUser\", \"do\": \"new\", \"save\": \"a\"}, {\"args\": [{\"ref\": \"z\"}, 3], \"do\": \"call\", \"method\": \"thank\", \"obj\": \"d\"}, {\"args\": [{\"ref\": \"z\"}, 1], \"do\": \"call\", \"method\": \"thank\", \"obj\": \"a\"}, {\"args\": [{\"ref\": \"z\"}, 3], \"do\": \"call\", \"method\": \"thank\", \"obj\": \"c\"}, {\"attr\": \"fans\", \"do\": \"get\", \"obj\": \"z\"}]}",
+      "output": "[{\"object\": \"KarmaUser\"}, {\"object\": \"KarmaUser\"}, {\"object\": \"KarmaUser\"}, {\"object\": \"KarmaUser\"}, null, null, null, [\"Cy\", \"Di\", \"Al\"]]",
+      "explanation": "fans sorts by points given, high to low. Cy and Di both gave 3, so the tie is broken by name."
+    },
+    {
+      "input": "{\"ops\": [{\"args\": [\"Ann\"], \"cls\": \"KarmaUser\", \"do\": \"new\", \"save\": \"a\"}, {\"args\": [\"Bo\"], \"cls\": \"KarmaUser\", \"do\": \"new\", \"save\": \"b\"}, {\"args\": [{\"ref\": \"a\"}], \"do\": \"call\", \"method\": \"thank\", \"obj\": \"a\"}, {\"args\": [{\"ref\": \"b\"}, 4], \"do\": \"call\", \"method\": \"thank\", \"obj\": \"a\"}, {\"attr\": \"karma\", \"do\": \"get\", \"obj\": \"b\"}, {\"attr\": \"given\", \"do\": \"get\", \"obj\": \"a\"}]}",
+      "output": "[{\"object\": \"KarmaUser\"}, {\"object\": \"KarmaUser\"}, {\"error\": \"ValueError\"}, {\"error\": \"ValueError\"}, 0, 0]",
+      "explanation": "A self-thank and 4 points are rejected. Nothing changes."
+    }
+  ],
+  "starterCode": {
+    "python": "class KarmaUser:\n    def __init__(self, name: str):\n        raise NotImplementedError\n\n    def thank(self, other: \"KarmaUser\", points: int = 1) -> None:\n        raise NotImplementedError\n\n    @property\n    def karma(self) -> int:\n        raise NotImplementedError\n\n    @property\n    def given(self) -> int:\n        raise NotImplementedError\n\n    @property\n    def fans(self) -> list[str]:\n        raise NotImplementedError\n\n    def __str__(self) -> str:\n        raise NotImplementedError\n\n    def __lt__(self, other: \"KarmaUser\") -> bool:\n        raise NotImplementedError\n\n\n# ---------------------------------------------------------------------------\n# Supplied test driver. Do not edit below this line.\n# Each test is a list of steps. The driver runs every step on your classes and\n# records its result, or {\"error\": \"<ExceptionName>\"} when the step raises.\n# ---------------------------------------------------------------------------\nimport builtins as _builtins\nimport dataclasses as _dataclasses\nimport inspect as _inspect\nimport operator as _operator\n\n_BINARY = {\"+\": _operator.add, \"-\": _operator.sub, \"*\": _operator.mul,\n           \"@\": _operator.matmul, \"==\": _operator.eq, \"!=\": _operator.ne,\n           \"<\": _operator.lt, \"<=\": _operator.le, \">\": _operator.gt,\n           \">=\": _operator.ge, \"in\": lambda left, right: left in right}\n_BUILTIN = {\"repr\": repr, \"str\": str, \"len\": len, \"bool\": bool,\n            \"list\": list, \"sorted\": sorted}\n\n\ndef _lookup(name, env):\n    if name in env:\n        return env[name]\n    if name in globals():\n        return globals()[name]\n    return getattr(_builtins, name)\n\n\ndef _value(raw, env):\n    if isinstance(raw, dict) and list(raw) == [\"ref\"]:\n        return env[raw[\"ref\"]]\n    if isinstance(raw, list):\n        return [_value(item, env) for item in raw]\n    if isinstance(raw, dict):\n        return {key: _value(item, env) for key, item in raw.items()}\n    return raw\n\n\ndef _plain(value):\n    if value is None or isinstance(value, (bool, int, float, str)):\n        return value\n    if isinstance(value, (list, tuple)):\n        return [_plain(item) for item in value]\n    if isinstance(value, dict):\n        return {str(key): _plain(item) for key, item in value.items()}\n    return {\"object\": type(value).__name__}\n\n\ndef _check(step, env):\n    kind = step[\"is\"]\n    if kind in (\"instance\", \"callable\"):\n        target = _lookup(step[\"obj\"], env)\n        return callable(target) if kind == \"callable\" else isinstance(target, _lookup(step[\"of\"], env))\n    cls = _lookup(step[\"cls\"], env)\n    if kind == \"mro\":\n        return [klass.__name__ for klass in cls.__mro__]\n    if kind == \"subclass\":\n        return issubclass(cls, _lookup(step[\"of\"], env))\n    if kind == \"abstract\":\n        return _inspect.isabstract(cls)\n    if kind == \"dataclass\":\n        return _dataclasses.is_dataclass(cls)\n    found = _inspect.getattr_static(cls, step[\"attr\"], None)\n    return isinstance(found, {\"property\": property, \"staticmethod\": staticmethod,\n                              \"classmethod\": classmethod}[kind])\n\n\ndef _step(step, env):\n    do = step[\"do\"]\n    args = _value(step.get(\"args\", []), env)\n    kwargs = _value(step.get(\"kwargs\", {}), env)\n    if do == \"check\":\n        return _check(step, env)\n    if do == \"op\":\n        return _BINARY[step[\"op\"]](_value(step[\"left\"], env), _value(step[\"right\"], env))\n    target = _lookup(step.get(\"obj\", step.get(\"cls\")), env)\n    if do == \"new\":\n        return target(*args, **kwargs)\n    if do == \"get\":\n        return getattr(target, step[\"attr\"])\n    if do == \"set\":\n        setattr(target, step[\"attr\"], _value(step[\"value\"], env))\n        return None\n    if do == \"call\":\n        return getattr(target, step[\"method\"])(*args, **kwargs)\n    if do == \"invoke\":\n        return target(*args, **kwargs)\n    if do == \"item\":\n        return target[_value(step[\"key\"], env)]\n    if do == \"setitem\":\n        target[_value(step[\"key\"], env)] = _value(step[\"value\"], env)\n        return None\n    if do == \"with\":\n        body = []\n        try:\n            with target as entered:\n                if \"as\" in step:\n                    env[step[\"as\"]] = entered\n                body.extend(_run(inner, env) for inner in step[\"body\"])\n                if \"raise\" in step:\n                    raise getattr(_builtins, step[\"raise\"])(\"raised by the test\")\n        except Exception as error:\n            return {\"body\": body, \"error\": type(error).__name__}\n        return {\"body\": body, \"error\": None}\n    return _BUILTIN[do](target)\n\n\ndef _run(step, env):\n    try:\n        result = _step(step, env)\n    except Exception as error:\n        return {\"error\": type(error).__name__}\n    if \"save\" in step:\n        env[step[\"save\"]] = result\n    return _plain(result)\n\n\ndef solve(data):\n    env = {}\n    return [_run(step, env) for step in data[\"ops\"]]\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"ops\":[{\"args\":[\"Ann\"],\"cls\":\"KarmaUser\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"Bo\"],\"cls\":\"KarmaUser\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[\"Cy\"],\"cls\":\"KarmaUser\",\"do\":\"new\",\"save\":\"c\"},{\"args\":[{\"ref\":\"b\"},2],\"do\":\"call\",\"method\":\"thank\",\"obj\":\"a\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"thank\",\"obj\":\"c\"},{\"attr\":\"karma\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"given\",\"do\":\"get\",\"obj\":\"a\"}]}"
+    },
+    {
+      "payload": "{\"ops\":[{\"args\":[\"Zed\"],\"cls\":\"KarmaUser\",\"do\":\"new\",\"save\":\"z\"},{\"args\":[\"Di\"],\"cls\":\"KarmaUser\",\"do\":\"new\",\"save\":\"d\"},{\"args\":[\"Cy\"],\"cls\":\"KarmaUser\",\"do\":\"new\",\"save\":\"c\"},{\"args\":[\"Al\"],\"cls\":\"KarmaUser\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[{\"ref\":\"z\"},3],\"do\":\"call\",\"method\":\"thank\",\"obj\":\"d\"},{\"args\":[{\"ref\":\"z\"},1],\"do\":\"call\",\"method\":\"thank\",\"obj\":\"a\"},{\"args\":[{\"ref\":\"z\"},3],\"do\":\"call\",\"method\":\"thank\",\"obj\":\"c\"},{\"attr\":\"fans\",\"do\":\"get\",\"obj\":\"z\"}]}"
+    },
+    {
+      "payload": "{\"ops\":[{\"args\":[\"Ann\"],\"cls\":\"KarmaUser\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"Bo\"],\"cls\":\"KarmaUser\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[{\"ref\":\"a\"}],\"do\":\"call\",\"method\":\"thank\",\"obj\":\"a\"},{\"args\":[{\"ref\":\"b\"},4],\"do\":\"call\",\"method\":\"thank\",\"obj\":\"a\"},{\"attr\":\"karma\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"given\",\"do\":\"get\",\"obj\":\"a\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Keep a dictionary on the receiver: giver name \u2192 total points.",
+    "Validate both arguments before you change any state."
+  ]
+}

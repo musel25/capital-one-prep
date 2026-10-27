@@ -1,0 +1,3483 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "c"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      null,
+      null,
+      3,
+      2
+    ],
+    "label": "thanks change two users"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Zed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "z"
+        },
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "d"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "Al"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "z"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "d"
+        },
+        {
+          "args": [
+            {
+              "ref": "z"
+            },
+            1
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "z"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "c"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "z"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      null,
+      null,
+      null,
+      [
+        "Cy",
+        "Di",
+        "Al"
+      ]
+    ],
+    "label": "fans sorted by points then name"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            4
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      0,
+      0
+    ],
+    "label": "invalid thank-yous change nothing"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            }
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "c"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      "Ann: 0 karma from 0 fans",
+      null,
+      "Ann: 3 karma from 1 fan",
+      null,
+      "Ann: 4 karma from 2 fans"
+    ],
+    "label": "str with singular and plural"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            1
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      null,
+      null,
+      [
+        "Ann"
+      ],
+      "Bo: 4 karma from 1 fan",
+      0
+    ],
+    "label": "repeated thanks add up for one fan"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            0
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            true
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            1.5
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "kwargs": {
+            "points": 3
+          },
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      null,
+      3
+    ],
+    "label": "points bounds and types"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Sam"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Sam"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      null,
+      1
+    ],
+    "label": "same name is not the same object"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "<",
+          "right": {
+            "ref": "a"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      false,
+      null,
+      true,
+      false
+    ],
+    "label": "compare users by karma"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "a"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "b"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      null,
+      null,
+      3,
+      2,
+      2,
+      3
+    ],
+    "label": "mutual thanks"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "T"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            "Bea"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Abe"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "t"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "t"
+            },
+            1
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [
+            {
+              "ref": "t"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      null,
+      null,
+      [
+        "Bea",
+        "Abe"
+      ],
+      null,
+      [
+        "Abe",
+        "Bea"
+      ]
+    ],
+    "label": "fan order changes with more points"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "attr": "karma",
+          "do": "set",
+          "obj": "a",
+          "value": 100
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "error": "AttributeError"
+      },
+      0,
+      []
+    ],
+    "label": "read-only karma"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "KarmaUser",
+          "do": "new",
+          "kwargs": {
+            "name": "Ann"
+          },
+          "save": "a"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "kwargs": {
+            "other": {
+              "ref": "b"
+            },
+            "points": 2
+          },
+          "method": "thank",
+          "obj": "a"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      null,
+      [
+        "Ann"
+      ],
+      2
+    ],
+    "label": "keyword target"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "do": "str",
+          "obj": "Ed"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "do": "str",
+          "obj": "Ann"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Di"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Ann"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Ann"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Ed"
+          }
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ed"
+            },
+            1
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ann"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ann"
+            },
+            4
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ann"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Di"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      [],
+      0,
+      [],
+      0,
+      0,
+      0,
+      [],
+      "Ed: 0 karma from 0 fans",
+      [],
+      0,
+      "Ann: 0 karma from 0 fans",
+      false,
+      false,
+      [],
+      null,
+      {
+        "error": "ValueError"
+      },
+      0
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "args": [
+            {
+              "ref": "Di"
+            },
+            1
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ed"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Ed"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Ann"
+          }
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "do": "str",
+          "obj": "Ann"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "args": [
+            {
+              "ref": "Cy"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Cy"
+        },
+        {
+          "do": "str",
+          "obj": "Di"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Cy"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      null,
+      false,
+      [],
+      [
+        "Ed"
+      ],
+      "Ann: 0 karma from 0 fans",
+      1,
+      {
+        "error": "ValueError"
+      },
+      "Di: 1 karma from 1 fan",
+      [
+        "Ed"
+      ],
+      0
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "do": "str",
+          "obj": "Di"
+        },
+        {
+          "do": "str",
+          "obj": "Cy"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Cy"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      0,
+      0,
+      [],
+      "Di: 0 karma from 0 fans",
+      "Cy: 0 karma from 0 fans",
+      0,
+      0,
+      []
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ed"
+            },
+            0
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ed"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Di"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Ed"
+          }
+        },
+        {
+          "args": [
+            {
+              "ref": "Ed"
+            },
+            4
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Di"
+        },
+        {
+          "do": "str",
+          "obj": "Ed"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ed"
+            },
+            1
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ed"
+        },
+        {
+          "args": [
+            {
+              "ref": "Di"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ed"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Di"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Di"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      [],
+      {
+        "error": "ValueError"
+      },
+      0,
+      false,
+      {
+        "error": "ValueError"
+      },
+      "Ed: 0 karma from 0 fans",
+      [],
+      {
+        "error": "ValueError"
+      },
+      null,
+      [
+        "Ed"
+      ],
+      false
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "do": "str",
+          "obj": "Cy"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "do": "str",
+          "obj": "Cy"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Di"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Di"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Cy"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Ann"
+          }
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Di"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Cy"
+          }
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ann"
+            },
+            4
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Cy"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      0,
+      0,
+      "Cy: 0 karma from 0 fans",
+      0,
+      "Cy: 0 karma from 0 fans",
+      false,
+      false,
+      [],
+      0,
+      [],
+      false,
+      [],
+      0,
+      0,
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Bo"
+        },
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "args": [
+            {
+              "ref": "Di"
+            },
+            0
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ed"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Cy"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Ann"
+          }
+        },
+        {
+          "args": [
+            {
+              "ref": "Cy"
+            },
+            4
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Cy"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      [],
+      {
+        "error": "ValueError"
+      },
+      0,
+      [],
+      [],
+      false,
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "do": "str",
+          "obj": "Ed"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ed"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Di"
+        },
+        {
+          "do": "str",
+          "obj": "Di"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "do": "str",
+          "obj": "Di"
+        },
+        {
+          "do": "str",
+          "obj": "Ed"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Ed"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      "Ed: 0 karma from 0 fans",
+      null,
+      "Di: 0 karma from 0 fans",
+      0,
+      "Di: 0 karma from 0 fans",
+      "Ed: 2 karma from 1 fan",
+      2
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "do": "str",
+          "obj": "Ann"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "do": "str",
+          "obj": "Di"
+        },
+        {
+          "args": [
+            {
+              "ref": "Di"
+            },
+            1
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Di"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Di"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      0,
+      0,
+      [],
+      0,
+      0,
+      [],
+      0,
+      [],
+      [],
+      "Ann: 0 karma from 0 fans",
+      0,
+      0,
+      "Di: 0 karma from 0 fans",
+      {
+        "error": "ValueError"
+      },
+      []
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Bo"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "do": "str",
+          "obj": "Ed"
+        },
+        {
+          "args": [
+            {
+              "ref": "Cy"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Cy"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "do": "str",
+          "obj": "Cy"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ed"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Cy"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      0,
+      "Ed: 0 karma from 0 fans",
+      {
+        "error": "ValueError"
+      },
+      0,
+      0,
+      "Cy: 0 karma from 0 fans",
+      0,
+      0,
+      null
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Bo"
+        },
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ann"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Cy"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "args": [
+            {
+              "ref": "Cy"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Cy"
+        },
+        {
+          "do": "str",
+          "obj": "Ann"
+        },
+        {
+          "do": "str",
+          "obj": "Ann"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ed"
+            },
+            0
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Di"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Cy"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Ed"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      0,
+      [],
+      0,
+      null,
+      3,
+      0,
+      {
+        "error": "ValueError"
+      },
+      "Ann: 3 karma from 1 fan",
+      "Ann: 3 karma from 1 fan",
+      3,
+      [],
+      0,
+      {
+        "error": "ValueError"
+      },
+      [],
+      false
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "do": "str",
+          "obj": "Cy"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "do": "str",
+          "obj": "Ann"
+        },
+        {
+          "do": "str",
+          "obj": "Cy"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Cy"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Cy"
+          }
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "do": "str",
+          "obj": "Cy"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      "Cy: 0 karma from 0 fans",
+      [],
+      "Ann: 0 karma from 0 fans",
+      "Cy: 0 karma from 0 fans",
+      false,
+      0,
+      [],
+      "Cy: 0 karma from 0 fans"
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Bo"
+        },
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Cy"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      0,
+      0,
+      0,
+      [],
+      0,
+      0
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "do": "str",
+          "obj": "Di"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Ed"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      [],
+      0,
+      0,
+      0,
+      "Di: 0 karma from 0 fans",
+      0
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Bo"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "args": [
+            {
+              "ref": "Bo"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Di"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Bo"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Di"
+          }
+        },
+        {
+          "args": [
+            {
+              "ref": "Bo"
+            },
+            1
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Bo"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Di"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      0,
+      null,
+      false,
+      {
+        "error": "ValueError"
+      },
+      0,
+      3,
+      3,
+      [
+        "Di"
+      ],
+      0,
+      3,
+      3
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Bo"
+        },
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Di"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Cy"
+          }
+        },
+        {
+          "args": [
+            {
+              "ref": "Ed"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ann"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Di"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Cy"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Ann"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Bo"
+          }
+        },
+        {
+          "do": "str",
+          "obj": "Ed"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ann"
+            },
+            0
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ed"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "do": "str",
+          "obj": "Cy"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ed"
+            },
+            1
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ann"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "do": "str",
+          "obj": "Bo"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Cy"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      0,
+      false,
+      null,
+      [
+        "Ann"
+      ],
+      false,
+      false,
+      "Ed: 2 karma from 1 fan",
+      0,
+      {
+        "error": "ValueError"
+      },
+      [
+        "Ann"
+      ],
+      "Cy: 0 karma from 0 fans",
+      [],
+      null,
+      [],
+      "Bo: 0 karma from 0 fans",
+      0
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Bo"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ed"
+            },
+            4
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Di"
+        },
+        {
+          "do": "str",
+          "obj": "Ed"
+        },
+        {
+          "do": "str",
+          "obj": "Di"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Bo"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "error": "ValueError"
+      },
+      "Ed: 0 karma from 0 fans",
+      "Di: 0 karma from 0 fans",
+      [],
+      0,
+      [],
+      0,
+      [],
+      []
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Bo"
+        },
+        {
+          "args": [
+            {
+              "ref": "Bo"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Bo"
+        },
+        {
+          "args": [
+            {
+              "ref": "Cy"
+            },
+            3
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Bo"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "args": [
+            {
+              "ref": "Bo"
+            },
+            0
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Bo"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Ed"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Bo"
+          }
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Ann"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Bo"
+          }
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "args": [
+            {
+              "ref": "Bo"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Bo"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Ann"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Bo"
+          }
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ann"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "error": "ValueError"
+      },
+      null,
+      3,
+      [
+        "Bo"
+      ],
+      {
+        "error": "ValueError"
+      },
+      [],
+      false,
+      0,
+      false,
+      0,
+      {
+        "error": "ValueError"
+      },
+      3,
+      [],
+      false,
+      0
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Di"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Di"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Cy"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Cy"
+          }
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "args": [
+            {
+              "ref": "Di"
+            },
+            0
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ann"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "do": "str",
+          "obj": "Ann"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "do": "str",
+          "obj": "Ann"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Di"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Di"
+          }
+        },
+        {
+          "do": "str",
+          "obj": "Di"
+        },
+        {
+          "do": "str",
+          "obj": "Ann"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Di"
+        },
+        {
+          "args": [
+            {
+              "ref": "Cy"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Di"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      false,
+      0,
+      0,
+      {
+        "error": "ValueError"
+      },
+      [],
+      0,
+      "Ann: 0 karma from 0 fans",
+      0,
+      "Ann: 0 karma from 0 fans",
+      false,
+      "Di: 0 karma from 0 fans",
+      "Ann: 0 karma from 0 fans",
+      [],
+      null
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Bo"
+        },
+        {
+          "args": [
+            "Cy"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Cy"
+        },
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "args": [
+            "Ann"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ann"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Ann"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Cy"
+          }
+        },
+        {
+          "args": [
+            {
+              "ref": "Cy"
+            },
+            0
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Cy"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ann"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Bo"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Cy"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Ann"
+          }
+        },
+        {
+          "do": "str",
+          "obj": "Ann"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ed"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ann"
+        },
+        {
+          "do": "str",
+          "obj": "Ed"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "args": [
+            {
+              "ref": "Bo"
+            },
+            4
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Cy"
+        },
+        {
+          "attr": "karma",
+          "do": "get",
+          "obj": "Cy"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "Cy"
+          },
+          "op": "<",
+          "right": {
+            "ref": "Bo"
+          }
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ann"
+        },
+        {
+          "do": "str",
+          "obj": "Cy"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      [],
+      false,
+      {
+        "error": "ValueError"
+      },
+      [],
+      [],
+      null,
+      true,
+      "Ann: 2 karma from 1 fan",
+      null,
+      "Ed: 2 karma from 1 fan",
+      2,
+      {
+        "error": "ValueError"
+      },
+      0,
+      false,
+      2,
+      "Cy: 0 karma from 0 fans"
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Bo"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Bo"
+        },
+        {
+          "args": [
+            "Ed"
+          ],
+          "cls": "KarmaUser",
+          "do": "new",
+          "save": "Ed"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "do": "str",
+          "obj": "Ed"
+        },
+        {
+          "attr": "given",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "args": [
+            {
+              "ref": "Ed"
+            },
+            2
+          ],
+          "do": "call",
+          "method": "thank",
+          "obj": "Ed"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Bo"
+        },
+        {
+          "attr": "fans",
+          "do": "get",
+          "obj": "Ed"
+        },
+        {
+          "do": "str",
+          "obj": "Bo"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "KarmaUser"
+      },
+      {
+        "object": "KarmaUser"
+      },
+      0,
+      "Ed: 0 karma from 0 fans",
+      0,
+      [],
+      {
+        "error": "ValueError"
+      },
+      [],
+      [],
+      "Bo: 0 karma from 0 fans"
+    ],
+    "label": "generated-20"
+  }
+]

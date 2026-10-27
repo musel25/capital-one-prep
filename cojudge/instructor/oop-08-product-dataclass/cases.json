@@ -1,0 +1,3014 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen",
+            150,
+            [
+              "office"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "do": "repr",
+          "obj": "p"
+        },
+        {
+          "attr": "tags",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      "Product(name='Pen', price_cents=150, tags=('office',))",
+      [
+        "office"
+      ]
+    ],
+    "label": "generated repr with tuple tags"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Mug",
+            1000
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "p",
+          "value": 1
+        },
+        {
+          "args": [
+            25
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "p",
+          "save": "q"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "q"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "object": "Product"
+      },
+      750,
+      1000
+    ],
+    "label": "frozen with a discount copy"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Cup",
+            500
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Cup",
+            300
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Bowl",
+            900
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "<",
+          "right": {
+            "ref": "a"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "c"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      true,
+      true,
+      false
+    ],
+    "label": "ordering and equality"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "",
+            100
+          ],
+          "cls": "Product",
+          "do": "new"
+        },
+        {
+          "args": [
+            "Pen",
+            -1
+          ],
+          "cls": "Product",
+          "do": "new"
+        },
+        {
+          "args": [
+            "Free",
+            0
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "attr": "tags",
+          "do": "get",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Product"
+      },
+      []
+    ],
+    "label": "validation in post_init"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Lamp",
+            2500
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "Desk",
+            9000,
+            [
+              "home",
+              "office"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      "Product(name='Lamp', price_cents=2500, tags=())",
+      {
+        "object": "Product"
+      },
+      "Product(name='Desk', price_cents=9000, tags=('home', 'office'))"
+    ],
+    "label": "repr with zero and two tags"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen",
+            150,
+            [
+              "a"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "x"
+        },
+        {
+          "args": [
+            "Pen",
+            150,
+            [
+              "a"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "y"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "x"
+          },
+          "op": "==",
+          "right": {
+            "ref": "y"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "x"
+          },
+          "op": "<=",
+          "right": {
+            "ref": "y"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "x"
+          },
+          "op": "<",
+          "right": {
+            "ref": "y"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      true,
+      true,
+      false
+    ],
+    "label": "equal values are equal"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen",
+            150,
+            [
+              "blue"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "x"
+        },
+        {
+          "args": [
+            "Pen",
+            150,
+            [
+              "red"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "y"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "x"
+          },
+          "op": "<",
+          "right": {
+            "ref": "y"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "y"
+          },
+          "op": ">",
+          "right": {
+            "ref": "x"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "x"
+          },
+          "op": "!=",
+          "right": {
+            "ref": "y"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      true,
+      true,
+      true
+    ],
+    "label": "tags break ties"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Gum",
+            99
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "p",
+          "save": "a"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            100
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "p",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            33
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "p",
+          "save": "c"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      99,
+      {
+        "object": "Product"
+      },
+      0,
+      {
+        "object": "Product"
+      },
+      66
+    ],
+    "label": "discount bounds and rounding"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Gum",
+            99
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            101
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "p"
+        },
+        {
+          "args": [
+            -5
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "invalid discount"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Bag",
+            2000,
+            [
+              "travel"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "p",
+          "save": "q"
+        },
+        {
+          "do": "repr",
+          "obj": "q"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      "Product(name='Bag', price_cents=1000, tags=('travel',))"
+    ],
+    "label": "discount keeps other fields"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ink",
+            300
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "name",
+          "do": "set",
+          "obj": "p",
+          "value": "Toner"
+        },
+        {
+          "attr": "tags",
+          "do": "set",
+          "obj": "p",
+          "value": []
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "p"
+          },
+          "op": "==",
+          "right": "Ink"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "p"
+          },
+          "op": "<",
+          "right": 5
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      false,
+      {
+        "error": "TypeError"
+      }
+    ],
+    "label": "every field is frozen and comparison with other types"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Product",
+          "do": "new",
+          "kwargs": {
+            "name": "Clip",
+            "price_cents": 40
+          },
+          "save": "p"
+        },
+        {
+          "cls": "Product",
+          "do": "check",
+          "is": "dataclass"
+        },
+        {
+          "do": "repr",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      true,
+      "Product(name='Clip', price_cents=40, tags=())"
+    ],
+    "label": "keywords and structure"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen Set",
+            174,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pen",
+            25,
+            [
+              "eco",
+              "red"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            120
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      25,
+      {
+        "error": "ValueError"
+      },
+      false,
+      {
+        "error": "FrozenInstanceError"
+      },
+      false
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pad",
+            255,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Ink",
+            30,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            "Ink",
+            -1
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "Ink",
+            -1
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      "Product(name='Ink', price_cents=30, tags=())",
+      false,
+      {
+        "error": "ValueError"
+      },
+      false,
+      {
+        "object": "Product"
+      },
+      "Product(name='Pad', price_cents=255, tags=())",
+      255,
+      {
+        "error": "ValueError"
+      },
+      255,
+      true,
+      {
+        "error": "FrozenInstanceError"
+      }
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen",
+            379,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pad",
+            89,
+            [
+              "blue"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      "Product(name='Pad', price_cents=89, tags=('blue',))",
+      {
+        "object": "Product"
+      },
+      89,
+      {
+        "error": "FrozenInstanceError"
+      },
+      false,
+      {
+        "object": "Product"
+      },
+      89
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen",
+            53,
+            [
+              "eco"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pad",
+            232,
+            [
+              "eco",
+              "blue"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<=",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            120
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Pen Set",
+            0
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            "Pen Set",
+            0
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      "Product(name='Pen', price_cents=53, tags=('eco',))",
+      {
+        "object": "Product"
+      },
+      false,
+      false,
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      false,
+      {
+        "object": "Product"
+      },
+      0
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ink",
+            28,
+            [
+              "red"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pen Set",
+            200,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": ">",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            "Pen",
+            250
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Pen",
+            250
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      200,
+      "Product(name='Pen Set', price_cents=200, tags=())",
+      "Product(name='Ink', price_cents=28, tags=('red',))",
+      false,
+      false,
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      false,
+      {
+        "error": "FrozenInstanceError"
+      },
+      true
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ink",
+            321,
+            [
+              "blue"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pen Set",
+            362,
+            [
+              "red",
+              "eco"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "args": [
+            "Pen Set",
+            -1
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "Pen Set",
+            250
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "error": "ValueError"
+      },
+      "Product(name='Pen Set', price_cents=362, tags=('red', 'eco'))",
+      "Product(name='Ink', price_cents=321, tags=('blue',))",
+      {
+        "object": "Product"
+      }
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen Set",
+            163,
+            [
+              "red",
+              "blue"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Ink",
+            387,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Pad",
+            250
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<=",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<=",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      false,
+      false,
+      false,
+      {
+        "object": "Product"
+      },
+      146,
+      146,
+      "Product(name='Pen Set', price_cents=146, tags=('red', 'blue'))",
+      false
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pad",
+            160,
+            [
+              "blue",
+              "red"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pen Set",
+            324,
+            [
+              "eco"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "args": [
+            "Pen Set",
+            250
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            120
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "args": [
+            100
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "object": "Product"
+      },
+      "Product(name='Pad', price_cents=160, tags=('blue', 'red'))",
+      "Product(name='Pen Set', price_cents=250, tags=())",
+      {
+        "object": "Product"
+      },
+      false,
+      144,
+      144,
+      {
+        "error": "ValueError"
+      },
+      144,
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "object": "Product"
+      }
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen",
+            284,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pen Set",
+            65,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "",
+            250
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<=",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "a"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "error": "ValueError"
+      },
+      true,
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      "Product(name='Pen Set', price_cents=58, tags=())",
+      {
+        "error": "FrozenInstanceError"
+      },
+      false,
+      65
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pad",
+            252,
+            [
+              "blue"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Ink",
+            179,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "args": [
+            99
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            99
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Pen Set",
+            0
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Pad",
+            250
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      "Product(name='Ink', price_cents=179, tags=())",
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      250,
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      0
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen Set",
+            234,
+            [
+              "eco"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Ink",
+            314,
+            [
+              "red"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            100
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "a"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": ">",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            100
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      false,
+      {
+        "object": "Product"
+      },
+      0,
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "error": "FrozenInstanceError"
+      }
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ink",
+            148,
+            [
+              "eco",
+              "red"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pad",
+            203,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": ">",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": ">",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      false,
+      false,
+      {
+        "object": "Product"
+      },
+      "Product(name='Pad', price_cents=101, tags=())",
+      {
+        "object": "Product"
+      },
+      false
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen",
+            320,
+            [
+              "blue"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pad",
+            3,
+            [
+              "blue"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "b"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": ">",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      true,
+      "Product(name='Pen', price_cents=320, tags=('blue',))"
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen Set",
+            273,
+            [
+              "red"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pen Set",
+            228,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "args": [
+            "Pen",
+            -1
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      228,
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen",
+            425,
+            [
+              "eco"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Ink",
+            155,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "",
+            250
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<=",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            "Pen Set",
+            250
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      "Product(name='Pen', price_cents=425, tags=('eco',))",
+      "Product(name='Ink', price_cents=155, tags=())",
+      {
+        "error": "ValueError"
+      },
+      false,
+      "Product(name='Pen', price_cents=425, tags=('eco',))",
+      false,
+      {
+        "object": "Product"
+      },
+      true,
+      250
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pad",
+            143,
+            [
+              "eco",
+              "blue"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pad",
+            384,
+            [
+              "blue"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": ">",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            120
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "args": [
+            "Pen Set",
+            250
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            "",
+            250
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      false,
+      384,
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "object": "Product"
+      },
+      false,
+      {
+        "error": "ValueError"
+      },
+      250
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pad",
+            167,
+            [
+              "red",
+              "eco"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pen",
+            481,
+            [
+              "eco"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "Pen",
+            250
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "b"
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "b"
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": ">",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            120
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      125,
+      "Product(name='Pen', price_cents=125, tags=())",
+      false,
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      125
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pen",
+            258,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pen",
+            222,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<=",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            120
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "b",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<=",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      false,
+      false,
+      {
+        "error": "ValueError"
+      },
+      222,
+      {
+        "error": "FrozenInstanceError"
+      },
+      "Product(name='Pen', price_cents=258, tags=())",
+      {
+        "error": "FrozenInstanceError"
+      },
+      222,
+      222,
+      {
+        "object": "Product"
+      },
+      "Product(name='Pen', price_cents=258, tags=())",
+      false
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Ink",
+            264,
+            [
+              "blue",
+              "red"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pen Set",
+            266,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      266,
+      false,
+      {
+        "object": "Product"
+      },
+      "Product(name='Ink', price_cents=132, tags=('blue', 'red'))",
+      132,
+      "Product(name='Ink', price_cents=132, tags=('blue', 'red'))",
+      {
+        "error": "FrozenInstanceError"
+      },
+      {
+        "error": "FrozenInstanceError"
+      }
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "Pad",
+            188,
+            [
+              "red",
+              "eco"
+            ]
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Ink",
+            196,
+            []
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "price_cents",
+          "do": "set",
+          "obj": "a",
+          "value": 1
+        },
+        {
+          "attr": "price_cents",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            99
+          ],
+          "do": "call",
+          "method": "with_discount",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Pen",
+            0
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            "Pen Set",
+            -1
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "",
+            -1
+          ],
+          "cls": "Product",
+          "do": "new",
+          "save": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      {
+        "error": "FrozenInstanceError"
+      },
+      196,
+      {
+        "object": "Product"
+      },
+      {
+        "object": "Product"
+      },
+      false,
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-20"
+  }
+]

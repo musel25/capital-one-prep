@@ -1,0 +1,1872 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Card",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            1000
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Card"
+      },
+      {
+        "method": "card",
+        "amount": 1000,
+        "fee": 59,
+        "total": 1059
+      }
+    ],
+    "label": "card receipt"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "PaymentMethod",
+          "do": "new"
+        },
+        {
+          "args": [],
+          "cls": "Draft",
+          "do": "new"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      }
+    ],
+    "label": "abstract classes cannot be created"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            500
+          ],
+          "cls": "Wallet",
+          "do": "new",
+          "save": "w"
+        },
+        {
+          "args": [
+            600
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "w"
+        },
+        {
+          "args": [
+            200
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "w"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "w"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Wallet"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "method": "wallet",
+        "amount": 200,
+        "fee": 0,
+        "total": 200
+      },
+      300
+    ],
+    "label": "wallet balance"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Card",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "c"
+        },
+        {
+          "args": [
+            34
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "c"
+        },
+        {
+          "args": [
+            35
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "c"
+        },
+        {
+          "args": [
+            2000
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Card"
+      },
+      31,
+      31,
+      32,
+      88
+    ],
+    "label": "card fee rounds up"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "BankTransfer",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "b"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "BankTransfer"
+      },
+      {
+        "method": "bank",
+        "amount": 1,
+        "fee": 50,
+        "total": 51
+      },
+      "bank"
+    ],
+    "label": "bank transfer"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Card",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "c"
+        },
+        {
+          "args": [
+            -5
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "c"
+        },
+        {
+          "args": [
+            true
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Card"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "invalid amounts"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            100
+          ],
+          "cls": "Wallet",
+          "do": "new",
+          "save": "w"
+        },
+        {
+          "args": [
+            -5
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "w"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "w"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "w"
+        },
+        {
+          "args": [
+            100
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "w"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "w"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Wallet"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      100,
+      {
+        "method": "wallet",
+        "amount": 100,
+        "fee": 0,
+        "total": 100
+      },
+      0
+    ],
+    "label": "wallet rejection keeps the balance"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0
+          ],
+          "cls": "Wallet",
+          "do": "new",
+          "save": "w"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "w"
+        },
+        {
+          "args": [
+            -1
+          ],
+          "cls": "Wallet",
+          "do": "new"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Wallet"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "wallet exact and empty balance"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "Card"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "Wallet"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "Draft"
+        }
+      ]
+    },
+    "expected": [
+      "card",
+      "wallet",
+      "draft"
+    ],
+    "label": "names from class attributes"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "cls": "PaymentMethod",
+          "do": "check",
+          "is": "abstract"
+        },
+        {
+          "cls": "Draft",
+          "do": "check",
+          "is": "abstract"
+        },
+        {
+          "cls": "Card",
+          "do": "check",
+          "is": "abstract"
+        },
+        {
+          "cls": "Wallet",
+          "do": "check",
+          "is": "abstract"
+        }
+      ]
+    },
+    "expected": [
+      true,
+      true,
+      false,
+      false
+    ],
+    "label": "abstract checks"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Card",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            10000000
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Card"
+      },
+      {
+        "method": "card",
+        "amount": 10000000,
+        "fee": 290030,
+        "total": 10290030
+      }
+    ],
+    "label": "large card charge"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "cls": "Wallet",
+          "do": "check",
+          "is": "subclass",
+          "of": "PaymentMethod"
+        },
+        {
+          "cls": "BankTransfer",
+          "do": "check",
+          "is": "subclass",
+          "of": "PaymentMethod"
+        },
+        {
+          "args": [],
+          "cls": "Wallet",
+          "do": "new",
+          "kwargs": {
+            "balance": 70
+          },
+          "save": "w"
+        },
+        {
+          "args": [
+            70
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "w"
+        },
+        {
+          "args": [
+            70
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "w"
+        }
+      ]
+    },
+    "expected": [
+      true,
+      true,
+      {
+        "object": "Wallet"
+      },
+      0,
+      {
+        "method": "wallet",
+        "amount": 70,
+        "fee": 0,
+        "total": 70
+      }
+    ],
+    "label": "polymorphic subclasses"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            50
+          ],
+          "cls": "Wallet",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            456
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            4967
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            1000
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            1324
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            1000
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Wallet"
+      },
+      "wallet",
+      0,
+      "wallet",
+      0,
+      {
+        "error": "ValueError"
+      },
+      0,
+      {
+        "error": "ValueError"
+      },
+      50
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "PaymentMethod",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            33
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "PaymentMethod",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            2958
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            2272
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            999
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            50
+          ],
+          "cls": "Wallet",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            1000
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            1050
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Wallet"
+      },
+      {
+        "error": "ValueError"
+      },
+      0,
+      "wallet",
+      50
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Draft",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "PaymentMethod",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            1001
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1000
+          ],
+          "cls": "Wallet",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            826
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            33
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            35
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            4418
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Wallet"
+      },
+      0,
+      "wallet",
+      {
+        "amount": 33,
+        "fee": 0,
+        "method": "wallet",
+        "total": 33
+      },
+      "wallet",
+      {
+        "amount": 35,
+        "fee": 0,
+        "method": "wallet",
+        "total": 35
+      },
+      "wallet",
+      0,
+      "wallet",
+      932
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            50
+          ],
+          "cls": "Wallet",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            2344
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            35
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            33
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Wallet"
+      },
+      0,
+      {
+        "amount": 35,
+        "fee": 0,
+        "method": "wallet",
+        "total": 35
+      },
+      {
+        "error": "ValueError"
+      },
+      15
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1000
+          ],
+          "cls": "Wallet",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            200
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            3803
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            1000
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Wallet"
+      },
+      "wallet",
+      {
+        "error": "ValueError"
+      },
+      0,
+      0,
+      {
+        "amount": 1000,
+        "fee": 0,
+        "method": "wallet",
+        "total": 1000
+      },
+      0
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Card",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            34
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Card"
+      },
+      {
+        "amount": 34,
+        "fee": 31,
+        "method": "card",
+        "total": 65
+      },
+      "card",
+      "card",
+      "card"
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "PaymentMethod",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            3403
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            2577
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            42191
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            3960
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            34
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Card",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            999
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            35
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            3335
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            3477
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            809
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Card"
+      },
+      {
+        "amount": 999,
+        "fee": 59,
+        "method": "card",
+        "total": 1058
+      },
+      {
+        "amount": 35,
+        "fee": 32,
+        "method": "card",
+        "total": 67
+      },
+      {
+        "amount": 1,
+        "fee": 31,
+        "method": "card",
+        "total": 32
+      },
+      127,
+      "card",
+      131,
+      54
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1000
+          ],
+          "cls": "Wallet",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            1000
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Wallet"
+      },
+      "wallet",
+      {
+        "amount": 1000,
+        "fee": 0,
+        "method": "wallet",
+        "total": 1000
+      },
+      "wallet",
+      "wallet",
+      0
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Card",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            1371
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            1000
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Card"
+      },
+      70,
+      "card",
+      "card",
+      {
+        "error": "ValueError"
+      },
+      {
+        "amount": 1000,
+        "fee": 59,
+        "method": "card",
+        "total": 1059
+      }
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Card",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            1001
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Card"
+      },
+      "card",
+      "card",
+      "card",
+      {
+        "error": "ValueError"
+      },
+      {
+        "amount": 1001,
+        "fee": 60,
+        "method": "card",
+        "total": 1061
+      },
+      "card"
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Card",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            230305
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            3734
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Card"
+      },
+      {
+        "amount": 230305,
+        "fee": 6709,
+        "method": "card",
+        "total": 237014
+      },
+      "card",
+      139,
+      "card",
+      "card",
+      "card"
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0
+          ],
+          "cls": "Wallet",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            35
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            1687
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            1333
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Wallet"
+      },
+      {
+        "error": "ValueError"
+      },
+      0,
+      0,
+      {
+        "error": "ValueError"
+      },
+      0
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0
+          ],
+          "cls": "Wallet",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            4975
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Wallet"
+      },
+      {
+        "error": "ValueError"
+      },
+      "wallet",
+      "wallet",
+      {
+        "error": "ValueError"
+      },
+      0
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Card",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            2851
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "args": [
+            33
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "charge",
+          "obj": "p"
+        },
+        {
+          "args": [
+            3673
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Card"
+      },
+      "card",
+      "card",
+      113,
+      {
+        "amount": 33,
+        "fee": 31,
+        "method": "card",
+        "total": 64
+      },
+      "card",
+      "card",
+      {
+        "error": "ValueError"
+      },
+      137
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1000
+          ],
+          "cls": "Wallet",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "args": [
+            4317
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "args": [
+            3681
+          ],
+          "do": "call",
+          "method": "fee",
+          "obj": "p"
+        },
+        {
+          "attr": "name",
+          "do": "get",
+          "obj": "p"
+        },
+        {
+          "attr": "balance",
+          "do": "get",
+          "obj": "p"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Wallet"
+      },
+      0,
+      "wallet",
+      0,
+      "wallet",
+      1000
+    ],
+    "label": "generated-20"
+  }
+]

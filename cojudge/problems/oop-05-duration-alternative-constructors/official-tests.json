@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"ops\":[{\"args\":[90],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"a\"},{\"args\":[\"90m\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"str\",\"obj\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[2],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"l\"},{\"args\":[\"1m 5s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\"},{\"do\":\"str\",\"obj\":\"l\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"1h  5m\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\"},{\"args\":[\"5m 5m\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\"},{\"args\":[\"5s 1m\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"2h 15m 10s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"d\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"d\"},{\"do\":\"str\",\"obj\":\"d\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[3605],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"args\":[0],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"z\"},{\"do\":\"str\",\"obj\":\"z\"},{\"args\":[59],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"s\"},{\"do\":\"str\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[-1],\"cls\":\"Duration\",\"do\":\"new\"},{\"args\":[-2],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\"},{\"args\":[0],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"z\"},{\"do\":\"str\",\"obj\":\"z\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\"},{\"args\":[\"h\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\"},{\"args\":[\"-5s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\"},{\"args\":[\"5x\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\"},{\"args\":[\"1.5h\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\" 5s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\"},{\"args\":[\"5s \"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\"},{\"args\":[\"1h5m\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\"},{\"args\":[\"5 s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"0h 0m 3661s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"d\"},{\"do\":\"str\",\"obj\":\"d\"},{\"args\":[\"100h\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"e\"},{\"do\":\"str\",\"obj\":\"e\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"1m\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"l\"},{\"args\":[60],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"d\"},{\"do\":\"op\",\"left\":{\"ref\":\"l\"},\"op\":\"==\",\"right\":{\"ref\":\"d\"}},{\"do\":\"op\",\"left\":{\"ref\":\"d\"},\"op\":\"==\",\"right\":60},{\"do\":\"op\",\"left\":{\"ref\":\"d\"},\"op\":\"!=\",\"right\":{\"ref\":\"l\"}}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[61],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[1],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"!=\",\"right\":{\"ref\":\"b\"}}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"attr\":\"from_minutes\",\"cls\":\"Duration\",\"do\":\"check\",\"is\":\"classmethod\"},{\"attr\":\"from_text\",\"cls\":\"Duration\",\"do\":\"check\",\"is\":\"classmethod\"},{\"cls\":\"Lap\",\"do\":\"check\",\"is\":\"subclass\",\"of\":\"Duration\"},{\"args\":[],\"cls\":\"Lap\",\"do\":\"new\",\"kwargs\":{\"seconds\":7},\"save\":\"l\"},{\"do\":\"str\",\"obj\":\"l\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[408],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"a\"},{\"args\":[586],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"b\"},{\"args\":[1],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"10s 5m\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"args\":[\"0s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"args\":[3599],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[18],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"a\"},{\"args\":[407],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"b\"},{\"args\":[645609],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"args\":[86399],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[229],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"a\"},{\"args\":[404],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[\"120s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"b\"},{\"args\":[\"1h\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[86399],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[330],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"a\"},{\"args\":[114],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"b\"},{\"args\":[\"0h 60m\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"args\":[86399],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[2],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"a\"},{\"args\":[399],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[\"0s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[177],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"a\"},{\"args\":[179],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[86399],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"str\",\"obj\":\"b\"},{\"args\":[\"120s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"b\"},{\"args\":[60],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[39],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"a\"},{\"args\":[148],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"b\"},{\"args\":[0],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[379891],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[0],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"args\":[59],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"1 h\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[372],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"a\"},{\"args\":[549],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"b\"},{\"args\":[\"1h 0m 0s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"args\":[3599],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"args\":[\"x5s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"args\":[\"1h 1h\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[191],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"a\"},{\"args\":[266],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"str\",\"obj\":\"a\"},{\"args\":[\"7h 7m 7s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[233],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"a\"},{\"args\":[209],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"args\":[60],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"0h 60m\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[900238],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"1 h\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[142],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"a\"},{\"args\":[354],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"args\":[3600],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[595],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"a\"},{\"args\":[430],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"str\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[114],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"a\"},{\"args\":[12],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[3599],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[316],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"a\"},{\"args\":[422],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"b\"},{\"args\":[382687],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"args\":[\"1 h\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"a\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[455],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"a\"},{\"args\":[44],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[\"7h 7m 7s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"args\":[3599],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[268],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"a\"},{\"args\":[599],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[152],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"a\"},{\"args\":[512],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[\"0h 60m\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"args\":[1],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"args\":[0],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[489],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"a\"},{\"args\":[430],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[\"0s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"args\":[\"\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[270],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"a\"},{\"args\":[500],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Duration\",\"save\":\"b\"},{\"args\":[59],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"args\":[\"120s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"b\"},{\"args\":[3599],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"args\":[\"1h 0m 0s\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[86399],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[3599],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"attr\":\"seconds\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[242],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"a\"},{\"args\":[178],\"do\":\"call\",\"method\":\"from_minutes\",\"obj\":\"Lap\",\"save\":\"b\"},{\"args\":[\"10s 5m\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"args\":[\"10s 5m\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Duration\",\"save\":\"b\"},{\"args\":[\"1h\"],\"do\":\"call\",\"method\":\"from_text\",\"obj\":\"Lap\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"a\"},{\"args\":[0],\"cls\":\"Duration\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"str\",\"obj\":\"a\"}]}"
+  }
+]

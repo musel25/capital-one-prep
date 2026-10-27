@@ -1,0 +1,2922 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#ff8000"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            0,
+            128,
+            255
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      [
+        255,
+        128,
+        0
+      ],
+      "#0080ff"
+    ],
+    "label": "static conversion on the class"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#FFAA00"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      "#ffaa00",
+      [
+        255,
+        170,
+        0
+      ],
+      "Color('#ffaa00')"
+    ],
+    "label": "instance stores lowercase"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#ff_f00"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            "#1_2345"
+          ],
+          "cls": "Color",
+          "do": "new"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "underscore is not a hex digit"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#fff"
+          ],
+          "cls": "Color",
+          "do": "new"
+        },
+        {
+          "args": [
+            "ff8800"
+          ],
+          "cls": "Color",
+          "do": "new"
+        },
+        {
+          "args": [
+            "#ff88001"
+          ],
+          "cls": "Color",
+          "do": "new"
+        },
+        {
+          "args": [
+            "x123456"
+          ],
+          "cls": "Color",
+          "do": "new"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "wrong length and missing hash"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#+f+f+f"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            "# fffff"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            "#gggggg"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "signs and spaces are rejected"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0,
+            0,
+            0
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            255,
+            255,
+            255
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            256,
+            0,
+            0
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            0,
+            -1,
+            0
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      "#000000",
+      "#ffffff",
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "component range"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            true,
+            0,
+            0
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            1.0,
+            0,
+            0
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            0,
+            0,
+            "9"
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "component type"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#ff0000"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            "#0000ff"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "r",
+          "save": "m"
+        },
+        {
+          "do": "repr",
+          "obj": "m"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "r"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      "Color('#7f007f')",
+      "#ff0000"
+    ],
+    "label": "blend returns a new color"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#010203"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#020304"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "m"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "m"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      [
+        1,
+        2,
+        3
+      ]
+    ],
+    "label": "blend rounds down"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#123456"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "#0a0B0c"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "c"
+        },
+        {
+          "args": [
+            10,
+            11,
+            12
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      [
+        10,
+        11,
+        12
+      ],
+      "#0a0b0c"
+    ],
+    "label": "static method through an instance"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#abcdef"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "rgb",
+          "do": "set",
+          "obj": "c",
+          "value": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "error": "AttributeError"
+      },
+      [
+        171,
+        205,
+        239
+      ]
+    ],
+    "label": "rgb is read-only"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "attr": "hex_to_rgb",
+          "cls": "Color",
+          "do": "check",
+          "is": "staticmethod"
+        },
+        {
+          "attr": "rgb_to_hex",
+          "cls": "Color",
+          "do": "check",
+          "is": "staticmethod"
+        },
+        {
+          "attr": "rgb",
+          "cls": "Color",
+          "do": "check",
+          "is": "property"
+        },
+        {
+          "attr": "blend",
+          "cls": "Color",
+          "do": "check",
+          "is": "staticmethod"
+        }
+      ]
+    },
+    "expected": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "label": "structure"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#ff8800"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#000000"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "#a1B2c3"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "#12345"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "#0F0f0F"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      "#ff8800",
+      "#ff8800",
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      "Color('#3f2200')",
+      "#3f2200",
+      "Color('#3f2200')",
+      [
+        161,
+        178,
+        195
+      ],
+      "Color('#3f2200')",
+      {
+        "error": "ValueError"
+      },
+      "Color('#3f2200')",
+      [
+        15,
+        15,
+        15
+      ]
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#000000"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#0F0f0F"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "#000000"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      [
+        15,
+        15,
+        15
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        15,
+        15,
+        15
+      ],
+      "#070707"
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#123abc"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#000000"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "#ff ff0"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      "#123abc",
+      [
+        0,
+        0,
+        0
+      ],
+      "Color('#123abc')",
+      [
+        0,
+        0,
+        0
+      ],
+      {
+        "object": "Color"
+      },
+      [
+        0,
+        0,
+        0
+      ],
+      "Color('#091d5e')",
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#000000"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#a1B2c3"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            0,
+            128,
+            -2
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      {
+        "error": "ValueError"
+      },
+      "Color('#000000')",
+      "#000000",
+      "#000000",
+      "Color('#000000')",
+      [
+        161,
+        178,
+        195
+      ],
+      [
+        161,
+        178,
+        195
+      ],
+      [
+        161,
+        178,
+        195
+      ],
+      "#000000"
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#0F0f0F"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#ff8800"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "#12345g"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            203,
+            256,
+            -2
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            124,
+            44,
+            7
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            "#ff8800"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            79,
+            7,
+            0
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      "#0f0f0f",
+      "#0f0f0f",
+      [
+        255,
+        136,
+        0
+      ],
+      [
+        255,
+        136,
+        0
+      ],
+      "#0f0f0f",
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      "#7c2c07",
+      [
+        255,
+        136,
+        0
+      ],
+      "#4f0700"
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#0F0f0F"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#123abc"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "#12345g"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            -2,
+            0,
+            256
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            -2,
+            0,
+            -2
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      "Color('#0f0f0f')",
+      "Color('#0f0f0f')",
+      "Color('#0f0f0f')",
+      [
+        18,
+        58,
+        188
+      ],
+      [
+        18,
+        58,
+        188
+      ],
+      "Color('#0f0f0f')",
+      "Color('#0f0f0f')",
+      "Color('#0f0f0f')",
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Color"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#123abc"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#ff8800"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "#-12345"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            "#FFFFFF"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            256,
+            256,
+            7
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            128,
+            -2,
+            255
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "#-12345"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      {
+        "error": "ValueError"
+      },
+      [
+        255,
+        255,
+        255
+      ],
+      {
+        "object": "Color"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      "#88615e",
+      [
+        255,
+        136,
+        0
+      ],
+      [
+        255,
+        136,
+        0
+      ],
+      {
+        "error": "ValueError"
+      },
+      "Color('#88615e')",
+      "#88615e",
+      {
+        "object": "Color"
+      }
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#000000"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#0F0f0F"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            128,
+            255,
+            38
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            128,
+            7,
+            255
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      "#80ff26",
+      "Color('#000000')",
+      {
+        "object": "Color"
+      },
+      "#8007ff",
+      [
+        15,
+        15,
+        15
+      ]
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#ff8800"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#FFFFFF"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "#ff ff0"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            7,
+            128,
+            0
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            59,
+            256,
+            256
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            128,
+            256,
+            255
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            7,
+            0,
+            0
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            255,
+            7,
+            29
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Color"
+      },
+      "#078000",
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      [
+        255,
+        255,
+        255
+      ],
+      "#ffc37f",
+      "#ffc37f",
+      {
+        "object": "Color"
+      },
+      "#070000",
+      [
+        255,
+        255,
+        255
+      ],
+      "#ff071d"
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#0F0f0F"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#ff8800"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#0F0f0F"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "#-12345"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            163,
+            256,
+            7
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      [
+        15,
+        15,
+        15
+      ],
+      "#874b07",
+      "#874b07",
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      [
+        255,
+        136,
+        0
+      ]
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#123abc"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#000000"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "#a1B2c3"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            -2,
+            0,
+            255
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      [
+        0,
+        0,
+        0
+      ],
+      "Color('#123abc')",
+      "Color('#123abc')",
+      "Color('#123abc')",
+      [
+        161,
+        178,
+        195
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#a1B2c3"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#a1B2c3"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "123456#"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            7,
+            128,
+            0
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            21,
+            128,
+            7
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "#1_2_34"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      "#a1b2c3",
+      {
+        "object": "Color"
+      },
+      [
+        161,
+        178,
+        195
+      ],
+      [
+        161,
+        178,
+        195
+      ],
+      {
+        "error": "ValueError"
+      },
+      "#078000",
+      {
+        "object": "Color"
+      },
+      [
+        161,
+        178,
+        195
+      ],
+      [
+        161,
+        178,
+        195
+      ],
+      "#158007",
+      [
+        161,
+        178,
+        195
+      ],
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#123abc"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#000000"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#ff ff0"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            "#a1B2c3"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      "#123abc",
+      [
+        0,
+        0,
+        0
+      ],
+      "#123abc",
+      "#123abc",
+      [
+        0,
+        0,
+        0
+      ],
+      {
+        "object": "Color"
+      },
+      {
+        "error": "ValueError"
+      },
+      [
+        161,
+        178,
+        195
+      ],
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      [
+        0,
+        0,
+        0
+      ],
+      "#020717"
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#a1B2c3"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#000000"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "#123abc"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            0,
+            7,
+            128
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "#0F0f0F"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            15,
+            -2,
+            76
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            255,
+            256,
+            255
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            128,
+            256,
+            128
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            "#ff8800"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            256,
+            7,
+            255
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      [
+        18,
+        58,
+        188
+      ],
+      "#000780",
+      "Color('#a1b2c3')",
+      [
+        15,
+        15,
+        15
+      ],
+      {
+        "object": "Color"
+      },
+      {
+        "error": "ValueError"
+      },
+      "#505961",
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      [
+        255,
+        136,
+        0
+      ],
+      {
+        "error": "ValueError"
+      },
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#000000"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#0F0f0F"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "#12345g"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#FFFFFF"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      "Color('#070707')",
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Color"
+      },
+      "#0b0b0b",
+      [
+        15,
+        15,
+        15
+      ],
+      {
+        "object": "Color"
+      },
+      [
+        255,
+        255,
+        255
+      ]
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#FFFFFF"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#123abc"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            255,
+            0,
+            128
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "#FFFFFF"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            "#a1B2c3"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            99,
+            254,
+            255
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            "#ff8800"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      "#ff0080",
+      [
+        18,
+        58,
+        188
+      ],
+      [
+        255,
+        255,
+        255
+      ],
+      [
+        161,
+        178,
+        195
+      ],
+      {
+        "object": "Color"
+      },
+      "#63feff",
+      [
+        255,
+        136,
+        0
+      ],
+      "#889cdd",
+      "#889cdd",
+      "#889cdd"
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#ff8800"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#0F0f0F"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            "#ff ff0"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            "#ff ff0"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            7,
+            255,
+            256
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            7,
+            255,
+            256
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            0,
+            70,
+            255
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      [
+        15,
+        15,
+        15
+      ],
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      "Color('#ff8800')",
+      "#ff8800",
+      {
+        "error": "ValueError"
+      },
+      "#0046ff",
+      "Color('#ff8800')"
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#ff8800"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#ff8800"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "#123abc"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            0,
+            134,
+            255
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      [
+        18,
+        58,
+        188
+      ],
+      [
+        255,
+        136,
+        0
+      ],
+      "#0086ff",
+      "#ff8800",
+      "Color('#ff8800')",
+      "#ff8800"
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#a1B2c3"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#000000"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            {
+              "ref": "b"
+            }
+          ],
+          "do": "call",
+          "method": "blend",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "attr": "hex",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            "#-12345"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      {
+        "object": "Color"
+      },
+      "#505961",
+      {
+        "error": "ValueError"
+      },
+      "Color('#505961')"
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "#ff8800"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "#a1B2c3"
+          ],
+          "cls": "Color",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "#-12345"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            "#-12345"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "attr": "rgb",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "args": [
+            -2,
+            27,
+            255
+          ],
+          "do": "call",
+          "method": "rgb_to_hex",
+          "obj": "Color"
+        },
+        {
+          "args": [
+            "#-12345"
+          ],
+          "do": "call",
+          "method": "hex_to_rgb",
+          "obj": "Color"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Color"
+      },
+      {
+        "object": "Color"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      "Color('#ff8800')",
+      [
+        161,
+        178,
+        195
+      ],
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-20"
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#ff8000\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[0,128,255],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#FFAA00\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"c\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"c\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"c\"},{\"do\":\"repr\",\"obj\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#ff_f00\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[\"#1_2345\"],\"cls\":\"Color\",\"do\":\"new\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#fff\"],\"cls\":\"Color\",\"do\":\"new\"},{\"args\":[\"ff8800\"],\"cls\":\"Color\",\"do\":\"new\"},{\"args\":[\"#ff88001\"],\"cls\":\"Color\",\"do\":\"new\"},{\"args\":[\"x123456\"],\"cls\":\"Color\",\"do\":\"new\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#+f+f+f\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[\"# fffff\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[\"#gggggg\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[0,0,0],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[255,255,255],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[256,0,0],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[0,-1,0],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[true,0,0],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[1.0,0,0],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[0,0,\"9\"],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#ff0000\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"r\"},{\"args\":[\"#0000ff\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"r\",\"save\":\"m\"},{\"do\":\"repr\",\"obj\":\"m\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"r\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#010203\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#020304\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"m\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"m\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#123456\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"c\"},{\"args\":[\"#0a0B0c\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"c\"},{\"args\":[10,11,12],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#abcdef\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"c\"},{\"attr\":\"rgb\",\"do\":\"set\",\"obj\":\"c\",\"value\":[0,0,0]},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"attr\":\"hex_to_rgb\",\"cls\":\"Color\",\"do\":\"check\",\"is\":\"staticmethod\"},{\"attr\":\"rgb_to_hex\",\"cls\":\"Color\",\"do\":\"check\",\"is\":\"staticmethod\"},{\"attr\":\"rgb\",\"cls\":\"Color\",\"do\":\"check\",\"is\":\"property\"},{\"attr\":\"blend\",\"cls\":\"Color\",\"do\":\"check\",\"is\":\"staticmethod\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#ff8800\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#000000\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"args\":[\"#a1B2c3\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"args\":[\"#12345\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"args\":[\"#0F0f0F\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#000000\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#0F0f0F\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[\"#000000\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#123abc\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#000000\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"args\":[\"#ff ff0\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#000000\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#a1B2c3\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[0,128,-2],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#0F0f0F\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#ff8800\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[\"#12345g\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[203,256,-2],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[124,44,7],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[\"#ff8800\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[79,7,0],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#0F0f0F\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#123abc\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"args\":[\"#12345g\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[-2,0,256],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"args\":[-2,0,-2],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#123abc\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#ff8800\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[\"#-12345\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[\"#FFFFFF\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"args\":[256,256,7],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[128,-2,255],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[\"#-12345\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#000000\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#0F0f0F\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[128,255,38],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"args\":[128,7,255],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#ff8800\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#FFFFFF\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[\"#ff ff0\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"args\":[7,128,0],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[59,256,256],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[128,256,255],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"args\":[7,0,0],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[255,7,29],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#0F0f0F\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#ff8800\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"args\":[\"#0F0f0F\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[\"#-12345\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[163,256,7],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#123abc\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#000000\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"args\":[\"#a1B2c3\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[-2,0,255],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#a1B2c3\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#a1B2c3\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[\"123456#\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[7,128,0],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[21,128,7],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[\"#1_2_34\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#123abc\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#000000\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"args\":[\"#ff ff0\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[\"#a1B2c3\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#a1B2c3\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#000000\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[\"#123abc\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[0,7,128],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"args\":[\"#0F0f0F\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"args\":[15,-2,76],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[255,256,255],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[128,256,128],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[\"#ff8800\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[256,7,255],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#000000\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#0F0f0F\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"args\":[\"#12345g\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"args\":[\"#FFFFFF\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#FFFFFF\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#123abc\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[255,0,128],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[\"#FFFFFF\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[\"#a1B2c3\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"args\":[99,254,255],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[\"#ff8800\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#ff8800\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#0F0f0F\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[\"#ff ff0\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[\"#ff ff0\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[7,255,256],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[7,255,256],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[0,70,255],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"do\":\"repr\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#ff8800\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#ff8800\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[\"#123abc\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[0,134,255],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#a1B2c3\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#000000\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[{\"ref\":\"b\"}],\"do\":\"call\",\"method\":\"blend\",\"obj\":\"a\",\"save\":\"a\"},{\"attr\":\"hex\",\"do\":\"get\",\"obj\":\"a\"},{\"args\":[\"#-12345\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"do\":\"repr\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[\"#ff8800\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"#a1B2c3\"],\"cls\":\"Color\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[\"#-12345\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"args\":[\"#-12345\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"attr\":\"rgb\",\"do\":\"get\",\"obj\":\"b\"},{\"args\":[-2,27,255],\"do\":\"call\",\"method\":\"rgb_to_hex\",\"obj\":\"Color\"},{\"args\":[\"#-12345\"],\"do\":\"call\",\"method\":\"hex_to_rgb\",\"obj\":\"Color\"}]}"
+  }
+]

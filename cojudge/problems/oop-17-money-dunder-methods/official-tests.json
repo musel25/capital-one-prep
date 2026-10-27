@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"ops\":[{\"args\":[1250,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[75,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"str\",\"obj\":\"c\"},{\"do\":\"repr\",\"obj\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[100,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"e\"},{\"args\":[100,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"u\"},{\"do\":\"op\",\"left\":{\"ref\":\"e\"},\"op\":\"+\",\"right\":{\"ref\":\"u\"}},{\"do\":\"op\",\"left\":{\"ref\":\"e\"},\"op\":\"+\",\"right\":5}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[199,\"GBP\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"m\"},{\"do\":\"op\",\"left\":2,\"op\":\"*\",\"right\":{\"ref\":\"m\"},\"save\":\"d\"},{\"do\":\"repr\",\"obj\":\"d\"},{\"do\":\"op\",\"left\":{\"ref\":\"m\"},\"op\":\"==\",\"right\":199}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[-5,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"args\":[-12345,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"args\":[0,\"JPY\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"z\"},{\"do\":\"str\",\"obj\":\"z\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[1.5,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\"},{\"args\":[true,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\"},{\"args\":[1,\"eur\"],\"cls\":\"Money\",\"do\":\"new\"},{\"args\":[1,\"EURO\"],\"cls\":\"Money\",\"do\":\"new\"},{\"args\":[1,\"E1R\"],\"cls\":\"Money\",\"do\":\"new\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[500,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[800,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"-\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"str\",\"obj\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"-\",\"right\":1}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[100,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[200,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\">=\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"b\"},\"op\":\">\",\"right\":{\"ref\":\"a\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<=\",\"right\":{\"ref\":\"a\"}}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[100,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[100,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"u\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<\",\"right\":{\"ref\":\"u\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<\",\"right\":100},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\">=\",\"right\":{\"ref\":\"u\"}}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[100,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[100,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[100,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"c\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"!=\",\"right\":{\"ref\":\"c\"}},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"!=\",\"right\":\"EUR 1.00\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[250,\"CHF\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"m\"},{\"do\":\"op\",\"left\":{\"ref\":\"m\"},\"op\":\"*\",\"right\":3,\"save\":\"t\"},{\"do\":\"str\",\"obj\":\"t\"},{\"do\":\"op\",\"left\":{\"ref\":\"m\"},\"op\":\"*\",\"right\":1.5},{\"do\":\"op\",\"left\":{\"ref\":\"m\"},\"op\":\"*\",\"right\":true},{\"do\":\"op\",\"left\":{\"ref\":\"m\"},\"op\":\"*\",\"right\":{\"ref\":\"m\"}}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[0,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"z\"},{\"do\":\"bool\",\"obj\":\"z\"},{\"args\":[-1,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"n\"},{\"do\":\"bool\",\"obj\":\"n\"},{\"do\":\"op\",\"left\":{\"ref\":\"n\"},\"op\":\"*\",\"right\":0,\"save\":\"k\"},{\"do\":\"bool\",\"obj\":\"k\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[1000000000000,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[1,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"str\",\"obj\":\"c\"},{\"attr\":\"cents\",\"do\":\"get\",\"obj\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[3442,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[2997,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":0,\"save\":\"a\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[451,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[3380,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"repr\",\"obj\":\"b\"},{\"do\":\"repr\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":5},{\"do\":\"bool\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":\"x\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[3487,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[3099,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":5},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<=\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":5},{\"do\":\"str\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[-282,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[4867,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"b\"},\"op\":\"*\",\"right\":2,\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":0,\"save\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":\"x\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"bool\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\">\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[3894,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[4484,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"repr\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":1.5,\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"b\"},\"op\":\"*\",\"right\":0,\"save\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":5},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":\"x\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\">\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":3,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[886,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[4907,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"bool\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":5},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":\"x\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"bool\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[-37,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[229,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":2,\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":-3,\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":-3,\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<\",\"right\":\"x\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":5},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<=\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"-\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":3,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[-214,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[2008,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"b\"},\"op\":\"*\",\"right\":-3,\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":0,\"save\":\"a\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"b\"},\"op\":\"*\",\"right\":0,\"save\":\"a\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"bool\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":3,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":-3,\"save\":\"a\"},{\"do\":\"bool\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":3,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[3234,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[3727,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":-3,\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"-\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[1612,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[3624,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":3,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":0,\"save\":\"a\"},{\"do\":\"repr\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"b\"},\"op\":\"*\",\"right\":0,\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":1.5,\"save\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"b\"},\"op\":\"*\",\"right\":2,\"save\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[4902,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[2661,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"!=\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"b\"},\"op\":\"*\",\"right\":1.5,\"save\":\"a\"},{\"do\":\"op\",\"left\":3,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":5},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":\"x\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[4019,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[208,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"!=\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"bool\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":-3,\"save\":\"a\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[4505,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[3491,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":1.5,\"save\":\"a\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"b\"},\"op\":\"*\",\"right\":1.5,\"save\":\"a\"},{\"do\":\"repr\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":\"x\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[1383,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[3351,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"repr\",\"obj\":\"b\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<\",\"right\":\"x\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":\"x\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":\"x\"},{\"do\":\"repr\",\"obj\":\"b\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":3,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<\",\"right\":5},{\"do\":\"op\",\"left\":3,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<\",\"right\":5}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[566,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[2582,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"repr\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"b\"},\"op\":\"*\",\"right\":-3,\"save\":\"a\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"<\",\"right\":\"x\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[161,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[3124,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"bool\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":5},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":-3,\"save\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[3431,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[4897,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"repr\",\"obj\":\"b\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"-\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":1.5,\"save\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[4362,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[4339,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":5},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":2,\"save\":\"a\"},{\"do\":\"bool\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":3,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":\"x\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":5},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[2349,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[1178,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"repr\",\"obj\":\"b\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"str\",\"obj\":\"a\"},{\"do\":\"repr\",\"obj\":\"a\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"*\",\"right\":0,\"save\":\"a\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[3808,\"EUR\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[2818,\"USD\"],\"cls\":\"Money\",\"do\":\"new\",\"save\":\"b\"},{\"do\":\"op\",\"left\":3,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"b\"},\"op\":\"*\",\"right\":1.5,\"save\":\"a\"},{\"do\":\"op\",\"left\":7,\"op\":\"*\",\"right\":{\"ref\":\"b\"},\"save\":\"b\"},{\"do\":\"str\",\"obj\":\"b\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"+\",\"right\":{\"ref\":\"b\"},\"save\":\"c\"},{\"do\":\"op\",\"left\":{\"ref\":\"a\"},\"op\":\"==\",\"right\":5}]}"
+  }
+]

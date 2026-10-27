@@ -1,0 +1,2712 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              80,
+              95
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            70
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        80,
+        95
+      ],
+      null,
+      81,
+      [
+        95,
+        80
+      ]
+    ],
+    "label": "valid list and average"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              10
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            [
+              50,
+              200
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "do": "len",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        10
+      ],
+      {
+        "error": "ValueError"
+      },
+      [
+        10
+      ],
+      1
+    ],
+    "label": "extend is all-or-nothing"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            "90"
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            true
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            9.5
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [],
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      []
+    ],
+    "label": "wrong types"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              101
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new"
+        },
+        {
+          "args": [
+            [
+              1,
+              null
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new"
+        },
+        {
+          "args": [
+            [
+              0,
+              100
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "TypeError"
+      },
+      [
+        0,
+        100
+      ]
+    ],
+    "label": "constructor validates"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              10,
+              30
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            1,
+            20
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "args": [
+            0,
+            -1
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        10,
+        30
+      ],
+      null,
+      {
+        "error": "ValueError"
+      },
+      [
+        10,
+        20,
+        30
+      ]
+    ],
+    "label": "insert validates"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              10,
+              20
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 0,
+          "obj": "s",
+          "value": 100
+        },
+        {
+          "do": "setitem",
+          "key": 1,
+          "obj": "s",
+          "value": 101
+        },
+        {
+          "do": "setitem",
+          "key": -1,
+          "obj": "s",
+          "value": false
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        10,
+        20
+      ],
+      null,
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "TypeError"
+      },
+      [
+        100,
+        20
+      ]
+    ],
+    "label": "item assignment validates"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              10
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 5,
+          "obj": "s",
+          "value": 50
+        },
+        {
+          "do": "item",
+          "key": -1,
+          "obj": "s"
+        },
+        {
+          "do": "item",
+          "key": 3,
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        10
+      ],
+      {
+        "error": "IndexError"
+      },
+      10,
+      {
+        "error": "IndexError"
+      }
+    ],
+    "label": "index errors after a valid value"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [],
+      {
+        "error": "ValueError"
+      },
+      []
+    ],
+    "label": "empty average"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              50,
+              90,
+              50,
+              70
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        50,
+        90,
+        50,
+        70
+      ],
+      [
+        90,
+        70,
+        50
+      ],
+      [
+        90,
+        70,
+        50,
+        50
+      ],
+      [],
+      [
+        50,
+        90,
+        50,
+        70
+      ]
+    ],
+    "label": "top with ties and large n"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              3,
+              1,
+              2
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "do": "sorted",
+          "obj": "s"
+        },
+        {
+          "do": "len",
+          "obj": "s"
+        },
+        {
+          "do": "check",
+          "is": "instance",
+          "obj": "s",
+          "of": "list"
+        }
+      ]
+    },
+    "expected": [
+      [
+        3,
+        1,
+        2
+      ],
+      [
+        1,
+        2,
+        3
+      ],
+      3,
+      true
+    ],
+    "label": "normal list behavior"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            [
+              0,
+              100,
+              55
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            []
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [],
+      null,
+      51,
+      null,
+      [
+        0,
+        100,
+        55
+      ]
+    ],
+    "label": "valid extend"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              5
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            -1,
+            4
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "args": [
+            99,
+            6
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "cls": "Scores",
+          "do": "check",
+          "is": "subclass",
+          "of": "list"
+        }
+      ]
+    },
+    "expected": [
+      [
+        5
+      ],
+      null,
+      null,
+      [
+        4,
+        5,
+        6
+      ],
+      true
+    ],
+    "label": "insert positions"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              93,
+              49
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            4,
+            50
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            101
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            99
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              101,
+              true,
+              "7"
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            42
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "args": [
+            5,
+            99
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        93,
+        49
+      ],
+      71,
+      null,
+      [
+        93,
+        49,
+        50
+      ],
+      64,
+      {
+        "error": "ValueError"
+      },
+      null,
+      {
+        "error": "ValueError"
+      },
+      null,
+      [
+        99
+      ],
+      null,
+      [
+        99,
+        99,
+        93,
+        50
+      ],
+      [
+        99,
+        99,
+        93
+      ]
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              86,
+              66,
+              83
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 4,
+          "obj": "s",
+          "value": 101
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": -2,
+          "obj": "s",
+          "value": -1
+        },
+        {
+          "args": [
+            [
+              true
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            4,
+            101
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        86,
+        66,
+        83
+      ],
+      {
+        "error": "ValueError"
+      },
+      [
+        86,
+        66,
+        83
+      ],
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "TypeError"
+      },
+      null,
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              1
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 4,
+          "obj": "s",
+          "value": 0
+        },
+        {
+          "do": "setitem",
+          "key": 3,
+          "obj": "s",
+          "value": 100
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        1
+      ],
+      1,
+      {
+        "error": "IndexError"
+      },
+      {
+        "error": "IndexError"
+      },
+      [
+        1
+      ]
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              46,
+              61,
+              24,
+              87
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "args": [
+            5,
+            0
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "args": [
+            101
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            100
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "args": [
+            88
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            88
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              42,
+              3.0
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        46,
+        61,
+        24,
+        87
+      ],
+      [
+        46,
+        61,
+        24,
+        87
+      ],
+      [
+        87
+      ],
+      null,
+      {
+        "error": "ValueError"
+      },
+      null,
+      null,
+      [
+        46,
+        61,
+        24,
+        87,
+        0,
+        100,
+        50
+      ],
+      null,
+      null,
+      {
+        "error": "TypeError"
+      },
+      60
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              45,
+              100
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            [
+              99,
+              101
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            99
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            3,
+            -1
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": -1,
+          "obj": "s",
+          "value": 1
+        },
+        {
+          "args": [
+            99
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              101,
+              100,
+              "7"
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        45,
+        100
+      ],
+      {
+        "error": "ValueError"
+      },
+      null,
+      {
+        "error": "ValueError"
+      },
+      81,
+      null,
+      null,
+      [
+        100
+      ],
+      {
+        "error": "ValueError"
+      },
+      null
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              14,
+              50,
+              73
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "args": [
+            99
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 2,
+          "obj": "s",
+          "value": true
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              100,
+              88,
+              1
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              101
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        14,
+        50,
+        73
+      ],
+      [
+        14,
+        50,
+        73
+      ],
+      45,
+      [
+        14,
+        50,
+        73
+      ],
+      null,
+      {
+        "error": "TypeError"
+      },
+      [
+        99,
+        73,
+        50
+      ],
+      null,
+      [
+        14,
+        50,
+        73,
+        99,
+        100,
+        88,
+        1
+      ],
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              7,
+              80,
+              54
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 3,
+          "obj": "s",
+          "value": 3.0
+        },
+        {
+          "args": [
+            0,
+            101
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "args": [
+            []
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            4,
+            1
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "args": [
+            4,
+            -1
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              50,
+              1,
+              "7"
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        7,
+        80,
+        54
+      ],
+      [
+        80,
+        54
+      ],
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "ValueError"
+      },
+      null,
+      null,
+      {
+        "error": "ValueError"
+      },
+      35,
+      {
+        "error": "TypeError"
+      }
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              5,
+              89,
+              26,
+              45
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            101
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            []
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "args": [
+            42
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        5,
+        89,
+        26,
+        45
+      ],
+      41,
+      {
+        "error": "ValueError"
+      },
+      null,
+      null,
+      [
+        89
+      ],
+      null
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              90,
+              71,
+              95,
+              91,
+              20
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 1,
+          "obj": "s",
+          "value": true
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              "7",
+              100,
+              99
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            -3,
+            0
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        90,
+        71,
+        95,
+        91,
+        20
+      ],
+      {
+        "error": "TypeError"
+      },
+      [
+        90,
+        71,
+        95,
+        91,
+        20
+      ],
+      {
+        "error": "TypeError"
+      },
+      null
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              45,
+              48,
+              52,
+              30,
+              52
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            [
+              0
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        45,
+        48,
+        52,
+        30,
+        52
+      ],
+      null,
+      [
+        52,
+        52
+      ],
+      37,
+      [
+        45,
+        48,
+        52,
+        30,
+        52,
+        0
+      ],
+      [
+        45,
+        48,
+        52,
+        30,
+        52,
+        0
+      ],
+      null
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              4,
+              12
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            [
+              true,
+              42
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            88
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": -1,
+          "obj": "s",
+          "value": 0
+        },
+        {
+          "do": "setitem",
+          "key": 3,
+          "obj": "s",
+          "value": 42
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            []
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 4,
+          "obj": "s",
+          "value": "7"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        4,
+        12
+      ],
+      {
+        "error": "TypeError"
+      },
+      null,
+      null,
+      {
+        "error": "IndexError"
+      },
+      5,
+      null,
+      {
+        "error": "TypeError"
+      },
+      [
+        4,
+        12,
+        0
+      ],
+      5
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              24,
+              17,
+              46,
+              41,
+              6
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "args": [
+            3.0
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 0,
+          "obj": "s",
+          "value": -1
+        },
+        {
+          "args": [
+            0,
+            101
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        24,
+        17,
+        46,
+        41,
+        6
+      ],
+      [
+        24,
+        17,
+        46,
+        41,
+        6
+      ],
+      {
+        "error": "TypeError"
+      },
+      null,
+      [
+        24,
+        17,
+        46,
+        41,
+        6,
+        0
+      ],
+      22,
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      [
+        46,
+        41
+      ],
+      22
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              40
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            101
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 2,
+          "obj": "s",
+          "value": 50
+        },
+        {
+          "args": [
+            0,
+            -1
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              42,
+              "7",
+              100
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "args": [
+            true
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            4,
+            -1
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        40
+      ],
+      {
+        "error": "ValueError"
+      },
+      [
+        40
+      ],
+      {
+        "error": "IndexError"
+      },
+      {
+        "error": "ValueError"
+      },
+      40,
+      {
+        "error": "TypeError"
+      },
+      [
+        40
+      ],
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              73,
+              77,
+              75,
+              27,
+              18
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "args": [
+            4,
+            88
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": -1,
+          "obj": "s",
+          "value": 100
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "args": [
+            42
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        73,
+        77,
+        75,
+        27,
+        18
+      ],
+      54,
+      [
+        77
+      ],
+      null,
+      59,
+      [
+        73,
+        77,
+        75,
+        27,
+        88,
+        18
+      ],
+      59,
+      null,
+      [
+        100,
+        88,
+        77
+      ],
+      null
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            []
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            88
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            -1
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            3,
+            100
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 2,
+          "obj": "s",
+          "value": 1
+        },
+        {
+          "args": [
+            true
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [],
+      null,
+      {
+        "error": "ValueError"
+      },
+      null,
+      94,
+      [
+        100,
+        88
+      ],
+      94,
+      {
+        "error": "IndexError"
+      },
+      {
+        "error": "TypeError"
+      },
+      [
+        88,
+        100
+      ]
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              86
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            0,
+            0
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": -1,
+          "obj": "s",
+          "value": 42
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            2,
+            100
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        86
+      ],
+      null,
+      [
+        0,
+        86
+      ],
+      null,
+      [],
+      21,
+      21,
+      null,
+      [
+        0,
+        42,
+        100
+      ]
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              4,
+              23,
+              79
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            101
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            2,
+            0
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        },
+        {
+          "args": [
+            []
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            -1,
+            3.0
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              101,
+              100
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            []
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              "7"
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              "7",
+              101
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            -3,
+            "7"
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 0,
+          "obj": "s",
+          "value": "7"
+        }
+      ]
+    },
+    "expected": [
+      [
+        4,
+        23,
+        79
+      ],
+      {
+        "error": "ValueError"
+      },
+      null,
+      [
+        4,
+        23,
+        0,
+        79
+      ],
+      null,
+      {
+        "error": "TypeError"
+      },
+      26,
+      {
+        "error": "ValueError"
+      },
+      null,
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      }
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              13,
+              88,
+              67
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 1,
+          "obj": "s",
+          "value": 101
+        },
+        {
+          "do": "setitem",
+          "key": 3,
+          "obj": "s",
+          "value": 42
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        13,
+        88,
+        67
+      ],
+      null,
+      {
+        "error": "ValueError"
+      },
+      null,
+      52
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              7,
+              34,
+              19,
+              78
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            4,
+            "7"
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "args": [
+            []
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            []
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        7,
+        34,
+        19,
+        78
+      ],
+      {
+        "error": "TypeError"
+      },
+      null,
+      34,
+      34,
+      null
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              22,
+              19,
+              9,
+              97,
+              82
+            ]
+          ],
+          "cls": "Scores",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            0,
+            0
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "do": "setitem",
+          "key": 2,
+          "obj": "s",
+          "value": 99
+        },
+        {
+          "args": [
+            -1
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "s"
+        },
+        {
+          "args": [
+            -2,
+            "7"
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "attr": "average",
+          "do": "get",
+          "obj": "s"
+        },
+        {
+          "args": [
+            0,
+            50
+          ],
+          "do": "call",
+          "method": "insert",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              "7"
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            [
+              100
+            ]
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            []
+          ],
+          "do": "call",
+          "method": "extend",
+          "obj": "s"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "top",
+          "obj": "s"
+        },
+        {
+          "do": "list",
+          "obj": "s"
+        }
+      ]
+    },
+    "expected": [
+      [
+        22,
+        19,
+        9,
+        97,
+        82
+      ],
+      null,
+      null,
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "TypeError"
+      },
+      51,
+      null,
+      {
+        "error": "TypeError"
+      },
+      null,
+      null,
+      [
+        100,
+        99,
+        97
+      ],
+      [
+        50,
+        0,
+        22,
+        99,
+        9,
+        97,
+        82,
+        100
+      ]
+    ],
+    "label": "generated-20"
+  }
+]

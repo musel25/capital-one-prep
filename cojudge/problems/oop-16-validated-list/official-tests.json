@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"ops\":[{\"args\":[[80,95]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[70],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[2],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[10]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[[50,200]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"do\":\"len\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[\"90\"],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[true],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[9.5],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[1,2,101]],\"cls\":\"Scores\",\"do\":\"new\"},{\"args\":[[1,null]],\"cls\":\"Scores\",\"do\":\"new\"},{\"args\":[[0,100]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[10,30]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[1,20],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"args\":[0,-1],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[10,20]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"do\":\"setitem\",\"key\":0,\"obj\":\"s\",\"value\":100},{\"do\":\"setitem\",\"key\":1,\"obj\":\"s\",\"value\":101},{\"do\":\"setitem\",\"key\":-1,\"obj\":\"s\",\"value\":false},{\"do\":\"list\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[10]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"do\":\"setitem\",\"key\":5,\"obj\":\"s\",\"value\":50},{\"do\":\"item\",\"key\":-1,\"obj\":\"s\"},{\"do\":\"item\",\"key\":3,\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[3],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[50,90,50,70]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[3],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"args\":[10],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"args\":[0],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[3,1,2]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"do\":\"sorted\",\"obj\":\"s\"},{\"do\":\"len\",\"obj\":\"s\"},{\"do\":\"check\",\"is\":\"instance\",\"obj\":\"s\",\"of\":\"list\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[[0,100,55]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[[]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[5]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[-1,4],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"args\":[99,6],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"cls\":\"Scores\",\"do\":\"check\",\"is\":\"subclass\",\"of\":\"list\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[93,49]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[4,50],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[101],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[99],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[[101,true,\"7\"]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[42],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[1],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"args\":[5,99],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"args\":[4],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"args\":[3],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[86,66,83]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"do\":\"setitem\",\"key\":4,\"obj\":\"s\",\"value\":101},{\"do\":\"list\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":-2,\"obj\":\"s\",\"value\":-1},{\"args\":[[true]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[1],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[4,101],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[1]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":4,\"obj\":\"s\",\"value\":0},{\"do\":\"setitem\",\"key\":3,\"obj\":\"s\",\"value\":100},{\"do\":\"list\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[46,61,24,87]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"args\":[1],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"args\":[5,0],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"args\":[101],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[100],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[50],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"args\":[88],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[88],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[[42,3.0]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[45,100]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[[99,101]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[99],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[3,-1],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":-1,\"obj\":\"s\",\"value\":1},{\"args\":[99],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[1],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"args\":[[101,100,\"7\"]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[1],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[14,50,73]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"args\":[99],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":2,\"obj\":\"s\",\"value\":true},{\"args\":[3],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"args\":[[100,88,1]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"args\":[[101]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[7,80,54]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[2],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":3,\"obj\":\"s\",\"value\":3.0},{\"args\":[0,101],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"args\":[[]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[4,1],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"args\":[4,-1],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[[50,1,\"7\"]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[5,89,26,45]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[101],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[[]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[50],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[1],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"args\":[42],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[90,71,95,91,20]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"do\":\"setitem\",\"key\":1,\"obj\":\"s\",\"value\":true},{\"do\":\"list\",\"obj\":\"s\"},{\"args\":[[\"7\",100,99]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[-3,0],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[45,48,52,30,52]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[[0]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[2],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"args\":[1],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[4,12]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[[true,42]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[88],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":-1,\"obj\":\"s\",\"value\":0},{\"do\":\"setitem\",\"key\":3,\"obj\":\"s\",\"value\":42},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[[]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":4,\"obj\":\"s\",\"value\":\"7\"},{\"do\":\"list\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[24,17,46,41,6]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"args\":[3.0],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[0],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":0,\"obj\":\"s\",\"value\":-1},{\"args\":[0,101],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"args\":[2],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[40]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[101],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[1],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":2,\"obj\":\"s\",\"value\":50},{\"args\":[0,-1],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[[42,\"7\",100]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"args\":[true],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[4,-1],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[73,77,75,27,18]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[1],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"args\":[4,88],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":-1,\"obj\":\"s\",\"value\":100},{\"args\":[3],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"args\":[42],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[88],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[-1],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[3,100],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[4],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":2,\"obj\":\"s\",\"value\":1},{\"args\":[true],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[86]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[0,0],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":-1,\"obj\":\"s\",\"value\":42},{\"args\":[0],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[2,100],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[4,23,79]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[101],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[2,0],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"},{\"args\":[[]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[-1,3.0],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[[101,100]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[[]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[[\"7\"]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[[\"7\",101]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[-3,\"7\"],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":0,\"obj\":\"s\",\"value\":\"7\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[13,88,67]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[50],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":1,\"obj\":\"s\",\"value\":101},{\"do\":\"setitem\",\"key\":3,\"obj\":\"s\",\"value\":42},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[7,34,19,78]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[4,\"7\"],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"args\":[[]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[[]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[[22,19,9,97,82]],\"cls\":\"Scores\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[0,0],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"do\":\"setitem\",\"key\":2,\"obj\":\"s\",\"value\":99},{\"args\":[-1],\"do\":\"call\",\"method\":\"append\",\"obj\":\"s\"},{\"args\":[-2,\"7\"],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"attr\":\"average\",\"do\":\"get\",\"obj\":\"s\"},{\"args\":[0,50],\"do\":\"call\",\"method\":\"insert\",\"obj\":\"s\"},{\"args\":[[\"7\"]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[[100]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[[]],\"do\":\"call\",\"method\":\"extend\",\"obj\":\"s\"},{\"args\":[3],\"do\":\"call\",\"method\":\"top\",\"obj\":\"s\"},{\"do\":\"list\",\"obj\":\"s\"}]}"
+  }
+]

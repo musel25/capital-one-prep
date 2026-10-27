@@ -1,0 +1,50 @@
+{
+  "id": "oop-10-vehicle-subclasses",
+  "title": "10. Subclassing: vehicles in motion",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "03-inheritance-and-composition",
+  "examples": [
+    {
+      "input": "{\"ops\": [{\"args\": [\"Bus\", 60], \"cls\": \"Vehicle\", \"do\": \"new\", \"save\": \"v\"}, {\"args\": [10], \"do\": \"call\", \"method\": \"travel_minutes\", \"obj\": \"v\"}, {\"args\": [\"Cart\", 7], \"cls\": \"Vehicle\", \"do\": \"new\", \"save\": \"w\"}, {\"args\": [1], \"do\": \"call\", \"method\": \"travel_minutes\", \"obj\": \"w\"}, {\"args\": [], \"do\": \"call\", \"method\": \"describe\", \"obj\": \"v\"}]}",
+      "output": "[{\"object\": \"Vehicle\"}, 10, {\"object\": \"Vehicle\"}, 9, \"Bus: 60 km/h\"]",
+      "explanation": "The base class rounds up: 10 km at 60 km/h is exactly 10 minutes, 1 km at 7 km/h is 8.57, so 9."
+    },
+    {
+      "input": "{\"ops\": [{\"args\": [\"Mini\", 90, 4], \"cls\": \"Car\", \"do\": \"new\", \"save\": \"c\"}, {\"args\": [], \"do\": \"call\", \"method\": \"describe\", \"obj\": \"c\"}, {\"args\": [\"Isla\", 30], \"cls\": \"Ferry\", \"do\": \"new\", \"save\": \"f\"}, {\"args\": [15], \"do\": \"call\", \"method\": \"travel_minutes\", \"obj\": \"f\"}]}",
+      "output": "[{\"object\": \"Car\"}, \"Mini: 90 km/h, 4 seats\", {\"object\": \"Ferry\"}, 50]",
+      "explanation": "Car.describe extends the base text. The Ferry adds 20 minutes of boarding to the base time."
+    },
+    {
+      "input": "{\"ops\": [{\"args\": [\"Racer\", 41], \"cls\": \"Bicycle\", \"do\": \"new\"}, {\"args\": [\"Slow\", 0], \"cls\": \"Bicycle\", \"do\": \"new\"}, {\"args\": [\"City\"], \"cls\": \"Bicycle\", \"do\": \"new\", \"save\": \"b\"}, {\"attr\": \"speed\", \"do\": \"get\", \"obj\": \"b\"}]}",
+      "output": "[{\"error\": \"ValueError\"}, {\"error\": \"ValueError\"}, {\"object\": \"Bicycle\"}, 15]",
+      "explanation": "A bicycle above 40 km/h is rejected by the subclass. Speed 0 is rejected by the base class through super()."
+    }
+  ],
+  "starterCode": {
+    "python": "class Vehicle:\n    def __init__(self, name: str, speed: int):\n        raise NotImplementedError\n\n    def travel_minutes(self, km: int) -> int:\n        raise NotImplementedError\n\n    def describe(self) -> str:\n        raise NotImplementedError\n\n\nclass Bicycle(Vehicle):\n    def __init__(self, name: str, speed: int = 15):\n        raise NotImplementedError\n\n\nclass Car(Vehicle):\n    def __init__(self, name: str, speed: int, seats: int):\n        raise NotImplementedError\n\n\nclass Ferry(Vehicle):\n    def __init__(self, name: str, speed: int, boarding: int = 20):\n        raise NotImplementedError\n\n\n# ---------------------------------------------------------------------------\n# Supplied test driver. Do not edit below this line.\n# Each test is a list of steps. The driver runs every step on your classes and\n# records its result, or {\"error\": \"<ExceptionName>\"} when the step raises.\n# ---------------------------------------------------------------------------\nimport builtins as _builtins\nimport dataclasses as _dataclasses\nimport inspect as _inspect\nimport operator as _operator\n\n_BINARY = {\"+\": _operator.add, \"-\": _operator.sub, \"*\": _operator.mul,\n           \"@\": _operator.matmul, \"==\": _operator.eq, \"!=\": _operator.ne,\n           \"<\": _operator.lt, \"<=\": _operator.le, \">\": _operator.gt,\n           \">=\": _operator.ge, \"in\": lambda left, right: left in right}\n_BUILTIN = {\"repr\": repr, \"str\": str, \"len\": len, \"bool\": bool,\n            \"list\": list, \"sorted\": sorted}\n\n\ndef _lookup(name, env):\n    if name in env:\n        return env[name]\n    if name in globals():\n        return globals()[name]\n    return getattr(_builtins, name)\n\n\ndef _value(raw, env):\n    if isinstance(raw, dict) and list(raw) == [\"ref\"]:\n        return env[raw[\"ref\"]]\n    if isinstance(raw, list):\n        return [_value(item, env) for item in raw]\n    if isinstance(raw, dict):\n        return {key: _value(item, env) for key, item in raw.items()}\n    return raw\n\n\ndef _plain(value):\n    if value is None or isinstance(value, (bool, int, float, str)):\n        return value\n    if isinstance(value, (list, tuple)):\n        return [_plain(item) for item in value]\n    if isinstance(value, dict):\n        return {str(key): _plain(item) for key, item in value.items()}\n    return {\"object\": type(value).__name__}\n\n\ndef _check(step, env):\n    kind = step[\"is\"]\n    if kind in (\"instance\", \"callable\"):\n        target = _lookup(step[\"obj\"], env)\n        return callable(target) if kind == \"callable\" else isinstance(target, _lookup(step[\"of\"], env))\n    cls = _lookup(step[\"cls\"], env)\n    if kind == \"mro\":\n        return [klass.__name__ for klass in cls.__mro__]\n    if kind == \"subclass\":\n        return issubclass(cls, _lookup(step[\"of\"], env))\n    if kind == \"abstract\":\n        return _inspect.isabstract(cls)\n    if kind == \"dataclass\":\n        return _dataclasses.is_dataclass(cls)\n    found = _inspect.getattr_static(cls, step[\"attr\"], None)\n    return isinstance(found, {\"property\": property, \"staticmethod\": staticmethod,\n                              \"classmethod\": classmethod}[kind])\n\n\ndef _step(step, env):\n    do = step[\"do\"]\n    args = _value(step.get(\"args\", []), env)\n    kwargs = _value(step.get(\"kwargs\", {}), env)\n    if do == \"check\":\n        return _check(step, env)\n    if do == \"op\":\n        return _BINARY[step[\"op\"]](_value(step[\"left\"], env), _value(step[\"right\"], env))\n    target = _lookup(step.get(\"obj\", step.get(\"cls\")), env)\n    if do == \"new\":\n        return target(*args, **kwargs)\n    if do == \"get\":\n        return getattr(target, step[\"attr\"])\n    if do == \"set\":\n        setattr(target, step[\"attr\"], _value(step[\"value\"], env))\n        return None\n    if do == \"call\":\n        return getattr(target, step[\"method\"])(*args, **kwargs)\n    if do == \"invoke\":\n        return target(*args, **kwargs)\n    if do == \"item\":\n        return target[_value(step[\"key\"], env)]\n    if do == \"setitem\":\n        target[_value(step[\"key\"], env)] = _value(step[\"value\"], env)\n        return None\n    if do == \"with\":\n        body = []\n        try:\n            with target as entered:\n                if \"as\" in step:\n                    env[step[\"as\"]] = entered\n                body.extend(_run(inner, env) for inner in step[\"body\"])\n                if \"raise\" in step:\n                    raise getattr(_builtins, step[\"raise\"])(\"raised by the test\")\n        except Exception as error:\n            return {\"body\": body, \"error\": type(error).__name__}\n        return {\"body\": body, \"error\": None}\n    return _BUILTIN[do](target)\n\n\ndef _run(step, env):\n    try:\n        result = _step(step, env)\n    except Exception as error:\n        return {\"error\": type(error).__name__}\n    if \"save\" in step:\n        env[step[\"save\"]] = result\n    return _plain(result)\n\n\ndef solve(data):\n    env = {}\n    return [_run(step, env) for step in data[\"ops\"]]\n\n# Supplied CoJudge adapter. Implement solve(data) above.\nimport json\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        return json.dumps(solve(json.loads(payload)), ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"ops\":[{\"args\":[\"Bus\",60],\"cls\":\"Vehicle\",\"do\":\"new\",\"save\":\"v\"},{\"args\":[10],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"v\"},{\"args\":[\"Cart\",7],\"cls\":\"Vehicle\",\"do\":\"new\",\"save\":\"w\"},{\"args\":[1],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"w\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"v\"}]}"
+    },
+    {
+      "payload": "{\"ops\":[{\"args\":[\"Mini\",90,4],\"cls\":\"Car\",\"do\":\"new\",\"save\":\"c\"},{\"args\":[],\"do\":\"call\",\"method\":\"describe\",\"obj\":\"c\"},{\"args\":[\"Isla\",30],\"cls\":\"Ferry\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[15],\"do\":\"call\",\"method\":\"travel_minutes\",\"obj\":\"f\"}]}"
+    },
+    {
+      "payload": "{\"ops\":[{\"args\":[\"Racer\",41],\"cls\":\"Bicycle\",\"do\":\"new\"},{\"args\":[\"Slow\",0],\"cls\":\"Bicycle\",\"do\":\"new\"},{\"args\":[\"City\"],\"cls\":\"Bicycle\",\"do\":\"new\",\"save\":\"b\"},{\"attr\":\"speed\",\"do\":\"get\",\"obj\":\"b\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Call `super().__init__(name, speed)` so the base class validates `speed`.",
+    "`Ferry.travel_minutes` can return `self.boarding + super().travel_minutes(km)`."
+  ]
+}

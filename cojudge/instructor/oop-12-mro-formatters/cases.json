@@ -1,0 +1,1294 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Alert",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "  disk full "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Alert"
+      },
+      "[ALERT] DISK FULL!"
+    ],
+    "label": "alert chain"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Note",
+          "do": "new",
+          "save": "n"
+        },
+        {
+          "args": [
+            " backup done  "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "n"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Note"
+      },
+      "[info] backup done"
+    ],
+    "label": "note chain"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "cls": "Alert",
+          "do": "check",
+          "is": "mro"
+        }
+      ]
+    },
+    "expected": [
+      [
+        "Alert",
+        "Shout",
+        "Tag",
+        "Trim",
+        "Formatter",
+        "object"
+      ]
+    ],
+    "label": "alert mro"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Trim",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            "  hi "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "cls": "Shout",
+          "do": "new",
+          "save": "s"
+        },
+        {
+          "args": [
+            " hi "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "s"
+        },
+        {
+          "args": [],
+          "cls": "Tag",
+          "do": "new",
+          "save": "g"
+        },
+        {
+          "args": [
+            "hi"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "g"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Trim"
+      },
+      "hi",
+      {
+        "object": "Shout"
+      },
+      " HI !",
+      {
+        "object": "Tag"
+      },
+      "[info] hi"
+    ],
+    "label": "single formatters"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "cls": "Note",
+          "do": "check",
+          "is": "mro"
+        },
+        {
+          "attr": "tag",
+          "do": "get",
+          "obj": "Note"
+        },
+        {
+          "attr": "tag",
+          "do": "get",
+          "obj": "Alert"
+        }
+      ]
+    },
+    "expected": [
+      [
+        "Note",
+        "Tag",
+        "Trim",
+        "Formatter",
+        "object"
+      ],
+      "info",
+      "alert"
+    ],
+    "label": "note mro and tag"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Alert",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "attr": "tag",
+          "do": "set",
+          "obj": "a",
+          "value": "db"
+        },
+        {
+          "args": [
+            "slow"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "cls": "Alert",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            "slow"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Alert"
+      },
+      null,
+      "[DB] SLOW!",
+      {
+        "object": "Alert"
+      },
+      "[ALERT] SLOW!"
+    ],
+    "label": "instance tag overrides the class"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Alert",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            ""
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "cls": "Note",
+          "do": "new",
+          "save": "n"
+        },
+        {
+          "args": [
+            "   "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "n"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Alert"
+      },
+      "[ALERT] !",
+      {
+        "object": "Note"
+      },
+      "[info] "
+    ],
+    "label": "empty and space-only text"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Note",
+          "do": "new",
+          "save": "n"
+        },
+        {
+          "args": [
+            "  a  b  "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "n"
+        },
+        {
+          "args": [],
+          "cls": "Alert",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "\tx y\n"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Note"
+      },
+      "[info] a  b",
+      {
+        "object": "Alert"
+      },
+      "[ALERT] X Y!"
+    ],
+    "label": "inner spaces are kept"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Formatter",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            "  As Is  "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Formatter"
+      },
+      "  As Is  "
+    ],
+    "label": "base formatter"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "cls": "Alert",
+          "do": "check",
+          "is": "subclass",
+          "of": "Tag"
+        },
+        {
+          "cls": "Alert",
+          "do": "check",
+          "is": "subclass",
+          "of": "Trim"
+        },
+        {
+          "cls": "Note",
+          "do": "check",
+          "is": "subclass",
+          "of": "Shout"
+        },
+        {
+          "cls": "Trim",
+          "do": "check",
+          "is": "subclass",
+          "of": "Tag"
+        }
+      ]
+    },
+    "expected": [
+      true,
+      true,
+      false,
+      false
+    ],
+    "label": "subclass relations"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Alert",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            "Mixed Case 42"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "cls": "Note",
+          "do": "new",
+          "save": "n"
+        },
+        {
+          "args": [
+            "Mixed Case"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "n"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Alert"
+      },
+      "[ALERT] MIXED CASE 42!",
+      {
+        "object": "Note"
+      },
+      "[info] Mixed Case"
+    ],
+    "label": "case of the input"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Note",
+          "do": "new",
+          "save": "n"
+        },
+        {
+          "attr": "tag",
+          "do": "set",
+          "obj": "n",
+          "value": "ops"
+        },
+        {
+          "args": [
+            " ok "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "n"
+        },
+        {
+          "cls": "Trim",
+          "do": "check",
+          "is": "mro"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Note"
+      },
+      null,
+      "[ops] ok",
+      [
+        "Trim",
+        "Formatter",
+        "object"
+      ]
+    ],
+    "label": "note tag change and trim mro"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Trim",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "attr": "tag",
+          "do": "set",
+          "obj": "f",
+          "value": "warn"
+        },
+        {
+          "args": [
+            ""
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "  CPU 99% "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Trim"
+      },
+      null,
+      "",
+      "CPU 99%"
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Trim",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            " Disk "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "a"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "\tTabbed"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "ok\n"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Trim"
+      },
+      "Disk",
+      "a",
+      "Tabbed",
+      "ok"
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Alert",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            "\tTabbed"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Alert"
+      },
+      "[ALERT] TABBED!"
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Tag",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            "\tTabbed"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "  CPU 99% "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "a"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            " Disk "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Tag"
+      },
+      "[info] \tTabbed",
+      "[info]   CPU 99% ",
+      "[info] a",
+      "[info]  Disk "
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Tag",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            "\tTabbed"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "low  memory "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Tag"
+      },
+      "[info] \tTabbed",
+      "[info] low  memory "
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Note",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "attr": "tag",
+          "do": "set",
+          "obj": "f",
+          "value": "x"
+        },
+        {
+          "args": [
+            "low  memory "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Note"
+      },
+      null,
+      "[x] low  memory"
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Alert",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            "a"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "  CPU 99% "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Alert"
+      },
+      "[ALERT] A!",
+      "[ALERT] CPU 99%!"
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Note",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            "a"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Note"
+      },
+      "[info] a"
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Tag",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            "  CPU 99% "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "ok\n"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Tag"
+      },
+      "[info]   CPU 99% ",
+      "[info] ok\n"
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Alert",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            "  CPU 99% "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            ""
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Alert"
+      },
+      "[ALERT] CPU 99%!",
+      "[ALERT] !"
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Note",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "attr": "tag",
+          "do": "set",
+          "obj": "f",
+          "value": "Db"
+        },
+        {
+          "args": [
+            "a"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            " Disk "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Note"
+      },
+      null,
+      "[Db] a",
+      "[Db] Disk"
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Alert",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            "low  memory "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Alert"
+      },
+      "[ALERT] LOW  MEMORY!"
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Trim",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            ""
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "ok\n"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            " "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Trim"
+      },
+      "",
+      "ok",
+      ""
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Alert",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            "  CPU 99% "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "ok\n"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "  CPU 99% "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Alert"
+      },
+      "[ALERT] CPU 99%!",
+      "[ALERT] OK!",
+      "[ALERT] CPU 99%!"
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Note",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            "a"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "low  memory "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            " Disk "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "a"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Note"
+      },
+      "[info] a",
+      "[info] low  memory",
+      "[info] Disk",
+      "[info] a"
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Tag",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            " Disk "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "ok\n"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            ""
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "\tTabbed"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Tag"
+      },
+      "[info]  Disk ",
+      "[info] ok\n",
+      "[info] ",
+      "[info] \tTabbed"
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Note",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "attr": "tag",
+          "do": "set",
+          "obj": "f",
+          "value": "warn"
+        },
+        {
+          "args": [
+            "a"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "  CPU 99% "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "a"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Note"
+      },
+      null,
+      "[warn] a",
+      "[warn] CPU 99%",
+      "[warn] a"
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Shout",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "attr": "tag",
+          "do": "set",
+          "obj": "f",
+          "value": "Db"
+        },
+        {
+          "args": [
+            "ok\n"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "\tTabbed"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Shout"
+      },
+      null,
+      "OK\n!",
+      "\tTABBED!"
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Shout",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "args": [
+            "ok\n"
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            " Disk "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        },
+        {
+          "args": [
+            "  CPU 99% "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Shout"
+      },
+      "OK\n!",
+      " DISK !",
+      "  CPU 99% !"
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Alert",
+          "do": "new",
+          "save": "f"
+        },
+        {
+          "attr": "tag",
+          "do": "set",
+          "obj": "f",
+          "value": "x"
+        },
+        {
+          "args": [
+            " "
+          ],
+          "do": "call",
+          "method": "format",
+          "obj": "f"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Alert"
+      },
+      null,
+      "[X] !"
+    ],
+    "label": "generated-20"
+  }
+]

@@ -1,0 +1,3472 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2,
+            10
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      false
+    ],
+    "label": "limit reached"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2,
+            10
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            11
+          ],
+          "do": "invoke",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      false,
+      true
+    ],
+    "label": "window boundary"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1,
+            5
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      false,
+      true,
+      1,
+      2
+    ],
+    "label": "rejected calls are not recorded"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0,
+            10
+          ],
+          "cls": "Throttle",
+          "do": "new"
+        },
+        {
+          "args": [
+            3,
+            0
+          ],
+          "cls": "Throttle",
+          "do": "new"
+        },
+        {
+          "args": [
+            -1,
+            -1
+          ],
+          "cls": "Throttle",
+          "do": "new"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "invalid configuration"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3,
+            60
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "do": "repr",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      "Throttle(limit=3, window=60)",
+      0,
+      0
+    ],
+    "label": "repr and counters start at zero"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3,
+            1
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            8
+          ],
+          "do": "invoke",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      false,
+      true
+    ],
+    "label": "same timestamp burst"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1,
+            1
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      false,
+      true
+    ],
+    "label": "window of one second"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2,
+            10
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            8
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            11
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            18
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            18
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            19
+          ],
+          "do": "invoke",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      false,
+      true,
+      false,
+      true
+    ],
+    "label": "sliding, not fixed buckets"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2,
+            100
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1000000
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1000000
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1000000
+          ],
+          "do": "invoke",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      false,
+      true,
+      true,
+      false
+    ],
+    "label": "long gap clears the window"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1,
+            10
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            1,
+            10
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "a"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "a"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      false,
+      0
+    ],
+    "label": "two throttles are independent"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1,
+            1
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "set",
+          "obj": "t",
+          "value": 5
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      {
+        "error": "AttributeError"
+      },
+      0
+    ],
+    "label": "counters are read-only"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Throttle",
+          "do": "new",
+          "kwargs": {
+            "limit": 2,
+            "window": 5
+          },
+          "save": "t"
+        },
+        {
+          "do": "check",
+          "is": "callable",
+          "obj": "t"
+        },
+        {
+          "do": "repr",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "cls": "Throttle",
+          "do": "check",
+          "is": "property"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      "Throttle(limit=2, window=5)",
+      true
+    ],
+    "label": "structure"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1,
+            30
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            22
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            28
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            39
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            66
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            91
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            94
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            103
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            113
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      3,
+      5
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1,
+            2
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      true,
+      4,
+      16
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2,
+            1
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      true,
+      4,
+      0
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4,
+            5
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            8
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            8
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            12
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            13
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            14
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            15
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            15
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            16
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            19
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      12,
+      4
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2,
+            1
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      true,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      9,
+      5
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1,
+            2
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            8
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      false,
+      true,
+      true,
+      false,
+      true,
+      false,
+      false,
+      4,
+      4
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4,
+            5
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            8
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            8
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            14
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            15
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            15
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            16
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            17
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            18
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            18
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            19
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            20
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      12,
+      5
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2,
+            2
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      false,
+      true,
+      true,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      6,
+      6
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4,
+            2
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            7
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            8
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      7,
+      1
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1,
+            30
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            8
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            16
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            21
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            25
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            30
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            34
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            36
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            43
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            48
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            61
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            62
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            63
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            64
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            65
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            68
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            72
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            74
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            92
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            111
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            117
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      true,
+      false,
+      4,
+      17
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3,
+            30
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            30
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            95
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            120
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      3,
+      0
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1,
+            30
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            24
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            26
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            38
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            42
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            58
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            72
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            92
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      3,
+      6
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1,
+            5
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            13
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            14
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            14
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            14
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            16
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      3,
+      19
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3,
+            5
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            11
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            12
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            15
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            16
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            16
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            20
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      true,
+      11,
+      4
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1,
+            30
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            26
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            29
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            35
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            43
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            45
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            47
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            50
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            54
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            63
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            74
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            78
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            78
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            89
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            102
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            114
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            119
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      4,
+      15
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2,
+            30
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            24
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            29
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            30
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            48
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            57
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            60
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            79
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            107
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            107
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            111
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      false,
+      false,
+      true,
+      true,
+      false,
+      true,
+      true,
+      false,
+      true,
+      7,
+      4
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4,
+            5
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            9
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            12
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            15
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            18
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            19
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            19
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            20
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      8,
+      0
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4,
+            1
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      11,
+      0
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3,
+            10
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            5
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            6
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            10
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            12
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            14
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            14
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            16
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            19
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            21
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            23
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            28
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            28
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            29
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            31
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            31
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            31
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            35
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            36
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            39
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            40
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      12,
+      11
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4,
+            1
+          ],
+          "cls": "Throttle",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "invoke",
+          "obj": "t"
+        },
+        {
+          "attr": "accepted",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "rejected",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Throttle"
+      },
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      19,
+      4
+    ],
+    "label": "generated-20"
+  }
+]

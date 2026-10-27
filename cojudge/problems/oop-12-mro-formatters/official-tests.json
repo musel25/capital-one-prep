@@ -1,0 +1,98 @@
+[
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Alert\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"  disk full \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Note\",\"do\":\"new\",\"save\":\"n\"},{\"args\":[\" backup done  \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"n\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"cls\":\"Alert\",\"do\":\"check\",\"is\":\"mro\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Trim\",\"do\":\"new\",\"save\":\"t\"},{\"args\":[\"  hi \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"t\"},{\"args\":[],\"cls\":\"Shout\",\"do\":\"new\",\"save\":\"s\"},{\"args\":[\" hi \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"s\"},{\"args\":[],\"cls\":\"Tag\",\"do\":\"new\",\"save\":\"g\"},{\"args\":[\"hi\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"g\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"cls\":\"Note\",\"do\":\"check\",\"is\":\"mro\"},{\"attr\":\"tag\",\"do\":\"get\",\"obj\":\"Note\"},{\"attr\":\"tag\",\"do\":\"get\",\"obj\":\"Alert\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Alert\",\"do\":\"new\",\"save\":\"a\"},{\"attr\":\"tag\",\"do\":\"set\",\"obj\":\"a\",\"value\":\"db\"},{\"args\":[\"slow\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"a\"},{\"args\":[],\"cls\":\"Alert\",\"do\":\"new\",\"save\":\"b\"},{\"args\":[\"slow\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Alert\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"a\"},{\"args\":[],\"cls\":\"Note\",\"do\":\"new\",\"save\":\"n\"},{\"args\":[\"   \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"n\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Note\",\"do\":\"new\",\"save\":\"n\"},{\"args\":[\"  a  b  \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"n\"},{\"args\":[],\"cls\":\"Alert\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"\\tx y\\n\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Formatter\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"  As Is  \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"cls\":\"Alert\",\"do\":\"check\",\"is\":\"subclass\",\"of\":\"Tag\"},{\"cls\":\"Alert\",\"do\":\"check\",\"is\":\"subclass\",\"of\":\"Trim\"},{\"cls\":\"Note\",\"do\":\"check\",\"is\":\"subclass\",\"of\":\"Shout\"},{\"cls\":\"Trim\",\"do\":\"check\",\"is\":\"subclass\",\"of\":\"Tag\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Alert\",\"do\":\"new\",\"save\":\"a\"},{\"args\":[\"Mixed Case 42\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"a\"},{\"args\":[],\"cls\":\"Note\",\"do\":\"new\",\"save\":\"n\"},{\"args\":[\"Mixed Case\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"n\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Note\",\"do\":\"new\",\"save\":\"n\"},{\"attr\":\"tag\",\"do\":\"set\",\"obj\":\"n\",\"value\":\"ops\"},{\"args\":[\" ok \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"n\"},{\"cls\":\"Trim\",\"do\":\"check\",\"is\":\"mro\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Trim\",\"do\":\"new\",\"save\":\"f\"},{\"attr\":\"tag\",\"do\":\"set\",\"obj\":\"f\",\"value\":\"warn\"},{\"args\":[\"\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"  CPU 99% \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Trim\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\" Disk \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"a\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"\\tTabbed\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"ok\\n\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Alert\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"\\tTabbed\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Tag\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"\\tTabbed\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"  CPU 99% \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"a\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\" Disk \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Tag\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"\\tTabbed\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"low  memory \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Note\",\"do\":\"new\",\"save\":\"f\"},{\"attr\":\"tag\",\"do\":\"set\",\"obj\":\"f\",\"value\":\"x\"},{\"args\":[\"low  memory \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Alert\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"a\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"  CPU 99% \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Note\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"a\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Tag\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"  CPU 99% \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"ok\\n\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Alert\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"  CPU 99% \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Note\",\"do\":\"new\",\"save\":\"f\"},{\"attr\":\"tag\",\"do\":\"set\",\"obj\":\"f\",\"value\":\"Db\"},{\"args\":[\"a\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\" Disk \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Alert\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"low  memory \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Trim\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"ok\\n\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\" \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Alert\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"  CPU 99% \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"ok\\n\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"  CPU 99% \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Note\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"a\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"low  memory \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\" Disk \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"a\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Tag\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\" Disk \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"ok\\n\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"\\tTabbed\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Note\",\"do\":\"new\",\"save\":\"f\"},{\"attr\":\"tag\",\"do\":\"set\",\"obj\":\"f\",\"value\":\"warn\"},{\"args\":[\"a\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"  CPU 99% \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"a\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Shout\",\"do\":\"new\",\"save\":\"f\"},{\"attr\":\"tag\",\"do\":\"set\",\"obj\":\"f\",\"value\":\"Db\"},{\"args\":[\"ok\\n\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"\\tTabbed\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Shout\",\"do\":\"new\",\"save\":\"f\"},{\"args\":[\"ok\\n\"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\" Disk \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"},{\"args\":[\"  CPU 99% \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  },
+  {
+    "payload": "{\"ops\":[{\"args\":[],\"cls\":\"Alert\",\"do\":\"new\",\"save\":\"f\"},{\"attr\":\"tag\",\"do\":\"set\",\"obj\":\"f\",\"value\":\"x\"},{\"args\":[\" \"],\"do\":\"call\",\"method\":\"format\",\"obj\":\"f\"}]}"
+  }
+]

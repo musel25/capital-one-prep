@@ -1,0 +1,1803 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            65
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      "1:05",
+      false
+    ],
+    "label": "basic display"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            60
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 9
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      null,
+      "0:09"
+    ],
+    "label": "display follows a changed attribute"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            -1
+          ],
+          "cls": "Countdown",
+          "do": "new"
+        },
+        {
+          "args": [
+            5
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "display",
+          "do": "set",
+          "obj": "t",
+          "value": "9:99"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Countdown"
+      },
+      {
+        "error": "AttributeError"
+      },
+      "0:05"
+    ],
+    "label": "invalid start and read-only property"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      "0:00",
+      true,
+      0,
+      0
+    ],
+    "label": "zero is valid and finished"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            61
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      60,
+      "1:00",
+      59,
+      "0:59"
+    ],
+    "label": "tick crosses a minute"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      1,
+      0,
+      true,
+      0,
+      "0:00"
+    ],
+    "label": "tick reaches zero and stops"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3600
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            1000000
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      "60:00",
+      {
+        "object": "Countdown"
+      },
+      "16666:40"
+    ],
+    "label": "minutes are not limited to 59"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            600
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 607
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      "10:00",
+      null,
+      "10:07"
+    ],
+    "label": "single-digit seconds are padded"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 30
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      0,
+      true,
+      null,
+      false,
+      "0:30"
+    ],
+    "label": "finished becomes false after a reset"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            10
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            20
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "a"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "b"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      {
+        "object": "Countdown"
+      },
+      9,
+      20,
+      "0:09"
+    ],
+    "label": "two timers keep separate state"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "set",
+          "obj": "t",
+          "value": true
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      {
+        "error": "AttributeError"
+      },
+      false
+    ],
+    "label": "finished is read-only"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [],
+          "cls": "Countdown",
+          "do": "new",
+          "kwargs": {
+            "seconds": 59
+          },
+          "save": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "cls": "Countdown",
+          "do": "check",
+          "is": "property"
+        },
+        {
+          "attr": "finished",
+          "cls": "Countdown",
+          "do": "check",
+          "is": "property"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      "0:59",
+      true,
+      true
+    ],
+    "label": "keyword argument and structure"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            59
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 4551
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 4622
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      null,
+      "75:51",
+      false,
+      null
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            59
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 6038
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 5212
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      58,
+      null,
+      6038,
+      "100:38",
+      6038,
+      6037,
+      6036,
+      null,
+      "86:52",
+      false,
+      5212,
+      5212
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            119
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 1361
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      false,
+      null,
+      "22:41",
+      1360
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            59
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      59,
+      false,
+      "0:59"
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3599
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      3598,
+      false,
+      "59:58",
+      3597,
+      false,
+      "59:57"
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            5403
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 5968
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      5403,
+      false,
+      5402,
+      null
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 993
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      null,
+      false,
+      992,
+      991,
+      990
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            59
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 6427
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 4010
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      false,
+      58,
+      false,
+      false,
+      57,
+      null,
+      false,
+      null,
+      4010,
+      4010,
+      "66:50"
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            60
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      "1:00",
+      "1:00",
+      false,
+      false,
+      59
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 3825
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      "0:00",
+      0,
+      0,
+      null
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            69390
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      69389,
+      false,
+      69389,
+      69388
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 1661
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      "0:00",
+      null,
+      "27:41",
+      1660
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            60
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 2460
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 6454
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 2358
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 5910
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      null,
+      2459,
+      null,
+      false,
+      null,
+      null,
+      "98:30",
+      "98:30",
+      5910,
+      "98:30",
+      5910,
+      false
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3600
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 3953
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 2168
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      null,
+      3953,
+      "65:53",
+      "65:53",
+      3952,
+      null,
+      2167,
+      2167,
+      2167,
+      false,
+      false
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 4131
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 1502
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 2195
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 2890
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      true,
+      null,
+      null,
+      1502,
+      "25:02",
+      1502,
+      null,
+      null,
+      2890,
+      2890,
+      "48:10"
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            59
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 6116
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 42
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      null,
+      6116,
+      "101:56",
+      6116,
+      6116,
+      6115,
+      null,
+      41
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "display",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      0,
+      0,
+      0,
+      "0:00",
+      "0:00",
+      0,
+      true,
+      0,
+      "0:00",
+      0,
+      true,
+      true
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            38903
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 4617
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      38903,
+      false,
+      null,
+      false
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            59
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 1481
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      null,
+      1481,
+      1480
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            61
+          ],
+          "cls": "Countdown",
+          "do": "new",
+          "save": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "set",
+          "obj": "t",
+          "value": 5293
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "finished",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "seconds",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "tick",
+          "obj": "t"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Countdown"
+      },
+      61,
+      null,
+      5292,
+      5291,
+      5291,
+      false,
+      5290,
+      5290,
+      5290,
+      5290,
+      5289
+    ],
+    "label": "generated-20"
+  }
+]

@@ -1,0 +1,3461 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                1,
+                2,
+                3
+              ],
+              [
+                4,
+                5,
+                6
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                7,
+                8
+              ],
+              [
+                9,
+                10
+              ],
+              [
+                11,
+                12
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      "Matrix([[58, 64], [139, 154]])",
+      [
+        2,
+        2
+      ]
+    ],
+    "label": "2x3 times 3x2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                2,
+                -1
+              ],
+              [
+                0,
+                3
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "i"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "i"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "repr",
+          "obj": "i"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      true,
+      "Matrix([[1, 0], [0, 1]])"
+    ],
+    "label": "identity"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                1,
+                2,
+                3
+              ],
+              [
+                4,
+                5,
+                6
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "a"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": [
+            [
+              1
+            ],
+            [
+              2
+            ],
+            [
+              3
+            ]
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "TypeError"
+      }
+    ],
+    "label": "shape mismatch and wrong type"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            []
+          ],
+          "cls": "Matrix",
+          "do": "new"
+        },
+        {
+          "args": [
+            [
+              []
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new"
+        },
+        {
+          "args": [
+            [
+              [
+                1,
+                2
+              ],
+              [
+                3
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new"
+        },
+        {
+          "args": [
+            0
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "invalid shapes"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                1,
+                2
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "a",
+          "save": "r"
+        },
+        {
+          "args": [
+            [
+              3,
+              4
+            ]
+          ],
+          "do": "call",
+          "method": "append",
+          "obj": "r"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      [
+        [
+          1,
+          2
+        ]
+      ],
+      null,
+      [
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "label": "rows is a copy"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                1,
+                2,
+                3
+              ],
+              [
+                4,
+                5,
+                6
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "t"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "t"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          6
+        ]
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "label": "transpose"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                1,
+                2,
+                3
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "r"
+        },
+        {
+          "args": [
+            [
+              [
+                4
+              ],
+              [
+                5
+              ],
+              [
+                6
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "r"
+          },
+          "op": "@",
+          "right": {
+            "ref": "c"
+          },
+          "save": "dot"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "dot"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "c"
+          },
+          "op": "@",
+          "right": {
+            "ref": "r"
+          },
+          "save": "outer"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "outer"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      [
+        [
+          32
+        ]
+      ],
+      {
+        "object": "Matrix"
+      },
+      [
+        [
+          4,
+          8,
+          12
+        ],
+        [
+          5,
+          10,
+          15
+        ],
+        [
+          6,
+          12,
+          18
+        ]
+      ]
+    ],
+    "label": "row times column"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "ab"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "@",
+          "right": {
+            "ref": "a"
+          },
+          "save": "ba"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "ab"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "ba"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "ab"
+          },
+          "op": "==",
+          "right": {
+            "ref": "ba"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      false
+    ],
+    "label": "multiplication is not commutative"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                -3
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                -1000
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      "Matrix([[3000]])"
+    ],
+    "label": "negative entries and 1x1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                1
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": [
+            [
+              1
+            ]
+          ]
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "!=",
+          "right": 1
+        },
+        {
+          "args": [
+            [
+              [
+                1
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      false,
+      true,
+      {
+        "object": "Matrix"
+      },
+      true
+    ],
+    "label": "equality with other types"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                2,
+                0
+              ],
+              [
+                0,
+                2
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "scale"
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                -1
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "rot"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "rot"
+          },
+          "op": "@",
+          "right": {
+            "ref": "scale"
+          },
+          "save": "m"
+        },
+        {
+          "args": [
+            [
+              [
+                3
+              ],
+              [
+                1
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "p"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "m"
+          },
+          "op": "@",
+          "right": {
+            "ref": "p"
+          },
+          "save": "q"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "q"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      [
+        [
+          -2
+        ],
+        [
+          6
+        ]
+      ]
+    ],
+    "label": "chain of transformations"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "i"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "i"
+        },
+        {
+          "args": [
+            [
+              [
+                1,
+                2
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                5,
+                6
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "t"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "t",
+          "save": "tt"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "tt"
+          },
+          "op": "==",
+          "right": {
+            "ref": "a"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      true
+    ],
+    "label": "identity 3 and transpose twice"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                -6,
+                -2,
+                5
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                3
+              ],
+              [
+                3,
+                0
+              ],
+              [
+                -1,
+                -2
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      false
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                6
+              ],
+              [
+                -4
+              ],
+              [
+                -3
+              ],
+              [
+                7
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                4
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Matrix"
+      },
+      false,
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                5,
+                -3
+              ],
+              [
+                5,
+                -3
+              ],
+              [
+                9,
+                -3
+              ],
+              [
+                -2,
+                7
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                9,
+                2,
+                -9
+              ],
+              [
+                -5,
+                -6,
+                6
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      [
+        [
+          60,
+          28,
+          -63
+        ],
+        [
+          60,
+          28,
+          -63
+        ],
+        [
+          96,
+          36,
+          -99
+        ],
+        [
+          -53,
+          -46,
+          60
+        ]
+      ],
+      [
+        2,
+        4
+      ],
+      false
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                5,
+                4,
+                5,
+                -2
+              ],
+              [
+                -1,
+                1,
+                6,
+                -9
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                -1
+              ],
+              [
+                -2
+              ],
+              [
+                6
+              ],
+              [
+                4
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      false,
+      {
+        "error": "AttributeError"
+      },
+      {
+        "object": "Matrix"
+      },
+      "Matrix([[9], [-1]])",
+      {
+        "object": "Matrix"
+      },
+      [
+        [
+          9
+        ],
+        [
+          -1
+        ]
+      ],
+      false,
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                2,
+                0
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                -2,
+                9
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                -7,
+                -9
+              ],
+              [
+                5,
+                0
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "object": "Matrix"
+      },
+      [
+        3,
+        2
+      ]
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                3,
+                9
+              ],
+              [
+                1,
+                -4
+              ],
+              [
+                7,
+                5
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                9,
+                -5,
+                5,
+                4
+              ],
+              [
+                -9,
+                8,
+                -1,
+                -2
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      false,
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "object": "Matrix"
+      },
+      false,
+      [
+        [
+          -54,
+          57,
+          6,
+          -6
+        ],
+        [
+          45,
+          -37,
+          9,
+          12
+        ],
+        [
+          18,
+          5,
+          30,
+          18
+        ]
+      ]
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                -4,
+                8,
+                -9
+              ],
+              [
+                2,
+                3,
+                -1
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                3,
+                -6,
+                -9,
+                -4
+              ],
+              [
+                -7,
+                -9,
+                -5,
+                -9
+              ],
+              [
+                5,
+                7,
+                -9,
+                -2
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                4,
+                8,
+                -2,
+                -6
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                6,
+                -3
+              ],
+              [
+                -2,
+                -4
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      false,
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                9
+              ],
+              [
+                8
+              ],
+              [
+                6
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                -7,
+                -6,
+                -3,
+                -5
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      false,
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                -5,
+                -2,
+                -5,
+                9
+              ],
+              [
+                -1,
+                6,
+                8,
+                -2
+              ],
+              [
+                1,
+                3,
+                6,
+                -8
+              ],
+              [
+                5,
+                7,
+                5,
+                -6
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                -6
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      }
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                -9,
+                -5
+              ],
+              [
+                5,
+                5
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                -6,
+                0
+              ],
+              [
+                -2,
+                0
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      false,
+      "Matrix([[64, 0], [-40, 0]])",
+      false,
+      false,
+      {
+        "object": "Matrix"
+      },
+      [
+        [
+          64,
+          0
+        ],
+        [
+          -40,
+          0
+        ]
+      ]
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                2,
+                9
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                3,
+                -5
+              ],
+              [
+                2,
+                -9
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "AttributeError"
+      },
+      [
+        1,
+        2
+      ],
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "ValueError"
+      },
+      false,
+      [
+        2,
+        1
+      ]
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                -6,
+                4
+              ],
+              [
+                -1,
+                -9
+              ],
+              [
+                -1,
+                -6
+              ],
+              [
+                -4,
+                6
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                -9,
+                -7
+              ],
+              [
+                7,
+                -5
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      false,
+      [
+        2,
+        4
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        2,
+        4
+      ],
+      {
+        "error": "AttributeError"
+      },
+      false,
+      {
+        "error": "AttributeError"
+      },
+      {
+        "object": "Matrix"
+      }
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                -5,
+                9
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                -7
+              ],
+              [
+                -3
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      false,
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      [
+        1,
+        2
+      ],
+      [
+        [
+          -5,
+          9
+        ]
+      ],
+      [
+        [
+          -5,
+          9
+        ]
+      ],
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                0,
+                4,
+                9,
+                -6
+              ],
+              [
+                -8,
+                7,
+                9,
+                -4
+              ],
+              [
+                2,
+                -2,
+                -4,
+                3
+              ],
+              [
+                1,
+                -9,
+                -5,
+                -5
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                -8,
+                5,
+                -9
+              ],
+              [
+                -1,
+                5,
+                -7
+              ],
+              [
+                -2,
+                8,
+                -1
+              ],
+              [
+                -6,
+                4,
+                3
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "attr": "rows",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            1
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "AttributeError"
+      },
+      [
+        4,
+        4
+      ],
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "AttributeError"
+      },
+      [
+        4,
+        4
+      ],
+      {
+        "object": "Matrix"
+      },
+      [
+        4,
+        4
+      ]
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                -4
+              ],
+              [
+                -3
+              ],
+              [
+                5
+              ],
+              [
+                -8
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                -7,
+                5,
+                -6,
+                4
+              ],
+              [
+                4,
+                -7,
+                4,
+                -7
+              ],
+              [
+                5,
+                -1,
+                4,
+                0
+              ],
+              [
+                2,
+                -8,
+                -6,
+                2
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "ValueError"
+      },
+      false,
+      [
+        4,
+        1
+      ],
+      false
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                -2,
+                -9
+              ],
+              [
+                -4,
+                -7
+              ],
+              [
+                -6,
+                -9
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                4,
+                -7
+              ],
+              [
+                5,
+                8
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      "Matrix([[-53, -58], [-51, -28], [-69, -30]])",
+      {
+        "object": "Matrix"
+      },
+      [
+        3,
+        2
+      ],
+      false,
+      false
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                -5,
+                4
+              ],
+              [
+                -8,
+                6
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                -6,
+                1,
+                0,
+                -2
+              ],
+              [
+                4,
+                4,
+                9,
+                5
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      "Matrix([[46, 11, 36, 30], [72, 16, 54, 46]])",
+      {
+        "object": "Matrix"
+      }
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                -5
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                1,
+                9,
+                -4,
+                1
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "args": [
+            4
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "transpose",
+          "obj": "a",
+          "save": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      false,
+      [
+        1,
+        1
+      ],
+      {
+        "object": "Matrix"
+      },
+      false,
+      {
+        "object": "Matrix"
+      }
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              [
+                -9,
+                -6,
+                7
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            [
+              [
+                4,
+                9,
+                -3
+              ],
+              [
+                -8,
+                -6,
+                -9
+              ],
+              [
+                0,
+                4,
+                -9
+              ]
+            ]
+          ],
+          "cls": "Matrix",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "args": [
+            3
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "args": [
+            2
+          ],
+          "do": "call",
+          "method": "identity",
+          "obj": "Matrix",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "@",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "AttributeError"
+      },
+      [
+        1,
+        3
+      ],
+      false,
+      {
+        "object": "Matrix"
+      },
+      {
+        "object": "Matrix"
+      },
+      {
+        "error": "ValueError"
+      },
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        3
+      ],
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-20"
+  }
+]

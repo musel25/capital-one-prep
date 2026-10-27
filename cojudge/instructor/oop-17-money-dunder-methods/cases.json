@@ -1,0 +1,3012 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1250,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            75,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "str",
+          "obj": "c"
+        },
+        {
+          "do": "repr",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "EUR 13.25",
+      "Money(1325, 'EUR')"
+    ],
+    "label": "add and format"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            100,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "e"
+        },
+        {
+          "args": [
+            100,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "u"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "e"
+          },
+          "op": "+",
+          "right": {
+            "ref": "u"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "e"
+          },
+          "op": "+",
+          "right": 5
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "TypeError"
+      }
+    ],
+    "label": "currency and type errors"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            199,
+            "GBP"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "do": "op",
+          "left": 2,
+          "op": "*",
+          "right": {
+            "ref": "m"
+          },
+          "save": "d"
+        },
+        {
+          "do": "repr",
+          "obj": "d"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "m"
+          },
+          "op": "==",
+          "right": 199
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "Money(398, 'GBP')",
+      false
+    ],
+    "label": "reflected multiply and equality with numbers"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            -5,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "args": [
+            -12345,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "args": [
+            0,
+            "JPY"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "z"
+        },
+        {
+          "do": "str",
+          "obj": "z"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      "EUR -0.05",
+      {
+        "object": "Money"
+      },
+      "USD -123.45",
+      {
+        "object": "Money"
+      },
+      "JPY 0.00"
+    ],
+    "label": "negative formatting"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1.5,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new"
+        },
+        {
+          "args": [
+            true,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new"
+        },
+        {
+          "args": [
+            1,
+            "eur"
+          ],
+          "cls": "Money",
+          "do": "new"
+        },
+        {
+          "args": [
+            1,
+            "EURO"
+          ],
+          "cls": "Money",
+          "do": "new"
+        },
+        {
+          "args": [
+            1,
+            "E1R"
+          ],
+          "cls": "Money",
+          "do": "new"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "constructor validation"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            500,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            800,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "-",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "str",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "-",
+          "right": 1
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "EUR -3.00",
+      {
+        "error": "TypeError"
+      }
+    ],
+    "label": "subtraction"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            100,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            200,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": ">=",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": ">",
+          "right": {
+            "ref": "a"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<=",
+          "right": {
+            "ref": "a"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      true,
+      false,
+      true,
+      true
+    ],
+    "label": "ordering"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            100,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            100,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "u"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "u"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": 100
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": ">=",
+          "right": {
+            "ref": "u"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "ordering errors"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            100,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            100,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "args": [
+            100,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "!=",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "!=",
+          "right": "EUR 1.00"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      true,
+      false,
+      true,
+      true
+    ],
+    "label": "equality"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            250,
+            "CHF"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "m"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "m"
+          },
+          "op": "*",
+          "right": 3,
+          "save": "t"
+        },
+        {
+          "do": "str",
+          "obj": "t"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "m"
+          },
+          "op": "*",
+          "right": 1.5
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "m"
+          },
+          "op": "*",
+          "right": true
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "m"
+          },
+          "op": "*",
+          "right": {
+            "ref": "m"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "CHF 7.50",
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      }
+    ],
+    "label": "multiply rules"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            0,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "z"
+        },
+        {
+          "do": "bool",
+          "obj": "z"
+        },
+        {
+          "args": [
+            -1,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "n"
+        },
+        {
+          "do": "bool",
+          "obj": "n"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "n"
+          },
+          "op": "*",
+          "right": 0,
+          "save": "k"
+        },
+        {
+          "do": "bool",
+          "obj": "k"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      false,
+      {
+        "object": "Money"
+      },
+      true,
+      {
+        "object": "Money"
+      },
+      false
+    ],
+    "label": "truth value"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1000000000000,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            1,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "str",
+          "obj": "c"
+        },
+        {
+          "attr": "cents",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "USD 10000000000.01",
+      1000000000001
+    ],
+    "label": "large amounts stay exact"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3442,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            2997,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": 0,
+          "save": "a"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "Money(3442, 'USD')",
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      true,
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            451,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            3380,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": 5
+        },
+        {
+          "do": "bool",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": "x"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      true,
+      "Money(3380, 'EUR')",
+      "Money(3380, 'EUR')",
+      true,
+      false,
+      {
+        "error": "TypeError"
+      },
+      true,
+      "EUR 4.51",
+      "EUR 4.51",
+      true,
+      {
+        "object": "Money"
+      },
+      {
+        "error": "TypeError"
+      }
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3487,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            3099,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": 5
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<=",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": 5
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "error": "ValueError"
+      },
+      false,
+      {
+        "object": "Money"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "TypeError"
+      },
+      "EUR 34.87"
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            -282,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            4867,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "*",
+          "right": 2,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": 0,
+          "save": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": "x"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": ">",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "EUR 48.67",
+      "EUR 48.67",
+      true,
+      false,
+      {
+        "object": "Money"
+      },
+      false,
+      "EUR 340.69",
+      "EUR 340.69",
+      false,
+      {
+        "object": "Money"
+      }
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3894,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            4484,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": 1.5,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "*",
+          "right": 0,
+          "save": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": 5
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": "x"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": ">",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": 3,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "EUR 44.84",
+      "Money(4484, 'EUR')",
+      {
+        "error": "TypeError"
+      },
+      {
+        "object": "Money"
+      },
+      "EUR 44.84",
+      false,
+      {
+        "error": "TypeError"
+      },
+      false,
+      "EUR 0.00",
+      "EUR 0.00",
+      true,
+      {
+        "object": "Money"
+      }
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            886,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            4907,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": 5
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": "x"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "bool",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      true,
+      true,
+      "EUR 8.86",
+      {
+        "object": "Money"
+      },
+      false,
+      {
+        "error": "TypeError"
+      },
+      "EUR 8.86",
+      true
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            -37,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            229,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": 2,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": -3,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": -3,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": "x"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": 5
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<=",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "-",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": 3,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "error": "TypeError"
+      },
+      "Money(-666, 'USD')",
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      true,
+      {
+        "object": "Money"
+      }
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            -214,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            2008,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "*",
+          "right": -3,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": 0,
+          "save": "a"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "*",
+          "right": 0,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": 3,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": -3,
+          "save": "a"
+        },
+        {
+          "do": "bool",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": 3,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      true,
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      false,
+      {
+        "object": "Money"
+      },
+      true,
+      true,
+      {
+        "object": "Money"
+      },
+      false,
+      {
+        "object": "Money"
+      }
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3234,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            3727,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": -3,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "-",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "EUR 37.27",
+      {
+        "object": "Money"
+      },
+      "EUR 260.89",
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "Money(-9702, 'EUR')",
+      {
+        "object": "Money"
+      }
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1612,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            3624,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": 3,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": 0,
+          "save": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "*",
+          "right": 0,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": 1.5,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "*",
+          "right": 2,
+          "save": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "Money(1612, 'EUR')",
+      true,
+      {
+        "object": "Money"
+      },
+      "Money(76104, 'EUR')",
+      true,
+      {
+        "object": "Money"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "object": "Money"
+      },
+      "Money(152208, 'EUR')"
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4902,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            2661,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "!=",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "*",
+          "right": 1.5,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": 3,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": 5
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": "x"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "EUR 49.02",
+      "EUR 49.02",
+      false,
+      true,
+      {
+        "error": "TypeError"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "error": "TypeError"
+      },
+      false,
+      true,
+      true,
+      {
+        "object": "Money"
+      }
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4019,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            208,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "!=",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "bool",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": -3,
+          "save": "a"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      true,
+      true,
+      "USD 2.08",
+      true,
+      true,
+      {
+        "object": "Money"
+      },
+      true,
+      "EUR -120.57",
+      "Money(-12057, 'EUR')"
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4505,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            3491,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": 1.5,
+          "save": "a"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "*",
+          "right": 1.5,
+          "save": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": "x"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "error": "TypeError"
+      },
+      "USD 34.91",
+      {
+        "error": "TypeError"
+      },
+      "Money(3491, 'USD')",
+      {
+        "object": "Money"
+      },
+      true,
+      false,
+      {
+        "object": "Money"
+      },
+      "USD 1710.59",
+      "USD 1710.59"
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            1383,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            3351,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": "x"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": "x"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": "x"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": 3,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": 5
+        },
+        {
+          "do": "op",
+          "left": 3,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": 5
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "Money(3351, 'USD')",
+      true,
+      {
+        "object": "Money"
+      },
+      {
+        "error": "TypeError"
+      },
+      false,
+      false,
+      "Money(23457, 'USD')",
+      true,
+      {
+        "object": "Money"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "error": "TypeError"
+      }
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            566,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            2582,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "*",
+          "right": -3,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "<",
+          "right": "x"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "Money(566, 'USD')",
+      true,
+      "Money(2582, 'EUR')",
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "error": "TypeError"
+      }
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            161,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            3124,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": 5
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": -3,
+          "save": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      true,
+      true,
+      false,
+      "EUR 218.68",
+      {
+        "object": "Money"
+      }
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3431,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            4897,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "-",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": 1.5,
+          "save": "a"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "Money(4897, 'EUR')",
+      true,
+      {
+        "object": "Money"
+      },
+      {
+        "error": "TypeError"
+      }
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            4362,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            4339,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": 5
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": 2,
+          "save": "a"
+        },
+        {
+          "do": "bool",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": 3,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": "x"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": 5
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "USD 43.39",
+      {
+        "object": "Money"
+      },
+      false,
+      "USD 43.62",
+      {
+        "object": "Money"
+      },
+      true,
+      {
+        "object": "Money"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "error": "TypeError"
+      },
+      {
+        "object": "Money"
+      }
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            2349,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            1178,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "b"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "str",
+          "obj": "a"
+        },
+        {
+          "do": "repr",
+          "obj": "a"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "*",
+          "right": 0,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "Money(2349, 'EUR')",
+      "Money(1178, 'EUR')",
+      "Money(2349, 'EUR')",
+      "EUR 23.49",
+      "Money(2349, 'EUR')",
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      }
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            3808,
+            "EUR"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "a"
+        },
+        {
+          "args": [
+            2818,
+            "USD"
+          ],
+          "cls": "Money",
+          "do": "new",
+          "save": "b"
+        },
+        {
+          "do": "op",
+          "left": 3,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "b"
+          },
+          "op": "*",
+          "right": 1.5,
+          "save": "a"
+        },
+        {
+          "do": "op",
+          "left": 7,
+          "op": "*",
+          "right": {
+            "ref": "b"
+          },
+          "save": "b"
+        },
+        {
+          "do": "str",
+          "obj": "b"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "+",
+          "right": {
+            "ref": "b"
+          },
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": {
+            "ref": "a"
+          },
+          "op": "==",
+          "right": 5
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      {
+        "object": "Money"
+      },
+      "USD 84.54",
+      {
+        "error": "TypeError"
+      },
+      {
+        "object": "Money"
+      },
+      "USD 591.78",
+      {
+        "error": "ValueError"
+      },
+      false
+    ],
+    "label": "generated-20"
+  }
+]

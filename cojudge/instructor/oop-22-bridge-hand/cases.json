@@ -1,0 +1,2149 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "SA",
+              "SK",
+              "S7",
+              "S2",
+              "HQ",
+              "HJ",
+              "H5",
+              "DA",
+              "D9",
+              "D8",
+              "CK",
+              "C4",
+              "C3"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      17,
+      "4-3-3-3",
+      "1NT",
+      "S: AK72 | H: QJ5 | D: A98 | C: K43"
+    ],
+    "label": "balanced 1NT"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "SA",
+              "SK",
+              "S3",
+              "HK",
+              "HQ",
+              "DQ",
+              "D4",
+              "CA",
+              "C9",
+              "C8",
+              "C7",
+              "C6",
+              "C5"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      6,
+      {
+        "S": 3,
+        "H": 2,
+        "D": 2,
+        "C": 6
+      }
+    ],
+    "label": "losing trick count"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6",
+              "S7",
+              "S8",
+              "S9",
+              "ST",
+              "SJ",
+              "SQ",
+              "SK"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new"
+        },
+        {
+          "args": [
+            [
+              "SA",
+              "SA",
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6",
+              "S7",
+              "S8",
+              "S9",
+              "ST",
+              "SJ",
+              "SQ"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "invalid card lists"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "sa",
+              "S3",
+              "S4",
+              "S5",
+              "S6",
+              "S7",
+              "S8",
+              "S9",
+              "ST",
+              "SJ",
+              "SQ",
+              "SK",
+              "SA"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new"
+        },
+        {
+          "args": [
+            [
+              "S10",
+              "S3",
+              "S4",
+              "S5",
+              "S6",
+              "S7",
+              "S8",
+              "S9",
+              "ST",
+              "SJ",
+              "SQ",
+              "SK",
+              "SA"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new"
+        },
+        {
+          "args": [
+            [
+              "X2",
+              "S3",
+              "S4",
+              "S5",
+              "S6",
+              "S7",
+              "S8",
+              "S9",
+              "ST",
+              "SJ",
+              "SQ",
+              "SK",
+              "SA"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new"
+        },
+        {
+          "args": [
+            [
+              "S1",
+              "S3",
+              "S4",
+              "S5",
+              "S6",
+              "S7",
+              "S8",
+              "S9",
+              "ST",
+              "SJ",
+              "SQ",
+              "SK",
+              "SA"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "invalid card strings"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "S2",
+              "S3",
+              "S4",
+              "S5",
+              "S6",
+              "S7",
+              "S8",
+              "S9",
+              "ST",
+              "SJ",
+              "SQ",
+              "SK",
+              "SA"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      "13-0-0-0",
+      10,
+      0,
+      "S: AKQJT98765432 | H: - | D: - | C: -",
+      "pass"
+    ],
+    "label": "thirteen spades"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "SA",
+              "SK",
+              "SQ",
+              "SJ",
+              "HA",
+              "HK",
+              "HQ",
+              "DA",
+              "DK",
+              "D2",
+              "C4",
+              "C3",
+              "C2"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      26,
+      true,
+      "2C"
+    ],
+    "label": "strong hand opens 2C"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "SA",
+              "SK",
+              "S5",
+              "S4",
+              "HA",
+              "HJ",
+              "H3",
+              "DK",
+              "DQ",
+              "D2",
+              "CA",
+              "C9",
+              "C8"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      21,
+      "4-3-3-3",
+      "2NT"
+    ],
+    "label": "2NT range"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "SA",
+              "S9",
+              "S8",
+              "HK",
+              "HQ",
+              "H8",
+              "H7",
+              "H6",
+              "H5",
+              "DA",
+              "D3",
+              "C7",
+              "C2"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      13,
+      "6-3-2-2",
+      false,
+      "1H"
+    ],
+    "label": "unbalanced opens the longest suit"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "S9",
+              "S8",
+              "S7",
+              "S6",
+              "S5",
+              "HA",
+              "HK",
+              "HQ",
+              "H9",
+              "H8",
+              "DA",
+              "D2",
+              "C2"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      "5-5-2-1",
+      "1S"
+    ],
+    "label": "equal lengths prefer the higher suit"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "SA",
+              "SK",
+              "SQ",
+              "S8",
+              "S7",
+              "S6",
+              "HA",
+              "HJ",
+              "H3",
+              "D9",
+              "D8",
+              "D7",
+              "C6"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      14,
+      "6-3-3-1",
+      "1S",
+      6
+    ],
+    "label": "unbalanced with 14 points"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "S9",
+              "S8",
+              "S7",
+              "S6",
+              "S5",
+              "H9",
+              "H8",
+              "H7",
+              "D9",
+              "D8",
+              "D7",
+              "C9",
+              "C8"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      "5-3-3-2",
+      true,
+      0,
+      "pass",
+      11
+    ],
+    "label": "balanced shapes"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "C3",
+              "DA",
+              "SK",
+              "H5",
+              "C4",
+              "S2",
+              "HJ",
+              "D8",
+              "SA",
+              "HQ",
+              "D9",
+              "S7",
+              "CK"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      "S: AK72 | H: QJ5 | D: A98 | C: K43",
+      {
+        "S": 4,
+        "H": 3,
+        "D": 3,
+        "C": 3
+      }
+    ],
+    "label": "input order does not matter"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "DA",
+              "HQ",
+              "S7",
+              "HA",
+              "DT",
+              "C5",
+              "C9",
+              "S6",
+              "HJ",
+              "H4",
+              "D3",
+              "S5",
+              "H6"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      "S: 765 | H: AQJ64 | D: AT3 | C: 95",
+      true,
+      "pass",
+      "S: 765 | H: AQJ64 | D: AT3 | C: 95",
+      8,
+      true
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "HA",
+              "C6",
+              "C5",
+              "D5",
+              "S5",
+              "SJ",
+              "DK",
+              "SQ",
+              "S4",
+              "H9",
+              "CQ",
+              "C8",
+              "ST"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      6,
+      false,
+      6,
+      {
+        "C": 4,
+        "D": 2,
+        "H": 2,
+        "S": 5
+      },
+      6,
+      {
+        "C": 4,
+        "D": 2,
+        "H": 2,
+        "S": 5
+      }
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "C6",
+              "S8",
+              "H4",
+              "CA",
+              "D9",
+              "D8",
+              "ST",
+              "H2",
+              "D3",
+              "S9",
+              "S7",
+              "DQ",
+              "HJ"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      "S: T987 | H: J42 | D: Q983 | C: A6",
+      "pass",
+      9,
+      "S: T987 | H: J42 | D: Q983 | C: A6",
+      "S: T987 | H: J42 | D: Q983 | C: A6",
+      true,
+      true
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "H2",
+              "C6",
+              "SK",
+              "H7",
+              "SJ",
+              "D8",
+              "S7",
+              "HT",
+              "DK",
+              "CA",
+              "S8",
+              "C5",
+              "DA"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      8,
+      15,
+      "S: KJ87 | H: T72 | D: AK8 | C: A65",
+      15
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "S4",
+              "S2",
+              "D5",
+              "H5",
+              "H7",
+              "H2",
+              "CK",
+              "C4",
+              "D2",
+              "ST",
+              "D6",
+              "C8",
+              "H3"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      true,
+      true,
+      {
+        "C": 3,
+        "D": 3,
+        "H": 4,
+        "S": 3
+      },
+      true,
+      "4-3-3-3"
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "SK",
+              "H9",
+              "C4",
+              "C8",
+              "S4",
+              "C9",
+              "DT",
+              "HA",
+              "S3",
+              "HK",
+              "ST",
+              "D5",
+              "D9"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      "pass",
+      "S: KT43 | H: AK9 | D: T95 | C: 984",
+      "S: KT43 | H: AK9 | D: T95 | C: 984",
+      10,
+      "pass",
+      "4-3-3-3"
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "SQ",
+              "H7",
+              "S8",
+              "HK",
+              "CK",
+              "SK",
+              "D6",
+              "DK",
+              "D9",
+              "S9",
+              "HJ",
+              "D7",
+              "H6"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      "S: KQ98 | H: KJ76 | D: K976 | C: K",
+      {
+        "C": 1,
+        "D": 4,
+        "H": 4,
+        "S": 4
+      },
+      {
+        "C": 1,
+        "D": 4,
+        "H": 4,
+        "S": 4
+      },
+      15,
+      "4-4-4-1",
+      15,
+      {
+        "C": 1,
+        "D": 4,
+        "H": 4,
+        "S": 4
+      }
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "C4",
+              "CJ",
+              "H8",
+              "D8",
+              "D2",
+              "SQ",
+              "CA",
+              "H3",
+              "ST",
+              "C3",
+              "D4",
+              "S2",
+              "CK"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      10,
+      "5-3-3-2",
+      true,
+      10,
+      true,
+      "5-3-3-2",
+      true
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "H2",
+              "DA",
+              "H7",
+              "C7",
+              "S7",
+              "ST",
+              "SK",
+              "C2",
+              "S2",
+              "CA",
+              "SQ",
+              "C6",
+              "S8"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      {
+        "C": 4,
+        "D": 1,
+        "H": 2,
+        "S": 6
+      },
+      {
+        "C": 4,
+        "D": 1,
+        "H": 2,
+        "S": 6
+      },
+      "6-4-2-1"
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "D3",
+              "D9",
+              "S2",
+              "D7",
+              "HT",
+              "H5",
+              "C8",
+              "DJ",
+              "S5",
+              "CQ",
+              "CK",
+              "CJ",
+              "D5"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      8,
+      false,
+      7,
+      "S: 52 | H: T5 | D: J9753 | C: KQJ8"
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "C9",
+              "S2",
+              "CQ",
+              "CT",
+              "C4",
+              "HA",
+              "ST",
+              "DK",
+              "H2",
+              "D2",
+              "C7",
+              "DT",
+              "D7"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      7,
+      {
+        "C": 5,
+        "D": 4,
+        "H": 2,
+        "S": 2
+      },
+      "5-4-2-2",
+      false,
+      {
+        "C": 5,
+        "D": 4,
+        "H": 2,
+        "S": 2
+      },
+      false,
+      "5-4-2-2"
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "D9",
+              "CQ",
+              "D4",
+              "HT",
+              "H6",
+              "S8",
+              "H4",
+              "DQ",
+              "H7",
+              "C9",
+              "CT",
+              "DT",
+              "HA"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      "pass",
+      8,
+      8
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "S8",
+              "SJ",
+              "D7",
+              "H6",
+              "D2",
+              "CJ",
+              "H3",
+              "HA",
+              "CA",
+              "CT",
+              "D8",
+              "DA",
+              "CQ"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      16,
+      "S: J8 | H: A63 | D: A872 | C: AQJT",
+      true
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "S6",
+              "C7",
+              "D7",
+              "D3",
+              "DJ",
+              "D8",
+              "S2",
+              "HK",
+              "S9",
+              "D6",
+              "DQ",
+              "D5",
+              "Z9"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "D9",
+              "C6",
+              "D6",
+              "C7",
+              "DJ",
+              "DA",
+              "DK",
+              "S2",
+              "S7",
+              "CQ",
+              "ST",
+              "D3",
+              "H9"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      {
+        "C": 3,
+        "D": 6,
+        "H": 1,
+        "S": 3
+      },
+      {
+        "C": 3,
+        "D": 6,
+        "H": 1,
+        "S": 3
+      },
+      "6-3-3-1",
+      false,
+      "6-3-3-1"
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "SA",
+              "CA",
+              "S3",
+              "CJ",
+              "D4",
+              "S9",
+              "H3",
+              "DK",
+              "H7",
+              "ST",
+              "HK",
+              "S6",
+              "D8"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      "S: AT963 | H: K73 | D: K84 | C: AJ",
+      "S: AT963 | H: K73 | D: K84 | C: AJ",
+      "5-3-3-2",
+      {
+        "C": 2,
+        "D": 3,
+        "H": 3,
+        "S": 5
+      },
+      "5-3-3-2",
+      true,
+      "5-3-3-2"
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "D4",
+              "S4",
+              "HA",
+              "H6",
+              "CQ",
+              "HK",
+              "D3",
+              "H8",
+              "C4",
+              "SQ",
+              "CJ",
+              "HJ",
+              "H4"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "balanced",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      "6-3-2-2",
+      false,
+      7
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "H6",
+              "CA",
+              "DJ",
+              "D3",
+              "HQ",
+              "C7",
+              "HT",
+              "CT",
+              "DT",
+              "S3",
+              "HA",
+              "D2",
+              "Z9"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "SJ",
+              "H5",
+              "D4",
+              "SA",
+              "C2",
+              "SK",
+              "H6",
+              "H3",
+              "C9",
+              "S7",
+              "C7",
+              "S8"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        },
+        {
+          "attr": "losers",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "hcp",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "args": [],
+          "do": "call",
+          "method": "opening",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            [
+              "C4",
+              "DT",
+              "H6",
+              "DJ",
+              "D3",
+              "SQ",
+              "C7",
+              "S4",
+              "D4",
+              "D5",
+              "SA",
+              "D6",
+              "H3"
+            ]
+          ],
+          "cls": "Hand",
+          "do": "new",
+          "save": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "lengths",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "attr": "shape",
+          "do": "get",
+          "obj": "h"
+        },
+        {
+          "do": "str",
+          "obj": "h"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "Hand"
+      },
+      "S: AQ4 | H: 63 | D: JT6543 | C: 74",
+      {
+        "C": 2,
+        "D": 6,
+        "H": 2,
+        "S": 3
+      },
+      {
+        "C": 2,
+        "D": 6,
+        "H": 2,
+        "S": 3
+      },
+      "6-3-2-2",
+      "S: AQ4 | H: 63 | D: JT6543 | C: 74"
+    ],
+    "label": "generated-20"
+  }
+]

@@ -1,0 +1,2162 @@
+[
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[tox]\nenvlist = py311, lint\n\n[testenv]\ndeps =\n    pytest\n    coverage\ncommands = pytest -q\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "testenv",
+            "deps"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "testenv"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      [
+        "tox",
+        "testenv"
+      ],
+      "pytest\ncoverage",
+      [
+        "deps",
+        "commands"
+      ]
+    ],
+    "label": "tox file with a continuation"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[tox]\nenvlist = py311, lint\n\n[testenv]\ndeps =\n    pytest\n    coverage\ncommands = pytest -q\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "tox",
+            "envlist"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "testenv",
+            "deps"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "tox",
+            "skip",
+            "no"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "testenv",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      [
+        "py311",
+        "lint"
+      ],
+      [
+        "pytest",
+        "coverage"
+      ],
+      "no",
+      true
+    ],
+    "label": "lists and defaults"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "name = x\n[a]\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "key before a section"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "# top\n; also\n[a]\n  # indented comment\nx = 1\n\n   \ny = 2\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "a"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "a",
+            "y"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      [
+        "x",
+        "y"
+      ],
+      "2"
+    ],
+    "label": "comments and blank lines"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[a]\nx = one\n\n# note\n  two\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "a",
+            "x"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      "one\ntwo"
+    ],
+    "label": "continuation after a blank line and a comment"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "  orphan\n[a]\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new"
+        },
+        {
+          "args": [
+            "[a]\n  orphan\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new"
+        },
+        {
+          "args": [
+            "[a]\nx = 1\n[b]\n  lost\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "label": "continuation errors"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[a]\n[a]\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new"
+        },
+        {
+          "args": [
+            "[ ]\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new"
+        },
+        {
+          "args": [
+            "[ spaced name ]\nk=v\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "IniConfig"
+      },
+      [
+        "spaced name"
+      ]
+    ],
+    "label": "section rules"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[a]\nx = 1\nx = 2\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new"
+        },
+        {
+          "args": [
+            "[a]\n = 1\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new"
+        },
+        {
+          "args": [
+            "[a]\njust text\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new"
+        },
+        {
+          "args": [
+            "[a]\nx = 1\n[b]\nx = 2\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "b",
+            "x"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "ValueError"
+      },
+      {
+        "object": "IniConfig"
+      },
+      "2"
+    ],
+    "label": "key rules"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[db]\nurl = postgres://u@h/db?sslmode=require\nempty =\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "db",
+            "url"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "db",
+            "empty"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "db",
+            "empty"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      "postgres://u@h/db?sslmode=require",
+      "",
+      []
+    ],
+    "label": "value with = and empty value"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[env]\nsetenv =\n    A = 1\n    B = 2\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "env"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "env",
+            "setenv"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      [
+        "setenv"
+      ],
+      [
+        "A = 1",
+        "B = 2"
+      ]
+    ],
+    "label": "indented line with = is a continuation"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[a]\nx = 1\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "b"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "b",
+            "x"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "a",
+            "y"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "b",
+            "x"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "b",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      {
+        "error": "KeyError"
+      },
+      null,
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      false
+    ],
+    "label": "missing lookups"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[t]\nitems = a,, b\n\tc , d\n\t\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "t",
+            "items"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "t",
+            "items"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            ""
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "e"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "e"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      "a,, b\nc , d",
+      [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      {
+        "object": "IniConfig"
+      },
+      []
+    ],
+    "label": "tabs, mixed separators, and an empty file"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[s1]\n"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k2"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "zz"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k2"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k2",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      [],
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      "?"
+    ],
+    "label": "generated-1"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[s2]\n\ty, z\nk3 = v=w\nk1 = a, b"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k3",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k1",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s3",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "args": [
+            "s2",
+            "k2",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s3",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "args": [
+            "s1",
+            "k2",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-2"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "k2 =\nk1 = a, b\n[s1]\nk1 = a, b\n[s1]\n  x\n[s2]"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s1",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "args": [
+            "s1",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s1",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "generated-3"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "\ty, z\n  x\nk2 ="
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k3",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k2",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-4"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "# c"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k2",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s1",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "do": "op",
+          "left": "s1",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      [],
+      "?",
+      {
+        "error": "KeyError"
+      },
+      false,
+      false,
+      []
+    ],
+    "label": "generated-5"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "  \nk3 = v=w"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k1",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-6"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "k2 =\n# c\n[s1]"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k2"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s3",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "args": [
+            "s2"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-7"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[s1]"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s2",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      [
+        "s1"
+      ],
+      [
+        "s1"
+      ],
+      {
+        "error": "KeyError"
+      },
+      false
+    ],
+    "label": "generated-8"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "k2 =\n  \n[s1]\n\nk2 =\n  x"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": "s1",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "args": [
+            "s2",
+            "k2",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k2",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k3",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-9"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "k3 = v=w\nbad line"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "zz"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k3",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-10"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "bad line\n[s2]\n[s1]\n[s1]\n\nk1 = a, b\n  x\nk1 = a, b\n# c"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k2",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s1",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "do": "op",
+          "left": "s1",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "generated-11"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[s1]\nk2 =\n\ty, z\n  "
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "do": "op",
+          "left": "s3",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s2",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "args": [
+            "s1",
+            "k3",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s3",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      false,
+      [
+        "s1"
+      ],
+      false,
+      "?",
+      {
+        "error": "KeyError"
+      },
+      [
+        "s1"
+      ],
+      [
+        "k2"
+      ],
+      false
+    ],
+    "label": "generated-12"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "k2 ="
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "s1"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s2",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "do": "op",
+          "left": "s2",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s1",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "args": [
+            "s2"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-13"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "  x\n# c\nk2 =\n  x"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k2"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-14"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "[s1]"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k3",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "zz"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k3",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k2"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      "?",
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      "?",
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "generated-15"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "  x\nbad line\n  x\nk1 = a, b\n[s2]\n  x\nk1 = a, b\nk3 = v=w\nk2 ="
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s3",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "do": "op",
+          "left": "s2",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s1",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      }
+    ],
+    "label": "generated-16"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "k2 =\n\n# c\n[s2]\n\n[s2]"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k2",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s1",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "args": [
+            "s1",
+            "k2"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k1",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-17"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "\n\n  "
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "s1",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "zz"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s1",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "args": [
+            "s1"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "object": "IniConfig"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      false,
+      {
+        "error": "KeyError"
+      },
+      []
+    ],
+    "label": "generated-18"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "\n[s2]\n  x"
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s2",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "args": [
+            "s1",
+            "k1",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s1"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-19"
+  },
+  {
+    "input": {
+      "ops": [
+        {
+          "args": [
+            "# c\n[s1]\n\ty, z\nk1 = a, b\nk3 = v=w\n  x\n  x\nk2 ="
+          ],
+          "cls": "IniConfig",
+          "do": "new",
+          "save": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "do": "op",
+          "left": "s1",
+          "op": "in",
+          "right": {
+            "ref": "c"
+          }
+        },
+        {
+          "args": [
+            "s1",
+            "k2",
+            "?"
+          ],
+          "do": "call",
+          "method": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "zz"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "attr": "sections",
+          "do": "get",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2"
+          ],
+          "do": "call",
+          "method": "keys",
+          "obj": "c"
+        },
+        {
+          "args": [
+            "s2",
+            "k1"
+          ],
+          "do": "call",
+          "method": "get_list",
+          "obj": "c"
+        }
+      ]
+    },
+    "expected": [
+      {
+        "error": "ValueError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      },
+      {
+        "error": "AttributeError"
+      }
+    ],
+    "label": "generated-20"
+  }
+]
