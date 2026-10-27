@@ -1,105 +1,39 @@
 # 02. Parse money into exact cents
 
-[Back to the course list](/?course=capital-one-engineering-50)
+[Course list](/?course=capital-one-engineering-50) · Level 1 · Easy · About 20 minutes
 
-**Level 1 · Easy · About 20 minutes**
+<details>
+<summary><strong>Lesson</strong> (open it first if the topic is new)</summary>
 
 **Before this problem:** Lists, dictionaries, and functions.
 
-## Learn first
-
 Binary floating point cannot represent many decimal fractions exactly. Money from a text boundary is easier to handle with Decimal. First validate the allowed text format. Then construct Decimal from that text, multiply by 100, and convert the exact result to an integer. This order keeps the cents. Constructing Decimal from a float would preserve the float error. Format validation is a separate concern: Decimal accepts forms that an API might forbid, such as an exponent. This task permits one or two fractional digits and rejects every other text format. Once parsed, integer cents support exact addition and comparison.
 
-## Your task
+</details>
 
-`data.amounts` is a list of JSON values. A valid amount is a string that fully matches ASCII `-?[0-9]{1,12}(?:\.[0-9]{1,2})?`. It has at most 12 digits before the decimal point. Leading zeros and negative zero are valid. Spaces, a leading plus, exponent notation, Unicode digits, and all non-string values are invalid. Return `{"cents": [...]}` in input order. Each valid amount becomes exact integer cents. Each invalid amount becomes null. Inputs have at most 30 characters.
+**Input:** `data` has:
+- `amounts`: a list of JSON values. Strings have at most 30 characters.
 
-## Examples
+**Rules**
+- A valid amount is a string that fully matches the ASCII pattern `-?[0-9]{1,12}(?:\.[0-9]{1,2})?`: an optional `-`, 1–12 digits, then optionally `.` and 1–2 digits.
+- Leading zeros and negative zero are valid: `"007"` → `700`, `"-0"` → `0`.
+- Invalid: spaces, a leading `+`, exponent notation, Unicode digits, and every non-string value.
+- Convert each valid amount to exact integer cents: `"1.5"` → `150`, `"-0.05"` → `-5`.
 
-### Example 1: exact decimal conversion
+**Return** `{"cents": [...]}` with one entry per amount, in input order: the integer cents for a valid amount, or `null` for an invalid one.
 
-Input to `solve`:
-```json
-{
-  "amounts": [
-    "12.34",
-    "-0.05",
-    "7"
-  ]
-}
-```
-Return:
-```json
-{
-  "cents": [
-    1234,
-    -5,
-    700
-  ]
-}
-```
-
-### Example 2: invalid forms
-
-Input to `solve`:
-```json
-{
-  "amounts": [
-    "1.234",
-    " 2.00",
-    2
-  ]
-}
-```
-Return:
-```json
-{
-  "cents": [
-    null,
-    null,
-    null
-  ]
-}
-```
-
-### Example 3: empty input
-
-Input to `solve`:
-```json
-{
-  "amounts": []
-}
-```
-Return:
-```json
-{
-  "cents": []
-}
-```
-
-## Constraints
+**Constraints:**
 
 - At most 100 input items. All input values follow the stated contract.
 
-## Work here
+---
 
-Select **Python**. Edit `solve(data)` and its helper code. The supplied
-`Solution.run` adapter converts the judge's JSON text into normal Python values.
-You do not need to edit the adapter or escape JSON by hand. For a custom test,
-paste a JSON object into the `payload` field.
+Select **Python** and edit `solve(data)`. Do not edit the `Solution.run` adapter: it converts the
+judge's JSON for you. For a custom test, paste a JSON object into `payload`. **Run** checks the
+three examples. **Submit** runs all 27 tests.
 
-Use **Run** for the three examples. Use **Submit** for all 27 tests.
-Open one hint if you need help. The reference solution is optional.
+The judge checks only the output. It does not check type annotations, inheritance, SQL use, or
+time complexity. This is an original practice exercise, not an official Capital One question. All
+data is fictional. Completing it does not prove interview readiness.
 
-The judge checks output behavior. It does not certify type annotations,
-inheritance, SQL use, or time complexity. Follow the requested technique to
-practice the skill. A code review can check those implementation choices.
-
-This is an original constructed exercise. It is not an official Capital One
-question. All data is fictional. Completing this course does not certify
-interview readiness.
-
-## References
-
-- [Official documentation 1](https://docs.python.org/3/library/decimal.html)
-- [Official documentation 2](https://docs.python.org/3/library/re.html#re.fullmatch)
+Official documentation: [1](https://docs.python.org/3/library/decimal.html), [2](https://docs.python.org/3/library/re.html#re.fullmatch)

@@ -13,15 +13,20 @@ SPEC = {'number': 17,
           'transfers. Publish the working copy only after every transfer succeeds. On failure, '
           'discard it. This method is a simulation of atomic behavior within one call. It does not '
           'create a database transaction or protect the state from concurrent callers.',
- 'task': 'Bug-fix task. `data.accounts` maps account IDs to nonnegative integer cents. '
-         '`data.batches` is a list of transfer lists. Each transfer has string `from`, string '
-         '`to`, and nonnegative integer `cents`. Both accounts always exist. Process batches in '
-         'order. Within a batch, process transfers in order using the tentative updated balances. '
-         'If any source has less than cents, reject the entire batch and restore its starting '
-         'balances. Otherwise accept all transfers. A self-transfer needs enough funds but leaves '
-         'its balance unchanged. An empty batch succeeds. Return `{"accepted": '
-         '[booleans_per_batch], "balances": final_account_map}`. Repair the starter’s '
-         'partial-write defect.',
+ 'task': ('**Bug fix.** The starter keeps part of a rejected batch (a partial write). Repair it.\n'
+    '\n'
+    '**Input:** `data` has:\n'
+    '- `accounts`: maps account IDs to nonnegative integer cents.\n'
+    '- `batches`: a list of batches. Each batch is a list of transfers `{"from": string, "to": string, "cents": int}`, with nonnegative `cents`. Both accounts always exist.\n'
+    '\n'
+    '**Rules**\n'
+    '- Process batches in order. Inside a batch, process transfers in order. Each transfer uses the balances after the earlier transfers in the same batch.\n'
+    '- If any source has less than `cents`, reject the whole batch and restore the balances from the start of that batch.\n'
+    '- Otherwise accept the batch and keep all its transfers.\n'
+    '- A self-transfer needs enough funds but does not change the balance.\n'
+    '- An empty batch is accepted.\n'
+    '\n'
+    '**Return** `{"accepted": [bool], "balances": {...}}`: one boolean per batch, and the final account map.'),
  'constraints': ['At most 30 accounts, 30 batches, and 100 transfers per batch. Input cents and '
                  'initial balances are at most 1,000,000,000,000.'],
  'hints': ['Apply changes to a separate candidate state.',

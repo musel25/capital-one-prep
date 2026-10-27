@@ -10,7 +10,7 @@ questions. Completing them does not certify interview readiness.
 
 1. Open problem 01.
 2. Select **Python** in the editor.
-3. Read **Learn first**.
+3. Read the task. Open the collapsed **Lesson** first if the topic is new.
 4. Implement the small `solve(data)` task.
 5. Use **Run** to check the examples.
 6. Use **Submit** to check all official cases.

@@ -13,10 +13,15 @@ SPEC = {'number': 4,
           'not add an identifier as a tie breaker unless the contract asks for it. Two valid '
           'ordering choices can produce different results for the same records. Use sorted when '
           'you want a new list and want to preserve the caller’s input.',
- 'task': '`data.tickets` is a list of objects with string `id`, integer `priority` from 0 through '
-         '9, and integer `created` from 0 through 1,000,000. Return a list of IDs. Order by '
-         'priority descending, then created ascending. If both fields tie, keep input order. IDs '
-         'need not be unique. ID text never changes the order.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `tickets`: a list of objects with `id` (string), `priority` (integer 0–9), and `created` (integer 0–1,000,000). IDs are not always unique.\n'
+    '\n'
+    '**Return** the list of ticket IDs, sorted by:\n'
+    '1. `priority`, highest first.\n'
+    '2. Then `created`, lowest first.\n'
+    '3. If both tie, keep the input order.\n'
+    '\n'
+    'The ID text never changes the order.'),
  'constraints': ['At most 1,000 tickets. All records contain the required fields.'],
  'hints': ['Build a tuple key with one value for each sort rule.',
            'A stable sort supplies the final input-order tie rule.'],

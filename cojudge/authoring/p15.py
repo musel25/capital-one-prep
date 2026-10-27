@@ -14,12 +14,19 @@ SPEC = {'number': 15,
           'call it. This is polymorphism through a shared interface. Integer arithmetic can also '
           'make a percentage fee exact. To round a nonnegative integer fraction upward, add '
           'denominator minus one before integer division.',
- 'task': '`data.policy` is either `{"kind":"flat","cents":nonnegative_integer}` or '
-         '`{"kind":"rate","bps":integer_from_0_to_10000}`. `data.amounts` is a list of nonnegative '
-         'integer cent amounts. One basis point is 1/100 of one percent. Flat fee equals `cents`, '
-         'including for amount zero. Rate fee is amount × bps / 10000, rounded upward to whole '
-         'cents. Return a list of `{"fee": integer, "total": amount_plus_fee}` in input order. '
-         'Practice Protocol and composition; the judge checks outputs only.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `policy`: one of these:\n'
+    '  - `{"kind": "flat", "cents": int}`, with nonnegative `cents`.\n'
+    '  - `{"kind": "rate", "bps": int}`, with `bps` from 0 to 10,000. One basis point is 1/100 of one percent.\n'
+    '- `amounts`: a list of nonnegative integer amounts in cents.\n'
+    '\n'
+    '**Rules:** the fee for each amount:\n'
+    '- Flat: the fee is `cents`, also when the amount is 0.\n'
+    '- Rate: the fee is amount × bps / 10000, rounded up to a whole cent.\n'
+    '\n'
+    '**Return** a list of `{"fee": int, "total": int}` in input order, where `total` = amount + fee.\n'
+    '\n'
+    '**Practice:** use a `Protocol` and composition. The judge checks only the output.'),
  'constraints': ['At most 100 amounts. Cent values are at most 1,000,000,000,000.'],
  'hints': ['Each policy can implement the same fee method.',
            'Keep integer cents throughout the percentage calculation.'],

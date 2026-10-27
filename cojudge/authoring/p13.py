@@ -14,13 +14,18 @@ SPEC = {'number': 13,
           'method should return a failure result and leave the balance unchanged. Keeping this '
           'rule in the object makes the calling loop simple and gives future operations a clear '
           'place to enforce the same invariant.',
- 'task': '`data.balance` is a nonnegative integer number of cents. `data.actions` contains '
-         '`{"op":"deposit"|"withdraw","cents":nonnegative_integer}`. A deposit always succeeds. A '
-         'withdrawal succeeds exactly when cents is at most the current balance. A failed '
-         'withdrawal changes nothing. Zero-cent actions succeed. Return `{"accepted": [booleans], '
-         '"balance": final_integer}` with one boolean per action. Implement an Account class with '
-         'controlled balance updates for practice; the output judge checks the invariant’s visible '
-         'behavior.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `balance`: a nonnegative integer number of cents.\n'
+    '- `actions`: a list of `{"op": "deposit" | "withdraw", "cents": int}`, with nonnegative `cents`.\n'
+    '\n'
+    '**Rules**\n'
+    '- A deposit always succeeds.\n'
+    '- A withdrawal succeeds only when `cents` is at most the current balance. A failed withdrawal changes nothing.\n'
+    '- Zero-cent actions succeed.\n'
+    '\n'
+    '**Return** `{"accepted": [bool], "balance": int}`: one boolean per action, and the final balance.\n'
+    '\n'
+    '**Practice:** write an `Account` class that controls balance updates. The judge checks only the output.'),
  'constraints': ['At most 100 actions. Initial balance and action cents are at most '
                  '1,000,000,000,000.'],
  'hints': ['Check the invariant before changing the stored balance.',

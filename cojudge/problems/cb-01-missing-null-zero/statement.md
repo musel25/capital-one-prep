@@ -1,16 +1,46 @@
 # 01. Trace a configuration default
 
-[Back to the course list](/?course=capital-one-codebase-practice)
+[Course list](/?course=capital-one-codebase-practice) · Level 1 · Easy · About 30 minutes
 
-**Level 1 · Easy · About 30 minutes**
+<details>
+<summary><strong>Lesson</strong> (open it first if the topic is new)</summary>
 
 **Before this problem:** Lists, dictionaries, loops, and functions. This is the first exercise in this course.
-
-## Learn first
 
 Start with one function and two result fields. `solve` reads each record and builds `limits` and `configured`. The runnable starter changes a valid explicit value. Your objective is to separate a field's presence from its value before you repair that behavior.
 
 A field can be absent, present with null, or present with zero. These states often have different meanings. Dictionary membership tells you whether a key exists. A value of None represents JSON null after decoding. Zero is a configured numeric value, even though it is false in a boolean condition. An expression such as value or default merges these states and can replace a valid zero. Write the decision in the same order as the contract: first check membership, then inspect the stored value. This makes defaults explicit and avoids an accidental change to a caller’s configuration.
+
+</details>
+
+**Input:** `data` has:
+- `default`: a nonnegative integer.
+- `records`: a list of objects. A record can have a `limit` key whose value is a nonnegative integer or `null`. Ignore all other keys.
+
+**Rules:** resolve the limit of each record.
+- No `limit` key → `default`.
+- `limit` is `null` → `null`.
+- `limit` is a number, including `0` → that number.
+
+**Return** `{"limits": [...], "configured": int}`
+- `limits`: the resolved limit of each record, in input order.
+- `configured`: the number of records that have a `limit` key with a non-null value. A `0` counts.
+
+**What to fix:** The starter runs, but it has one intentional bug.
+
+- Repair only the per-record value handling in `solve`.
+- Keep the input keys, output keys, record order, and count rule.
+- Preserve explicit null and zero.
+- Ignore unrelated fields.
+- Do not add validation for inputs that the contract excludes.
+- Keep the loop so its behavior remains easy to compare with your trace.
+
+**Constraints:**
+
+- At most 100 input items. All input values follow the stated contract.
+
+<details>
+<summary><strong>Practice steps</strong> (trace, tests, AI review)</summary>
 
 ### Worked trace
 
@@ -19,16 +49,6 @@ Use `default = 12` and records `[{}, {"limit": 0}, {"limit": null}]`. After the 
 ### Read the existing code
 
 Read `solve` from its input loop to its return. Mark the branch that detects an absent `limit`. Then find where `value` enters `limits` and where `configured` changes. For each branch, write which input state reaches it. Read the stored value and the output decision as separate steps.
-
-## Your task
-
-### Scoped repair
-
-Repair only the per-record value handling in `solve`. Keep the input keys, output keys, record order, and count rule. Preserve explicit null and zero. Ignore unrelated fields. Do not add validation for inputs that the contract excludes. Keep the loop so its behavior remains easy to compare with your trace.
-
-### Required behavior
-
-`data` has nonnegative integer `default` and a list `records`. Each record is an object. It may contain `limit`, whose value is a nonnegative integer or null. Ignore other keys. An absent `limit` resolves to `default`. An explicit null resolves to null. Zero stays zero. Return `{"limits": [resolved_values], "configured": count}`. Count only records that contain a non-null `limit`, including zero.
 
 ### Test before and after the change
 
@@ -52,109 +72,18 @@ Optional AI prompt. Write your own implementation and tests:
 
 A judge pass checks behavior. Your trace, test choice, and edit scope need your review. Do not use the pass mark as evidence of those skills.
 
+</details>
+
+---
+
+Select **Python** and edit `solve(data)`. Do not edit the `Solution.run` adapter: it converts the
+judge's JSON for you. For a custom test, paste a JSON object into `payload`. **Run** checks the
+three examples. **Submit** runs all 24 tests.
+
+The judge checks only the output. It does not check type annotations, inheritance, SQL use, or
+time complexity. This is an original practice exercise, not an official Capital One question. All
+data is fictional. Completing it does not prove interview readiness.
+
 [Full sequence and local pytest labs](https://github.com/musel25/capital-one-prep/blob/main/codebase_labs/README.md). Then open [exercise 02](/problems/cb-02-typed-json-boundary).
 
-## Examples
-
-### Example 1: three distinct field states
-
-Input to `solve`:
-```json
-{
-  "default": 10,
-  "records": [
-    {},
-    {
-      "limit": null
-    },
-    {
-      "limit": 0
-    },
-    {
-      "limit": 4
-    }
-  ]
-}
-```
-Return:
-```json
-{
-  "limits": [
-    10,
-    null,
-    0,
-    4
-  ],
-  "configured": 2
-}
-```
-
-### Example 2: count records, not distinct values
-
-Input to `solve`:
-```json
-{
-  "default": 5,
-  "records": [
-    {
-      "limit": 2
-    },
-    {
-      "limit": 2
-    }
-  ]
-}
-```
-Return:
-```json
-{
-  "limits": [
-    2,
-    2
-  ],
-  "configured": 2
-}
-```
-
-### Example 3: empty records
-
-Input to `solve`:
-```json
-{
-  "default": 9,
-  "records": []
-}
-```
-Return:
-```json
-{
-  "limits": [],
-  "configured": 0
-}
-```
-
-## Constraints
-
-- At most 100 input items. All input values follow the stated contract.
-
-## Work here
-
-Select **Python**. Edit `solve(data)` and its helper code. The supplied
-`Solution.run` adapter converts the judge's JSON text into normal Python values.
-You do not need to edit the adapter or escape JSON by hand. For a custom test,
-paste a JSON object into the `payload` field.
-
-Use **Run** for the three examples. Use **Submit** for all 24 tests.
-Open one hint if you need help. The reference solution is optional.
-
-The judge checks output behavior. It does not certify type annotations,
-inheritance, SQL use, or time complexity. Follow the requested technique to
-practice the skill. A code review can check those implementation choices.
-
-This is an original constructed exercise. It is not an official Capital One
-question. All data is fictional. Completing this course does not certify
-interview readiness.
-
-## References
-
-- [Official documentation 1](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
+Official documentation: [1](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)

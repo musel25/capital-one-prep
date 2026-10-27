@@ -14,11 +14,16 @@ SPEC = {'number': 9,
           'this pattern can limit the active buffer to one batch. This exercise returns every '
           'batch as JSON, so the complete result still occupies memory. The grouping logic should '
           'preserve every item exactly once.',
- 'task': '`data` has `values`, a list of integers from -1,000,000 through 1,000,000, and `size`, '
-         'an integer from 1 through 20. Return consecutive batches as a list of lists. Each batch '
-         'has `size` items except a possible final nonempty partial batch. Preserve order and '
-         'duplicates. An empty input returns an empty list. Use an iterator and itertools.islice '
-         'for practice; the judge checks the grouping behavior.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `values`: a list of integers from -1,000,000 to 1,000,000.\n'
+    '- `size`: an integer from 1 to 20.\n'
+    '\n'
+    '**Return** the values split into consecutive batches, as a list of lists.\n'
+    '- Every batch has `size` items. Only the last batch can be smaller, and it is never empty.\n'
+    '- Keep the order and the duplicates.\n'
+    '- An empty `values` list returns `[]`.\n'
+    '\n'
+    '**Practice:** use an iterator and `itertools.islice`. The judge checks only the output.'),
  'constraints': ['At most 100 input items. All input values follow the stated contract.'],
  'hints': ['Create the iterator once, outside the loop.',
            'An empty batch ends the loop; a short batch does not.'],

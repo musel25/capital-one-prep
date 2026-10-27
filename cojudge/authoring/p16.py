@@ -13,12 +13,22 @@ SPEC = {'number': 16,
           'moves the process forward. Terminal states may have no valid outgoing actions. This '
           'exercise models one order with a small set of named states. It uses a boolean result '
           'for each request so a caller can see exactly which requests were accepted.',
- 'task': 'An order starts in `NEW`. `data.actions` is a list containing only `authorize`, '
-         '`capture`, `cancel`, or `refund`. Allowed transitions are: NEW + authorize → AUTHORIZED; '
-         'NEW + cancel → CANCELLED; AUTHORIZED + capture → CAPTURED; AUTHORIZED + cancel → '
-         'CANCELLED; CAPTURED + refund → REFUNDED. No other transition is allowed. An invalid '
-         'action returns false and leaves the current state unchanged. Return `{"accepted": '
-         '[booleans], "state": final_state}`. CANCELLED and REFUNDED are terminal states.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `actions`: a list of strings. Each is `authorize`, `capture`, `cancel`, or `refund`.\n'
+    '\n'
+    '**Rules:** the order starts in `NEW`. Only these transitions are allowed:\n'
+    '\n'
+    '| State | Action | New state |\n'
+    '| --- | --- | --- |\n'
+    '| NEW | authorize | AUTHORIZED |\n'
+    '| NEW | cancel | CANCELLED |\n'
+    '| AUTHORIZED | capture | CAPTURED |\n'
+    '| AUTHORIZED | cancel | CANCELLED |\n'
+    '| CAPTURED | refund | REFUNDED |\n'
+    '\n'
+    'Any other action is rejected (`false`) and does not change the state. `CANCELLED` and `REFUNDED` are final states.\n'
+    '\n'
+    '**Return** `{"accepted": [bool], "state": string}`: one boolean per action, and the final state.'),
  'constraints': ['At most 100 input items. All input values follow the stated contract.'],
  'hints': ['Use the pair of current state and action as a lookup key.',
            'Change state only when that lookup has a result.'],

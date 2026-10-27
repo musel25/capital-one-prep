@@ -276,55 +276,40 @@ def build_problem(spec, destination):
         "functionName": "run", "params": [{"name": "payload", "type": "string"}],
         "outputType": "string", "hints": spec["hints"],
     }
-    sample_text = "\n\n".join(
-        f"### Example {i + 1}: {c['label']}\n\nInput to `solve`:\n```json\n{json.dumps(c['input'], indent=2, ensure_ascii=True)}\n```\nReturn:\n```json\n{json.dumps(c['expected'], indent=2, ensure_ascii=True)}\n```"
-        for i, c in enumerate(cases[:3])
-    )
+    # CoJudge renders metadata examples between the text before "**Constraints:**" and the rest.
+    fix = f"\n\n**What to fix:** {spec['fix'].strip()}" if spec.get("fix") else ""
+    practice = (f"\n\n<details>\n<summary><strong>Practice steps</strong> (trace, tests, AI review)</summary>\n\n"
+                f"{spec['practice'].strip()}\n\n</details>") if spec.get("practice") else ""
+    references = ", ".join(f"[{i + 1}]({url})" for i, url in enumerate(spec["sources"]))
     statement = f"""# {metadata['title']}
 
-[Back to the course list](/?course={spec.get('course_id', 'capital-one-engineering-50')})
+[Course list](/?course={spec.get('course_id', 'capital-one-engineering-50')}) · Level {spec.get('level', (spec['number'] - 1) // 10 + 1)} · {spec['difficulty']} · About {spec['time']} minutes
 
-**Level {spec.get('level', (spec['number'] - 1) // 10 + 1)} · {spec['difficulty']} · About {spec['time']} minutes**
+<details>
+<summary><strong>Lesson</strong> (open it first if the topic is new)</summary>
 
 **Before this problem:** {spec['prerequisites']}
 
-## Learn first
-
 {spec['learn'].strip()}
 
-## Your task
+</details>
 
-{spec['task'].strip()}
+{spec['task'].strip()}{fix}
 
-## Examples
+**Constraints:**
 
-{sample_text}
+""" + "\n".join(f"- {item}" for item in spec["constraints"]) + practice + f"""
 
-## Constraints
+---
 
-""" + "\n".join(f"- {item}" for item in spec["constraints"]) + f"""
+Select **Python** and edit `solve(data)`. Do not edit the `Solution.run` adapter: it converts the
+judge's JSON for you. For a custom test, paste a JSON object into `payload`. **Run** checks the
+three examples. **Submit** runs all {len(cases)} tests.
 
-## Work here
-
-Select **Python**. Edit `solve(data)` and its helper code. The supplied
-`Solution.run` adapter converts the judge's JSON text into normal Python values.
-You do not need to edit the adapter or escape JSON by hand. For a custom test,
-paste a JSON object into the `payload` field.
-
-Use **Run** for the three examples. Use **Submit** for all {len(cases)} tests.
-Open one hint if you need help. The reference solution is optional.
-
-The judge checks output behavior. It does not certify type annotations,
-inheritance, SQL use, or time complexity. Follow the requested technique to
-practice the skill. A code review can check those implementation choices.
-
-This is an original constructed exercise. It is not an official Capital One
-question. All data is fictional. Completing this course does not certify
-interview readiness.
-
-## References
-
-""" + "\n".join(f"- [Official documentation {i + 1}]({url})" for i, url in enumerate(spec["sources"])) + "\n"
+The judge checks only the output. It does not check type annotations, inheritance, SQL use, or
+time complexity. This is an original practice exercise, not an official Capital One question. All
+data is fictional. Completing it does not prove interview readiness.
+""" + (f"\n{spec['next'].strip()}\n" if spec.get("next") else "") + f"\nOfficial documentation: {references}\n"
     reference = spec["reference"].rstrip() + ADAPTER
     write_json(folder / "metadata.json", metadata)
     write_json(folder / "official-tests.json", [{"payload": encode(c["input"])} for c in cases])

@@ -37,7 +37,18 @@ rng = random.Random(37)
 SPEC={"number":37,"slug":"sql-optimistic-locking","title":"Reject stale SQL updates","difficulty":"Medium","time":25,
 "prerequisites":"SQL UPDATE and transaction basics.",
 "learn":"A client can read a document and then write after another client has changed it. A version number lets the database detect that stale write. The client sends the version it read. One UPDATE statement checks that version, changes the value, and increments the version. If the statement changes no rows, the client must refresh its data before it retries. Checking the version in a separate read is not the same guarantee: another writer could run between the read and write. This exercise supplies an ordered trace of client proposals. Even a write of the same value counts as an accepted update and advances the version.",
-"task":"`value` is the initial document string and `version` is its initial integer version. Each item in `updates` has a string `value` and integer `expected`. Accept it only when `expected` equals the current version. On acceptance replace the value and increment the version by one. Rejections change nothing. Return `{accepted: [Boolean, ...], value: string, version: integer}`. Complete the SQL update loop in the scaffold. This is a deterministic proposal trace, not an actual parallel execution test. The output judge cannot enforce SQL syntax or architecture.",
+"task":('**Input:** `data` has:\n'
+    '- `value`: the initial document string.\n'
+    '- `version`: its initial integer version.\n'
+    '- `updates`: a list of `{"value": string, "expected": int}`.\n'
+    '\n'
+    '**Rules:** for each update:\n'
+    '- Accept it only when `expected` is equal to the current version. Then replace the value and add 1 to the version.\n'
+    '- A rejected update changes nothing.\n'
+    '\n'
+    '**Return** `{"accepted": [bool], "value": string, "version": int}`.\n'
+    '\n'
+    'Complete the SQL update loop in the scaffold. This is a sequential trace, not a test of real parallel execution. The judge cannot check SQL syntax or structure.'),
 "constraints":["0–200 updates. Versions and expected versions are 0–1000000.","Values are ASCII strings of length 0–100."],
 "hints":["Put the expected version in the UPDATE predicate.","Use the affected-row count to produce the Boolean result."],
 "starter":REFERENCE[:REFERENCE.index('    results = []')]+'    # TODO: execute conditional updates and return accepted/value/version.\n    raise NotImplementedError\n',

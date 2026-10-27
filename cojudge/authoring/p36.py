@@ -56,7 +56,21 @@ SPEC = {
     "number": 36, "slug": "atomic-transfer-rollback", "title": "Repair an atomic SQL transfer", "difficulty": "Medium", "time": 30,
     "prerequisites": "SQL UPDATE, parameterized statements, and Python exceptions.",
     "learn": "A transfer changes two balances. Both changes must commit, or neither change must remain. A transaction groups these writes into one unit. Commit only after the debit and credit succeed. Roll back if an exception occurs between them. A conditional debit can check the available balance and subtract the amount in one statement. Its affected-row count tells you whether the debit occurred. Setup writes also need a commit before you start an explicit transaction. This exercise injects a failure after the debit. The starter catches that failure but commits the partial transfer. Repair that transaction boundary and preserve earlier successful transfers.",
-    "task": "Repair the faulty `solve(data)` implementation. `balances` maps account IDs to initial integer balances. `transfers` is an ordered list of objects with `from`, `to`, positive `amount`, and Boolean `fail`. Both IDs exist and differ. First reject a transfer that lacks funds with `insufficient`. Otherwise debit the source. If `fail` is true, roll back and return `failed`. Otherwise credit the destination, commit, and return `ok`. Each transfer has its own transaction. Return `{results: [...], balances: {...}}` with one status per transfer and final balances. Use the supplied in-memory SQLite setup. The output judge cannot verify SQL use.",
+    "task": ('**Bug fix.** Repair the faulty `solve(data)` implementation.\n'
+    '\n'
+    '**Input:** `data` has:\n'
+    '- `balances`: maps account IDs to initial integer balances.\n'
+    '- `transfers`: an ordered list of `{"from": ..., "to": ..., "amount": ..., "fail": ...}`. `amount` is positive and `fail` is a boolean. Both IDs exist and differ.\n'
+    '\n'
+    '**Rules:** each transfer has its own transaction.\n'
+    '1. If the source has less than `amount` → `insufficient`.\n'
+    '2. Otherwise debit the source.\n'
+    '3. If `fail` is true → roll back and return `failed`.\n'
+    '4. Otherwise credit the destination, commit, and return `ok`.\n'
+    '\n'
+    '**Return** `{"results": [...], "balances": {...}}`: one status per transfer, and the final balances.\n'
+    '\n'
+    'Use the supplied in-memory SQLite setup. The judge cannot check SQL use.'),
     "constraints": ["0–100 accounts and 0–200 transfers.", "IDs are nonempty ASCII strings. Initial balances are 0–1000000; amounts are 1–1000000.", "Failures are injected exceptions, not actual concurrent operations."],
     "hints": ["A caught exception does not undo an earlier SQL statement.", "The exception handler must end the current transaction without retaining its writes."],
     "starter": REFERENCE.replace("db.rollback()  # undo the debit", "db.commit()  # BUG: commits only the debit"), "reference": REFERENCE,

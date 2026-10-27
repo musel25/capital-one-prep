@@ -1,121 +1,42 @@
 # 05. Reconcile repeated item IDs
 
-[Back to the course list](/?course=capital-one-engineering-50)
+[Course list](/?course=capital-one-engineering-50) · Level 1 · Easy · About 20 minutes
 
-**Level 1 · Easy · About 20 minutes**
+<details>
+<summary><strong>Lesson</strong> (open it first if the topic is new)</summary>
 
 **Before this problem:** Lists, dictionaries, and functions.
 
-## Learn first
-
 A set records whether an item is present. It does not record how many times the item occurs. Counter stores a count for each key and acts as a multiset. In a reconciliation task, repeated IDs can represent separate units. Counter subtraction keeps only positive counts. Therefore expected minus observed gives missing units, and observed minus expected gives extra units. Neither result includes zero or negative counts. Keep the input meaning separate from output order. Sorting the result keys makes the report deterministic even when two batches list their units in different orders. The output should preserve counts, not expand each count into repeated rows.
 
-## Your task
+</details>
 
-`data` has `expected` and `observed`, each a list of strings. Repeated strings count as separate units. Return `{"missing": [{"id": string, "count": positive_integer}], "extra": [...]}`. Missing count is max(expected count minus observed count, 0). Extra count is the reverse difference. Sort each list by ID in ascending ASCII order. IDs contain only ASCII characters. Do not include zero counts.
+**Input:** `data` has:
+- `expected`: a list of item IDs (ASCII strings).
+- `observed`: a list of item IDs (ASCII strings).
 
-## Examples
+A repeated ID counts as a separate unit each time.
 
-### Example 1: counts in both directions
+**Rules:** for each ID:
+- missing count = max(count in `expected` − count in `observed`, 0)
+- extra count = max(count in `observed` − count in `expected`, 0)
 
-Input to `solve`:
-```json
-{
-  "expected": [
-    "A",
-    "A",
-    "B"
-  ],
-  "observed": [
-    "A",
-    "C"
-  ]
-}
-```
-Return:
-```json
-{
-  "missing": [
-    {
-      "id": "A",
-      "count": 1
-    },
-    {
-      "id": "B",
-      "count": 1
-    }
-  ],
-  "extra": [
-    {
-      "id": "C",
-      "count": 1
-    }
-  ]
-}
-```
+**Return** `{"missing": [...], "extra": [...]}`
+- Each list contains `{"id": string, "count": int}` for each ID whose count is above 0. Do not include zero counts.
+- Sort each list by ID in ascending ASCII order.
 
-### Example 2: order does not matter
-
-Input to `solve`:
-```json
-{
-  "expected": [
-    "B",
-    "A"
-  ],
-  "observed": [
-    "A",
-    "B"
-  ]
-}
-```
-Return:
-```json
-{
-  "missing": [],
-  "extra": []
-}
-```
-
-### Example 3: empty batches
-
-Input to `solve`:
-```json
-{
-  "expected": [],
-  "observed": []
-}
-```
-Return:
-```json
-{
-  "missing": [],
-  "extra": []
-}
-```
-
-## Constraints
+**Constraints:**
 
 - At most 100 input items. All input values follow the stated contract.
 
-## Work here
+---
 
-Select **Python**. Edit `solve(data)` and its helper code. The supplied
-`Solution.run` adapter converts the judge's JSON text into normal Python values.
-You do not need to edit the adapter or escape JSON by hand. For a custom test,
-paste a JSON object into the `payload` field.
+Select **Python** and edit `solve(data)`. Do not edit the `Solution.run` adapter: it converts the
+judge's JSON for you. For a custom test, paste a JSON object into `payload`. **Run** checks the
+three examples. **Submit** runs all 24 tests.
 
-Use **Run** for the three examples. Use **Submit** for all 24 tests.
-Open one hint if you need help. The reference solution is optional.
+The judge checks only the output. It does not check type annotations, inheritance, SQL use, or
+time complexity. This is an original practice exercise, not an official Capital One question. All
+data is fictional. Completing it does not prove interview readiness.
 
-The judge checks output behavior. It does not certify type annotations,
-inheritance, SQL use, or time complexity. Follow the requested technique to
-practice the skill. A code review can check those implementation choices.
-
-This is an original constructed exercise. It is not an official Capital One
-question. All data is fictional. Completing this course does not certify
-interview readiness.
-
-## References
-
-- [Official documentation 1](https://docs.python.org/3/library/collections.html#collections.Counter)
+Official documentation: [1](https://docs.python.org/3/library/collections.html#collections.Counter)

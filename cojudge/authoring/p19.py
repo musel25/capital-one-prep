@@ -15,13 +15,17 @@ SPEC = {'number': 19,
           'succeed without changing the amount. Real refund systems need additional rules for '
           'request IDs and external settlement; this task isolates the cumulative amount '
           'invariant.',
- 'task': '`data.payments` maps payment IDs to nonnegative integer charged cents. `data.refunds` '
-         'contains objects with string `payment` and nonnegative integer `cents`; each payment ID '
-         'exists. Process requests in order. Accept a refund if its cents are at most that '
-         'payment’s remaining refundable cents. Subtract only accepted refunds. Zero-cent refunds '
-         'succeed, including after a full refund. Return `{"accepted": [booleans], "remaining": '
-         '{payment_id: integer_cents}}`. Preserve all payment IDs, including payments with no '
-         'refund requests.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `payments`: maps payment IDs to charged cents (nonnegative integers).\n'
+    '- `refunds`: a list of `{"payment": string, "cents": int}`, with nonnegative `cents`. Every payment ID exists.\n'
+    '\n'
+    '**Rules:** process the refunds in order.\n'
+    "- Accept a refund when `cents` is at most the payment's remaining refundable cents. Subtract only accepted refunds.\n"
+    '- A zero-cent refund is accepted, also after a full refund.\n'
+    '\n'
+    '**Return** `{"accepted": [bool], "remaining": {payment_id: int}}`\n'
+    '- `accepted`: one boolean per refund.\n'
+    '- `remaining`: the remaining refundable cents of every payment, including payments with no refund requests.'),
  'constraints': ['At most 30 payments and 100 refund requests. Charged and requested cents are at '
                  'most 1,000,000,000,000.'],
  'hints': ['Compare with the remaining amount, not the original charge.',

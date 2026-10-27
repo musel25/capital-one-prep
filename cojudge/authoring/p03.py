@@ -13,11 +13,18 @@ SPEC = {'number': 3,
           'merges these states and can replace a valid zero. Write the decision in the same order '
           'as the contract: first check membership, then inspect the stored value. This makes '
           'defaults explicit and avoids an accidental change to a caller’s configuration.',
- 'task': '`data` has nonnegative integer `default` and a list `records`. Each record is an object. '
-         'It may contain `limit`, whose value is a nonnegative integer or null. Ignore other keys. '
-         'An absent `limit` resolves to `default`. An explicit null resolves to null. Zero stays '
-         'zero. Return `{"limits": [resolved_values], "configured": count}`. Count only records '
-         'that contain a non-null `limit`, including zero.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `default`: a nonnegative integer.\n'
+    '- `records`: a list of objects. A record can have a `limit` key whose value is a nonnegative integer or `null`. Ignore all other keys.\n'
+    '\n'
+    '**Rules:** resolve the limit of each record.\n'
+    '- No `limit` key → `default`.\n'
+    '- `limit` is `null` → `null`.\n'
+    '- `limit` is a number, including `0` → that number.\n'
+    '\n'
+    '**Return** `{"limits": [...], "configured": int}`\n'
+    '- `limits`: the resolved limit of each record, in input order.\n'
+    '- `configured`: the number of records that have a `limit` key with a non-null value. A `0` counts.'),
  'constraints': ['At most 100 input items. All input values follow the stated contract.'],
  'hints': ['Use key membership to detect absence.', 'Use is not None to count configured values.'],
  'starter': 'def solve(data: dict) -> dict:\n    raise NotImplementedError\n',

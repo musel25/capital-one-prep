@@ -1,160 +1,42 @@
 # 46. Schedule dependent jobs and detect blocked cycles
 
-[Back to the course list](/?course=capital-one-engineering-50)
+[Course list](/?course=capital-one-engineering-50) · Level 5 · Hard · About 35 minutes
 
-**Level 5 · Hard · About 35 minutes**
+<details>
+<summary><strong>Lesson</strong> (open it first if the topic is new)</summary>
 
 **Before this problem:** Sets, directed graphs, and dependency order.
 
-## Learn first
-
 A job is ready when every prerequisite has completed. A dependency scheduler can repeatedly select ready jobs, run a bounded batch, and then mark that batch complete. All jobs in this task take one round, so a job cannot start in the same round as its prerequisite. If unfinished jobs remain but none is ready, the remaining dependency graph contains a cycle. Some blocked jobs may only depend on a cycle and are not themselves part of it. Report all unfinished jobs separately from the cycle flag. A fixed tie rule makes results reproducible. This is a deterministic event trace model, not an actual parallel, thread, or network test.
 
-## Your task
+</details>
 
-`jobs` contains objects with unique ASCII `id` and `depends`, a list of distinct existing job IDs. `workers` is the maximum jobs per round. At the start of each round, find every unfinished job whose dependencies completed in earlier rounds. Select up to `workers` in ascending ASCII ID order. All selected jobs complete at the end of that round. Stop when all jobs finish or no job is ready. Return `{rounds: [[id, ...], ...], blocked: [...], has_cycle: Boolean}`. Sort blocked IDs. `has_cycle` is true exactly when jobs remain blocked. Self dependencies and cycles are valid inputs. Do not claim every blocked job belongs to a cycle.
+**Input:** `data` has:
+- `jobs`: a list of `{"id": string, "depends": [ids]}`. IDs are unique ASCII strings. `depends` lists distinct existing job IDs. Self-dependencies and cycles can occur.
+- `workers`: the maximum number of jobs per round.
 
-## Examples
+**Rules:** repeat rounds.
+1. At the start of a round, find every unfinished job whose dependencies all finished in earlier rounds.
+2. Select up to `workers` of these jobs, in ascending ASCII ID order. All selected jobs finish at the end of the round.
+3. Stop when all jobs are finished or no job is ready.
 
-### Example 1: dependencies finish before next round
+**Return** `{"rounds": [[id, ...], ...], "blocked": [...], "has_cycle": bool}`
+- `blocked`: the unfinished jobs, sorted.
+- `has_cycle`: `true` exactly when some jobs are blocked. Do not claim that every blocked job is part of a cycle.
 
-Input to `solve`:
-```json
-{
-  "jobs": [
-    {
-      "id": "a",
-      "depends": []
-    },
-    {
-      "id": "b",
-      "depends": [
-        "a"
-      ]
-    },
-    {
-      "id": "c",
-      "depends": [
-        "a"
-      ]
-    }
-  ],
-  "workers": 2
-}
-```
-Return:
-```json
-{
-  "rounds": [
-    [
-      "a"
-    ],
-    [
-      "b",
-      "c"
-    ]
-  ],
-  "blocked": [],
-  "has_cycle": false
-}
-```
-
-### Example 2: worker limit and ASCII tie break
-
-Input to `solve`:
-```json
-{
-  "jobs": [
-    {
-      "id": "c",
-      "depends": []
-    },
-    {
-      "id": "b",
-      "depends": []
-    },
-    {
-      "id": "a",
-      "depends": []
-    }
-  ],
-  "workers": 2
-}
-```
-Return:
-```json
-{
-  "rounds": [
-    [
-      "a",
-      "b"
-    ],
-    [
-      "c"
-    ]
-  ],
-  "blocked": [],
-  "has_cycle": false
-}
-```
-
-### Example 3: cycle blocks both jobs
-
-Input to `solve`:
-```json
-{
-  "jobs": [
-    {
-      "id": "a",
-      "depends": [
-        "b"
-      ]
-    },
-    {
-      "id": "b",
-      "depends": [
-        "a"
-      ]
-    }
-  ],
-  "workers": 2
-}
-```
-Return:
-```json
-{
-  "rounds": [],
-  "blocked": [
-    "a",
-    "b"
-  ],
-  "has_cycle": true
-}
-```
-
-## Constraints
+**Constraints:**
 
 - 0–100 jobs, at most 100 dependencies per job, and 1–20 workers.
 - Every dependency refers to a supplied job. Each job takes exactly one round and always succeeds.
 
-## Work here
+---
 
-Select **Python**. Edit `solve(data)` and its helper code. The supplied
-`Solution.run` adapter converts the judge's JSON text into normal Python values.
-You do not need to edit the adapter or escape JSON by hand. For a custom test,
-paste a JSON object into the `payload` field.
+Select **Python** and edit `solve(data)`. Do not edit the `Solution.run` adapter: it converts the
+judge's JSON for you. For a custom test, paste a JSON object into `payload`. **Run** checks the
+three examples. **Submit** runs all 37 tests.
 
-Use **Run** for the three examples. Use **Submit** for all 37 tests.
-Open one hint if you need help. The reference solution is optional.
+The judge checks only the output. It does not check type annotations, inheritance, SQL use, or
+time complexity. This is an original practice exercise, not an official Capital One question. All
+data is fictional. Completing it does not prove interview readiness.
 
-The judge checks output behavior. It does not certify type annotations,
-inheritance, SQL use, or time complexity. Follow the requested technique to
-practice the skill. A code review can check those implementation choices.
-
-This is an original constructed exercise. It is not an official Capital One
-question. All data is fictional. Completing this course does not certify
-interview readiness.
-
-## References
-
-- [Official documentation 1](https://docs.python.org/3.11/library/graphlib.html)
+Official documentation: [1](https://docs.python.org/3.11/library/graphlib.html)

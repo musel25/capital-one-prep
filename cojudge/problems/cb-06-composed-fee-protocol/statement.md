@@ -1,16 +1,46 @@
 # 06. Trace a composed fee dependency
 
-[Back to the course list](/?course=capital-one-codebase-practice)
+[Course list](/?course=capital-one-codebase-practice) · Level 2 · Medium · About 35 minutes
 
-**Level 2 · Medium · About 35 minutes**
+<details>
+<summary><strong>Lesson</strong> (open it first if the topic is new)</summary>
 
 **Before this problem:** Exercise 05. Follow an object method call and read an integer calculation.
-
-## Learn first
 
 The calculator receives a policy object and calls its `fee` method. The rate policy has a rounding defect. Your objective is to separate dependency selection, fee calculation, and result construction, then repair only the responsible layer.
 
 Composition gives an object another object that performs part of its work. A small protocol describes the methods that the dependency must provide. Python Protocol supports structural typing: a class can satisfy the interface without explicitly inheriting from it. A calculator can depend on fee(amount) instead of checking policy types for every amount. Select the policy once at the boundary, then let the calculator call it. This is polymorphism through a shared interface. Integer arithmetic can also make a percentage fee exact. To round a nonnegative integer fraction upward, add denominator minus one before integer division.
+
+</details>
+
+**Input:** `data` has:
+- `policy`: one of these:
+  - `{"kind": "flat", "cents": int}`, with nonnegative `cents`.
+  - `{"kind": "rate", "bps": int}`, with `bps` from 0 to 10,000. One basis point is 1/100 of one percent.
+- `amounts`: a list of nonnegative integer amounts in cents.
+
+**Rules:** the fee for each amount:
+- Flat: the fee is `cents`, also when the amount is 0.
+- Rate: the fee is amount × bps / 10000, rounded up to a whole cent.
+
+**Return** a list of `{"fee": int, "total": int}` in input order, where `total` = amount + fee.
+
+**Practice:** use a `Protocol` and composition. The judge checks only the output.
+
+**What to fix:** The starter runs, but it has one intentional bug.
+
+- Repair the integer calculation in `RateFee.fee`.
+- Keep the Protocol interface, constructor inputs, and quote shape.
+- Preserve `FlatFee` behavior, including a flat charge for amount zero.
+- Do not add policy-type branches to `Calculator.quote`.
+- Keep exact integer arithmetic and the input amount unchanged.
+
+**Constraints:**
+
+- At most 100 amounts. Cent values are at most 1,000,000,000,000.
+
+<details>
+<summary><strong>Practice steps</strong> (trace, tests, AI review)</summary>
 
 ### Worked trace
 
@@ -19,16 +49,6 @@ Select a rate policy of `125` basis points and amounts `[0, 80, 81]`. The exact 
 ### Read the existing code
 
 Inspect the `FeePolicy.fee` signature. Follow construction in `solve` to `Calculator.__init__` and `Calculator.quote`. Compare `FlatFee.fee` and `RateFee.fee`. Identify which layer knows the policy kind and which layer knows how a quote is represented. Check units: amounts and fees are cents; `bps` is a rate.
-
-## Your task
-
-### Scoped repair
-
-Repair the integer calculation in `RateFee.fee`. Keep the Protocol interface, constructor inputs, and quote shape. Preserve `FlatFee` behavior, including a flat charge for amount zero. Do not add policy-type branches to `Calculator.quote`. Keep exact integer arithmetic and the input amount unchanged.
-
-### Required behavior
-
-`data.policy` is either `{"kind":"flat","cents":nonnegative_integer}` or `{"kind":"rate","bps":integer_from_0_to_10000}`. `data.amounts` is a list of nonnegative integer cent amounts. One basis point is 1/100 of one percent. Flat fee equals `cents`, including for amount zero. Rate fee is amount × bps / 10000, rounded upward to whole cents. Return a list of `{"fee": integer, "total": amount_plus_fee}` in input order. Practice Protocol and composition; the judge checks outputs only.
 
 ### Test before and after the change
 
@@ -52,112 +72,18 @@ Optional AI prompt. Write your own implementation and tests:
 
 A judge pass checks behavior. Your trace, test choice, and edit scope need your review. Do not use the pass mark as evidence of those skills.
 
+</details>
+
+---
+
+Select **Python** and edit `solve(data)`. Do not edit the `Solution.run` adapter: it converts the
+judge's JSON for you. For a custom test, paste a JSON object into `payload`. **Run** checks the
+three examples. **Submit** runs all 25 tests.
+
+The judge checks only the output. It does not check type annotations, inheritance, SQL use, or
+time complexity. This is an original practice exercise, not an official Capital One question. All
+data is fictional. Completing it does not prove interview readiness.
+
 [Full sequence and local pytest labs](https://github.com/musel25/capital-one-prep/blob/main/codebase_labs/README.md). Then open [exercise 07](/problems/cb-07-explicit-order-states).
 
-## Examples
-
-### Example 1: flat fee includes zero amount
-
-Input to `solve`:
-```json
-{
-  "policy": {
-    "kind": "flat",
-    "cents": 3
-  },
-  "amounts": [
-    0,
-    10
-  ]
-}
-```
-Return:
-```json
-[
-  {
-    "fee": 3,
-    "total": 3
-  },
-  {
-    "fee": 3,
-    "total": 13
-  }
-]
-```
-
-### Example 2: rate fees round upward
-
-Input to `solve`:
-```json
-{
-  "policy": {
-    "kind": "rate",
-    "bps": 250
-  },
-  "amounts": [
-    100,
-    200,
-    1
-  ]
-}
-```
-Return:
-```json
-[
-  {
-    "fee": 3,
-    "total": 103
-  },
-  {
-    "fee": 5,
-    "total": 205
-  },
-  {
-    "fee": 1,
-    "total": 2
-  }
-]
-```
-
-### Example 3: no quotes
-
-Input to `solve`:
-```json
-{
-  "policy": {
-    "kind": "rate",
-    "bps": 10
-  },
-  "amounts": []
-}
-```
-Return:
-```json
-[]
-```
-
-## Constraints
-
-- At most 100 amounts. Cent values are at most 1,000,000,000,000.
-
-## Work here
-
-Select **Python**. Edit `solve(data)` and its helper code. The supplied
-`Solution.run` adapter converts the judge's JSON text into normal Python values.
-You do not need to edit the adapter or escape JSON by hand. For a custom test,
-paste a JSON object into the `payload` field.
-
-Use **Run** for the three examples. Use **Submit** for all 25 tests.
-Open one hint if you need help. The reference solution is optional.
-
-The judge checks output behavior. It does not certify type annotations,
-inheritance, SQL use, or time complexity. Follow the requested technique to
-practice the skill. A code review can check those implementation choices.
-
-This is an original constructed exercise. It is not an official Capital One
-question. All data is fictional. Completing this course does not certify
-interview readiness.
-
-## References
-
-- [Official documentation 1](https://docs.python.org/3.11/library/typing.html#typing.Protocol)
+Official documentation: [1](https://docs.python.org/3.11/library/typing.html#typing.Protocol)

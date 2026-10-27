@@ -49,7 +49,21 @@ rng=random.Random(39)
 SPEC={"number":39,"slug":"sql-savepoint-import","title":"Isolate failed import rows with savepoints","difficulty":"Hard","time":35,
 "prerequisites":"Transactions, constraint failures, and exception handling.",
 "learn":"A savepoint marks a position inside a transaction. ROLLBACK TO restores that position without discarding earlier work in the transaction. RELEASE removes the savepoint. It does not make inner changes durable when an outer transaction is still open. This is useful for batch imports: one bad row can fail while other rows remain eligible to commit. The final batch decision still controls all accepted rows. A row can also fail after its insert succeeds. In that case the savepoint must remove that inserted row before the next item runs. Keep row outcomes separate from the final batch commit decision.",
-"task":"`batches` is an ordered list of `{rows, abort}`. Each row is `{id, qty, fail}`. Use the supplied SQLite table. Each batch starts an outer transaction. Attempt each row under its own savepoint. A duplicate ID or negative quantity gives `invalid`. Otherwise insert it; if `fail` is true, undo that insert and give `failed`. Successful row attempts give `ok`. Continue after every row failure. If `abort` is true, roll back the whole batch; otherwise commit it. Return `{batches: [{rows: [status, ...], committed: Boolean}, ...], rows: [[id, qty], ...]}`. Row statuses describe attempts even when the batch later aborts. Sort final rows by ASCII ID. Constraint errors take precedence over injected failures. The judge cannot verify SQL use.",
+"task":('**Input:** `data` has:\n'
+    '- `batches`: an ordered list of `{"rows": [...], "abort": bool}`. Each row is `{"id": ..., "qty": ..., "fail": ...}`.\n'
+    '\n'
+    '**Rules:** use the supplied SQLite table.\n'
+    '- Each batch is one outer transaction. Attempt each row inside its own savepoint.\n'
+    '- A duplicate ID or a negative `qty` → `invalid`. This check comes before `fail`.\n'
+    '- Otherwise insert the row. If `fail` is true, undo that insert and return `failed`. Otherwise return `ok`.\n'
+    '- Continue with the next row after every row failure.\n'
+    '- At the end of the batch: if `abort` is true, roll back the whole batch. Otherwise commit it.\n'
+    '\n'
+    'Row statuses describe each attempt, even if the batch is rolled back later.\n'
+    '\n'
+    '**Return** `{"batches": [{"rows": [status, ...], "committed": bool}, ...], "rows": [[id, qty], ...]}`. Sort the final `rows` by ASCII ID.\n'
+    '\n'
+    'The judge cannot check SQL use.'),
 "constraints":["0–30 batches, each with 0–30 rows.","IDs are nonempty ASCII strings. Quantities are -100–1000000. fail and abort are Boolean.","No actual concurrent transactions occur."],"hints":["ROLLBACK TO keeps the outer transaction active.","Release the row savepoint after both success and rollback."],
 "starter":REFERENCE[:REFERENCE.index('    results = []')]+'    # TODO: use one outer transaction per batch and one savepoint per row.\n    raise NotImplementedError\n',"reference":REFERENCE,
 "java":'''public Object solve(Map<String,Object> d){ Map<String,Object> saved=new TreeMap<>(); List<Object> results=new ArrayList<>(); for(Object raw:arr(d.get("batches"))){Map<String,Object> batch=obj(raw); Map<String,Object> working=new TreeMap<>(saved); List<Object> statuses=new ArrayList<>(); for(Object r:arr(batch.get("rows"))){Map<String,Object> row=obj(r);String id=s(row.get("id"));long qty=lng(row.get("qty"));if(working.containsKey(id)||qty<0)statuses.add("invalid");else if(b(row.get("fail")))statuses.add("failed");else{working.put(id,qty);statuses.add("ok");}}boolean commit=!b(batch.get("abort"));if(commit)saved=working;results.add(map("rows",statuses,"committed",commit));}List<Object> rows=new ArrayList<>();for(String id:saved.keySet())rows.add(list(id,saved.get(id)));return map("batches",results,"rows",rows);}''',

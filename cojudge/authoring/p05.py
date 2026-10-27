@@ -14,11 +14,19 @@ SPEC = {'number': 5,
           'the input meaning separate from output order. Sorting the result keys makes the report '
           'deterministic even when two batches list their units in different orders. The output '
           'should preserve counts, not expand each count into repeated rows.',
- 'task': '`data` has `expected` and `observed`, each a list of strings. Repeated strings count as '
-         'separate units. Return `{"missing": [{"id": string, "count": positive_integer}], '
-         '"extra": [...]}`. Missing count is max(expected count minus observed count, 0). Extra '
-         'count is the reverse difference. Sort each list by ID in ascending ASCII order. IDs '
-         'contain only ASCII characters. Do not include zero counts.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `expected`: a list of item IDs (ASCII strings).\n'
+    '- `observed`: a list of item IDs (ASCII strings).\n'
+    '\n'
+    'A repeated ID counts as a separate unit each time.\n'
+    '\n'
+    '**Rules:** for each ID:\n'
+    '- missing count = max(count in `expected` − count in `observed`, 0)\n'
+    '- extra count = max(count in `observed` − count in `expected`, 0)\n'
+    '\n'
+    '**Return** `{"missing": [...], "extra": [...]}`\n'
+    '- Each list contains `{"id": string, "count": int}` for each ID whose count is above 0. Do not include zero counts.\n'
+    '- Sort each list by ID in ascending ASCII order.'),
  'constraints': ['At most 100 input items. All input values follow the stated contract.'],
  'hints': ['Build one Counter per batch.',
            'Subtract in both directions, then sort the positive result keys.'],

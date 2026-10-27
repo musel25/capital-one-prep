@@ -14,13 +14,20 @@ SPEC = {'number': 12,
           'task uses small JSON-like dictionaries and lists, so deep copying has clear meaning. '
           'The starter copies only the outer dictionary. Repair it so each result starts from the '
           'original template, not from a previous result.',
- 'task': 'Bug-fix task. `data.template` is '
-         '`{"limits":{"daily":nonnegative_integer,"monthly":nonnegative_integer},"tags":[strings]}`. '
-         '`data.changes` is a list of objects. A change may contain `daily`, `monthly`, and `tag`; '
-         'no other keys occur. Numeric values replace that limit. A tag is appended even if it is '
-         'an empty string or already exists. For each change, create an independent copy of the '
-         'original template and apply only that change. Return `{"template": unchanged_original, '
-         '"copies": [updated_configurations]}` in change order. Repair the shallow-copy starter.',
+ 'task': ('**Bug fix.** The starter makes a shallow copy. Repair it.\n'
+    '\n'
+    '**Input:** `data` has:\n'
+    '- `template`: `{"limits": {"daily": int, "monthly": int}, "tags": [string]}`. The limits are nonnegative integers.\n'
+    '- `changes`: a list of objects. A change can contain `daily`, `monthly`, and `tag`. No other keys occur.\n'
+    '\n'
+    '**Rules:** for each change:\n'
+    '1. Make an independent copy of the original template, not of an earlier copy.\n'
+    '2. `daily` or `monthly`: replace that limit with the value.\n'
+    '3. `tag`: append it to `tags`, even if it is an empty string or is already in the list.\n'
+    '\n'
+    '**Return** `{"template": ..., "copies": [...]}`\n'
+    '- `template`: the original template, unchanged.\n'
+    '- `copies`: the updated configurations, in change order.'),
  'constraints': ['At most 100 input items. All input values follow the stated contract.'],
  'hints': ['Inspect the objects inside limits and tags.',
            'Each change starts from the original template.'],

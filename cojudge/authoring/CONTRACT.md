@@ -14,7 +14,7 @@ SPEC = {
     "time": 20,
     "prerequisites": "Lists, dictionaries, and functions.",
     "learn": "A short lesson, 80–160 words. Teach before testing.",
-    "task": "Precise input/output contract as Markdown. Describe every field and error.",
+    "task": "Precise contract as Markdown: **Input:** bullets, **Rules**, **Return**. Describe every field and error.",
     "constraints": ["..."],
     "hints": ["Conceptual hint.", "More specific hint."],
     "starter": "def solve(data):\n    raise NotImplementedError\n",

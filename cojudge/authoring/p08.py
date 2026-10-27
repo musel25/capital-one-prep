@@ -14,12 +14,14 @@ SPEC = {'number': 8,
           'require local time zone rules. Parse each timestamp, convert it to UTC, and format all '
           'outputs in one consistent form. Preserve the input order because normalization does not '
           'imply sorting.',
- 'task': '`data.timestamps` is a list of valid strings in `YYYY-MM-DDTHH:MM:SSZ` or '
-         '`YYYY-MM-DDTHH:MM:SS±HH:MM` form. Input years are 2000 through 2099. Offsets range from '
-         '-14:00 through +14:00. Dates and clock fields are valid, with no leap seconds or '
-         'fractional seconds. Each timestamp includes an offset; local names such as '
-         'America/Tijuana do not occur. Return the same instants, in input order, as '
-         '`YYYY-MM-DDTHH:MM:SSZ` strings. A UTC date outside the input year range is valid.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `timestamps`: a list of valid strings, each in one of these forms:\n'
+    '  - `YYYY-MM-DDTHH:MM:SSZ`\n'
+    '  - `YYYY-MM-DDTHH:MM:SS±HH:MM`, with an offset from `-14:00` to `+14:00`\n'
+    '\n'
+    'Years are 2000–2099. All dates and times are valid. There are no leap seconds, no fractional seconds, and no zone names such as `America/Tijuana`.\n'
+    '\n'
+    '**Return** the same instants converted to UTC, in input order, each as `YYYY-MM-DDTHH:MM:SSZ`. A UTC result can fall outside 2000–2099.'),
  'constraints': ['At most 100 input items. All input values follow the stated contract.'],
  'hints': ['Parse an aware datetime for each input.',
            'Convert the instant with astimezone, then format it.'],

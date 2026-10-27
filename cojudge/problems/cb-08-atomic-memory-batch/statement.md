@@ -1,16 +1,46 @@
 # 08. Locate a batch commit boundary
 
-[Back to the course list](/?course=capital-one-codebase-practice)
+[Course list](/?course=capital-one-codebase-practice) · Level 2 · Medium · About 35 minutes
 
-**Level 2 · Medium · About 35 minutes**
+<details>
+<summary><strong>Lesson</strong> (open it first if the topic is new)</summary>
 
 **Before this problem:** Exercise 07. Trace accepted and rejected state transitions.
-
-## Learn first
 
 A batch can contain valid transfers followed by one that fails. The starter lets earlier writes escape from a rejected batch. Your objective is to distinguish tentative balances from published balances and find the single commit boundary.
 
 Atomic means that an operation has one complete result: all intended changes happen, or none happen. A loop that updates live balances can leave a partial result when a later transfer fails. For a small in-memory model, start with a working copy. Apply each transfer to that copy in order. Earlier transfers in the same batch can fund later transfers. Publish the working copy only after every transfer succeeds. On failure, discard it. This method is a simulation of atomic behavior within one call. It does not create a database transaction or protect the state from concurrent callers.
+
+</details>
+
+**Input:** `data` has:
+- `accounts`: maps account IDs to nonnegative integer cents.
+- `batches`: a list of batches. Each batch is a list of transfers `{"from": string, "to": string, "cents": int}`, with nonnegative `cents`. Both accounts always exist.
+
+**Rules**
+- Process batches in order. Inside a batch, process transfers in order. Each transfer uses the balances after the earlier transfers in the same batch.
+- If any source has less than `cents`, reject the whole batch and restore the balances from the start of that batch.
+- Otherwise accept the batch and keep all its transfers.
+- A self-transfer needs enough funds but does not change the balance.
+- An empty batch is accepted.
+
+**Return** `{"accepted": [bool], "balances": {...}}`: one boolean per batch, and the final account map.
+
+**What to fix:** The starter runs, but it has one intentional bug. The starter keeps part of a rejected batch (a partial write). Repair it.
+
+- Repair the ownership of tentative batch state.
+- Preserve transfer order inside a batch and commit only after all transfers succeed.
+- Keep empty batches successful.
+- Keep the self-transfer funds check.
+- Do not add a rollback log, database, or concurrent execution.
+- A shallow dictionary copy is sufficient here because balances are integer values.
+
+**Constraints:**
+
+- At most 30 accounts, 30 batches, and 100 transfers per batch. Input cents and initial balances are at most 1,000,000,000,000.
+
+<details>
+<summary><strong>Practice steps</strong> (trace, tests, AI review)</summary>
 
 ### Worked trace
 
@@ -19,16 +49,6 @@ Start with `A = 5`, `B = 0`, and `C = 0`. In one batch, transfer `4` from A to B
 ### Read the existing code
 
 Inspect `Ledger.__init__` to see how input balances enter the object. In `Ledger.apply_batch`, locate `trial`, the funds check, both balance writes, and the final assignment to `self.balances`. Mark which paths reach that final assignment. Follow repeated calls from `solve` to see when a successful batch becomes the next batch's starting state.
-
-## Your task
-
-### Scoped repair
-
-Repair the ownership of tentative batch state. Preserve transfer order inside a batch and commit only after all transfers succeed. Keep empty batches successful. Keep the self-transfer funds check. Do not add a rollback log, database, or concurrent execution. A shallow dictionary copy is sufficient here because balances are integer values.
-
-### Required behavior
-
-Bug-fix task. `data.accounts` maps account IDs to nonnegative integer cents. `data.batches` is a list of transfer lists. Each transfer has string `from`, string `to`, and nonnegative integer `cents`. Both accounts always exist. Process batches in order. Within a batch, process transfers in order using the tentative updated balances. If any source has less than cents, reject the entire batch and restore its starting balances. Otherwise accept all transfers. A self-transfer needs enough funds but leaves its balance unchanged. An empty batch succeeds. Return `{"accepted": [booleans_per_batch], "balances": final_account_map}`. Repair the starter’s partial-write defect.
 
 ### Test before and after the change
 
@@ -52,127 +72,18 @@ Optional AI prompt. Write your own implementation and tests:
 
 A judge pass checks behavior. Your trace, test choice, and edit scope need your review. Do not use the pass mark as evidence of those skills.
 
+</details>
+
+---
+
+Select **Python** and edit `solve(data)`. Do not edit the `Solution.run` adapter: it converts the
+judge's JSON for you. For a custom test, paste a JSON object into `payload`. **Run** checks the
+three examples. **Submit** runs all 25 tests.
+
+The judge checks only the output. It does not check type annotations, inheritance, SQL use, or
+time complexity. This is an original practice exercise, not an official Capital One question. All
+data is fictional. Completing it does not prove interview readiness.
+
 [Full sequence and local pytest labs](https://github.com/musel25/capital-one-prep/blob/main/codebase_labs/README.md). Next, complete lab03 and lab04 from the guide.
 
-## Examples
-
-### Example 1: late failure rolls back earlier transfer
-
-Input to `solve`:
-```json
-{
-  "accounts": {
-    "A": 10,
-    "B": 0
-  },
-  "batches": [
-    [
-      {
-        "from": "A",
-        "to": "B",
-        "cents": 6
-      },
-      {
-        "from": "A",
-        "to": "B",
-        "cents": 5
-      }
-    ]
-  ]
-}
-```
-Return:
-```json
-{
-  "accepted": [
-    false
-  ],
-  "balances": {
-    "A": 10,
-    "B": 0
-  }
-}
-```
-
-### Example 2: earlier transfer funds later transfer
-
-Input to `solve`:
-```json
-{
-  "accounts": {
-    "A": 10,
-    "B": 0,
-    "C": 0
-  },
-  "batches": [
-    [
-      {
-        "from": "A",
-        "to": "B",
-        "cents": 7
-      },
-      {
-        "from": "B",
-        "to": "C",
-        "cents": 7
-      }
-    ]
-  ]
-}
-```
-Return:
-```json
-{
-  "accepted": [
-    true
-  ],
-  "balances": {
-    "A": 3,
-    "B": 0,
-    "C": 7
-  }
-}
-```
-
-### Example 3: no accounts or batches
-
-Input to `solve`:
-```json
-{
-  "accounts": {},
-  "batches": []
-}
-```
-Return:
-```json
-{
-  "accepted": [],
-  "balances": {}
-}
-```
-
-## Constraints
-
-- At most 30 accounts, 30 batches, and 100 transfers per batch. Input cents and initial balances are at most 1,000,000,000,000.
-
-## Work here
-
-Select **Python**. Edit `solve(data)` and its helper code. The supplied
-`Solution.run` adapter converts the judge's JSON text into normal Python values.
-You do not need to edit the adapter or escape JSON by hand. For a custom test,
-paste a JSON object into the `payload` field.
-
-Use **Run** for the three examples. Use **Submit** for all 25 tests.
-Open one hint if you need help. The reference solution is optional.
-
-The judge checks output behavior. It does not certify type annotations,
-inheritance, SQL use, or time complexity. Follow the requested technique to
-practice the skill. A code review can check those implementation choices.
-
-This is an original constructed exercise. It is not an official Capital One
-question. All data is fictional. Completing this course does not certify
-interview readiness.
-
-## References
-
-- [Official documentation 1](https://docs.python.org/3.11/library/stdtypes.html#dict.copy)
+Official documentation: [1](https://docs.python.org/3.11/library/stdtypes.html#dict.copy)

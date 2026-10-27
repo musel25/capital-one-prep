@@ -1,16 +1,49 @@
 # 02. Find the runtime validation boundary
 
-[Back to the course list](/?course=capital-one-codebase-practice)
+[Course list](/?course=capital-one-codebase-practice) · Level 1 · Easy · About 30 minutes
 
-**Level 1 · Easy · About 30 minutes**
+<details>
+<summary><strong>Lesson</strong> (open it first if the topic is new)</summary>
 
 **Before this problem:** Exercise 01. Read dictionary keys, return values, and rejection paths.
-
-## Learn first
 
 This program separates one-record validation from batch processing. `validate` returns an accepted `Entry` or `None`; `solve` records the result. The starter accepts a value that the amount rule excludes. Your objective is to locate the runtime check that must enforce the rule.
 
 TypedDict describes the expected keys and value types in a dictionary for a static type checker. It does not validate a decoded JSON value at runtime. A value from json.loads can still be a list, a number, or an object with missing fields. Put a validator at the boundary. Check the outer type before you read keys. Check each required field and then build a small accepted object. That object can have a TypedDict return annotation because the function has established its shape. Extra fields need a stated policy. This task ignores them and returns only the validated fields.
+
+</details>
+
+**Input:** `data` has:
+- `records`: a list of any JSON values.
+
+**Rules:** accept a record only if all of these are true:
+- It is an object.
+- It has `id`, a nonempty string.
+- It has `amount`, a nonnegative integer. Booleans and floats are not integers for this rule. Integers have absolute value at most 1,000,000.
+
+Extra keys do not cause a rejection.
+
+**Return** `{"valid": [...], "rejected": [...]}`
+- `valid`: one `{"id": string, "amount": int}` per accepted record, in input order. Keep only these two fields.
+- `rejected`: the zero-based positions of the rejected records, in input order.
+
+**Practice:** use `TypedDict` in your solution. The judge checks only the output.
+
+**What to fix:** The starter runs, but it has one intentional bug.
+
+- Repair the amount acceptance check in `validate`.
+- Keep the `Entry` model and the caller's `None` convention.
+- Do not coerce strings or floats.
+- Preserve zero, valid duplicate IDs, and any nonempty ID string.
+- Keep only the two accepted fields.
+- Do not add trimming or ID uniqueness rules.
+
+**Constraints:**
+
+- At most 100 input items. All input values follow the stated contract.
+
+<details>
+<summary><strong>Practice steps</strong> (trace, tests, AI review)</summary>
 
 ### Worked trace
 
@@ -19,16 +52,6 @@ Trace records `[7, {"id": "Q", "amount": 0, "debug": true}, {"id": "R", "amount"
 ### Read the existing code
 
 Inspect the `Entry` declaration, the return paths in `validate`, and the `enumerate` loop in `solve`. Find where the outer object shape is checked before `.get` is used. Find where a new accepted dictionary is built. Distinguish a rejected position from an accepted record's `id`.
-
-## Your task
-
-### Scoped repair
-
-Repair the amount acceptance check in `validate`. Keep the `Entry` model and the caller's `None` convention. Do not coerce strings or floats. Preserve zero, valid duplicate IDs, and any nonempty ID string. Keep only the two accepted fields. Do not add trimming or ID uniqueness rules.
-
-### Required behavior
-
-`data.records` is a list of arbitrary JSON values. Accept a record if it is an object with a nonempty string `id` and a nonnegative integer `amount`. Booleans and floats are not integers for this rule. Integers have absolute value at most 1,000,000. Ignore extra keys. Return `{"valid": [{"id": string, "amount": integer}], "rejected": [zero_based_positions]}`. The valid list contains only the two required fields, in input order. The rejected list also follows input order. Use TypedDict in your solution for practice; the output judge checks behavior only.
 
 ### Test before and after the change
 
@@ -52,111 +75,18 @@ Optional AI prompt. Write your own implementation and tests:
 
 A judge pass checks behavior. Your trace, test choice, and edit scope need your review. Do not use the pass mark as evidence of those skills.
 
+</details>
+
+---
+
+Select **Python** and edit `solve(data)`. Do not edit the `Solution.run` adapter: it converts the
+judge's JSON for you. For a custom test, paste a JSON object into `payload`. **Run** checks the
+three examples. **Submit** runs all 25 tests.
+
+The judge checks only the output. It does not check type annotations, inheritance, SQL use, or
+time complexity. This is an original practice exercise, not an official Capital One question. All
+data is fictional. Completing it does not prove interview readiness.
+
 [Full sequence and local pytest labs](https://github.com/musel25/capital-one-prep/blob/main/codebase_labs/README.md). Then open [exercise 03](/problems/cb-03-dataclass-list-isolation).
 
-## Examples
-
-### Example 1: validate fields at the boundary
-
-Input to `solve`:
-```json
-{
-  "records": [
-    {
-      "id": "A",
-      "amount": 0
-    },
-    {
-      "id": "B",
-      "amount": true
-    },
-    {
-      "id": "C"
-    }
-  ]
-}
-```
-Return:
-```json
-{
-  "valid": [
-    {
-      "id": "A",
-      "amount": 0
-    }
-  ],
-  "rejected": [
-    1,
-    2
-  ]
-}
-```
-
-### Example 2: drop extra fields
-
-Input to `solve`:
-```json
-{
-  "records": [
-    {
-      "id": "X",
-      "amount": 4,
-      "debug": true
-    }
-  ]
-}
-```
-Return:
-```json
-{
-  "valid": [
-    {
-      "id": "X",
-      "amount": 4
-    }
-  ],
-  "rejected": []
-}
-```
-
-### Example 3: empty list
-
-Input to `solve`:
-```json
-{
-  "records": []
-}
-```
-Return:
-```json
-{
-  "valid": [],
-  "rejected": []
-}
-```
-
-## Constraints
-
-- At most 100 input items. All input values follow the stated contract.
-
-## Work here
-
-Select **Python**. Edit `solve(data)` and its helper code. The supplied
-`Solution.run` adapter converts the judge's JSON text into normal Python values.
-You do not need to edit the adapter or escape JSON by hand. For a custom test,
-paste a JSON object into the `payload` field.
-
-Use **Run** for the three examples. Use **Submit** for all 25 tests.
-Open one hint if you need help. The reference solution is optional.
-
-The judge checks output behavior. It does not certify type annotations,
-inheritance, SQL use, or time complexity. Follow the requested technique to
-practice the skill. A code review can check those implementation choices.
-
-This is an original constructed exercise. It is not an official Capital One
-question. All data is fictional. Completing this course does not certify
-interview readiness.
-
-## References
-
-- [Official documentation 1](https://docs.python.org/3.11/library/typing.html#typing.TypedDict)
+Official documentation: [1](https://docs.python.org/3.11/library/typing.html#typing.TypedDict)

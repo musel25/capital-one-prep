@@ -1,166 +1,45 @@
 # 32. Fix a LEFT JOIN that loses customers
 
-[Back to the course list](/?course=capital-one-engineering-50)
+[Course list](/?course=capital-one-engineering-50) · Level 4 · Medium · About 30 minutes
 
-**Level 4 · Medium · About 30 minutes**
+<details>
+<summary><strong>Lesson</strong> (open it first if the topic is new)</summary>
 
 **Before this problem:** Problem 31; SELECT, WHERE, ordering, and SQL NULL.
 
-## Learn first
-
 A LEFT JOIN keeps each row from its left table even when no right-table row matches. Missing right-side values become NULL. A condition in ON controls which right rows can match. A condition in WHERE runs after the join and can remove those generated NULL rows. This difference often breaks reports that must include customers with no activity. The starter query has that defect. Move the payment qualification to the correct place while preserving the full output contract. A zero amount is a real value, not a missing value. Customers can also share a name, so joins must use their ids rather than display text.
 
-## Your task
+</details>
 
-Fix the intentionally faulty `report_rows(connection)` query. The scaffold creates `customers(id PRIMARY KEY, name)` and `payments(id PRIMARY KEY, customer_id nullable, amount, status)`. Input supplies the same named fields in customers and payments lists. For every customer, emit one row for each payment with matching customer_id and status paid. If no paid payment matches, emit exactly one row with payment_id and amount null. Ignore orphan payments, null customer_id values, and pending payments. Each output row has `{customer_id, name, payment_id, amount}`. Order by customer_id ascending, then payment_id ascending. Use a LEFT JOIN. The reference executes SQLite. The output judge cannot enforce SQL use or query structure.
+**Bug fix.** The `report_rows(connection)` query is intentionally faulty. Fix it.
 
-## Examples
+**Input:** `data` has the lists `customers` and `payments`. The scaffold loads them into:
+- `customers(id PRIMARY KEY, name)`
+- `payments(id PRIMARY KEY, customer_id nullable, amount, status)`
 
-### Example 1: keep customer with no payments
+**Rules**
+- For each customer, output one row per payment that has a matching `customer_id` and `status` paid.
+- A customer with no matching paid payment gets exactly one row, with `payment_id` and `amount` set to null.
+- Ignore orphan payments, payments with a null `customer_id`, and pending payments.
 
-Input to `solve`:
-```json
-{
-  "customers": [
-    {
-      "id": 1,
-      "name": "1"
-    },
-    {
-      "id": 2,
-      "name": "2"
-    }
-  ],
-  "payments": [
-    {
-      "id": 1,
-      "customer_id": 1,
-      "amount": 10,
-      "status": "paid"
-    }
-  ]
-}
-```
-Return:
-```json
-[
-  {
-    "customer_id": 1,
-    "name": "1",
-    "payment_id": 1,
-    "amount": 10
-  },
-  {
-    "customer_id": 2,
-    "name": "2",
-    "payment_id": null,
-    "amount": null
-  }
-]
-```
+**Return** a list of `{"customer_id": ..., "name": ..., "payment_id": ..., "amount": ...}`, ordered by `customer_id` ascending, then `payment_id` ascending.
 
-### Example 2: pending-only customer remains with nulls
+**Practice:** use a LEFT JOIN. The reference runs SQLite. The judge cannot check SQL use or query structure.
 
-Input to `solve`:
-```json
-{
-  "customers": [
-    {
-      "id": 1,
-      "name": "1"
-    }
-  ],
-  "payments": [
-    {
-      "id": 1,
-      "customer_id": 1,
-      "amount": 10,
-      "status": "pending"
-    }
-  ]
-}
-```
-Return:
-```json
-[
-  {
-    "customer_id": 1,
-    "name": "1",
-    "payment_id": null,
-    "amount": null
-  }
-]
-```
-
-### Example 3: one output row per paid payment
-
-Input to `solve`:
-```json
-{
-  "customers": [
-    {
-      "id": 1,
-      "name": "1"
-    }
-  ],
-  "payments": [
-    {
-      "id": 3,
-      "customer_id": 1,
-      "amount": 30,
-      "status": "paid"
-    },
-    {
-      "id": 2,
-      "customer_id": 1,
-      "amount": 20,
-      "status": "paid"
-    }
-  ]
-}
-```
-Return:
-```json
-[
-  {
-    "customer_id": 1,
-    "name": "1",
-    "payment_id": 2,
-    "amount": 20
-  },
-  {
-    "customer_id": 1,
-    "name": "1",
-    "payment_id": 3,
-    "amount": 30
-  }
-]
-```
-
-## Constraints
+**Constraints:**
 
 - 0–200 customers and 0–300 payments. Ids are positive integers at most 1000000 and unique within each table.
 - Payment customer_id is null or a positive integer at most 1000000. Foreign keys are intentionally not enforced.
 - status is paid or pending. amount is an integer in [-1000000,1000000]. Names have 1–50 printable ASCII characters.
 
-## Work here
+---
 
-Select **Python**. Edit `solve(data)` and its helper code. The supplied
-`Solution.run` adapter converts the judge's JSON text into normal Python values.
-You do not need to edit the adapter or escape JSON by hand. For a custom test,
-paste a JSON object into the `payload` field.
+Select **Python** and edit `solve(data)`. Do not edit the `Solution.run` adapter: it converts the
+judge's JSON for you. For a custom test, paste a JSON object into `payload`. **Run** checks the
+three examples. **Submit** runs all 32 tests.
 
-Use **Run** for the three examples. Use **Submit** for all 32 tests.
-Open one hint if you need help. The reference solution is optional.
+The judge checks only the output. It does not check type annotations, inheritance, SQL use, or
+time complexity. This is an original practice exercise, not an official Capital One question. All
+data is fictional. Completing it does not prove interview readiness.
 
-The judge checks output behavior. It does not certify type annotations,
-inheritance, SQL use, or time complexity. Follow the requested technique to
-practice the skill. A code review can check those implementation choices.
-
-This is an original constructed exercise. It is not an official Capital One
-question. All data is fictional. Completing this course does not certify
-interview readiness.
-
-## References
-
-- [Official documentation 1](https://www.sqlite.org/lang_select.html#whereclause)
+Official documentation: [1](https://www.sqlite.org/lang_select.html#whereclause)

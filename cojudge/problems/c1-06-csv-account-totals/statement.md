@@ -1,102 +1,43 @@
 # 06. Read quoted CSV records
 
-[Back to the course list](/?course=capital-one-engineering-50)
+[Course list](/?course=capital-one-engineering-50) · Level 1 · Easy · About 20 minutes
 
-**Level 1 · Easy · About 20 minutes**
+<details>
+<summary><strong>Lesson</strong> (open it first if the topic is new)</summary>
 
 **Before this problem:** Lists, dictionaries, and functions.
 
-## Learn first
-
 CSV fields can contain commas, quotes, and line breaks. Splitting text at commas or splitting it into lines before parsing destroys those fields. The csv module reads records according to the quoting rules. A quoted double quote is written as two double quotes. Open a text stream with newline handling that lets the CSV reader see the original line endings. The reader returns strings, so convert a numeric column only after parsing the record. Keep aggregation separate from parsing. A dictionary preserves the first insertion order of account IDs, which gives a simple way to return totals in first-seen order.
 
-## Your task
+</details>
 
-`data.csv` is valid comma-separated CSV text. Its first record is exactly the two fields `account,amount`. Each later record has exactly two fields. `account` is a string of at most 1,000 characters, including an empty string, comma, quote, or line break. `amount` is an optionally negative ASCII integer string with absolute value at most 1,000,000 and at most 20 characters, including any sign and leading zeros. Standard double-quote escaping applies. Record separators are LF or CRLF. There are no blank records. The last record may omit its separator. Return a list of `{"account": string, "total": integer}`. Sum each account’s amounts. Keep accounts in first-seen order.
+**Input:** `data` has:
+- `csv`: valid CSV text.
+  - The first record (the header) is exactly `account,amount`.
+  - Every later record has exactly two fields.
+  - `account` is a string of at most 1,000 characters. It can be empty or contain a comma, a quote, or a line break.
+  - `amount` is an ASCII integer string, optionally negative, with absolute value at most 1,000,000. It has at most 20 characters, including any sign and leading zeros.
+  - Standard double-quote escaping applies: `""` inside a quoted field is one `"`.
+  - Records are separated by LF or CRLF. There are no blank records. The last record may have no separator.
 
-## Examples
+**Return** a list of `{"account": string, "total": int}`
+- `total` is the sum of that account's amounts.
+- Accounts are in the order they first appear.
 
-### Example 1: quoted comma and repeated account
-
-Input to `solve`:
-```json
-{
-  "csv": "account,amount\n\"Acme, West\",10\nBeta,3\n\"Acme, West\",-4\n"
-}
-```
-Return:
-```json
-[
-  {
-    "account": "Acme, West",
-    "total": 6
-  },
-  {
-    "account": "Beta",
-    "total": 3
-  }
-]
-```
-
-### Example 2: quote and embedded line break
-
-Input to `solve`:
-```json
-{
-  "csv": "account,amount\n\"a\"\"b\",7\n\"line\nbreak\",2\n"
-}
-```
-Return:
-```json
-[
-  {
-    "account": "a\"b",
-    "total": 7
-  },
-  {
-    "account": "line\nbreak",
-    "total": 2
-  }
-]
-```
-
-### Example 3: header only
-
-Input to `solve`:
-```json
-{
-  "csv": "account,amount\n"
-}
-```
-Return:
-```json
-[]
-```
-
-## Constraints
+**Constraints:**
 
 - At most 100 data records after the header.
 - Each decoded account field has at most 1,000 characters. Each amount field has at most 20 characters.
 - The complete CSV text has at most 200,000 characters. All text follows the stated valid CSV format.
 
-## Work here
+---
 
-Select **Python**. Edit `solve(data)` and its helper code. The supplied
-`Solution.run` adapter converts the judge's JSON text into normal Python values.
-You do not need to edit the adapter or escape JSON by hand. For a custom test,
-paste a JSON object into the `payload` field.
+Select **Python** and edit `solve(data)`. Do not edit the `Solution.run` adapter: it converts the
+judge's JSON for you. For a custom test, paste a JSON object into `payload`. **Run** checks the
+three examples. **Submit** runs all 27 tests.
 
-Use **Run** for the three examples. Use **Submit** for all 27 tests.
-Open one hint if you need help. The reference solution is optional.
+The judge checks only the output. It does not check type annotations, inheritance, SQL use, or
+time complexity. This is an original practice exercise, not an official Capital One question. All
+data is fictional. Completing it does not prove interview readiness.
 
-The judge checks output behavior. It does not certify type annotations,
-inheritance, SQL use, or time complexity. Follow the requested technique to
-practice the skill. A code review can check those implementation choices.
-
-This is an original constructed exercise. It is not an official Capital One
-question. All data is fictional. Completing this course does not certify
-interview readiness.
-
-## References
-
-- [Official documentation 1](https://docs.python.org/3.11/library/csv.html)
+Official documentation: [1](https://docs.python.org/3.11/library/csv.html)

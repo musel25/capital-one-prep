@@ -13,12 +13,19 @@ SPEC = {'number': 18,
           'unintended change. Do not replace the stored payload when a conflict arrives. The first '
           'event remains the reference for later comparisons. This task uses a single signed delta '
           'as the payload, so equality has one clear meaning.',
- 'task': '`data.balance` is an integer starting total. `data.events` contains objects with string '
-         '`id` and integer `delta`. Signed totals and deltas are permitted. On the first '
-         'occurrence of an ID, add its delta and record status `applied`. For an existing ID, '
-         'record `duplicate` if delta equals its first delta; otherwise record `conflict`. Neither '
-         'duplicate nor conflict changes the total or stored first delta. Return `{"status": '
-         '[status_strings], "balance": final_integer}` in event order.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `balance`: the integer starting total.\n'
+    '- `events`: a list of `{"id": string, "delta": int}`.\n'
+    '\n'
+    'Totals and deltas can be negative.\n'
+    '\n'
+    '**Rules:** for each event, in order:\n'
+    '- First time an ID appears: add its `delta` to the total. Status `applied`.\n'
+    '- ID seen before, with the same `delta` as its first event: status `duplicate`.\n'
+    '- ID seen before, with a different `delta`: status `conflict`.\n'
+    '- `duplicate` and `conflict` do not change the total or the stored first delta.\n'
+    '\n'
+    '**Return** `{"status": [string], "balance": int}`: the statuses in event order, and the final total.'),
  'constraints': ['At most 100 events. Initial total and deltas have absolute value at most '
                  '1,000,000,000,000.'],
  'hints': ['Remember the first delta for each ID.',

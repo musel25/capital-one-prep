@@ -1,142 +1,46 @@
 # 36. Repair an atomic SQL transfer
 
-[Back to the course list](/?course=capital-one-engineering-50)
+[Course list](/?course=capital-one-engineering-50) · Level 4 · Medium · About 30 minutes
 
-**Level 4 · Medium · About 30 minutes**
+<details>
+<summary><strong>Lesson</strong> (open it first if the topic is new)</summary>
 
 **Before this problem:** SQL UPDATE, parameterized statements, and Python exceptions.
 
-## Learn first
-
 A transfer changes two balances. Both changes must commit, or neither change must remain. A transaction groups these writes into one unit. Commit only after the debit and credit succeed. Roll back if an exception occurs between them. A conditional debit can check the available balance and subtract the amount in one statement. Its affected-row count tells you whether the debit occurred. Setup writes also need a commit before you start an explicit transaction. This exercise injects a failure after the debit. The starter catches that failure but commits the partial transfer. Repair that transaction boundary and preserve earlier successful transfers.
 
-## Your task
+</details>
 
-Repair the faulty `solve(data)` implementation. `balances` maps account IDs to initial integer balances. `transfers` is an ordered list of objects with `from`, `to`, positive `amount`, and Boolean `fail`. Both IDs exist and differ. First reject a transfer that lacks funds with `insufficient`. Otherwise debit the source. If `fail` is true, roll back and return `failed`. Otherwise credit the destination, commit, and return `ok`. Each transfer has its own transaction. Return `{results: [...], balances: {...}}` with one status per transfer and final balances. Use the supplied in-memory SQLite setup. The output judge cannot verify SQL use.
+**Bug fix.** Repair the faulty `solve(data)` implementation.
 
-## Examples
+**Input:** `data` has:
+- `balances`: maps account IDs to initial integer balances.
+- `transfers`: an ordered list of `{"from": ..., "to": ..., "amount": ..., "fail": ...}`. `amount` is positive and `fail` is a boolean. Both IDs exist and differ.
 
-### Example 1: transfer commits both entries
+**Rules:** each transfer has its own transaction.
+1. If the source has less than `amount` → `insufficient`.
+2. Otherwise debit the source.
+3. If `fail` is true → roll back and return `failed`.
+4. Otherwise credit the destination, commit, and return `ok`.
 
-Input to `solve`:
-```json
-{
-  "balances": {
-    "a": 10,
-    "b": 0
-  },
-  "transfers": [
-    {
-      "from": "a",
-      "to": "b",
-      "amount": 4,
-      "fail": false
-    }
-  ]
-}
-```
-Return:
-```json
-{
-  "results": [
-    "ok"
-  ],
-  "balances": {
-    "a": 6,
-    "b": 4
-  }
-}
-```
+**Return** `{"results": [...], "balances": {...}}`: one status per transfer, and the final balances.
 
-### Example 2: failure restores debit
+Use the supplied in-memory SQLite setup. The judge cannot check SQL use.
 
-Input to `solve`:
-```json
-{
-  "balances": {
-    "a": 10,
-    "b": 0
-  },
-  "transfers": [
-    {
-      "from": "a",
-      "to": "b",
-      "amount": 4,
-      "fail": true
-    }
-  ]
-}
-```
-Return:
-```json
-{
-  "results": [
-    "failed"
-  ],
-  "balances": {
-    "a": 10,
-    "b": 0
-  }
-}
-```
-
-### Example 3: insufficient funds change neither balance
-
-Input to `solve`:
-```json
-{
-  "balances": {
-    "a": 3,
-    "b": 2
-  },
-  "transfers": [
-    {
-      "from": "a",
-      "to": "b",
-      "amount": 4,
-      "fail": false
-    }
-  ]
-}
-```
-Return:
-```json
-{
-  "results": [
-    "insufficient"
-  ],
-  "balances": {
-    "a": 3,
-    "b": 2
-  }
-}
-```
-
-## Constraints
+**Constraints:**
 
 - 0–100 accounts and 0–200 transfers.
 - IDs are nonempty ASCII strings. Initial balances are 0–1000000; amounts are 1–1000000.
 - Failures are injected exceptions, not actual concurrent operations.
 
-## Work here
+---
 
-Select **Python**. Edit `solve(data)` and its helper code. The supplied
-`Solution.run` adapter converts the judge's JSON text into normal Python values.
-You do not need to edit the adapter or escape JSON by hand. For a custom test,
-paste a JSON object into the `payload` field.
+Select **Python** and edit `solve(data)`. Do not edit the `Solution.run` adapter: it converts the
+judge's JSON for you. For a custom test, paste a JSON object into `payload`. **Run** checks the
+three examples. **Submit** runs all 36 tests.
 
-Use **Run** for the three examples. Use **Submit** for all 36 tests.
-Open one hint if you need help. The reference solution is optional.
+The judge checks only the output. It does not check type annotations, inheritance, SQL use, or
+time complexity. This is an original practice exercise, not an official Capital One question. All
+data is fictional. Completing it does not prove interview readiness.
 
-The judge checks output behavior. It does not certify type annotations,
-inheritance, SQL use, or time complexity. Follow the requested technique to
-practice the skill. A code review can check those implementation choices.
-
-This is an original constructed exercise. It is not an official Capital One
-question. All data is fictional. Completing this course does not certify
-interview readiness.
-
-## References
-
-- [Official documentation 1](https://docs.python.org/3.11/library/sqlite3.html)
-- [Official documentation 2](https://www.sqlite.org/lang_transaction.html)
+Official documentation: [1](https://docs.python.org/3.11/library/sqlite3.html), [2](https://www.sqlite.org/lang_transaction.html)

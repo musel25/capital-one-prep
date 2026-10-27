@@ -13,12 +13,22 @@ SPEC = {'number': 10,
           'list is not globally sorted. If you need a final ordered report, sort a copy or drain a '
           'separate heap. Empty pops need an explicit result. This task uses null so the result '
           'list still contains one entry for each requested pop.',
- 'task': '`data.actions` is a list of operations. `{"op":"add","id":string,"priority":integer}` '
-         'inserts a job. Priority is from -100 through 100; smaller values run first. '
-         '`{"op":"pop"}` removes the next job and records its ID, or null if the queue is empty. '
-         'Equal priorities use insertion order. IDs may repeat. Return `{"popped": [IDs_or_null], '
-         '"pending": [IDs_in_future_pop_order]}`. Add operations do not add an entry to `popped`. '
-         'Use heapq for practice; the judge checks results.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `actions`: a list of operations:\n'
+    '  - `{"op": "add", "id": string, "priority": int}` adds a job. Priority is from -100 to 100. A smaller value runs first.\n'
+    '  - `{"op": "pop"}` removes the next job.\n'
+    '\n'
+    '**Rules**\n'
+    '- Jobs with equal priority run in insertion order.\n'
+    '- IDs can repeat.\n'
+    '- A `pop` records the ID of the removed job, or `null` if the queue is empty.\n'
+    '- An `add` records nothing.\n'
+    '\n'
+    '**Return** `{"popped": [...], "pending": [...]}`\n'
+    '- `popped`: the result of each `pop`, in order.\n'
+    '- `pending`: the IDs still in the queue, in the order they would be popped.\n'
+    '\n'
+    '**Practice:** use `heapq`. The judge checks only the output.'),
  'constraints': ['At most 100 input items. All input values follow the stated contract.'],
  'hints': ['Use a tuple of priority, insertion sequence, and ID.',
            'Do not return the internal heap array as the pending order.'],

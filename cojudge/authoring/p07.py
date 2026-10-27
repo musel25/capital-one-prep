@@ -13,13 +13,21 @@ SPEC = {'number': 7,
           'build a small accepted object. That object can have a TypedDict return annotation '
           'because the function has established its shape. Extra fields need a stated policy. This '
           'task ignores them and returns only the validated fields.',
- 'task': '`data.records` is a list of arbitrary JSON values. Accept a record if it is an object '
-         'with a nonempty string `id` and a nonnegative integer `amount`. Booleans and floats are '
-         'not integers for this rule. Integers have absolute value at most 1,000,000. Ignore extra '
-         'keys. Return `{"valid": [{"id": string, "amount": integer}], "rejected": '
-         '[zero_based_positions]}`. The valid list contains only the two required fields, in input '
-         'order. The rejected list also follows input order. Use TypedDict in your solution for '
-         'practice; the output judge checks behavior only.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `records`: a list of any JSON values.\n'
+    '\n'
+    '**Rules:** accept a record only if all of these are true:\n'
+    '- It is an object.\n'
+    '- It has `id`, a nonempty string.\n'
+    '- It has `amount`, a nonnegative integer. Booleans and floats are not integers for this rule. Integers have absolute value at most 1,000,000.\n'
+    '\n'
+    'Extra keys do not cause a rejection.\n'
+    '\n'
+    '**Return** `{"valid": [...], "rejected": [...]}`\n'
+    '- `valid`: one `{"id": string, "amount": int}` per accepted record, in input order. Keep only these two fields.\n'
+    '- `rejected`: the zero-based positions of the rejected records, in input order.\n'
+    '\n'
+    '**Practice:** use `TypedDict` in your solution. The judge checks only the output.'),
  'constraints': ['At most 100 input items. All input values follow the stated contract.'],
  'hints': ['TypedDict does not replace runtime checks.',
            'Return a newly constructed Entry only after all checks pass.'],

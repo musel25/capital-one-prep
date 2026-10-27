@@ -14,14 +14,18 @@ SPEC = {'number': 6,
           'after parsing the record. Keep aggregation separate from parsing. A dictionary '
           'preserves the first insertion order of account IDs, which gives a simple way to return '
           'totals in first-seen order.',
- 'task': '`data.csv` is valid comma-separated CSV text. Its first record is exactly the two fields '
-         '`account,amount`. Each later record has exactly two fields. `account` is a string of at '
-         'most 1,000 characters, including an empty string, comma, quote, or line break. `amount` '
-         'is an optionally negative ASCII integer string with absolute value at most 1,000,000 and '
-         'at most 20 characters, including any sign and leading zeros. Standard double-quote '
-         'escaping applies. Record separators are LF or CRLF. There are no blank records. The last '
-         'record may omit its separator. Return a list of `{"account": string, "total": integer}`. '
-         'Sum each account’s amounts. Keep accounts in first-seen order.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `csv`: valid CSV text.\n'
+    '  - The first record (the header) is exactly `account,amount`.\n'
+    '  - Every later record has exactly two fields.\n'
+    '  - `account` is a string of at most 1,000 characters. It can be empty or contain a comma, a quote, or a line break.\n'
+    '  - `amount` is an ASCII integer string, optionally negative, with absolute value at most 1,000,000. It has at most 20 characters, including any sign and leading zeros.\n'
+    '  - Standard double-quote escaping applies: `""` inside a quoted field is one `"`.\n'
+    '  - Records are separated by LF or CRLF. There are no blank records. The last record may have no separator.\n'
+    '\n'
+    '**Return** a list of `{"account": string, "total": int}`\n'
+    "- `total` is the sum of that account's amounts.\n"
+    '- Accounts are in the order they first appear.'),
  'constraints': ['At most 100 data records after the header.',
                  'Each decoded account field has at most 1,000 characters. Each amount field has '
                  'at most 20 characters.',

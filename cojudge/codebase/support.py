@@ -1,6 +1,7 @@
 """Build guided repairs from independently verified behavioral contracts."""
 import copy
 import json
+import re
 
 from cojudge.authoring.support import ROOT, load_specs, slug
 
@@ -50,29 +51,34 @@ def load_codebase_specs(numbers=None):
                     prerequisites=PREREQUISITES[number - 1],
                     starter="# This existing program has one intentional behavior defect.\n"
                             "# Read the task. Write a regression case before changing it.\n" + starter)
-        spec["learn"] = (lesson["orientation"] + "\n\n" + source["learn"]
-                         + "\n\n### Worked trace\n\n" + lesson["trace"]
-                         + "\n\n### Read the existing code\n\n" + lesson["read"])
-        spec["task"] = ("### Scoped repair\n\n" + lesson["scope"]
-                        + "\n\n### Required behavior\n\n" + source["task"]
-                        + "\n\n### Test before and after the change\n\n" + lesson["test_plan"]
-                        + "\n\n### Check an AI claim\n\nThe following claim is a constructed review example. "
-                        "It may be correct or incorrect. Check it against the code and contract.\n\n> "
-                        + lesson["ai_claim"].replace("\n", "\n> ")
-                        + "\n\nOptional AI prompt. Write your own implementation and tests:\n\n> "
-                        + lesson["ai_prompt"].replace("\n", "\n> ")
-                        + "\n\n### Technical completion checks\n\n"
-                        + "\n".join("- " + item for item in lesson["done"])
-                        + "\n\nA judge pass checks behavior. Your trace, test choice, and edit scope "
-                        "need your review. Do not use the pass mark as evidence of those skills.\n\n"
-                        + f"[Full sequence and local pytest labs]({GUIDE_URL}). ")
+        spec["learn"] = lesson["orientation"] + "\n\n" + source["learn"]
+        # A bug-fix source opens with its own defect note; show it once, under "What to fix".
+        lead = "The starter runs, but it has one intentional bug."
+        if source["task"].startswith("**Bug fix.** "):
+            note, spec["task"] = source["task"].split("\n\n", 1)
+            lead += " " + note.removeprefix("**Bug fix.** ")
+        spec["fix"] = (lead + "\n\n"
+                       + "\n".join("- " + rule for rule in re.split(r"(?<=\.)\s+(?=[A-Z])", lesson["scope"])))
+        spec["practice"] = ("### Worked trace\n\n" + lesson["trace"]
+                            + "\n\n### Read the existing code\n\n" + lesson["read"]
+                            + "\n\n### Test before and after the change\n\n" + lesson["test_plan"]
+                            + "\n\n### Check an AI claim\n\nThe following claim is a constructed review example. "
+                            "It may be correct or incorrect. Check it against the code and contract.\n\n> "
+                            + lesson["ai_claim"].replace("\n", "\n> ")
+                            + "\n\nOptional AI prompt. Write your own implementation and tests:\n\n> "
+                            + lesson["ai_prompt"].replace("\n", "\n> ")
+                            + "\n\n### Technical completion checks\n\n"
+                            + "\n".join("- " + item for item in lesson["done"])
+                            + "\n\nA judge pass checks behavior. Your trace, test choice, and edit scope "
+                            "need your review. Do not use the pass mark as evidence of those skills.")
+        spec["next"] = f"[Full sequence and local pytest labs]({GUIDE_URL}). "
         if number % 4 == 0:
             first_lab = level * 2 - 1
-            spec["task"] += f"Next, complete lab{first_lab:02d} and lab{first_lab+1:02d} from the guide."
+            spec["next"] += f"Next, complete lab{first_lab:02d} and lab{first_lab+1:02d} from the guide."
         else:
             next_source = originals[SOURCE_NUMBERS[number]]
             next_id = slug({**next_source, "number": number + 1, "prefix": "cb"})
-            spec["task"] += f"Then open [exercise {number+1:02d}](/problems/{next_id})."
+            spec["next"] += f"Then open [exercise {number+1:02d}](/problems/{next_id})."
         spec["approach"] += ("\n\n## Review of the AI claim\n\n" + lesson["ai_answer"]
                              + f"\n\n## Provenance\n\nThis guided repair reuses the verified behavior contract "
                              f"and independent oracle from Engineering 50 problem {source['number']:02d}. "

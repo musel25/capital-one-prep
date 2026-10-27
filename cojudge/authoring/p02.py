@@ -14,12 +14,16 @@ SPEC = {'number': 2,
           'forms that an API might forbid, such as an exponent. This task permits one or two '
           'fractional digits and rejects every other text format. Once parsed, integer cents '
           'support exact addition and comparison.',
- 'task': '`data.amounts` is a list of JSON values. A valid amount is a string that fully matches '
-         'ASCII `-?[0-9]{1,12}(?:\\.[0-9]{1,2})?`. It has at most 12 digits before the decimal '
-         'point. Leading zeros and negative zero are valid. Spaces, a leading plus, exponent '
-         'notation, Unicode digits, and all non-string values are invalid. Return `{"cents": '
-         '[...]}` in input order. Each valid amount becomes exact integer cents. Each invalid '
-         'amount becomes null. Inputs have at most 30 characters.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `amounts`: a list of JSON values. Strings have at most 30 characters.\n'
+    '\n'
+    '**Rules**\n'
+    '- A valid amount is a string that fully matches the ASCII pattern `-?[0-9]{1,12}(?:\\.[0-9]{1,2})?`: an optional `-`, 1–12 digits, then optionally `.` and 1–2 digits.\n'
+    '- Leading zeros and negative zero are valid: `"007"` → `700`, `"-0"` → `0`.\n'
+    '- Invalid: spaces, a leading `+`, exponent notation, Unicode digits, and every non-string value.\n'
+    '- Convert each valid amount to exact integer cents: `"1.5"` → `150`, `"-0.05"` → `-5`.\n'
+    '\n'
+    '**Return** `{"cents": [...]}` with one entry per amount, in input order: the integer cents for a valid amount, or `null` for an invalid one.'),
  'constraints': ['At most 100 input items. All input values follow the stated contract.'],
  'hints': ['Validate text before calling Decimal.',
            'Multiply the Decimal value before converting it to int.'],

@@ -13,11 +13,16 @@ SPEC = {'number': 1,
           'condition. Do not convert strings or round floats unless the contract requires it. Keep '
           'rejected positions so a caller can identify each bad field. Zero is a valid amount in '
           'this task. An empty batch has a total of zero.',
- 'task': '`data` has `values`, a list of JSON values. Accept a value only when its exact Python '
-         'type is `int` and it is at least zero. JSON integers have absolute value at most '
-         '1,000,000,000. Reject booleans, floats, strings, null, lists, objects, and negative '
-         'integers. Return `{"total": sum_of_accepted_values, "rejected": '
-         '[zero_based_positions]}`. Keep rejected positions in input order.',
+ 'task': ('**Input:** `data` has:\n'
+    '- `values`: a list of JSON values. Integers have absolute value at most 1,000,000,000.\n'
+    '\n'
+    '**Rules**\n'
+    '- Accept a value only if its exact Python type is `int` and it is at least 0.\n'
+    '- Reject everything else: booleans, floats, strings, null, lists, objects, and negative integers.\n'
+    '\n'
+    '**Return** `{"total": int, "rejected": [int]}`\n'
+    '- `total`: the sum of the accepted values.\n'
+    '- `rejected`: the zero-based positions of the rejected values, in input order.'),
  'constraints': ['At most 100 input items. All input values follow the stated contract.'],
  'hints': ['Check the exact type before the range.', 'Use enumerate to record rejected positions.'],
  'starter': 'def solve(data: dict) -> dict:\n    raise NotImplementedError\n',

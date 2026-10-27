@@ -14,14 +14,19 @@ SPEC = {'number': 14,
           'rule. Avoid copying the whole withdrawal method just to change one calculation. Both '
           'amount and fee must fit in the balance. A rejected operation must charge neither of '
           'them.',
- 'task': '`data` contains `kind` (`standard` or `premium`), nonnegative integer `balance`, '
-         'nonnegative integer `fee`, nonnegative integer `threshold`, and a list of positive '
-         'integer `withdrawals`. All amounts use cents. Standard accounts charge `fee` on every '
-         'successful withdrawal. Premium accounts charge zero fee when the requested withdrawal is '
-         'at least `threshold`; otherwise they charge `fee`. A withdrawal succeeds when amount '
-         'plus applicable fee is at most the current balance. Failure changes nothing. Return '
-         '`{"accepted": [booleans], "balance": final_integer}`. Practice inheritance, super(), and '
-         'a fee-method override. The judge checks behavior, not class structure.',
+ 'task': ('**Input:** `data` has (all amounts in cents):\n'
+    '- `kind`: `"standard"` or `"premium"`.\n'
+    '- `balance`, `fee`, `threshold`: nonnegative integers.\n'
+    '- `withdrawals`: a list of positive integers.\n'
+    '\n'
+    '**Rules:** for each withdrawal amount, in order:\n'
+    '- The fee: a standard account charges `fee`. A premium account charges 0 when the amount is at least `threshold`, otherwise `fee`.\n'
+    '- The withdrawal succeeds when amount + fee is at most the current balance. Subtract amount + fee.\n'
+    '- A failed withdrawal changes nothing.\n'
+    '\n'
+    '**Return** `{"accepted": [bool], "balance": int}`: one boolean per withdrawal, and the final balance.\n'
+    '\n'
+    '**Practice:** use inheritance, `super()`, and a fee method override. The judge checks only the output.'),
  'constraints': ['At most 100 withdrawals. Numeric input values are at most 1,000,000,000,000.'],
  'hints': ['Let the base withdrawal method call a fee method.',
            'Initialize base fields with super(), then store the premium threshold.'],

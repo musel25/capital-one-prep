@@ -39,7 +39,17 @@ rng=random.Random(38)
 SPEC={"number":38,"slug":"sql-idempotency-key","title":"Commit a credit and its idempotency key","difficulty":"Medium","time":30,
 "prerequisites":"Transactions, UNIQUE constraints, and request retries.",
 "learn":"A retry can arrive after the first request has already committed. An idempotency key identifies that logical request. Store the key and its payload in a table with a uniqueness constraint. A repeat with the same payload returns a replay result. A repeat with a different payload is a conflict. The key and the business write must share one transaction. Otherwise a crash can record the key without applying the credit, or apply the credit without recording the key. A failed transaction leaves the key available for a later attempt. This task models ordered requests and an injected failure immediately before commit.",
-"task":"`balance` is the initial account balance. `credits` contains `{key, amount, fail}` objects. For a committed key, return `replay` for the same amount or `conflict` for a different amount, with no change. For a new key, atomically insert the key and add its amount. If `fail` is true, roll back both writes and return `failed`; otherwise commit and return `ok`. Return `{results: [...], balance: integer, keys: [...]}`. Sort committed keys in ASCII order. Key checks take precedence over injected failures. Use the supplied SQLite tables. SQL use cannot be certified by the output judge.",
+"task":('**Input:** `data` has:\n'
+    '- `balance`: the initial account balance.\n'
+    '- `credits`: a list of `{"key": ..., "amount": ..., "fail": ...}`.\n'
+    '\n'
+    '**Rules:** for each credit, in order:\n'
+    '- **Key already committed:** return `replay` if the amount is the same, or `conflict` if it is different. Nothing changes. This check comes before `fail`.\n'
+    '- **New key:** in one transaction, insert the key and add the amount. If `fail` is true, roll back both writes and return `failed`. Otherwise commit and return `ok`.\n'
+    '\n'
+    '**Return** `{"results": [...], "balance": int, "keys": [...]}`. `keys` lists the committed keys in ASCII order.\n'
+    '\n'
+    'Use the supplied SQLite tables. The judge cannot check SQL use.'),
 "constraints":["0–200 credits. Balance is 0–1000000; amounts are 1–1000000.","Keys are nonempty ASCII strings of length at most 30. fail is Boolean.","This ordered trace does not test actual parallel transactions."],
 "hints":["A failed operation must not reserve its key.","Keep the INSERT and balance UPDATE inside the same transaction context."],
 "starter":REFERENCE[:REFERENCE.index('    results = []')]+'    # TODO: process credits atomically and return results/balance/keys.\n    raise NotImplementedError\n',"reference":REFERENCE,

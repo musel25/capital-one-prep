@@ -1,6 +1,6 @@
 {
   "title": "Capital One Engineering 50",
-  "description": "50 original Python problems for technical practice beyond basic LeetCode. Start at 01. Work through one level at a time: Python data, objects and state, APIs, SQL, then system components. Read the short lesson before coding. Select Python in the editor. API and distributed-system tasks use deterministic simulations; SQL references use real SQLite. Optional reference solutions are available. This is independent training, not an official question bank or a readiness score.",
+  "description": "50 original Python problems for technical practice beyond basic LeetCode. Start at 01. Work through one level at a time: Python data, objects and state, APIs, SQL, then system components. Open the collapsed lesson first if the topic is new. Select Python in the editor. API and distributed-system tasks use deterministic simulations; SQL references use real SQLite. Optional reference solutions are available. This is independent training, not an official question bank or a readiness score.",
   "category-order": [
     "01-python-data-and-libraries",
     "02-objects-and-state",

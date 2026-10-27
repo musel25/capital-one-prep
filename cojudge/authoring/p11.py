@@ -14,13 +14,21 @@ SPEC = {'number': 11,
           'but a factory can hide the same defect. This task supplies a runnable faulty starter. '
           'Repair the shared state while keeping the dataclass model. The result for every box '
           'must depend only on actions addressed to that box.',
- 'task': 'Bug-fix task. `data.names` contains distinct strings in box order. `data.actions` '
-         'contains objects with valid zero-based `box` index and string `item`. Create one empty '
-         'box per name, then append each item to its selected box. Return a list of `{"name": '
-         'string, "items": [strings]}` in names order. Preserve item order and duplicates. The '
-         'supplied dataclass starter has a factory that returns a shared list. Fix that defect. '
-         'Empty names implies empty actions. The judge checks isolation behavior, not dataclass '
-         'syntax.',
+ 'task': ('**Bug fix.** The dataclass in the starter has a field factory that returns one shared list. Fix that defect.\n'
+    '\n'
+    '**Input:** `data` has:\n'
+    '- `names`: distinct strings, one per box, in box order.\n'
+    '- `actions`: a list of `{"box": int, "item": string}`. `box` is a valid zero-based box index.\n'
+    '\n'
+    'If `names` is empty, `actions` is empty too.\n'
+    '\n'
+    '**Rules**\n'
+    '- Create one empty box per name.\n'
+    '- For each action, in order, append `item` to the selected box.\n'
+    '\n'
+    '**Return** a list of `{"name": string, "items": [string]}`, one per box, in `names` order. Keep item order and duplicates.\n'
+    '\n'
+    'The judge checks that the boxes are isolated. It does not check the dataclass syntax.'),
  'constraints': ['At most 100 input items. All input values follow the stated contract.'],
  'hints': ['A default factory runs once per new instance.',
            'Check whether the factory creates a list or returns an existing list.'],

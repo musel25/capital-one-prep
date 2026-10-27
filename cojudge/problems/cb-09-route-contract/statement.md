@@ -1,16 +1,60 @@
 # 09. Trace route, method, and record dispatch
 
-[Back to the course list](/?course=capital-one-codebase-practice)
+[Course list](/?course=capital-one-codebase-practice) · Level 3 · Easy · About 35 minutes
 
-**Level 3 · Easy · About 35 minutes**
+<details>
+<summary><strong>Lesson</strong> (open it first if the topic is new)</summary>
 
 **Before this problem:** Exercises 01–08 and local labs 01–04. The lesson introduces HTTP route decisions.
-
-## Learn first
 
 This is an API simulation inside `solve`, not a running web server. A request passes through route recognition, method checks, and record lookup. The starter returns the wrong result for a successful operation. Your objective is to locate the response branch while preserving dispatch order.
 
 An API contract defines the response for each route and method. A route selects a resource shape. A method selects an operation on that shape. Keep these decisions separate from the search for one stored record. A missing route and an unsupported method have different meanings. A successful delete can return no representation. Response bodies must also be snapshots: a later write must not change an earlier response. This exercise uses familiar HTTP status codes but defines a small explicit routing policy. It is a deterministic simulation. It does not start a server, parse a URL, or implement every HTTP rule.
+
+</details>
+
+**Input:** `data` has:
+- `items`: a list of `{"id": int, "name": string}`. IDs are unique positive integers.
+- `requests`: a list of `{"path": string, "method": string}`. Methods are uppercase.
+
+Process the requests in order. **Return** a list with one response object per request.
+
+**Routes:** paths must match exactly. There is no query parsing and no slash normalization.
+
+| Route | Allowed methods |
+| --- | --- |
+| `/health` | GET |
+| `/items` | GET |
+| `/items/N` | GET, DELETE |
+
+`N` matches only a canonical positive decimal number. For example, `/items/01`, `/items/0`, `/items/+1`, and `/items/1/` are unknown routes.
+
+**Responses**
+- `GET /health` → `{"status": 200, "body": {"status": "ok"}}`
+- `GET /items` → `{"status": 200, "body": [all items, sorted by id]}`
+- `GET /items/N` → `{"status": 200, "body": item}`
+- `DELETE /items/N` → remove the item and return `{"status": 204, "body": null}`
+- Item `N` does not exist → `{"status": 404, "body": {"error": "not_found"}}`
+- Unknown route → the same 404 response.
+- Known route, method not allowed → `{"status": 405, "body": {"error": "method_not_allowed"}, "allow": [...]}`. `allow` lists the allowed methods in the table order, for example `["GET", "DELETE"]`.
+
+On a known route, check the method before you check that the item exists. Only 405 responses have an `allow` field.
+
+**What to fix:** The starter runs, but it has one intentional bug.
+
+- Repair the successful deletion response.
+- Preserve the actual deletion, missing-item response, exact path matching, method priority, and `allow` order.
+- Keep `allow` absent from other responses.
+- Do not normalize slashes, accept leading-zero IDs, add HEAD support, or change the simulation into a framework application.
+
+**Constraints:**
+
+- 0–100 items and 0–200 requests; ids and any numeric path suffix are at most 1000000.
+- Names and paths have at most 80 ASCII characters. Methods are GET, DELETE, POST, PUT, PATCH, or HEAD.
+- No network calls. Each solve call starts with its own items.
+
+<details>
+<summary><strong>Practice steps</strong> (trace, tests, AI review)</summary>
 
 ### Worked trace
 
@@ -19,18 +63,6 @@ Start with item `{"id": 4, "name": "pen"}`. Send `DELETE /items/4`, then `GET /i
 ### Read the existing code
 
 In `solve`, inspect `items`, `match`, and `allowed`. Follow the unknown-route branch, then the method branch, then the record lookup. Locate the delete mutation and its response construction. Inspect the copies used for collection and single-item bodies so a later request cannot change an earlier representation.
-
-## Your task
-
-### Scoped repair
-
-Repair the successful deletion response. Preserve the actual deletion, missing-item response, exact path matching, method priority, and `allow` order. Keep `allow` absent from other responses. Do not normalize slashes, accept leading-zero IDs, add HEAD support, or change the simulation into a framework application.
-
-### Required behavior
-
-Implement `solve(data)`. `items` contains unique positive integer `id` values and string `name` values. `requests` contains `path` and uppercase `method` strings. Process requests in order. Return a list of response objects.
-
-Exact routes: `GET /health` returns `{status:200, body:{status:"ok"}}`. `GET /items` returns status 200 and all item objects ordered by numeric id. `/items/N` matches only canonical positive decimal N. It allows GET then DELETE in that order. GET returns the item with status 200. DELETE removes it and returns `{status:204, body:null}`. Missing items return `{status:404, body:{error:"not_found"}}`. Unknown routes return the same 404. For a known route, check the method before record existence. Unsupported methods return `{status:405, body:{error:"method_not_allowed"}, allow:[...]}`. Collection and health allow only GET. Do not add an `allow` field to other responses. Paths are exact; no query or slash normalization.
 
 ### Test before and after the change
 
@@ -54,145 +86,18 @@ Optional AI prompt. Write your own implementation and tests:
 
 A judge pass checks behavior. Your trace, test choice, and edit scope need your review. Do not use the pass mark as evidence of those skills.
 
+</details>
+
+---
+
+Select **Python** and edit `solve(data)`. Do not edit the `Solution.run` adapter: it converts the
+judge's JSON for you. For a custom test, paste a JSON object into `payload`. **Run** checks the
+three examples. **Submit** runs all 30 tests.
+
+The judge checks only the output. It does not check type annotations, inheritance, SQL use, or
+time complexity. This is an original practice exercise, not an official Capital One question. All
+data is fictional. Completing it does not prove interview readiness.
+
 [Full sequence and local pytest labs](https://github.com/musel25/capital-one-prep/blob/main/codebase_labs/README.md). Then open [exercise 10](/problems/cb-10-body-validation).
 
-## Examples
-
-### Example 1: collection is ordered by numeric id
-
-Input to `solve`:
-```json
-{
-  "items": [
-    {
-      "id": 2,
-      "name": "book"
-    },
-    {
-      "id": 1,
-      "name": "pen"
-    }
-  ],
-  "requests": [
-    {
-      "path": "/items",
-      "method": "GET"
-    }
-  ]
-}
-```
-Return:
-```json
-[
-  {
-    "status": 200,
-    "body": [
-      {
-        "id": 1,
-        "name": "pen"
-      },
-      {
-        "id": 2,
-        "name": "book"
-      }
-    ]
-  }
-]
-```
-
-### Example 2: delete then read
-
-Input to `solve`:
-```json
-{
-  "items": [
-    {
-      "id": 1,
-      "name": "pen"
-    }
-  ],
-  "requests": [
-    {
-      "path": "/items/1",
-      "method": "DELETE"
-    },
-    {
-      "path": "/items/1",
-      "method": "GET"
-    }
-  ]
-}
-```
-Return:
-```json
-[
-  {
-    "status": 204,
-    "body": null
-  },
-  {
-    "status": 404,
-    "body": {
-      "error": "not_found"
-    }
-  }
-]
-```
-
-### Example 3: method check precedes item lookup
-
-Input to `solve`:
-```json
-{
-  "items": [],
-  "requests": [
-    {
-      "path": "/items/9",
-      "method": "POST"
-    }
-  ]
-}
-```
-Return:
-```json
-[
-  {
-    "status": 405,
-    "body": {
-      "error": "method_not_allowed"
-    },
-    "allow": [
-      "GET",
-      "DELETE"
-    ]
-  }
-]
-```
-
-## Constraints
-
-- 0–100 items and 0–200 requests; ids and any numeric path suffix are at most 1000000.
-- Names and paths have at most 80 ASCII characters. Methods are GET, DELETE, POST, PUT, PATCH, or HEAD.
-- No network calls. Each solve call starts with its own items.
-
-## Work here
-
-Select **Python**. Edit `solve(data)` and its helper code. The supplied
-`Solution.run` adapter converts the judge's JSON text into normal Python values.
-You do not need to edit the adapter or escape JSON by hand. For a custom test,
-paste a JSON object into the `payload` field.
-
-Use **Run** for the three examples. Use **Submit** for all 30 tests.
-Open one hint if you need help. The reference solution is optional.
-
-The judge checks output behavior. It does not certify type annotations,
-inheritance, SQL use, or time complexity. Follow the requested technique to
-practice the skill. A code review can check those implementation choices.
-
-This is an original constructed exercise. It is not an official Capital One
-question. All data is fictional. Completing this course does not certify
-interview readiness.
-
-## References
-
-- [Official documentation 1](https://www.rfc-editor.org/rfc/rfc9110.html)
+Official documentation: [1](https://www.rfc-editor.org/rfc/rfc9110.html)
