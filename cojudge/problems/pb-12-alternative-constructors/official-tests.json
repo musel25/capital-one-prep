@@ -1,0 +1,50 @@
+[
+  {
+    "payload": "{\"test\": \"test_valid_domain[google.com]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_valid_domain[pybit.es]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_valid_domain[bbc.co.uk]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_valid_domain[python.org]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_domain[google]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_domain[pybit.e]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_domain[pybites.comm]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_domain[python.org/]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_domain[python.42]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_parse_url[http://pybit.es-pybit.es]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_parse_url[https://www.python.org/downloads/-www.python.org]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_parse_url[https://docs.python.org/3/library/re.html?highlight=match#re.match-docs.python.org]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_parse_email[julian@pybit.es-pybit.es]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_parse_email[bob@gmail.com-gmail.com]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_parsed_domains_are_validated\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_classmethods_return_subclass_instances\"}"
+  }
+]

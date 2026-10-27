@@ -1,0 +1,17 @@
+[
+  {
+    "payload": "{\"test\": \"test_promo_expired\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_promo_not_expired\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_uses_property\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_expired_is_read_only\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_expired_follows_a_new_date\"}"
+  }
+]

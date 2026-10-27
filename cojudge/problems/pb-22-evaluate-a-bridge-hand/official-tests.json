@@ -1,0 +1,56 @@
+[
+  {
+    "payload": "{\"test\": \"test_evaluation[S:AK8 H:JT94 D:A2 C:KQ74-17-1-0-0-1-18-6]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_evaluation[S:9 H:KJT9 D:432 C:AJ742-9-0-1-0-2-11-8]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_evaluation[H:AKQJT94 D:4 C:KQJ72-16-0-1-1-5-21-2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_evaluation[S:QJ H:KQ D:AQ7 C:987643-14-2-0-0-2-16-7]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_evaluation[S:AKQJT98765432-10-0-0-3-9-19-0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_str_is_sorted[S:AK8 H:JT94 D:A2 C:KQ74]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_str_is_sorted[S:9 H:KJT9 D:432 C:AJ742]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_str_is_sorted[H:AKQJT94 D:4 C:KQJ72]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_str_is_sorted[S:QJ H:KQ D:AQ7 C:987643]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_str_is_sorted[S:AKQJT98765432]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_tuple_input\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_not_a_sequence[bad0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_not_a_sequence[13]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_not_a_sequence[None]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_not_a_sequence[bad3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_wrong_number_of_cards\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_not_cards\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_read_only_properties\"}"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_is_dataclass\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_default_level\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_title_is_capitalized\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_ordering\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_repr_and_equality\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_mutable_unlike_a_namedtuple\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_not_a_tuple\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_not_frozen\"}"
+  }
+]

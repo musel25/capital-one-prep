@@ -1,0 +1,92 @@
+[
+  {
+    "payload": "{\"test\": \"test_rgb_from_color_names[white-rgb0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb_from_color_names[ALICEBLUE-rgb1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb_from_color_names[Tomato-rgb2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_unknown_color_has_no_rgb\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_repr\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_str\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb[#000000-rgb0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb[#ffffff-rgb1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb[#FF8000-rgb2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb[#0a0B0c-rgb3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex[rgb0-#000000]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex[rgb1-#ffffff]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex[rgb2-#ff8000]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex[rgb3-#0a0b0c]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_bad_values[ffffff]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_bad_values[#fff]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_bad_values[#fffffff]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_bad_values[#gggggg]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_bad_values[#12_456]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_bad_values[123456]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_bad_values[None]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_bad_values[bad0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_bad_values[bad1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_bad_values[bad2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_bad_values[bad3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_bad_values[#ffffff]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_bad_values[bad5]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_bad_values[None]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_staticmethods\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_round_trip_all_names\"}"
+  }
+]

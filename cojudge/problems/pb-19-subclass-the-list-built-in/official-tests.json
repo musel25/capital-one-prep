@@ -1,0 +1,23 @@
+[
+  {
+    "payload": "{\"test\": \"test_mean_and_median\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_median_of_even_length\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_append_rejects_other_types\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_append_a_list_of_numbers\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_iadd\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_add_returns_an_intlist\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_is_a_list_and_properties\"}"
+  }
+]

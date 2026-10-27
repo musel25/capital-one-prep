@@ -1,0 +1,17 @@
+[
+  {
+    "payload": "{\"test\": \"test_record_score\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_negative_numbers\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_first_score_is_the_record\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_instances_keep_their_own_record\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_instance_is_callable\"}"
+  }
+]

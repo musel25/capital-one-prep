@@ -1,0 +1,17 @@
+[
+  {
+    "payload": "{\"test\": \"test_django\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_comma_separated_envlist\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_commas_and_newlines_mixed\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_no_basepython\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_config_attribute_and_properties\"}"
+  }
+]

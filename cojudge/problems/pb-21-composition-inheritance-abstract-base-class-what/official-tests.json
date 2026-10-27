@@ -1,0 +1,35 @@
+[
+  {
+    "payload": "{\"test\": \"test_namedtuples_have_type_hints\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_file\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_web\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_site_is_an_abstract_base_class\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_composition\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_find_table\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_nyt_polls\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rcp_polls\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_nyt_stats\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rcp_stats\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_parsers_derive_from_site\"}"
+  }
+]

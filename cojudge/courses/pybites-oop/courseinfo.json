@@ -1,0 +1,39 @@
+{
+  "title": "Pybites OOP Path",
+  "description": "The 22 bites of the Pybites Object Oriented Programming learning path, in the same order. Each problem has the bite's description, a code template, and its pytest tests, which the judge runs on your code. Bites 1 and 14 use the original free template and tests; the others are recreations that follow the public descriptions. Select Python.",
+  "category-order": [
+    "01-beginner",
+    "02-intermediate",
+    "03-advanced"
+  ],
+  "problems-of-category": {
+    "01-beginner": [
+      "pb-01-write-a-property",
+      "pb-02-complete-a-user-class-properties-and-representation-dunder-methods",
+      "pb-03-subclassing-vehicles-in-motion"
+    ],
+    "02-intermediate": [
+      "pb-04-no-promo-twice-keep-state-in-a-class",
+      "pb-05-keep-state-in-a-class-make-its-instance-callable",
+      "pb-06-subclass-the-dict-built-in",
+      "pb-07-implement-a-color-class-with-staticmethod",
+      "pb-08-oop-fun-at-the-zoo",
+      "pb-09-write-your-own-data-class",
+      "pb-10-complete-a-tox-ini-file-parser-class",
+      "pb-11-multiple-inheritance-mro",
+      "pb-12-alternative-constructors"
+    ],
+    "03-advanced": [
+      "pb-13-enrich-a-class-with-dunder-methods",
+      "pb-14-write-a-context-manager",
+      "pb-15-abcs-and-class-inheritance",
+      "pb-16-matrix-multiplication-operator",
+      "pb-17-building-a-karma-app-implement-the-user-class",
+      "pb-18-write-a-score-property",
+      "pb-19-subclass-the-list-built-in",
+      "pb-20-ninja-rankings",
+      "pb-21-composition-inheritance-abstract-base-class-what",
+      "pb-22-evaluate-a-bridge-hand"
+    ]
+  }
+}

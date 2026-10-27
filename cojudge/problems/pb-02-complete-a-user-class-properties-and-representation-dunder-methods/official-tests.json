@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"test\": \"test_bob\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_julian\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_short_last_name_and_mixed_case\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_properties_are_properties\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_values_follow_attribute_changes\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_repr_of_a_subclass\"}"
+  }
+]

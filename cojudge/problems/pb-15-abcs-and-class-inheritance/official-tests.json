@@ -1,0 +1,23 @@
+[
+  {
+    "payload": "{\"test\": \"test_base_class_is_abstract\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_subclass_must_implement_the_api\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_blog_challenge\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_bite_challenge\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pretty_title_is_a_property\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_subclasses_call_parent_constructor[cls0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_subclasses_call_parent_constructor[cls1]\"}"
+  }
+]

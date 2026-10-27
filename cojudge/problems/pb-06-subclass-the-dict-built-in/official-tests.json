@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"test\": \"test_birthday_dict\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_values_are_stored\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_same_year_and_month_is_not_a_match\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_message_once_per_new_person\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_update_and_constructor_use_setitem\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_subclasses_userdict\"}"
+  }
+]

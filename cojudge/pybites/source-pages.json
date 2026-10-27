@@ -1,0 +1,266 @@
+[
+ {
+  "n": 1,
+  "slug": "write-a-property",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Beginner",
+  "desc_html": "<p>Write a simple <code>Promo</code> class. Its constructor receives two variables: <code>name</code> (which must be a string) and <code>expires</code> (which must be a <code>datetime</code> object).</p>\r\n<p>Add a <a href=\"https://docs.python.org/3/library/functions.html#property\" target=\"_blank\" rel=\"noopener\"><code>property</code></a> called <code>expired</code> which returns a boolean value indicating whether the promo has expired or not.</p>\r\n<p>Checkout the tests and <code>datetime</code> module for more info. Have fun!</p>",
+  "template": "from datetime import datetime\r\n\r\nNOW = datetime.now()\r\n\r\n\r\nclass Promo:\r\n    pass",
+  "tests": "from datetime import timedelta\r\nimport inspect\r\n\r\nfrom simple_property import Promo, NOW\r\n\r\n\r\ndef test_promo_expired():\r\n    past_time = NOW - timedelta(seconds=3)\r\n    twitter_promo = Promo('twitter', past_time)\r\n    assert twitter_promo.expired\r\n\r\n\r\ndef test_promo_not_expired():\r\n    future_date = NOW + timedelta(days=1)\r\n    newsletter_promo = Promo('newsletter', future_date)\r\n    assert not newsletter_promo.expired\r\n\r\n\r\ndef test_uses_property():\r\n    assert 'property' in inspect.getsource(Promo)"
+ },
+ {
+  "n": 2,
+  "slug": "complete-a-user-class-properties-and-representation-dunder-methods",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Beginner",
+  "desc_html": "<p>In this Bite you are presented with another class, <code>User</code> this time.</p>\r\n<p>Like last Bite you are asked to complete it, see the <code>TODO</code>s in the code below:</p>\r\n<ol>\r\n<li>Complete the <code>get_full_name</code> property (more on <em>properties</em> <a href=\"https://pybit.es/articles/property-decorator/\" target=\"_blank\" rel=\"noopener\">here</a>) that prints first and last name separated by a space.</li>\r\n<li>Complete the <code>username</code> property following its <em>docstring</em>.</li>\r\n<li>Complete the special representation <a href=\"https://dbader.org/blog/python-dunder-methods\" target=\"_blank\" rel=\"noopener\"><em>dunder methods</em></a>: <code>__str__</code> and <code>__repr__</code>. Look at the tests what they should return. Brace yourself for some bonus learning for a twist we added in <code>__repr__</code> (but as it's a Beginner Bite we give you a hint!)</li>\r\n</ol>\r\n<p>Apart from <a href=\"https://stackoverflow.com/a/1438297\" target=\"_blank\" rel=\"noopener\">Ned's awesome answer on SO</a>, to give you an idea about the difference between <code>__str__</code> and <code>__repr__</code>, check out how <code>datetime</code> implements them:</p>\r\n<pre>&gt;&gt;&gt; from datetime import datetime\r\n&gt;&gt;&gt; dt = datetime.now()\r\n&gt;&gt;&gt; str(dt)\r\n'2019-02-04 23:05:27.376407'\r\n&gt;&gt;&gt; repr(dt)\r\n'datetime.datetime(2019, 2, 4, 23, 5, 27, 376407)'\r\n</pre>\r\n<p>Good luck and keep calm and code in Python!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 3,
+  "slug": "subclassing-vehicles-in-motion",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Beginner",
+  "desc_html": "<p dir=\"auto\">In this exercise, you&rsquo;ll practice creating Python subclasses and using&nbsp;<code>super()</code>&nbsp;to inherit from a parent class.</p>\r\n<p dir=\"auto\">Subclassing allows you to build specialized versions of a general blueprint, making your code more organized and reusable.</p>\r\n<p dir=\"auto\">If you're new to this concept, check out our article:&nbsp;<a href=\"https://pybit.es/articles/python-subclasses/\" rel=\"nofollow\">How to Write a Python Subclass</a>.</p>\r\n<p dir=\"auto\">You&rsquo;ll start with a&nbsp;<code>Vehicle</code>&nbsp;base class containing attributes common to all vehicles. From there, you&rsquo;ll create two subclasses &mdash;&nbsp;<code>Car</code>&nbsp;and&nbsp;<code>Motorbike</code>&nbsp;&mdash; each adding their own unique attributes and methods. Both subclasses should still have access to all methods from&nbsp;<code>Vehicle</code>.</p>\r\n<div class=\"markdown-heading\" dir=\"auto\">\r\n<h2 class=\"heading-element\" dir=\"auto\" tabindex=\"-1\">Your task</h2>\r\n<a id=\"user-content-your-task\" class=\"anchor\" href=\"https://github.com/pybites/bitesofpy_contrib/blob/main/subclass/exercise.md#your-task\" aria-label=\"Permalink: Your task\"></a></div>\r\n<ol dir=\"auto\">\r\n<li>\r\n<p dir=\"auto\">Implement the&nbsp;<code>Vehicle</code>&nbsp;class with&nbsp;<code>brand</code>,&nbsp;<code>model</code>, and&nbsp;<code>wheels</code>&nbsp;attributes, plus a&nbsp;<code>description()</code>&nbsp;method that returns:&nbsp;<code>\"&lt;brand&gt; &lt;model&gt; with &lt;wheels&gt; wheels\"</code>, for example:&nbsp;<code>\"Toyota Corolla with 4 wheels\"</code>.</p>\r\n</li>\r\n<li>\r\n<p dir=\"auto\">Create a&nbsp;<code>Car</code>&nbsp;subclass with an extra&nbsp;<code>doors</code>&nbsp;attribute and a&nbsp;<code>honk()</code>&nbsp;method returning:&nbsp;<code>\"Beep beep!\"</code>.</p>\r\n</li>\r\n<li>\r\n<p dir=\"auto\">Create a&nbsp;<code>Motorbike</code>&nbsp;subclass with an extra&nbsp;<code>engine_cc</code>&nbsp;attribute and a&nbsp;<code>rev_engine()</code>&nbsp;method returning:&nbsp;<code>\"&lt;parent class's description method&gt; goes Vroom vroom!\"</code>, for example:&nbsp;<code>\"Yamaha R3 with 2 wheels goes Vroom vroom!\"</code></p>\r\n</li>\r\n<li>\r\n<p dir=\"auto\">Use&nbsp;<code>super()</code>&nbsp;in each subclass&rsquo;s constructor to initialize the shared attributes.</p>\r\n</li>\r\n</ol>\r\n<hr>\r\n<p dir=\"auto\">\ud83d\udca1&nbsp;<em>Tip:</em>&nbsp;In real-world code, you can make constructor parameters&nbsp;<strong>keyword-only</strong>&nbsp;(e.g.,&nbsp;<code>Motorbike(brand=\"Yamaha\", model=\"R3\", wheels=2, engine_cc=321)</code>) to avoid mixing up arguments. We&rsquo;re keeping them positional here for simplicity.</p>\r\n<p dir=\"auto\">Related exercise:&nbsp;<a href=\"../../../../bites/force-keyword-arguments/\" rel=\"nofollow\">Force keyword arguments</a></p>\r\n<hr>\r\n<p dir=\"auto\">By the end, you&rsquo;ll see how inheritance lets you reuse code across multiple classes while still customizing behavior for specific cases. This is a core principle of object-oriented programming (OOP) and a powerful tool in your Python skill set.</p>\r\n<hr>\r\n<p dir=\"auto\">For more OOP exercises, check out our&nbsp;<a href=\"../../../../bites/paths/oop/\" rel=\"nofollow\">OOP track</a>.</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 4,
+  "slug": "no-promo-twice-keep-state-in-a-class",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Intermediate",
+  "desc_html": "<p>In this bite a real world scenario: <em>PyBites has a growing set of Bites and gives away promos.</em> They choose a Bite randomly but don't want to choose the same one again.</p>\r\n<p>Hence you are provided with a <code>BITES dict</code> and a <code>BITES_DONE set</code> that we use (copies) in the <code>Promo</code> class via its constructor (code provided).</p>\r\n<p>Complete the following methods in the Promo class:</p>\r\n<ol>\r\n<li><code>_pick_random_bite</code> is a helper (<code>_</code> here means \"private\", not to be called directly on an instance) that picks a randomly available Bite (use the <code>random</code> module). <br><br>When no more Bites are available raise the provided <code>NoBitesAvailable</code> custom exception.<br><br></li>\r\n<li><code>new_bite</code> should use this helper and update <code>self.bites_done</code> (<em>it keeps state</em>, the reason we used a class here).</li>\r\n</ol>\r\n<p>See also the tests. We hope you learn a thing or two. Enjoy!</p>\r\n<p><strong>Update</strong> 4th of Nov 2020: we changed this Bite slightly to localize the Bite constants (<a href=\"../../../../../inbox/bite/25/#260893\" target=\"_blank\" rel=\"noopener\">thanks Kenneth</a>). No worries: it's all done in the&nbsp;<code>__init__</code>&nbsp;constructor for you, you don't have to change anything there).</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 5,
+  "slug": "keep-state-in-a-class-make-its-instance-callable",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Intermediate",
+  "desc_html": "<p>In this Bite you write a small class to keep track of the max score in a game. When called as a function it receives a new score and returns the max score. Note it should work with negative numbers as well.</p>\r\n<p>This is how it should work:</p>\r\n<pre>  &gt;&gt;&gt; from record import RecordScore\r\n\r\n  &gt;&gt;&gt; record = RecordScore()\r\n  &gt;&gt;&gt; print(record(10))\r\n  10\r\n  &gt;&gt;&gt; print(record(9))\r\n  10\r\n  &gt;&gt;&gt; print(record(11))  # new max\r\n  11\r\n\r\n  &gt;&gt;&gt; record = RecordScore()\r\n  &gt;&gt;&gt; print(record(-5))\r\n  -5\r\n  &gt;&gt;&gt; print(record(-10))\r\n  -5\r\n  &gt;&gt;&gt; print(record(-2))  # new max\r\n  -2\r\n</pre>\r\n<p>Use the <code>__call__</code> dunder (\"special\") method to make the <code>RecordScore</code> class callable.</p>\r\n<p>Good luck and keep calm and code in Python!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 6,
+  "slug": "subclass-the-dict-built-in",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Intermediate",
+  "desc_html": "<p data-start=\"242\" data-end=\"337\">In this Bite, you will subclass&nbsp;<code data-start=\"274\" data-end=\"284\">UserDict</code> from <code data-start=\"290\" data-end=\"303\">collections</code> to support a birthday dictionary.</p>\r\n<p>This dictionary takes names as&nbsp;<em>keys</em> and birthday <code>date</code>s as <em>values</em>. Implement the <code>__setitem__</code> <em>dunder method</em> to print a message every time somebody gets added with a birthday that is already in the dictionary. It should work like this when running it in the REPL:</p>\r\n<pre>  &gt;&gt;&gt; from datetime import date\r\n  &gt;&gt;&gt; from bdaydict import BirthdayDict\r\n  &gt;&gt;&gt; bd = BirthdayDict()\r\n  &gt;&gt;&gt; bd['bob'] = date(1987, 6, 15)\r\n  &gt;&gt;&gt; bd['tim'] = date(1984, 7, 15)\r\n  &gt;&gt;&gt; bd['mary'] = date(1987, 6, 15)  # whole date match\r\n  Hey mary, there are more people with your birthday!\r\n  &gt;&gt;&gt; bd['sara'] = date(1987, 6, 14)\r\n  &gt;&gt;&gt; bd['mike'] = date(1981, 7, 15)  # day + month match\r\n  Hey mike, there are more people with your birthday!\r\n</pre>\r\n<p data-start=\"640\" data-end=\"818\">So if&nbsp;<strong data-start=\"646\" data-end=\"663\">day and month</strong> are the same, you have a match; the <strong data-start=\"700\" data-end=\"725\">year can be different</strong>. Use <code data-start=\"731\" data-end=\"736\">MSG</code> to print the message, replacing <code data-start=\"769\" data-end=\"773\">{}</code> with the name key of the newly added person.</p>\r\n<p data-start=\"823\" data-end=\"1079\">Note that this exercise is meant to get you thinking about <strong data-start=\"882\" data-end=\"928\">subclasses and extending built-in behavior</strong>. Instead of subclassing <code data-start=\"953\" data-end=\"959\">dict</code> directly, we use <code data-start=\"977\" data-end=\"987\">UserDict</code>, which provides better flexibility and ensures that overridden methods behave consistently.</p>\r\n<p data-start=\"1084\" data-end=\"1111\">Good luck and have fun!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 7,
+  "slug": "implement-a-color-class-with-staticmethod",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Intermediate",
+  "desc_html": "<p>As the new junior developer, you have been charged with enhancing the <strong>Color</strong> class.</p>\r\n<p>Your task will be to implement the following:</p>\r\n<ul>\r\n<li>add <code>self.rgb</code> to the <strong>__init__</strong> method that gets its value from the provided <code>COLOR_NAMES</code> dictionary (k, v = color_name, rgb tuple = e.g.: <code>\"ALICEBLUE\": (240, 248, 255)</code>). If the value does not exist, just assume it is <code>None</code>.</li>\r\n<li>Convert <code>hex2rgb</code> and <code>rgb2hex</code> into <code>@staticmethod</code>s.</li>\r\n<li>Validate the values being passed to each of these <em>staticmethods</em> and raise a <code>ValueError</code> if called with bad data.</li>\r\n<li>Add a <strong>__repr__</strong> method whose value is in the form of <code>Color('white')</code>, with <em>white</em> being the inital value that it was initialized with.</li>\r\n<li>Add a <strong>__str__</strong> method whose value is the RGB value of the color if it is found in <code>COLOR_NAMES</code>, else return <code>Unknown</code>.</li>\r\n</ul>\r\n<p>Take a look at the tests for a better understanding of the values expected.</p>\r\n<p>Good luck!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 8,
+  "slug": "oop-fun-at-the-zoo",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Intermediate",
+  "desc_html": "<p>Finish the <code>Animal</code> class below adding one or more class variables and a <code>classmethod</code> so that the following code:</p>\r\n<pre>dog = Animal('dog')\r\ncat = Animal('cat')\r\nfish = Animal('fish')\r\nlion = Animal('lion')\r\nmouse = Animal('mouse')\r\nprint(Animal.zoo())\r\n</pre>\r\n<p>... produces the following output:</p>\r\n<pre>10001. Dog\r\n10002. Cat\r\n10003. Fish\r\n10004. Lion\r\n10005. Mouse\r\n</pre>\r\n<p>Few things to note here:</p>\r\n<ul>\r\n<li>The sequencing starts at 10000,</li>\r\n<li>Each animal gets title cased,</li>\r\n<li>An individual animal should print the sequence+name string as well, so best to implement the <code>__str__</code> method on the class.</li>\r\n</ul>\r\n<p>So making another animal at this point, the following should work:</p>\r\n<pre>horse = Animal('horse')\r\nassert str(horse) == \"10006. Horse\"\r\n</pre>\r\n<p>As usual this is what the <code>pytest</code> code tests when you submit your code.</p>\r\n<p>Have fun and code more Python! Join our growing developer Circle community to&nbsp;learn together with other passionate Pythonistas ...</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 9,
+  "slug": "write-your-own-data-class",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Intermediate",
+  "desc_html": "<p>As you <a href=\"../../../../../news\">might have noticed</a> we are now on Python 3.7 so time for a Bite on <em>data classes</em> which were introduced with <a href=\"https://www.python.org/dev/peps/pep-0557/\" target=\"_blank\" rel=\"noopener\">PEP 557</a>.</p>\r\n<p>What are they? Raymond Hettinger summarized it nicely <a href=\"https://www.youtube.com/watch?v=T-TwcmT6Rcw\" target=\"_blank\" rel=\"noopener\">in his great talk</a>: <em>a mutible named tuple with defaults</em>.</p>\r\n<p>One advantage is the code it saves you typing so they might become an essential part of your Python toolkit!</p>\r\n<p>In this Bite we have you write a data class called <code>Bite</code> that managed 3 attributes: <em>number</em>, <em>title</em>, and <em>level</em>. Their types are <code>int</code>, <code>str</code> and <code>str</code> respectively.</p>\r\n<p>There are 3 more requirements:</p>\r\n<ol>\r\n<li><em>title</em> needs to be capitalized upon instantiation (you get a hint in the tests for this one :) - make sure to read the tests for additonal specs, including some of the differences between <code>data class</code>es and <code>namedtuple</code>s!)</li>\r\n<li><em>level</em> takes a default argument of <em>Beginner</em>.</li>\r\n<li>A collection of Bite instances needs to be orderable (using <code>sort</code> / <code>sorted</code> - this is not by default but configurable ...)</li>\r\n</ol>\r\n<p>Good luck and keep up with the language, exciting new things are getting added!<br />On that note feel free to make us more Bite requests via our <a href=\"../../../../../bites/\">Bites homepage</a> (you'll find a form per Bite level at the bottom of the page ...)</p>\r\n<p>For more resources on <em>data classes</em> we recommned watching <a href=\"https://www.youtube.com/watch?v=T-TwcmT6Rcw\" target=\"_blank\" rel=\"noopener\">Hettinger's talk</a> as well as reading through Anthony Shaw's <a href=\"https://hackernoon.com/a-brief-tour-of-python-3-7-data-classes-22ee5e046517\" target=\"_blank\" rel=\"noopener\">A brief tour of Python 3.7 data classes</a>. Have fun!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 10,
+  "slug": "complete-a-tox-ini-file-parser-class",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Intermediate",
+  "desc_html": "<p><em>The INI file format is an informal standard for configuration files for some platforms or software.</em> (<a href=\"https://en.wikipedia.org/wiki/INI_file\">Wikipedia</a>).</p>\r\n<p>In this Bite you will use <code>configparser</code> to parse a <a href=\"https://tox.readthedocs.io/en/latest/\">tox</a> <em>ini file</em>.</p>\r\n<p>Complete the <code>ToxIniParser</code> class, completing the <em>stub properties</em> making the tests happy.</p>\r\n<p>Eh <em>properties</em>? No worries, check out <a href=\"https://pybit.es/articles/property-decorator/\" target=\"_blank\" rel=\"noopener\">our article</a> and <a href=\"https://www.youtube.com/watch?v=8BbngXWouzo\">YouTube video</a>.</p>\r\n<p>See the <em>TESTS</em> tab. There is a lot of ini file data, so scroll down to the actual tests ...</p>\r\n<p>Additionally here is how it would work in the Python REPL using <a href=\"https://bites-data.s3.us-east-2.amazonaws.com/django-tox.ini\" target=\"_blank\" rel=\"noopener\">a copy of Django's tox ini file</a> saved to my local /tmp folder:</p>\r\n<pre>  &gt;&gt;&gt; from ini import ToxIniParser\r\n  &gt;&gt;&gt; tox = ToxIniParser('/tmp/django-tox.ini')\r\n  &gt;&gt;&gt; tox.number_of_sections\r\n  7\r\n  &gt;&gt;&gt; tox.environments\r\n  ['py3', 'flake8', 'docs', 'isort']\r\n  &gt;&gt;&gt; tox.base_python_versions\r\n  ['python3']\r\n</pre>\r\n<p>Good luck and keep calm and code in Python!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 11,
+  "slug": "multiple-inheritance-__mro",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Intermediate",
+  "desc_html": "<p>Implement the following <code>class</code> structure: <code>print(Child.__mro__)</code>:</p>\r\n<pre>(&lt;class '__main__.Child'&gt;,\r\n &lt;class '__main__.Father'&gt;,\r\n &lt;class '__main__.Mother'&gt;,\r\n &lt;class '__main__.Person'&gt;,\r\n &lt;class 'object'&gt;)\r\n</pre>\r\n<p>Each class has the following string representation:</p>\r\n<pre>person = Person()\r\ndad = Father()\r\nmom = Mother()\r\nchild = Child()\r\n\r\nprint(person)\r\nprint(dad)\r\nprint(mom)\r\nprint(child)\r\n</pre>\r\n<p>Output:</p>\r\n<pre>I am a person\r\nI am a person and cool daddy\r\nI am a person and awesome mom\r\nI am the coolest kid\r\n</pre>\r\n<p>You should use inheritance here, so the <em>I am a person</em> substring should only occur in the <code>Person</code> base class.</p>\r\n<p>Good luck and keep calm and code in Python!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 12,
+  "slug": "alternative-constructors",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Intermediate",
+  "desc_html": "<p>In this Bite your are provided with a <code>Domain</code> class and a <code>DomainException</code> custom exception class.</p>\r\n<p>You will add some validation to the current constructor to check if a valid domain name is passed in.</p>\r\n<p>Next you will add a <code>__str__</code> special method to represent the object (basically the name attribute) and you will write two <code>classmethod</code>s to construct domains:</p>\r\n<p>1. from a <strong>URL</strong></p>\r\n<p>2. from an <strong>email</strong></p>\r\n<p>Here you can see the code in action (also make sure you check out the tests):</p>\r\n<pre>&gt;&gt;&gt; from constructors import Domain<br />&gt;&gt;&gt; str(Domain('google.com'))<br />'google.com'<br />&gt;&gt;&gt; str(Domain.parse_url(\"http://pybit.es\"))<br />'pybit.es'<br />&gt;&gt;&gt; domain = Domain.parse_email(\"julian@pybit.es\")<br />&gt;&gt;&gt; type(domain)<br />&lt;class 'constructors.Domain'&gt;<br />&gt;&gt;&gt; str(domain)<br />'pybit.es'</pre>\r\n<p>Good luck and keep calm and code more Python!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 13,
+  "slug": "enrich-a-class-with-dunder-methods",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Advanced",
+  "desc_html": "<p>Let's enrich an <em>Account</em> class by adding <em>dunder</em> (aka special) methods to support the following:</p>\r\n<ol>\r\n<li>length of the object: <code>len(acc)</code> returns the number of transactions</li>\r\n<li>account comparison: <code>acc1 &gt;,&lt;,&gt;=.&lt;=,== acc2</code> returns a boolean comparing account balances</li>\r\n<li>indexing: <code>acc[n]</code> shows the nth transaction on<code>account</code> (0 based)</li>\r\n<li>iteration: <code>list(acc)</code> returns a sequence of account transactions</li>\r\n<li>operator overloading: <code>acc + int</code> and <code>acc - int</code> can be used to add/subtract money (if given incompatible types for these operations, raise a <code>TypeError</code> - <strong>note </strong>that previously this was a <code>ValueError</code>, but former is more correct for this scenario)</li>\r\n<li>string representation: <code>str(acc)</code> returns <em>NAME account - balance: INT</em></li>\r\n</ol>\r\n<p>The provided template already does some setup for you.</p>\r\n<p>Check out the tests for more specifics. If you're still new to dunder (magic) methods, <a href=\"https://dbader.org/blog/python-dunder-methods\" target=\"_blank\" rel=\"noopener\">here is an article</a> you might find useful. Good luck!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 14,
+  "slug": "write-a-context-manager",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Advanced",
+  "desc_html": "<p>Write a <a href=\"https://docs.python.org/3/reference/datamodel.html#context-managers\" target=\"_blank\" rel=\"noopener\">context manager</a> to roll back a transaction on the given <code>Account</code> class.</p>\r\n<p>There are two <em>special (aka <em>dunder</em>) methods</em> you need to define to create a context manager (there is also a convenient decorator - see <a href=\"../../../../../bites/write-a-performance-monitoring-context-manager/\">Write a performance monitoring context manager</a>).</p>\r\n<p>The purpose of the context manager is to roll back any transaction that will make the balance go below 0 (debt != cool).</p>\r\n<p>The rollback should follow <a href=\"https://www.cosmicpython.com/book/chapter_06_uow.html\" target=\"_blank\" rel=\"noopener\">the <em>Unit of Work </em>pattern</a>, meaning all transactions within a <code>with</code> block should be either fully applied or fully discarded, just like a database transaction.</p>\r\n<p>The rest of the class is already defined so you can focus on the context manager part.</p>\r\n<p>See the tests for more detail. Good luck and keep calm and code in Python!</p>",
+  "template": "class Account:\r\n\r\n    def __init__(self):\r\n        self._transactions = []\r\n\r\n    @property\r\n    def balance(self):\r\n        return sum(self._transactions)\r\n\r\n    def __add__(self, amount):\r\n        self._transactions.append(amount)\r\n\r\n    def __sub__(self, amount):\r\n        self._transactions.append(-amount)\r\n\r\n    # add 2 dunder methods here to turn this class \r\n    # into a 'rollback' context manager",
+  "tests": "import pytest\r\n\r\nfrom account import Account\r\n\r\n\r\n@pytest.fixture()\r\ndef account():\r\n    return Account()\r\n\r\n\r\ndef test_balance(account):\r\n    assert account.balance == 0\r\n    account + 10\r\n    assert account.balance == 10\r\n    account - 5\r\n    assert account.balance == 5\r\n\r\n\r\ndef test_without_contextman_balance_negative(account):\r\n    assert account.balance == 0\r\n    account - 5\r\n    assert account.balance == -5\r\n\r\n\r\ndef test_with_contextman_performs_rollback(account):\r\n    account + 3\r\n    assert account.balance == 3\r\n    # trigger rollback\r\n    with account as acc:\r\n        acc - 5\r\n    assert account.balance == 3\r\n    # adding this ensures all required dunders are used:\r\n    with account as acc:\r\n        acc + 10\r\n        acc - 3\r\n    assert account.balance == 10\r\n    # make sure composite transactions are properly rolled back\r\n    with account as acc:\r\n        acc - 11\r\n        acc - 2\r\n    assert account.balance == 10"
+ },
+ {
+  "n": 15,
+  "slug": "abcs-and-class-inheritance",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Advanced",
+  "desc_html": "<p><code>ABC</code>'s or <code>Abstract Base Classes</code> are great to enforce a common <em>API</em> for your subclasses.</p>\r\n<p>You define one or more methods and/or properties as abstract in the base class, and if the subclass does not implement them it raises a <code>TypeError</code>. In this bite you will use this concept as follows:</p>\r\n<ol>\r\n<li>Define a Challenge base class that inherits from <code>ABC</code> (given), its constructor receives a <code>number</code> and a <code>title</code> attribute.</li>\r\n<li>On Challenge define an <code>abstractmethod</code> called <code>verify</code> and a <code>property</code> (&lt; 3.3 it would be an <code>abstractproperty</code>) called <code>pretty_title</code>.</li>\r\n<li>Create the <code>BlogChallenge</code> and <code>BiteChallenge</code> classes which both inherit from <code>Challenge</code>. <em>Note that they would raise a <code>TypeError</code> at this point, exactly what you want: enforcing the use of the abstract method/ property.</em></li>\r\n<li><code>BlogChallenge</code> and <code>BiteChallenge</code>'s constructors call the parent constructor (don't worry it's <em>super</em>cool, remember: <strong>we use Python3</strong> so adjust your syntax), and both receive an extra argument in the constructor: <code>merged_prs</code> for <code>BlogChallenge</code> and <code>result</code> for <code>BiteChallenge</code>.</li>\r\n<li>Implement the required methods and properties, refer to the tests what they need to return.</li>\r\n</ol>\r\n<p>Get coding, learn more about classes, and have fun!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 16,
+  "slug": "matrix-multiplication-operator",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Advanced",
+  "desc_html": "<p>Since 3.5 Python has a binary operator to be used for matrix multiplication: <code>@</code>, see <a href=\"http://legacy.python.org/dev/peps/pep-0465/\" target=\"_blank\" rel=\"noopener\">PEP 465 -- A dedicated infix operator for matrix multiplication</a>.</p>\r\n<p>The <em>@ sign</em> can now be used on types implementing the <code>__matmul__</code> <em>special/magic/dunder</em> method.</p>\r\n<p>It is important to note that whilst this feature shipped in 3.5, none of the standard library builtin types have matrix multiplication implementations. So let's try to implement it on a custom type for this Bite.</p>\r\n<p>Implement a simple class called <code>Matrix</code> that takes a list of lists in its constructor.</p>\r\n<p>Implement the <code>__matmul__</code>, <code>__rmatmul__</code> (reversed) and <code>__imatmul__</code> (in place) <em>dunder</em> methods.</p>\r\n<p><em>Yes, using <code>numpy</code> a <code>np.dot(self, other)</code> would suffice, but the point is to get you thinking about implementing @ yourself!</em></p>\r\n<p>Here is a how matrix multiplication works:</p>\r\n<pre>A = [[1, 2],  [3, 4]]\r\nB = [[11, 12], [13, 14]]\r\n</pre>\r\n<p>Doing A @ B would do the following multiplications:</p>\r\n<pre>[[1 * 11 + 2 * 13,   1 * 12 + 2 * 14],\r\n[3 * 11 + 4 * 13,   3 * 12 + 4 * 14]]\r\n</pre>\r\n<p>See the tests for more info. Good luck!</p>\r\n<blockquote>Special thanks to <a href=\"https://twitter.com/anthonypjshaw\" target=\"_blank\" rel=\"noopener\">Anthony Shaw</a> for providing the idea and collaborating with us on this Bite!</blockquote>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 17,
+  "slug": "building-a-karma-app-implement-the-user-class",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Advanced",
+  "desc_html": "<p>This Bite is about implementing a <code>User</code> class that keeps track of <em>karma</em> points received (Bite idea came from <a href=\"https://github.com/pybites/karmabot\" target=\"_blank\" rel=\"noopener\">our karmabot</a>).</p>\r\n<p>As it is an <em>Advanced</em> Bite we have you look at the tests to figure out the implementation, but we will say that the class uses 3 <em>magic/special/dunder</em> methods and 3 <em>properties</em>.</p>\r\n<p>Good luck and have fun!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 18,
+  "slug": "write-a-score-property",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Advanced",
+  "desc_html": "<p>After <a href=\"../../../../../bites/write-a-property/\">Write a property</a> let's write a bit more advanced one.</p>\r\n<p>In this Bite you are presented with a <code>NinjaBelt</code> class that keeps track of scores and Ninja Belts earned (a very real scenario). Some setup code has been provided like the <code>_score</code> and <code>_last_earned_belt</code> variables and the getter and setter methods that make up the property.</p>\r\n<p>The goal is to write a property called <code>score</code> that does the following:</p>\r\n<ol>\r\n<li>Make sure it can only be assigned an integer,</li>\r\n<li>It can not be assigned a score lower than the current score,</li>\r\n<li>It checks in <code>BELTS</code> if a new belt was earned (for example going from 49 to 50 you earn the <em>yellow belt</em>), if so it stores it in <code>self._last_earned_belt</code>.</li>\r\n<li>For each new score print a message:\r\n<ul>\r\n<li>If a new badge was earned: \"<em>Congrats, you earned {score} points obtaining the PyBites Ninja {rank} Belt\" </em>(where <em>rank</em> is the name of the belt titlecased, e.g. <em>White</em>, <em>Yellow</em>, etc.)</li>\r\n<li>Else just the new score: \"<em>Set new score to {score}\"</em></li>\r\n</ul>\r\n</li>\r\n</ol>\r\n<p>See the TESTS tab for more info. Good luck, have fun and keep calm and code in Python!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 19,
+  "slug": "subclass-the-list-built-in",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Advanced",
+  "desc_html": "<p>In this Bite you will complete <code>IntList</code>, a subclass of <code>list</code>, which should be able to do the following:</p>\r\n<pre>&gt;&gt;&gt; from intlist import IntList\r\n&gt;&gt;&gt; mylist = IntList([1, 3, 5])\r\n&gt;&gt;&gt; mylist.mean\r\n3\r\n&gt;&gt;&gt; mylist.median\r\n3\r\n&gt;&gt;&gt; mylist.append(7)\r\n&gt;&gt;&gt; mylist.append(1.0)\r\n&gt;&gt;&gt; mylist.mean\r\n3.4\r\n&gt;&gt;&gt; mylist.median\r\n3\r\n&gt;&gt;&gt; mylist.append('a')\r\n...\r\nTypeError\r\n&gt;&gt;&gt; mylist.append([2, 3])\r\n&gt;&gt;&gt; mylist.append([2, 'a'])\r\n...\r\nTypeError\r\n&gt;&gt;&gt; mylist += [1]\r\n&gt;&gt;&gt; mylist += [1, 'a']\r\n...\r\nTypeError\r\n</pre>\r\n<p>As you see this <em>special</em> list is enriched with <code>mean</code> and <code>median</code> <em>properties</em>, and is restricted to <code>int</code> values only, be it as appended individually or as <code>list</code> of <code>int</code>s. Apart from overriding <code>append</code>, you'll also need to tweak the <code>__add__</code> and <code>__iadd__</code> (operator overloading) <em><a href=\"https://dbader.org/blog/python-dunder-methods\" target=\"_blank\" rel=\"noopener\">dunder methods</a></em> here.</p>\r\n<p>Enjoy and keep calm and code more Python!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 20,
+  "slug": "ninja-rankings",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Advanced",
+  "desc_html": "<p>PyBites is starting a campaign to try and pair up the highest ranking Ninjas with some of the lower ranking ones. Your task is to rank the given Ninjas according to their number of Bites.</p>\r\n<p>We are going to delve into some <em>Object Oriented Programming</em> here because we want to retain state as we add more Ninjas to the <code>Ranking</code> class.</p>\r\n<p>I have laid out the structure of the script for you. Your task is to flesh out the <code>Ninja</code> and <code>Rankings</code> classes.</p>\r\n<p>The <code>Ninja</code> class will have the following features:</p>\r\n<ul>\r\n<li>string <code>name</code></li>\r\n<li>integer <code>bites</code></li>\r\n<li>support <code>&lt;</code>, <code>&gt;</code>, and <code>==</code>, based on <code>bites</code></li>\r\n<li>print out in the following format: <code>[469] bob</code></li>\r\n</ul>\r\n<p>The <code>Rankings</code> class will have the following features:</p>\r\n<ul>\r\n<li>method <code>add()</code> that adds a Ninja object to the rankings</li>\r\n<li>method <code>dump()</code> that removes/dumps (and returns) the lowest ranking Ninja from Rankings</li>\r\n<li>method <code>highest()</code> returns the highest ranking <code>Ninja</code>, but it takes an optional <code>count</code> parameter indicating how many of the highest ranking Ninjas to return</li>\r\n<li>method <code>lowest()</code>, the same as highest but returns the lowest ranking Ninjas, also supports an optional <code>count</code> parameter<br />returns how many Ninjas are in Rankings when <code>len()</code> is called on it</li>\r\n<li>a <code>pair_up()</code> method that pairs up study partners: the highest with the lowest <code>Ninja</code> of the <code>ranking</code> instance, then the second highest with the second lowest <code>Ninja</code> of the <code>ranking</code> etc. It takes an optional count parameter indicating how many Ninjas to pair up (default = <code>3</code>).</li>\r\n</ul>\r\n<p>Remember, that the standard library is your friend, best of luck!</p>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 21,
+  "slug": "composition-inheritance-abstract-base-class-what",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Advanced",
+  "desc_html": "<p>It&rsquo;s not as bad as that sounds, really. If you don&rsquo;t know the difference between composition and inheritance, I would recommend reading up on it from <a href=\"https://realpython.com/inheritance-composition-python/\" target=\"_blank\" rel=\"noopener\">Real Python</a>. As most of their articles, the subject is covered pretty thoroughly!</p>\r\n<h4 id=\"the-scenario\">The scenario</h4>\r\n<p>So you&rsquo;ve been tasked with scraping some presidential polling sites. The plan is to create a scraper that can be used on multiple sites.</p>\r\n<p>I&rsquo;ve already created the following <em>namedtuples</em>, but you will need to add type hints to them:</p>\r\n<p><code>Candidate</code>, <code>LeaderBoard</code>, and <code>Poll</code></p>\r\n<blockquote>\r\n<p>I&rsquo;ve never tried to add type hinting to <em>namedtuples</em>, so it was a great learning experience for me and I hope to pass that experience along to you.</p>\r\n</blockquote>\r\n<p>The plan is to create the following core classes:</p>\r\n<ul>\r\n<li>File:\r\n<ul>\r\n<li>Variables:\r\n<ul>\r\n<li>name: <em>str</em></li>\r\n<li>path: <em>Path</em></li>\r\n</ul>\r\n</li>\r\n<li>Methods:\r\n<ul>\r\n<li>data -&gt; <em>Optional[str]</em></li>\r\n</ul>\r\n</li>\r\n</ul>\r\n</li>\r\n<li>Web:\r\n<ul>\r\n<li>Variables:\r\n<ul>\r\n<li>url: <em>str</em></li>\r\n<li>file: <em>File</em></li>\r\n</ul>\r\n</li>\r\n<li>Methods:\r\n<ul>\r\n<li>data -&gt; <em>Optional[str]</em></li>\r\n<li>soup -&gt; <em>Soup</em></li>\r\n</ul>\r\n</li>\r\n</ul>\r\n</li>\r\n<li>Site(<em>ABC</em>):\r\n<ul>\r\n<li>Variables:\r\n<ul>\r\n<li>web: <em>Web</em></li>\r\n</ul>\r\n</li>\r\n<li>Methods:\r\n<ul>\r\n<li>find_table -&gt; <em>str</em></li>\r\n<li>parse_rows -&gt; <em>Union[List[LeaderBoard], List[Poll]]</em></li>\r\n<li>polls -&gt; <em>Union[List[LeaderBoard], List[Poll]]</em></li>\r\n<li>stats</li>\r\n</ul>\r\n</li>\r\n</ul>\r\n</li>\r\n</ul>\r\n<blockquote>\r\n<p>Site is an abstract base class which decorates some methods with abstractmethods!</p>\r\n</blockquote>\r\n<p>If you are not familiar with Abstract Base Classes, read up on the documentation: <a href=\"https://docs.python.org/3/library/abc.html\">ABC</a></p>\r\n<h4 id=\"adding-new-parsers\">Adding new parsers</h4>\r\n<p>After creating the core of the application, you will have to create parsers for <a href=\"https://www.nytimes.com/interactive/2020/us/elections/democratic-polls.html\">The New York Times</a> and <a href=\"https://www.realclearpolitics.com/epolls/2020/president/us/2020_democratic_presidential_nomination-6730.html#polls\">RealClearPolitics</a>. Don&rsquo;t be scared by all the data, we&rsquo;re only interested in the <strong>Current State of the Race</strong> table from <em>NYTimes</em> and the third table from <em>RCP</em>. Since the tables in RCP all pretty much have the same layout, your parser should work with any of them, but that won&rsquo;t be checked.</p>\r\n<p>The parsers should derive from the <em>Site</em> class. While coding this, I was able to get the <code>find_table</code> method to work for all sites, so that one is not decorated with <code>@abstractmethod</code>. The other methods however, need to be overwritten in order for them to be instantiated.</p>\r\n<ul>\r\n<li>RealClearPolitics(Site):\r\n<ul>\r\n<li>Variables:\r\n<ul>\r\n<li>web: Web</li>\r\n</ul>\r\n</li>\r\n<li>Methods:\r\n<ul>\r\n<li>find_table -&gt; <em>str</em></li>\r\n<li>parse_rows -&gt; <em>List[Poll]</em></li>\r\n<li>polls -&gt; <em>List[Poll]</em></li>\r\n<li>stats</li>\r\n</ul>\r\n</li>\r\n</ul>\r\n</li>\r\n<li>NYTimes(Site):\r\n<ul>\r\n<li>Variables:\r\n<ul>\r\n<li>web: Web</li>\r\n</ul>\r\n</li>\r\n<li>Methods:\r\n<ul>\r\n<li>find_table -&gt; <em>str</em></li>\r\n<li>parse_rows -&gt; <em>List[Poll]</em></li>\r\n<li>polls -&gt; <em>List[Poll]</em></li>\r\n<li>stats</li>\r\n</ul>\r\n</li>\r\n</ul>\r\n</li>\r\n</ul>\r\n<h4 id=\"the-output-format\">The output format</h4>\r\n<p>Each of the two different parsers will have different outputs. We&rsquo;ll just keep it simple, but there are some rules to adhere to. First, this is what sample output from each should look like.</p>\r\n<p id=\"realclearpolitics\"><strong style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;\">NYTimes</strong></p>\r\n<pre>NYTimes\r\n=================================\r\n\r\n                   Pete Buttigieg\r\n---------------------------------\r\nNational Polling Average: 10%\r\n       Pledged Delegates: 25\r\nIndividual Contributions: $76.2m\r\n    Weekly News Coverage: 3\r\n\r\n                   Bernie Sanders\r\n---------------------------------\r\netc..\r\n    Weekly News Coverage: 3\r\n</pre>\r\n<p>Things to note about this output:</p>\r\n<ul>\r\n<li>Starts and ends with blank lines</li>\r\n<li>There is a similar output for each of the remaining candidates:\r\n<ul>\r\n<li>Bernie Sanders</li>\r\n<li>Joseph R. Biden Jr.</li>\r\n<li>Tulsi Gabbard</li>\r\n</ul>\r\n</li>\r\n<li>Not shown here, but there is a blank line between each candidate</li>\r\n<li>There are 33 equal (<strong>=</strong>) signs and hyphens (<strong>-</strong>) in the dividers</li>\r\n<li>The name of the candidate is right aligned</li>\r\n<li>The data lines are all right aligned</li>\r\n<li>The values from the data lines are all left aligned</li>\r\n</ul>\r\n<blockquote>\r\n<p><em>etc..</em> is just a place holder, indicating that not all data was shown</p>\r\n</blockquote>\r\n<p id=\"nytimes\"><strong style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;\">RealClearPolitics</strong></p>\r\n<pre>RealClearPolitics\r\n=================\r\n    Biden: 214.0\r\n  Sanders: 142.0\r\n  Gabbard: 6.0\r\n</pre>\r\n<p>Some things to note here.</p>\r\n<ul>\r\n<li>Starts and ends with blank line</li>\r\n<li>This is the whole output for this scraper</li>\r\n<li>There are as many equal (<strong>=</strong>) signs as the length of the title</li>\r\n<li>The candidate last names are right aligned</li>\r\n</ul>\r\n<h4 id=\"time-to-start-coding\">Time to start coding</h4>\r\n<p>That&rsquo;s it. I&rsquo;ve scattered a generous amount of docstrings all over the code to try and make it as explicit as possible in order to help you out. When you complete this bite, you will have learned and or gained more experience with:</p>\r\n<ul>\r\n<li>Object Oriented Programming</li>\r\n<li>Dataclasses</li>\r\n<li>Inheritance</li>\r\n<li>Composition</li>\r\n<li>Abstract Base Classes\r\n<ul>\r\n<li>The <em><span class=\"citation\" data-cites=\"abstractmethod\">@abstractmethod</span></em> decorator</li>\r\n</ul>\r\n</li>\r\n<li>Type hinting <em>namedtuples</em></li>\r\n<li>String formatting</li>\r\n<li>Web scraping with BeautifulSoup</li>\r\n</ul>",
+  "template": null,
+  "tests": null
+ },
+ {
+  "n": 22,
+  "slug": "evaluate-a-bridge-hand",
+  "title": "Pybites Platform",
+  "h1": [
+   "Pybites Platform"
+  ],
+  "level": "Advanced",
+  "desc_html": "<p>In this bite you will implement a <code>BridgeHand</code> class representing a collection of 13 playing cards randomly chosen from a 52-card <a href=\"https://en.wikipedia.org/wiki/French_playing_cards\" target=\"_blank\" rel=\"noopener\">French deck</a>.&nbsp;</p>\r\n<p>Each card features a suit (spades, hearts, diamonds or clubs) and a rank</p>\r\n<p>(Ace, King, Queen, Jack and then 10 to 2). Both suits and ranks are ordered as</p>\r\n<p>indicated. Data structures for <code>Suit</code>, <code>Rank</code>, and <code>Card</code> have been provided to you.</p>\r\n<h3>Methods</h3>\r\n<p>The <code>__init__</code> constructor for your class should expect a sequence of <code>Card</code> objects. Attempts to use non-sequential types should raise a <code>TypeError</code> exception, and sequences containing values of types other than <code>Card</code> - or holding fewer or more than 13 elements - should raise <code>ValueError</code>.</p>\r\n<p>Your class will also need to implement a <code>__str__</code> method returning a textual representation of the hand, sorted by suit and rank, eg: <strong>S:AK32 H:QJT4 D:9654 C:3</strong>. Note that the <strong>10</strong> rank should be represented as a capital <strong>T</strong>.</p>\r\n<p>Ensure that spades, hearts, diamonds and clubs follow each other in that order, skipping over voids (eg, no cards in that suit).</p>\r\n<h3>Properties</h3>\r\n<p>Additionally, your class must implement the following read-only properties:&nbsp; &nbsp;&nbsp;</p>\r\n<p>- <code>hcp</code>: high card points. Count 4 points for each Ace, 3 for each King, 2 for each Queen and 1 for each Jack.</p>\r\n<p>- <code>doubletons</code>: number of suits containing only two cards.</p>\r\n<p>- <code>singletons</code>: number of suits containing just one card.</p>\r\n<p>- <code>voids</code>: number of suits containing zero cards (that is, no cards in that suit).</p>\r\n<p>- <code>ssp</code>: short suit points. Count 1 point for each doubleton, 2 for each singleton, and 3 for each void.</p>\r\n<p>- <code>total_points</code>: sum of HCP and SSP.</p>\r\n<p>- <code>ltc</code>: losing trick count. Considering only the top three cards in each suit, LTC is determined by examining each suit and assuming that an Ace will never be a loser, nor will a King in a 2+ card suit, nor a Queen in a 3+ card suit; accordingly:</p>\r\n<p>&nbsp; &nbsp; - a void = 0 losing tricks.</p>\r\n<p>&nbsp; &nbsp; - a singleton other than an A = 1 losing trick.</p>\r\n<p>&nbsp; &nbsp; - a doubleton AK = 0; Ax or Kx = 1; Qx or xx = 2 losing tricks.</p>\r\n<p>&nbsp; &nbsp; - a three card suit AKQ = 0; AKx, AQx or KQx = 1 losing trick.</p>\r\n<p>&nbsp; &nbsp; - a three card suit Axx, Kxx or Qxx = 2; xxx = 3 losing tricks.</p>\r\n<h3>Examples</h3>\r\n<table style=\"border-collapse: collapse; width: 100%;\" border=\"1\">\r\n<tbody>\r\n<tr>\r\n<td style=\"width: 50%;\">S:AK8 H:JT94 D:A2 C:KQ74</td>\r\n<td style=\"width: 50%;\">hcp=17, doubletons=1, singletons=0, voids=0, ssp=1, total points=18, ltc=6</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 50%;\">S:9 H:KJT94 D:432 C:AJ742</td>\r\n<td style=\"width: 50%;\">hcp=9, doubletons=0, singletons=1, voids=0, ssp=2, total points=11, ltc=8</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 50%;\">H:AKQJT94 D:4 C:KQJ72</td>\r\n<td style=\"width: 50%;\">hcp=16, doubletons=0, singletons=1, voids=1, ssp=5, total points=21, ltc=2</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p>---</p>\r\n<p>Hope you will enjoy this bite, and perhaps be inspired to learn more about Bridge, easily the&nbsp;finest card game ever created!</p>",
+  "template": null,
+  "tests": null
+ }
+]

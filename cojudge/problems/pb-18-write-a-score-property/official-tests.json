@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_initial_state\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_only_integers\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_score_cannot_go_down\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_new_scores_and_belts\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_skipping_belts_gives_the_highest\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_below_first_belt\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_titlecased_belt_name\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_score_is_a_property\"}"
+  }
+]

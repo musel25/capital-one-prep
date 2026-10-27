@@ -1,0 +1,29 @@
+[
+  {
+    "payload": "{\"test\": \"test_ninja\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_ninja_comparison\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_len\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_highest\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_lowest\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_dump\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pair_up\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pair_up_with_count\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_add_after_ranking\"}"
+  }
+]

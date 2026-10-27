@@ -1,0 +1,29 @@
+[
+  {
+    "payload": "{\"test\": \"test_promo_has_state\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pick_random_bite_returns_an_available_bite\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pick_random_bite_does_not_change_state\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_new_bite_updates_bites_done\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_no_bite_twice_then_exception\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_uses_random\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_instances_and_constants_are_independent\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_custom_bites\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_custom_exception\"}"
+  }
+]

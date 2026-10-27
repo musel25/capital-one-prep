@@ -1,0 +1,32 @@
+[
+  {
+    "payload": "{\"test\": \"test_balance\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_len\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_comparison\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_indexing\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_iteration\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_add_sub_incompatible_types[10]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_add_sub_incompatible_types[1.5]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_add_sub_incompatible_types[bad2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_add_sub_incompatible_types[None]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_str\"}"
+  }
+]

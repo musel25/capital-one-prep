@@ -1,0 +1,29 @@
+[
+  {
+    "payload": "{\"test\": \"test_name\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_karma\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_points\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_fans\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_str\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_comparison\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_add_more_karma\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_properties\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_users_do_not_share_state\"}"
+  }
+]

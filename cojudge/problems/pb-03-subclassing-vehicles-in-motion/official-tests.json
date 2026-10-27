@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_vehicle\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_car\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_motorbike\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_keyword_arguments\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_subclasses_inherit_from_vehicle\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_subclass_constructor_uses_super[cls0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_subclass_constructor_uses_super[cls1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rev_engine_reuses_description\"}"
+  }
+]

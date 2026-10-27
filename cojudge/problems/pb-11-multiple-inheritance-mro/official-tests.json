@@ -1,0 +1,32 @@
+[
+  {
+    "payload": "{\"test\": \"test_mro\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_inheritance\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_str[cls0-I am a person]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_str[cls1-I am a person and cool daddy]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_str[cls2-I am a person and awesome mom]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_str[cls3-I am the coolest kid]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_person_text_only_in_base_class[cls0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_person_text_only_in_base_class[cls1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_person_text_only_in_base_class[cls2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_print\"}"
+  }
+]

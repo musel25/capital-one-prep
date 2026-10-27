@@ -1,0 +1,17 @@
+[
+  {
+    "payload": "{\"test\": \"test_zoo_string\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_next_animal_continues_the_sequence\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_title_case\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_zoo_is_a_classmethod\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_sequence_is_shared_by_all_instances\"}"
+  }
+]

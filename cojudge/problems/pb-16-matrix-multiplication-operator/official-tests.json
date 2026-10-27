@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_matmul\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_matmul_does_not_change_operands\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_not_commutative\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rmatmul\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_imatmul\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_non_square\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_identity_and_vector\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_repr\"}"
+  }
+]
