@@ -11,6 +11,8 @@ A JSON parser can accept a value that your API cannot use. Validation is a separ
 
 </details>
 
+**Scenario:** A transfers API receives JSON request bodies from client apps. Before the API stores anything, it validates the body. The apps need all field errors at once, in a fixed order, so they can show them next to the form fields.
+
 **Input:** `data` has:
 - `bodies`: a list of decoded JSON values of any type.
 

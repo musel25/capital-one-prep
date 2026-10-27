@@ -8,17 +8,17 @@
     {
       "input": "{\"template\": {\"limits\": {\"daily\": 1, \"monthly\": 10}, \"tags\": [\"base\"]}, \"changes\": [{\"daily\": 2}, {\"tag\": \"new\"}]}",
       "output": "{\"template\": {\"limits\": {\"daily\": 1, \"monthly\": 10}, \"tags\": [\"base\"]}, \"copies\": [{\"limits\": {\"daily\": 2, \"monthly\": 10}, \"tags\": [\"base\"]}, {\"limits\": {\"daily\": 1, \"monthly\": 10}, \"tags\": [\"base\", \"new\"]}]}",
-      "explanation": "copies and template stay independent"
+      "explanation": "The first copy sets `daily` to 2. The second copy only adds the tag `new`, so its `daily` is still 1. The template does not change."
     },
     {
       "input": "{\"template\": {\"limits\": {\"daily\": 5, \"monthly\": 50}, \"tags\": []}, \"changes\": [{\"daily\": 0, \"monthly\": 0, \"tag\": \"x\"}]}",
       "output": "{\"template\": {\"limits\": {\"daily\": 5, \"monthly\": 50}, \"tags\": []}, \"copies\": [{\"limits\": {\"daily\": 0, \"monthly\": 0}, \"tags\": [\"x\"]}]}",
-      "explanation": "one change can update all fields"
+      "explanation": "One change sets both limits to 0 and adds the tag `x`."
     },
     {
       "input": "{\"template\": {\"limits\": {\"daily\": 0, \"monthly\": 0}, \"tags\": []}, \"changes\": []}",
       "output": "{\"template\": {\"limits\": {\"daily\": 0, \"monthly\": 0}, \"tags\": []}, \"copies\": []}",
-      "explanation": "no requested copies"
+      "explanation": "No changes, so no copies."
     }
   ],
   "starterCode": {

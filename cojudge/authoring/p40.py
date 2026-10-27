@@ -33,7 +33,9 @@ rng=random.Random(40)
 SPEC={"number":40,"slug":"transactional-outbox","title":"Write an order and its outbox event atomically","difficulty":"Hard","time":30,
 "prerequisites":"SQL transactions, primary keys, and idempotent requests.",
 "learn":"A business write and a message publish cannot normally share a local database transaction. A transactional outbox stores the intended event beside the business record instead. One database transaction inserts both rows. A separate worker can later publish committed outbox rows and retry delivery. This task covers the producer boundary only. A failure after either insert must leave neither row behind. A repeated order ID with the same amount must not create another event. A repeated ID with a different amount is a conflict. Atomic outbox insertion prevents missing event records, but it does not itself guarantee exactly one delivery to consumers.",
-"task":('**Input:** `data` has:\n'
+"scenario": ('When an order is saved, other services must hear about it through an event. If the order is saved but the event is lost, or the reverse, the systems disagree. The outbox pattern writes the order and its event in one transaction.'),
+ "example_notes": ['The order and its event are saved together.', 'A fault after the order insert: neither row stays.', 'The same ID and amount again: `replay`, with no second order.'],
+ "task":('**Input:** `data` has:\n'
     '- `orders`: an ordered list of `{"id": ..., "amount": ..., "fail": ...}`. `fail` is `"none"`, `"business"` (a fault after the order insert), or `"event"` (a fault after the outbox insert).\n'
     '\n'
     '**Rules:** for each order:\n'

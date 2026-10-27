@@ -8,17 +8,17 @@
     {
       "input": "{\"balances\": {\"a\": 5, \"b\": 0}, \"payments\": [{\"key\": \"k\", \"from\": \"a\", \"to\": \"b\", \"amount\": 2, \"fail\": \"none\"}]}",
       "output": "{\"results\": [\"ok\"], \"balances\": {\"a\": 3, \"b\": 2}, \"events\": [[\"k\", \"a\", \"b\", 2]]}",
-      "explanation": "payment commits balance changes and event"
+      "explanation": "A normal payment of 2 creates one event."
     },
     {
       "input": "{\"balances\": {\"a\": 5, \"b\": 0}, \"payments\": [{\"key\": \"k\", \"from\": \"a\", \"to\": \"b\", \"amount\": 2, \"fail\": \"none\"}, {\"key\": \"k\", \"from\": \"a\", \"to\": \"b\", \"amount\": 2, \"fail\": \"none\"}]}",
       "output": "{\"results\": [\"ok\", \"replay\"], \"balances\": {\"a\": 3, \"b\": 2}, \"events\": [[\"k\", \"a\", \"b\", 2]]}",
-      "explanation": "retry has no duplicate effect or event"
+      "explanation": "The same key again: `replay`, with no second debit or event."
     },
     {
       "input": "{\"balances\": {\"a\": 5, \"b\": 0}, \"payments\": [{\"key\": \"k\", \"from\": \"a\", \"to\": \"b\", \"amount\": 2, \"fail\": \"debit\"}, {\"key\": \"k\", \"from\": \"a\", \"to\": \"b\", \"amount\": 2, \"fail\": \"none\"}]}",
       "output": "{\"results\": [\"failed\", \"ok\"], \"balances\": {\"a\": 3, \"b\": 2}, \"events\": [[\"k\", \"a\", \"b\", 2]]}",
-      "explanation": "retry after partial staged debit"
+      "explanation": "The first attempt fails, so the key is not stored. The retry succeeds."
     }
   ],
   "starterCode": {

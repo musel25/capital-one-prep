@@ -11,6 +11,8 @@ Receiving a queue message can hide it for a limited time without deleting it. If
 
 </details>
 
+**Scenario:** A job queue hides a message for `timeout` time units after a worker receives it. If the worker does not finish in time, the message becomes visible again, and another worker can take it. Each receipt gets a new token, so a slow first worker cannot acknowledge a message that another worker now owns.
+
 **Input:** `data` has:
 - `messages`: unique IDs in queue order.
 - `timeout`: a positive visibility duration.

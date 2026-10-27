@@ -13,6 +13,10 @@ A pagination client needs a completion condition and guards against faulty upstr
 
 </details>
 
+**Scenario:** Your service downloads a full list from a partner API, page by page, and follows the `next` cursor of each page. The partner API is unreliable: it can loop, fail, or point to pages that do not exist. Your client must stop safely and keep what it already has. `pages` is a recorded copy of the partner's responses.
+
+> **Bug report:** "The partner API returned an empty page that still had a `next` cursor. Our import stopped there and missed all the later items."
+
 **Input:** `data` has:
 - `start`: the first cursor.
 - `max_pages`: the maximum number of page requests.

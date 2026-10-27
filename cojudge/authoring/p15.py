@@ -14,6 +14,8 @@ SPEC = {'number': 15,
           'call it. This is polymorphism through a shared interface. Integer arithmetic can also '
           'make a percentage fee exact. To round a nonnegative integer fraction upward, add '
           'denominator minus one before integer division.',
+ 'scenario': ('A payment processor charges merchants a fee on each sale. Some merchants pay a flat fee. Others pay a percentage, given in basis points. The processor never undercharges, so a percentage fee rounds up to the next cent.'),
+ 'example_notes': ['A flat fee of 3, also on a sale of 0.', '2.5%: 100 → 2.5, rounded up to 3. 200 → 5. 1 → 0.025, rounded up to 1.', 'No sales.'],
  'task': ('**Input:** `data` has:\n'
     '- `policy`: one of these:\n'
     '  - `{"kind": "flat", "cents": int}`, with nonnegative `cents`.\n'

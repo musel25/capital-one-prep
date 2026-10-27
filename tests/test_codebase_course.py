@@ -47,3 +47,15 @@ def test_guided_repairs_are_runnable_and_do_not_expose_ai_answers(tmp_path):
         folder = tmp_path / "problems" / record["id"]
         assert lesson["ai_answer"] not in (folder / "statement.md").read_text()
         assert lesson["ai_answer"] in (folder / "solution.md").read_text()
+
+
+def test_bug_reports_describe_the_starter_defect():
+    from cojudge.codebase.lessons import LESSONS
+    from cojudge.codebase.support import load_codebase_specs
+
+    for spec, lesson in zip(load_codebase_specs(), LESSONS):
+        check = lesson["ticket_check"]
+        starter = python_solver(spec["starter"])(copy.deepcopy(check["input"]))
+        reference = python_solver(spec["reference"])(copy.deepcopy(check["input"]))
+        assert json_equal(starter, check["starter_output"]), spec["title"]
+        assert not json_equal(reference, check["starter_output"]), spec["title"]

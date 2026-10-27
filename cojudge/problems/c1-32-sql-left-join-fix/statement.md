@@ -11,6 +11,8 @@ A LEFT JOIN keeps each row from its left table even when no right-table row matc
 
 </details>
 
+**Scenario:** A monthly report lists every customer with their paid payments. Customers with no paid payments must also appear, so account managers can contact them. The current query loses those customers.
+
 **Bug fix.** The `report_rows(connection)` query is intentionally faulty. Fix it.
 
 **Input:** `data` has the lists `customers` and `payments`. The scaffold loads them into:

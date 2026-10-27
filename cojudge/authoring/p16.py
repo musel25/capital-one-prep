@@ -13,6 +13,8 @@ SPEC = {'number': 16,
           'moves the process forward. Terminal states may have no valid outgoing actions. This '
           'exercise models one order with a small set of named states. It uses a boolean result '
           'for each request so a caller can see exactly which requests were accepted.',
+ 'scenario': ('An online store tracks the payment of each order with a state machine. An order is authorized, then captured (the money is taken), then maybe refunded. It can be cancelled only before capture. `solve` processes the actions that arrive and reports which ones were valid.'),
+ 'example_notes': ['The normal path: authorize, capture, then refund.', 'Capture before authorize is invalid. A second authorize is invalid.', 'No actions, so the order stays `NEW`.'],
  'task': ('**Input:** `data` has:\n'
     '- `actions`: a list of strings. Each is `authorize`, `capture`, `cancel`, or `refund`.\n'
     '\n'

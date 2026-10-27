@@ -13,6 +13,8 @@ SPEC = {'number': 17,
           'transfers. Publish the working copy only after every transfer succeeds. On failure, '
           'discard it. This method is a simulation of atomic behavior within one call. It does not '
           'create a database transaction or protect the state from concurrent callers.',
+ 'scenario': ('A payroll system sends transfers in batches. A batch is all-or-nothing: if one transfer in it fails, none of the batch happens. Operations report that after a failed batch, some money moved anyway.'),
+ 'example_notes': ['6 from A leaves 4. Then 5 from A fails, so the whole batch is rejected and A keeps 10.', "A → B 7, then B → C 7 uses B's new balance. Both succeed.", 'No accounts and no batches.'],
  'task': ('**Bug fix.** The starter keeps part of a rejected batch (a partial write). Repair it.\n'
     '\n'
     '**Input:** `data` has:\n'

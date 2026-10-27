@@ -95,6 +95,8 @@ def validate_spec(spec):
         encode(case["expected"])
         if not case.get("label"):
             raise ValueError("Explicit cases need labels")
+    if "example_notes" in spec and len(spec["example_notes"]) != 3:
+        raise ValueError("example_notes must explain the first three cases")
     if not spec["mutations"]:
         raise ValueError("Need at least one realistic mutation")
     for mutation in spec["mutations"]:
@@ -262,8 +264,8 @@ def build_problem(spec, destination):
     cases = all_cases(spec)
     examples = [
         {"input": json.dumps(c["input"], ensure_ascii=True),
-         "output": json.dumps(c["expected"], ensure_ascii=True), "explanation": c["label"]}
-        for c in cases[:3]
+         "output": json.dumps(c["expected"], ensure_ascii=True), "explanation": note}
+        for c, note in zip(cases[:3], spec.get("example_notes", [c["label"] for c in cases[:3]]))
     ]
     metadata = {
         "id": problem_id, "title": f"{spec['number']:02d}. {spec['title']}",
@@ -277,6 +279,8 @@ def build_problem(spec, destination):
         "outputType": "string", "hints": spec["hints"],
     }
     # CoJudge renders metadata examples between the text before "**Constraints:**" and the rest.
+    scenario = f"**Scenario:** {spec['scenario'].strip()}\n\n" if spec.get("scenario") else ""
+    ticket = f"> **Bug report:** {spec['ticket'].strip()}\n\n" if spec.get("ticket") else ""
     fix = f"\n\n**What to fix:** {spec['fix'].strip()}" if spec.get("fix") else ""
     practice = (f"\n\n<details>\n<summary><strong>Practice steps</strong> (trace, tests, AI review)</summary>\n\n"
                 f"{spec['practice'].strip()}\n\n</details>") if spec.get("practice") else ""
@@ -294,7 +298,7 @@ def build_problem(spec, destination):
 
 </details>
 
-{spec['task'].strip()}{fix}
+{scenario}{ticket}{spec['task'].strip()}{fix}
 
 **Constraints:**
 

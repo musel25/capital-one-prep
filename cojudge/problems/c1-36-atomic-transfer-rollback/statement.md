@@ -11,6 +11,8 @@ A transfer changes two balances. Both changes must commit, or neither change mus
 
 </details>
 
+**Scenario:** A bank moves money between accounts in a SQLite database. A transfer is a debit plus a credit. If something fails between them, the database must look as if the transfer never started. Operations report that money disappears after failures.
+
 **Bug fix.** Repair the faulty `solve(data)` implementation.
 
 **Input:** `data` has:

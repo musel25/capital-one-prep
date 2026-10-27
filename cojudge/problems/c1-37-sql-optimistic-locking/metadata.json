@@ -8,17 +8,17 @@
     {
       "input": "{\"version\": 0, \"value\": \"old\", \"updates\": [{\"expected\": 0, \"value\": \"new\"}]}",
       "output": "{\"accepted\": [true], \"value\": \"new\", \"version\": 1}",
-      "explanation": "matching version updates"
+      "explanation": "A save based on version 0 succeeds, and the version becomes 1."
     },
     {
       "input": "{\"version\": 2, \"value\": \"old\", \"updates\": [{\"expected\": 1, \"value\": \"new\"}]}",
       "output": "{\"accepted\": [false], \"value\": \"old\", \"version\": 2}",
-      "explanation": "stale writer is rejected"
+      "explanation": "A save based on the old version 1, while the current version is 2: rejected."
     },
     {
       "input": "{\"version\": 0, \"value\": \"old\", \"updates\": [{\"expected\": 0, \"value\": \"one\"}, {\"expected\": 0, \"value\": \"two\"}]}",
       "output": "{\"accepted\": [true, false], \"value\": \"one\", \"version\": 1}",
-      "explanation": "two readers share a version"
+      "explanation": "Two saves based on version 0: only the first one wins."
     }
   ],
   "starterCode": {

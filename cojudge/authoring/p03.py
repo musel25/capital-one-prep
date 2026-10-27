@@ -13,6 +13,15 @@ SPEC = {'number': 3,
           'merges these states and can replace a valid zero. Write the decision in the same order '
           'as the contract: first check membership, then inspect the stored value. This makes '
           'defaults explicit and avoids an accidental change to a caller’s configuration.',
+ 'scenario': ('You work on the alert service of a banking app. Each customer can set a daily limit for push alerts. The app stores one settings record per customer. Before the service sends alerts, it calls `solve` to get the real limit of each customer.\n'
+    '\n'
+    'A record can be in three states:\n'
+    '- The customer never opened the setting: there is no `limit` key, so use the company default.\n'
+    '- The customer chose "no limit": `limit` is `null`. Keep `null`, so the service does not cap their alerts.\n'
+    '- The customer chose a number: keep it. `0` means "send me no alerts".\n'
+    '\n'
+    'The product team also counts how many customers set their own limit (a number, including 0).'),
+ 'example_notes': ['Customer 1 never set a limit (default 10). Customer 2 chose no limit. Customer 3 muted alerts (0). Customer 4 chose 4. Customers 3 and 4 set a number, so `configured` is 2.', 'Two customers both chose 2. Count customers, not different values.', 'No customers in this batch.'],
  'task': ('**Input:** `data` has:\n'
     '- `default`: a nonnegative integer.\n'
     '- `records`: a list of objects. A record can have a `limit` key whose value is a nonnegative integer or `null`. Ignore all other keys.\n'

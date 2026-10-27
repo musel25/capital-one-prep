@@ -47,7 +47,9 @@ for i in range(24):
  generated.append({"stock":i,"ops":ops})
 SPEC={"number":49,"slug":"reservation-expiry","title":"Expire reservations and make transitions idempotent","difficulty":"Hard","time":40,"prerequisites":"State machines, inventory invariants, and idempotency.",
 "learn":"A reservation temporarily removes stock from the available pool. Confirmation makes that allocation permanent. Release or expiry returns the held stock, but must do so only once. Terminal states prevent repeated commands from creating extra stock. An idempotent reserve retry also must not extend the original deadline. Here each accepted reservation retains its ID, payload, and final state. Insufficient attempts create no record and may retry later. Expire held records before processing every command, including commands for another ID. This makes the exact expiry boundary explicit. The task is a deterministic event trace, not an actual parallel, thread, or network test.",
-"task":('**Input:** `data` has:\n'
+"scenario": ('A ticket site holds seats in a cart for a short time. If the customer does not pay before the hold expires, the seats go back on sale. Clients can send a request again, so a repeated request must be safe.'),
+ "example_notes": ['Hold 2 seats, then confirm at 4, before the expiry at 5.', 'At 5 the hold expires. The confirm returns `expired`, and the seats come back.', 'A second release returns `released` again. The seats come back only once.'],
+ "task":('**Input:** `data` has:\n'
     '- `stock`: the starting integer stock.\n'
     '- `ops`: a list of operations. Each has `at` (times never decrease), `id`, and `op`.\n'
     '\n'

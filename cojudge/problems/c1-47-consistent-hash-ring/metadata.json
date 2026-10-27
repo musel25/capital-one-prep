@@ -8,17 +8,17 @@
     {
       "input": "{\"nodes\": [{\"id\": \"a\", \"hash\": 100}, {\"id\": \"b\", \"hash\": 500}], \"ops\": [{\"op\": \"lookup\", \"hash\": 101}]}",
       "output": "{\"results\": [\"b\"], \"ring\": [[100, \"a\"], [500, \"b\"]]}",
-      "explanation": "clockwise successor"
+      "explanation": "Hash 101 goes to the next server, at 500: `b`."
     },
     {
       "input": "{\"nodes\": [{\"id\": \"a\", \"hash\": 100}, {\"id\": \"b\", \"hash\": 500}], \"ops\": [{\"op\": \"lookup\", \"hash\": 100}]}",
       "output": "{\"results\": [\"a\"], \"ring\": [[100, \"a\"], [500, \"b\"]]}",
-      "explanation": "exact hash belongs to that node"
+      "explanation": "Hash 100 is exactly at the point of `a`."
     },
     {
       "input": "{\"nodes\": [{\"id\": \"a\", \"hash\": 100}, {\"id\": \"b\", \"hash\": 500}], \"ops\": [{\"op\": \"lookup\", \"hash\": 999}]}",
       "output": "{\"results\": [\"a\"], \"ring\": [[100, \"a\"], [500, \"b\"]]}",
-      "explanation": "wrap past final point"
+      "explanation": "Hash 999 is after the last server, so it wraps around to `a`."
     }
   ],
   "starterCode": {

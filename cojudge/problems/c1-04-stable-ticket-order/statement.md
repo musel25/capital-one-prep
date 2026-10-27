@@ -11,6 +11,8 @@ A sort key can express several business rules. Python compares tuples from left 
 
 </details>
 
+**Scenario:** A support desk shows agents one queue of tickets. Agents take tickets from the top. Urgent tickets (higher priority) come first. For equal priority, the oldest ticket comes first. If both are equal, keep the order in which the system received them. `solve` returns the queue order.
+
 **Input:** `data` has:
 - `tickets`: a list of objects with `id` (string), `priority` (integer 0–9), and `created` (integer 0–1,000,000). IDs are not always unique.
 

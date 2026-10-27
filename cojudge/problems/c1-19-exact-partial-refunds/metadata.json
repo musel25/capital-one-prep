@@ -8,17 +8,17 @@
     {
       "input": "{\"payments\": {\"p\": 100}, \"refunds\": [{\"payment\": \"p\", \"cents\": 30}, {\"payment\": \"p\", \"cents\": 80}, {\"payment\": \"p\", \"cents\": 70}]}",
       "output": "{\"accepted\": [true, false, true], \"remaining\": {\"p\": 0}}",
-      "explanation": "cumulative cap and failure preservation"
+      "explanation": "A refund of 30 leaves 70. 80 is too much, so it is rejected. 70 is accepted and leaves 0."
     },
     {
       "input": "{\"payments\": {\"a\": 50, \"b\": 20}, \"refunds\": [{\"payment\": \"b\", \"cents\": 20}, {\"payment\": \"a\", \"cents\": 10}]}",
       "output": "{\"accepted\": [true, true], \"remaining\": {\"a\": 40, \"b\": 0}}",
-      "explanation": "separate payment state"
+      "explanation": "Each payment has its own remaining amount."
     },
     {
       "input": "{\"payments\": {}, \"refunds\": []}",
       "output": "{\"accepted\": [], \"remaining\": {}}",
-      "explanation": "no payments"
+      "explanation": "No payments."
     }
   ],
   "starterCode": {

@@ -8,17 +8,17 @@
     {
       "input": "{\"records\": [{\"id\": 3, \"ts\": 2}, {\"id\": 2, \"ts\": 1}, {\"id\": 1, \"ts\": 1}], \"actions\": [{\"op\": \"page\", \"after\": null, \"limit\": 2}]}",
       "output": "[{\"ids\": [1, 2], \"next\": [1, 2]}]",
-      "explanation": "timestamp ties use id"
+      "explanation": "Records 1 and 2 both have ts 1, so the id breaks the tie. More rows remain, so `next` is `[1, 2]`."
     },
     {
       "input": "{\"records\": [{\"id\": 1, \"ts\": 10}, {\"id\": 2, \"ts\": 20}], \"actions\": [{\"op\": \"page\", \"after\": null, \"limit\": 1}, {\"op\": \"insert\", \"record\": {\"id\": 3, \"ts\": 5}}, {\"op\": \"page\", \"after\": [10, 1], \"limit\": 1}]}",
       "output": "[{\"ids\": [1], \"next\": [10, 1]}, {\"ids\": [2], \"next\": null}]",
-      "explanation": "insertion before cursor does not shift page"
+      "explanation": "Record 3 (ts 5) is inserted before the cursor, so the next page does not include it."
     },
     {
       "input": "{\"records\": [{\"id\": 1, \"ts\": 10}, {\"id\": 2, \"ts\": 20}], \"actions\": [{\"op\": \"page\", \"after\": null, \"limit\": 1}, {\"op\": \"insert\", \"record\": {\"id\": 3, \"ts\": 15}}, {\"op\": \"page\", \"after\": [10, 1], \"limit\": 1}]}",
       "output": "[{\"ids\": [1], \"next\": [10, 1]}, {\"ids\": [3], \"next\": [15, 3]}]",
-      "explanation": "new row after cursor can appear"
+      "explanation": "Record 3 (ts 15) is inserted after the cursor, so the next page shows it."
     }
   ],
   "starterCode": {

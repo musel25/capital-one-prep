@@ -11,6 +11,8 @@ Replicas can lag behind a completed write. A client can carry the version of its
 
 </details>
 
+**Scenario:** A database has several replicas that can lag behind. After a user saves data, the app gets a write token (a version). The user's next read must go to a replica that has at least that version, so the user sees their own change.
+
 **Input:** `data` has:
 - `replicas`: a list of `{"id": ..., "version": ..., "value": ...}`, with unique IDs.
 - `ops`: a list of operations:

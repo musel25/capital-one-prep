@@ -11,6 +11,8 @@ A cached response can carry a validator called an entity tag, or ETag. The clien
 
 </details>
 
+**Scenario:** A content API serves one document. Clients cache it and send the ETag of their cached copy. If their copy is still current, the API answers 304 with no body, which saves bandwidth. Each update creates a new version.
+
 **Input:** `data` has:
 - `initial`: `{"version": positive int, "body": string}`.
 - `requests`: a list of `{"op": "put", "body": string}` or `{"op": "get", "tags": null | [tag, ...]}`.

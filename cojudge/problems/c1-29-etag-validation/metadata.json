@@ -8,17 +8,17 @@
     {
       "input": "{\"initial\": {\"version\": 1, \"body\": \"hello\"}, \"requests\": [{\"op\": \"get\", \"tags\": null}]}",
       "output": "[{\"status\": 200, \"etag\": \"\\\"v1\\\"\", \"body\": \"hello\"}]",
-      "explanation": "unconditional read returns representation"
+      "explanation": "No tag, so the API sends the body."
     },
     {
       "input": "{\"initial\": {\"version\": 1, \"body\": \"hello\"}, \"requests\": [{\"op\": \"get\", \"tags\": [\"\\\"v1\\\"\"]}]}",
       "output": "[{\"status\": 304, \"etag\": \"\\\"v1\\\"\", \"body\": null}]",
-      "explanation": "matching tag avoids body"
+      "explanation": "The client's tag matches the current version: 304 with no body."
     },
     {
       "input": "{\"initial\": {\"version\": 1, \"body\": \"hello\"}, \"requests\": [{\"op\": \"put\", \"body\": \"new\"}, {\"op\": \"get\", \"tags\": [\"\\\"v1\\\"\"]}]}",
       "output": "[{\"status\": 200, \"etag\": \"\\\"v2\\\"\", \"body\": \"new\"}, {\"status\": 200, \"etag\": \"\\\"v2\\\"\", \"body\": \"new\"}]",
-      "explanation": "write invalidates old validator"
+      "explanation": "After the update the version is 2, so the old tag `\"v1\"` does not match."
     }
   ],
   "starterCode": {

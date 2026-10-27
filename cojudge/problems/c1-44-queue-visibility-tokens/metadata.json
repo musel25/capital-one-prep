@@ -8,17 +8,17 @@
     {
       "input": "{\"messages\": [\"a\"], \"timeout\": 5, \"ops\": [{\"op\": \"receive\", \"at\": 0}, {\"op\": \"ack\", \"at\": 4, \"id\": \"a\", \"token\": 1}]}",
       "output": "{\"results\": [{\"id\": \"a\", \"token\": 1}, true], \"pending\": []}",
-      "explanation": "ack before visibility timeout"
+      "explanation": "Received at 0 and acknowledged at 4, before the deadline of 5."
     },
     {
       "input": "{\"messages\": [\"a\"], \"timeout\": 5, \"ops\": [{\"op\": \"receive\", \"at\": 0}, {\"op\": \"receive\", \"at\": 5}, {\"op\": \"ack\", \"at\": 6, \"id\": \"a\", \"token\": 1}, {\"op\": \"ack\", \"at\": 6, \"id\": \"a\", \"token\": 2}]}",
       "output": "{\"results\": [{\"id\": \"a\", \"token\": 1}, {\"id\": \"a\", \"token\": 2}, false, true], \"pending\": []}",
-      "explanation": "redelivery invalidates stale token"
+      "explanation": "Redelivered at 5 with token 2. The old token 1 fails. Token 2 succeeds."
     },
     {
       "input": "{\"messages\": [\"a\"], \"timeout\": 5, \"ops\": [{\"op\": \"receive\", \"at\": 0}, {\"op\": \"ack\", \"at\": 5, \"id\": \"a\", \"token\": 1}]}",
       "output": "{\"results\": [{\"id\": \"a\", \"token\": 1}, false], \"pending\": [\"a\"]}",
-      "explanation": "ack at timeout is too late"
+      "explanation": "The acknowledgement at 5 is too late (the deadline is 5), so the message stays pending."
     }
   ],
   "starterCode": {

@@ -8,17 +8,17 @@
     {
       "input": "{\"requests\": [{\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 10}}, {\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 10}}]}",
       "output": "{\"responses\": [{\"status\": 201, \"body\": {\"id\": 1, \"to\": \"a\", \"amount\": 10}, \"replayed\": false}, {\"status\": 201, \"body\": {\"id\": 1, \"to\": \"a\", \"amount\": 10}, \"replayed\": true}], \"transfers\": [{\"id\": 1, \"to\": \"a\", \"amount\": 10}]}",
-      "explanation": "same key and body replay one transfer"
+      "explanation": "The second request is a retry with the same key and body. The API returns the first result and creates nothing new."
     },
     {
       "input": "{\"requests\": [{\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 10}}, {\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 11}}]}",
       "output": "{\"responses\": [{\"status\": 201, \"body\": {\"id\": 1, \"to\": \"a\", \"amount\": 10}, \"replayed\": false}, {\"status\": 409, \"body\": {\"error\": \"key_conflict\"}, \"replayed\": false}], \"transfers\": [{\"id\": 1, \"to\": \"a\", \"amount\": 10}]}",
-      "explanation": "same key with changed amount conflicts"
+      "explanation": "The same key with a different amount: 409 conflict."
     },
     {
       "input": "{\"requests\": [{\"key\": \"k\", \"body\": {\"to\": \"a\", \"amount\": 10}}, {\"key\": \"j\", \"body\": {\"to\": \"a\", \"amount\": 10}}]}",
       "output": "{\"responses\": [{\"status\": 201, \"body\": {\"id\": 1, \"to\": \"a\", \"amount\": 10}, \"replayed\": false}, {\"status\": 201, \"body\": {\"id\": 2, \"to\": \"a\", \"amount\": 10}, \"replayed\": false}], \"transfers\": [{\"id\": 1, \"to\": \"a\", \"amount\": 10}, {\"id\": 2, \"to\": \"a\", \"amount\": 10}]}",
-      "explanation": "different keys permit same body"
+      "explanation": "Two different keys create two transfers."
     }
   ],
   "starterCode": {

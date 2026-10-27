@@ -8,17 +8,17 @@
     {
       "input": "{\"kind\": \"standard\", \"balance\": 20, \"fee\": 2, \"threshold\": 10, \"withdrawals\": [10, 8]}",
       "output": "{\"accepted\": [true, false], \"balance\": 8}",
-      "explanation": "fee is part of the funds check"
+      "explanation": "Standard: 10 + 2 = 12 leaves 8. Then 8 + 2 = 10 is more than 8, so it is rejected."
     },
     {
       "input": "{\"kind\": \"premium\", \"balance\": 20, \"fee\": 2, \"threshold\": 10, \"withdrawals\": [10, 8]}",
       "output": "{\"accepted\": [true, true], \"balance\": 0}",
-      "explanation": "premium fee override"
+      "explanation": "Premium: 10 is at the threshold, so there is no fee and 10 remains. Then 8 + 2 = 10 leaves 0."
     },
     {
       "input": "{\"kind\": \"premium\", \"balance\": 10, \"fee\": 3, \"threshold\": 10, \"withdrawals\": []}",
       "output": "{\"accepted\": [], \"balance\": 10}",
-      "explanation": "no withdrawals"
+      "explanation": "No withdrawals."
     }
   ],
   "starterCode": {

@@ -8,17 +8,17 @@
     {
       "input": "{\"accounts\": {\"A\": 10, \"B\": 0}, \"batches\": [[{\"from\": \"A\", \"to\": \"B\", \"cents\": 6}, {\"from\": \"A\", \"to\": \"B\", \"cents\": 5}]]}",
       "output": "{\"accepted\": [false], \"balances\": {\"A\": 10, \"B\": 0}}",
-      "explanation": "late failure rolls back earlier transfer"
+      "explanation": "6 from A leaves 4. Then 5 from A fails, so the whole batch is rejected and A keeps 10."
     },
     {
       "input": "{\"accounts\": {\"A\": 10, \"B\": 0, \"C\": 0}, \"batches\": [[{\"from\": \"A\", \"to\": \"B\", \"cents\": 7}, {\"from\": \"B\", \"to\": \"C\", \"cents\": 7}]]}",
       "output": "{\"accepted\": [true], \"balances\": {\"A\": 3, \"B\": 0, \"C\": 7}}",
-      "explanation": "earlier transfer funds later transfer"
+      "explanation": "A \u2192 B 7, then B \u2192 C 7 uses B's new balance. Both succeed."
     },
     {
       "input": "{\"accounts\": {}, \"batches\": []}",
       "output": "{\"accepted\": [], \"balances\": {}}",
-      "explanation": "no accounts or batches"
+      "explanation": "No accounts and no batches."
     }
   ],
   "starterCode": {

@@ -8,17 +8,17 @@
     {
       "input": "{\"orders\": [{\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}]}",
       "output": "{\"results\": [\"ok\"], \"orders\": [[\"a\", 2]], \"events\": [[\"a\", 2]]}",
-      "explanation": "business record and event commit"
+      "explanation": "The order and its event are saved together."
     },
     {
       "input": "{\"orders\": [{\"id\": \"a\", \"amount\": 2, \"fail\": \"business\"}]}",
       "output": "{\"results\": [\"failed\"], \"orders\": [], \"events\": []}",
-      "explanation": "failure between writes"
+      "explanation": "A fault after the order insert: neither row stays."
     },
     {
       "input": "{\"orders\": [{\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}, {\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}]}",
       "output": "{\"results\": [\"ok\", \"replay\"], \"orders\": [[\"a\", 2]], \"events\": [[\"a\", 2]]}",
-      "explanation": "retry creates no duplicate event"
+      "explanation": "The same ID and amount again: `replay`, with no second order."
     }
   ],
   "starterCode": {

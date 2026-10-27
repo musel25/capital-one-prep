@@ -11,6 +11,8 @@ A reliable payment boundary combines rules that are easy to implement incorrectl
 
 </details>
 
+**Scenario:** A payment service combines three parts from earlier problems: idempotency keys, atomic balance updates, and an outbox event. Each payment request moves money between two accounts and emits one event.
+
 **Input:** `data` has:
 - `balances`: maps existing account IDs to nonnegative integer balances.
 - `payments`: a list of `{"key": ..., "from": ..., "to": ..., "amount": ..., "fail": ...}`. The two accounts exist and differ. `amount` is positive. `fail` is `"none"`, `"debit"` (a fault after the debit is staged), or `"outbox"` (a fault after the event is prepared).

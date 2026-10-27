@@ -14,6 +14,8 @@ SPEC = {'number': 20,
           'funds. Retrying it cannot later turn the same ID into a different operation. A new ID '
           'is required for a new attempt. Keep duplicate detection before balance changes and '
           'check funds before either side of a transfer changes.',
+ 'scenario': ('A wallet app processes transfer events from a queue. Each event has an ID. The queue can send an event again, and a faulty client can reuse an ID for a different transfer. Each ID is applied at most once, and the system remembers it even when the first attempt failed for lack of funds.'),
+ 'example_notes': ['`x` moves 4 from A to B. The same `x` again is a duplicate. `x` with 5 cents is a conflict.', '`x` first fails because A has 0. After A gets money, the same `x` is still a duplicate, not a new try. A new ID moves the money.', 'No accounts and no events.'],
  'task': ('**Input:** `data` has:\n'
     '- `accounts`: maps account IDs to nonnegative integer cents.\n'
     '- `events`: a list of `{"id": string, "from": account_id, "to": account_id, "cents": int}`, with nonnegative `cents`. Both accounts exist.\n'

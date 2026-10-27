@@ -11,6 +11,8 @@ Composition gives an object another object that performs part of its work. A sma
 
 </details>
 
+**Scenario:** A payment processor charges merchants a fee on each sale. Some merchants pay a flat fee. Others pay a percentage, given in basis points. The processor never undercharges, so a percentage fee rounds up to the next cent.
+
 **Input:** `data` has:
 - `policy`: one of these:
   - `{"kind": "flat", "cents": int}`, with nonnegative `cents`.

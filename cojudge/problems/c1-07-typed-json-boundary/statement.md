@@ -11,6 +11,8 @@ TypedDict describes the expected keys and value types in a dictionary for a stat
 
 </details>
 
+**Scenario:** A partner bank sends payment records to your API as JSON. Some records are broken: wrong types, missing fields, or not objects at all. `solve` is the boundary check. It keeps the clean records (only `id` and `amount`) and reports the positions of the rejected ones, so the partner can send them again.
+
 **Input:** `data` has:
 - `records`: a list of any JSON values.
 

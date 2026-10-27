@@ -8,17 +8,17 @@
     {
       "input": "{\"names\": [\"A\", \"B\"], \"actions\": [{\"box\": 0, \"item\": \"pen\"}]}",
       "output": "[{\"name\": \"A\", \"items\": [\"pen\"]}, {\"name\": \"B\", \"items\": []}]",
-      "explanation": "one box must not change another"
+      "explanation": "The pen goes into box A only. Box B stays empty."
     },
     {
       "input": "{\"names\": [\"A\", \"B\"], \"actions\": [{\"box\": 1, \"item\": \"book\"}, {\"box\": 0, \"item\": \"pen\"}, {\"box\": 1, \"item\": \"paper\"}]}",
       "output": "[{\"name\": \"A\", \"items\": [\"pen\"]}, {\"name\": \"B\", \"items\": [\"book\", \"paper\"]}]",
-      "explanation": "independent item order"
+      "explanation": "Box B gets the book and the paper. Box A gets the pen."
     },
     {
       "input": "{\"names\": [], \"actions\": []}",
       "output": "[]",
-      "explanation": "no boxes"
+      "explanation": "No boxes."
     }
   ],
   "starterCode": {

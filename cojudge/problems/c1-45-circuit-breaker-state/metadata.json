@@ -8,17 +8,17 @@
     {
       "input": "{\"threshold\": 2, \"cooldown\": 5, \"calls\": [{\"at\": 0, \"ok\": false}, {\"at\": 1, \"ok\": false}]}",
       "output": "{\"results\": [{\"mode\": \"closed\", \"result\": \"failure\", \"state\": \"closed\"}, {\"mode\": \"closed\", \"result\": \"failure\", \"state\": \"open\"}], \"state\": \"open\", \"failures\": 2, \"retry_at\": 6}",
-      "explanation": "consecutive failures open breaker"
+      "explanation": "Two failures reach the threshold of 2, so the breaker is open until 6."
     },
     {
       "input": "{\"threshold\": 1, \"cooldown\": 5, \"calls\": [{\"at\": 0, \"ok\": false}, {\"at\": 4, \"ok\": true}]}",
       "output": "{\"results\": [{\"mode\": \"closed\", \"result\": \"failure\", \"state\": \"open\"}, {\"mode\": \"blocked\", \"result\": \"blocked\", \"state\": \"open\"}], \"state\": \"open\", \"failures\": 1, \"retry_at\": 5}",
-      "explanation": "open breaker ignores supplied outcome"
+      "explanation": "The call at 4 is before `retry_at` 5, so it is blocked."
     },
     {
       "input": "{\"threshold\": 1, \"cooldown\": 5, \"calls\": [{\"at\": 0, \"ok\": false}, {\"at\": 5, \"ok\": true}]}",
       "output": "{\"results\": [{\"mode\": \"closed\", \"result\": \"failure\", \"state\": \"open\"}, {\"mode\": \"probe\", \"result\": \"success\", \"state\": \"closed\"}], \"state\": \"closed\", \"failures\": 0, \"retry_at\": null}",
-      "explanation": "probe succeeds at deadline"
+      "explanation": "At 5 the probe succeeds, so the breaker closes."
     }
   ],
   "starterCode": {

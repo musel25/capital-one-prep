@@ -11,6 +11,8 @@ SQL describes the rows you want from a table. SELECT chooses output columns. WHE
 
 </details>
 
+**Scenario:** A banking dashboard lists a customer's largest posted transfers. Customer names come from user input and can contain quotes, so the query must use bound parameters, not string formatting.
+
 Complete `select_rows(connection, owner, minimum, limit)` in the supplied SQLite scaffold.
 
 **Input:** `data` has:

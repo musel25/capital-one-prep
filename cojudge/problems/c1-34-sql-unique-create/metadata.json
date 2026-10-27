@@ -8,17 +8,17 @@
     {
       "input": "{\"initial\": [], \"requests\": [{\"username\": \"ada\", \"quota\": 10}, {\"username\": \"ada\", \"quota\": 10}]}",
       "output": "{\"responses\": [{\"status\": 201, \"record\": {\"username\": \"ada\", \"quota\": 10}}, {\"status\": 200, \"record\": {\"username\": \"ada\", \"quota\": 10}}], \"accounts\": [{\"username\": \"ada\", \"quota\": 10}]}",
-      "explanation": "duplicate identical create is a replay"
+      "explanation": "Create, then the same request again: 200 with the stored record."
     },
     {
       "input": "{\"initial\": [{\"username\": \"ada\", \"quota\": 10}], \"requests\": [{\"username\": \"ada\", \"quota\": 20}]}",
       "output": "{\"responses\": [{\"status\": 409, \"record\": {\"username\": \"ada\", \"quota\": 10}}], \"accounts\": [{\"username\": \"ada\", \"quota\": 10}]}",
-      "explanation": "conflicting quota preserves original"
+      "explanation": "The name exists with quota 10, and the request asks for 20: 409, and nothing changes."
     },
     {
       "input": "{\"initial\": [], \"requests\": [{\"username\": \"O'Reilly\", \"quota\": 10}]}",
       "output": "{\"responses\": [{\"status\": 201, \"record\": {\"username\": \"O'Reilly\", \"quota\": 10}}], \"accounts\": [{\"username\": \"O'Reilly\", \"quota\": 10}]}",
-      "explanation": "quote in bound username"
+      "explanation": "A name with a quote is stored safely."
     }
   ],
   "starterCode": {

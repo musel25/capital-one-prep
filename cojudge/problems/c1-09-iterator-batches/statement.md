@@ -11,6 +11,8 @@ An iterator gives values one at a time and remembers its current position. You c
 
 </details>
 
+**Scenario:** An email service sends messages through a provider that accepts at most `size` recipients per API call. `solve` splits the list of recipient IDs into calls. The last call can be smaller, but it must not be dropped.
+
 **Input:** `data` has:
 - `values`: a list of integers from -1,000,000 to 1,000,000.
 - `size`: an integer from 1 to 20.

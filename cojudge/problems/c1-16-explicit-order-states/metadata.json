@@ -8,17 +8,17 @@
     {
       "input": "{\"actions\": [\"authorize\", \"capture\", \"refund\"]}",
       "output": "{\"accepted\": [true, true, true], \"state\": \"REFUNDED\"}",
-      "explanation": "complete valid path"
+      "explanation": "The normal path: authorize, capture, then refund."
     },
     {
       "input": "{\"actions\": [\"capture\", \"authorize\", \"authorize\", \"capture\"]}",
       "output": "{\"accepted\": [false, true, false, true], \"state\": \"CAPTURED\"}",
-      "explanation": "invalid order and repeated action"
+      "explanation": "Capture before authorize is invalid. A second authorize is invalid."
     },
     {
       "input": "{\"actions\": []}",
       "output": "{\"accepted\": [], \"state\": \"NEW\"}",
-      "explanation": "no events"
+      "explanation": "No actions, so the order stays `NEW`."
     }
   ],
   "starterCode": {

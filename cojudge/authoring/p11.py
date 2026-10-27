@@ -14,6 +14,8 @@ SPEC = {'number': 11,
           'but a factory can hide the same defect. This task supplies a runnable faulty starter. '
           'Repair the shared state while keeping the dataclass model. The result for every box '
           'must depend only on actions addressed to that box.',
+ 'scenario': ('A warehouse app models storage boxes. Each box has a name and a list of items. When a worker puts an item in one box, only that box must change. Workers report that an item put in one box appears in every box.'),
+ 'example_notes': ['The pen goes into box A only. Box B stays empty.', 'Box B gets the book and the paper. Box A gets the pen.', 'No boxes.'],
  'task': ('**Bug fix.** The dataclass in the starter has a field factory that returns one shared list. Fix that defect.\n'
     '\n'
     '**Input:** `data` has:\n'

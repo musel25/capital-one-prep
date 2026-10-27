@@ -14,6 +14,8 @@ SPEC = {'number': 9,
           'this pattern can limit the active buffer to one batch. This exercise returns every '
           'batch as JSON, so the complete result still occupies memory. The grouping logic should '
           'preserve every item exactly once.',
+ 'scenario': ('An email service sends messages through a provider that accepts at most `size` recipients per API call. `solve` splits the list of recipient IDs into calls. The last call can be smaller, but it must not be dropped.'),
+ 'example_notes': ['5 recipients in calls of 2: the last call has 1 recipient.', '4 recipients divide evenly into two full calls.', 'No recipients, so no calls.'],
  'task': ('**Input:** `data` has:\n'
     '- `values`: a list of integers from -1,000,000 to 1,000,000.\n'
     '- `size`: an integer from 1 to 20.\n'

@@ -11,6 +11,8 @@ A retry policy needs three decisions: which failures are temporary, how many att
 
 </details>
 
+**Scenario:** A payment client calls a bank API. Some failures are temporary (timeouts, 429, and some 5xx errors), and the client retries them with exponential backoff. Other failures, such as 400, are permanent, and the client must stop at once. `outcomes` lists what the API returns on each attempt.
+
 **Input:** `data` has:
 - `outcomes`: a list. Each entry is an integer HTTP status or the string `"timeout"`.
 - `max_attempts`: the maximum number of attempts.

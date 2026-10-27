@@ -13,6 +13,10 @@ Assignment gives another name to the same object. A shallow copy creates a new o
 
 </details>
 
+**Scenario:** A bank has a default card configuration: a daily and a monthly spending limit, plus tags. For each new customer, the app copies this template and applies that customer's changes. Staff report that one customer's change appears for other customers, and that the template itself changes.
+
+> **Bug report:** "I set the daily limit of one new customer to 2. The next customer and the default template now show 2 as well."
+
 **Input:** `data` has:
 - `template`: `{"limits": {"daily": int, "monthly": int}, "tags": [string]}`. The limits are nonnegative integers.
 - `changes`: a list of objects. A change can contain `daily`, `monthly`, and `tag`. No other keys occur.

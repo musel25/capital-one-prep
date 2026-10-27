@@ -11,6 +11,8 @@ A circuit breaker stops repeated calls to a failing dependency. While closed, it
 
 </details>
 
+**Scenario:** A payment service calls a fraud-check service. If the fraud service keeps failing, the payment service stops calling it for a cooldown period (open). Then it tries one test call (a probe) to see if the service recovered.
+
 **Input:** `data` has:
 - `threshold`, `cooldown`: positive integers.
 - `calls`: a list of `{"at": int, "ok": bool}`. Times never decrease.

@@ -14,6 +14,8 @@ SPEC = {'number': 6,
           'after parsing the record. Keep aggregation separate from parsing. A dictionary '
           'preserves the first insertion order of account IDs, which gives a simple way to return '
           'totals in first-seen order.',
+ 'scenario': ('Finance exports transactions from a spreadsheet as CSV text: one row per transaction, with an account name and an amount. Account names can contain commas, quotes, and line breaks, so splitting each line on `,` gives wrong results. `solve` produces the total of each account for the monthly report.'),
+ 'example_notes': ['`Acme, West` has 10 and -4, so its total is 6. The comma is inside quotes, so it is part of the name.', '`"a""b"` decodes to `a"b`. A quoted name can also contain a line break.', 'Only the header: there are no accounts.'],
  'task': ('**Input:** `data` has:\n'
     '- `csv`: valid CSV text.\n'
     '  - The first record (the header) is exactly `account,amount`.\n'

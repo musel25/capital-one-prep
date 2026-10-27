@@ -8,17 +8,17 @@
     {
       "input": "{\"jobs\": [{\"id\": \"a\", \"depends\": []}, {\"id\": \"b\", \"depends\": [\"a\"]}, {\"id\": \"c\", \"depends\": [\"a\"]}], \"workers\": 2}",
       "output": "{\"rounds\": [[\"a\"], [\"b\", \"c\"]], \"blocked\": [], \"has_cycle\": false}",
-      "explanation": "dependencies finish before next round"
+      "explanation": "`a` runs first. Then `b` and `c`, which depend on it."
     },
     {
       "input": "{\"jobs\": [{\"id\": \"c\", \"depends\": []}, {\"id\": \"b\", \"depends\": []}, {\"id\": \"a\", \"depends\": []}], \"workers\": 2}",
       "output": "{\"rounds\": [[\"a\", \"b\"], [\"c\"]], \"blocked\": [], \"has_cycle\": false}",
-      "explanation": "worker limit and ASCII tie break"
+      "explanation": "No dependencies. Two workers take `a` and `b` first (ASCII order), then `c`."
     },
     {
       "input": "{\"jobs\": [{\"id\": \"a\", \"depends\": [\"b\"]}, {\"id\": \"b\", \"depends\": [\"a\"]}], \"workers\": 2}",
       "output": "{\"rounds\": [], \"blocked\": [\"a\", \"b\"], \"has_cycle\": true}",
-      "explanation": "cycle blocks both jobs"
+      "explanation": "`a` and `b` wait for each other, so both are blocked."
     }
   ],
   "starterCode": {

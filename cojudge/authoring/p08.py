@@ -14,6 +14,8 @@ SPEC = {'number': 8,
           'require local time zone rules. Parse each timestamp, convert it to UTC, and format all '
           'outputs in one consistent form. Preserve the input order because normalization does not '
           'imply sorting.',
+ 'scenario': ("A travel company receives booking times from partners in many time zones. Each time has an offset, such as `-07:00`. The company's database stores all times in UTC. `solve` converts each timestamp to UTC."),
+ 'example_notes': ['09:30 at -07:00 is 16:30 UTC. It is the same instant as the second timestamp.', '00:15 at +02:00 on January 1 is 22:15 UTC on the previous day, in the previous year.', 'No timestamps.'],
  'task': ('**Input:** `data` has:\n'
     '- `timestamps`: a list of valid strings, each in one of these forms:\n'
     '  - `YYYY-MM-DDTHH:MM:SSZ`\n'

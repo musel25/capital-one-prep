@@ -30,7 +30,9 @@ CASES=[c([rep("a",1),rep("b",3)],[read(2)],[rep("b",3)],[["a",1,10],["b",3,30]],
 rng=random.Random(48)
 SPEC={"number":48,"slug":"replica-version-reads","title":"Preserve read-your-writes with version floors","difficulty":"Medium","time":30,"prerequisites":"Version numbers, replication lag, and deterministic selection.",
 "learn":"Replicas can lag behind a completed write. A client can carry the version of its last write as a minimum acceptable version for later reads. A replica below that floor must not answer the read, even if it is reachable. If none qualifies, the caller must wait or use another source. This exercise selects the freshest eligible replica and uses its ID to break ties. Replication updates can also arrive out of order, so a replica must never replace a newer version with an older one. All equal versions represent the same value here. This is a deterministic event trace, not an actual parallel, thread, or network test.",
-"task":('**Input:** `data` has:\n'
+"scenario": ("A database has several replicas that can lag behind. After a user saves data, the app gets a write token (a version). The user's next read must go to a replica that has at least that version, so the user sees their own change."),
+ "example_notes": ['Only `b` has a version of at least 2.', 'No replica has version 2 yet, so the result is `null`.', '`a` and `b` both have version 2. The smaller ID, `a`, wins.'],
+ "task":('**Input:** `data` has:\n'
     '- `replicas`: a list of `{"id": ..., "version": ..., "value": ...}`, with unique IDs.\n'
     '- `ops`: a list of operations:\n'
     '  - `publish`: an existing `id`, a `version`, and a `value`.\n'

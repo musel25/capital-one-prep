@@ -11,6 +11,8 @@ A hash ring assigns each request to the first node at or after its hash, moving 
 
 </details>
 
+**Scenario:** A cache cluster spreads keys over servers with a hash ring. A key goes to the first server at or after its hash, and wraps around at the end of the ring. Servers can join and leave.
+
 **Input:** `data` has:
 - `nodes`: a list of `{"id": ..., "hash": ...}`, with unique IDs and hashes. Hashes are points on a ring from 0 to 999.
 - `ops`: a list of operations. Process them in order.

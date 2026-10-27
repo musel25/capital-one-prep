@@ -11,6 +11,8 @@ A set records whether an item is present. It does not record how many times the 
 
 </details>
 
+**Scenario:** A warehouse compares a shipment's packing list (`expected`) with the items scanned at the dock (`observed`). Each scan is one unit, so one ID can appear many times. `solve` reports what is missing and what is extra, so the team can open a claim with the supplier.
+
 **Input:** `data` has:
 - `expected`: a list of item IDs (ASCII strings).
 - `observed`: a list of item IDs (ASCII strings).

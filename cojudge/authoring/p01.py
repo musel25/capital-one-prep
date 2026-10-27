@@ -13,6 +13,8 @@ SPEC = {'number': 1,
           'condition. Do not convert strings or round floats unless the contract requires it. Keep '
           'rejected positions so a caller can identify each bad field. Zero is a valid amount in '
           'this task. An empty batch has a total of zero.',
+ 'scenario': ('A mobile app sends tip amounts, in cents, to a payments backend as JSON. An old app version has a bug: it sometimes sends a tip as `true`, `"4"`, or `-2`. Python treats `True` as `1`, so a careless check counts a flag as a one-cent tip. `solve` receives one batch of tips. It adds up the valid tips and reports the positions of the bad ones, so support can find them.'),
+ 'example_notes': ['`7` and `0` are valid tips. `true`, `-2`, and `"4"` are rejected at positions 1, 3, and 4.', 'All three tips are valid.', 'An empty batch: the total is 0 and nothing is rejected.'],
  'task': ('**Input:** `data` has:\n'
     '- `values`: a list of JSON values. Integers have absolute value at most 1,000,000,000.\n'
     '\n'

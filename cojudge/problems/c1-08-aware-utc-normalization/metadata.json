@@ -8,17 +8,17 @@
     {
       "input": "{\"timestamps\": [\"2026-10-26T09:30:00-07:00\", \"2026-10-26T16:30:00Z\"]}",
       "output": "[\"2026-10-26T16:30:00Z\", \"2026-10-26T16:30:00Z\"]",
-      "explanation": "same instant from two offsets"
+      "explanation": "09:30 at -07:00 is 16:30 UTC. It is the same instant as the second timestamp."
     },
     {
       "input": "{\"timestamps\": [\"2026-01-01T00:15:00+02:00\"]}",
       "output": "[\"2025-12-31T22:15:00Z\"]",
-      "explanation": "previous day and year"
+      "explanation": "00:15 at +02:00 on January 1 is 22:15 UTC on the previous day, in the previous year."
     },
     {
       "input": "{\"timestamps\": []}",
       "output": "[]",
-      "explanation": "empty list"
+      "explanation": "No timestamps."
     }
   ],
   "starterCode": {

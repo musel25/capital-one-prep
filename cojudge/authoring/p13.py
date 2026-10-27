@@ -14,6 +14,8 @@ SPEC = {'number': 13,
           'method should return a failure result and leave the balance unchanged. Keeping this '
           'rule in the object makes the calling loop simple and gives future operations a clear '
           'place to enforce the same invariant.',
+ 'scenario': ('A prepaid card has a balance in cents. The balance must never go below zero. `solve` processes deposits and withdrawals in order and reports which ones went through.'),
+ 'example_notes': ['Withdrawing 7 from 10 succeeds. Withdrawing 4 from the remaining 3 fails.', 'Deposit 5, then withdraw exactly 5: the balance is 0.', 'No actions: the balance stays 9.'],
  'task': ('**Input:** `data` has:\n'
     '- `balance`: a nonnegative integer number of cents.\n'
     '- `actions`: a list of `{"op": "deposit" | "withdraw", "cents": int}`, with nonnegative `cents`.\n'

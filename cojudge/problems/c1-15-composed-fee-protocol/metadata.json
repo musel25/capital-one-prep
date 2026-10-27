@@ -8,17 +8,17 @@
     {
       "input": "{\"policy\": {\"kind\": \"flat\", \"cents\": 3}, \"amounts\": [0, 10]}",
       "output": "[{\"fee\": 3, \"total\": 3}, {\"fee\": 3, \"total\": 13}]",
-      "explanation": "flat fee includes zero amount"
+      "explanation": "A flat fee of 3, also on a sale of 0."
     },
     {
       "input": "{\"policy\": {\"kind\": \"rate\", \"bps\": 250}, \"amounts\": [100, 200, 1]}",
       "output": "[{\"fee\": 3, \"total\": 103}, {\"fee\": 5, \"total\": 205}, {\"fee\": 1, \"total\": 2}]",
-      "explanation": "rate fees round upward"
+      "explanation": "2.5%: 100 \u2192 2.5, rounded up to 3. 200 \u2192 5. 1 \u2192 0.025, rounded up to 1."
     },
     {
       "input": "{\"policy\": {\"kind\": \"rate\", \"bps\": 10}, \"amounts\": []}",
       "output": "[]",
-      "explanation": "no quotes"
+      "explanation": "No sales."
     }
   ],
   "starterCode": {

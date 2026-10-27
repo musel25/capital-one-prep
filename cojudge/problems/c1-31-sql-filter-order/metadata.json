@@ -8,17 +8,17 @@
     {
       "input": "{\"rows\": [{\"id\": 3, \"amount\": 20, \"owner\": \"a\", \"posted\": true}, {\"id\": 1, \"amount\": 20, \"owner\": \"a\", \"posted\": true}, {\"id\": 2, \"amount\": 10, \"owner\": \"a\", \"posted\": true}], \"owner\": \"a\", \"minimum\": 0, \"limit\": 2}",
       "output": "[{\"id\": 1, \"amount\": 20}, {\"id\": 3, \"amount\": 20}]",
-      "explanation": "sort before taking limit"
+      "explanation": "Two transfers of 20: the id breaks the tie. The limit of 2 drops the transfer of 10."
     },
     {
       "input": "{\"rows\": [{\"id\": 1, \"amount\": 5, \"owner\": \"O'Reilly\", \"posted\": true}, {\"id\": 2, \"amount\": 9, \"owner\": \"a\", \"posted\": true}], \"owner\": \"O'Reilly\", \"minimum\": 0, \"limit\": 10}",
       "output": "[{\"id\": 1, \"amount\": 5}]",
-      "explanation": "quoted owner is a bound value"
+      "explanation": "The owner name contains a quote: `O'Reilly`."
     },
     {
       "input": "{\"rows\": [{\"id\": 1, \"amount\": 10, \"owner\": \"a\", \"posted\": true}, {\"id\": 2, \"amount\": 9, \"owner\": \"a\", \"posted\": true}, {\"id\": 3, \"amount\": 20, \"owner\": \"a\", \"posted\": false}], \"owner\": \"a\", \"minimum\": 10, \"limit\": 10}",
       "output": "[{\"id\": 1, \"amount\": 10}]",
-      "explanation": "inclusive minimum and posted filter"
+      "explanation": "Transfer 2 is below the minimum, and transfer 3 is not posted."
     }
   ],
   "starterCode": {

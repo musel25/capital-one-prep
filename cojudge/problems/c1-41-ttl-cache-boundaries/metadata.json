@@ -8,17 +8,17 @@
     {
       "input": "{\"ops\": [{\"op\": \"put\", \"at\": 0, \"key\": \"a\", \"value\": 7, \"ttl\": 5}, {\"op\": \"get\", \"at\": 4, \"key\": \"a\"}]}",
       "output": "{\"results\": [\"stored\", 7], \"keys\": [\"a\"]}",
-      "explanation": "read before expiration"
+      "explanation": "Stored at 0 with a TTL of 5: still valid at 4."
     },
     {
       "input": "{\"ops\": [{\"op\": \"put\", \"at\": 0, \"key\": \"a\", \"value\": 7, \"ttl\": 5}, {\"op\": \"get\", \"at\": 5, \"key\": \"a\"}]}",
       "output": "{\"results\": [\"stored\", null], \"keys\": []}",
-      "explanation": "exact expiration is a miss"
+      "explanation": "At 5 the entry expires, because it expires at 0 + 5."
     },
     {
       "input": "{\"ops\": [{\"op\": \"put\", \"at\": 0, \"key\": \"a\", \"value\": 7, \"ttl\": 5}, {\"op\": \"invalidate\", \"at\": 1, \"key\": \"a\"}, {\"op\": \"get\", \"at\": 2, \"key\": \"a\"}]}",
       "output": "{\"results\": [\"stored\", true, null], \"keys\": []}",
-      "explanation": "explicit invalidation"
+      "explanation": "The entry is invalidated at 1, so the get at 2 finds nothing."
     }
   ],
   "starterCode": {

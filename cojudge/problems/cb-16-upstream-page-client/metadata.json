@@ -8,17 +8,17 @@
     {
       "input": "{\"pages\": {\"a\": {\"status\": 200, \"items\": [{\"id\": 1, \"value\": \"1\"}], \"next\": \"b\"}, \"b\": {\"status\": 200, \"items\": [{\"id\": 1, \"value\": \"1\"}, {\"id\": 2, \"value\": \"2\"}], \"next\": null}}, \"start\": \"a\", \"max_pages\": 5}",
       "output": "{\"items\": [{\"id\": 1, \"value\": \"1\"}, {\"id\": 2, \"value\": \"2\"}], \"requests\": [\"a\", \"b\"], \"error\": null}",
-      "explanation": "deduplicate across pages"
+      "explanation": "Item 1 is on both pages. Keep it once."
     },
     {
       "input": "{\"pages\": {\"a\": {\"status\": 200, \"items\": [{\"id\": 1, \"value\": \"1\"}], \"next\": \"a\"}}, \"start\": \"a\", \"max_pages\": 5}",
       "output": "{\"items\": [{\"id\": 1, \"value\": \"1\"}], \"requests\": [\"a\"], \"error\": \"cycle\"}",
-      "explanation": "stop before fetching a repeated cursor"
+      "explanation": "Page `a` points back to itself: stop with `cycle`."
     },
     {
       "input": "{\"pages\": {\"a\": {\"status\": 200, \"items\": [{\"id\": 1, \"value\": \"1\"}], \"next\": \"b\"}, \"b\": {\"status\": 503}}, \"start\": \"a\", \"max_pages\": 5}",
       "output": "{\"items\": [{\"id\": 1, \"value\": \"1\"}], \"requests\": [\"a\", \"b\"], \"error\": \"upstream\"}",
-      "explanation": "preserve earlier data on failure"
+      "explanation": "Page `b` returns 503: stop with `upstream` and keep item 1."
     }
   ],
   "starterCode": {

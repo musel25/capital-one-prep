@@ -11,6 +11,8 @@ A job is ready when every prerequisite has completed. A dependency scheduler can
 
 </details>
 
+**Scenario:** A nightly data pipeline has jobs that depend on other jobs. A limited number of workers run the jobs in rounds. `solve` reports the rounds and the jobs that can never run.
+
 **Input:** `data` has:
 - `jobs`: a list of `{"id": string, "depends": [ids]}`. IDs are unique ASCII strings. `depends` lists distinct existing job IDs. Self-dependencies and cycles can occur.
 - `workers`: the maximum number of jobs per round.

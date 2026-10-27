@@ -8,17 +8,17 @@
     {
       "input": "{\"balance\": 10, \"events\": [{\"id\": \"e1\", \"delta\": 5}, {\"id\": \"e1\", \"delta\": 5}, {\"id\": \"e1\", \"delta\": 7}]}",
       "output": "{\"status\": [\"applied\", \"duplicate\", \"conflict\"], \"balance\": 15}",
-      "explanation": "new, duplicate, and conflicting payload"
+      "explanation": "`e1` is applied once (+5). The same `e1` again is a duplicate. `e1` with 7 is a conflict."
     },
     {
       "input": "{\"balance\": 0, \"events\": [{\"id\": \"x\", \"delta\": 2}, {\"id\": \"x\", \"delta\": 3}, {\"id\": \"x\", \"delta\": 2}]}",
       "output": "{\"status\": [\"applied\", \"conflict\", \"duplicate\"], \"balance\": 2}",
-      "explanation": "conflict does not replace the first payload"
+      "explanation": "`x` with 3 is a conflict. `x` with 2 again matches the first event, so it is a duplicate."
     },
     {
       "input": "{\"balance\": 8, \"events\": []}",
       "output": "{\"status\": [], \"balance\": 8}",
-      "explanation": "no events"
+      "explanation": "No events."
     }
   ],
   "starterCode": {

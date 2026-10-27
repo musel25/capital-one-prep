@@ -11,6 +11,8 @@ Selecting the latest row in each group needs more than finding the maximum times
 
 </details>
 
+**Scenario:** An IoT dashboard shows the latest reading of each sensor at a given time (`cutoff`). Readings can arrive out of order.
+
 Complete `latest_rows(connection, cutoff)` in the SQLite scaffold. The table is `readings(id PRIMARY KEY, device, ts, value)`.
 
 **Input:** `data` has:

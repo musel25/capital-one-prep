@@ -8,17 +8,17 @@
     {
       "input": "{\"batches\": [{\"rows\": [{\"id\": \"a\", \"qty\": 1, \"fail\": false}], \"abort\": false}]}",
       "output": "{\"batches\": [{\"rows\": [\"ok\"], \"committed\": true}], \"rows\": [[\"a\", 1]]}",
-      "explanation": "valid item commits"
+      "explanation": "One good row, committed."
     },
     {
       "input": "{\"batches\": [{\"rows\": [{\"id\": \"a\", \"qty\": 1, \"fail\": false}, {\"id\": \"b\", \"qty\": -1, \"fail\": false}, {\"id\": \"c\", \"qty\": 3, \"fail\": false}], \"abort\": false}]}",
       "output": "{\"batches\": [{\"rows\": [\"ok\", \"invalid\", \"ok\"], \"committed\": true}], \"rows\": [[\"a\", 1], [\"c\", 3]]}",
-      "explanation": "one invalid item does not cancel batch"
+      "explanation": "Row `b` has a negative quantity: `invalid`. Rows `a` and `c` are still imported."
     },
     {
       "input": "{\"batches\": [{\"rows\": [{\"id\": \"a\", \"qty\": 1, \"fail\": false}], \"abort\": true}]}",
       "output": "{\"batches\": [{\"rows\": [\"ok\"], \"committed\": false}], \"rows\": []}",
-      "explanation": "outer abort cancels released savepoint"
+      "explanation": "The batch is aborted. Row `a` was `ok`, but nothing is saved."
     }
   ],
   "starterCode": {

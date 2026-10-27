@@ -11,6 +11,8 @@ A client can read a document and then write after another client has changed it.
 
 </details>
 
+**Scenario:** Two people edit the same document in a web app. Each save says which version it was based on. If someone else saved first, the version changed, and the save must be rejected, so no edit is lost without a warning.
+
 **Input:** `data` has:
 - `value`: the initial document string.
 - `version`: its initial integer version.

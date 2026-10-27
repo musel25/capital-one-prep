@@ -25,7 +25,9 @@ for i in range(24):
  generated.append({"jobs":jobs,"workers":i%4+1})
 SPEC={"number":46,"slug":"dependency-job-rounds","title":"Schedule dependent jobs and detect blocked cycles","difficulty":"Hard","time":35,"prerequisites":"Sets, directed graphs, and dependency order.",
 "learn":"A job is ready when every prerequisite has completed. A dependency scheduler can repeatedly select ready jobs, run a bounded batch, and then mark that batch complete. All jobs in this task take one round, so a job cannot start in the same round as its prerequisite. If unfinished jobs remain but none is ready, the remaining dependency graph contains a cycle. Some blocked jobs may only depend on a cycle and are not themselves part of it. Report all unfinished jobs separately from the cycle flag. A fixed tie rule makes results reproducible. This is a deterministic event trace model, not an actual parallel, thread, or network test.",
-"task":('**Input:** `data` has:\n'
+"scenario": ('A nightly data pipeline has jobs that depend on other jobs. A limited number of workers run the jobs in rounds. `solve` reports the rounds and the jobs that can never run.'),
+ "example_notes": ['`a` runs first. Then `b` and `c`, which depend on it.', 'No dependencies. Two workers take `a` and `b` first (ASCII order), then `c`.', '`a` and `b` wait for each other, so both are blocked.'],
+ "task":('**Input:** `data` has:\n'
     '- `jobs`: a list of `{"id": string, "depends": [ids]}`. IDs are unique ASCII strings. `depends` lists distinct existing job IDs. Self-dependencies and cycles can occur.\n'
     '- `workers`: the maximum number of jobs per round.\n'
     '\n'

@@ -11,6 +11,8 @@ A small ledger combines several rules that must agree. Account objects hold bala
 
 </details>
 
+**Scenario:** A wallet app processes transfer events from a queue. Each event has an ID. The queue can send an event again, and a faulty client can reuse an ID for a different transfer. Each ID is applied at most once, and the system remembers it even when the first attempt failed for lack of funds.
+
 **Input:** `data` has:
 - `accounts`: maps account IDs to nonnegative integer cents.
 - `events`: a list of `{"id": string, "from": account_id, "to": account_id, "cents": int}`, with nonnegative `cents`. Both accounts exist.

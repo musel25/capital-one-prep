@@ -11,6 +11,8 @@ Python treats bool as a subclass of int. As a result, isinstance(True, int) retu
 
 </details>
 
+**Scenario:** A mobile app sends tip amounts, in cents, to a payments backend as JSON. An old app version has a bug: it sometimes sends a tip as `true`, `"4"`, or `-2`. Python treats `True` as `1`, so a careless check counts a flag as a one-cent tip. `solve` receives one batch of tips. It adds up the valid tips and reports the positions of the bad ones, so support can find them.
+
 **Input:** `data` has:
 - `values`: a list of JSON values. Integers have absolute value at most 1,000,000,000.
 

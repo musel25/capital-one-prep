@@ -36,7 +36,9 @@ for i in range(24):
  generated.append({"ops":ops})
 SPEC={"number":41,"slug":"ttl-cache-boundaries","title":"Expire and invalidate cache entries","difficulty":"Medium","time":25,"prerequisites":"Dictionaries and integer time arithmetic.",
 "learn":"A time-to-live cache stores a value and its expiration time. If an entry is written at time t with lifetime d, its expiration is t + d. It is usable only while the current time is strictly less than that expiration. Reads do not extend this lifetime unless the contract explicitly says so. An overwrite replaces both the value and its expiration. Invalidation removes the entry immediately. Distinguish a missing key from a cached value such as zero. This exercise uses an integer clock supplied by each operation. It is a deterministic event trace, not an actual parallel, thread, or network test.",
-"task":('**Input:** `data` has:\n'
+"scenario": ('A service caches exchange rates with a time-to-live (TTL). It must never serve an expired value. An admin can also invalidate a key early.'),
+ "example_notes": ['Stored at 0 with a TTL of 5: still valid at 4.', 'At 5 the entry expires, because it expires at 0 + 5.', 'The entry is invalidated at 1, so the get at 2 finds nothing.'],
+ "task":('**Input:** `data` has:\n'
     '- `ops`: a list of operations. Each has an integer time `at`. Times never decrease.\n'
     '\n'
     '**Rules:** before each operation, remove every entry whose expiration time is at or before `at`. Then:\n'

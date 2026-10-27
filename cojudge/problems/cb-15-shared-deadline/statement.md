@@ -13,6 +13,10 @@ A per-request timeout does not bound the total time of a sequence. Several indiv
 
 </details>
 
+**Scenario:** A checkout request must finish within a total time budget. It calls several services in order, and each call has its own timeout. `solve` simulates how much time the request uses and why it stops.
+
+> **Bug report:** "A service answered in exactly 5 ms, and its timeout is 5 ms. The request was marked as a timeout, but the answer arrived in time."
+
 **Input:** `data` has:
 - `budget`: the total time allowance, in milliseconds.
 - `steps`: a list of `{"duration": int, "timeout": int, "outcome": "ok" | "error"}`.

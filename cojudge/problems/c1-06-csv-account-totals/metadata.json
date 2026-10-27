@@ -8,17 +8,17 @@
     {
       "input": "{\"csv\": \"account,amount\\n\\\"Acme, West\\\",10\\nBeta,3\\n\\\"Acme, West\\\",-4\\n\"}",
       "output": "[{\"account\": \"Acme, West\", \"total\": 6}, {\"account\": \"Beta\", \"total\": 3}]",
-      "explanation": "quoted comma and repeated account"
+      "explanation": "`Acme, West` has 10 and -4, so its total is 6. The comma is inside quotes, so it is part of the name."
     },
     {
       "input": "{\"csv\": \"account,amount\\n\\\"a\\\"\\\"b\\\",7\\n\\\"line\\nbreak\\\",2\\n\"}",
       "output": "[{\"account\": \"a\\\"b\", \"total\": 7}, {\"account\": \"line\\nbreak\", \"total\": 2}]",
-      "explanation": "quote and embedded line break"
+      "explanation": "`\"a\"\"b\"` decodes to `a\"b`. A quoted name can also contain a line break."
     },
     {
       "input": "{\"csv\": \"account,amount\\n\"}",
       "output": "[]",
-      "explanation": "header only"
+      "explanation": "Only the header: there are no accounts."
     }
   ],
   "starterCode": {

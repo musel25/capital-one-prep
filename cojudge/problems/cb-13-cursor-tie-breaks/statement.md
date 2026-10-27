@@ -13,6 +13,10 @@ Offset pagination counts how many rows to skip. An insertion before that positio
 
 </details>
 
+**Scenario:** A transactions API returns a history page by page. The client sends a cursor (the last row it saw) to get the next page. New rows can be inserted between page requests. Rows are ordered by timestamp, with the id to break ties, so no row is skipped or shown twice.
+
+> **Bug report:** "In my transaction history, the first row on each new page is the same as the last row on the page before."
+
 **Input:** `data` has:
 - `records`: a list of `{"id": int, "ts": int}`.
 - `actions`: a list of operations:

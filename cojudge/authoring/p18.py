@@ -13,6 +13,8 @@ SPEC = {'number': 18,
           'unintended change. Do not replace the stored payload when a conflict arrives. The first '
           'event remains the reference for later comparisons. This task uses a single signed delta '
           'as the payload, so equality has one clear meaning.',
+ 'scenario': ('A ledger receives balance events from a message queue. The queue can deliver the same event twice. The same ID with the same delta is a harmless duplicate. The same ID with a different delta is a data conflict that needs a person to look at it. Each event ID is applied at most once.'),
+ 'example_notes': ['`e1` is applied once (+5). The same `e1` again is a duplicate. `e1` with 7 is a conflict.', '`x` with 3 is a conflict. `x` with 2 again matches the first event, so it is a duplicate.', 'No events.'],
  'task': ('**Input:** `data` has:\n'
     '- `balance`: the integer starting total.\n'
     '- `events`: a list of `{"id": string, "delta": int}`.\n'

@@ -14,6 +14,8 @@ SPEC = {'number': 2,
           'forms that an API might forbid, such as an exponent. This task permits one or two '
           'fractional digits and rejects every other text format. Once parsed, integer cents '
           'support exact addition and comparison.',
+ 'scenario': ('A bank\'s import tool reads amounts that people typed into a form, such as `"12.34"`. A float cannot store cents exactly, so the tool converts the text to an integer number of cents. Text that does not match the strict format becomes `null`, so the import can flag it for review.'),
+ 'example_notes': ['`"12.34"` is 1234 cents, `"-0.05"` is -5, and `"7"` is 700.', 'All three are invalid: three decimal places, a leading space, and a number instead of a string.', 'No amounts.'],
  'task': ('**Input:** `data` has:\n'
     '- `amounts`: a list of JSON values. Strings have at most 30 characters.\n'
     '\n'

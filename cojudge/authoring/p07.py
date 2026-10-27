@@ -13,6 +13,8 @@ SPEC = {'number': 7,
           'build a small accepted object. That object can have a TypedDict return annotation '
           'because the function has established its shape. Extra fields need a stated policy. This '
           'task ignores them and returns only the validated fields.',
+ 'scenario': ('A partner bank sends payment records to your API as JSON. Some records are broken: wrong types, missing fields, or not objects at all. `solve` is the boundary check. It keeps the clean records (only `id` and `amount`) and reports the positions of the rejected ones, so the partner can send them again.'),
+ 'example_notes': ['Record 0 is valid (an amount of 0 is allowed). Record 1 has the amount `true`. Record 2 has no amount.', 'The extra `debug` key is not copied to the output.', 'An empty list.'],
  'task': ('**Input:** `data` has:\n'
     '- `records`: a list of any JSON values.\n'
     '\n'

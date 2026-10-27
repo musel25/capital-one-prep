@@ -11,6 +11,8 @@ Atomic means that an operation has one complete result: all intended changes hap
 
 </details>
 
+**Scenario:** A payroll system sends transfers in batches. A batch is all-or-nothing: if one transfer in it fails, none of the batch happens. Operations report that after a failed batch, some money moved anyway.
+
 **Bug fix.** The starter keeps part of a rejected batch (a partial write). Repair it.
 
 **Input:** `data` has:

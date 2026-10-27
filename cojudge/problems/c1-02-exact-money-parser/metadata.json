@@ -8,17 +8,17 @@
     {
       "input": "{\"amounts\": [\"12.34\", \"-0.05\", \"7\"]}",
       "output": "{\"cents\": [1234, -5, 700]}",
-      "explanation": "exact decimal conversion"
+      "explanation": "`\"12.34\"` is 1234 cents, `\"-0.05\"` is -5, and `\"7\"` is 700."
     },
     {
       "input": "{\"amounts\": [\"1.234\", \" 2.00\", 2]}",
       "output": "{\"cents\": [null, null, null]}",
-      "explanation": "invalid forms"
+      "explanation": "All three are invalid: three decimal places, a leading space, and a number instead of a string."
     },
     {
       "input": "{\"amounts\": []}",
       "output": "{\"cents\": []}",
-      "explanation": "empty input"
+      "explanation": "No amounts."
     }
   ],
   "starterCode": {

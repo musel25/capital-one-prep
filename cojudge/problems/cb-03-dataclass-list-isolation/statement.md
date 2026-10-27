@@ -13,6 +13,10 @@ A dataclass can generate an initializer from annotated fields. A mutable field s
 
 </details>
 
+**Scenario:** A warehouse app models storage boxes. Each box has a name and a list of items. When a worker puts an item in one box, only that box must change. Workers report that an item put in one box appears in every box.
+
+> **Bug report:** "I put a pen in box A. Now box B shows a pen too."
+
 **Input:** `data` has:
 - `names`: distinct strings, one per box, in box order.
 - `actions`: a list of `{"box": int, "item": string}`. `box` is a valid zero-based box index.

@@ -8,17 +8,17 @@
     {
       "input": "{\"limit\": 2, \"window\": 10, \"events\": [{\"time\": 0, \"user\": \"a\"}, {\"time\": 1, \"user\": \"a\"}, {\"time\": 2, \"user\": \"a\"}]}",
       "output": "[{\"allowed\": true, \"remaining\": 1, \"retry_after\": 0}, {\"allowed\": true, \"remaining\": 0, \"retry_after\": 0}, {\"allowed\": false, \"remaining\": 0, \"retry_after\": 8}]",
-      "explanation": "third call exceeds window"
+      "explanation": "Two requests fill the limit. The third, at time 2, must wait until 0 + 10 = 10, so `retry_after` is 8."
     },
     {
       "input": "{\"limit\": 1, \"window\": 10, \"events\": [{\"time\": 0, \"user\": \"a\"}, {\"time\": 10, \"user\": \"a\"}]}",
       "output": "[{\"allowed\": true, \"remaining\": 0, \"retry_after\": 0}, {\"allowed\": true, \"remaining\": 0, \"retry_after\": 0}]",
-      "explanation": "timestamp at left boundary expires"
+      "explanation": "At time 10, the request from time 0 is no longer in the window."
     },
     {
       "input": "{\"limit\": 1, \"window\": 10, \"events\": [{\"time\": 0, \"user\": \"a\"}, {\"time\": 0, \"user\": \"b\"}, {\"time\": 1, \"user\": \"a\"}]}",
       "output": "[{\"allowed\": true, \"remaining\": 0, \"retry_after\": 0}, {\"allowed\": true, \"remaining\": 0, \"retry_after\": 0}, {\"allowed\": false, \"remaining\": 0, \"retry_after\": 9}]",
-      "explanation": "users have independent windows"
+      "explanation": "Each user has a separate limit. User `a` must wait 9."
     }
   ],
   "starterCode": {

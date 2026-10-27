@@ -11,6 +11,15 @@ A field can be absent, present with null, or present with zero. These states oft
 
 </details>
 
+**Scenario:** You work on the alert service of a banking app. Each customer can set a daily limit for push alerts. The app stores one settings record per customer. Before the service sends alerts, it calls `solve` to get the real limit of each customer.
+
+A record can be in three states:
+- The customer never opened the setting: there is no `limit` key, so use the company default.
+- The customer chose "no limit": `limit` is `null`. Keep `null`, so the service does not cap their alerts.
+- The customer chose a number: keep it. `0` means "send me no alerts".
+
+The product team also counts how many customers set their own limit (a number, including 0).
+
 **Input:** `data` has:
 - `default`: a nonnegative integer.
 - `records`: a list of objects. A record can have a `limit` key whose value is a nonnegative integer or `null`. Ignore all other keys.

@@ -8,17 +8,17 @@
     {
       "input": "{\"capacity\": 2, \"ops\": [{\"op\": \"put\", \"key\": \"a\", \"value\": 1}, {\"op\": \"put\", \"key\": \"b\", \"value\": 2}, {\"op\": \"put\", \"key\": \"c\", \"value\": 3}]}",
       "output": "{\"results\": [null, null, \"a\"], \"entries\": [[\"b\", 2], [\"c\", 3]]}",
-      "explanation": "evict oldest use"
+      "explanation": "Adding `c` to a full cache evicts `a`, the least recent key."
     },
     {
       "input": "{\"capacity\": 2, \"ops\": [{\"op\": \"put\", \"key\": \"a\", \"value\": 1}, {\"op\": \"put\", \"key\": \"b\", \"value\": 2}, {\"op\": \"get\", \"key\": \"a\"}, {\"op\": \"put\", \"key\": \"c\", \"value\": 3}]}",
       "output": "{\"results\": [null, null, 1, \"b\"], \"entries\": [[\"a\", 1], [\"c\", 3]]}",
-      "explanation": "read refreshes recency"
+      "explanation": "The get makes `a` recent, so `b` is evicted instead."
     },
     {
       "input": "{\"capacity\": 2, \"ops\": [{\"op\": \"put\", \"key\": \"a\", \"value\": 1}, {\"op\": \"put\", \"key\": \"b\", \"value\": 2}, {\"op\": \"put\", \"key\": \"a\", \"value\": 9}]}",
       "output": "{\"results\": [null, null, null], \"entries\": [[\"b\", 2], [\"a\", 9]]}",
-      "explanation": "overwrite refreshes recency"
+      "explanation": "Overwriting `a` makes it the most recent. Nothing is evicted."
     }
   ],
   "starterCode": {

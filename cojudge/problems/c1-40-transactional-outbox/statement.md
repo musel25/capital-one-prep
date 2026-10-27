@@ -11,6 +11,8 @@ A business write and a message publish cannot normally share a local database tr
 
 </details>
 
+**Scenario:** When an order is saved, other services must hear about it through an event. If the order is saved but the event is lost, or the reverse, the systems disagree. The outbox pattern writes the order and its event in one transaction.
+
 **Input:** `data` has:
 - `orders`: an ordered list of `{"id": ..., "amount": ..., "fail": ...}`. `fail` is `"none"`, `"business"` (a fault after the order insert), or `"event"` (a fault after the outbox insert).
 

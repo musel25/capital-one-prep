@@ -15,6 +15,8 @@ SPEC = {'number': 19,
           'succeed without changing the amount. Real refund systems need additional rules for '
           'request IDs and external settlement; this task isolates the cumulative amount '
           'invariant.',
+ 'scenario': ('An online store allows partial refunds. The total refunded for a payment must never be more than the amount charged. `solve` processes refund requests in order and tracks how much each payment can still refund.'),
+ 'example_notes': ['A refund of 30 leaves 70. 80 is too much, so it is rejected. 70 is accepted and leaves 0.', 'Each payment has its own remaining amount.', 'No payments.'],
  'task': ('**Input:** `data` has:\n'
     '- `payments`: maps payment IDs to charged cents (nonnegative integers).\n'
     '- `refunds`: a list of `{"payment": string, "cents": int}`, with nonnegative `cents`. Every payment ID exists.\n'

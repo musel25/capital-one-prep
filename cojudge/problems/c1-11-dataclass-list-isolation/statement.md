@@ -11,6 +11,8 @@ A dataclass can generate an initializer from annotated fields. A mutable field s
 
 </details>
 
+**Scenario:** A warehouse app models storage boxes. Each box has a name and a list of items. When a worker puts an item in one box, only that box must change. Workers report that an item put in one box appears in every box.
+
 **Bug fix.** The dataclass in the starter has a field factory that returns one shared list. Fix that defect.
 
 **Input:** `data` has:

@@ -14,6 +14,8 @@ SPEC = {'number': 12,
           'task uses small JSON-like dictionaries and lists, so deep copying has clear meaning. '
           'The starter copies only the outer dictionary. Repair it so each result starts from the '
           'original template, not from a previous result.',
+ 'scenario': ("A bank has a default card configuration: a daily and a monthly spending limit, plus tags. For each new customer, the app copies this template and applies that customer's changes. Staff report that one customer's change appears for other customers, and that the template itself changes."),
+ 'example_notes': ['The first copy sets `daily` to 2. The second copy only adds the tag `new`, so its `daily` is still 1. The template does not change.', 'One change sets both limits to 0 and adds the tag `x`.', 'No changes, so no copies.'],
  'task': ('**Bug fix.** The starter makes a shallow copy. Repair it.\n'
     '\n'
     '**Input:** `data` has:\n'

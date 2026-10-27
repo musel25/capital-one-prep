@@ -11,6 +11,8 @@ A payment can have several partial refunds. The limit applies to their cumulativ
 
 </details>
 
+**Scenario:** An online store allows partial refunds. The total refunded for a payment must never be more than the amount charged. `solve` processes refund requests in order and tracks how much each payment can still refund.
+
 **Input:** `data` has:
 - `payments`: maps payment IDs to charged cents (nonnegative integers).
 - `refunds`: a list of `{"payment": string, "cents": int}`, with nonnegative `cents`. Every payment ID exists.

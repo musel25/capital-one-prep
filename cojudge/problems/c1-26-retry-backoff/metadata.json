@@ -8,17 +8,17 @@
     {
       "input": "{\"outcomes\": [503, 503, 200], \"max_attempts\": 3, \"base\": 2, \"cap\": 3}",
       "output": "{\"attempts\": 3, \"delays\": [2, 3], \"result\": \"success\"}",
-      "explanation": "backoff is capped"
+      "explanation": "503 two times, then 200. The delays are 2, then 4 capped to 3."
     },
     {
       "input": "{\"outcomes\": [400, 200], \"max_attempts\": 2, \"base\": 1, \"cap\": 10}",
       "output": "{\"attempts\": 1, \"delays\": [], \"result\": \"failed\"}",
-      "explanation": "do not retry a client error"
+      "explanation": "400 is not retryable, so the client stops after 1 attempt."
     },
     {
       "input": "{\"outcomes\": [\"timeout\", 504], \"max_attempts\": 2, \"base\": 4, \"cap\": 20}",
       "output": "{\"attempts\": 2, \"delays\": [4], \"result\": \"exhausted\"}",
-      "explanation": "no delay after final failure"
+      "explanation": "Two retryable failures with a maximum of 2 attempts: `exhausted`, with one delay."
     }
   ],
   "starterCode": {

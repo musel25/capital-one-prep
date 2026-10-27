@@ -11,6 +11,8 @@ A retry can arrive after the first request has already committed. An idempotency
 
 </details>
 
+**Scenario:** A wallet service adds credits to an account. Clients retry requests, so each credit has a key. The key and the balance change must be saved in the same transaction. Otherwise a crash could save one without the other.
+
 **Input:** `data` has:
 - `balance`: the initial account balance.
 - `credits`: a list of `{"key": ..., "amount": ..., "fail": ...}`.

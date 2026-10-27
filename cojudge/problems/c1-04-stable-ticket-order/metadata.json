@@ -8,17 +8,17 @@
     {
       "input": "{\"tickets\": [{\"id\": \"low\", \"priority\": 1, \"created\": 1}, {\"id\": \"late\", \"priority\": 3, \"created\": 9}, {\"id\": \"early\", \"priority\": 3, \"created\": 2}]}",
       "output": "[\"early\", \"late\", \"low\"]",
-      "explanation": "two ordering keys"
+      "explanation": "The two priority-3 tickets come first. `early` was created before `late`."
     },
     {
       "input": "{\"tickets\": [{\"id\": \"z\", \"priority\": 2, \"created\": 5}, {\"id\": \"a\", \"priority\": 2, \"created\": 5}]}",
       "output": "[\"z\", \"a\"]",
-      "explanation": "ties preserve input order"
+      "explanation": "Same priority and same time: keep the input order, even though `\"a\"` sorts before `\"z\"`."
     },
     {
       "input": "{\"tickets\": []}",
       "output": "[]",
-      "explanation": "empty list"
+      "explanation": "An empty queue."
     }
   ],
   "starterCode": {

@@ -8,17 +8,17 @@
     {
       "input": "{\"initial\": {\"name\": \"Ada\", \"email\": \"a@x\"}, \"requests\": [{\"method\": \"PATCH\", \"body\": {\"name\": \"Bo\"}}]}",
       "output": "{\"responses\": [{\"status\": 200, \"body\": {\"name\": \"Bo\", \"email\": \"a@x\"}}], \"state\": {\"name\": \"Bo\", \"email\": \"a@x\"}}",
-      "explanation": "PATCH keeps omitted email"
+      "explanation": "PATCH changes only the name. The email stays."
     },
     {
       "input": "{\"initial\": {\"name\": \"Ada\", \"email\": \"a@x\"}, \"requests\": [{\"method\": \"PUT\", \"body\": {\"name\": \"Bo\"}}]}",
       "output": "{\"responses\": [{\"status\": 200, \"body\": {\"name\": \"Bo\", \"email\": null}}], \"state\": {\"name\": \"Bo\", \"email\": null}}",
-      "explanation": "PUT resets omitted email"
+      "explanation": "PUT without an email sets the email to `null`."
     },
     {
       "input": "{\"initial\": {\"name\": \"Ada\", \"email\": \"a@x\"}, \"requests\": [{\"method\": \"PATCH\", \"body\": {\"email\": null}}]}",
       "output": "{\"responses\": [{\"status\": 200, \"body\": {\"name\": \"Ada\", \"email\": null}}], \"state\": {\"name\": \"Ada\", \"email\": null}}",
-      "explanation": "explicit null clears email"
+      "explanation": "PATCH with `\"email\": null` clears the email."
     }
   ],
   "starterCode": {

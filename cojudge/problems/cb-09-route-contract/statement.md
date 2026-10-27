@@ -13,6 +13,10 @@ An API contract defines the response for each route and method. A route selects 
 
 </details>
 
+**Scenario:** You build a small HTTP API for an internal inventory tool. There is no real server: `solve` gets the stored items and a list of requests, and returns the response to each request, in order.
+
+> **Bug report:** "When I delete an item, the API answers 404 Not Found, so the app shows an error. But the item is gone, so the delete worked."
+
 **Input:** `data` has:
 - `items`: a list of `{"id": int, "name": string}`. IDs are unique positive integers.
 - `requests`: a list of `{"path": string, "method": string}`. Methods are uppercase.

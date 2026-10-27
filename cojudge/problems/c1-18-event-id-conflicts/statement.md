@@ -11,6 +11,8 @@ An event ID can make a retried operation safe to handle more than once. Store th
 
 </details>
 
+**Scenario:** A ledger receives balance events from a message queue. The queue can deliver the same event twice. The same ID with the same delta is a harmless duplicate. The same ID with a different delta is a data conflict that needs a person to look at it. Each event ID is applied at most once.
+
 **Input:** `data` has:
 - `balance`: the integer starting total.
 - `events`: a list of `{"id": string, "delta": int}`.

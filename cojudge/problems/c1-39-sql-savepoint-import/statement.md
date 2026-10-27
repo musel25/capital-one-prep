@@ -11,6 +11,8 @@ A savepoint marks a position inside a transaction. ROLLBACK TO restores that pos
 
 </details>
 
+**Scenario:** An inventory import loads rows in batches. One bad row must not stop the rest of its batch, but an operator can abort a whole batch. A savepoint undoes one row. The outer transaction undoes the batch.
+
 **Input:** `data` has:
 - `batches`: an ordered list of `{"rows": [...], "abort": bool}`. Each row is `{"id": ..., "qty": ..., "fail": ...}`.
 

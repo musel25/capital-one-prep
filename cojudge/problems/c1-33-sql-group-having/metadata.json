@@ -8,17 +8,17 @@
     {
       "input": "{\"rows\": [{\"id\": 1, \"account\": \"a\", \"amount\": 10, \"kind\": \"paid\"}, {\"id\": 2, \"account\": \"a\", \"amount\": 10, \"kind\": \"paid\"}, {\"id\": 3, \"account\": \"a\", \"amount\": null, \"kind\": \"paid\"}], \"minimum_total\": 0, \"minimum_events\": 1}",
       "output": "[{\"account\": \"a\", \"events\": 3, \"valued\": 2, \"total\": 20}]",
-      "explanation": "repeated amounts count and null affects only valued count"
+      "explanation": "Three paid rows. One amount is null, so `valued` is 2 and `total` is 20."
     },
     {
       "input": "{\"rows\": [{\"id\": 1, \"account\": \"a\", \"amount\": 4, \"kind\": \"paid\"}, {\"id\": 2, \"account\": \"a\", \"amount\": 6, \"kind\": \"paid\"}, {\"id\": 3, \"account\": \"b\", \"amount\": 20, \"kind\": \"paid\"}], \"minimum_total\": 10, \"minimum_events\": 2}",
       "output": "[{\"account\": \"a\", \"events\": 2, \"valued\": 2, \"total\": 10}]",
-      "explanation": "HAVING applies both group thresholds"
+      "explanation": "Account `b` has only one event, below the minimum of 2."
     },
     {
       "input": "{\"rows\": [{\"id\": 1, \"account\": \"a\", \"amount\": null, \"kind\": \"paid\"}, {\"id\": 2, \"account\": \"a\", \"amount\": null, \"kind\": \"paid\"}], \"minimum_total\": 0, \"minimum_events\": 1}",
       "output": "[{\"account\": \"a\", \"events\": 2, \"valued\": 0, \"total\": 0}]",
-      "explanation": "all-null sum becomes zero"
+      "explanation": "All amounts are null, so the total is 0, not null."
     }
   ],
   "starterCode": {

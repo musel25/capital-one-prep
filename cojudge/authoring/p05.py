@@ -14,6 +14,8 @@ SPEC = {'number': 5,
           'the input meaning separate from output order. Sorting the result keys makes the report '
           'deterministic even when two batches list their units in different orders. The output '
           'should preserve counts, not expand each count into repeated rows.',
+ 'scenario': ("A warehouse compares a shipment's packing list (`expected`) with the items scanned at the dock (`observed`). Each scan is one unit, so one ID can appear many times. `solve` reports what is missing and what is extra, so the team can open a claim with the supplier."),
+ 'example_notes': ['Expected 2 × A and 1 × B. Scanned 1 × A and 1 × C. Missing: 1 A and 1 B. Extra: 1 C.', 'The same items in a different order: nothing is missing or extra.', 'Both lists are empty.'],
  'task': ('**Input:** `data` has:\n'
     '- `expected`: a list of item IDs (ASCII strings).\n'
     '- `observed`: a list of item IDs (ASCII strings).\n'

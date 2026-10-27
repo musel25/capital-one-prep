@@ -11,6 +11,8 @@ A heap provides efficient access to the smallest key. heapq uses Python tuple or
 
 </details>
 
+**Scenario:** A background worker runs jobs from a queue. Each job has a priority, and a smaller number is more urgent. Jobs with equal priority run in the order they were added. `solve` simulates the queue: `add` puts a job in, and `pop` takes out the next job to run.
+
 **Input:** `data` has:
 - `actions`: a list of operations:
   - `{"op": "add", "id": string, "priority": int}` adds a job. Priority is from -100 to 100. A smaller value runs first.

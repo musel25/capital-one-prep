@@ -8,17 +8,17 @@
     {
       "input": "{\"expected\": [\"A\", \"A\", \"B\"], \"observed\": [\"A\", \"C\"]}",
       "output": "{\"missing\": [{\"id\": \"A\", \"count\": 1}, {\"id\": \"B\", \"count\": 1}], \"extra\": [{\"id\": \"C\", \"count\": 1}]}",
-      "explanation": "counts in both directions"
+      "explanation": "Expected 2 \u00d7 A and 1 \u00d7 B. Scanned 1 \u00d7 A and 1 \u00d7 C. Missing: 1 A and 1 B. Extra: 1 C."
     },
     {
       "input": "{\"expected\": [\"B\", \"A\"], \"observed\": [\"A\", \"B\"]}",
       "output": "{\"missing\": [], \"extra\": []}",
-      "explanation": "order does not matter"
+      "explanation": "The same items in a different order: nothing is missing or extra."
     },
     {
       "input": "{\"expected\": [], \"observed\": []}",
       "output": "{\"missing\": [], \"extra\": []}",
-      "explanation": "empty batches"
+      "explanation": "Both lists are empty."
     }
   ],
   "starterCode": {

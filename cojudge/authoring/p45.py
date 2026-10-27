@@ -34,7 +34,9 @@ for i in range(24):
  generated.append({"threshold":i%4+1,"cooldown":i%7+1,"calls":calls})
 SPEC={"number":45,"slug":"circuit-breaker-state","title":"Trace a circuit breaker through recovery","difficulty":"Hard","time":35,"prerequisites":"State machines, consecutive counters, and time boundaries.",
 "learn":"A circuit breaker stops repeated calls to a failing dependency. While closed, it allows calls and counts consecutive failures. Enough failures open the breaker for a cooldown period. During that period calls are blocked and do not reach the dependency. At the deadline, the next call is a half-open probe. A successful probe closes the breaker and resets failures. A failed probe opens it for a new cooldown. The half-open state is transient here because each allowed call completes immediately in the trace. This exercise uses supplied outcomes and integer times. It is a deterministic event trace, not an actual parallel, thread, or network test.",
-"task":('**Input:** `data` has:\n'
+"scenario": ('A payment service calls a fraud-check service. If the fraud service keeps failing, the payment service stops calling it for a cooldown period (open). Then it tries one test call (a probe) to see if the service recovered.'),
+ "example_notes": ['Two failures reach the threshold of 2, so the breaker is open until 6.', 'The call at 4 is before `retry_at` 5, so it is blocked.', 'At 5 the probe succeeds, so the breaker closes.'],
+ "task":('**Input:** `data` has:\n'
     '- `threshold`, `cooldown`: positive integers.\n'
     '- `calls`: a list of `{"at": int, "ok": bool}`. Times never decrease.\n'
     '\n'

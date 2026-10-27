@@ -8,17 +8,17 @@
     {
       "input": "{\"customers\": [{\"id\": 1, \"name\": \"1\"}, {\"id\": 2, \"name\": \"2\"}], \"payments\": [{\"id\": 1, \"customer_id\": 1, \"amount\": 10, \"status\": \"paid\"}]}",
       "output": "[{\"customer_id\": 1, \"name\": \"1\", \"payment_id\": 1, \"amount\": 10}, {\"customer_id\": 2, \"name\": \"2\", \"payment_id\": null, \"amount\": null}]",
-      "explanation": "keep customer with no payments"
+      "explanation": "Customer 2 has no payments: one row with nulls."
     },
     {
       "input": "{\"customers\": [{\"id\": 1, \"name\": \"1\"}], \"payments\": [{\"id\": 1, \"customer_id\": 1, \"amount\": 10, \"status\": \"pending\"}]}",
       "output": "[{\"customer_id\": 1, \"name\": \"1\", \"payment_id\": null, \"amount\": null}]",
-      "explanation": "pending-only customer remains with nulls"
+      "explanation": "Customer 1 has only a pending payment: one row with nulls."
     },
     {
       "input": "{\"customers\": [{\"id\": 1, \"name\": \"1\"}], \"payments\": [{\"id\": 3, \"customer_id\": 1, \"amount\": 30, \"status\": \"paid\"}, {\"id\": 2, \"customer_id\": 1, \"amount\": 20, \"status\": \"paid\"}]}",
       "output": "[{\"customer_id\": 1, \"name\": \"1\", \"payment_id\": 2, \"amount\": 20}, {\"customer_id\": 1, \"name\": \"1\", \"payment_id\": 3, \"amount\": 30}]",
-      "explanation": "one output row per paid payment"
+      "explanation": "Two paid payments give two rows, ordered by payment id."
     }
   ],
   "starterCode": {

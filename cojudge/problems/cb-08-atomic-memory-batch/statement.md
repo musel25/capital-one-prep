@@ -13,6 +13,10 @@ Atomic means that an operation has one complete result: all intended changes hap
 
 </details>
 
+**Scenario:** A payroll system sends transfers in batches. A batch is all-or-nothing: if one transfer in it fails, none of the batch happens. Operations report that after a failed batch, some money moved anyway.
+
+> **Bug report:** "A payroll batch was rejected because one account had too little money. But the first transfer of that batch still moved money."
+
 **Input:** `data` has:
 - `accounts`: maps account IDs to nonnegative integer cents.
 - `batches`: a list of batches. Each batch is a list of transfers `{"from": string, "to": string, "cents": int}`, with nonnegative `cents`. Both accounts always exist.

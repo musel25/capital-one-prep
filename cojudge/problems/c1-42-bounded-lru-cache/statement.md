@@ -11,6 +11,8 @@ A least-recently-used cache evicts the entry whose last successful use is oldest
 
 </details>
 
+**Scenario:** An API gateway keeps a small in-memory cache of user profiles. When the cache is full, it removes the profile that was used least recently (LRU).
+
 **Input:** `data` has:
 - `capacity`: the maximum number of entries.
 - `ops`: a list of `put` (`key`, integer `value`), `get` (`key`), or `delete` (`key`).

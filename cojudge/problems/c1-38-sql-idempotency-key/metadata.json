@@ -8,17 +8,17 @@
     {
       "input": "{\"balance\": 0, \"credits\": [{\"key\": \"k\", \"amount\": 2, \"fail\": false}]}",
       "output": "{\"results\": [\"ok\"], \"balance\": 2, \"keys\": [\"k\"]}",
-      "explanation": "new credit"
+      "explanation": "A new key adds 2."
     },
     {
       "input": "{\"balance\": 0, \"credits\": [{\"key\": \"k\", \"amount\": 2, \"fail\": false}, {\"key\": \"k\", \"amount\": 2, \"fail\": false}]}",
       "output": "{\"results\": [\"ok\", \"replay\"], \"balance\": 2, \"keys\": [\"k\"]}",
-      "explanation": "retry does not add money"
+      "explanation": "The same key again: `replay`, with no second credit."
     },
     {
       "input": "{\"balance\": 0, \"credits\": [{\"key\": \"k\", \"amount\": 2, \"fail\": false}, {\"key\": \"k\", \"amount\": 3, \"fail\": false}]}",
       "output": "{\"results\": [\"ok\", \"conflict\"], \"balance\": 2, \"keys\": [\"k\"]}",
-      "explanation": "key cannot change amount"
+      "explanation": "The same key with a different amount: `conflict`."
     }
   ],
   "starterCode": {

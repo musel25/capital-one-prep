@@ -8,17 +8,17 @@
     {
       "input": "{\"values\": [1, 2, 3, 4, 5], \"size\": 2}",
       "output": "[[1, 2], [3, 4], [5]]",
-      "explanation": "final partial batch"
+      "explanation": "5 recipients in calls of 2: the last call has 1 recipient."
     },
     {
       "input": "{\"values\": [7, 8, 9, 10], \"size\": 2}",
       "output": "[[7, 8], [9, 10]]",
-      "explanation": "exact multiple"
+      "explanation": "4 recipients divide evenly into two full calls."
     },
     {
       "input": "{\"values\": [], \"size\": 3}",
       "output": "[]",
-      "explanation": "empty iterator"
+      "explanation": "No recipients, so no calls."
     }
   ],
   "starterCode": {

@@ -11,6 +11,8 @@ Assignment gives another name to the same object. A shallow copy creates a new o
 
 </details>
 
+**Scenario:** A bank has a default card configuration: a daily and a monthly spending limit, plus tags. For each new customer, the app copies this template and applies that customer's changes. Staff report that one customer's change appears for other customers, and that the template itself changes.
+
 **Bug fix.** The starter makes a shallow copy. Repair it.
 
 **Input:** `data` has:

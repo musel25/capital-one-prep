@@ -51,6 +51,7 @@ def load_codebase_specs(numbers=None):
                     prerequisites=PREREQUISITES[number - 1],
                     starter="# This existing program has one intentional behavior defect.\n"
                             "# Read the task. Write a regression case before changing it.\n" + starter)
+        spec["ticket"] = lesson["ticket"]
         spec["learn"] = lesson["orientation"] + "\n\n" + source["learn"]
         # A bug-fix source opens with its own defect note; show it once, under "What to fix".
         lead = "The starter runs, but it has one intentional bug."

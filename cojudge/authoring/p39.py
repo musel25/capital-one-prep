@@ -49,7 +49,9 @@ rng=random.Random(39)
 SPEC={"number":39,"slug":"sql-savepoint-import","title":"Isolate failed import rows with savepoints","difficulty":"Hard","time":35,
 "prerequisites":"Transactions, constraint failures, and exception handling.",
 "learn":"A savepoint marks a position inside a transaction. ROLLBACK TO restores that position without discarding earlier work in the transaction. RELEASE removes the savepoint. It does not make inner changes durable when an outer transaction is still open. This is useful for batch imports: one bad row can fail while other rows remain eligible to commit. The final batch decision still controls all accepted rows. A row can also fail after its insert succeeds. In that case the savepoint must remove that inserted row before the next item runs. Keep row outcomes separate from the final batch commit decision.",
-"task":('**Input:** `data` has:\n'
+"scenario": ('An inventory import loads rows in batches. One bad row must not stop the rest of its batch, but an operator can abort a whole batch. A savepoint undoes one row. The outer transaction undoes the batch.'),
+ "example_notes": ['One good row, committed.', 'Row `b` has a negative quantity: `invalid`. Rows `a` and `c` are still imported.', 'The batch is aborted. Row `a` was `ok`, but nothing is saved.'],
+ "task":('**Input:** `data` has:\n'
     '- `batches`: an ordered list of `{"rows": [...], "abort": bool}`. Each row is `{"id": ..., "qty": ..., "fail": ...}`.\n'
     '\n'
     '**Rules:** use the supplied SQLite table.\n'

@@ -11,6 +11,8 @@ A client can lose a response after the server completes a write. Retrying the wr
 
 </details>
 
+**Scenario:** A mobile banking app sends each transfer request with an idempotency key. If the network fails, the app sends the same request again with the same key. The API must not create the transfer twice. A key that is reused for a different transfer is a client bug, so the API rejects it.
+
 **Input:** `data` has:
 - `requests`: a list of `{"key": string, "body": {"to": string, "amount": int}}`. All requests are valid.
 

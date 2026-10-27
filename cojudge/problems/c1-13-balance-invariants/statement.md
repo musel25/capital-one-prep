@@ -11,6 +11,8 @@ An invariant is a rule that must hold after every operation. Here the balance mu
 
 </details>
 
+**Scenario:** A prepaid card has a balance in cents. The balance must never go below zero. `solve` processes deposits and withdrawals in order and reports which ones went through.
+
 **Input:** `data` has:
 - `balance`: a nonnegative integer number of cents.
 - `actions`: a list of `{"op": "deposit" | "withdraw", "cents": int}`, with nonnegative `cents`.

@@ -8,17 +8,17 @@
     {
       "input": "{\"records\": [{\"id\": \"A\", \"amount\": 0}, {\"id\": \"B\", \"amount\": true}, {\"id\": \"C\"}]}",
       "output": "{\"valid\": [{\"id\": \"A\", \"amount\": 0}], \"rejected\": [1, 2]}",
-      "explanation": "validate fields at the boundary"
+      "explanation": "Record 0 is valid (an amount of 0 is allowed). Record 1 has the amount `true`. Record 2 has no amount."
     },
     {
       "input": "{\"records\": [{\"id\": \"X\", \"amount\": 4, \"debug\": true}]}",
       "output": "{\"valid\": [{\"id\": \"X\", \"amount\": 4}], \"rejected\": []}",
-      "explanation": "drop extra fields"
+      "explanation": "The extra `debug` key is not copied to the output."
     },
     {
       "input": "{\"records\": []}",
       "output": "{\"valid\": [], \"rejected\": []}",
-      "explanation": "empty list"
+      "explanation": "An empty list."
     }
   ],
   "starterCode": {

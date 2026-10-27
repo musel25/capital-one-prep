@@ -8,17 +8,17 @@
     {
       "input": "{\"total\": 0, \"deliveries\": [{\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}, {\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}]}",
       "output": "{\"results\": [\"ack\", \"ack\"], \"total\": 2, \"processed\": [\"a\"]}",
-      "explanation": "duplicate delivery has one effect"
+      "explanation": "The second delivery of `a` is a duplicate: `ack`, with no second +2."
     },
     {
       "input": "{\"total\": 0, \"deliveries\": [{\"id\": \"a\", \"amount\": 2, \"fail\": \"before\"}, {\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}]}",
       "output": "{\"results\": [\"retry\", \"ack\"], \"total\": 2, \"processed\": [\"a\"]}",
-      "explanation": "failure before commit can retry"
+      "explanation": "A failure before the commit: `retry`. The next delivery applies it."
     },
     {
       "input": "{\"total\": 0, \"deliveries\": [{\"id\": \"a\", \"amount\": 2, \"fail\": \"after\"}, {\"id\": \"a\", \"amount\": 2, \"fail\": \"none\"}]}",
       "output": "{\"results\": [\"retry\", \"ack\"], \"total\": 2, \"processed\": [\"a\"]}",
-      "explanation": "lost acknowledgement after commit"
+      "explanation": "Committed, but the acknowledgement was lost: `retry`. The redelivery is acknowledged without adding again."
     }
   ],
   "starterCode": {

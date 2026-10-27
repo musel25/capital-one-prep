@@ -8,17 +8,17 @@
     {
       "input": "{\"balance\": 10, \"actions\": [{\"op\": \"withdraw\", \"cents\": 7}, {\"op\": \"withdraw\", \"cents\": 4}]}",
       "output": "{\"accepted\": [true, false], \"balance\": 3}",
-      "explanation": "failed withdrawal preserves balance"
+      "explanation": "Withdrawing 7 from 10 succeeds. Withdrawing 4 from the remaining 3 fails."
     },
     {
       "input": "{\"balance\": 0, \"actions\": [{\"op\": \"deposit\", \"cents\": 5}, {\"op\": \"withdraw\", \"cents\": 5}]}",
       "output": "{\"accepted\": [true, true], \"balance\": 0}",
-      "explanation": "deposit then exact withdrawal"
+      "explanation": "Deposit 5, then withdraw exactly 5: the balance is 0."
     },
     {
       "input": "{\"balance\": 9, \"actions\": []}",
       "output": "{\"accepted\": [], \"balance\": 9}",
-      "explanation": "no actions"
+      "explanation": "No actions: the balance stays 9."
     }
   ],
   "starterCode": {

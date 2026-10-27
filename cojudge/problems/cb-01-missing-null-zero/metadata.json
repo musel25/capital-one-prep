@@ -8,17 +8,17 @@
     {
       "input": "{\"default\": 10, \"records\": [{}, {\"limit\": null}, {\"limit\": 0}, {\"limit\": 4}]}",
       "output": "{\"limits\": [10, null, 0, 4], \"configured\": 2}",
-      "explanation": "three distinct field states"
+      "explanation": "Customer 1 never set a limit (default 10). Customer 2 chose no limit. Customer 3 muted alerts (0). Customer 4 chose 4. Customers 3 and 4 set a number, so `configured` is 2."
     },
     {
       "input": "{\"default\": 5, \"records\": [{\"limit\": 2}, {\"limit\": 2}]}",
       "output": "{\"limits\": [2, 2], \"configured\": 2}",
-      "explanation": "count records, not distinct values"
+      "explanation": "Two customers both chose 2. Count customers, not different values."
     },
     {
       "input": "{\"default\": 9, \"records\": []}",
       "output": "{\"limits\": [], \"configured\": 0}",
-      "explanation": "empty records"
+      "explanation": "No customers in this batch."
     }
   ],
   "starterCode": {

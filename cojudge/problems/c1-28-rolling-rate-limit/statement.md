@@ -11,6 +11,8 @@ A rolling limit counts accepted requests in a recent time interval. Its exact bo
 
 </details>
 
+**Scenario:** A public API allows each user at most `limit` requests in a rolling window of `window` time units. `solve` decides whether to allow each request, and tells a rejected client how long to wait.
+
 **Input:** `data` has:
 - `limit`: a positive integer.
 - `window`: a positive integer.

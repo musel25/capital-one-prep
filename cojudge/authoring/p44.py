@@ -35,7 +35,9 @@ for i in range(24):
  generated.append({"messages":list("abc"[:i%4]),"timeout":i+1,"ops":ops})
 SPEC={"number":44,"slug":"queue-visibility-tokens","title":"Reject stale queue acknowledgements","difficulty":"Hard","time":35,"prerequisites":"State machines, integer clocks, and message retries.",
 "learn":"Receiving a queue message can hide it for a limited time without deleting it. If the consumer does not acknowledge it before that deadline, another receive can deliver it again. Each delivery needs a fresh receipt token. An old consumer must not acknowledge the new delivery with its old token. This model uses an increasing token per message and accepts an acknowledgement only during that token's active visibility interval. At the exact deadline the message is visible again and the old token is invalid. These are the explicit rules of this exercise, not a promise about every queue provider. The task is a deterministic event trace, not an actual parallel, thread, or network test.",
-"task":('**Input:** `data` has:\n'
+"scenario": ('A job queue hides a message for `timeout` time units after a worker receives it. If the worker does not finish in time, the message becomes visible again, and another worker can take it. Each receipt gets a new token, so a slow first worker cannot acknowledge a message that another worker now owns.'),
+ "example_notes": ['Received at 0 and acknowledged at 4, before the deadline of 5.', 'Redelivered at 5 with token 2. The old token 1 fails. Token 2 succeeds.', 'The acknowledgement at 5 is too late (the deadline is 5), so the message stays pending.'],
+ "task":('**Input:** `data` has:\n'
     '- `messages`: unique IDs in queue order.\n'
     '- `timeout`: a positive visibility duration.\n'
     '- `ops`: a list of operations. Their `at` times never decrease.\n'

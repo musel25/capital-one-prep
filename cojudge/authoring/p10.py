@@ -13,6 +13,8 @@ SPEC = {'number': 10,
           'list is not globally sorted. If you need a final ordered report, sort a copy or drain a '
           'separate heap. Empty pops need an explicit result. This task uses null so the result '
           'list still contains one entry for each requested pop.',
+ 'scenario': ('A background worker runs jobs from a queue. Each job has a priority, and a smaller number is more urgent. Jobs with equal priority run in the order they were added. `solve` simulates the queue: `add` puts a job in, and `pop` takes out the next job to run.'),
+ 'example_notes': ['`fast` (priority 1) runs before `slow` (priority 5).', 'Equal priority: `z` was added first, so it runs first.', 'No actions.'],
  'task': ('**Input:** `data` has:\n'
     '- `actions`: a list of operations:\n'
     '  - `{"op": "add", "id": string, "priority": int}` adds a job. Priority is from -100 to 100. A smaller value runs first.\n'

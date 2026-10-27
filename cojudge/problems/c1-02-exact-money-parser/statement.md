@@ -11,6 +11,8 @@ Binary floating point cannot represent many decimal fractions exactly. Money fro
 
 </details>
 
+**Scenario:** A bank's import tool reads amounts that people typed into a form, such as `"12.34"`. A float cannot store cents exactly, so the tool converts the text to an integer number of cents. Text that does not match the strict format becomes `null`, so the import can flag it for review.
+
 **Input:** `data` has:
 - `amounts`: a list of JSON values. Strings have at most 30 characters.
 

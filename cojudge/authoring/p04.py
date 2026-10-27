@@ -13,6 +13,8 @@ SPEC = {'number': 4,
           'not add an identifier as a tie breaker unless the contract asks for it. Two valid '
           'ordering choices can produce different results for the same records. Use sorted when '
           'you want a new list and want to preserve the caller’s input.',
+ 'scenario': ('A support desk shows agents one queue of tickets. Agents take tickets from the top. Urgent tickets (higher priority) come first. For equal priority, the oldest ticket comes first. If both are equal, keep the order in which the system received them. `solve` returns the queue order.'),
+ 'example_notes': ['The two priority-3 tickets come first. `early` was created before `late`.', 'Same priority and same time: keep the input order, even though `"a"` sorts before `"z"`.', 'An empty queue.'],
  'task': ('**Input:** `data` has:\n'
     '- `tickets`: a list of objects with `id` (string), `priority` (integer 0–9), and `created` (integer 0–1,000,000). IDs are not always unique.\n'
     '\n'

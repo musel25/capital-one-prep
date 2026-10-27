@@ -8,17 +8,17 @@
     {
       "input": "{\"balances\": {\"a\": 10, \"b\": 0}, \"transfers\": [{\"from\": \"a\", \"to\": \"b\", \"amount\": 4, \"fail\": false}]}",
       "output": "{\"results\": [\"ok\"], \"balances\": {\"a\": 6, \"b\": 4}}",
-      "explanation": "transfer commits both entries"
+      "explanation": "A normal transfer of 4."
     },
     {
       "input": "{\"balances\": {\"a\": 10, \"b\": 0}, \"transfers\": [{\"from\": \"a\", \"to\": \"b\", \"amount\": 4, \"fail\": true}]}",
       "output": "{\"results\": [\"failed\"], \"balances\": {\"a\": 10, \"b\": 0}}",
-      "explanation": "failure restores debit"
+      "explanation": "A failure after the debit: roll back, so both balances stay the same."
     },
     {
       "input": "{\"balances\": {\"a\": 3, \"b\": 2}, \"transfers\": [{\"from\": \"a\", \"to\": \"b\", \"amount\": 4, \"fail\": false}]}",
       "output": "{\"results\": [\"insufficient\"], \"balances\": {\"a\": 3, \"b\": 2}}",
-      "explanation": "insufficient funds change neither balance"
+      "explanation": "`a` has 3 and needs 4: `insufficient`."
     }
   ],
   "starterCode": {

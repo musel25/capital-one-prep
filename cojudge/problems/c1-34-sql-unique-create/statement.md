@@ -11,6 +11,8 @@ A unique database constraint is the final guard against duplicate keys. Checking
 
 </details>
 
+**Scenario:** A sign-up API creates accounts with a unique username. Clients can send the same request again. A repeat with the same data is fine (200). A request that reuses a name with different data is a conflict (409).
+
 Complete `create_account(connection, username, quota)` in the SQLite scaffold. The table has `username TEXT PRIMARY KEY NOT NULL` and `quota INTEGER NOT NULL`. Text comparison is case-sensitive (the default).
 
 **Input:** `data` has:

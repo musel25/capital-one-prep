@@ -11,6 +11,8 @@ A reservation temporarily removes stock from the available pool. Confirmation ma
 
 </details>
 
+**Scenario:** A ticket site holds seats in a cart for a short time. If the customer does not pay before the hold expires, the seats go back on sale. Clients can send a request again, so a repeated request must be safe.
+
 **Input:** `data` has:
 - `stock`: the starting integer stock.
 - `ops`: a list of operations. Each has `at` (times never decrease), `id`, and `op`.

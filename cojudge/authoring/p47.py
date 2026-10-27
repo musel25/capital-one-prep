@@ -36,7 +36,9 @@ CASES=[c([node(),node("b",500)],[look(101)],["b"],[[100,"a"],[500,"b"]],"clockwi
 rng=random.Random(47)
 SPEC={"number":47,"slug":"consistent-hash-ring","title":"Route requests around a consistent hash ring","difficulty":"Hard","time":30,"prerequisites":"Sorted lists, binary search, and dictionaries.",
 "learn":"A hash ring assigns each request to the first node at or after its hash, moving in increasing hash order. If no node remains in that direction, the search wraps to the first node. An exact hash match belongs to that node. Adding a node changes the interval immediately before it; removing a node hands its interval to its successor. This exercise supplies deterministic integer hashes so that language hash randomization cannot change the answers. Python's bisect_left finds the required insertion position, including exact matches. The model uses one point per node. This is a deterministic event trace, not an actual parallel, thread, or network test.",
-"task":('**Input:** `data` has:\n'
+"scenario": ('A cache cluster spreads keys over servers with a hash ring. A key goes to the first server at or after its hash, and wraps around at the end of the ring. Servers can join and leave.'),
+ "example_notes": ['Hash 101 goes to the next server, at 500: `b`.', 'Hash 100 is exactly at the point of `a`.', 'Hash 999 is after the last server, so it wraps around to `a`.'],
+ "task":('**Input:** `data` has:\n'
     '- `nodes`: a list of `{"id": ..., "hash": ...}`, with unique IDs and hashes. Hashes are points on a ring from 0 to 999.\n'
     '- `ops`: a list of operations. Process them in order.\n'
     '\n'

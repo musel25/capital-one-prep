@@ -43,7 +43,9 @@ for i in range(24):
  generated.append({"balances":{"a":i+10,"b":i,"c":5},"payments":ops})
 SPEC={"number":50,"slug":"payment-service-integration","title":"Compose a bounded reliable payment service","difficulty":"Hard","time":45,"prerequisites":"Atomic transfers, idempotency payloads, and transactional outbox records.",
 "learn":"A reliable payment boundary combines rules that are easy to implement incorrectly in isolation. The idempotency key identifies the complete request payload, including both accounts and the amount. A successful payment changes two balances, records that key, and creates an event as one logical commit. Replays return before checking the current balance because the original payment already happened. Failed attempts retain no key, so they can retry after recovery. This bounded exercise stages changes in memory and publishes them only after all fault points pass. It is a deterministic event trace, not an actual parallel, thread, or network test. Production storage would need a real durable transaction.",
-"task":('**Input:** `data` has:\n'
+"scenario": ('A payment service combines three parts from earlier problems: idempotency keys, atomic balance updates, and an outbox event. Each payment request moves money between two accounts and emits one event.'),
+ "example_notes": ['A normal payment of 2 creates one event.', 'The same key again: `replay`, with no second debit or event.', 'The first attempt fails, so the key is not stored. The retry succeeds.'],
+ "task":('**Input:** `data` has:\n'
     '- `balances`: maps existing account IDs to nonnegative integer balances.\n'
     '- `payments`: a list of `{"key": ..., "from": ..., "to": ..., "amount": ..., "fail": ...}`. The two accounts exist and differ. `amount` is positive. `fail` is `"none"`, `"debit"` (a fault after the debit is staged), or `"outbox"` (a fault after the event is prepared).\n'
     '\n'

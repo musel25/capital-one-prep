@@ -11,6 +11,8 @@ At-least-once delivery means a message can arrive more than once. A consumer sho
 
 </details>
 
+**Scenario:** A rewards service reads point events from a queue that delivers each message at least once. A message arrives again if its acknowledgement is lost. Points must be added exactly once per message ID.
+
 **Input:** `data` has:
 - `total`: the initial integer total.
 - `deliveries`: a list of `{"id": ..., "amount": ..., "fail": ...}`. `fail` is `"none"`, `"before"`, or `"after"`. All deliveries with the same ID have the same amount.

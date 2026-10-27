@@ -11,6 +11,8 @@ Replacement and partial update need different rules for absent fields. A replace
 
 </details>
 
+**Scenario:** A profile API lets an app update a user's name and email. PUT replaces the whole profile. PATCH changes only the fields it sends. `solve` processes a sequence of update requests for one profile.
+
 **Input:** `data` has:
 - `initial`: a valid profile `{"name": string, "email": string | null}`.
 - `requests`: a list of `{"method": "PUT" | "PATCH", "body": any JSON}`.

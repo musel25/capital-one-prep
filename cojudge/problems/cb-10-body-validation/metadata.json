@@ -8,17 +8,17 @@
     {
       "input": "{\"bodies\": [{\"account\": \"acct_1\", \"amount\": 25}]}",
       "output": "[{\"status\": 201, \"body\": {\"account\": \"acct_1\", \"amount\": 25, \"note\": null}}]",
-      "explanation": "valid body gets default null note"
+      "explanation": "A valid body. `note` is missing, so it is `null`."
     },
     {
       "input": "{\"bodies\": [{\"account\": \"A\", \"amount\": 0, \"note\": false, \"extra\": 1}]}",
       "output": "[{\"status\": 422, \"errors\": [\"account\", \"amount\", \"note\", \"unknown\"]}]",
-      "explanation": "all field errors have fixed order"
+      "explanation": "Four errors: an uppercase account, an amount of 0, a note that is not a string, and the unknown key `extra`."
     },
     {
       "input": "{\"bodies\": [null]}",
       "output": "[{\"status\": 400, \"errors\": [\"body\"]}]",
-      "explanation": "JSON null is not an object"
+      "explanation": "The body is not an object, so the response is 400."
     }
   ],
   "starterCode": {

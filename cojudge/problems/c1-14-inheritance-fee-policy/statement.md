@@ -11,6 +11,8 @@ Inheritance lets a subclass reuse a base implementation while replacing a specif
 
 </details>
 
+**Scenario:** A bank has standard and premium checking accounts. Each ATM withdrawal costs a fee, but premium customers pay no fee for large withdrawals (at least `threshold`). The fee is part of the withdrawal, so the account must have enough money for both.
+
 **Input:** `data` has (all amounts in cents):
 - `kind`: `"standard"` or `"premium"`.
 - `balance`, `fee`, `threshold`: nonnegative integers.

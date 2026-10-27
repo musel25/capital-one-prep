@@ -22,7 +22,9 @@ CASES=[c(0,[o(),o()],["ack","ack"],2,["a"],"duplicate delivery has one effect"),
 rng=random.Random(43)
 SPEC={"number":43,"slug":"message-deduplication","title":"Deduplicate at-least-once message delivery","difficulty":"Medium","time":25,"prerequisites":"Sets, idempotency, and transaction boundaries.",
 "learn":"At-least-once delivery means a message can arrive more than once. A consumer should identify the logical message by its ID and record completed IDs with the business effect. These two changes form one logical commit in this model. If processing fails before commit, a retry must still apply the effect. If the acknowledgement is lost after commit, a retry must acknowledge the message without applying it again. Do not mark a message complete before its effect commits. This task supplies the failures directly. It is a deterministic event trace, not an actual parallel, thread, or network test, and it makes no claim of end-to-end exactly-once delivery.",
-"task":('**Input:** `data` has:\n'
+"scenario": ('A rewards service reads point events from a queue that delivers each message at least once. A message arrives again if its acknowledgement is lost. Points must be added exactly once per message ID.'),
+ "example_notes": ['The second delivery of `a` is a duplicate: `ack`, with no second +2.', 'A failure before the commit: `retry`. The next delivery applies it.', 'Committed, but the acknowledgement was lost: `retry`. The redelivery is acknowledged without adding again.'],
+ "task":('**Input:** `data` has:\n'
     '- `total`: the initial integer total.\n'
     '- `deliveries`: a list of `{"id": ..., "amount": ..., "fail": ...}`. `fail` is `"none"`, `"before"`, or `"after"`. All deliveries with the same ID have the same amount.\n'
     '\n'

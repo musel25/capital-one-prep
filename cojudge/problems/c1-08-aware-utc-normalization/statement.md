@@ -11,6 +11,8 @@ An aware datetime has a time zone offset. It identifies an instant rather than a
 
 </details>
 
+**Scenario:** A travel company receives booking times from partners in many time zones. Each time has an offset, such as `-07:00`. The company's database stores all times in UTC. `solve` converts each timestamp to UTC.
+
 **Input:** `data` has:
 - `timestamps`: a list of valid strings, each in one of these forms:
   - `YYYY-MM-DDTHH:MM:SSZ`

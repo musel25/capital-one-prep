@@ -13,6 +13,10 @@ A state machine lists which actions are valid in each state. It separates the cu
 
 </details>
 
+**Scenario:** An online store tracks the payment of each order with a state machine. An order is authorized, then captured (the money is taken), then maybe refunded. It can be cancelled only before capture. `solve` processes the actions that arrive and reports which ones were valid.
+
+> **Bug report:** "My order was already captured, so my card was charged. Then a cancel came in, and the system accepted it. The order now says CANCELLED, but I never got my money back."
+
 **Input:** `data` has:
 - `actions`: a list of strings. Each is `authorize`, `capture`, `cancel`, or `refund`.
 

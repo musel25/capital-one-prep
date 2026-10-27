@@ -11,6 +11,8 @@ CSV fields can contain commas, quotes, and line breaks. Splitting text at commas
 
 </details>
 
+**Scenario:** Finance exports transactions from a spreadsheet as CSV text: one row per transaction, with an account name and an amount. Account names can contain commas, quotes, and line breaks, so splitting each line on `,` gives wrong results. `solve` produces the total of each account for the monthly report.
+
 **Input:** `data` has:
 - `csv`: valid CSV text.
   - The first record (the header) is exactly `account,amount`.

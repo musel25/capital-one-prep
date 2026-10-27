@@ -39,7 +39,9 @@ rng=random.Random(38)
 SPEC={"number":38,"slug":"sql-idempotency-key","title":"Commit a credit and its idempotency key","difficulty":"Medium","time":30,
 "prerequisites":"Transactions, UNIQUE constraints, and request retries.",
 "learn":"A retry can arrive after the first request has already committed. An idempotency key identifies that logical request. Store the key and its payload in a table with a uniqueness constraint. A repeat with the same payload returns a replay result. A repeat with a different payload is a conflict. The key and the business write must share one transaction. Otherwise a crash can record the key without applying the credit, or apply the credit without recording the key. A failed transaction leaves the key available for a later attempt. This task models ordered requests and an injected failure immediately before commit.",
-"task":('**Input:** `data` has:\n'
+"scenario": ('A wallet service adds credits to an account. Clients retry requests, so each credit has a key. The key and the balance change must be saved in the same transaction. Otherwise a crash could save one without the other.'),
+ "example_notes": ['A new key adds 2.', 'The same key again: `replay`, with no second credit.', 'The same key with a different amount: `conflict`.'],
+ "task":('**Input:** `data` has:\n'
     '- `balance`: the initial account balance.\n'
     '- `credits`: a list of `{"key": ..., "amount": ..., "fail": ...}`.\n'
     '\n'

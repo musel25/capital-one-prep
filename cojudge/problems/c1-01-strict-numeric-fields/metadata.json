@@ -8,17 +8,17 @@
     {
       "input": "{\"values\": [7, true, 0, -2, \"4\"]}",
       "output": "{\"total\": 7, \"rejected\": [1, 3, 4]}",
-      "explanation": "flags and text are not amounts"
+      "explanation": "`7` and `0` are valid tips. `true`, `-2`, and `\"4\"` are rejected at positions 1, 3, and 4."
     },
     {
       "input": "{\"values\": [2, 3, 5]}",
       "output": "{\"total\": 10, \"rejected\": []}",
-      "explanation": "all amounts are valid"
+      "explanation": "All three tips are valid."
     },
     {
       "input": "{\"values\": []}",
       "output": "{\"total\": 0, \"rejected\": []}",
-      "explanation": "empty batch"
+      "explanation": "An empty batch: the total is 0 and nothing is rejected."
     }
   ],
   "starterCode": {

@@ -8,17 +8,17 @@
     {
       "input": "{\"items\": [{\"id\": 2, \"name\": \"book\"}, {\"id\": 1, \"name\": \"pen\"}], \"requests\": [{\"path\": \"/items\", \"method\": \"GET\"}]}",
       "output": "[{\"status\": 200, \"body\": [{\"id\": 1, \"name\": \"pen\"}, {\"id\": 2, \"name\": \"book\"}]}]",
-      "explanation": "collection is ordered by numeric id"
+      "explanation": "`GET /items` lists all items, sorted by id."
     },
     {
       "input": "{\"items\": [{\"id\": 1, \"name\": \"pen\"}], \"requests\": [{\"path\": \"/items/1\", \"method\": \"DELETE\"}, {\"path\": \"/items/1\", \"method\": \"GET\"}]}",
       "output": "[{\"status\": 204, \"body\": null}, {\"status\": 404, \"body\": {\"error\": \"not_found\"}}]",
-      "explanation": "delete then read"
+      "explanation": "`DELETE` returns 204. A later `GET` of the same item returns 404."
     },
     {
       "input": "{\"items\": [], \"requests\": [{\"path\": \"/items/9\", \"method\": \"POST\"}]}",
       "output": "[{\"status\": 405, \"body\": {\"error\": \"method_not_allowed\"}, \"allow\": [\"GET\", \"DELETE\"]}]",
-      "explanation": "method check precedes item lookup"
+      "explanation": "`POST` is not allowed on `/items/9`: 405 with the allowed methods. The method is checked before the item lookup."
     }
   ],
   "starterCode": {

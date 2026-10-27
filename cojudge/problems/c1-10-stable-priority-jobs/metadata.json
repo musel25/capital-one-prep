@@ -8,17 +8,17 @@
     {
       "input": "{\"actions\": [{\"op\": \"add\", \"id\": \"slow\", \"priority\": 5}, {\"op\": \"add\", \"id\": \"fast\", \"priority\": 1}, {\"op\": \"pop\"}]}",
       "output": "{\"popped\": [\"fast\"], \"pending\": [\"slow\"]}",
-      "explanation": "smallest priority first"
+      "explanation": "`fast` (priority 1) runs before `slow` (priority 5)."
     },
     {
       "input": "{\"actions\": [{\"op\": \"add\", \"id\": \"z\", \"priority\": 1}, {\"op\": \"add\", \"id\": \"a\", \"priority\": 1}, {\"op\": \"pop\"}]}",
       "output": "{\"popped\": [\"z\"], \"pending\": [\"a\"]}",
-      "explanation": "equal priorities use insertion order"
+      "explanation": "Equal priority: `z` was added first, so it runs first."
     },
     {
       "input": "{\"actions\": []}",
       "output": "{\"popped\": [], \"pending\": []}",
-      "explanation": "empty action list"
+      "explanation": "No actions."
     }
   ],
   "starterCode": {

@@ -56,7 +56,9 @@ SPEC = {
     "number": 36, "slug": "atomic-transfer-rollback", "title": "Repair an atomic SQL transfer", "difficulty": "Medium", "time": 30,
     "prerequisites": "SQL UPDATE, parameterized statements, and Python exceptions.",
     "learn": "A transfer changes two balances. Both changes must commit, or neither change must remain. A transaction groups these writes into one unit. Commit only after the debit and credit succeed. Roll back if an exception occurs between them. A conditional debit can check the available balance and subtract the amount in one statement. Its affected-row count tells you whether the debit occurred. Setup writes also need a commit before you start an explicit transaction. This exercise injects a failure after the debit. The starter catches that failure but commits the partial transfer. Repair that transaction boundary and preserve earlier successful transfers.",
-    "task": ('**Bug fix.** Repair the faulty `solve(data)` implementation.\n'
+    "scenario": ('A bank moves money between accounts in a SQLite database. A transfer is a debit plus a credit. If something fails between them, the database must look as if the transfer never started. Operations report that money disappears after failures.'),
+ "example_notes": ['A normal transfer of 4.', 'A failure after the debit: roll back, so both balances stay the same.', '`a` has 3 and needs 4: `insufficient`.'],
+ "task": ('**Bug fix.** Repair the faulty `solve(data)` implementation.\n'
     '\n'
     '**Input:** `data` has:\n'
     '- `balances`: maps account IDs to initial integer balances.\n'

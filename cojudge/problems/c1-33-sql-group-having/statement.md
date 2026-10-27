@@ -11,6 +11,8 @@ Aggregation combines several rows into one summary. WHERE selects source rows be
 
 </details>
 
+**Scenario:** A finance team wants a summary of the paid entries of each account: how many there are, how many have a known amount, and the total. Some amounts are unknown (`null`). The report shows only the accounts above the thresholds.
+
 Complete `summary_rows(connection, minimum_total, minimum_events)`. The scaffold loads `rows` into `entries(id PRIMARY KEY, account, amount nullable, kind)`.
 
 **Input:** `data` has `rows`, `minimum_total`, and `minimum_events`.

@@ -11,6 +11,8 @@ A time-to-live cache stores a value and its expiration time. If an entry is writ
 
 </details>
 
+**Scenario:** A service caches exchange rates with a time-to-live (TTL). It must never serve an expired value. An admin can also invalidate a key early.
+
 **Input:** `data` has:
 - `ops`: a list of operations. Each has an integer time `at`. Times never decrease.
 

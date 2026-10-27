@@ -14,6 +14,8 @@ SPEC = {'number': 14,
           'rule. Avoid copying the whole withdrawal method just to change one calculation. Both '
           'amount and fee must fit in the balance. A rejected operation must charge neither of '
           'them.',
+ 'scenario': ('A bank has standard and premium checking accounts. Each ATM withdrawal costs a fee, but premium customers pay no fee for large withdrawals (at least `threshold`). The fee is part of the withdrawal, so the account must have enough money for both.'),
+ 'example_notes': ['Standard: 10 + 2 = 12 leaves 8. Then 8 + 2 = 10 is more than 8, so it is rejected.', 'Premium: 10 is at the threshold, so there is no fee and 10 remains. Then 8 + 2 = 10 leaves 0.', 'No withdrawals.'],
  'task': ('**Input:** `data` has (all amounts in cents):\n'
     '- `kind`: `"standard"` or `"premium"`.\n'
     '- `balance`, `fee`, `threshold`: nonnegative integers.\n'

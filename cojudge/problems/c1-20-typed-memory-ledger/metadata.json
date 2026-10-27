@@ -8,17 +8,17 @@
     {
       "input": "{\"accounts\": {\"A\": 10, \"B\": 0}, \"events\": [{\"id\": \"x\", \"from\": \"A\", \"to\": \"B\", \"cents\": 4}, {\"id\": \"x\", \"from\": \"A\", \"to\": \"B\", \"cents\": 4}, {\"id\": \"x\", \"from\": \"A\", \"to\": \"B\", \"cents\": 5}]}",
       "output": "{\"status\": [\"applied\", \"duplicate\", \"conflict\"], \"balances\": {\"A\": 6, \"B\": 4}}",
-      "explanation": "transfer, duplicate, and conflict"
+      "explanation": "`x` moves 4 from A to B. The same `x` again is a duplicate. `x` with 5 cents is a conflict."
     },
     {
       "input": "{\"accounts\": {\"A\": 0, \"B\": 10}, \"events\": [{\"id\": \"x\", \"from\": \"A\", \"to\": \"B\", \"cents\": 5}, {\"id\": \"fund\", \"from\": \"B\", \"to\": \"A\", \"cents\": 10}, {\"id\": \"x\", \"from\": \"A\", \"to\": \"B\", \"cents\": 5}, {\"id\": \"new\", \"from\": \"A\", \"to\": \"B\", \"cents\": 5}]}",
       "output": "{\"status\": [\"insufficient\", \"applied\", \"duplicate\", \"applied\"], \"balances\": {\"A\": 5, \"B\": 5}}",
-      "explanation": "failed ID stays reserved after new funds arrive"
+      "explanation": "`x` first fails because A has 0. After A gets money, the same `x` is still a duplicate, not a new try. A new ID moves the money."
     },
     {
       "input": "{\"accounts\": {}, \"events\": []}",
       "output": "{\"status\": [], \"balances\": {}}",
-      "explanation": "empty ledger"
+      "explanation": "No accounts and no events."
     }
   ],
   "starterCode": {

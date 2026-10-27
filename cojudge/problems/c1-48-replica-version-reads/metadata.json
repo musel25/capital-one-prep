@@ -8,17 +8,17 @@
     {
       "input": "{\"replicas\": [{\"id\": \"a\", \"version\": 1, \"value\": 10}, {\"id\": \"b\", \"version\": 3, \"value\": 30}], \"ops\": [{\"op\": \"read\", \"min_version\": 2}]}",
       "output": "{\"results\": [{\"id\": \"b\", \"version\": 3, \"value\": 30}], \"replicas\": [[\"a\", 1, 10], [\"b\", 3, 30]]}",
-      "explanation": "choose freshest eligible replica"
+      "explanation": "Only `b` has a version of at least 2."
     },
     {
       "input": "{\"replicas\": [{\"id\": \"a\", \"version\": 1, \"value\": 10}], \"ops\": [{\"op\": \"read\", \"min_version\": 2}]}",
       "output": "{\"results\": [null], \"replicas\": [[\"a\", 1, 10]]}",
-      "explanation": "stale replica cannot satisfy read token"
+      "explanation": "No replica has version 2 yet, so the result is `null`."
     },
     {
       "input": "{\"replicas\": [{\"id\": \"b\", \"version\": 2, \"value\": 20}, {\"id\": \"a\", \"version\": 2, \"value\": 20}], \"ops\": [{\"op\": \"read\", \"min_version\": 2}]}",
       "output": "{\"results\": [{\"id\": \"a\", \"version\": 2, \"value\": 20}], \"replicas\": [[\"a\", 2, 20], [\"b\", 2, 20]]}",
-      "explanation": "equal version tie uses ASCII ID"
+      "explanation": "`a` and `b` both have version 2. The smaller ID, `a`, wins."
     }
   ],
   "starterCode": {
