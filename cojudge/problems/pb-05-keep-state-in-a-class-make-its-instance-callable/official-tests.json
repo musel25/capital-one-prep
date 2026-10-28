@@ -13,5 +13,14 @@
   },
   {
     "payload": "{\"test\": \"test_instance_is_callable\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_zero_record_is_not_replaced_by_a_negative_score\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_fractional_scores_and_ties\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_arbitrarily_large_integer_scores\"}"
   }
 ]

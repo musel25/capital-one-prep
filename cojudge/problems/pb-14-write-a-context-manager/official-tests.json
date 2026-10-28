@@ -19,5 +19,20 @@
   },
   {
     "payload": "{\"test\": \"test_exception_in_block_is_not_hidden\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_block_keeps_balance\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_only_final_balance_triggers_rollback\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_exception_uses_final_balance_rule[3-2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_exception_uses_final_balance_rule[8-5]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_two_accounts_do_not_share_rollback_state\"}"
   }
 ]

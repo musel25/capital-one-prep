@@ -86,7 +86,17 @@ def verify(spec):
     assert results and not failed, f"{problem_id(spec)} reference fails: {failed}"
     starter = run_all(spec, spec["template"])
     assert any(v != "passed" for v in starter.values()), f"{problem_id(spec)}: the template passes every test"
-    return {"id": problem_id(spec), "tests": list(results), "template_failures": sum(v != "passed" for v in starter.values())}
+    mutations = []
+    for mutation in spec.get("mutations", []):
+        assert mutation["old"] in spec["reference"], f"Mutation target missing: {mutation['name']}"
+        source = spec["reference"].replace(mutation["old"], mutation["new"], mutation.get("count", 1))
+        compile(source, f"mutation_{spec['number']}", "exec")
+        faulty = run_all(spec, source)
+        detected = [name for name, result in faulty.items() if result != "passed"]
+        assert detected, f"{problem_id(spec)} mutation survived: {mutation['name']}"
+        mutations.append({"name": mutation["name"], "detected_by": detected})
+    return {"id": problem_id(spec), "tests": list(results),
+            "template_failures": sum(v != "passed" for v in starter.values()), "mutations": mutations}
 
 
 class _Markdown(HTMLParser):
@@ -176,7 +186,16 @@ def statement(spec, test_ids):
 
 [Course list](/?course={COURSE_ID}) · Pybites {page['level']} · [Original bite]({url})
 
-{description(spec)}{notes}
+**Inputs and required behavior for this version:**
+
+{spec.get('contract', '').strip()}
+
+<details>
+<summary>Original bite description</summary>
+
+{description(spec)}
+
+</details>{notes}
 
 **How to solve it here:** write your code at the top of the editor, like the Pybites Code tab.
 The Pybites tests are in the editor below your code (the Tests tab). The tests import your code as
@@ -187,6 +206,7 @@ the module `{spec['module']}`. **Run** checks the first three tests. **Submit** 
 
 - Python 3.11, standard library only. No network access.
 - Do not edit the tests or the supplied runner at the bottom of the editor.
+- For an older saved solution, use **+** beside the editor tabs to open the current template in a new tab. Copy your implementation into that tab. This keeps the saved solution and gives you the current tests.
 """
 
 

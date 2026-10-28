@@ -2,6 +2,13 @@
 
 [Course list](/?course=pybites-oop) · Pybites Advanced · [Original bite](https://pybitesplatform.com/bites/composition-inheritance-abstract-base-class-what/)
 
+**Inputs and required behavior for this version:**
+
+This version reads cached files only. File names are relative names under the existing TMP directory. Missing files return None; empty files return an empty string. Web.soup returns a Soup even when data is missing. Tables have one header row, followed by zero or more rows with exactly the documented fields. Numeric cells use plain int or float text. parse_rows skips the header and preserves row order. NYTimes returns LeaderBoard records; RealClearPolitics returns Poll records. Default table indices are 0 and 2 respectively. Explicit indices must be valid and nonnegative. Statistics use nonempty tables and the exact documented format; RCP orders candidate totals from highest to lowest, with tied order unspecified. Nested tables, malformed HTML or rows, file access errors, and network downloads are outside this exercise.
+
+<details>
+<summary>Original bite description</summary>
+
 It’s not as bad as that sounds, really. If you don’t know the difference between composition and inheritance, I would recommend reading up on it from [Real Python](https://realpython.com/inheritance-composition-python/). As most of their articles, the subject is covered pretty thoroughly!
 
 ### The scenario
@@ -146,14 +153,17 @@ That’s it. I’ve scattered a generous amount of docstrings all over the code 
 - String formatting
 - Web scraping with BeautifulSoup
 
+</details>
+
 **Notes for this version:** This is an offline version. The judge has no network and no BeautifulSoup, so the template supplies a small `Soup` class with `find_all("table")`, and `Web.data` reads the cached HTML file (the tests create it). The sample pages in the tests are fictional and contain only the tables that are used. Everything else follows the description: the typed namedtuples, `File`, `Web`, the `Site` abstract base class, the two parsers, and the exact output formats.
 
 **How to solve it here:** write your code at the top of the editor, like the Pybites Code tab.
 The Pybites tests are in the editor below your code (the Tests tab). The tests import your code as
 the module `scraper`. **Run** checks the first three tests. **Submit** runs all
-11. A failing test shows its name, the error, and the failed test line. The original template and tests are in Pybites premium, so the template and tests here are a recreation that follows the description.
+15. A failing test shows its name, the error, and the failed test line. The original template and tests are in Pybites premium, so the template and tests here are a recreation that follows the description.
 
 **Constraints:**
 
 - Python 3.11, standard library only. No network access.
 - Do not edit the tests or the supplied runner at the bottom of the editor.
+- For an older saved solution, use **+** beside the editor tabs to open the current template in a new tab. Copy your implementation into that tab. This keeps the saved solution and gives you the current tests.

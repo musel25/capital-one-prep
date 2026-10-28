@@ -44,6 +44,22 @@ TMP = Path(os.getenv("TMP", "/tmp"))
 SPEC = {
     "title": "Composition, inheritance, abstract base class, what?",
     "module": "scraper",
+    "contract": "This version reads cached files only. File names are relative names under the "
+                "existing TMP directory. Missing files return None; empty files return an empty "
+                "string. Web.soup returns a Soup even when data is missing. Tables have one header "
+                "row, followed by zero or more rows with exactly the documented fields. Numeric "
+                "cells use plain int or float text. parse_rows skips the header and preserves row "
+                "order. NYTimes returns LeaderBoard records; RealClearPolitics returns Poll records. "
+                "Default table indices are 0 and 2 respectively. Explicit indices must be valid and "
+                "nonnegative. Statistics use nonempty tables and the exact documented format; RCP "
+                "orders candidate totals from highest to lowest, with tied order unspecified. "
+                "Nested tables, malformed HTML or rows, file access errors, and network downloads "
+                "are outside this exercise.",
+    "mutations": [
+        {"name": "missing_file_is_empty_string", "old": "return self.path.read_text() if self.path.exists() else None", "new": "return self.path.read_text() if self.path.exists() else ''"},
+        {"name": "rcp_uses_wrong_default_table", "old": "def polls(self, table: int = 2)", "new": "def polls(self, table: int = 0)"},
+        {"name": "rcp_totals_only_first_poll", "old": "sum(getattr(p, name) for p in polls)", "new": "getattr(polls[0], name)"},
+    ],
     "notes": "This is an offline version. The judge has no network and no BeautifulSoup, so the "
              "template supplies a small `Soup` class with `find_all(\"table\")`, and `Web.data` reads "
              "the cached HTML file (the tests create it). The sample pages in the tests are fictional "
@@ -335,6 +351,56 @@ def test_parsers_derive_from_site():
     assert issubclass(NYTimes, Site)
     assert issubclass(RealClearPolitics, Site)
     assert "find_table" not in NYTimes.__dict__ and "find_table" not in RealClearPolitics.__dict__
+
+
+def test_missing_and_empty_web_cache(tmp):
+    file = File('empty.html')
+    web = Web('https://example.invalid/offline', file)
+    assert web.data is None
+    assert isinstance(web.soup, Soup)
+    assert web.soup.find_all('table') == []
+    file.path.write_text('')
+    assert file.data == ''
+    assert web.data == ''
+    assert web.soup.find_all('table') == []
+    file.path.write_text('<table><tr><th>header</th></tr></table>')
+    assert len(web.soup.find_all('table')) == 1
+
+
+def test_header_only_tables(nyt, rcp):
+    table = '<table><tr><th>header</th></tr></table>'
+    assert nyt.parse_rows(table) == []
+    assert rcp.parse_rows(table) == []
+
+
+def test_rcp_default_table_and_changed_poll_data(rcp, capsys):
+    assert rcp.polls() == rcp.polls(2)
+    table = ('<table><tr><th>Poll</th><th>Date</th><th>Sample</th><th>Sanders</th>'
+             '<th>Biden</th><th>Gabbard</th><th>Spread</th></tr>'
+             '<tr><td> New &amp; Co </td><td>today</td><td>1</td><td>2.5</td>'
+             '<td>0</td><td>1</td><td>Sanders +2.5</td></tr>'
+             '<tr><td>Other</td><td>yesterday</td><td>0</td><td>3.0</td>'
+             '<td>0</td><td>0</td><td>Sanders +3</td></tr></table>')
+    rcp.web.file.path.write_text(table)
+    assert rcp.polls(0) == [Poll('New & Co', 'today', 1, 2.5, 0.0, 1.0, 'Sanders +2.5'),
+                            Poll('Other', 'yesterday', 0, 3.0, 0.0, 0.0, 'Sanders +3')]
+    rcp.stats(0)
+    assert capsys.readouterr().out == ('\\nRealClearPolitics\\n=================\\n'
+                                     '  Sanders: 5.5\\n  Gabbard: 1.0\\n    Biden: 0.0\\n\\n')
+
+
+def test_nyt_parses_other_table_and_current_file_data(nyt, capsys):
+    table = ('<table><tr><th>Candidate</th><th>Average</th><th>Delegates</th>'
+             '<th>Contributions</th><th>Coverage</th></tr>'
+             '<tr><td><b>A &amp; B</b></td><td>0%</td><td>0</td>'
+             '<td>$0</td><td>0</td></tr></table>')
+    nyt.web.file.path.write_text('<table><tr><th>unused</th></tr></table>' + table)
+    assert nyt.polls(1) == [LeaderBoard('A & B', '0%', 0, '$0', 0)]
+    nyt.stats(1)
+    assert capsys.readouterr().out == ('\\nNYTimes\\n=================================\\n\\n'
+        '                            A & B\\n---------------------------------\\n'
+        'National Polling Average: 0%\\n       Pledged Delegates: 0\\n'
+        'Individual Contributions: $0\\n    Weekly News Coverage: 0\\n\\n')
 ''',
     "reference": _HEADER + '''
 

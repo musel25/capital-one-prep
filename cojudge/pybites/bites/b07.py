@@ -34,6 +34,7 @@ _NAMES = '''COLOR_NAMES = {
     "WHITE": (255, 255, 255),
     "YELLOW": (255, 255, 0),
 }
+
 '''
 
 SPEC = {
@@ -167,3 +168,66 @@ class Color:
         return str(self.rgb) if self.rgb is not None else "Unknown"
 ''',
 }
+
+SPEC["contract"] = (
+    "Color receives a string name. Lookup is case-insensitive and uses only the "
+    "supplied COLOR_NAMES. Empty and unknown names have rgb None; str returns "
+    "'Unknown'. Known names produce their RGB tuple as a string. repr preserves "
+    "the initial name and case, as in Color('white'). Non-string constructor "
+    "arguments are outside the contract. hex2rgb accepts exactly '#' followed by "
+    "six ASCII hex digits and returns three integers. rgb2hex accepts exactly a "
+    "three-item tuple of int values from 0 through 255; bool is invalid. It returns "
+    "'#rrggbb' in lowercase. Both static methods raise ValueError for all other "
+    "inputs. They also work through an instance."
+)
+SPEC["tests"] += '''
+
+
+@pytest.mark.parametrize('name', ['', ' white ', 'not-a-color'])
+def test_unknown_names_are_not_normalized(name):
+    color = Color(name)
+    assert color.rgb is None
+    assert str(color) == 'Unknown'
+
+
+def test_repr_preserves_original_case():
+    assert repr(Color('ToMaTo')) == "Color('ToMaTo')"
+
+
+@pytest.mark.parametrize('bad', [
+    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#１２３４５６',
+    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,
+])
+def test_hex2rgb_rejects_malformed_values(bad):
+    with pytest.raises(ValueError):
+        Color.hex2rgb(bad)
+
+
+@pytest.mark.parametrize('bad', [
+    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),
+    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),
+    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),
+])
+def test_rgb2hex_rejects_wrong_container_and_channel_values(bad):
+    with pytest.raises(ValueError):
+        Color.rgb2hex(bad)
+
+
+def test_asymmetric_channels_and_both_instance_converters():
+    color = Color('red')
+    assert color.hex2rgb('#0102Fe') == (1, 2, 254)
+    assert color.rgb2hex((1, 2, 254)) == '#0102fe'
+
+
+def test_every_supplied_name_resolves_to_its_literal_rgb():
+    for name, rgb in COLOR_NAMES.items():
+        assert Color(name.lower()).rgb == rgb
+'''
+SPEC["mutations"] = [
+    {"name": "case-sensitive color lookup", "old": "COLOR_NAMES.get(color.upper())", "new": "COLOR_NAMES.get(color)"},
+    {"name": "accept bool RGB channels", "old": "type(v) is not int", "new": "not isinstance(v, int)"},
+    {"name": "accept RGB lists", "old": "isinstance(rgb_value, tuple)", "new": "isinstance(rgb_value, (tuple, list))"},
+    {"name": "exclude upper channel boundary", "old": "0 <= v <= 255", "new": "0 <= v < 255"},
+    {"name": "drop hex zero padding", "old": "f\"{v:02x}\"", "new": "f\"{v:x}\""},
+    {"name": "reverse hex channels", "old": "for i in (1, 3, 5)", "new": "for i in (5, 3, 1)"},
+]

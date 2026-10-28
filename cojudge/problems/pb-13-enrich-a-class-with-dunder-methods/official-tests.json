@@ -28,5 +28,20 @@
   },
   {
     "payload": "{\"test\": \"test_str\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_default_empty_account\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_zero_and_negative_amounts_are_transactions\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_boolean_amounts_do_not_change_account[True]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_boolean_amounts_do_not_change_account[False]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_accounts_have_separate_transactions\"}"
   }
 ]

@@ -112,3 +112,47 @@ def test_repr_of_a_subclass():
         return f'{self.__class__.__name__}("{self.first_name}", "{self.last_name}")'
 ''',
 }
+
+SPEC["contract"] = (
+    "first_name and last_name are non-empty strings of ASCII letters A-Z or a-z. "
+    "Empty names, whitespace, punctuation, non-ASCII names and other types are outside "
+    "the contract; no validation is required for them. get_full_name returns both "
+    "title-cased names with one space. username lowercases the first letter of "
+    "first_name followed by at most seven letters of last_name. Both properties "
+    "use the current attributes. str returns 'Full Name (username)'. repr returns "
+    "ClassName(\"first_name\", \"last_name\") with the original case and the instance's class name. "
+    "Each instance keeps its own names."
+)
+SPEC["tests"] += '''
+
+
+def test_one_letter_names():
+    user = User('A', 'B')
+    assert user.get_full_name == 'A B'
+    assert user.username == 'ab'
+    assert str(user) == 'A B (ab)'
+    assert repr(user) == 'User("A", "B")'
+
+
+def test_surname_at_and_above_seven_letters():
+    assert User('Ada', 'Abcdefg').username == 'aabcdefg'
+    assert User('Ada', 'Abcdefgh').username == 'aabcdefg'
+
+
+def test_both_names_can_change_without_affecting_another_user():
+    user, other = User('ann', 'smith'), User('bob', 'jones')
+    user.first_name = 'EVE'
+    user.last_name = 'BROWN'
+    assert user.get_full_name == 'Eve Brown'
+    assert user.username == 'ebrown'
+    assert str(user) == 'Eve Brown (ebrown)'
+    assert repr(user) == 'User("EVE", "BROWN")'
+    assert other.get_full_name == 'Bob Jones'
+    assert other.username == 'bjones'
+'''
+SPEC["mutations"] = [
+    {"name": "surname truncated at six letters", "old": "self.last_name[:7]", "new": "self.last_name[:6]"},
+    {"name": "surname truncated at eight letters", "old": "self.last_name[:7]", "new": "self.last_name[:8]"},
+    {"name": "hard-coded repr class", "old": "self.__class__.__name__", "new": '"User"'},
+    {"name": "use final first-name letter", "old": "self.first_name[0]", "new": "self.first_name[-1]"},
+]

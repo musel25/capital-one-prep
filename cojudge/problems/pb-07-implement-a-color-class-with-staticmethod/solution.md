@@ -37,6 +37,7 @@ COLOR_NAMES = {
 }
 
 
+
 class Color:
     """Color class.
 

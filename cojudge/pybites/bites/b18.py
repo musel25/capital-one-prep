@@ -3,6 +3,18 @@
 SPEC = {
     "title": "Write a score property",
     "module": "ninjabelt",
+    "contract": "The constructor takes a nonnegative int score, with bool excluded. It stores "
+                "the score without a message or an earned belt. Assignment accepts only int "
+                "values, with bool excluded, and must not lower the current score. Invalid "
+                "assignments raise ValueError without state changes or output. Equal scores are "
+                "allowed. Each valid assignment prints one message. Award the highest reached "
+                "belt when it differs from the last earned belt. Scores above 1000 retain red. "
+                "Invalid constructor values are outside this exercise; constructor validation is not required.",
+    "mutations": [
+        {"name": "bool_accepted", "old": "if type(new_score) is not int:", "new": "if not isinstance(new_score, int):"},
+        {"name": "strict_belt_threshold", "old": "if new_score >= points", "new": "if new_score > points"},
+        {"name": "reject_equal_score", "old": "if new_score < self._score:", "new": "if new_score <= self._score:"},
+    ],
     "template": '''BELTS = {10: 'white', 50: 'yellow', 100: 'orange', 175: 'green',
          250: 'blue', 400: 'brown', 600: 'black', 800: 'paneled',
          1000: 'red'}
@@ -98,6 +110,53 @@ def test_titlecased_belt_name(capsys):
 
 def test_score_is_a_property():
     assert isinstance(NinjaBelt.__dict__['score'], property)
+
+
+@pytest.mark.parametrize("score,belt", [(0, None), (9, None), (10, 'white'),
+    (49, 'white'), (50, 'yellow'), (99, 'yellow'), (100, 'orange'),
+    (174, 'orange'), (175, 'green'), (249, 'green'), (250, 'blue'),
+    (399, 'blue'), (400, 'brown'), (599, 'brown'), (600, 'black'),
+    (799, 'black'), (800, 'paneled'), (999, 'paneled'), (1000, 'red'), (1200, 'red')])
+def test_every_belt_boundary(score, belt, capsys):
+    ninja = NinjaBelt()
+    ninja.score = score
+    assert ninja.score == score
+    assert ninja._last_earned_belt == belt
+    expected = (f'Congrats, you earned {score} points obtaining the PyBites Ninja {belt.title()} Belt'
+                if belt else f'Set new score to {score}')
+    assert capsys.readouterr().out == expected + '\\n'
+    ninja.score = score
+    assert capsys.readouterr().out == f'Set new score to {score}\\n'
+
+
+def test_invalid_assignment_is_silent_and_preserves_belt(capsys):
+    ninja = NinjaBelt()
+    ninja.score = 50
+    capsys.readouterr()
+    for bad in (True, False, -1, 49, '51', 51.0, None):
+        with pytest.raises(ValueError):
+            ninja.score = bad
+        assert ninja.score == 50
+        assert ninja._last_earned_belt == 'yellow'
+        assert capsys.readouterr().out == ''
+
+
+def test_nonzero_constructor_does_not_award_belt(capsys):
+    ninja = NinjaBelt(700)
+    assert ninja.score == 700
+    assert ninja._last_earned_belt is None
+    assert capsys.readouterr().out == ''
+    ninja.score = 700
+    assert ninja._last_earned_belt == 'black'
+    assert 'Black Belt' in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("value", [False, True])
+def test_bool_is_not_a_score(value):
+    ninja = NinjaBelt()
+    with pytest.raises(ValueError):
+        ninja.score = value
+    assert ninja.score == 0
 ''',
     "reference": '''BELTS = {10: 'white', 50: 'yellow', 100: 'orange', 175: 'green',
          250: 'blue', 400: 'brown', 600: 'black', 800: 'paneled',

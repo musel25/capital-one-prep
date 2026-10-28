@@ -46,5 +46,35 @@
   },
   {
     "payload": "{\"test\": \"test_classmethods_return_subclass_instances\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_domain_rule_boundaries[]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_domain_rule_boundaries[a.b]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_domain_rule_boundaries[a.abcd]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_domain_rule_boundaries[a.COM]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_short_names_and_subdomains[a.io]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_short_names_and_subdomains[a.xyz]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_short_names_and_subdomains[sub.example.io]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_url_and_email_keep_the_full_host\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_url_port_is_not_removed_before_validation\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_domains_are_rejected_through_subclasses\"}"
   }
 ]

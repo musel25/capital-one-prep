@@ -3,6 +3,15 @@
 SPEC = {
     "title": "Alternative constructors",
     "module": "constructors",
+    "contract": "All inputs are strings. Direct domain names contain no whitespace. "
+                "Use the template's simplified rule r'.*\\.[a-z]{2,3}$'; this is not full DNS validation. "
+                "An empty name or a name that fails this rule raises DomainException. "
+                "Keep accepted names unchanged. URLs use http or https, with a host and optional numeric port, "
+                "path, query, or fragment. Validate the full network location, including its port if present; "
+                "a numeric port therefore fails the domain rule. Credentials and malformed URLs are excluded. "
+                "Emails have exactly one @ and a nonempty local part and domain part. Other email forms are excluded. "
+                "Both classmethods extract the domain and use the same validation. Return an instance of the calling class. "
+                "str(domain) returns its name. Other input types are excluded.",
     "template": '''import re
 
 
@@ -74,7 +83,43 @@ def test_classmethods_return_subclass_instances():
     assert type(SubDomain.parse_email("bob@pybit.es")) is SubDomain
     assert isinstance(Domain.__dict__["parse_url"], classmethod)
     assert isinstance(Domain.__dict__["parse_email"], classmethod)
+
+
+@pytest.mark.parametrize('name', ['', 'a.b', 'a.abcd', 'a.COM'])
+def test_domain_rule_boundaries(name):
+    with pytest.raises(DomainException):
+        Domain(name)
+
+
+@pytest.mark.parametrize('name', ['a.io', 'a.xyz', 'sub.example.io'])
+def test_short_names_and_subdomains(name):
+    assert str(Domain(name)) == name
+
+
+def test_url_and_email_keep_the_full_host():
+    assert str(Domain.parse_url('https://sub.example.io/?q=other.com#other.org')) == 'sub.example.io'
+    assert str(Domain.parse_email('first.last+tag@sub.example.io')) == 'sub.example.io'
+
+
+def test_url_port_is_not_removed_before_validation():
+    with pytest.raises(DomainException):
+        Domain.parse_url('https://pybit.es:443/')
+
+
+def test_invalid_domains_are_rejected_through_subclasses():
+    class SubDomain(Domain):
+        pass
+    with pytest.raises(DomainException):
+        SubDomain.parse_email('person@example.abcd')
+    with pytest.raises(DomainException):
+        SubDomain.parse_url('https://example.abcd/')
 ''',
+    "mutations": [
+        {"name": 'skip_domain_validation', "old": "if not re.match(r'.*\\.[a-z]{2,3}$', name):", "new": 'if False:'},
+        {"name": 'url_returns_base_class', "old": 'return cls(urlparse(url).netloc)', "new": 'return Domain(urlparse(url).netloc)'},
+        {"name": 'url_silently_strips_port', "old": 'return cls(urlparse(url).netloc)', "new": 'return cls(urlparse(url).hostname)'},
+        {"name": 'email_loses_subdomain', "old": 'return cls(email.split("@")[-1])', "new": 'return cls(email.split("@")[-1].split(".", 1)[-1])'},
+    ],
     "reference": '''import re
 from urllib.parse import urlparse
 

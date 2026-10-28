@@ -25,5 +25,35 @@
   },
   {
     "payload": "{\"test\": \"test_add_after_ranking\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pairs_use_each_person_at_most_once[0-3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pairs_use_each_person_at_most_once[1-3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pairs_use_each_person_at_most_once[3-3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pairs_use_each_person_at_most_once[4-3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pairs_use_each_person_at_most_once[7-99]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pairs_use_each_person_at_most_once[6-3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pairs_use_each_person_at_most_once[6-0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_ranking_queries_and_dump\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_zero_and_large_query_counts_and_last_dump\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_equal_scores_and_separate_rankings\"}"
   }
 ]

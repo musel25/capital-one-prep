@@ -16,5 +16,14 @@
   },
   {
     "payload": "{\"test\": \"test_repr_of_a_subclass\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_one_letter_names\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_surname_at_and_above_seven_letters\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_both_names_can_change_without_affecting_another_user\"}"
   }
 ]

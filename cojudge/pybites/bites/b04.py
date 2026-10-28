@@ -161,3 +161,59 @@ class Promo:
         return bite
 ''',
 }
+
+SPEC["contract"] = (
+    "bites is a dict from integer IDs to title strings. bites_done is a set of "
+    "IDs from that dict. Either argument can be None to use its supplied default. "
+    "Empty containers are valid and must not select defaults. Copy the inputs. "
+    "_pick_random_bite returns an available ID without changing state. new_bite "
+    "uses that helper, adds the ID to bites_done and returns it. Both methods raise "
+    "NoBitesAvailable when no IDs remain. IDs cannot repeat. No exact random order "
+    "is required. Other types and done IDs outside the catalog are outside the "
+    "contract; no validation is required for them."
+)
+SPEC["tests"] += '''
+
+
+@pytest.mark.parametrize('bites, done', [({}, set()), ({1: 'one'}, {1})])
+def test_initially_empty_availability(bites, done):
+    promo = Promo(bites, done)
+    for method in (promo._pick_random_bite, promo.new_bite):
+        with pytest.raises(NoBitesAvailable):
+            method()
+    assert promo.all_bites == bites
+    assert promo.bites_done == done
+
+
+def test_empty_done_set_is_not_the_default():
+    promo = Promo({6: 'six'}, set())
+    assert promo._pick_random_bite() == 6
+    assert promo.bites_done == set()
+    assert promo.new_bite() == 6
+
+
+def test_custom_input_containers_are_copied():
+    bites, done = {1: 'one', 2: 'two'}, {1}
+    promo = Promo(bites, done)
+    bites[3] = 'three'
+    done.add(2)
+    assert promo.all_bites == {1: 'one', 2: 'two'}
+    assert promo.bites_done == {1}
+    assert promo.new_bite() == 2
+    assert bites == {1: 'one', 2: 'two', 3: 'three'}
+
+
+def test_new_bite_uses_the_selection_helper(monkeypatch):
+    promo = Promo({1: 'one', 2: 'two'}, set())
+    monkeypatch.setattr(promo, '_pick_random_bite', lambda: 2)
+    assert promo.new_bite() == 2
+    assert promo.bites_done == {2}
+'''
+SPEC["mutations"] = [
+    {"name": "empty catalog selects defaults", "old": "if bites is None:", "new": "if not bites:"},
+    {"name": "empty done set selects defaults", "old": "if bites_done is None:", "new": "if not bites_done:"},
+    {"name": "retain caller catalog", "old": "self.all_bites = bites.copy()", "new": "self.all_bites = bites"},
+    {"name": "retain caller done set", "old": "self.bites_done = bites_done.copy()", "new": "self.bites_done = bites_done"},
+    {"name": "forget selected ID", "old": "self.bites_done.add(bite)", "new": "pass"},
+    {"name": "skip selection helper", "old": "bite = self._pick_random_bite()", "new": "bite = min(set(self.all_bites) - self.bites_done)"},
+]

@@ -2,6 +2,13 @@
 
 [Course list](/?course=pybites-oop) · Pybites Advanced · [Original bite](https://pybitesplatform.com/bites/ninja-rankings/)
 
+**Inputs and required behavior for this version:**
+
+Ninja takes a string name and a nonnegative integer bites count. Comparisons between Ninjas use bites only. Rankings accepts Ninja objects and retains them. highest and lowest return lists, defaulting to one result; count is a nonnegative integer. A zero count returns an empty list; a large count returns all available results. dump removes and returns one lowest Ninja, or raises IndexError when empty. Local clarification: pair_up makes at most min(count, len(rankings)//2) pairs, so no person is reused or paired with itself. Its default count is 3. Ranking queries and pairing do not remove people. Equal-score order is unspecified. Add each person once and do not change bites after adding. Invalid argument types, negative counts, and mixed-type comparisons are outside this exercise.
+
+<details>
+<summary>Original bite description</summary>
+
 PyBites is starting a campaign to try and pair up the highest ranking Ninjas with some of the lower ranking ones. Your task is to rank the given Ninjas according to their number of Bites.
 
 We are going to delve into some *Object Oriented Programming* here because we want to retain state as we add more Ninjas to the `Ranking` class.
@@ -26,12 +33,15 @@ returns how many Ninjas are in Rankings when `len()` is called on it
 
 Remember, that the standard library is your friend, best of luck!
 
+</details>
+
 **How to solve it here:** write your code at the top of the editor, like the Pybites Code tab.
 The Pybites tests are in the editor below your code (the Tests tab). The tests import your code as
 the module `ninjas`. **Run** checks the first three tests. **Submit** runs all
-9. A failing test shows its name, the error, and the failed test line. The original template and tests are in Pybites premium, so the template and tests here are a recreation that follows the description.
+19. A failing test shows its name, the error, and the failed test line. The original template and tests are in Pybites premium, so the template and tests here are a recreation that follows the description.
 
 **Constraints:**
 
 - Python 3.11, standard library only. No network access.
 - Do not edit the tests or the supplied runner at the bottom of the editor.
+- For an older saved solution, use **+** beside the editor tabs to open the current template in a new tab. Copy your implementation into that tab. This keeps the saved solution and gives you the current tests.

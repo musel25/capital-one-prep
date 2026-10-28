@@ -3,6 +3,16 @@
 SPEC = {
     "title": "Matrix multiplication / @ operator",
     "module": "matmul",
+    "contract": "Inputs are nonempty rectangular lists of lists of finite int or float values. "
+                "The left column count equals the right row count. Matrix @ Matrix and "
+                "list-of-lists @ Matrix return a new Matrix. Matrix @= Matrix updates and returns "
+                "the left object. The right operand stays unchanged. Empty, ragged, incompatible, "
+                "nonnumeric, and other operand types are outside this exercise; no validation is required.",
+    "mutations": [
+        {"name": "wrong_dot_product", "old": "sum(a * b for a, b in zip(row, col))", "new": "sum(a + b for a, b in zip(row, col))"},
+        {"name": "skip_first_column", "old": "columns = list(zip(*right))", "new": "columns = list(zip(*right))[1:]"},
+        {"name": "inplace_does_not_update", "old": "self.values = self._multiply(self.values, other.values)", "new": "self._multiply(self.values, other.values)"},
+    ],
     "template": '''class Matrix(object):
 
     def __init__(self, values):
@@ -67,6 +77,40 @@ def test_identity_and_vector():
 
 def test_repr():
     assert repr(Matrix(A) @ Matrix(B)) == '<Matrix values="[[37, 40], [85, 92]]">'
+
+
+@pytest.mark.parametrize("left,right,expected", [
+    ([[0]], [[-8]], [[0]]),
+    ([[-2]], [[1.5]], [[-3.0]]),
+    ([[1, -2, 0]], [[3], [4], [9]], [[-5]]),
+    ([[2], [-1]], [[0, 3, -2]], [[0, 6, -4], [0, -3, 2]]),
+])
+def test_matrix_boundaries(left, right, expected):
+    assert (Matrix(left) @ Matrix(right)).values == expected
+    assert (left @ Matrix(right)).values == expected
+
+
+def test_inplace_square_uses_original_values():
+    matrix = Matrix([[1, 2], [3, 4]])
+    alias = matrix
+    matrix @= matrix
+    assert matrix is alias
+    assert matrix.values == [[7, 10], [15, 22]]
+
+
+def test_product_storage_is_independent():
+    left, right = Matrix([[1, 2]]), Matrix([[3, 4], [5, 6]])
+    result = left @ right
+    result.values[0][0] = 100
+    assert left.values == [[1, 2]]
+    assert right.values == [[3, 4], [5, 6]]
+
+
+def test_inplace_preserves_distinct_right_operand():
+    left, right = Matrix([[1, 2]]), Matrix([[3], [4]])
+    left @= right
+    assert left.values == [[11]]
+    assert right.values == [[3], [4]]
 ''',
     "reference": '''class Matrix(object):
 

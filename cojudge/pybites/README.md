@@ -24,6 +24,18 @@ in the same order, as CoJudge problems.
 
 ## Checks
 
+Every bite now starts with an explicit input contract. The original description is
+available in a collapsed section. The added tests cover boundaries and state changes
+within that contract. Verification also checks realistic faulty implementations;
+every supplied fault must fail at least one test.
+
+Bite 02 guarantees nonempty ASCII names. Empty names are outside its contract.
+Bite 20 limits pairing to distinct people, with no self-pairs or reused people.
+
+For an older saved solution, use **+** beside the editor tabs. The new tab uses the
+current template. Copy your implementation into that tab. Keep its supplied tests
+and runner. The old saved tab stays intact.
+
 From the repository root:
 
 ```bash

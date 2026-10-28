@@ -2,6 +2,13 @@
 
 [Course list](/?course=pybites-oop) · Pybites Intermediate · [Original bite](https://pybitesplatform.com/bites/complete-a-tox-ini-file-parser-class/)
 
+**Inputs and required behavior for this version:**
+
+The input is the path to a readable, valid INI file with a [tox] section. DEFAULT options, interpolation, malformed files, and missing files are outside this exercise. Count named sections. envlist can be absent or empty; split it on commas and newlines, strip whitespace, discard empty items, and remove duplicates in first-seen order. Do not expand tox brace expressions. Each basepython value is one interpreter name. Return nonempty basepython values once in section order. Matching is case-sensitive. Expose config and the three read-only properties from the template.
+
+<details>
+<summary>Original bite description</summary>
+
 *The INI file format is an informal standard for configuration files for some platforms or software.* ([Wikipedia](https://en.wikipedia.org/wiki/INI_file)).
 
 In this Bite you will use `configparser` to parse a [tox](https://tox.readthedocs.io/en/latest/) *ini file*.
@@ -28,14 +35,17 @@ Additionally here is how it would work in the Python REPL using [a copy of Djang
 
 Good luck and keep calm and code in Python!
 
+</details>
+
 **Notes for this version:** The tests write sample tox ini files to a temporary folder and pass the file path, as in the description's REPL example. The first sample has the same shape as the Django tox file in that example.
 
 **How to solve it here:** write your code at the top of the editor, like the Pybites Code tab.
 The Pybites tests are in the editor below your code (the Tests tab). The tests import your code as
 the module `ini`. **Run** checks the first three tests. **Submit** runs all
-5. A failing test shows its name, the error, and the failed test line. The original template and tests are in Pybites premium, so the template and tests here are a recreation that follows the description.
+9. A failing test shows its name, the error, and the failed test line. The original template and tests are in Pybites premium, so the template and tests here are a recreation that follows the description.
 
 **Constraints:**
 
 - Python 3.11, standard library only. No network access.
 - Do not edit the tests or the supplied runner at the bottom of the editor.
+- For an older saved solution, use **+** beside the editor tabs to open the current template in a new tab. Copy your implementation into that tab. This keeps the saved solution and gives you the current tests.

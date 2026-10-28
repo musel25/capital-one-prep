@@ -88,5 +88,104 @@
   },
   {
     "payload": "{\"test\": \"test_round_trip_all_names\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_unknown_names_are_not_normalized[]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_unknown_names_are_not_normalized[ white ]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_unknown_names_are_not_normalized[not-a-color]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_repr_preserves_original_case\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[#]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[#12345]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[#1234567]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[# 12345]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[#+12345]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[#\\uff11\\uff12\\uff13\\uff14\\uff15\\uff16]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[#12345\\n]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[ #123456]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[#123456 ]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[bad10]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[bad11]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[bad12]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hex2rgb_rejects_malformed_values[True]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad4]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad5]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad6]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad7]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad8]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad9]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad10]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad11]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rgb2hex_rejects_wrong_container_and_channel_values[bad12]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_asymmetric_channels_and_both_instance_converters\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_every_supplied_name_resolves_to_its_literal_rgb\"}"
   }
 ]

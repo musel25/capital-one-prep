@@ -86,3 +86,58 @@ class BirthdayDict(UserDict):
         super().__setitem__(name, birthday)
 ''',
 }
+
+SPEC["contract"] = (
+    "Use string name keys and datetime.date birthday values. Each assigned name "
+    "is new to this dictionary. Empty dictionaries and February 29 birthdays are "
+    "valid. Store every entry. Before adding it, compare its month and day with "
+    "the stored birthdays, ignoring the year. Print MSG.format(name) followed by "
+    "one newline if any match exists, once per added name. Otherwise print nothing. "
+    "Construction and update must apply the same rule. Existing-key replacement, "
+    "datetime values and other input types are outside the contract; no validation "
+    "is required for them. Instances keep separate entries."
+)
+SPEC["tests"] += '''
+
+
+def test_leap_day_and_exact_single_newline(capsys):
+    bd = BirthdayDict()
+    bd['first'] = date(2000, 2, 29)
+    assert capsys.readouterr().out == ''
+    bd['second'] = date(2004, 2, 29)
+    assert capsys.readouterr().out == MSG.format('second') + '\\n'
+    bd['third'] = date(2008, 2, 29)
+    assert capsys.readouterr().out == MSG.format('third') + '\\n'
+    assert len(bd) == 3
+
+
+def test_constructor_detects_matches_within_its_input(capsys):
+    bd = BirthdayDict({'a': date(1970, 12, 31), 'b': date(2000, 12, 31)})
+    assert capsys.readouterr().out == MSG.format('b') + '\\n'
+    assert bd['a'] == date(1970, 12, 31)
+    assert bd['b'] == date(2000, 12, 31)
+
+
+def test_instances_do_not_share_birthdays(capsys):
+    one, two = BirthdayDict(), BirthdayDict()
+    one['a'] = date(1990, 1, 1)
+    two['b'] = date(2000, 1, 1)
+    assert capsys.readouterr().out == ''
+    assert list(one) == ['a']
+    assert list(two) == ['b']
+
+
+def test_empty_constructor_and_nonmatching_update(capsys):
+    bd = BirthdayDict({})
+    assert len(bd) == 0
+    bd.update({'a': date(2001, 1, 1), 'b': date(2001, 1, 2)})
+    assert capsys.readouterr().out == ''
+    assert len(bd) == 2
+'''
+SPEC["mutations"] = [
+    {"name": "compare whole dates", "old": "(d.month, d.day) == (birthday.month, birthday.day)", "new": "d == birthday"},
+    {"name": "compare month only", "old": "(d.month, d.day) == (birthday.month, birthday.day)", "new": "d.month == birthday.month"},
+    {"name": "compare day only", "old": "(d.month, d.day) == (birthday.month, birthday.day)", "new": "d.day == birthday.day"},
+    {"name": "require every birthday to match", "old": "if any(", "new": "if all("},
+    {"name": "omit message newline", "old": "print(MSG.format(name))", "new": "print(MSG.format(name), end='')"},
+]

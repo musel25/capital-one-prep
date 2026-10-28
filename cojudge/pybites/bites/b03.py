@@ -112,3 +112,37 @@ class Motorbike(Vehicle):
         return f"{self.description()} goes Vroom vroom!"
 ''',
 }
+
+SPEC["contract"] = (
+    "brand and model are strings. wheels, doors and engine_cc are non-negative "
+    "integers, excluding bool. Store the supplied values without normalization. "
+    "Other types and negative counts are outside the contract; no validation is "
+    "required for them. description returns '<brand> <model> with <wheels> wheels' "
+    "from the current attributes. Car and Motorbike inherit Vehicle and use super() "
+    "to initialize its attributes. honk returns 'Beep beep!'. rev_engine calls "
+    "description and appends ' goes Vroom vroom!'. Instances keep separate attributes."
+)
+SPEC["tests"] += '''
+
+
+def test_zero_and_unusual_counts_are_not_replaced_with_defaults():
+    car = Car('Custom', 'Prototype', 6, 0)
+    bike = Motorbike('Electric', 'Test', 0, 0)
+    assert car.description() == 'Custom Prototype with 6 wheels'
+    assert car.doors == 0
+    assert bike.engine_cc == 0
+    assert bike.rev_engine() == 'Electric Test with 0 wheels goes Vroom vroom!'
+
+
+def test_description_uses_current_instance_attributes():
+    first, second = Vehicle('A', 'B', 3), Vehicle('C', 'D', 5)
+    first.brand, first.model, first.wheels = 'New', 'Model', 1
+    assert first.description() == 'New Model with 1 wheels'
+    assert second.description() == 'C D with 5 wheels'
+'''
+SPEC["mutations"] = [
+    {"name": "hard-code four wheels", "old": "self.wheels = wheels", "new": "self.wheels = 4"},
+    {"name": "replace zero doors with four", "old": "self.doors = doors", "new": "self.doors = doors or 4"},
+    {"name": "replace zero engine capacity", "old": "self.engine_cc = engine_cc", "new": "self.engine_cc = engine_cc or 125"},
+    {"name": "bypass overridden description", "old": "self.description()", "new": "Vehicle.description(self)"},
+]

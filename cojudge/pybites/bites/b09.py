@@ -3,6 +3,10 @@
 SPEC = {
     "title": "Write your own data class",
     "module": "bite",
+    "contract": "Use an int number and str title and level. Empty strings and zero or negative numbers are allowed. "
+                "Do not validate these values. Apply str.capitalize() to title once at construction. "
+                "The default level is 'Beginner'. Use a mutable, ordered dataclass with fields number, title, level. "
+                "Equality and ordering compare all three fields in that order. Other input types are outside this exercise.",
     "template": '''from dataclasses import dataclass
 
 
@@ -72,7 +76,31 @@ def test_not_frozen():
         bite.number = 2
     except FrozenInstanceError:
         pytest.fail('Bite should be mutable')
+
+
+@pytest.mark.parametrize('title, expected', [
+    ('', ''), ('  fizz BUZZ', '  fizz buzz'), ('123 ABC', '123 abc'),
+])
+def test_title_boundaries(title, expected):
+    assert Bite(0, title).title == expected
+
+
+def test_level_breaks_ties_and_empty_values_are_kept():
+    assert Bite(-1, '', '') < Bite(-1, '', 'Beginner')
+    assert Bite(-1, '', '').level == ''
+    assert Bite(-1, '', '') != Bite(-1, '', 'Beginner')
+
+
+def test_title_normalization_only_happens_at_construction():
+    bite = Bite(1, 'first TITLE')
+    bite.title = 'new TITLE'
+    assert bite.title == 'new TITLE'
 ''',
+    "mutations": [
+        {"name": 'not_ordered', "old": '@dataclass(order=True)', "new": '@dataclass'},
+        {"name": 'titlecase_instead_of_capitalize', "old": 'self.title = self.title.capitalize()', "new": 'self.title = self.title.title()'},
+        {"name": 'empty_title_index_error', "old": 'self.title = self.title.capitalize()', "new": 'self.title = self.title[0].upper() + self.title[1:].lower()'},
+    ],
     "reference": '''from dataclasses import dataclass
 
 

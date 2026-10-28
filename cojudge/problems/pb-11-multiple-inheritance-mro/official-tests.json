@@ -28,5 +28,8 @@
   },
   {
     "payload": "{\"test\": \"test_print\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_parent_text_is_reused\"}"
   }
 ]

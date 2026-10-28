@@ -41,5 +41,6 @@ class Rankings:
         return len(self._ninjas)
 
     def pair_up(self, count=3):
+        count = min(count, len(self._ninjas) // 2)
         return list(zip(self.highest(count), self.lowest(count)))
 ```

@@ -52,5 +52,101 @@
   },
   {
     "payload": "{\"test\": \"test_read_only_properties\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_and_invalid_card_sequences[cards0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_and_invalid_card_sequences[cards1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_and_invalid_card_sequences[]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_and_invalid_card_sequences[cards3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_and_invalid_card_sequences[cards4]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[A-0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[K-1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[Q-1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[2-1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[AK-0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[A2-1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[K2-1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[Q2-2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[32-2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[AKQ-0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[AK2-1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[AQ2-1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[KQ2-1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[A32-2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[K32-2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[Q32-2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[432-3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[A432-2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[K432-2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[Q432-2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_each_losing_trick_rule[5432-3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_no_high_cards_or_short_suits\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_input_sequence_is_not_retained_or_reordered\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_multiple_short_suits[S:AK H:AK D:AK C:AKQJT98-3-0-0-3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_multiple_short_suits[S:A H:A D:A C:AKQJT98765-0-3-0-6]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_multiple_short_suits[S:AKQJT9 H:AKQJT98-0-0-2-6]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_multiple_short_suits[S:A H:A D:AKQJT987654-0-2-1-7]\"}"
   }
 ]

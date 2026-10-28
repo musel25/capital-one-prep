@@ -2,6 +2,13 @@
 
 [Course list](/?course=pybites-oop) · Pybites Beginner · [Original bite](https://pybitesplatform.com/bites/subclassing-vehicles-in-motion/)
 
+**Inputs and required behavior for this version:**
+
+brand and model are strings. wheels, doors and engine_cc are non-negative integers, excluding bool. Store the supplied values without normalization. Other types and negative counts are outside the contract; no validation is required for them. description returns '<brand> <model> with <wheels> wheels' from the current attributes. Car and Motorbike inherit Vehicle and use super() to initialize its attributes. honk returns 'Beep beep!'. rev_engine calls description and appends ' goes Vroom vroom!'. Instances keep separate attributes.
+
+<details>
+<summary>Original bite description</summary>
+
 In this exercise, you’ll practice creating Python subclasses and using `super()` to inherit from a parent class.
 
 Subclassing allows you to build specialized versions of a general blueprint, making your code more organized and reusable.
@@ -36,12 +43,15 @@ By the end, you’ll see how inheritance lets you reuse code across multiple cla
 
 For more OOP exercises, check out our OOP track.
 
+</details>
+
 **How to solve it here:** write your code at the top of the editor, like the Pybites Code tab.
 The Pybites tests are in the editor below your code (the Tests tab). The tests import your code as
 the module `vehicles`. **Run** checks the first three tests. **Submit** runs all
-8. A failing test shows its name, the error, and the failed test line. The original template and tests are in Pybites premium, so the template and tests here are a recreation that follows the description.
+10. A failing test shows its name, the error, and the failed test line. The original template and tests are in Pybites premium, so the template and tests here are a recreation that follows the description.
 
 **Constraints:**
 
 - Python 3.11, standard library only. No network access.
 - Do not edit the tests or the supplied runner at the bottom of the editor.
+- For an older saved solution, use **+** beside the editor tabs to open the current template in a new tab. Copy your implementation into that tab. This keeps the saved solution and gives you the current tests.

@@ -43,3 +43,37 @@ class Promo:
 ''',
 }
 SPEC["tests"] = SPEC["tests"].replace("import inspect\n", "import inspect\n\nimport pytest\n", 1)
+
+SPEC["contract"] = (
+    "name is a string, including an empty string. expires is a naive datetime. "
+    "Store both values. The read-only expired property returns a bool on each access: "
+    "expires < the module's NOW. Equality is not expired. Changes to expires take effect "
+    "on the next access. Other input types and timezone-aware datetimes are outside "
+    "the contract; no validation is required for them."
+)
+SPEC["tests"] += '''
+
+
+def test_expiry_boundary_and_boolean_result():
+    assert Promo('equal', NOW).expired is False
+    assert Promo('before', NOW - timedelta(microseconds=1)).expired is True
+    assert Promo('after', NOW + timedelta(microseconds=1)).expired is False
+
+
+def test_constructor_preserves_values_and_empty_name():
+    promo = Promo('', NOW)
+    assert promo.name == ''
+    assert promo.expires == NOW
+
+
+def test_expired_can_become_current_again():
+    promo = Promo('extended', NOW - timedelta(days=1))
+    assert promo.expired is True
+    promo.expires = NOW + timedelta(days=1)
+    assert promo.expired is False
+'''
+SPEC["mutations"] = [
+    {"name": "expire at equality", "old": "self.expires < NOW", "new": "self.expires <= NOW"},
+    {"name": "compare calendar dates only", "old": "self.expires < NOW", "new": "self.expires.date() < NOW.date()"},
+    {"name": "discard promo name", "old": "self.name = name", "new": "self.name = 'promo'"},
+]

@@ -31,5 +31,17 @@
   },
   {
     "payload": "{\"test\": \"test_parsers_derive_from_site\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_and_empty_web_cache\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_header_only_tables\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rcp_default_table_and_changed_poll_data\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_nyt_parses_other_table_and_current_file_data\"}"
   }
 ]

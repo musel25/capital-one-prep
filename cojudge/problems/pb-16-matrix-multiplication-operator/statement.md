@@ -2,6 +2,13 @@
 
 [Course list](/?course=pybites-oop) · Pybites Advanced · [Original bite](https://pybitesplatform.com/bites/matrix-multiplication-operator/)
 
+**Inputs and required behavior for this version:**
+
+Inputs are nonempty rectangular lists of lists of finite int or float values. The left column count equals the right row count. Matrix @ Matrix and list-of-lists @ Matrix return a new Matrix. Matrix @= Matrix updates and returns the left object. The right operand stays unchanged. Empty, ragged, incompatible, nonnumeric, and other operand types are outside this exercise; no validation is required.
+
+<details>
+<summary>Original bite description</summary>
+
 Since 3.5 Python has a binary operator to be used for matrix multiplication: `@`, see [PEP 465 -- A dedicated infix operator for matrix multiplication](http://legacy.python.org/dev/peps/pep-0465/).
 
 The *@ sign* can now be used on types implementing the `__matmul__` *special/magic/dunder* method.
@@ -34,12 +41,15 @@ See the tests for more info. Good luck!
 
 > Special thanks to [Anthony Shaw](https://twitter.com/anthonypjshaw) for providing the idea and collaborating with us on this Bite!
 
+</details>
+
 **How to solve it here:** write your code at the top of the editor, like the Pybites Code tab.
 The Pybites tests are in the editor below your code (the Tests tab). The tests import your code as
 the module `matmul`. **Run** checks the first three tests. **Submit** runs all
-8. A failing test shows its name, the error, and the failed test line. The original template and tests are in Pybites premium, so the template and tests here are a recreation that follows the description.
+15. A failing test shows its name, the error, and the failed test line. The original template and tests are in Pybites premium, so the template and tests here are a recreation that follows the description.
 
 **Constraints:**
 
 - Python 3.11, standard library only. No network access.
 - Do not edit the tests or the supplied runner at the bottom of the editor.
+- For an older saved solution, use **+** beside the editor tabs to open the current template in a new tab. Copy your implementation into that tab. This keeps the saved solution and gives you the current tests.

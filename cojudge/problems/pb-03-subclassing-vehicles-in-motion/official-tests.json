@@ -22,5 +22,11 @@
   },
   {
     "payload": "{\"test\": \"test_rev_engine_reuses_description\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_zero_and_unusual_counts_are_not_replaced_with_defaults\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_description_uses_current_instance_attributes\"}"
   }
 ]

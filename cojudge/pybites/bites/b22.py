@@ -15,6 +15,19 @@ SSP = {2: 1, 1: 2, 0: 3}  # cards in a suit -> short suit points
 SPEC = {
     "title": "Evaluate a bridge hand",
     "module": "bridgehand",
+    "contract": "A valid hand is a sequence of 13 distinct Card objects from the supplied deck. "
+                "Each Card contains a Suit member and a Rank member. Non-sequences raise TypeError. "
+                "Sequences with a length other than 13, or any non-Card element, raise ValueError. "
+                "The hand stores a snapshot; later changes to the input sequence do not change it. "
+                "String output sorts suits in SHDC order and ranks in AKQJT98765432 order, and "
+                "omits void suits. All seven evaluation properties are read-only and follow the "
+                "stated point and losing-trick rules. Duplicate cards and malformed Card fields "
+                "are outside this exercise; additional validation for them is not required.",
+    "mutations": [
+        {"name": "wrong_ace_points", "old": "Rank.A: 4", "new": "Rank.A: 3"},
+        {"name": "void_not_counted", "old": "return self._count(0)", "new": "return 0"},
+        {"name": "queen_saves_doubleton", "old": "[Rank.A, Rank.K, Rank.Q][:considered]", "new": "[Rank.A, Rank.K, Rank.Q]"},
+    ],
     "notes": "The second example hand in the description has 14 cards (`H:KJT94`). The tests use `S:9 H:KJT9 D:432 C:AJ742`, which has 13 cards and the same values.",
     "template": _HEADER + '''
 
@@ -156,6 +169,58 @@ def test_read_only_properties():
         assert isinstance(BridgeHand.__dict__[name], property)
         with pytest.raises(AttributeError):
             setattr(hand, name, 0)
+
+
+@pytest.mark.parametrize("cards", [[], (), '', [None], list(range(13))])
+def test_empty_and_invalid_card_sequences(cards):
+    with pytest.raises(ValueError):
+        BridgeHand(cards)
+
+
+@pytest.mark.parametrize("ranks,losers", [
+    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),
+    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),
+    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),
+    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),
+    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),
+])
+def test_each_losing_trick_rule(ranks, losers):
+    # The hearts holding always has AKQ and therefore contributes zero losers.
+    hearts = 'AKQJT98765432'[:13 - len(ranks)]
+    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))
+    assert hand.ltc == losers
+
+
+def test_no_high_cards_or_short_suits():
+    hand = BridgeHand(make_hand('S:9876 H:987 D:987 C:987'))
+    assert hand.hcp == 0
+    assert hand.ssp == 0
+    assert hand.total_points == 0
+    assert hand.ltc == 12
+
+
+def test_input_sequence_is_not_retained_or_reordered():
+    cards = make_hand(HANDS[0][0])[::-1]
+    before = cards[:]
+    hand = BridgeHand(cards)
+    assert cards == before
+    cards.clear()
+    assert str(hand) == HANDS[0][0]
+    assert hand.hcp == 17
+
+
+@pytest.mark.parametrize("text,doubletons,singletons,voids,ssp", [
+    ('S:AK H:AK D:AK C:AKQJT98', 3, 0, 0, 3),
+    ('S:A H:A D:A C:AKQJT98765', 0, 3, 0, 6),
+    ('S:AKQJT9 H:AKQJT98', 0, 0, 2, 6),
+    ('S:A H:A D:AKQJT987654', 0, 2, 1, 7),
+])
+def test_multiple_short_suits(text, doubletons, singletons, voids, ssp):
+    hand = BridgeHand(make_hand(text))
+    assert hand.doubletons == doubletons
+    assert hand.singletons == singletons
+    assert hand.voids == voids
+    assert hand.ssp == ssp
 ''',
     "reference": _HEADER + '''
 

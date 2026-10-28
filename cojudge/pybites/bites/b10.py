@@ -3,6 +3,13 @@
 SPEC = {
     "title": "Complete a tox ini file parser class",
     "module": "ini",
+    "contract": "The input is the path to a readable, valid INI file with a [tox] section. "
+                "DEFAULT options, interpolation, malformed files, and missing files are outside this exercise. "
+                "Count named sections. envlist can be absent or empty; split it on commas and newlines, "
+                "strip whitespace, discard empty items, and remove duplicates in first-seen order. "
+                "Do not expand tox brace expressions. Each basepython value is one interpreter name. "
+                "Return nonempty basepython values once in section order. Matching is case-sensitive. "
+                "Expose config and the three read-only properties from the template.",
     "notes": "The tests write sample tox ini files to a temporary folder and pass the file path, "
              "as in the description's REPL example. The first sample has the same shape as the "
              "Django tox file in that example.",
@@ -185,7 +192,43 @@ def test_config_attribute_and_properties(make_parser):
     assert hasattr(tox, 'config')
     for name in ('number_of_sections', 'environments', 'base_python_versions'):
         assert isinstance(ToxIniParser.__dict__[name], property)
+
+
+@pytest.mark.parametrize('text', ['[tox]\\n', '[tox]\\nenvlist = , ,\\n    ,\\n'])
+def test_missing_or_empty_envlist(make_parser, text):
+    tox = make_parser(text)
+    assert tox.number_of_sections == 1
+    assert tox.environments == []
+    assert tox.base_python_versions == []
+
+
+def test_blank_basepython_and_case_sensitive_names(make_parser):
+    tox = make_parser("""[tox]
+envlist = py311, Py311, py311, py{310,311}
+[testenv]
+basepython =
+[testenv:first]
+basepython = python3
+[testenv:second]
+basepython = Python3
+[testenv:third]
+basepython = python3
+""")
+    assert tox.environments == ['py311', 'Py311', 'py{310', '311}']
+    assert tox.base_python_versions == ['python3', 'Python3']
+
+
+def test_instances_do_not_share_config(make_parser):
+    first = make_parser(library, 'first.ini')
+    second = make_parser('[tox]\\nenvlist = other\\n', 'second.ini')
+    assert second.environments == ['other']
+    assert first.environments == ['py38', 'py39', 'py310', 'py311', 'pypy3', 'lint', 'docs']
 ''',
+    "mutations": [
+        {"name": 'envlist_required', "old": 'self.config["tox"].get("envlist", "")', "new": 'self.config["tox"]["envlist"]'},
+        {"name": 'lowercase_environment_names', "old": 'item.strip() for item in raw', "new": 'item.strip().lower() for item in raw'},
+        {"name": 'keep_duplicate_python_versions', "old": 'return list(dict.fromkeys(v.strip() for v in values if v))', "new": 'return [v.strip() for v in values if v]'},
+    ],
     "reference": '''import configparser
 
 

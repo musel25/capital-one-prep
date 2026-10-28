@@ -1,5 +1,8 @@
 [
   {
+    "payload": "{\"test\": \"test_empty_zoo\"}"
+  },
+  {
     "payload": "{\"test\": \"test_zoo_string\"}"
   },
   {
@@ -13,5 +16,14 @@
   },
   {
     "payload": "{\"test\": \"test_sequence_is_shared_by_all_instances\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_duplicate_names_are_distinct_animals\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_reading_zoo_and_str_does_not_change_sequence\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_and_spaced_names_preserve_spacing\"}"
   }
 ]

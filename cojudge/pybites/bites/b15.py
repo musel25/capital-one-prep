@@ -3,6 +3,13 @@
 SPEC = {
     "title": "Abc's and class inheritance",
     "module": "challenge",
+    "contract": "Challenge takes an int number and str title. Empty titles and zero or negative numbers are allowed. "
+                "Do not normalize or validate them. Challenge is abstract; verify and the pretty_title property "
+                "must both be implemented before a subclass can be instantiated. Subclass constructors call super(). "
+                "BlogChallenge takes a list of int PR numbers, including an empty list; verify checks membership. "
+                "BiteChallenge takes a result and verifies it with ==, including falsy or unhashable built-in values. "
+                "pretty_title formats the current number and title as 'PCCN - TITLE' or 'Bite N. TITLE'. "
+                "Other number, title, and PR container types are outside this exercise.",
     "template": '''from abc import ABC, abstractmethod
 
 
@@ -84,7 +91,39 @@ def test_pretty_title_is_a_property():
 def test_subclasses_call_parent_constructor(cls):
     assert issubclass(cls, Challenge)
     assert 'super()' in inspect.getsource(cls.__init__)
+
+
+def test_empty_merged_prs():
+    challenge = BlogChallenge(0, '', [])
+    assert challenge.pretty_title == 'PCC0 - '
+    assert challenge.verify(0) is False
+
+
+@pytest.mark.parametrize('result, other', [(0, 1), ('', 'x'), (None, ''), ([], [1]), ({}, {'a': 1})])
+def test_falsy_and_unhashable_results(result, other):
+    challenge = BiteChallenge(-1, '', result)
+    assert challenge.verify(result) is True
+    assert challenge.verify(other) is False
+    assert challenge.pretty_title == 'Bite -1. '
+
+
+def test_pretty_titles_use_current_attributes():
+    blog = BlogChallenge(1, 'old', [0, 0, 8])
+    bite = BiteChallenge(2, 'old', ['a'])
+    blog.number, blog.title = 3, '  NEW title'
+    bite.number, bite.title = 4, '  NEW title'
+    assert blog.pretty_title == 'PCC3 -   NEW title'
+    assert bite.pretty_title == 'Bite 4.   NEW title'
+    assert blog.verify(0) is True
+    assert blog.verify(9) is False
+    assert bite.verify(['a']) is True
 ''',
+    "mutations": [
+        {"name": 'truthy_results_only', "old": 'return result == self.result', "new": 'return bool(result) and result == self.result'},
+        {"name": 'result_identity', "old": 'return result == self.result', "new": 'return result is self.result'},
+        {"name": 'first_pr_only', "old": 'return merged_pr in self.merged_prs', "new": 'return bool(self.merged_prs) and merged_pr == self.merged_prs[0]'},
+        {"name": 'abstract_api_not_enforced', "old": '    @abstractmethod\n    def verify(self, value):', "new": '    def verify(self, value):'},
+    ],
     "reference": '''from abc import ABC, abstractmethod
 
 

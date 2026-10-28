@@ -22,5 +22,20 @@
   },
   {
     "payload": "{\"test\": \"test_not_frozen\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_title_boundaries[-]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_title_boundaries[  fizz BUZZ-  fizz buzz]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_title_boundaries[123 ABC-123 abc]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_level_breaks_ties_and_empty_values_are_kept\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_title_normalization_only_happens_at_construction\"}"
   }
 ]

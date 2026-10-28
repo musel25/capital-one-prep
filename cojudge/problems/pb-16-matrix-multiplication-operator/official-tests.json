@@ -22,5 +22,26 @@
   },
   {
     "payload": "{\"test\": \"test_repr\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_matrix_boundaries[left0-right0-expected0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_matrix_boundaries[left1-right1-expected1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_matrix_boundaries[left2-right2-expected2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_matrix_boundaries[left3-right3-expected3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_inplace_square_uses_original_values\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_product_storage_is_independent\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_inplace_preserves_distinct_right_operand\"}"
   }
 ]

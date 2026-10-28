@@ -3,6 +3,18 @@
 SPEC = {
     "title": "Subclass the list built-in",
     "module": "intlist",
+    "contract": "Construct an IntList from an iterable of finite int or float values, with bool "
+                "excluded. append accepts one number or a list of numbers. + and += accept lists "
+                "of numbers. These three operations raise TypeError for invalid elements and do "
+                "not change the list on failure. + returns a new IntList; += preserves identity. "
+                "mean and median are read-only properties and do not reorder the list. On an empty "
+                "list they raise statistics.StatisticsError. Constructor validation, other mutation "
+                "methods, nonfinite numbers, and non-list operands for + or += are outside this exercise.",
+    "mutations": [
+        {"name": "bool_accepted", "old": "isinstance(value, bool) or not isinstance(value, (int, float))", "new": "not isinstance(value, (int, float))"},
+        {"name": "median_uses_mean", "old": "return median(self)", "new": "return mean(self)"},
+        {"name": "addition_returns_plain_list", "old": "return IntList(list(self) + self._validate(other))", "new": "return list(self) + self._validate(other)"},
+    ],
     "notes": "As in the description's REPL example, numbers such as `1.0` are accepted; other types raise `TypeError`.",
     "template": '''class IntList(list):
     pass
@@ -70,6 +82,54 @@ def test_is_a_list_and_properties():
     assert issubclass(IntList, list)
     assert isinstance(IntList.__dict__['mean'], property)
     assert isinstance(IntList.__dict__['median'], property)
+
+
+def test_empty_properties():
+    from statistics import StatisticsError
+    values = IntList()
+    for name in ('mean', 'median'):
+        with pytest.raises(StatisticsError):
+            getattr(values, name)
+    values.append([])
+    assert values == []
+    assert values + [] == []
+    alias = values
+    values += []
+    assert values is alias
+    assert values == []
+
+
+def test_fractional_negative_values_and_unsorted_median():
+    values = IntList([9, -2, 1.5])
+    assert values.mean == pytest.approx(8.5 / 3)
+    assert values.median == 1.5
+    assert values == [9, -2, 1.5]
+    single = IntList([-2.5])
+    assert single.mean == single.median == -2.5
+    for name in ('mean', 'median'):
+        with pytest.raises(AttributeError):
+            setattr(values, name, 1)
+
+
+@pytest.mark.parametrize("bad", [True, False, '2', None, [2]])
+def test_invalid_elements_are_atomic_in_all_named_operations(bad):
+    values = IntList([1])
+    with pytest.raises(TypeError):
+        values.append([2, bad])
+    assert values == [1]
+    with pytest.raises(TypeError):
+        values + [2, bad]
+    assert values == [1]
+    with pytest.raises(TypeError):
+        values += [2, bad]
+    assert values == [1]
+
+
+def test_append_rejects_scalar_bool():
+    values = IntList([1])
+    with pytest.raises(TypeError):
+        values.append(True)
+    assert values == [1]
 ''',
     "reference": '''from statistics import mean, median
 

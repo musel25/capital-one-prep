@@ -13,5 +13,17 @@
   },
   {
     "payload": "{\"test\": \"test_config_attribute_and_properties\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_or_empty_envlist[[tox]\\n]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_or_empty_envlist[[tox]\\nenvlist = , ,\\n    ,\\n]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_blank_basepython_and_case_sensitive_names\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_instances_do_not_share_config\"}"
   }
 ]

@@ -16,5 +16,17 @@
   },
   {
     "payload": "{\"test\": \"test_subclasses_userdict\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_leap_day_and_exact_single_newline\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_constructor_detects_matches_within_its_input\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_instances_do_not_share_birthdays\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_constructor_and_nonmatching_update\"}"
   }
 ]

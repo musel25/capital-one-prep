@@ -19,5 +19,29 @@
   },
   {
     "payload": "{\"test\": \"test_is_a_list_and_properties\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_properties\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_fractional_negative_values_and_unsorted_median\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_elements_are_atomic_in_all_named_operations[True]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_elements_are_atomic_in_all_named_operations[False]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_elements_are_atomic_in_all_named_operations[2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_elements_are_atomic_in_all_named_operations[None]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_elements_are_atomic_in_all_named_operations[bad4]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_append_rejects_scalar_bool\"}"
   }
 ]

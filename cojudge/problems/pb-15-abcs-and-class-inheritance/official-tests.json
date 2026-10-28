@@ -19,5 +19,26 @@
   },
   {
     "payload": "{\"test\": \"test_subclasses_call_parent_constructor[cls1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_merged_prs\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_falsy_and_unhashable_results[0-1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_falsy_and_unhashable_results[-x]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_falsy_and_unhashable_results[None-]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_falsy_and_unhashable_results[result3-other3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_falsy_and_unhashable_results[result4-other4]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pretty_titles_use_current_attributes\"}"
   }
 ]
