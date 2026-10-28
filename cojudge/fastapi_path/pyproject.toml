@@ -12,4 +12,5 @@ dependencies = [
     "pytest>=8,<9",
     "python-jose[cryptography]>=3.5,<4",
     "python-multipart>=0.0.20",
+    "sqlmodel>=0.0.48",
 ]

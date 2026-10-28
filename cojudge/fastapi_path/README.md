@@ -54,5 +54,6 @@ docker build -t cojudge-python:fastapi-20261028 cojudge/fastapi_path
 Set `COJUDGE_PYTHON_IMAGE=cojudge-python:fastapi-20261028` when starting Cojudge.
 The judge must include the custom Python image setting from commit `8b49b46`.
 Dependencies are installed when building the image. Tests run without downloads.
+SQLModel is also installed to preserve the existing SQLModel course in the shared runtime.
 Publish only `problems/pbf-*` and `courses/pybites-fastapi` into the content volume.
 Keep the existing learner progress and other courses.
