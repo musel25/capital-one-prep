@@ -60,3 +60,21 @@ matches the Foundation step already present in the home-page Learning path.
 No application restart is required. Live API checks do not save learner code
 or completion flags. Keep instructor verification artifacts outside learner
 attempt folders and the served content directory.
+
+## Publication checks — October 28, 2026
+
+All twelve exercises are published in the source order. The live Docker judge
+accepts all 200 reference cases and rejects all twelve starters and sixty
+prepared faults. Each rejection includes a completed test run and a reported
+test failure. Runner failures do not count as successful fault detection.
+
+All 181 repository tests pass. The reference checks also pass under real
+pytest. CLI init produces all twelve exact starter files. CLI run passes the
+sandwich reference samples and reports failures for its unfinished starter.
+The browser shows twelve course entries and activates the existing Foundation
+link. Verification did not save learner code or completion flags.
+
+Private backup: `/home/ubuntu/cojudge-backups/decorators-context-20261028.MzvSzE/`.
+It contains the prior course indexes and a list of the new problem directories.
+To unpublish, move only the `pybites-decorators-context-managers` course directory
+out of the served `courses/` folder. Keep learner progress and saved code.
