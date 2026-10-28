@@ -1,0 +1,71 @@
+[
+  {
+    "code": [
+      {
+        "id": "python-editor",
+        "value": "from fibonacci import fib\n\n# write one or more pytest functions below, they need to start with test_"
+      },
+      {
+        "id": "test-python-editor",
+        "value": "from functools import cache\n\n@cache\ndef fib(n):\n   if n < 0:\n        raise ValueError\n   elif n in (0, 1):\n       return n\n   else:\n       return(fib(n-1) + fib(n-2))"
+      }
+    ],
+    "description": "Write tests for fibonacci Pybites ⛉ Bookmark Beginner +2 pts Pytest 0/10 We moved from mutpy (<= 3.7) to mutatest (3.12 📈) for test Bites. First we check if you have 90% test coverage, then we inject some mutations into the code to see if your tests catch them. 🤯 Good luck 🔥 💪 (please be patient 🙏 - it can take a few seconds to run the tests 🕒) Our first Test Bite! The concept is simple: to pass a Test Bite, you write tests for the program under the \"Code to Test\" tab. We run pytest-cov and mutatest against your code to see if your tests are strong enough. To kick this off we have you write some tests for fib which generates a Fibonacci sequence. Note that we use the functool.cache decorator so we can also test higher numbers without timing out. Good luck and keep calm and code in Python! 🐍 💪 fibonacci Topics pytest fibonacci",
+    "title": "Write tests for fibonacci",
+    "url": "https://pybitesplatform.com/bites/write-tests-for-fibonacci/"
+  },
+  {
+    "code": [],
+    "description": "Write tests for list_to_decimal slipsnip ⛉ Bookmark Beginner +2 pts Pytest 0/10 We moved from mutpy (<= 3.7) to mutatest (3.12 📈) for test Bites. First we check if you have 90% test coverage, then we inject some mutations into the code to see if your tests catch them. 🤯 Good luck 🔥 💪 (please be patient 🙏 - it can take a few seconds to run the tests 🕒) Our 4th test Bite. Michael made a calculator that will be able to accept a list of decimal digits and returns an integer where each int of the given list represents decimal place values from first element to last. He wrote the function in such a way that it only accepts positive digits in range(0, 10) and anything that is not raises a ValueError if its out of range, or a TypeError if its not an int type. Some examples: [0, 4, 2, 8] => 428 [1, 2] => 12 [3] => 3 [6, 2, True] => raises TypeError [-3, 12] => raises ValueError [3.6, 4, 1] => raises TypeError ['4', 5, 3, 1] => raises TypeError In this Bite you are tasked to write the tests for this function. Good luck and keep calm and code in Python! Topics pytest exception handling",
+    "title": "Write tests for list_to_decimal",
+    "url": "https://pybitesplatform.com/bites/write-tests-for-list_to_decimal/"
+  },
+  {
+    "code": [],
+    "description": "Test print / standard output Pybites ⛉ Bookmark Beginner +2 pts Pytest 0/10 We moved from mutpy (<= 3.7) to mutatest (3.12 📈) for test Bites. First we check if you have 90% test coverage, then we inject some mutations into the code to see if your tests catch them. 🤯 Good luck 🔥 💪 (please be patient 🙏 - it can take a few seconds to run the tests 🕒) In this Bite you test a function that prints to stdout. Check out pytest's Capturing of the stdout/stderr output how to test this. You probably want to use the capsys / capfd fixture in your test code and you'll probably find a good use case for @pytest.mark.parametrize here too. Have fun and keep calm and code in Python! Topics pytest list comprehensions capfd capsys stdout",
+    "title": "Test print / standard output",
+    "url": "https://pybitesplatform.com/bites/test-print-standard-output/"
+  },
+  {
+    "code": [],
+    "description": "Test fizzbuzz Pybites ⛉ Bookmark Intermediate +3 pts Pytest 0/10 We moved from mutpy (<= 3.7) to mutatest (3.12 📈) for test Bites. First we check if you have 90% test coverage, then we inject some mutations into the code to see if your tests catch them. 🤯 Good luck 🔥 💪 (please be patient 🙏 - it can take a few seconds to run the tests 🕒) In our second Test Bite you will write tests for FizzBuzz. Refer to the \"Code to Test\" tab, then start to write your pytests. Have fun! Topics fizzbuzz pytest",
+    "title": "Test fizzbuzz",
+    "url": "https://pybitesplatform.com/bites/test-fizzbuzz/"
+  },
+  {
+    "code": [],
+    "description": "Test code that parses json and ip ranges ajkerrigan ⛉ Bookmark Intermediate +3 pts Pytest 0/10 We moved from mutpy (<= 3.7) to mutatest (3.12 📈) for test Bites. First we check if you have 90% test coverage, then we inject some mutations into the code to see if your tests catch them. 🤯 Good luck 🔥 💪 (please be patient 🙏 - it can take a few seconds to run the tests 🕒) Another Test Bite, we ❤️them 😁- today you will write tests for IPv4Network (ipaddress module) and dataclass objects 💪. Check out the ips module I wrote parsing a JSON file of IP ranges (ip-ranges.json) under CODE TO TEST, then write tests to get to 100% test coverage and a 100% mutation score. Good luck and keep calm and code in Python 🐍 and pytest. Share your accomplishment upon completing the Bite 😎 Topics json pytest dataclasses ipaddress",
+    "title": "Test code that parses json and ip ranges",
+    "url": "https://pybitesplatform.com/bites/test-code-that-parses-json-and-ip-ranges/"
+  },
+  {
+    "code": [],
+    "description": "Mocking a standard library function Pybites ⛉ Bookmark Intermediate +3 pts Pytest 0/10 We moved from mutpy (<= 3.7) to mutatest (3.12 📈) for test Bites. First we check if you have 90% test coverage, then we inject some mutations into the code to see if your tests catch them. 🤯 Good luck 🔥 💪 (please be patient 🙏 - it can take a few seconds to run the tests 🕒) In this Bite you will mock out a function of the standard library, more specifically random.sample. We wrote a small generator that produces hex colors. We also provided a fixture to initialize the generator so you can just call next(gen) to get the next hex value. Use unittest.mock's patch to mock out the call to sample. It might be a bit tricky, but once you get this one down you possess a valuable testing skill! Have fun and keep calm and test with pytest! Topics random mock.patch pytest",
+    "title": "Mocking a standard library function",
+    "url": "https://pybitesplatform.com/bites/mocking-a-standard-library-function/"
+  },
+  {
+    "code": [],
+    "description": "Write tests for an account class Pybites ⛉ Bookmark Advanced +4 pts Pytest 0/10 We moved from mutpy (<= 3.7) to mutatest (3.12 📈) for test Bites. First we check if you have 90% test coverage, then we inject some mutations into the code to see if your tests catch them. 🤯 Good luck 🔥 💪 (please be patient 🙏 - it can take a few seconds to run the tests 🕒) In our third Test Bite you will write tests for (a reduced version of) the Account class Bob wrote for his Enriching Your Python Classes With Dunder (Magic, Special) Methods article. You can assume Accounts to be instantiated with integer amounts only. Topics classes pytest",
+    "title": "Write tests for an account class",
+    "url": "https://pybitesplatform.com/bites/write-tests-for-an-account-class/"
+  },
+  {
+    "code": [],
+    "description": "Zodiacal data parsing Pybites ⛉ Bookmark Advanced +4 pts Pytest 0/10 We moved from mutpy (<= 3.7) to mutatest (3.12 📈) for test Bites. First we check if you have 90% test coverage, then we inject some mutations into the code to see if your tests catch them. 🤯 Good luck 🔥 💪 (please be patient 🙏 - it can take a few seconds to run the tests 🕒) In this Bite we will write tests for a module that parses data from Zodiacal / The Zodiac API (update 2025: this site is no longer online, but don't worry, we use a static copy for this exercise). See the CODE TO TEST tab below. The get_signs function is used in the signs fixture that has been provided in the template. You can use it in your tests by passing it into your test functions (read our article if you have not used them yet). Write code to test get_sign_with_most_famous_people, signs_are_mutually_compatible and get_sign_by_date. As with all our test Bites, your test code will be tested for: 1. correct syntax, 2. pytest passes all tests, 3. test coverage, and 4. mutation score (mutatest) Good luck and keep calm and code in Python + pytest! Topics datetime pytest fixtures",
+    "title": "Zodiacal data parsing",
+    "url": "https://pybitesplatform.com/bites/zodiacal-data-parsing/"
+  },
+  {
+    "code": [],
+    "description": "Test a number guessing game Pybites ⛉ Bookmark Advanced +4 pts Pytest 0/10 We moved from mutpy (<= 3.7) to mutatest (3.12 📈) for test Bites. First we check if you have 90% test coverage, then we inject some mutations into the code to see if your tests catch them. 🤯 Good luck 🔥 💪 (please be patient 🙏 - it can take a few seconds to run the tests 🕒) In this Bite you test a simple number guessing game (class). Ready to write some pytest code? Read on ... You again will need to mock out a standard library function, input this time. We tried to use random.randint to get the secret number, but mutation testing became a bit too strict on us, so for now we just pass the secret number into the constructor. That said, there is some validation going on that you will need to test. Check for boundaries and to check exception strings, pytest's raises has a nice match kwarg. The constructor also takes an optional max_guesses arg to make the game easier or harder. You will need to the use capfd/capsys fixture again to test the standard output of the game (100% test coverage remember). Good luck and keep calm and code in Python / pytest. Topics classes games mock.patch pytest exception handling",
+    "title": "Test a number guessing game",
+    "url": "https://pybitesplatform.com/bites/test-a-number-guessing-game/"
+  },
+  {
+    "code": [],
+    "description": "Test a movie db class Pybites ⛉ Bookmark Advanced +4 pts Pytest 0/10 We moved from mutpy (<= 3.7) to mutatest (3.12 📈) for test Bites. First we check if you have 90% test coverage, then we inject some mutations into the code to see if your tests catch them. 🤯 Good luck 🔥 💪 (please be patient 🙏 - it can take a few seconds to run the tests 🕒) Time for fixtures, one of pytest's killer features or as Brian Okken said: pytest fixtures are one of the unique core features that make pytest stand out above other test frameworks, and are the reason why many people switch to and stay with pytest (Python Testing with pytest). Why fixtures? The purpose of test fixtures is to provide a fixed baseline upon which tests can reliably and repeatedly execute. pytest fixtures offer dramatic improvements over the classic xUnit style of setup/teardown functions (docs). In this Bite we wrote a little movie DB using sqlite3. The idea is that you write a db fixture to instantiate this class and run its init method to get the movies table created and populated. At the end of the fixture you use drop_table to undo any changes. Apart from this setup and teardown there are 3 methods you need to test: query, add and delete. Specially query has various args, so make sure you test them all. Apart from the docs we also wrote an article on fixtures you might want to check out: All You Need to Know to Start Using Fixtures in Your pytest Code. Let us know on Twitter when you finish our pytest learning path ... Good luck and keep calm and code in Python / pytest! Topics movie data classes pytest SQL sqlite3 fixtures",
+    "title": "Test a movie db class",
+    "url": "https://pybitesplatform.com/bites/test-a-movie-db-class/"
+  }
+]

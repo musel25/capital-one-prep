@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"check\": \"baseline\"}"
+  },
+  {
+    "payload": "{\"check\": \"accept booleans\"}"
+  },
+  {
+    "payload": "{\"check\": \"reject zero digit\"}"
+  },
+  {
+    "payload": "{\"check\": \"accept ten\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong place value\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong empty result\"}"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"check\": \"baseline\"}"
+  },
+  {
+    "payload": "{\"check\": \"ignore starting amount\"}"
+  },
+  {
+    "payload": "{\"check\": \"subtract transactions\"}"
+  },
+  {
+    "payload": "{\"check\": \"reject zero transactions\"}"
+  },
+  {
+    "payload": "{\"check\": \"accept booleans as amounts\"}"
+  },
+  {
+    "payload": "{\"check\": \"count starting amount as a transaction\"}"
+  },
+  {
+    "payload": "{\"check\": \"compare initial amounts\"}"
+  },
+  {
+    "payload": "{\"check\": \"less than includes equality\"}"
+  }
+]

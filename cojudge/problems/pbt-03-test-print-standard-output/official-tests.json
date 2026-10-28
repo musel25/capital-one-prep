@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"check\": \"baseline\"}"
+  },
+  {
+    "payload": "{\"check\": \"print odd numbers\"}"
+  },
+  {
+    "payload": "{\"check\": \"omit zero\"}"
+  },
+  {
+    "payload": "{\"check\": \"omit negative numbers\"}"
+  },
+  {
+    "payload": "{\"check\": \"omit newline\"}"
+  },
+  {
+    "payload": "{\"check\": \"deduplicate output\"}"
+  }
+]

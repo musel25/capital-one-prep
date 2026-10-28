@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"check\": \"baseline\"}"
+  },
+  {
+    "payload": "{\"check\": \"missing hash prefix\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong sample size\"}"
+  },
+  {
+    "payload": "{\"check\": \"lowercase output\"}"
+  },
+  {
+    "payload": "{\"check\": \"generator stops early\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong character alphabet\"}"
+  }
+]

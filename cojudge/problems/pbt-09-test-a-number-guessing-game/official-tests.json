@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"check\": \"baseline\"}"
+  },
+  {
+    "payload": "{\"check\": \"reject lower endpoint\"}"
+  },
+  {
+    "payload": "{\"check\": \"reject upper endpoint\"}"
+  },
+  {
+    "payload": "{\"check\": \"accept boolean secret\"}"
+  },
+  {
+    "payload": "{\"check\": \"omit last attempt\"}"
+  },
+  {
+    "payload": "{\"check\": \"swap high and low\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong winning result\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong losing result\"}"
+  }
+]

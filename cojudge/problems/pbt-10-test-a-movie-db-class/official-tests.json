@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"check\": \"baseline\"}"
+  },
+  {
+    "payload": "{\"check\": \"exclude exact score threshold\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong year filter\"}"
+  },
+  {
+    "payload": "{\"check\": \"exact title instead of substring\"}"
+  },
+  {
+    "payload": "{\"check\": \"reverse title ordering\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong deletion count\"}"
+  },
+  {
+    "payload": "{\"check\": \"omit insert commit\"}"
+  },
+  {
+    "payload": "{\"check\": \"omit delete commit\"}"
+  }
+]

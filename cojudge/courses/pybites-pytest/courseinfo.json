@@ -1,0 +1,21 @@
+{
+  "title": "Pybites Pytest Path",
+  "description": "The 10 exercises of the Pybites Pytest learning path, in the original order. Write tests that pass against correct code and detect supplied faulty variants. Fibonacci uses the original visible code. Exercises 2\u201310 are labeled offline recreations from public descriptions. Uses the OOP course\u2019s small pytest subset, statement coverage, and explicit faults; not pytest-cov or mutatest. Select Python.",
+  "category-order": [
+    "pytest"
+  ],
+  "problems-of-category": {
+    "pytest": [
+      "pbt-01-write-tests-for-fibonacci",
+      "pbt-02-write-tests-for-list-to-decimal",
+      "pbt-03-test-print-standard-output",
+      "pbt-04-test-fizzbuzz",
+      "pbt-05-test-code-that-parses-json-and-ip-ranges",
+      "pbt-06-mocking-a-standard-library-function",
+      "pbt-07-write-tests-for-an-account-class",
+      "pbt-08-zodiacal-data-parsing",
+      "pbt-09-test-a-number-guessing-game",
+      "pbt-10-test-a-movie-db-class"
+    ]
+  }
+}

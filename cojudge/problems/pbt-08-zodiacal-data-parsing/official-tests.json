@@ -1,0 +1,23 @@
+[
+  {
+    "payload": "{\"check\": \"baseline\"}"
+  },
+  {
+    "payload": "{\"check\": \"return fewest famous people\"}"
+  },
+  {
+    "payload": "{\"check\": \"one way compatibility\"}"
+  },
+  {
+    "payload": "{\"check\": \"exclude start date\"}"
+  },
+  {
+    "payload": "{\"check\": \"exclude end date\"}"
+  },
+  {
+    "payload": "{\"check\": \"break year wrap\"}"
+  },
+  {
+    "payload": "{\"check\": \"return shared static data\"}"
+  }
+]

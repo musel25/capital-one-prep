@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"check\": \"baseline\"}"
+  },
+  {
+    "payload": "{\"check\": \"swap region and service\"}"
+  },
+  {
+    "payload": "{\"check\": \"skip the first range\"}"
+  },
+  {
+    "payload": "{\"check\": \"invert region filter\"}"
+  },
+  {
+    "payload": "{\"check\": \"invert service filter\"}"
+  },
+  {
+    "payload": "{\"check\": \"combine filters with or\"}"
+  }
+]

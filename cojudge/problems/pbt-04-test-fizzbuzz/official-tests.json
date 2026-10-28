@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"check\": \"baseline\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong combined divisor\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong fizz divisor\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong buzz divisor\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong combined text\"}"
+  },
+  {
+    "payload": "{\"check\": \"convert plain integers to text\"}"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"check\": \"baseline\"}"
+  },
+  {
+    "payload": "{\"check\": \"reject zero\"}"
+  },
+  {
+    "payload": "{\"check\": \"accept negative input\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong base case\"}"
+  },
+  {
+    "payload": "{\"check\": \"subtract recursive terms\"}"
+  },
+  {
+    "payload": "{\"check\": \"wrong recurrence\"}"
+  }
+]
