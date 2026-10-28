@@ -57,3 +57,30 @@ Dependencies are installed when building the image. Tests run without downloads.
 SQLModel is also installed to preserve the existing SQLModel course in the shared runtime.
 Publish only `problems/pbf-*` and `courses/pybites-fastapi` into the content volume.
 Keep the existing learner progress and other courses.
+
+## Publication — October 28, 2026
+
+The course is published with all 10 exercises and 59 checks. Local verification
+passes every reference, rejects all starters, and detects all 12 supplied faults.
+All 59 checks pass on the separate VPS judge. Its starters are rejected.
+The final JWT run used fresh execution containers because other judge instances
+can remove pooled containers from a different session. The production checks
+pass both hello-world tests, token creation, an authenticated write, and rejection
+of an ownership transfer. The public browser shows the course and 0 / 10 progress.
+The repository test run passes 146 tests. The Cojudge image setting passes
+264 unit tests and a production build. The CLI Run check passes both hello-world tests.
+
+The production application remains `cojudge:typer-b58c197`. It now sets
+`COJUDGE_PYTHON_IMAGE=cojudge-python:fastapi-20261028`.
+The runtime image ID is `sha256:c2a1e4e43f2d24fe34ab7912e54364c30c0c270e544d787956ca1bc2e427d966`.
+The previous application container is retained, stopped, as
+`cojudge-profiles-pre-fastapi-20261028T123728`. The private configuration and
+progress backup is `/home/ubuntu/cojudge-backups/fastapi-20261028.y1dFbs/`.
+The startup health request needs the internal `X-CoJudge-User` header and retries
+connection resets while the server starts. The first two attempts rolled back
+before the corrected health request passed.
+
+Only `pbf-*` definitions and the `pybites-fastapi` index were copied into the live
+content volume. API checks do not mark exercises solved or change saved code.
+The temporary judge instance was removed. The locked runtime also passed an
+offline SQLModel/SQLite smoke check.
