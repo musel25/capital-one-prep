@@ -45,18 +45,18 @@ Files: `cojudge/production/`, `scripts/production_course.py`, `tests/test_produc
 - [x] Add a small builder with named Python functions and a supplied adapter.
 - [x] Verify references against manual expectations and independent Java implementations.
 - [x] Reject realistic mutations and wrong output types; check repeated and reversed execution.
-- [ ] Run the full repository test suite. Commit and push this unit.
+- [x] Run the full repository test suite. Commit and push this unit (`ec5695a`, followed by `a8035ea` for live-check classification and `b119851` for title cleanup).
 
 ### Task 3: Live publication
 
 Files: live content only, plus deployment records in both repositories.
 
 - [x] Back up affected course indexes and Pybites problems outside the public content directory.
-- [ ] Stage new problems before publishing the new course index.
-- [ ] Verify all references and representative faulty solutions through Run and Submit on the VPS. Do not write learner progress.
-- [ ] Remove the three requested indexes by moving them to the backup directory.
-- [ ] Confirm the new course has 24 complete problems and all 22 Pybites updates are present.
-- [ ] Record verification and the rollback location. Commit and push documentation.
+- [x] Stage new problems before publishing the new course index.
+- [x] Verify all references and representative faulty solutions through Run and Submit on the VPS. Do not write learner progress.
+- [x] Remove the three requested indexes by moving them to the backup directory.
+- [x] Confirm the new course has 24 complete problems and all 22 Pybites updates are present.
+- [x] Record verification and the rollback location. Commit and push documentation.
 
 ## Decisions and evidence
 
@@ -68,3 +68,4 @@ Files: live content only, plus deployment records in both repositories.
 - The repository suite passed 85 tests. Pybites passed 390 cases and rejected 83 faults. The new tickets passed 380 manual cases and rejected 103 faults.
 - A later shared-checkout run passed the same 85 tests but found four tests from concurrent, unfinished Pytest Path work: `test_empty_suite_cannot_pass`, `test_false_assertions_cannot_kill_mutants`, `test_weak_suite_leaves_mutants_alive`, and `test_reference_suites_pass_and_each_starter_fails`. All failed because `cojudge/pytest_path/support.py` was not implemented. Those files are outside this task and remain untouched. Verify this task again from a clean archive of its committed files.
 - Before-publication backup: `/home/ubuntu/cojudge-backups/software-tickets.PJshjq/content-before.tar.gz`.
+- Final isolated verification passed 86 tests. Live Submit accepted every reference in both courses. All 103 software engineering faults were rejected. Final counts and recovery steps are in `cojudge/production/verification.md`.
