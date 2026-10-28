@@ -1,0 +1,50 @@
+{
+  "id": "pbf-06-pydantic-part-ii",
+  "title": "06. Pydantic part ii",
+  "difficulty": "Medium",
+  "category": "03-food-log",
+  "link": "",
+  "starterCode": {
+    "python": "from datetime import datetime\nfrom typing import Any\n\nfrom passlib.context import CryptContext\nfrom pydantic import BaseModel, model_validator\n\n# https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/\n# which we'll further explore in a later Bite\npwd_context = CryptContext(schemes=[\"bcrypt\"], deprecated=\"auto\")\n\n\ndef get_password_hash(password):\n    return pwd_context.hash(password)\n\n\nclass Food(BaseModel):\n    \"\"\"Bite 02\"\"\"\n\n    id: int\n    name: str\n    serving_size: str\n    kcal_per_serving: int\n    protein_grams: float\n    fibre_grams: float = 0\n\n\n# Write the User and FoodEntry models here ...\n\n# === SUPPLIED FASTAPI TESTS ===\n# Keep the tests and adapter unchanged.\n_FA_MODULE = 'models'\n_FA_IDS = ['test_create_user_object', 'test_create_incomplete_user_object', 'test_create_user_object_wrong_type', 'test_create_food_log_object', 'test_create_food_missing_data', 'test_added_date_defaults_at_each_creation']\n_FA_TESTS = r'''\nfrom datetime import datetime, timedelta\n\nimport pytest\nfrom pydantic import ValidationError\n\nfrom models import Food, FoodEntry, User, pwd_context\n\nLAME_PASSWORD = \"1234\"  # noqa S105\n\n\n# also from https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/\ndef _verify_password(plain_password, hashed_password):\n    return pwd_context.verify(plain_password, hashed_password)\n\n\n@pytest.fixture\ndef user():\n    user = User(id=1, username=\"user1\", password=LAME_PASSWORD)\n    return user\n\n\n@pytest.fixture\ndef food():\n    food = Food(\n        id=1,\n        name=\"egg\",\n        serving_size=\"piece\",\n        kcal_per_serving=78,\n        protein_grams=6.3,\n        fibre_grams=0,\n    )\n    return food\n\n\ndef test_create_user_object(user):\n    assert type(user) == User\n    assert user.id == 1\n    assert user.username == \"user1\"\n    assert _verify_password(LAME_PASSWORD, user.password) is True\n\n\ndef test_create_incomplete_user_object():\n    error = \"username\\n  Field required\"\n    with pytest.raises(ValidationError, match=error):\n        User(id=1, password=\"abc\")\n\n\ndef test_create_user_object_wrong_type():\n    error = \"id\\n  Input should be a valid integer\"\n    with pytest.raises(ValidationError, match=error):\n        User(id=\"1abc\", username=\"user1\", password=\"abc\")\n\n\ndef test_create_food_log_object(user, food):\n    food_entry = FoodEntry(id=1, user=user, food=food, number_servings=1.5)\n    now = datetime.now()\n    assert abs(food_entry.date_added - now) < timedelta(seconds=10)\n    assert food_entry.user == user\n    assert food_entry.food == food\n    assert food_entry.number_servings == 1.5\n    assert food_entry.total_calories == 1.5 * 78\n\n\ndef test_create_food_missing_data(user, food):\n    error = \"user\\n  Field required\"\n    with pytest.raises(ValidationError, match=error):\n        FoodEntry(id=1, food=food, number_servings=1.5)\n\n# Added Cojudge boundary tests.\n\ndef test_added_date_defaults_at_each_creation(user, food):\n    import time\n    from datetime import datetime\n    first = FoodEntry(id=10, user=user, food=food, number_servings=2)\n    time.sleep(0.02)\n    second = FoodEntry(id=11, user=user, food=food, number_servings=0.5)\n    assert second.date_added > first.date_added\n    explicit = datetime(2020, 1, 2, 3, 4, 5)\n    item = FoodEntry(id=12, user=user, food=food, number_servings=0, date_added=explicit)\n    assert item.date_added == explicit\n    assert item.total_calories == 0\n'''\n\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        import os\n        from pathlib import Path\n        import subprocess\n        import sys\n        import tempfile\n\n        test = json.loads(payload)['test']\n        if test not in _FA_IDS:\n            return 'Unknown test: ' + str(test)\n        with tempfile.TemporaryDirectory(prefix='fastapi-bite-') as work:\n            source = Path(__file__).read_text().split('# === SUPPLIED FASTAPI TESTS ===', 1)[0]\n            Path(work, _FA_MODULE + '.py').write_text(source)\n            Path(work, 'test_bite.py').write_text(_FA_TESTS)\n            env = dict(os.environ, PYTEST_DISABLE_PLUGIN_AUTOLOAD='1', PYTHONDONTWRITEBYTECODE='1')\n            try:\n                done = subprocess.run(\n                    [sys.executable, '-m', 'pytest', '-q', '--tb=short', '--disable-warnings',\n                     '-p', 'no:cacheprovider', 'test_bite.py::' + test],\n                    cwd=work, env=env, capture_output=True, text=True, timeout=12)\n            except subprocess.TimeoutExpired:\n                return 'FAILED ' + test + ' | Test exceeded 12 seconds'\n            if done.returncode == 0:\n                return 'passed'\n            output = done.stdout + done.stderr\n            lines = [line.strip() for line in output.splitlines() if line.strip()]\n            return ('FAILED ' + test + ' | ' + ' | '.join(lines))[:6000]\n"
+  },
+  "examples": [
+    {
+      "input": "{\"test\": \"test_create_user_object\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_create_incomplete_user_object\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_create_user_object_wrong_type\"}",
+      "output": "passed"
+    }
+  ],
+  "testCases": [
+    {
+      "payload": "{\"test\": \"test_create_user_object\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_create_incomplete_user_object\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_create_user_object_wrong_type\"}",
+      "_isLargeTest": true
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Read the supplied pytest tests.",
+    "Use the real FastAPI and Pydantic packages."
+  ]
+}

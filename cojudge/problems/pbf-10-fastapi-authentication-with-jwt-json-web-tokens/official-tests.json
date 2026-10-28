@@ -1,0 +1,82 @@
+[
+  {
+    "payload": "{\"test\": \"test_get_food_entry_without_auth\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_food_entry_without_auth\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_get_token_success\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_get_token_wrong_username\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_get_token_wrong_password\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_with_auth\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_with_wrong_token\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_can_only_create_own_foods\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_get_only_returns_own_foods\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_update_needs_login\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_update_wrong_food\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_update_food_not_owner_by_user\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_update_food_owned_by_self\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_delete_needs_login\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_delete_wrong_food\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_delete_food_not_owner_by_user\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_delete_food_owned_by_self\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_added_reject_expired_tampered_and_unknown_tokens\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_added_update_cannot_transfer_ownership\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_added_create_cannot_overwrite_other_user_id\"}",
+    "_isLargeTest": true
+  }
+]

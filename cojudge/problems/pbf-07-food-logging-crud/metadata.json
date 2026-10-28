@@ -1,0 +1,50 @@
+{
+  "id": "pbf-07-food-logging-crud",
+  "title": "07. Food logging crud",
+  "difficulty": "Medium",
+  "category": "03-food-log",
+  "link": "",
+  "starterCode": {
+    "python": "from datetime import datetime\nfrom typing import Any, Dict, List\n\nfrom fastapi import FastAPI\nfrom passlib.context import CryptContext\nfrom pydantic import BaseModel, Field\n\n# https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/\n# We'll export authentication further in a later Bite\npwd_context = CryptContext(schemes=[\"bcrypt\"], deprecated=\"auto\")\n\n\ndef get_password_hash(password):\n    return pwd_context.hash(password)\n\n\nclass Food(BaseModel):\n    id: int\n    name: str\n    serving_size: str\n    kcal_per_serving: int\n    protein_grams: float\n    fibre_grams: float = 0\n\n\nclass User(BaseModel):\n    id: int\n    username: str\n    password: str\n\n    def __init__(self, **data: Any):\n        data[\"password\"] = get_password_hash(data[\"password\"])\n        super().__init__(**data)\n\n\nclass FoodEntry(BaseModel):\n    id: int\n    user: User\n    food: Food\n    date_added: datetime = Field(default_factory=datetime.now)\n    number_servings: float\n\n    @property\n    def total_calories(self):\n        return self.food.kcal_per_serving * self.number_servings\n\n\napp = FastAPI()\nfood_log: Dict[int, FoodEntry] = {}\n\n# We've hidden the previous Food CRUD to keep it compact and to force you to\n# repeat the API building process (deliberate practice is key!)\n\n# Create CRUD endpoints for FoodEntry below as per instructions in the Bite ...\n\n# === SUPPLIED FASTAPI TESTS ===\n# Keep the tests and adapter unchanged.\n_FA_MODULE = 'app'\n_FA_IDS = ['test_get_foods_user1', 'test_get_foods_user2', 'test_update_food_entry', 'test_update_nonexisting_food_entry_returns_404', 'test_delete_food_entry', 'test_delete_nonexisting_food_entry_returns_404', 'test_added_unknown_user_has_empty_log']\n_FA_TESTS = r'''\nimport pytest\nfrom fastapi.testclient import TestClient\n\nfrom app import FoodEntry, app, pwd_context\n\nLAME_PASSWORD = \"1234\"  # noqa S105\n\n\n# also from https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/\ndef _verify_password(plain_password, hashed_password):\n    return pwd_context.verify(plain_password, hashed_password)\n\n\n@pytest.fixture(scope=\"session\")\ndef client():\n    client = TestClient(app)\n    return client\n\n\n@pytest.fixture(scope=\"session\")\ndef user1():\n    user = dict(id=1, username=\"user1\", password=LAME_PASSWORD)\n    return user\n\n\n@pytest.fixture(scope=\"session\")\ndef user2():\n    user = dict(id=2, username=\"user2\", password=LAME_PASSWORD)\n    return user\n\n\n@pytest.fixture(scope=\"session\")\ndef food1():\n    food = dict(\n        id=1,\n        name=\"egg\",\n        serving_size=\"piece\",\n        kcal_per_serving=78,\n        protein_grams=6.2,\n        fibre_grams=0,\n    )\n    return food\n\n\n@pytest.fixture(scope=\"session\")\ndef food2():\n    food = dict(\n        id=2,\n        name=\"oatmeal\",\n        serving_size=\"100 grams\",\n        kcal_per_serving=336,\n        protein_grams=13.2,\n        fibre_grams=10.1,\n    )\n    return food\n\n\n@pytest.fixture(autouse=True, scope=\"session\")\ndef create_food_entries(client, user1, user2, food1, food2):\n    payload = dict(id=1, user=user1, food=food1, number_servings=1.5)\n    client.post(\"/\", json=payload)\n    payload = dict(id=2, user=user2, food=food2, number_servings=2.2)\n    client.post(\"/\", json=payload)\n\n\ndef test_get_foods_user1(client):\n    resp = client.get(\"/users/1\")\n    data = resp.json()\n    assert len(data) == 1\n    entry = data[0]\n    assert entry[\"id\"] == 1\n    assert entry[\"user\"][\"username\"] == \"user1\"\n    assert entry[\"food\"][\"name\"] == \"egg\"\n    assert entry[\"number_servings\"] == 1.5\n    assert FoodEntry(**entry).total_calories == 117.0\n\n\ndef test_get_foods_user2(client, user2):\n    new_food = dict(\n        id=3,\n        name=\"almendras\",\n        serving_size=\"20 grams\",\n        kcal_per_serving=104,\n        protein_grams=2.3,\n        fibre_grams=1.1,\n    )\n    payload = dict(id=3, user=user2, food=new_food, number_servings=2)\n    client.post(\"/\", json=payload)\n    resp = client.get(\"/users/2\")\n    data = resp.json()\n    assert len(data) == 2\n    assert data[0][\"food\"][\"name\"] == \"oatmeal\"\n    assert data[1][\"food\"][\"name\"] == \"almendras\"\n    assert data[0][\"user\"][\"id\"] == 2\n    assert data[1][\"user\"][\"id\"] == 2\n    assert data[0][\"number_servings\"] == 2.2\n    assert data[1][\"number_servings\"] == 2.0\n    # need to create Pydantic model to test property\n    assert FoodEntry(**data[0]).total_calories == 739.2\n    assert FoodEntry(**data[1]).total_calories == 208.0\n    # clean up for next tests (price of having global dict)\n    client.delete(\"/3\")\n\n\ndef test_update_food_entry(client):\n    entry = client.get(\"/users/1\").json()[0]\n    assert entry[\"number_servings\"] == 1.5\n    new_entry = entry.copy()\n    new_entry[\"number_servings\"] = 3\n    client.put(f\"/{entry['id']}\", json=new_entry)\n    entry = client.get(\"/users/1\").json()[0]\n    assert entry[\"number_servings\"] == 3.0\n\n\ndef test_update_nonexisting_food_entry_returns_404(client):\n    entry = client.get(\"/users/2\").json()[0]\n    resp = client.put(\"/3\", json=entry)\n    assert resp.status_code == 404\n    assert resp.json() == {\"detail\": \"Food entry not found\"}\n\n\ndef test_delete_food_entry(client):\n    resp = client.delete(\"/2\")\n    assert resp.json() == {\"ok\": True}\n    # user1's item still there\n    assert len(client.get(\"/users/1\").json()) == 1\n    # user2's item deleted\n    assert len(client.get(\"/users/2\").json()) == 0\n\n\ndef test_delete_nonexisting_food_entry_returns_404(client):\n    resp = client.delete(\"/3\")\n    assert resp.status_code == 404\n    assert resp.json() == {\"detail\": \"Food entry not found\"}\n\n# Added Cojudge boundary tests.\n\ndef test_added_unknown_user_has_empty_log(client):\n    response = client.get('/users/999')\n    assert response.status_code == 200\n    assert response.json() == []\n'''\n\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        import os\n        from pathlib import Path\n        import subprocess\n        import sys\n        import tempfile\n\n        test = json.loads(payload)['test']\n        if test not in _FA_IDS:\n            return 'Unknown test: ' + str(test)\n        with tempfile.TemporaryDirectory(prefix='fastapi-bite-') as work:\n            source = Path(__file__).read_text().split('# === SUPPLIED FASTAPI TESTS ===', 1)[0]\n            Path(work, _FA_MODULE + '.py').write_text(source)\n            Path(work, 'test_bite.py').write_text(_FA_TESTS)\n            env = dict(os.environ, PYTEST_DISABLE_PLUGIN_AUTOLOAD='1', PYTHONDONTWRITEBYTECODE='1')\n            try:\n                done = subprocess.run(\n                    [sys.executable, '-m', 'pytest', '-q', '--tb=short', '--disable-warnings',\n                     '-p', 'no:cacheprovider', 'test_bite.py::' + test],\n                    cwd=work, env=env, capture_output=True, text=True, timeout=12)\n            except subprocess.TimeoutExpired:\n                return 'FAILED ' + test + ' | Test exceeded 12 seconds'\n            if done.returncode == 0:\n                return 'passed'\n            output = done.stdout + done.stderr\n            lines = [line.strip() for line in output.splitlines() if line.strip()]\n            return ('FAILED ' + test + ' | ' + ' | '.join(lines))[:6000]\n"
+  },
+  "examples": [
+    {
+      "input": "{\"test\": \"test_get_foods_user1\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_get_foods_user2\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_update_food_entry\"}",
+      "output": "passed"
+    }
+  ],
+  "testCases": [
+    {
+      "payload": "{\"test\": \"test_get_foods_user1\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_get_foods_user2\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_update_food_entry\"}",
+      "_isLargeTest": true
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Read the supplied pytest tests.",
+    "Use the real FastAPI and Pydantic packages."
+  ]
+}

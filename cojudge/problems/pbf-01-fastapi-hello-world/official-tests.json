@@ -1,0 +1,10 @@
+[
+  {
+    "payload": "{\"test\": \"test_root_endpoint_with_get\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_root_endpoint_only_get\"}",
+    "_isLargeTest": true
+  }
+]

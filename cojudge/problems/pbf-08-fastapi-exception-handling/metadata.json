@@ -1,0 +1,50 @@
+{
+  "id": "pbf-08-fastapi-exception-handling",
+  "title": "08. Fastapi exception handling",
+  "difficulty": "Medium",
+  "category": "03-food-log",
+  "link": "",
+  "starterCode": {
+    "python": "from datetime import datetime\nfrom typing import Any, Dict\n\nfrom fastapi import FastAPI\nfrom passlib.context import CryptContext\nfrom pydantic import BaseModel, Field\n\n# https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/\n# We'll explore further in a later Bite\npwd_context = CryptContext(schemes=[\"bcrypt\"], deprecated=\"auto\")\n\nAVG_HUMAN_CALORIES_PER_DAY = 2250\n\n\ndef get_password_hash(password):\n    return pwd_context.hash(password)\n\n\nclass Food(BaseModel):\n    id: int\n    name: str\n    serving_size: str\n    kcal_per_serving: int\n    protein_grams: float\n    fibre_grams: float = 0\n\n\nclass User(BaseModel):\n    id: int\n    username: str\n    password: str\n    max_daily_calories: int = AVG_HUMAN_CALORIES_PER_DAY\n\n    def __init__(self, **data: Any):\n        data[\"password\"] = get_password_hash(data[\"password\"])\n        super().__init__(**data)\n\n\nclass FoodEntry(BaseModel):\n    id: int\n    user: User\n    food: Food\n    date_added: datetime = Field(default_factory=datetime.now)\n    number_servings: float\n\n    @property\n    def total_calories(self):\n        return self.food.kcal_per_serving * self.number_servings\n\n\napp = FastAPI()\nfood_log: Dict[int, FoodEntry] = {}\n\n# To focus on exception handling we only work on Create\n# in this Bite hiding read-update-delete endpoints.\n\n\n@app.post(\"/\", status_code=201)\nasync def create_food_entry(entry: FoodEntry):\n\n    # TODO: add exception handling code here\n\n    food_log[entry.id] = entry\n    return entry\n\n# === SUPPLIED FASTAPI TESTS ===\n# Keep the tests and adapter unchanged.\n_FA_MODULE = 'app'\n_FA_IDS = ['test_cannot_insert_same_food_entry_id_twice', 'test_cannot_overeat', 'test_added_calorie_boundary_and_user_isolation', 'test_added_duplicate_does_not_overwrite']\n_FA_TESTS = r'''\nimport pytest\nfrom fastapi.testclient import TestClient\n\nfrom app import app, food_log, pwd_context\n\nLAME_PASSWORD = \"1234\"  # noqa S105\n\n\n# also from https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/\ndef _verify_password(plain_password, hashed_password):\n    return pwd_context.verify(plain_password, hashed_password)\n\n\n@pytest.fixture\ndef client():\n    client = TestClient(app)\n    return client\n\n\n@pytest.fixture\ndef user():\n    user = dict(id=1, username=\"user\", password=LAME_PASSWORD)\n    return user\n\n\n@pytest.fixture\ndef food():\n    food = dict(\n        id=1,\n        name=\"egg\",\n        serving_size=\"piece\",\n        kcal_per_serving=78,\n        protein_grams=6.2,\n        fibre_grams=0,\n    )\n    return food\n\n\n@pytest.fixture\ndef food_entry1(user, food):\n    payload = dict(id=1, user=user, food=food, number_servings=1.5)\n    yield payload\n    del food_log[1]\n\n\n@pytest.fixture\ndef food_entry2(user, food):\n    payload = dict(id=2, user=user, food=food, number_servings=26.5)\n    yield payload\n    try:\n        del food_log[2]\n    except KeyError:\n        pass\n\n\n@pytest.fixture(autouse=True)\ndef create_food_entries(client, food_entry1):\n    client.post(\"/\", json=food_entry1)\n\n\ndef test_cannot_insert_same_food_entry_id_twice(client, food_entry1):\n    resp = client.post(\"/\", json=food_entry1)\n    assert resp.status_code == 400\n    error = \"Food entry already logged, use an update request\"\n    expected = {\"detail\": error}\n    assert resp.json() == expected\n\n\ndef test_cannot_overeat(client, food_entry1, food_entry2):\n    # food entry 1 is posted in the autouse fixture = 1.5 eggs\n    # posting food entry 2 would lead of a consumption of:\n    # 28 (1.5 + 26.5) x 78 kcal == 2.184 which is still < 2.250 = ok\n    resp = client.post(\"/\", json=food_entry2)\n    assert resp.status_code == 201\n    # however posting one more egg on top of that we go over max\n    # daily kcal allowance = 29 x 78 kcal = 2.262 > 2.250 -> not ok\n    food_entry3 = food_entry1.copy()\n    food_entry3[\"id\"] = 3\n    food_entry3[\"number_servings\"] = 1\n    resp = client.post(\"/\", json=food_entry3)\n    assert resp.status_code == 400\n    error = (\"Cannot add more food than daily caloric \"\n             \"allowance = 2250 kcal / day\")\n    expected = {\"detail\": error}\n    assert resp.json() == expected\n\n# Added Cojudge boundary tests.\n\ndef test_added_calorie_boundary_and_user_isolation(client, food_entry1):\n    from copy import deepcopy\n    original = dict(food_log)\n    payload = deepcopy(food_entry1)\n    payload['id'] = 31\n    payload['user']['id'] = 31\n    payload['user']['username'] = 'other'\n    payload['user']['max_daily_calories'] = 156\n    payload['number_servings'] = 2\n    assert client.post('/', json=payload).status_code == 201\n    too_much = deepcopy(payload)\n    too_much['id'] = 32\n    too_much['number_servings'] = 0.5\n    before = dict(food_log)\n    response = client.post('/', json=too_much)\n    assert response.status_code == 400\n    assert response.json()['detail'].endswith('156 kcal / day')\n    assert food_log == before\n    assert all(food_log[key] == value for key, value in original.items())\n\ndef test_added_duplicate_does_not_overwrite(client, food_entry1):\n    before = dict(food_log)\n    changed = dict(food_entry1, number_servings=0)\n    assert client.post('/', json=changed).status_code == 400\n    assert food_log == before\n'''\n\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        import os\n        from pathlib import Path\n        import subprocess\n        import sys\n        import tempfile\n\n        test = json.loads(payload)['test']\n        if test not in _FA_IDS:\n            return 'Unknown test: ' + str(test)\n        with tempfile.TemporaryDirectory(prefix='fastapi-bite-') as work:\n            source = Path(__file__).read_text().split('# === SUPPLIED FASTAPI TESTS ===', 1)[0]\n            Path(work, _FA_MODULE + '.py').write_text(source)\n            Path(work, 'test_bite.py').write_text(_FA_TESTS)\n            env = dict(os.environ, PYTEST_DISABLE_PLUGIN_AUTOLOAD='1', PYTHONDONTWRITEBYTECODE='1')\n            try:\n                done = subprocess.run(\n                    [sys.executable, '-m', 'pytest', '-q', '--tb=short', '--disable-warnings',\n                     '-p', 'no:cacheprovider', 'test_bite.py::' + test],\n                    cwd=work, env=env, capture_output=True, text=True, timeout=12)\n            except subprocess.TimeoutExpired:\n                return 'FAILED ' + test + ' | Test exceeded 12 seconds'\n            if done.returncode == 0:\n                return 'passed'\n            output = done.stdout + done.stderr\n            lines = [line.strip() for line in output.splitlines() if line.strip()]\n            return ('FAILED ' + test + ' | ' + ' | '.join(lines))[:6000]\n"
+  },
+  "examples": [
+    {
+      "input": "{\"test\": \"test_cannot_insert_same_food_entry_id_twice\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_cannot_overeat\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_added_calorie_boundary_and_user_isolation\"}",
+      "output": "passed"
+    }
+  ],
+  "testCases": [
+    {
+      "payload": "{\"test\": \"test_cannot_insert_same_food_entry_id_twice\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_cannot_overeat\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_added_calorie_boundary_and_user_isolation\"}",
+      "_isLargeTest": true
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Read the supplied pytest tests.",
+    "Use the real FastAPI and Pydantic packages."
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "payload": "{\"test\": \"test_create_food_object\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_food_without_fibre\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_food_required_attrs\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_food_wrong_serving_type\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_food_casting_no_exception\"}",
+    "_isLargeTest": true
+  }
+]

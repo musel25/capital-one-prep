@@ -1,0 +1,22 @@
+[
+  {
+    "payload": "{\"test\": \"test_get_is_not_allowed\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_food\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_two_foods\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_food_default_fibre\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_food_wrong_food_payload\"}",
+    "_isLargeTest": true
+  }
+]

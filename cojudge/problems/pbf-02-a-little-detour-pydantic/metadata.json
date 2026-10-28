@@ -1,0 +1,50 @@
+{
+  "id": "pbf-02-a-little-detour-pydantic",
+  "title": "02. A little detour: pydantic",
+  "difficulty": "Easy",
+  "category": "01-basics",
+  "link": "",
+  "starterCode": {
+    "python": "from pydantic import BaseModel, Field\n\n# write a Food pydantic model\n\n# === SUPPLIED FASTAPI TESTS ===\n# Keep the tests and adapter unchanged.\n_FA_MODULE = 'models'\n_FA_IDS = ['test_create_food_object', 'test_create_food_without_fibre', 'test_create_food_required_attrs', 'test_create_food_wrong_serving_type', 'test_create_food_casting_no_exception']\n_FA_TESTS = r'''\nimport pytest\nfrom pydantic import ValidationError\n\nfrom models import Food\n\n\ndef test_create_food_object():\n    food = Food(\n        id=1,\n        name=\"egg\",\n        serving_size=\"piece\",\n        kcal_per_serving=78,\n        protein_grams=6.3,\n        fibre_grams=0,\n    )\n    assert type(food) == Food\n    assert food.id == 1\n    assert food.name == \"egg\"\n    assert food.serving_size == \"piece\"\n    assert food.kcal_per_serving == 78\n    assert food.protein_grams == 6.3\n    assert food.fibre_grams == 0\n\n\ndef test_create_food_without_fibre():\n    # no fibre in constructor\n    food = Food(\n        id=1, name=\"egg\", serving_size=\"piece\", kcal_per_serving=78, protein_grams=6.3\n    )\n    # hence it's set to default 0\n    assert food.fibre_grams == 0\n\n\ndef test_create_food_required_attrs():\n    with pytest.raises(ValidationError):\n        # missing attrs like serving_size, kcal_per_serving, etc.\n        Food(id=1, name=\"egg\")\n\n\ndef test_create_food_wrong_serving_type():\n    with pytest.raises(ValidationError):\n        # note that name=2 is ok with pydantic, it gets casted\n        Food(\n            id=1,\n            name=\"egg\",\n            serving_size=\"piece\",\n            kcal_per_serving=\"2ab\",\n            protein_grams=6.3,\n            fibre_grams=1.2,\n        )\n\n\ndef test_create_food_casting_no_exception():\n    # \"78\" is ok, so is an int for protein's float type\n    assert Food(\n        id=1,\n        name=\"egg\",\n        serving_size=\"piece\",\n        kcal_per_serving=\"78\",\n        protein_grams=6,\n        fibre_grams=1.2,\n    )\n\n# Added Cojudge boundary tests.\n'''\n\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        import os\n        from pathlib import Path\n        import subprocess\n        import sys\n        import tempfile\n\n        test = json.loads(payload)['test']\n        if test not in _FA_IDS:\n            return 'Unknown test: ' + str(test)\n        with tempfile.TemporaryDirectory(prefix='fastapi-bite-') as work:\n            source = Path(__file__).read_text().split('# === SUPPLIED FASTAPI TESTS ===', 1)[0]\n            Path(work, _FA_MODULE + '.py').write_text(source)\n            Path(work, 'test_bite.py').write_text(_FA_TESTS)\n            env = dict(os.environ, PYTEST_DISABLE_PLUGIN_AUTOLOAD='1', PYTHONDONTWRITEBYTECODE='1')\n            try:\n                done = subprocess.run(\n                    [sys.executable, '-m', 'pytest', '-q', '--tb=short', '--disable-warnings',\n                     '-p', 'no:cacheprovider', 'test_bite.py::' + test],\n                    cwd=work, env=env, capture_output=True, text=True, timeout=12)\n            except subprocess.TimeoutExpired:\n                return 'FAILED ' + test + ' | Test exceeded 12 seconds'\n            if done.returncode == 0:\n                return 'passed'\n            output = done.stdout + done.stderr\n            lines = [line.strip() for line in output.splitlines() if line.strip()]\n            return ('FAILED ' + test + ' | ' + ' | '.join(lines))[:6000]\n"
+  },
+  "examples": [
+    {
+      "input": "{\"test\": \"test_create_food_object\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_create_food_without_fibre\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_create_food_required_attrs\"}",
+      "output": "passed"
+    }
+  ],
+  "testCases": [
+    {
+      "payload": "{\"test\": \"test_create_food_object\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_create_food_without_fibre\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_create_food_required_attrs\"}",
+      "_isLargeTest": true
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Read the supplied pytest tests.",
+    "Use the real FastAPI and Pydantic packages."
+  ]
+}

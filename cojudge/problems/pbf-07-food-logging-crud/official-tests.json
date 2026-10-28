@@ -1,0 +1,30 @@
+[
+  {
+    "payload": "{\"test\": \"test_get_foods_user1\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_get_foods_user2\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_update_food_entry\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_update_nonexisting_food_entry_returns_404\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_delete_food_entry\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_delete_nonexisting_food_entry_returns_404\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_added_unknown_user_has_empty_log\"}",
+    "_isLargeTest": true
+  }
+]

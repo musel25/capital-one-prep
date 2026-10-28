@@ -1,0 +1,50 @@
+{
+  "id": "pbf-03-create-food-objects",
+  "title": "03. Create food objects",
+  "difficulty": "Medium",
+  "category": "02-food-api",
+  "link": "",
+  "starterCode": {
+    "python": "from typing import Dict\n\nfrom fastapi import FastAPI\nfrom pydantic import BaseModel, Field\n\n\nclass Food(BaseModel):\n    \"\"\"Model from Bite 02\"\"\"\n\n    id: int\n    name: str\n    serving_size: str\n    kcal_per_serving: int\n    protein_grams: float\n    fibre_grams: float = 0\n\n\napp = FastAPI()\nfoods: Dict[int, Food] = {}\n\n\n# write the Create endpoint\n\n# === SUPPLIED FASTAPI TESTS ===\n# Keep the tests and adapter unchanged.\n_FA_MODULE = 'app'\n_FA_IDS = ['test_get_is_not_allowed', 'test_create_food', 'test_create_two_foods', 'test_create_food_default_fibre', 'test_create_food_wrong_food_payload']\n_FA_TESTS = r'''\nimport pytest\nfrom fastapi.testclient import TestClient\n\nfrom app import Food, app, foods\n\n\n@pytest.fixture\ndef client():\n    client = TestClient(app)\n    return client\n\n\n@pytest.fixture\ndef food():\n    food = Food(\n        id=1,\n        name=\"egg\",\n        serving_size=\"piece\",\n        kcal_per_serving=78,\n        protein_grams=6.3,\n        fibre_grams=1,\n    )\n    return food\n\n\n@pytest.fixture\ndef food_payload():\n    return dict(\n        id=1,\n        name=\"egg\",\n        serving_size=\"piece\",\n        kcal_per_serving=78,\n        protein_grams=6.3,\n        fibre_grams=1,\n    )\n\n\n@pytest.fixture\ndef second_food_payload():\n    return dict(\n        id=2,\n        name=\"oatmeal\",\n        serving_size=\"100 grams\",\n        kcal_per_serving=336,\n        protein_grams=13.2,\n        fibre_grams=10.1,\n    )\n\n\ndef test_get_is_not_allowed(client):\n    resp = client.get(\"/\")\n    assert resp.status_code == 405\n\n\ndef test_create_food(client, food_payload, food):\n    resp = client.post(\"/\", json=food_payload)\n    assert resp.status_code == 201\n    assert resp.json() == dict(food)\n    assert foods == {1: food}\n\n\ndef test_create_two_foods(client, food_payload, second_food_payload):\n    for pl in (food_payload, second_food_payload):\n        resp = client.post(\"/\", json=pl)\n        assert resp.status_code == 201\n    assert len(foods) == 2\n    names = [food.name for food in foods.values()]\n    assert names == [\"egg\", \"oatmeal\"]\n    total_calories = sum(food.kcal_per_serving for food in foods.values())\n    assert total_calories == 414\n\n\ndef test_create_food_default_fibre(client, food_payload):\n    del food_payload[\"fibre_grams\"]\n    resp = client.post(\"/\", json=food_payload)\n    assert resp.status_code == 201\n    assert foods[1].fibre_grams == 0\n\n\ndef test_create_food_wrong_food_payload(client, food_payload):\n    del food_payload[\"kcal_per_serving\"]\n    resp = client.post(\"/\", json=food_payload)\n    assert resp.status_code == 422\n    details = resp.json()[\"detail\"][0]\n    assert details[\"msg\"] == 'Field required'\n    assert details[\"type\"] == 'missing'\n\n# Added Cojudge boundary tests.\n'''\n\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        import os\n        from pathlib import Path\n        import subprocess\n        import sys\n        import tempfile\n\n        test = json.loads(payload)['test']\n        if test not in _FA_IDS:\n            return 'Unknown test: ' + str(test)\n        with tempfile.TemporaryDirectory(prefix='fastapi-bite-') as work:\n            source = Path(__file__).read_text().split('# === SUPPLIED FASTAPI TESTS ===', 1)[0]\n            Path(work, _FA_MODULE + '.py').write_text(source)\n            Path(work, 'test_bite.py').write_text(_FA_TESTS)\n            env = dict(os.environ, PYTEST_DISABLE_PLUGIN_AUTOLOAD='1', PYTHONDONTWRITEBYTECODE='1')\n            try:\n                done = subprocess.run(\n                    [sys.executable, '-m', 'pytest', '-q', '--tb=short', '--disable-warnings',\n                     '-p', 'no:cacheprovider', 'test_bite.py::' + test],\n                    cwd=work, env=env, capture_output=True, text=True, timeout=12)\n            except subprocess.TimeoutExpired:\n                return 'FAILED ' + test + ' | Test exceeded 12 seconds'\n            if done.returncode == 0:\n                return 'passed'\n            output = done.stdout + done.stderr\n            lines = [line.strip() for line in output.splitlines() if line.strip()]\n            return ('FAILED ' + test + ' | ' + ' | '.join(lines))[:6000]\n"
+  },
+  "examples": [
+    {
+      "input": "{\"test\": \"test_get_is_not_allowed\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_create_food\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_create_two_foods\"}",
+      "output": "passed"
+    }
+  ],
+  "testCases": [
+    {
+      "payload": "{\"test\": \"test_get_is_not_allowed\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_create_food\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_create_two_foods\"}",
+      "_isLargeTest": true
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Read the supplied pytest tests.",
+    "Use the real FastAPI and Pydantic packages."
+  ]
+}

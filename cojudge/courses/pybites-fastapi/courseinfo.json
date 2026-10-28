@@ -1,0 +1,30 @@
+{
+  "title": "Pybites FastAPI Path",
+  "description": "The 10 exercises of the Pybites FastAPI learning path, in source order. Build a food and calorie API with real FastAPI, Pydantic, pytest, and JWT authentication. Imported templates and tests, with documented adaptations and added boundary tests. Select Python.",
+  "category-order": [
+    "01-basics",
+    "02-food-api",
+    "03-food-log",
+    "04-authentication"
+  ],
+  "problems-of-category": {
+    "01-basics": [
+      "pbf-01-fastapi-hello-world",
+      "pbf-02-a-little-detour-pydantic"
+    ],
+    "02-food-api": [
+      "pbf-03-create-food-objects",
+      "pbf-04-retrieve-food-objects",
+      "pbf-05-update-and-delete-food-objects"
+    ],
+    "03-food-log": [
+      "pbf-06-pydantic-part-ii",
+      "pbf-07-food-logging-crud",
+      "pbf-08-fastapi-exception-handling",
+      "pbf-09-return-an-html-response"
+    ],
+    "04-authentication": [
+      "pbf-10-fastapi-authentication-with-jwt-json-web-tokens"
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_create_user_object\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_incomplete_user_object\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_user_object_wrong_type\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_food_log_object\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_create_food_missing_data\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_added_date_defaults_at_each_creation\"}",
+    "_isLargeTest": true
+  }
+]

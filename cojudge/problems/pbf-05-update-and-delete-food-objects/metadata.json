@@ -1,0 +1,50 @@
+{
+  "id": "pbf-05-update-and-delete-food-objects",
+  "title": "05. Update and delete food objects",
+  "difficulty": "Medium",
+  "category": "02-food-api",
+  "link": "",
+  "starterCode": {
+    "python": "from typing import Dict, List\n\nfrom fastapi import FastAPI, HTTPException\nfrom pydantic import BaseModel, Field\n\n\nclass Food(BaseModel):\n    \"\"\"Model from Bite 02\"\"\"\n\n    id: int\n    name: str\n    serving_size: str\n    kcal_per_serving: int\n    protein_grams: float\n    fibre_grams: float = 0\n\n\napp = FastAPI()\nfoods: Dict[int, Food] = {}\n\n\n@app.post(\"/\", status_code=201)\nasync def create_food(food: Food):\n    \"\"\"Endpoint from Bite 03\"\"\"\n    foods[food.id] = food\n    return food\n\n\n@app.get(\"/\", response_model=List[Food])\nasync def read_foods():\n    \"\"\"Endpoints from Bite 04\"\"\"\n    return list(foods.values())\n\n\n@app.get(\"/{food_id}\", response_model=Food)\nasync def read_food(food_id: int):\n    \"\"\"Endpoints from Bite 04\"\"\"\n    return foods[food_id]\n\n\n# Create the update and delete endpoints here ...\n\n# === SUPPLIED FASTAPI TESTS ===\n# Keep the tests and adapter unchanged.\n_FA_MODULE = 'app'\n_FA_IDS = ['test_update_food', 'test_update_nonexisting_food_returns_404', 'test_delete_food', 'test_delete_nonexisting_food_returns_404']\n_FA_TESTS = r'''\nimport difflib\n\nimport pytest\nfrom fastapi import HTTPException\nfrom fastapi.testclient import TestClient\n\nfrom app import app\n\n\n@pytest.fixture\ndef client():\n    client = TestClient(app)\n    return client\n\n\n@pytest.fixture(autouse=True)\ndef create_foods(client):\n    \"\"\"\n    Payload for two food objects, \"autouse\" runs this\n    automatically before the tests.\n    \"\"\"\n    food1_payload = dict(\n        id=1,\n        name=\"egg\",\n        serving_size=\"piece\",\n        kcal_per_serving=78,\n        protein_grams=6.2,\n        fibre_grams=0,\n    )\n    food2_payload = dict(\n        id=2,\n        name=\"oatmeal\",\n        serving_size=\"100 grams\",\n        kcal_per_serving=336,\n        protein_grams=13.2,\n        fibre_grams=10.1,\n    )\n    for payload in (food1_payload, food2_payload):\n        client.post(\"/\", json=payload)\n\n\ndef test_update_food(client):\n    orig_egg = client.get(\"/1\").json()\n    resp = client.get(\"/2\")\n    orig_food = resp.json()\n    food = orig_food.copy()\n    food[\"kcal_per_serving\"] = 350\n    client.put(\"/2\", json=food)\n    resp = client.get(\"/2\")\n    updated_food = resp.json()\n    diff = set(updated_food.values()) - set(orig_food.values())\n    assert diff == {350}\n    # the other item is not updated\n    egg = client.get(\"/1\").json()\n    assert orig_egg == egg\n\n\ndef test_update_nonexisting_food_returns_404(client):\n    resp = client.get(\"/2\")\n    payload = resp.json()\n    resp = client.put(\"/3\", json=payload)\n    assert resp.status_code == 404\n    assert resp.json() == {\"detail\": \"Food not found\"}\n\n\ndef test_delete_food(client):\n    resp = client.get(\"/\")\n    assert len(resp.json()) == 2\n    resp = client.delete(\"/2\")\n    assert resp.json() == {\"ok\": True}\n    # oatmeal deleted\n    with pytest.raises(KeyError):\n        client.get(\"/2\")\n    resp = client.get(\"/\")\n    data = resp.json()\n    assert len(data) == 1\n    # only egg remains\n    assert data[0][\"id\"] == 1\n    assert data[0][\"name\"] == \"egg\"\n\n\ndef test_delete_nonexisting_food_returns_404(client):\n    resp = client.delete(\"/3\")\n    assert resp.status_code == 404\n    assert resp.json() == {\"detail\": \"Food not found\"}\n\n# Added Cojudge boundary tests.\n'''\n\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        import os\n        from pathlib import Path\n        import subprocess\n        import sys\n        import tempfile\n\n        test = json.loads(payload)['test']\n        if test not in _FA_IDS:\n            return 'Unknown test: ' + str(test)\n        with tempfile.TemporaryDirectory(prefix='fastapi-bite-') as work:\n            source = Path(__file__).read_text().split('# === SUPPLIED FASTAPI TESTS ===', 1)[0]\n            Path(work, _FA_MODULE + '.py').write_text(source)\n            Path(work, 'test_bite.py').write_text(_FA_TESTS)\n            env = dict(os.environ, PYTEST_DISABLE_PLUGIN_AUTOLOAD='1', PYTHONDONTWRITEBYTECODE='1')\n            try:\n                done = subprocess.run(\n                    [sys.executable, '-m', 'pytest', '-q', '--tb=short', '--disable-warnings',\n                     '-p', 'no:cacheprovider', 'test_bite.py::' + test],\n                    cwd=work, env=env, capture_output=True, text=True, timeout=12)\n            except subprocess.TimeoutExpired:\n                return 'FAILED ' + test + ' | Test exceeded 12 seconds'\n            if done.returncode == 0:\n                return 'passed'\n            output = done.stdout + done.stderr\n            lines = [line.strip() for line in output.splitlines() if line.strip()]\n            return ('FAILED ' + test + ' | ' + ' | '.join(lines))[:6000]\n"
+  },
+  "examples": [
+    {
+      "input": "{\"test\": \"test_update_food\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_update_nonexisting_food_returns_404\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_delete_food\"}",
+      "output": "passed"
+    }
+  ],
+  "testCases": [
+    {
+      "payload": "{\"test\": \"test_update_food\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_update_nonexisting_food_returns_404\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_delete_food\"}",
+      "_isLargeTest": true
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Read the supplied pytest tests.",
+    "Use the real FastAPI and Pydantic packages."
+  ]
+}

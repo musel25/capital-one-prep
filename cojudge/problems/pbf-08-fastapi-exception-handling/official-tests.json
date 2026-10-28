@@ -1,0 +1,18 @@
+[
+  {
+    "payload": "{\"test\": \"test_cannot_insert_same_food_entry_id_twice\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_cannot_overeat\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_added_calorie_boundary_and_user_isolation\"}",
+    "_isLargeTest": true
+  },
+  {
+    "payload": "{\"test\": \"test_added_duplicate_does_not_overwrite\"}",
+    "_isLargeTest": true
+  }
+]

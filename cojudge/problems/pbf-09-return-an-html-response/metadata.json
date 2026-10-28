@@ -1,0 +1,42 @@
+{
+  "id": "pbf-09-return-an-html-response",
+  "title": "09. Return an html response",
+  "difficulty": "Medium",
+  "category": "03-food-log",
+  "link": "",
+  "starterCode": {
+    "python": "from datetime import datetime\nfrom typing import Any, Dict, List\n\nfrom fastapi import FastAPI, Request\nfrom fastapi.responses import HTMLResponse\nfrom passlib.context import CryptContext\nfrom pydantic import BaseModel, Field\n\n# https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/\n# We'll export authentication further in a later Bite\npwd_context = CryptContext(schemes=[\"bcrypt\"], deprecated=\"auto\")\n\n\ndef get_password_hash(password):\n    return pwd_context.hash(password)\n\n\nclass Food(BaseModel):\n    id: int\n    name: str\n    serving_size: str\n    kcal_per_serving: int\n    protein_grams: float\n    fibre_grams: float = 0\n\n\nclass User(BaseModel):\n    id: int\n    username: str\n    password: str\n\n    def __init__(self, **data: Any):\n        data[\"password\"] = get_password_hash(data[\"password\"])\n        super().__init__(**data)\n\n\nclass FoodEntry(BaseModel):\n    id: int\n    user: User\n    food: Food\n    date_added: datetime = Field(default_factory=datetime.now)\n    number_servings: float\n\n    @property\n    def total_calories(self):\n        return self.food.kcal_per_serving * self.number_servings\n\n\napp = FastAPI()\n\nfood_log: Dict[int, FoodEntry] = {}\n\nHTML_TEMPLATE = \"\"\"<!doctype html>\n\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Food log for {username}</title>\n</head>\n\n<body>\n    <table>\n        <thead>\n            <th>Food</th>\n            <th>Added</th>\n            <th>Servings</th>\n            <th>Calories (kcal)</th>\n        </thead>\n        <tbody>\n            {table_rows}\n        </tbody>\n    </table>\n\n</body>\n</html>\"\"\"\nTABLE_ROW = \"\"\"<tr>\n    <td>{food_name}</td>\n    <td>{date_added}</td>\n    <td>{number_servings} x {serving_size}</td>\n    <td>{total_calories}</td>\n</tr>\"\"\"\n\n\n@app.post(\"/\", status_code=201)\nasync def create_food_entry(entry: FoodEntry):\n    \"\"\"Previous Bite and used in test\"\"\"\n    food_log[entry.id] = entry\n    return entry\n\n\n@app.get(\"/{username}\", response_class=HTMLResponse)\nasync def show_foods_for_user(request: Request, username: str):\n    # 1. extract foods for user using the food_log dict\n    # 2. build up the embedded html string\n    # 3. return an HTMLResponse (with the html content and status code 200)\n    pass\n\n# === SUPPLIED FASTAPI TESTS ===\n# Keep the tests and adapter unchanged.\n_FA_MODULE = 'app'\n_FA_IDS = ['test_show_foods_for_user', 'test_added_html_filters_and_escapes']\n_FA_TESTS = r'''\nfrom datetime import datetime\n\nimport pytest\nfrom bs4 import BeautifulSoup\nfrom fastapi.testclient import TestClient\n\nfrom app import app, food_log, pwd_context\n\nLAME_PASSWORD = \"1234\"  # noqa S105\n\n\n# also from https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/\ndef _verify_password(plain_password, hashed_password):\n    return pwd_context.verify(plain_password, hashed_password)\n\n\n@pytest.fixture\ndef client():\n    client = TestClient(app)\n    return client\n\n\n@pytest.fixture\ndef user():\n    user = dict(id=1, username=\"Julian\", password=LAME_PASSWORD)\n    return user\n\n\n@pytest.fixture\ndef food1():\n    food = dict(\n        id=1,\n        name=\"egg\",\n        serving_size=\"piece\",\n        kcal_per_serving=78,\n        protein_grams=6.2,\n        fibre_grams=0,\n    )\n    return food\n\n\n@pytest.fixture\ndef food2():\n    food = dict(\n        id=2,\n        name=\"oatmeal\",\n        serving_size=\"100 grams\",\n        kcal_per_serving=336,\n        protein_grams=13.2,\n        fibre_grams=10.1,\n    )\n    return food\n\n\n@pytest.fixture\ndef food_entry1(user, food1):\n    payload = dict(id=1, user=user, food=food1, number_servings=1.5)\n    yield payload\n    del food_log[1]\n\n\n@pytest.fixture\ndef food_entry2(user, food2):\n    payload = dict(id=2, user=user, food=food2, number_servings=2)\n    yield payload\n    del food_log[2]\n\n\n@pytest.fixture(autouse=True)\ndef create_food_entries(client, food_entry1, food_entry2):\n    client.post(\"/\", json=food_entry1)\n    client.post(\"/\", json=food_entry2)\n\n\ndef test_show_foods_for_user(client):\n    resp = client.get(\"/Julian\")\n    assert resp.status_code == 200\n    try:\n        soup = BeautifulSoup(resp.text, \"html.parser\")\n    except Exception as exc:\n        pytest.fail(f\"Could not make soup object for testing, exception: {exc}\")\n\n    assert soup.title.text == \"Food log for Julian\"\n\n    assert len(soup.findAll(\"tr\")) == 2\n    tds = soup.findAll(\"td\")\n    assert len(tds) == 8\n\n    # datetimes change and freezegun did not work so best we can do is assert type\n    dt1, dt2 = tds.pop(1).text, tds.pop(4).text\n    for dt in (dt1, dt2):\n        isinstance(datetime.strptime(dt, \"%Y-%m-%d %H:%M:%S.%f\"), datetime)\n\n    # remaining cells are plain text\n    text_cells = [td.text for td in tds]\n    assert text_cells == [\n        \"egg\",\n        \"1.5 x piece\",\n        \"117.0\",\n        \"oatmeal\",\n        \"2.0 x 100 grams\",\n        \"672.0\",\n    ]\n\n# Added Cojudge boundary tests.\n\ndef test_added_html_filters_and_escapes(client, food_entry1):\n    from copy import deepcopy\n    payload = deepcopy(food_entry1)\n    payload['id'] = 10\n    payload['user']['username'] = 'Other'\n    payload['food']['name'] = 'private-food'\n    assert client.post('/', json=payload).status_code == 201\n    response = client.get('/Julian')\n    assert response.headers['content-type'].startswith('text/html')\n    assert 'private-food' not in response.text\n    payload['id'] = 11\n    payload['user']['username'] = 'Julian'\n    payload['food']['name'] = '<script>alert(1)</script>'\n    assert client.post('/', json=payload).status_code == 201\n    text = client.get('/Julian').text\n    assert '<script>' not in text\n    assert '&lt;script&gt;' in text\n    empty = BeautifulSoup(client.get('/nobody').text, 'html.parser')\n    assert empty.find_all('td') == []\n'''\n\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        import os\n        from pathlib import Path\n        import subprocess\n        import sys\n        import tempfile\n\n        test = json.loads(payload)['test']\n        if test not in _FA_IDS:\n            return 'Unknown test: ' + str(test)\n        with tempfile.TemporaryDirectory(prefix='fastapi-bite-') as work:\n            source = Path(__file__).read_text().split('# === SUPPLIED FASTAPI TESTS ===', 1)[0]\n            Path(work, _FA_MODULE + '.py').write_text(source)\n            Path(work, 'test_bite.py').write_text(_FA_TESTS)\n            env = dict(os.environ, PYTEST_DISABLE_PLUGIN_AUTOLOAD='1', PYTHONDONTWRITEBYTECODE='1')\n            try:\n                done = subprocess.run(\n                    [sys.executable, '-m', 'pytest', '-q', '--tb=short', '--disable-warnings',\n                     '-p', 'no:cacheprovider', 'test_bite.py::' + test],\n                    cwd=work, env=env, capture_output=True, text=True, timeout=12)\n            except subprocess.TimeoutExpired:\n                return 'FAILED ' + test + ' | Test exceeded 12 seconds'\n            if done.returncode == 0:\n                return 'passed'\n            output = done.stdout + done.stderr\n            lines = [line.strip() for line in output.splitlines() if line.strip()]\n            return ('FAILED ' + test + ' | ' + ' | '.join(lines))[:6000]\n"
+  },
+  "examples": [
+    {
+      "input": "{\"test\": \"test_show_foods_for_user\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_added_html_filters_and_escapes\"}",
+      "output": "passed"
+    }
+  ],
+  "testCases": [
+    {
+      "payload": "{\"test\": \"test_show_foods_for_user\"}",
+      "_isLargeTest": true
+    },
+    {
+      "payload": "{\"test\": \"test_added_html_filters_and_escapes\"}",
+      "_isLargeTest": true
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Read the supplied pytest tests.",
+    "Use the real FastAPI and Pydantic packages."
+  ]
+}
