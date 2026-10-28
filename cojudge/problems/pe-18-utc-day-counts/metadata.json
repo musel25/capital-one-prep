@@ -1,0 +1,47 @@
+{
+  "id": "pe-18-utc-day-counts",
+  "title": "18. Count events by UTC day",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "05-files-time-and-boundaries",
+  "examples": [
+    {
+      "input": "{\"timestamps\": [\"2026-10-28T00:30:00+02:00\", \"2026-10-27T23:30:00Z\"]}",
+      "output": "{\"2026-10-27\": 2}",
+      "explanation": "positive offset moves an event to the prior UTC day"
+    },
+    {
+      "input": "{\"timestamps\": [\"2026-10-28T23:30:00-02:00\", \"2026-10-29T00:00:00Z\"]}",
+      "output": "{\"2026-10-29\": 2}",
+      "explanation": "negative offset moves an event to the next UTC day"
+    },
+    {
+      "input": "{\"timestamps\": []}",
+      "output": "{}",
+      "explanation": "empty timestamp list"
+    }
+  ],
+  "starterCode": {
+    "python": "def count_utc_days(timestamps):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement count_utc_days above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = count_utc_days(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"timestamps\":[\"2026-10-28T00:30:00+02:00\",\"2026-10-27T23:30:00Z\"]}"
+    },
+    {
+      "payload": "{\"timestamps\":[\"2026-10-28T23:30:00-02:00\",\"2026-10-29T00:00:00Z\"]}"
+    },
+    {
+      "payload": "{\"timestamps\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

@@ -1,0 +1,47 @@
+{
+  "id": "pe-01-clean-notification-emails",
+  "title": "01. Clean notification emails",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-data-and-api",
+  "examples": [
+    {
+      "input": "{\"emails\": [\" ADA@EXAMPLE.COM \", \"ada@example.com\", \"bob@example.com\"]}",
+      "output": "[\"ada@example.com\", \"bob@example.com\"]",
+      "explanation": "normalize then deduplicate"
+    },
+    {
+      "input": "{\"emails\": []}",
+      "output": "[]",
+      "explanation": "empty batch"
+    },
+    {
+      "input": "{\"emails\": [\"\", \" \", \"\\t\\r\\n\"]}",
+      "output": "[]",
+      "explanation": "blank entries"
+    }
+  ],
+  "starterCode": {
+    "python": "def clean_emails(emails):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement clean_emails above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = clean_emails(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"emails\":[\" ADA@EXAMPLE.COM \",\"ada@example.com\",\"bob@example.com\"]}"
+    },
+    {
+      "payload": "{\"emails\":[]}"
+    },
+    {
+      "payload": "{\"emails\":[\"\",\" \",\"\\t\\r\\n\"]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

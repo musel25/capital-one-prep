@@ -1,0 +1,47 @@
+{
+  "id": "pe-10-enqueue-idempotent-jobs",
+  "title": "10. Handle duplicate job submissions",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "02-clients-and-reliability",
+  "examples": [
+    {
+      "input": "{\"requests\": [{\"key\": \"a\", \"task\": \"send\"}, {\"key\": \"b\", \"task\": \"index\"}]}",
+      "output": "[{\"status\": \"created\", \"id\": 1}, {\"status\": \"created\", \"id\": 2}]",
+      "explanation": "new keys get consecutive IDs"
+    },
+    {
+      "input": "{\"requests\": [{\"key\": \"a\", \"task\": \"send\"}, {\"key\": \"a\", \"task\": \"send\"}]}",
+      "output": "[{\"status\": \"created\", \"id\": 1}, {\"status\": \"replayed\", \"id\": 1}]",
+      "explanation": "same key and task replays original ID"
+    },
+    {
+      "input": "{\"requests\": [{\"key\": \"a\", \"task\": \"old\"}, {\"key\": \"a\", \"task\": \"new\"}, {\"key\": \"a\", \"task\": \"old\"}]}",
+      "output": "[{\"status\": \"created\", \"id\": 1}, {\"status\": \"conflict\", \"id\": null}, {\"status\": \"replayed\", \"id\": 1}]",
+      "explanation": "changed task conflicts without replacing original"
+    }
+  ],
+  "starterCode": {
+    "python": "def enqueue_jobs(requests):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement enqueue_jobs above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = enqueue_jobs(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"send\"},{\"key\":\"b\",\"task\":\"index\"}]}"
+    },
+    {
+      "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"send\"},{\"key\":\"a\",\"task\":\"send\"}]}"
+    },
+    {
+      "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"old\"},{\"key\":\"a\",\"task\":\"new\"},{\"key\":\"a\",\"task\":\"old\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

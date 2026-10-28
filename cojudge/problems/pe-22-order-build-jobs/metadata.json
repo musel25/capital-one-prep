@@ -1,0 +1,47 @@
+{
+  "id": "pe-22-order-build-jobs",
+  "title": "22. Produce a deterministic build order",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "06-application-logic",
+  "examples": [
+    {
+      "input": "{\"dependencies\": {\"app\": [\"lib\"], \"lib\": [], \"docs\": []}}",
+      "output": "[\"docs\", \"lib\", \"app\"]",
+      "explanation": "independent jobs and dependent job"
+    },
+    {
+      "input": "{\"dependencies\": {\"a\": [], \"b\": [\"a\"], \"z\": []}}",
+      "output": "[\"a\", \"b\", \"z\"]",
+      "explanation": "newly ready job can precede an earlier ready job"
+    },
+    {
+      "input": "{\"dependencies\": {\"a\": [], \"b\": [\"c\"], \"c\": [\"b\"]}}",
+      "output": "null",
+      "explanation": "cycle returns no partial build list"
+    }
+  ],
+  "starterCode": {
+    "python": "def build_order(dependencies):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement build_order above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = build_order(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"dependencies\":{\"app\":[\"lib\"],\"docs\":[],\"lib\":[]}}"
+    },
+    {
+      "payload": "{\"dependencies\":{\"a\":[],\"b\":[\"a\"],\"z\":[]}}"
+    },
+    {
+      "payload": "{\"dependencies\":{\"a\":[],\"b\":[\"c\"],\"c\":[\"b\"]}}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

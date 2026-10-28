@@ -1,0 +1,44 @@
+[
+  {
+    "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"send\"},{\"key\":\"b\",\"task\":\"index\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"send\"},{\"key\":\"a\",\"task\":\"send\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"old\"},{\"key\":\"a\",\"task\":\"new\"},{\"key\":\"a\",\"task\":\"old\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"same\"},{\"key\":\"b\",\"task\":\"same\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"key\":\"empty\",\"task\":\"\"},{\"key\":\"empty\",\"task\":\"\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"x\"},{\"key\":\"A\",\"task\":\"x\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"x\"},{\"key\":\"a\",\"task\":\"X\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"x\"},{\"key\":\"a\",\"task\":\"y\"},{\"key\":\"b\",\"task\":\"y\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"x\"},{\"key\":\"a\",\"task\":\"x\"},{\"key\":\"b\",\"task\":\"x\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"x\"},{\"key\":\"a\",\"task\":\"y\"},{\"key\":\"a\",\"task\":\"y\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"key\":\" a \",\"task\":\" x \"},{\"key\":\"a\",\"task\":\" x \"},{\"key\":\" a \",\"task\":\"x\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"key\":\"a\",\"task\":\"x\"},{\"key\":\"b\",\"task\":\"y\"},{\"key\":\"a\",\"task\":\"x\"},{\"key\":\"b\",\"task\":\"y\"}]}"
+  },
+  {
+    "payload": "{\"requests\":[{\"key\":\"\\t\",\"task\":\"line\\n\"},{\"key\":\"\\t\",\"task\":\"line\\n\"},{\"key\":\"\\t\",\"task\":\"line\"}]}"
+  }
+]

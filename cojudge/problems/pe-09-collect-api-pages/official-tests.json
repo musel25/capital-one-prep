@@ -1,0 +1,50 @@
+[
+  {
+    "payload": "{\"pages\":{\"a\":{\"items\":[3,1,3],\"next\":\"b\"},\"b\":{\"items\":[1,2,0],\"next\":null}},\"start\":\"a\"}"
+  },
+  {
+    "payload": "{\"pages\":{\"a\":{\"items\":[7],\"next\":\"absent\"}},\"start\":\"a\"}"
+  },
+  {
+    "payload": "{\"pages\":{\"a\":{\"items\":[2],\"next\":\"b\"},\"b\":{\"items\":[4,2],\"next\":\"a\"}},\"start\":\"a\"}"
+  },
+  {
+    "payload": "{\"pages\":{},\"start\":null}"
+  },
+  {
+    "payload": "{\"pages\":{\"a\":{\"items\":[1],\"next\":\"a\"}},\"start\":null}"
+  },
+  {
+    "payload": "{\"pages\":{},\"start\":\"a\"}"
+  },
+  {
+    "payload": "{\"pages\":{\"a\":{\"items\":[],\"next\":null}},\"start\":\"a\"}"
+  },
+  {
+    "payload": "{\"pages\":{\"a\":{\"items\":[],\"next\":\"b\"},\"b\":{\"items\":[8],\"next\":null}},\"start\":\"a\"}"
+  },
+  {
+    "payload": "{\"pages\":{\"a\":{\"items\":[6,6],\"next\":\"a\"}},\"start\":\"a\"}"
+  },
+  {
+    "payload": "{\"pages\":{\"a\":{\"items\":[9],\"next\":null},\"broken\":{\"items\":[1],\"next\":\"gone\"}},\"start\":\"a\"}"
+  },
+  {
+    "payload": "{\"pages\":{\"A\":{\"items\":[5],\"next\":\"a\"},\"a\":{\"items\":[1],\"next\":null}},\"start\":\"A\"}"
+  },
+  {
+    "payload": "{\"pages\":{\"zero\":{\"items\":[0,0,2,0],\"next\":null}},\"start\":\"zero\"}"
+  },
+  {
+    "payload": "{\"pages\":{\"a\":{\"items\":[18446744073709551616,0,18446744073709551616],\"next\":null}},\"start\":\"a\"}"
+  },
+  {
+    "payload": "{\"pages\":{\"a\":{\"items\":[],\"next\":\"gone\"}},\"start\":\"a\"}"
+  },
+  {
+    "payload": "{\"pages\":{\"a\":{\"items\":[8],\"next\":\"b\"},\"b\":{\"items\":[],\"next\":\"c\"},\"c\":{\"items\":[8,3],\"next\":\"b\"}},\"start\":\"a\"}"
+  },
+  {
+    "payload": "{\"pages\":{\" a \":{\"items\":[4],\"next\":\"a\"},\"a\":{\"items\":[2],\"next\":null}},\"start\":\" a \"}"
+  }
+]

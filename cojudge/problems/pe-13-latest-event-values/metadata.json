@@ -1,0 +1,47 @@
+{
+  "id": "pe-13-latest-event-values",
+  "title": "13. Keep the latest event values",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "03-stateful-services",
+  "examples": [
+    {
+      "input": "{\"events\": [{\"entity\": \"a\", \"version\": 1, \"value\": \"old\"}, {\"entity\": \"a\", \"version\": 2, \"value\": \"new\"}]}",
+      "output": "{\"a\": \"new\"}",
+      "explanation": "new version replaces value"
+    },
+    {
+      "input": "{\"events\": [{\"entity\": \"a\", \"version\": 2, \"value\": \"new\"}, {\"entity\": \"a\", \"version\": 1, \"value\": \"old\"}]}",
+      "output": "{\"a\": \"new\"}",
+      "explanation": "late old event is ignored"
+    },
+    {
+      "input": "{\"events\": [{\"entity\": \"a\", \"version\": 4, \"value\": \"first\"}, {\"entity\": \"a\", \"version\": 4, \"value\": \"second\"}]}",
+      "output": "{\"a\": \"first\"}",
+      "explanation": "first equal version wins"
+    }
+  ],
+  "starterCode": {
+    "python": "def latest_events(events):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement latest_events above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = latest_events(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"events\":[{\"entity\":\"a\",\"value\":\"old\",\"version\":1},{\"entity\":\"a\",\"value\":\"new\",\"version\":2}]}"
+    },
+    {
+      "payload": "{\"events\":[{\"entity\":\"a\",\"value\":\"new\",\"version\":2},{\"entity\":\"a\",\"value\":\"old\",\"version\":1}]}"
+    },
+    {
+      "payload": "{\"events\":[{\"entity\":\"a\",\"value\":\"first\",\"version\":4},{\"entity\":\"a\",\"value\":\"second\",\"version\":4}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

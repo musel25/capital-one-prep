@@ -1,0 +1,47 @@
+[
+  {
+    "payload": "{\"payload\":{\"age\":0,\"email\":\"a@b\",\"name\":\"Ada\"}}"
+  },
+  {
+    "payload": "{\"payload\":{}}"
+  },
+  {
+    "payload": "{\"payload\":{\"email\":\"\",\"name\":\"\"}}"
+  },
+  {
+    "payload": "{\"payload\":{\"email\":\"a@b\",\"name\":\" \\t\"}}"
+  },
+  {
+    "payload": "{\"payload\":{\"email\":\"@b\",\"name\":\"A\"}}"
+  },
+  {
+    "payload": "{\"payload\":{\"email\":\"a@\",\"name\":\"A\"}}"
+  },
+  {
+    "payload": "{\"payload\":{\"email\":\"a@@b\",\"name\":\"A\"}}"
+  },
+  {
+    "payload": "{\"payload\":{\"email\":\" a@b\",\"name\":\"A\"}}"
+  },
+  {
+    "payload": "{\"payload\":{\"age\":true,\"email\":\"a@b\",\"name\":\"A\"}}"
+  },
+  {
+    "payload": "{\"payload\":{\"age\":1.0,\"email\":\"a@b\",\"name\":\"A\"}}"
+  },
+  {
+    "payload": "{\"payload\":{\"age\":-1,\"email\":\"a@b\",\"name\":\"A\"}}"
+  },
+  {
+    "payload": "{\"payload\":{\"age\":null,\"email\":1,\"name\":null}}"
+  },
+  {
+    "payload": "{\"payload\":{\"email\":\"a@b\",\"extra\":false,\"name\":\" A \"}}"
+  },
+  {
+    "payload": "{\"payload\":{\"age\":\"4\",\"email\":true,\"name\":1}}"
+  },
+  {
+    "payload": "{\"payload\":{\"email\":\"a@b\\nc\",\"name\":\"A\"}}"
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "payload": "{\"value\":{\"password\":\"abc\",\"user\":\"sam\"}}"
+  },
+  {
+    "payload": "{\"value\":{\"SECRET\":null,\"Token\":\"abc\"}}"
+  },
+  {
+    "payload": "{\"value\":{\"events\":[{\"token\":42},\"ok\"],\"profile\":{\"password\":\"abc\"}}}"
+  },
+  {
+    "payload": "{\"value\":{}}"
+  },
+  {
+    "payload": "{\"value\":[]}"
+  },
+  {
+    "payload": "{\"value\":null}"
+  },
+  {
+    "payload": "{\"value\":\"password\"}"
+  },
+  {
+    "payload": "{\"value\":[false,0,3.5,\"token\",null]}"
+  },
+  {
+    "payload": "{\"value\":{\"password\":{\"safe\":[1,2]},\"secret\":[1,{\"x\":2}]}}"
+  },
+  {
+    "payload": "{\"value\":{\" token\":\"keep\",\"access_token\":\"keep\",\"password_hint\":\"keep\",\"secrets\":\"keep\"}}"
+  },
+  {
+    "payload": "{\"value\":[[{\"pAsSwOrD\":false}],{\"x\":[{\"ToKeN\":0}]}]}"
+  },
+  {
+    "payload": "{\"value\":{\"a\":{\"b\":{\"c\":{\"d\":{\"e\":{\"f\":{\"g\":{\"h\":{\"secret\":\"deep\"}}}}}}}}}}"
+  },
+  {
+    "payload": "{\"value\":{\"note\":\"[REDACTED]\",\"password\":\"[REDACTED]\"}}"
+  },
+  {
+    "payload": "{\"value\":{\"\":{\"secret\":\"\"},\"PASSWORD\":[],\"secret\":{}}}"
+  },
+  {
+    "payload": "{\"value\":[1e-06,-999999.999999]}"
+  }
+]

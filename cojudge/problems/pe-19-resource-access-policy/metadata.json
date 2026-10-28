@@ -1,0 +1,47 @@
+{
+  "id": "pe-19-resource-access-policy",
+  "title": "19. Apply a resource access policy",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "05-files-time-and-boundaries",
+  "examples": [
+    {
+      "input": "{\"user\": {\"id\": \"root\", \"role\": \"admin\", \"suspended\": true}, \"resource\": {\"owner_id\": \"x\", \"public\": true}, \"action\": \"read\"}",
+      "output": "false",
+      "explanation": "suspension overrides admin and public access"
+    },
+    {
+      "input": "{\"user\": {\"id\": null, \"role\": \"guest\", \"suspended\": false}, \"resource\": {\"owner_id\": \"x\", \"public\": true}, \"action\": \"read\"}",
+      "output": "true",
+      "explanation": "guest can read a public resource"
+    },
+    {
+      "input": "{\"user\": {\"id\": \"a\", \"role\": \"member\", \"suspended\": false}, \"resource\": {\"owner_id\": \"a\", \"public\": false}, \"action\": \"write\"}",
+      "output": "true",
+      "explanation": "member can write an owned private resource"
+    }
+  ],
+  "starterCode": {
+    "python": "def can_access(user, resource, action):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement can_access above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = can_access(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"action\":\"read\",\"resource\":{\"owner_id\":\"x\",\"public\":true},\"user\":{\"id\":\"root\",\"role\":\"admin\",\"suspended\":true}}"
+    },
+    {
+      "payload": "{\"action\":\"read\",\"resource\":{\"owner_id\":\"x\",\"public\":true},\"user\":{\"id\":null,\"role\":\"guest\",\"suspended\":false}}"
+    },
+    {
+      "payload": "{\"action\":\"write\",\"resource\":{\"owner_id\":\"a\",\"public\":false},\"user\":{\"id\":\"a\",\"role\":\"member\",\"suspended\":false}}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

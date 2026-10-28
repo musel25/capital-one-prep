@@ -1,0 +1,38 @@
+[
+  {
+    "payload": "{\"emails\":[\" ADA@EXAMPLE.COM \",\"ada@example.com\",\"bob@example.com\"]}"
+  },
+  {
+    "payload": "{\"emails\":[]}"
+  },
+  {
+    "payload": "{\"emails\":[\"\",\" \",\"\\t\\r\\n\"]}"
+  },
+  {
+    "payload": "{\"emails\":[\"A@B\"]}"
+  },
+  {
+    "payload": "{\"emails\":[\"z@b\",\"a@b\"]}"
+  },
+  {
+    "payload": "{\"emails\":[\"a@b\",\"a@b\",\"a@b\"]}"
+  },
+  {
+    "payload": "{\"emails\":[\"\\ta@b\\n\",\" a@b\\r\"]}"
+  },
+  {
+    "payload": "{\"emails\":[\"\",\"X+tag@B\",\"\"]}"
+  },
+  {
+    "payload": "{\"emails\":[\"A.B@C\",\"ab@c\"]}"
+  },
+  {
+    "payload": "{\"emails\":[\"first\",\"SECOND\"]}"
+  },
+  {
+    "payload": "{\"emails\":[\"a @b\"]}"
+  },
+  {
+    "payload": "{\"emails\":[\"B\",\"a\",\"B\",\"C\",\"A\"]}"
+  }
+]

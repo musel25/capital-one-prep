@@ -1,0 +1,65 @@
+[
+  {
+    "payload": "{\"action\":\"read\",\"resource\":{\"owner_id\":\"x\",\"public\":true},\"user\":{\"id\":\"root\",\"role\":\"admin\",\"suspended\":true}}"
+  },
+  {
+    "payload": "{\"action\":\"read\",\"resource\":{\"owner_id\":\"x\",\"public\":true},\"user\":{\"id\":null,\"role\":\"guest\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"write\",\"resource\":{\"owner_id\":\"a\",\"public\":false},\"user\":{\"id\":\"a\",\"role\":\"member\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"delete\",\"resource\":{\"owner_id\":\"x\",\"public\":false},\"user\":{\"id\":\"root\",\"role\":\"admin\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"read\",\"resource\":{\"owner_id\":\"x\",\"public\":false},\"user\":{\"id\":\"root\",\"role\":\"admin\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"write\",\"resource\":{\"owner_id\":\"x\",\"public\":false},\"user\":{\"id\":\"root\",\"role\":\"admin\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"share\",\"resource\":{\"owner_id\":\"x\",\"public\":true},\"user\":{\"id\":\"root\",\"role\":\"admin\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"read\",\"resource\":{\"owner_id\":\"x\",\"public\":false},\"user\":{\"id\":null,\"role\":\"guest\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"write\",\"resource\":{\"owner_id\":\"x\",\"public\":true},\"user\":{\"id\":null,\"role\":\"guest\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"delete\",\"resource\":{\"owner_id\":\"x\",\"public\":true},\"user\":{\"id\":null,\"role\":\"guest\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"read\",\"resource\":{\"owner_id\":\"x\",\"public\":true},\"user\":{\"id\":null,\"role\":\"guest\",\"suspended\":true}}"
+  },
+  {
+    "payload": "{\"action\":\"read\",\"resource\":{\"owner_id\":\"a\",\"public\":false},\"user\":{\"id\":\"a\",\"role\":\"member\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"delete\",\"resource\":{\"owner_id\":\"a\",\"public\":false},\"user\":{\"id\":\"a\",\"role\":\"member\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"delete\",\"resource\":{\"owner_id\":\"a\",\"public\":false},\"user\":{\"id\":\"a\",\"role\":\"member\",\"suspended\":true}}"
+  },
+  {
+    "payload": "{\"action\":\"read\",\"resource\":{\"owner_id\":\"b\",\"public\":true},\"user\":{\"id\":\"a\",\"role\":\"member\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"read\",\"resource\":{\"owner_id\":\"b\",\"public\":false},\"user\":{\"id\":\"a\",\"role\":\"member\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"write\",\"resource\":{\"owner_id\":\"b\",\"public\":true},\"user\":{\"id\":\"a\",\"role\":\"member\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"delete\",\"resource\":{\"owner_id\":\"b\",\"public\":true},\"user\":{\"id\":\"a\",\"role\":\"member\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"READ\",\"resource\":{\"owner_id\":\"a\",\"public\":true},\"user\":{\"id\":\"a\",\"role\":\"member\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"\",\"resource\":{\"owner_id\":\"a\",\"public\":true},\"user\":{\"id\":\"a\",\"role\":\"member\",\"suspended\":false}}"
+  },
+  {
+    "payload": "{\"action\":\"read\",\"resource\":{\"owner_id\":\"a\",\"public\":false},\"user\":{\"id\":\"A\",\"role\":\"member\",\"suspended\":false}}"
+  }
+]

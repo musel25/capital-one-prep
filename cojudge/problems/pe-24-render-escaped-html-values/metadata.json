@@ -1,0 +1,47 @@
+{
+  "id": "pe-24-render-escaped-html-values",
+  "title": "24. Render HTML placeholders safely",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "06-application-logic",
+  "examples": [
+    {
+      "input": "{\"template\": \"<p>{{name}}</p>\", \"values\": {\"name\": \"<&>\\\"'\"}}",
+      "output": "\"<p>&lt;&amp;&gt;&quot;&#x27;</p>\"",
+      "explanation": "escape all five HTML special characters"
+    },
+    {
+      "input": "{\"template\": \"Hello {{missing}}.\", \"values\": {\"name\": \"Ada\"}}",
+      "output": "\"Hello {{missing}}.\"",
+      "explanation": "missing placeholder remains unchanged"
+    },
+    {
+      "input": "{\"template\": \"{{a}} {{b}}\", \"values\": {\"a\": \"{{b}}\", \"b\": \"resolved\"}}",
+      "output": "\"{{b}} resolved\"",
+      "explanation": "inserted placeholders are not processed again"
+    }
+  ],
+  "starterCode": {
+    "python": "def render_html(template, values):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement render_html above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = render_html(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"template\":\"<p>{{name}}</p>\",\"values\":{\"name\":\"<&>\\\"'\"}}"
+    },
+    {
+      "payload": "{\"template\":\"Hello {{missing}}.\",\"values\":{\"name\":\"Ada\"}}"
+    },
+    {
+      "payload": "{\"template\":\"{{a}} {{b}}\",\"values\":{\"a\":\"{{b}}\",\"b\":\"resolved\"}}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

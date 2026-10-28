@@ -1,0 +1,47 @@
+[
+  {
+    "payload": "{\"events\":[{\"entity\":\"a\",\"value\":\"old\",\"version\":1},{\"entity\":\"a\",\"value\":\"new\",\"version\":2}]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"a\",\"value\":\"new\",\"version\":2},{\"entity\":\"a\",\"value\":\"old\",\"version\":1}]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"a\",\"value\":\"first\",\"version\":4},{\"entity\":\"a\",\"value\":\"second\",\"version\":4}]}"
+  },
+  {
+    "payload": "{\"events\":[]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"a\",\"value\":\"first\",\"version\":1}]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"a\",\"value\":1,\"version\":9},{\"entity\":\"b\",\"value\":2,\"version\":1}]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"a\",\"value\":7,\"version\":1},{\"entity\":\"a\",\"value\":null,\"version\":2}]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"a\",\"value\":true,\"version\":1},{\"entity\":\"a\",\"value\":false,\"version\":2}]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"a\",\"value\":10,\"version\":1},{\"entity\":\"a\",\"value\":0,\"version\":3}]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"a\",\"value\":\"\",\"version\":1},{\"entity\":\"b\",\"value\":[],\"version\":1},{\"entity\":\"c\",\"value\":{},\"version\":1}]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"a\",\"value\":{\"rows\":[1,null,{\"ok\":true}]},\"version\":1},{\"entity\":\"a\",\"value\":{\"rows\":[]},\"version\":1}]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"A\",\"value\":1,\"version\":1},{\"entity\":\"a\",\"value\":2,\"version\":1},{\"entity\":\"a b\",\"value\":3,\"version\":1}]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"x\",\"value\":\"five\",\"version\":5},{\"entity\":\"y\",\"value\":\"two\",\"version\":2},{\"entity\":\"x\",\"value\":\"three\",\"version\":3},{\"entity\":\"y\",\"value\":\"eight\",\"version\":8},{\"entity\":\"x\",\"value\":\"seven\",\"version\":7},{\"entity\":\"y\",\"value\":\"duplicate\",\"version\":8}]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"max\",\"value\":-4.5,\"version\":1000000000},{\"entity\":\"max\",\"value\":7,\"version\":999999999}]}"
+  },
+  {
+    "payload": "{\"events\":[{\"entity\":\"x\",\"value\":[1e-06,-999999.999999],\"version\":1}]}"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "payload": "{\"default\":false,\"value\":\" true \"}"
+  },
+  {
+    "payload": "{\"default\":true,\"value\":\"OFF\"}"
+  },
+  {
+    "payload": "{\"default\":true,\"value\":null}"
+  },
+  {
+    "payload": "{\"default\":false,\"value\":null}"
+  },
+  {
+    "payload": "{\"default\":true,\"value\":\"\"}"
+  },
+  {
+    "payload": "{\"default\":false,\"value\":\"  \"}"
+  },
+  {
+    "payload": "{\"default\":false,\"value\":\"1\"}"
+  },
+  {
+    "payload": "{\"default\":true,\"value\":\"0\"}"
+  },
+  {
+    "payload": "{\"default\":false,\"value\":\"YeS\"}"
+  },
+  {
+    "payload": "{\"default\":true,\"value\":\"no\"}"
+  },
+  {
+    "payload": "{\"default\":false,\"value\":\"\\ton\\n\"}"
+  },
+  {
+    "payload": "{\"default\":true,\"value\":\"False\"}"
+  },
+  {
+    "payload": "{\"default\":true,\"value\":\"enabled\"}"
+  },
+  {
+    "payload": "{\"default\":false,\"value\":\"true false\"}"
+  }
+]

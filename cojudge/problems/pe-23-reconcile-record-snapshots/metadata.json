@@ -1,0 +1,47 @@
+{
+  "id": "pe-23-reconcile-record-snapshots",
+  "title": "23. Plan record synchronization",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "06-application-logic",
+  "examples": [
+    {
+      "input": "{\"local\": [{\"id\": \"local\", \"version\": 1, \"checksum\": \"a\"}, {\"id\": \"newer\", \"version\": 2, \"checksum\": \"b\"}, {\"id\": \"conflict\", \"version\": 1, \"checksum\": \"c\"}], \"remote\": [{\"id\": \"remote\", \"version\": 1, \"checksum\": \"d\"}, {\"id\": \"newer\", \"version\": 1, \"checksum\": \"b\"}, {\"id\": \"conflict\", \"version\": 1, \"checksum\": \"e\"}]}",
+      "output": "{\"upload\": [\"local\", \"newer\"], \"download\": [\"remote\"], \"conflicts\": [\"conflict\"]}",
+      "explanation": "plan uploads downloads and conflicts together"
+    },
+    {
+      "input": "{\"local\": [{\"id\": \"a\", \"version\": 1, \"checksum\": \"old\"}], \"remote\": [{\"id\": \"a\", \"version\": 2, \"checksum\": \"new\"}]}",
+      "output": "{\"upload\": [], \"download\": [\"a\"], \"conflicts\": []}",
+      "explanation": "higher remote version downloads"
+    },
+    {
+      "input": "{\"local\": [{\"id\": \"a\", \"version\": 2, \"checksum\": \"same\"}], \"remote\": [{\"id\": \"a\", \"version\": 2, \"checksum\": \"same\"}]}",
+      "output": "{\"upload\": [], \"download\": [], \"conflicts\": []}",
+      "explanation": "equal records need no action"
+    }
+  ],
+  "starterCode": {
+    "python": "def reconcile_records(local, remote):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement reconcile_records above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = reconcile_records(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"local\":[{\"checksum\":\"a\",\"id\":\"local\",\"version\":1},{\"checksum\":\"b\",\"id\":\"newer\",\"version\":2},{\"checksum\":\"c\",\"id\":\"conflict\",\"version\":1}],\"remote\":[{\"checksum\":\"d\",\"id\":\"remote\",\"version\":1},{\"checksum\":\"b\",\"id\":\"newer\",\"version\":1},{\"checksum\":\"e\",\"id\":\"conflict\",\"version\":1}]}"
+    },
+    {
+      "payload": "{\"local\":[{\"checksum\":\"old\",\"id\":\"a\",\"version\":1}],\"remote\":[{\"checksum\":\"new\",\"id\":\"a\",\"version\":2}]}"
+    },
+    {
+      "payload": "{\"local\":[{\"checksum\":\"same\",\"id\":\"a\",\"version\":2}],\"remote\":[{\"checksum\":\"same\",\"id\":\"a\",\"version\":2}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

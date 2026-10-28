@@ -1,0 +1,47 @@
+{
+  "id": "pe-04-summarize-service-errors",
+  "title": "04. Summarize service errors",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-data-and-api",
+  "examples": [
+    {
+      "input": "{\"logs\": [{\"service\": \"api\", \"status\": 200}, {\"service\": \"api\", \"status\": 503}]}",
+      "output": "{\"api\": {\"requests\": 2, \"errors\": 1}}",
+      "explanation": "mixed outcomes"
+    },
+    {
+      "input": "{\"logs\": []}",
+      "output": "{}",
+      "explanation": "empty logs"
+    },
+    {
+      "input": "{\"logs\": [{\"service\": \"api\", \"status\": 499}]}",
+      "output": "{\"api\": {\"requests\": 1, \"errors\": 0}}",
+      "explanation": "last client status"
+    }
+  ],
+  "starterCode": {
+    "python": "def summarize_logs(logs):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement summarize_logs above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = summarize_logs(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"logs\":[{\"service\":\"api\",\"status\":200},{\"service\":\"api\",\"status\":503}]}"
+    },
+    {
+      "payload": "{\"logs\":[]}"
+    },
+    {
+      "payload": "{\"logs\":[{\"service\":\"api\",\"status\":499}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "payload": "{\"requests\":[{\"quantity\":2,\"sku\":\"a\"}],\"stock\":{\"a\":5}}"
+  },
+  {
+    "payload": "{\"requests\":[{\"quantity\":5,\"sku\":\"a\"}],\"stock\":{\"a\":5}}"
+  },
+  {
+    "payload": "{\"requests\":[{\"quantity\":6,\"sku\":\"a\"}],\"stock\":{\"a\":5}}"
+  },
+  {
+    "payload": "{\"requests\":[],\"stock\":{}}"
+  },
+  {
+    "payload": "{\"requests\":[],\"stock\":{\"a\":5}}"
+  },
+  {
+    "payload": "{\"requests\":[{\"quantity\":1,\"sku\":\"a\"}],\"stock\":{\"a\":0}}"
+  },
+  {
+    "payload": "{\"requests\":[{\"quantity\":1,\"sku\":\"missing\"}],\"stock\":{}}"
+  },
+  {
+    "payload": "{\"requests\":[{\"quantity\":1,\"sku\":\"b\"},{\"quantity\":1,\"sku\":\"a\"}],\"stock\":{\"a\":2}}"
+  },
+  {
+    "payload": "{\"requests\":[{\"quantity\":3,\"sku\":\"a\"},{\"quantity\":3,\"sku\":\"a\"}],\"stock\":{\"a\":5}}"
+  },
+  {
+    "payload": "{\"requests\":[{\"quantity\":3,\"sku\":\"a\"},{\"quantity\":2,\"sku\":\"a\"}],\"stock\":{\"a\":2}}"
+  },
+  {
+    "payload": "{\"requests\":[{\"quantity\":2,\"sku\":\"a\"},{\"quantity\":2,\"sku\":\"a\"},{\"quantity\":1,\"sku\":\"a\"}],\"stock\":{\"a\":4}}"
+  },
+  {
+    "payload": "{\"requests\":[{\"quantity\":2,\"sku\":\"b\"},{\"quantity\":2,\"sku\":\"a\"},{\"quantity\":2,\"sku\":\"b\"}],\"stock\":{\"a\":2,\"b\":3,\"unused\":0}}"
+  },
+  {
+    "payload": "{\"requests\":[{\"quantity\":1,\"sku\":\"A\"},{\"quantity\":3,\"sku\":\"a\"}],\"stock\":{\"A\":2,\"a\":3}}"
+  },
+  {
+    "payload": "{\"requests\":[{\"quantity\":999999999,\"sku\":\"bulk\"},{\"quantity\":1,\"sku\":\"bulk\"}],\"stock\":{\"bulk\":1000000000}}"
+  }
+]

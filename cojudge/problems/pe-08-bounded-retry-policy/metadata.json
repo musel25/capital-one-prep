@@ -1,0 +1,47 @@
+{
+  "id": "pe-08-bounded-retry-policy",
+  "title": "08. Plan capped request retries",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "02-clients-and-reliability",
+  "examples": [
+    {
+      "input": "{\"statuses\": [503, 503, 200], \"base_delay\": 2, \"max_delay\": 3, \"max_attempts\": 3}",
+      "output": "{\"attempts\": 3, \"delays\": [2, 3], \"status\": 200}",
+      "explanation": "retry server failures with a capped delay"
+    },
+    {
+      "input": "{\"statuses\": [400, 200], \"base_delay\": 1, \"max_delay\": 8, \"max_attempts\": 3}",
+      "output": "{\"attempts\": 1, \"delays\": [], \"status\": 400}",
+      "explanation": "terminal client error ignores later statuses"
+    },
+    {
+      "input": "{\"statuses\": [], \"base_delay\": 1, \"max_delay\": 1, \"max_attempts\": 1}",
+      "output": "{\"attempts\": 0, \"delays\": [], \"status\": null}",
+      "explanation": "empty status source"
+    }
+  ],
+  "starterCode": {
+    "python": "def retry_policy(statuses, base_delay, max_delay, max_attempts):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement retry_policy above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = retry_policy(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"base_delay\":2,\"max_attempts\":3,\"max_delay\":3,\"statuses\":[503,503,200]}"
+    },
+    {
+      "payload": "{\"base_delay\":1,\"max_attempts\":3,\"max_delay\":8,\"statuses\":[400,200]}"
+    },
+    {
+      "payload": "{\"base_delay\":1,\"max_attempts\":1,\"max_delay\":1,\"statuses\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

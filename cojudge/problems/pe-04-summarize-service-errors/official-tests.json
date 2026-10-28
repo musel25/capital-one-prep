@@ -1,0 +1,38 @@
+[
+  {
+    "payload": "{\"logs\":[{\"service\":\"api\",\"status\":200},{\"service\":\"api\",\"status\":503}]}"
+  },
+  {
+    "payload": "{\"logs\":[]}"
+  },
+  {
+    "payload": "{\"logs\":[{\"service\":\"api\",\"status\":499}]}"
+  },
+  {
+    "payload": "{\"logs\":[{\"service\":\"api\",\"status\":500}]}"
+  },
+  {
+    "payload": "{\"logs\":[{\"service\":\"api\",\"status\":599}]}"
+  },
+  {
+    "payload": "{\"logs\":[{\"service\":\"api\",\"status\":100}]}"
+  },
+  {
+    "payload": "{\"logs\":[{\"service\":\"a\",\"status\":500},{\"service\":\"b\",\"status\":200}]}"
+  },
+  {
+    "payload": "{\"logs\":[{\"service\":\"A\",\"status\":200},{\"service\":\"a\",\"status\":500}]}"
+  },
+  {
+    "payload": "{\"logs\":[{\"service\":\"a\",\"status\":500},{\"service\":\"a\",\"status\":500}]}"
+  },
+  {
+    "payload": "{\"logs\":[{\"service\":\"api\",\"status\":301},{\"service\":\"api\",\"status\":404}]}"
+  },
+  {
+    "payload": "{\"logs\":[{\"service\":\"x-y\",\"status\":503},{\"service\":\"x-y\",\"status\":201},{\"service\":\"x-y\",\"status\":501}]}"
+  },
+  {
+    "payload": "{\"logs\":[{\"service\":\"a\",\"status\":200},{\"service\":\"b\",\"status\":500},{\"service\":\"a\",\"status\":500}]}"
+  }
+]

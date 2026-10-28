@@ -1,0 +1,47 @@
+{
+  "id": "pe-11-expire-cache-entries",
+  "title": "11. Apply cache expiry without using the clock",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "03-stateful-services",
+  "examples": [
+    {
+      "input": "{\"operations\": [{\"op\": \"put\", \"key\": \"a\", \"value\": \"ready\", \"now\": 5, \"ttl\": 3}, {\"op\": \"get\", \"key\": \"a\", \"now\": 7}]}",
+      "output": "[null, {\"hit\": true, \"value\": \"ready\"}]",
+      "explanation": "value is available before expiry"
+    },
+    {
+      "input": "{\"operations\": [{\"op\": \"put\", \"key\": \"a\", \"value\": 9, \"now\": 5, \"ttl\": 3}, {\"op\": \"get\", \"key\": \"a\", \"now\": 8}]}",
+      "output": "[null, {\"hit\": false, \"value\": null}]",
+      "explanation": "entry expires exactly at its deadline"
+    },
+    {
+      "input": "{\"operations\": [{\"op\": \"put\", \"key\": \"a\", \"value\": null, \"now\": 0, \"ttl\": 1}, {\"op\": \"get\", \"key\": \"a\", \"now\": 0}, {\"op\": \"get\", \"key\": \"missing\", \"now\": 0}]}",
+      "output": "[null, {\"hit\": true, \"value\": null}, {\"hit\": false, \"value\": null}]",
+      "explanation": "cached null is distinct from a miss"
+    }
+  ],
+  "starterCode": {
+    "python": "def run_cache(operations):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement run_cache above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = run_cache(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"operations\":[{\"key\":\"a\",\"now\":5,\"op\":\"put\",\"ttl\":3,\"value\":\"ready\"},{\"key\":\"a\",\"now\":7,\"op\":\"get\"}]}"
+    },
+    {
+      "payload": "{\"operations\":[{\"key\":\"a\",\"now\":5,\"op\":\"put\",\"ttl\":3,\"value\":9},{\"key\":\"a\",\"now\":8,\"op\":\"get\"}]}"
+    },
+    {
+      "payload": "{\"operations\":[{\"key\":\"a\",\"now\":0,\"op\":\"put\",\"ttl\":1,\"value\":null},{\"key\":\"a\",\"now\":0,\"op\":\"get\"},{\"key\":\"missing\",\"now\":0,\"op\":\"get\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "payload": "{\"local\":[{\"checksum\":\"a\",\"id\":\"local\",\"version\":1},{\"checksum\":\"b\",\"id\":\"newer\",\"version\":2},{\"checksum\":\"c\",\"id\":\"conflict\",\"version\":1}],\"remote\":[{\"checksum\":\"d\",\"id\":\"remote\",\"version\":1},{\"checksum\":\"b\",\"id\":\"newer\",\"version\":1},{\"checksum\":\"e\",\"id\":\"conflict\",\"version\":1}]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"old\",\"id\":\"a\",\"version\":1}],\"remote\":[{\"checksum\":\"new\",\"id\":\"a\",\"version\":2}]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"same\",\"id\":\"a\",\"version\":2}],\"remote\":[{\"checksum\":\"same\",\"id\":\"a\",\"version\":2}]}"
+  },
+  {
+    "payload": "{\"local\":[],\"remote\":[]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"\",\"id\":\"a\",\"version\":0}],\"remote\":[]}"
+  },
+  {
+    "payload": "{\"local\":[],\"remote\":[{\"checksum\":\"\",\"id\":\"a\",\"version\":0}]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"same\",\"id\":\"a\",\"version\":3}],\"remote\":[{\"checksum\":\"same\",\"id\":\"a\",\"version\":2}]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"same\",\"id\":\"a\",\"version\":2}],\"remote\":[{\"checksum\":\"same\",\"id\":\"a\",\"version\":3}]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"left\",\"id\":\"a\",\"version\":0}],\"remote\":[{\"checksum\":\"right\",\"id\":\"a\",\"version\":0}]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"x\",\"id\":\"a\",\"version\":1}],\"remote\":[{\"checksum\":\"x\",\"id\":\"A\",\"version\":1}]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"x\",\"id\":\"z\",\"version\":1},{\"checksum\":\"x\",\"id\":\"A\",\"version\":1},{\"checksum\":\"x\",\"id\":\"b\",\"version\":1},{\"checksum\":\"x\",\"id\":\"Z\",\"version\":1}],\"remote\":[{\"checksum\":\"x\",\"id\":\"a\",\"version\":1},{\"checksum\":\"x\",\"id\":\"0\",\"version\":1},{\"checksum\":\"y\",\"id\":\"b\",\"version\":1},{\"checksum\":\"y\",\"id\":\"Z\",\"version\":1}]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"abc\",\"id\":\"a\",\"version\":1}],\"remote\":[{\"checksum\":\"ABC\",\"id\":\"a\",\"version\":1}]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"\",\"id\":\"a\",\"version\":0}],\"remote\":[{\"checksum\":\"\",\"id\":\"a\",\"version\":0}]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"\",\"id\":\"a\",\"version\":1}],\"remote\":[{\"checksum\":\"x\",\"id\":\"a\",\"version\":1}]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"x\",\"id\":\"a\",\"version\":1000000000}],\"remote\":[{\"checksum\":\"y\",\"id\":\"a\",\"version\":0}]}"
+  },
+  {
+    "payload": "{\"local\":[{\"checksum\":\"b\",\"id\":\"b\",\"version\":1},{\"checksum\":\"a\",\"id\":\"a\",\"version\":3}],\"remote\":[{\"checksum\":\"a\",\"id\":\"a\",\"version\":2},{\"checksum\":\"b\",\"id\":\"b\",\"version\":2}]}"
+  }
+]

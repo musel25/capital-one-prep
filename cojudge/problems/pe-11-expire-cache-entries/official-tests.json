@@ -1,0 +1,53 @@
+[
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":5,\"op\":\"put\",\"ttl\":3,\"value\":\"ready\"},{\"key\":\"a\",\"now\":7,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":5,\"op\":\"put\",\"ttl\":3,\"value\":9},{\"key\":\"a\",\"now\":8,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":0,\"op\":\"put\",\"ttl\":1,\"value\":null},{\"key\":\"a\",\"now\":0,\"op\":\"get\"},{\"key\":\"missing\",\"now\":0,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":0,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":2,\"op\":\"put\",\"ttl\":0,\"value\":3},{\"key\":\"a\",\"now\":2,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":0,\"op\":\"put\",\"ttl\":100,\"value\":\"old\"},{\"key\":\"a\",\"now\":1,\"op\":\"put\",\"ttl\":1,\"value\":\"new\"},{\"key\":\"a\",\"now\":1,\"op\":\"get\"},{\"key\":\"a\",\"now\":2,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":0,\"op\":\"put\",\"ttl\":1,\"value\":1},{\"key\":\"a\",\"now\":2,\"op\":\"put\",\"ttl\":3,\"value\":2},{\"key\":\"a\",\"now\":4,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"false\",\"now\":0,\"op\":\"put\",\"ttl\":2,\"value\":false},{\"key\":\"zero\",\"now\":0,\"op\":\"put\",\"ttl\":2,\"value\":0},{\"key\":\"text\",\"now\":0,\"op\":\"put\",\"ttl\":2,\"value\":\"\"},{\"key\":\"list\",\"now\":0,\"op\":\"put\",\"ttl\":2,\"value\":[]},{\"key\":\"object\",\"now\":0,\"op\":\"put\",\"ttl\":2,\"value\":{}},{\"key\":\"false\",\"now\":1,\"op\":\"get\"},{\"key\":\"zero\",\"now\":1,\"op\":\"get\"},{\"key\":\"text\",\"now\":1,\"op\":\"get\"},{\"key\":\"list\",\"now\":1,\"op\":\"get\"},{\"key\":\"object\",\"now\":1,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"\",\"now\":0,\"op\":\"put\",\"ttl\":1,\"value\":{\"rows\":[null,true,{\"n\":4.5}]}},{\"key\":\"\",\"now\":0,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":0,\"op\":\"put\",\"ttl\":3,\"value\":1},{\"key\":\"A\",\"now\":0,\"op\":\"put\",\"ttl\":3,\"value\":2},{\"key\":\"a\",\"now\":1,\"op\":\"get\"},{\"key\":\"A\",\"now\":1,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":0,\"op\":\"put\",\"ttl\":1,\"value\":1},{\"key\":\"b\",\"now\":0,\"op\":\"put\",\"ttl\":3,\"value\":2},{\"key\":\"a\",\"now\":1,\"op\":\"get\"},{\"key\":\"b\",\"now\":1,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":10,\"op\":\"put\",\"ttl\":2,\"value\":\"x\"},{\"key\":\"a\",\"now\":11,\"op\":\"get\"},{\"key\":\"a\",\"now\":12,\"op\":\"get\"},{\"key\":\"a\",\"now\":13,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":2,\"op\":\"put\",\"ttl\":2,\"value\":\"first\"},{\"key\":\"a\",\"now\":2,\"op\":\"put\",\"ttl\":2,\"value\":\"last\"},{\"key\":\"a\",\"now\":2,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":18446744073709551616,\"op\":\"put\",\"ttl\":18446744073709551616,\"value\":7},{\"key\":\"a\",\"now\":36893488147419103231,\"op\":\"get\"},{\"key\":\"a\",\"now\":36893488147419103232,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"a\",\"now\":0,\"op\":\"put\",\"ttl\":20,\"value\":\"old\"},{\"key\":\"a\",\"now\":1,\"op\":\"put\",\"ttl\":0,\"value\":\"new\"},{\"key\":\"a\",\"now\":1,\"op\":\"get\"}]}"
+  },
+  {
+    "payload": "{\"operations\":[{\"key\":\"decimal\",\"now\":0,\"op\":\"put\",\"ttl\":1,\"value\":[1e-06,-999999.999999]},{\"key\":\"decimal\",\"now\":0,\"op\":\"get\"}]}"
+  }
+]

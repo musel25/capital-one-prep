@@ -1,0 +1,62 @@
+[
+  {
+    "payload": "{\"path\":\"photos/./2026//image.png\"}"
+  },
+  {
+    "payload": "{\"path\":\"a/b/../file.txt\"}"
+  },
+  {
+    "payload": "{\"path\":\"../safe/file.txt\"}"
+  },
+  {
+    "payload": "{\"path\":\"\"}"
+  },
+  {
+    "payload": "{\"path\":\".\"}"
+  },
+  {
+    "payload": "{\"path\":\"././\"}"
+  },
+  {
+    "payload": "{\"path\":\"/etc/passwd\"}"
+  },
+  {
+    "payload": "{\"path\":\"///file\"}"
+  },
+  {
+    "payload": "{\"path\":\"a\\\\b\"}"
+  },
+  {
+    "payload": "{\"path\":\"a\\u0000b\"}"
+  },
+  {
+    "payload": "{\"path\":\"a/..\"}"
+  },
+  {
+    "payload": "{\"path\":\"a/../b\"}"
+  },
+  {
+    "payload": "{\"path\":\"a/../../b\"}"
+  },
+  {
+    "payload": "{\"path\":\"a/b/../../c/d\"}"
+  },
+  {
+    "payload": "{\"path\":\"report.txt/\"}"
+  },
+  {
+    "payload": "{\"path\":\".../..hidden/file..txt\"}"
+  },
+  {
+    "payload": "{\"path\":\"A_b-1/File.TXT\"}"
+  },
+  {
+    "payload": "{\"path\":\"..\"}"
+  },
+  {
+    "payload": "{\"path\":\"a//b///.././c//\"}"
+  },
+  {
+    "payload": "{\"path\":\"a/../..//later\"}"
+  }
+]

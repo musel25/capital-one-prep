@@ -1,0 +1,47 @@
+{
+  "id": "pe-07-nested-secret-redaction",
+  "title": "07. Redact secrets from JSON logs",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "02-clients-and-reliability",
+  "examples": [
+    {
+      "input": "{\"value\": {\"user\": \"sam\", \"password\": \"abc\"}}",
+      "output": "{\"user\": \"sam\", \"password\": \"[REDACTED]\"}",
+      "explanation": "redact a top-level password"
+    },
+    {
+      "input": "{\"value\": {\"Token\": \"abc\", \"SECRET\": null}}",
+      "output": "{\"Token\": \"[REDACTED]\", \"SECRET\": \"[REDACTED]\"}",
+      "explanation": "case-insensitive secret key matching"
+    },
+    {
+      "input": "{\"value\": {\"profile\": {\"password\": \"abc\"}, \"events\": [{\"token\": 42}, \"ok\"]}}",
+      "output": "{\"profile\": {\"password\": \"[REDACTED]\"}, \"events\": [{\"token\": \"[REDACTED]\"}, \"ok\"]}",
+      "explanation": "recurse through objects and arrays"
+    }
+  ],
+  "starterCode": {
+    "python": "def redact_secrets(value):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement redact_secrets above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = redact_secrets(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"value\":{\"password\":\"abc\",\"user\":\"sam\"}}"
+    },
+    {
+      "payload": "{\"value\":{\"SECRET\":null,\"Token\":\"abc\"}}"
+    },
+    {
+      "payload": "{\"value\":{\"events\":[{\"token\":42},\"ok\"],\"profile\":{\"password\":\"abc\"}}}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

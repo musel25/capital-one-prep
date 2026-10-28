@@ -1,0 +1,47 @@
+{
+  "id": "pe-12-limit-fixed-window-requests",
+  "title": "12. Enforce per-user request limits",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "03-stateful-services",
+  "examples": [
+    {
+      "input": "{\"requests\": [{\"user\": \"a\", \"at\": 0}, {\"user\": \"a\", \"at\": 1}, {\"user\": \"a\", \"at\": 2}], \"limit\": 2, \"window\": 10}",
+      "output": "[true, true, false]",
+      "explanation": "allow only the first requests in a bucket"
+    },
+    {
+      "input": "{\"requests\": [{\"user\": \"a\", \"at\": 9}, {\"user\": \"a\", \"at\": 10}], \"limit\": 1, \"window\": 10}",
+      "output": "[true, true]",
+      "explanation": "exact boundary opens a new window"
+    },
+    {
+      "input": "{\"requests\": [{\"user\": \"a\", \"at\": 0}, {\"user\": \"b\", \"at\": 0}, {\"user\": \"a\", \"at\": 0}, {\"user\": \"b\", \"at\": 0}], \"limit\": 1, \"window\": 10}",
+      "output": "[true, true, false, false]",
+      "explanation": "users have independent quotas"
+    }
+  ],
+  "starterCode": {
+    "python": "def limit_requests(requests, limit, window):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement limit_requests above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = limit_requests(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"limit\":2,\"requests\":[{\"at\":0,\"user\":\"a\"},{\"at\":1,\"user\":\"a\"},{\"at\":2,\"user\":\"a\"}],\"window\":10}"
+    },
+    {
+      "payload": "{\"limit\":1,\"requests\":[{\"at\":9,\"user\":\"a\"},{\"at\":10,\"user\":\"a\"}],\"window\":10}"
+    },
+    {
+      "payload": "{\"limit\":1,\"requests\":[{\"at\":0,\"user\":\"a\"},{\"at\":0,\"user\":\"b\"},{\"at\":0,\"user\":\"a\"},{\"at\":0,\"user\":\"b\"}],\"window\":10}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

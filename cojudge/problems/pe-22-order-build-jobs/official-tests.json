@@ -1,0 +1,50 @@
+[
+  {
+    "payload": "{\"dependencies\":{\"app\":[\"lib\"],\"docs\":[],\"lib\":[]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"a\":[],\"b\":[\"a\"],\"z\":[]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"a\":[],\"b\":[\"c\"],\"c\":[\"b\"]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"build\":[]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"-\":[],\"0\":[],\"A\":[],\"Z\":[],\"a\":[]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"a\":[],\"b\":[\"a\"],\"c\":[\"b\"]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"a\":[],\"b\":[\"a\"],\"c\":[\"a\"],\"d\":[\"b\",\"c\"]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"a\":[],\"b\":[\"a\",\"a\",\"a\"]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"a\":[\"a\"]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"a\":[\"a\",\"a\"]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"a\":[\"b\"],\"b\":[\"c\"],\"c\":[\"a\"]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"a\":[\"z\"],\"b\":[],\"z\":[]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\" A \":[],\"A\":[\" A \"],\"a\":[]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"a\":[],\"b\":[\"a\",\"a\"],\"c\":[\"a\"],\"d\":[\"b\",\"c\",\"c\"]}}"
+  },
+  {
+    "payload": "{\"dependencies\":{\"a\":[\"b\",\"z\"],\"b\":[],\"c\":[\"b\"],\"z\":[]}}"
+  }
+]

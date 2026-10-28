@@ -1,0 +1,50 @@
+{
+  "title": "Software Engineering Tickets",
+  "description": "24 practical Python tickets with a clear input/output contract. Practice validation, APIs, retries, state, SQL, files, timestamps, permissions, version handling, dependencies, synchronization, and safe HTML output. Run checks examples. Submit checks edge cases. Each ticket is independent.",
+  "category-order": [
+    "01-data-and-api",
+    "02-clients-and-reliability",
+    "03-stateful-services",
+    "04-jobs-and-storage",
+    "05-files-time-and-boundaries",
+    "06-application-logic"
+  ],
+  "problems-of-category": {
+    "01-data-and-api": [
+      "pe-01-clean-notification-emails",
+      "pe-02-parse-environment-flag",
+      "pe-03-validate-create-user",
+      "pe-04-summarize-service-errors",
+      "pe-05-record-cursor-pagination",
+      "pe-06-flat-settings-patch"
+    ],
+    "02-clients-and-reliability": [
+      "pe-07-nested-secret-redaction",
+      "pe-08-bounded-retry-policy",
+      "pe-09-collect-api-pages",
+      "pe-10-enqueue-idempotent-jobs"
+    ],
+    "03-stateful-services": [
+      "pe-11-expire-cache-entries",
+      "pe-12-limit-fixed-window-requests",
+      "pe-13-latest-event-values",
+      "pe-14-reserve-stock"
+    ],
+    "04-jobs-and-storage": [
+      "pe-15-queue-visibility",
+      "pe-16-atomic-transfers"
+    ],
+    "05-files-time-and-boundaries": [
+      "pe-17-csv-inventory-import",
+      "pe-18-utc-day-counts",
+      "pe-19-resource-access-policy",
+      "pe-20-relative-upload-path"
+    ],
+    "06-application-logic": [
+      "pe-21-compare-semantic-versions",
+      "pe-22-order-build-jobs",
+      "pe-23-reconcile-record-snapshots",
+      "pe-24-render-escaped-html-values"
+    ]
+  }
+}

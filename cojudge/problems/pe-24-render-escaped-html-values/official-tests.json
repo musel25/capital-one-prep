@@ -1,0 +1,53 @@
+[
+  {
+    "payload": "{\"template\":\"<p>{{name}}</p>\",\"values\":{\"name\":\"<&>\\\"'\"}}"
+  },
+  {
+    "payload": "{\"template\":\"Hello {{missing}}.\",\"values\":{\"name\":\"Ada\"}}"
+  },
+  {
+    "payload": "{\"template\":\"{{a}} {{b}}\",\"values\":{\"a\":\"{{b}}\",\"b\":\"resolved\"}}"
+  },
+  {
+    "payload": "{\"template\":\"\",\"values\":{}}"
+  },
+  {
+    "payload": "{\"template\":\"<b>& raw</b>\",\"values\":{\"a\":\"<\"}}"
+  },
+  {
+    "payload": "{\"template\":\"A{{name}}B\",\"values\":{\"name\":\"\"}}"
+  },
+  {
+    "payload": "{\"template\":\"{{x}}/{{x}}/{{x}}\",\"values\":{\"x\":\"<\"}}"
+  },
+  {
+    "payload": "{\"template\":\"{{_a1}} {{Z9}}\",\"values\":{\"Z9\":\"two\",\"_a1\":\"one\"}}"
+  },
+  {
+    "payload": "{\"template\":\"{{ a }}|{{a b}}|{{a-b}}|{{1a}}|{{}}\",\"values\":{\"a\":\"x\",\"b\":\"y\"}}"
+  },
+  {
+    "payload": "{\"template\":\"\\u00a1Hola {{name}}! \\ud83c\\udf0d\",\"values\":{\"name\":\"\\u674e & Zo\\u00eb\"}}"
+  },
+  {
+    "payload": "{\"template\":\"{{x}}\",\"values\":{\"x\":\"&amp;\"}}"
+  },
+  {
+    "payload": "{\"template\":\"&copy; {{x}}\",\"values\":{\"x\":\"&copy;\"}}"
+  },
+  {
+    "payload": "{\"template\":\"{{path}}\",\"values\":{\"path\":\"$1\\\\path\"}}"
+  },
+  {
+    "payload": "{\"template\":\"{{A}} {{a}} {{B}}\",\"values\":{\"A\":\"upper\",\"a\":\"lower\"}}"
+  },
+  {
+    "payload": "{\"template\":\"{{{a}}}\",\"values\":{\"a\":\"X\"}}"
+  },
+  {
+    "payload": "{\"template\":\"{{a}}\",\"values\":{\"a\":\"{{b}}<\",\"b\":\"done\"}}"
+  },
+  {
+    "payload": "{\"template\":\"<pre>{{text}}</pre>\",\"values\":{\"text\":\"one\\ntwo\"}}"
+  }
+]

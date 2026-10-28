@@ -1,0 +1,47 @@
+{
+  "id": "pe-16-atomic-transfers",
+  "title": "16. Apply account transfers atomically",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "04-jobs-and-storage",
+  "examples": [
+    {
+      "input": "{\"balances\": {\"a\": 50, \"b\": 10}, \"transfers\": [{\"from\": \"a\", \"to\": \"b\", \"amount\": 20}]}",
+      "output": "{\"accepted\": [true], \"balances\": {\"a\": 30, \"b\": 30}}",
+      "explanation": "successful transfer debits and credits"
+    },
+    {
+      "input": "{\"balances\": {\"a\": 50, \"b\": 0}, \"transfers\": [{\"from\": \"a\", \"to\": \"b\", \"amount\": 51}]}",
+      "output": "{\"accepted\": [false], \"balances\": {\"a\": 50, \"b\": 0}}",
+      "explanation": "insufficient funds change neither account"
+    },
+    {
+      "input": "{\"balances\": {\"a\": 10}, \"transfers\": [{\"from\": \"a\", \"to\": \"missing\", \"amount\": 1}]}",
+      "output": "{\"accepted\": [false], \"balances\": {\"a\": 10}}",
+      "explanation": "missing target does not debit source"
+    }
+  ],
+  "starterCode": {
+    "python": "def apply_transfers(balances, transfers):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement apply_transfers above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = apply_transfers(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"balances\":{\"a\":50,\"b\":10},\"transfers\":[{\"amount\":20,\"from\":\"a\",\"to\":\"b\"}]}"
+    },
+    {
+      "payload": "{\"balances\":{\"a\":50,\"b\":0},\"transfers\":[{\"amount\":51,\"from\":\"a\",\"to\":\"b\"}]}"
+    },
+    {
+      "payload": "{\"balances\":{\"a\":10},\"transfers\":[{\"amount\":1,\"from\":\"a\",\"to\":\"missing\"}]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

@@ -1,0 +1,47 @@
+{
+  "id": "pe-14-reserve-stock",
+  "title": "14. Reserve stock in request order",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "03-stateful-services",
+  "examples": [
+    {
+      "input": "{\"stock\": {\"a\": 5}, \"requests\": [{\"sku\": \"a\", \"quantity\": 2}]}",
+      "output": "{\"accepted\": [true], \"stock\": {\"a\": 3}}",
+      "explanation": "successful reservation"
+    },
+    {
+      "input": "{\"stock\": {\"a\": 5}, \"requests\": [{\"sku\": \"a\", \"quantity\": 5}]}",
+      "output": "{\"accepted\": [true], \"stock\": {\"a\": 0}}",
+      "explanation": "exact stock is accepted"
+    },
+    {
+      "input": "{\"stock\": {\"a\": 5}, \"requests\": [{\"sku\": \"a\", \"quantity\": 6}]}",
+      "output": "{\"accepted\": [false], \"stock\": {\"a\": 5}}",
+      "explanation": "insufficient stock is unchanged"
+    }
+  ],
+  "starterCode": {
+    "python": "def reserve_stock(stock, requests):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement reserve_stock above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = reserve_stock(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"requests\":[{\"quantity\":2,\"sku\":\"a\"}],\"stock\":{\"a\":5}}"
+    },
+    {
+      "payload": "{\"requests\":[{\"quantity\":5,\"sku\":\"a\"}],\"stock\":{\"a\":5}}"
+    },
+    {
+      "payload": "{\"requests\":[{\"quantity\":6,\"sku\":\"a\"}],\"stock\":{\"a\":5}}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

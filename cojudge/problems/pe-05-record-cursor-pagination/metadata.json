@@ -1,0 +1,47 @@
+{
+  "id": "pe-05-record-cursor-pagination",
+  "title": "05. Return the next record page",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-data-and-api",
+  "examples": [
+    {
+      "input": "{\"records\": [{\"id\": 3}, {\"id\": 1}, {\"id\": 2}], \"after_id\": null, \"limit\": 2}",
+      "output": "{\"items\": [{\"id\": 1}, {\"id\": 2}], \"next_cursor\": 2}",
+      "explanation": "sort before selecting the first page"
+    },
+    {
+      "input": "{\"records\": [{\"id\": 3}, {\"id\": 1}, {\"id\": 2}], \"after_id\": 1, \"limit\": 2}",
+      "output": "{\"items\": [{\"id\": 2}, {\"id\": 3}], \"next_cursor\": null}",
+      "explanation": "cursor is exclusive and final full page has no cursor"
+    },
+    {
+      "input": "{\"records\": [], \"after_id\": null, \"limit\": 1}",
+      "output": "{\"items\": [], \"next_cursor\": null}",
+      "explanation": "empty collection"
+    }
+  ],
+  "starterCode": {
+    "python": "def paginate_records(records, after_id, limit):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement paginate_records above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = paginate_records(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"after_id\":null,\"limit\":2,\"records\":[{\"id\":3},{\"id\":1},{\"id\":2}]}"
+    },
+    {
+      "payload": "{\"after_id\":1,\"limit\":2,\"records\":[{\"id\":3},{\"id\":1},{\"id\":2}]}"
+    },
+    {
+      "payload": "{\"after_id\":null,\"limit\":1,\"records\":[]}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

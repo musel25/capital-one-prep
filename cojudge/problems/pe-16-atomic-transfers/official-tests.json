@@ -1,0 +1,53 @@
+[
+  {
+    "payload": "{\"balances\":{\"a\":50,\"b\":10},\"transfers\":[{\"amount\":20,\"from\":\"a\",\"to\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{\"a\":50,\"b\":0},\"transfers\":[{\"amount\":51,\"from\":\"a\",\"to\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{\"a\":10},\"transfers\":[{\"amount\":1,\"from\":\"a\",\"to\":\"missing\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{},\"transfers\":[]}"
+  },
+  {
+    "payload": "{\"balances\":{\"a\":50,\"b\":0},\"transfers\":[]}"
+  },
+  {
+    "payload": "{\"balances\":{\"a\":50,\"b\":0},\"transfers\":[{\"amount\":50,\"from\":\"a\",\"to\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{\"a\":10},\"transfers\":[{\"amount\":1,\"from\":\"missing\",\"to\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{},\"transfers\":[{\"amount\":1,\"from\":\"a\",\"to\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{\"a\":10},\"transfers\":[{\"amount\":10,\"from\":\"a\",\"to\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{\"a\":10},\"transfers\":[{\"amount\":11,\"from\":\"a\",\"to\":\"a\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{\"a\":0,\"b\":1},\"transfers\":[{\"amount\":1,\"from\":\"a\",\"to\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{\"a\":5,\"b\":0,\"c\":0},\"transfers\":[{\"amount\":5,\"from\":\"a\",\"to\":\"b\"},{\"amount\":3,\"from\":\"b\",\"to\":\"c\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{\"a\":5,\"b\":0},\"transfers\":[{\"amount\":6,\"from\":\"a\",\"to\":\"b\"},{\"amount\":5,\"from\":\"a\",\"to\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{\"a\":5,\"b\":0},\"transfers\":[{\"amount\":3,\"from\":\"a\",\"to\":\"b\"},{\"amount\":3,\"from\":\"a\",\"to\":\"b\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{\"A\":7,\"a\":1},\"transfers\":[{\"amount\":2,\"from\":\"A\",\"to\":\"a\"},{\"amount\":3,\"from\":\"a\",\"to\":\"A\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{\"large\":1000000000000,\"other\":1000000000000},\"transfers\":[{\"amount\":1000000000000,\"from\":\"large\",\"to\":\"other\"}]}"
+  },
+  {
+    "payload": "{\"balances\":{\"O'Brien\":4,\"x; DROP TABLE balances;--\":0},\"transfers\":[{\"amount\":3,\"from\":\"O'Brien\",\"to\":\"x; DROP TABLE balances;--\"}]}"
+  }
+]

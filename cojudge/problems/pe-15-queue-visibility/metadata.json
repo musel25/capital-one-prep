@@ -1,0 +1,47 @@
+{
+  "id": "pe-15-queue-visibility",
+  "title": "15. Deliver jobs with a visibility timeout",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "04-jobs-and-storage",
+  "examples": [
+    {
+      "input": "{\"operations\": [{\"op\": \"enqueue\", \"id\": \"a\", \"at\": 0}, {\"op\": \"poll\", \"at\": 0}, {\"op\": \"ack\", \"id\": \"a\", \"at\": 4}, {\"op\": \"poll\", \"at\": 4}], \"visibility\": 5}",
+      "output": "[null, \"a\", true, null]",
+      "explanation": "acknowledged job is removed"
+    },
+    {
+      "input": "{\"operations\": [{\"op\": \"enqueue\", \"id\": \"a\", \"at\": 0}, {\"op\": \"poll\", \"at\": 0}, {\"op\": \"poll\", \"at\": 4}], \"visibility\": 5}",
+      "output": "[null, \"a\", null]",
+      "explanation": "invisible before exact expiry"
+    },
+    {
+      "input": "{\"operations\": [{\"op\": \"enqueue\", \"id\": \"a\", \"at\": 0}, {\"op\": \"poll\", \"at\": 0}, {\"op\": \"ack\", \"id\": \"a\", \"at\": 5}, {\"op\": \"poll\", \"at\": 5}], \"visibility\": 5}",
+      "output": "[null, \"a\", false, \"a\"]",
+      "explanation": "ack fails and redelivery succeeds at exact expiry"
+    }
+  ],
+  "starterCode": {
+    "python": "def process_queue(operations, visibility):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement process_queue above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = process_queue(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"operations\":[{\"at\":0,\"id\":\"a\",\"op\":\"enqueue\"},{\"at\":0,\"op\":\"poll\"},{\"at\":4,\"id\":\"a\",\"op\":\"ack\"},{\"at\":4,\"op\":\"poll\"}],\"visibility\":5}"
+    },
+    {
+      "payload": "{\"operations\":[{\"at\":0,\"id\":\"a\",\"op\":\"enqueue\"},{\"at\":0,\"op\":\"poll\"},{\"at\":4,\"op\":\"poll\"}],\"visibility\":5}"
+    },
+    {
+      "payload": "{\"operations\":[{\"at\":0,\"id\":\"a\",\"op\":\"enqueue\"},{\"at\":0,\"op\":\"poll\"},{\"at\":5,\"id\":\"a\",\"op\":\"ack\"},{\"at\":5,\"op\":\"poll\"}],\"visibility\":5}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "payload": "{\"base_delay\":2,\"max_attempts\":3,\"max_delay\":3,\"statuses\":[503,503,200]}"
+  },
+  {
+    "payload": "{\"base_delay\":1,\"max_attempts\":3,\"max_delay\":8,\"statuses\":[400,200]}"
+  },
+  {
+    "payload": "{\"base_delay\":1,\"max_attempts\":1,\"max_delay\":1,\"statuses\":[]}"
+  },
+  {
+    "payload": "{\"base_delay\":2,\"max_attempts\":5,\"max_delay\":8,\"statuses\":[429]}"
+  },
+  {
+    "payload": "{\"base_delay\":1,\"max_attempts\":1,\"max_delay\":8,\"statuses\":[503,200]}"
+  },
+  {
+    "payload": "{\"base_delay\":3,\"max_attempts\":2,\"max_delay\":10,\"statuses\":[429,201]}"
+  },
+  {
+    "payload": "{\"base_delay\":1,\"max_attempts\":2,\"max_delay\":4,\"statuses\":[499,200]}"
+  },
+  {
+    "payload": "{\"base_delay\":1,\"max_attempts\":2,\"max_delay\":4,\"statuses\":[500,200]}"
+  },
+  {
+    "payload": "{\"base_delay\":1,\"max_attempts\":2,\"max_delay\":4,\"statuses\":[599,204]}"
+  },
+  {
+    "payload": "{\"base_delay\":1,\"max_attempts\":2,\"max_delay\":4,\"statuses\":[301,500]}"
+  },
+  {
+    "payload": "{\"base_delay\":1,\"max_attempts\":2,\"max_delay\":4,\"statuses\":[100,200]}"
+  },
+  {
+    "payload": "{\"base_delay\":2,\"max_attempts\":8,\"max_delay\":20,\"statuses\":[501,502,503]}"
+  },
+  {
+    "payload": "{\"base_delay\":3,\"max_attempts\":4,\"max_delay\":5,\"statuses\":[500,500,500,500,500]}"
+  },
+  {
+    "payload": "{\"base_delay\":7,\"max_attempts\":10,\"max_delay\":7,\"statuses\":[500,429,200]}"
+  },
+  {
+    "payload": "{\"base_delay\":5,\"max_attempts\":10,\"max_delay\":10,\"statuses\":[200]}"
+  },
+  {
+    "payload": "{\"base_delay\":100000000000000000000,\"max_attempts\":3,\"max_delay\":300000000000000000000,\"statuses\":[500,500,200]}"
+  }
+]

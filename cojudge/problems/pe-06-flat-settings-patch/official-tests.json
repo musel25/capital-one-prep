@@ -1,0 +1,47 @@
+[
+  {
+    "payload": "{\"patch\":{\"theme\":\"light\"},\"settings\":{\"lang\":\"en\",\"theme\":\"dark\"}}"
+  },
+  {
+    "payload": "{\"patch\":{\"theme\":null},\"settings\":{\"theme\":\"dark\"}}"
+  },
+  {
+    "payload": "{\"patch\":{},\"settings\":{}}"
+  },
+  {
+    "payload": "{\"patch\":{},\"settings\":{\"a\":1}}"
+  },
+  {
+    "payload": "{\"patch\":{\"a\":1},\"settings\":{}}"
+  },
+  {
+    "payload": "{\"patch\":{\"missing\":null},\"settings\":{\"a\":1}}"
+  },
+  {
+    "payload": "{\"patch\":{\"enabled\":false},\"settings\":{\"enabled\":true}}"
+  },
+  {
+    "payload": "{\"patch\":{\"count\":0},\"settings\":{\"count\":8}}"
+  },
+  {
+    "payload": "{\"patch\":{\"name\":\"\"},\"settings\":{\"name\":\"old\"}}"
+  },
+  {
+    "payload": "{\"patch\":{\"options\":[]},\"settings\":{\"options\":[1]}}"
+  },
+  {
+    "payload": "{\"patch\":{\"config\":{\"b\":null}},\"settings\":{\"config\":{\"a\":1,\"b\":2}}}"
+  },
+  {
+    "payload": "{\"patch\":{\"new\":null,\"x\":\"set\"},\"settings\":{\"keep\":null,\"x\":null}}"
+  },
+  {
+    "payload": "{\"patch\":{\"a\":null,\"b\":0,\"d\":[true,null]},\"settings\":{\"a\":1,\"b\":2,\"c\":3}}"
+  },
+  {
+    "payload": "{\"patch\":{\"\":{},\"Mode\":null},\"settings\":{\"\":3,\"Mode\":1,\"mode\":2}}"
+  },
+  {
+    "payload": "{\"patch\":{},\"settings\":{\"large\":-999999.999999,\"small\":1e-06}}"
+  }
+]

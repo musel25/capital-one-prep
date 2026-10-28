@@ -1,0 +1,47 @@
+{
+  "id": "pe-20-relative-upload-path",
+  "title": "20. Resolve a relative upload path",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "05-files-time-and-boundaries",
+  "examples": [
+    {
+      "input": "{\"path\": \"photos/./2026//image.png\"}",
+      "output": "\"photos/2026/image.png\"",
+      "explanation": "remove dot and empty components"
+    },
+    {
+      "input": "{\"path\": \"a/b/../file.txt\"}",
+      "output": "\"a/file.txt\"",
+      "explanation": "parent component removes one prior component"
+    },
+    {
+      "input": "{\"path\": \"../safe/file.txt\"}",
+      "output": "null",
+      "explanation": "reject an initial parent escape"
+    }
+  ],
+  "starterCode": {
+    "python": "def resolve_upload_path(path):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement resolve_upload_path above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = resolve_upload_path(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"path\":\"photos/./2026//image.png\"}"
+    },
+    {
+      "payload": "{\"path\":\"a/b/../file.txt\"}"
+    },
+    {
+      "payload": "{\"path\":\"../safe/file.txt\"}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

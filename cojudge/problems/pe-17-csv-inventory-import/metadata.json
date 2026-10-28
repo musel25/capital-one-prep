@@ -1,0 +1,47 @@
+{
+  "id": "pe-17-csv-inventory-import",
+  "title": "17. Parse an inventory CSV import",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "05-files-time-and-boundaries",
+  "examples": [
+    {
+      "input": "{\"csv_text\": \"sku,quantity\\nA-1,3\\nB-2,0\\n\"}",
+      "output": "[{\"sku\": \"A-1\", \"quantity\": 3}, {\"sku\": \"B-2\", \"quantity\": 0}]",
+      "explanation": "read ordered inventory rows"
+    },
+    {
+      "input": "{\"csv_text\": \"sku,quantity\\n\\\"A,B\\\",12\\n\"}",
+      "output": "[{\"sku\": \"A,B\", \"quantity\": 12}]",
+      "explanation": "quoted SKU contains a comma"
+    },
+    {
+      "input": "{\"csv_text\": \"sku,quantity\\n\\\"A\\\"\\\"B\\\",5\\n\"}",
+      "output": "[{\"sku\": \"A\\\"B\", \"quantity\": 5}]",
+      "explanation": "escaped double quote inside a quoted SKU"
+    }
+  ],
+  "starterCode": {
+    "python": "def parse_inventory(csv_text):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement parse_inventory above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = parse_inventory(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"csv_text\":\"sku,quantity\\nA-1,3\\nB-2,0\\n\"}"
+    },
+    {
+      "payload": "{\"csv_text\":\"sku,quantity\\n\\\"A,B\\\",12\\n\"}"
+    },
+    {
+      "payload": "{\"csv_text\":\"sku,quantity\\n\\\"A\\\"\\\"B\\\",5\\n\"}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}
