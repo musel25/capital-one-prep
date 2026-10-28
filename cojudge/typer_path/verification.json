@@ -13,7 +13,7 @@
       "test_invalid_arguments[args3]",
       "test_help"
     ],
-    "template_failures": 4,
+    "template_failures": 9,
     "mutations": [
       {
         "name": "subtract instead of add",
@@ -40,7 +40,7 @@
       "test_reject_bad_command[args2]",
       "test_help_lists_both_commands"
     ],
-    "template_failures": 6,
+    "template_failures": 10,
     "mutations": [
       {
         "name": "equality handled as greater",
@@ -88,7 +88,7 @@
       "test_reject_invalid_values[args1]",
       "test_reject_invalid_values[args2]"
     ],
-    "template_failures": 7,
+    "template_failures": 8,
     "mutations": [
       {
         "name": "treat zero option as absent",
@@ -131,16 +131,17 @@
   },
   {
     "id": "pbty-06-rich-excursion-create-beautiful-tables",
-    "cases": 6,
+    "cases": 7,
     "tests": [
       "test_real_table_and_headers",
       "test_row_values_and_order",
       "test_duplicate_rows_are_kept",
       "test_show_table",
       "test_cli_table",
-      "test_unicode_cells"
+      "test_unicode_cells",
+      "test_brackets_in_cells_are_literal_text"
     ],
-    "template_failures": 6,
+    "template_failures": 7,
     "mutations": [
       {
         "name": "omit final row",
@@ -149,7 +150,8 @@
           "test_duplicate_rows_are_kept",
           "test_show_table",
           "test_cli_table",
-          "test_unicode_cells"
+          "test_unicode_cells",
+          "test_brackets_in_cells_are_literal_text"
         ]
       }
     ]

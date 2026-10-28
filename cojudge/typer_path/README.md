@@ -32,7 +32,7 @@ uv run python scripts/typer_path.py live --base-url http://127.0.0.1:15379
 ```
 
 The local verifier uses Python 3.11 with `-S`. It loads libraries from the archive,
-not from the authoring environment. All 61 reference tests pass. Each unfinished
+not from the authoring environment. All 62 reference tests pass. Each unfinished
 starter fails at least one test. Seven explicit faults must each fail a test.
 `verification.json` records the checks that detect each fault.
 

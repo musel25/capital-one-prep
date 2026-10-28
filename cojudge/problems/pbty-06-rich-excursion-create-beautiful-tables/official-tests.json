@@ -16,5 +16,8 @@
   },
   {
     "payload": "{\"test\": \"test_unicode_cells\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_brackets_in_cells_are_literal_text\"}"
   }
 ]

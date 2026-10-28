@@ -31,7 +31,7 @@ PS: You may need to adjust the width of the rows to pass the tests.
 </details>
 
 Write your code at the top of the editor. The tests below it import your code as `cli`.
-**Run** checks the first three tests. **Submit** checks all 6 tests.
+**Run** checks the first three tests. **Submit** checks all 7 tests.
 A failure shows the test name, error, and test line.
 
 - Python 3.11. The judge supplies real Typer 0.12.5, Click 8.1.7, and Rich 13.9.4.

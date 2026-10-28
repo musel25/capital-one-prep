@@ -6,6 +6,7 @@ Paste above the supplied tests and runner.
 import typer
 from rich.table import Table
 from rich.console import Console
+from rich.text import Text
 
 app = typer.Typer()
 PEOPLE = [("Alice", 30, "London"), ("Bob", 25, "Paris")]
@@ -16,7 +17,7 @@ def create_table(rows):
     for header in ("Name", "Age", "City"):
         table.add_column(header)
     for name, age, city in rows:
-        table.add_row(str(name), str(age), str(city))
+        table.add_row(Text(str(name)), Text(str(age)), Text(str(city)))
     return table
 
 

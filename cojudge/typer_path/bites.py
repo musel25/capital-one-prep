@@ -26,15 +26,13 @@ Accept negative integers. Reject missing or non-integer values.''',
 '''import typer
 
 
-def main(a: int = typer.Argument(..., help="The value of the first summand"),
-         b: int = typer.Argument(..., help="The value of the second summand")):
+def main(a, b):
     """CLI that allows you to add two numbers."""
-    # Print the sum.
-    pass
+    typer.echo(f"The sum is {a + b}")
 
 
 app = typer.Typer()
-app.command()(main)
+# Add typed arguments, help text, and command registration.
 ''',
 '''import typer
 
@@ -99,14 +97,14 @@ Use the actual integer values in these messages. Reject unknown commands and inv
 app = typer.Typer()
 
 
-@app.command(name="sum")
 def sum_numbers(a: int, b: int):
     pass
 
 
-@app.command()
 def compare(c: int, d: int):
     pass
+
+# Register these functions as the sum and compare commands.
 ''', TWO,
 '''
 import pytest
@@ -223,7 +221,8 @@ app = typer.Typer()
 
 
 @app.command()
-def main(a: int, b: int, c: Optional[int] = typer.Option(None)):
+def main(a, b, c=None):
+    # Define integer arguments a and b, and the optional integer --c.
     pass
 ''', OPTIONS,
 '''
@@ -288,8 +287,9 @@ app = typer.Typer()
 
 
 @app.callback()
-def configure(ctx: typer.Context, verbose: bool = typer.Option(False, "--verbose", "-v")):
-    ctx.obj = {"verbose": verbose}
+def configure(ctx: typer.Context, verbose: bool = False):
+    # Add --verbose / -v and share its value with both commands.
+    pass
 
 
 @app.command(name="sum")
@@ -329,6 +329,7 @@ def test_unknown_root_option():
 TABLE = '''import typer
 from rich.table import Table
 from rich.console import Console
+from rich.text import Text
 
 app = typer.Typer()
 PEOPLE = [("Alice", 30, "London"), ("Bob", 25, "Paris")]
@@ -339,7 +340,7 @@ def create_table(rows):
     for header in ("Name", "Age", "City"):
         table.add_column(header)
     for name, age, city in rows:
-        table.add_row(str(name), str(age), str(city))
+        table.add_row(Text(str(name)), Text(str(age)), Text(str(city)))
     return table
 
 
@@ -397,7 +398,7 @@ def test_real_table_and_headers():
 def test_row_values_and_order():
     table = cli.create_table([("Zoe", 0, "Lima"), ("Ari", 120, "Rome")])
     assert table.row_count == 2
-    assert [list(c.cells) for c in table.columns] == [["Zoe", "Ari"], ["0", "120"], ["Lima", "Rome"]]
+    assert [[str(cell) for cell in c.cells] for c in table.columns] == [["Zoe", "Ari"], ["0", "120"], ["Lima", "Rome"]]
 
 
 def test_duplicate_rows_are_kept():
@@ -422,6 +423,12 @@ def test_unicode_cells():
     buffer = io.StringIO()
     Console(file=buffer, width=80, color_system=None).print(table)
     assert "Müsel" in buffer.getvalue() and "México" in buffer.getvalue()
+
+
+def test_brackets_in_cells_are_literal_text(capsys):
+    cli.show_table([("[/red]", 30, "[bold]Lima[/bold]"), ("[red]", 20, "Rome")])
+    text = capsys.readouterr().out
+    assert "[/red]" in text and "[red]" in text and "[bold]Lima[/bold]" in text
 ''',
 [dict(name='omit final row', old='for name, age, city in rows:', new='for name, age, city in list(rows)[:-1]:')])
 
@@ -449,9 +456,9 @@ app = typer.Typer()
 
 
 @app.command()
-def main(username: str = typer.Option(..., prompt="Username"),
-         password: str = typer.Option(..., prompt="Password", hide_input=True, confirmation_prompt=True)):
-    # Print the success message. Never print the password.
+def main(username: str = typer.Option(...), password: str = typer.Option(...)):
+    # Add the username prompt, hidden password prompt, and confirmation.
+    # Print the success message.
     pass
 ''', PASSWORD,
 '''
