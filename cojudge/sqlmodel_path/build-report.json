@@ -273,14 +273,6 @@
       "id": "pbs-10-fastapi-integration-complex-queries",
       "cases": 17,
       "tests": [
-        "test_factory_initializes_tables",
-        "test_empty_list",
-        "test_create_and_read",
-        "test_create_is_durable",
-        "test_invalid_body",
-        "test_missing_and_invalid_id",
-        "test_order_and_pagination",
-        "test_delete_preserves_other_rows",
         "test_create_log_and_persist",
         "test_missing_pair",
         "test_invalid_log_body",
@@ -289,7 +281,15 @@
         "test_filter_by_exercise",
         "test_combined_filters_are_intersection",
         "test_workout_exercises",
-        "test_duplicate_links_return_distinct_exercises"
+        "test_duplicate_links_return_distinct_exercises",
+        "test_factory_initializes_tables",
+        "test_empty_list",
+        "test_create_and_read",
+        "test_create_is_durable",
+        "test_invalid_body",
+        "test_missing_and_invalid_id",
+        "test_order_and_pagination",
+        "test_delete_preserves_other_rows"
       ],
       "template_failures": 9,
       "mutations": [

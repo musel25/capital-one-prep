@@ -57,3 +57,10 @@ def test_skipped_tests_cannot_pass():
         'assert app.Workout.__tablename__ == "workout"', 'pytest.skip("not implemented")')
     results = course.run_all(spec, spec['reference'])
     assert results['test_workout_table_fields'] != 'passed'
+
+
+def test_advanced_api_samples_detect_unfinished_new_endpoints():
+    course = support()
+    spec = course.load_specs([10])[0]
+    results = course.run_all(spec, spec['template'])
+    assert any(results[name] != 'passed' for name in course.test_ids(spec)[:3])

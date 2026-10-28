@@ -289,7 +289,7 @@ TestClient supplies a fresh SQLite engine. The same exercise can appear in diffe
 workouts. A log must stay attached to its exact workout/exercise pair.''',
     template=IMPORTS + API_IMPORTS + ADVANCED_MODELS + API_SCHEMAS + HEADER + BASIC_ROUTES + COMPLEX_STARTER + '\n    return app\n',
     reference=IMPORTS + API_IMPORTS + ADVANCED_MODELS + API_SCHEMAS + HEADER + BASIC_ROUTES + COMPLEX_ROUTES + '\n    return app\n',
-    tests=API_FIXTURES + BASIC_TESTS + COMPLEX_TESTS,
+    tests=API_FIXTURES + COMPLEX_TESTS + BASIC_TESTS,
     mutations=[dict(name='exercise filter omitted', old='query = query.where(WorkoutExercise.exercise_id == exercise_id)', new='query = query'),
                dict(name='missing pair returns wrong status', old='status_code=404, detail="Workout/exercise pair not found"', new='status_code=400, detail="Workout/exercise pair not found"'),
                dict(name='factory does not create tables', old='SQLModel.metadata.create_all(engine)', new='pass'),
