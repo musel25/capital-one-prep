@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"test\": \"test_workout_table_fields\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_exercise_table_fields\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_defaults\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_required_name\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_create_and_persist\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_create_tables_is_idempotent\"}"
+  }
+]

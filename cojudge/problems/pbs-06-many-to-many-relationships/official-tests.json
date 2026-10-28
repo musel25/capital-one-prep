@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"test\": \"test_composite_key_and_foreign_keys\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_link_and_both_relationships\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_shared_exercise\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_duplicate_link_is_idempotent\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_endpoints\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_link_is_durable\"}"
+  }
+]

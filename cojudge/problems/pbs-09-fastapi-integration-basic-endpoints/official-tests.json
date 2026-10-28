@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_factory_initializes_tables\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_list\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_create_and_read\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_create_is_durable\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_body\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_and_invalid_id\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_order_and_pagination\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_delete_preserves_other_rows\"}"
+  }
+]

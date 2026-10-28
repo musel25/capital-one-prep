@@ -1,0 +1,44 @@
+{
+  "id": "pbs-09-fastapi-integration-basic-endpoints",
+  "title": "09. FastAPI Integration - Basic Endpoints",
+  "difficulty": "Hard",
+  "link": "",
+  "category": "03-fastapi",
+  "examples": [
+    {
+      "input": "{\"test\": \"test_factory_initializes_tables\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_empty_list\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_create_and_read\"}",
+      "output": "passed"
+    }
+  ],
+  "starterCode": {
+    "python": "from typing import Optional\nfrom sqlmodel import SQLModel, Field, Session, create_engine, select, Relationship\nfrom fastapi import FastAPI, Depends, HTTPException, Query, Response\n\nclass WorkoutBase(SQLModel):\n    name: str = Field(min_length=1)\n    description: str = \"\"\n\nclass Workout(WorkoutBase, table=True):\n    id: Optional[int] = Field(default=None, primary_key=True)\n\nclass WorkoutCreate(WorkoutBase):\n    pass\n\nclass WorkoutRead(WorkoutBase):\n    id: int\n\nclass WorkoutUpdate(SQLModel):\n    name: Optional[str] = Field(default=None, min_length=1)\n    description: Optional[str] = None\n\nclass ExerciseRead(SQLModel):\n    id: int\n    name: str\n\nclass WorkoutWithExercises(WorkoutRead):\n    exercises: list[ExerciseRead] = Field(default_factory=list)\n\ndef create_app(engine):\n    SQLModel.metadata.create_all(engine)\n    app = FastAPI()\n\n    def get_session():\n        with Session(engine) as session:\n            yield session\n\n    # Add the four routes here. Use the supplied get_session dependency.\n    return app\n\n# === SUPPLIED SQLMODEL TESTS ===\n# Read the tests below. Keep the supplied tests and runner.\n_SM_TESTS = r'''\nimport pytest\nfrom fastapi.testclient import TestClient\nfrom sqlmodel import Session, SQLModel, create_engine, select\nfrom sqlalchemy.pool import StaticPool\nimport workout_app as app\n\n@pytest.fixture\ndef engine():\n    engine = create_engine(\"sqlite://\", connect_args={\"check_same_thread\": False}, poolclass=StaticPool)\n    SQLModel.metadata.create_all(engine)\n    yield engine\n    engine.dispose()\n\n@pytest.fixture\ndef client(engine):\n    with TestClient(app.create_app(engine)) as client:\n        yield client\n\n\ndef test_factory_initializes_tables():\n    from sqlalchemy import inspect\n    engine = create_engine(\"sqlite://\", connect_args={\"check_same_thread\": False}, poolclass=StaticPool)\n    try:\n        app.create_app(engine)\n        assert set(inspect(engine).get_table_names()) == set(SQLModel.metadata.tables)\n    finally:\n        engine.dispose()\n\ndef test_empty_list(client):\n    response = client.get(\"/workouts\")\n    assert response.status_code == 200 and response.json() == []\n\ndef test_create_and_read(client):\n    response = client.post(\"/workouts\", json={\"name\": \"Upper\", \"description\": \"Press\"})\n    assert response.status_code == 201\n    row = response.json()\n    assert isinstance(row[\"id\"], int)\n    assert row == {\"id\": row[\"id\"], \"name\": \"Upper\", \"description\": \"Press\"}\n    assert client.get(f\"/workouts/{row['id']}\").json() == row\n\ndef test_create_is_durable(client, engine):\n    row = client.post(\"/workouts\", json={\"name\": \"Legs\", \"id\": 9999}).json()\n    assert row[\"description\"] == \"\" and row[\"id\"] != 9999\n    with Session(engine) as session:\n        assert session.get(app.Workout, row[\"id\"]).name == \"Legs\"\n\ndef test_invalid_body(client):\n    for body in ({}, {\"name\": \"\"}, {\"name\": None}, {\"name\": []}):\n        assert client.post(\"/workouts\", json=body).status_code == 422\n    assert client.get(\"/workouts\").json() == []\n\ndef test_missing_and_invalid_id(client):\n    assert client.get(\"/workouts/999\").status_code == 404\n    assert client.delete(\"/workouts/999\").status_code == 404\n    assert client.get(\"/workouts/abc\").status_code == 422\n\ndef test_order_and_pagination(client):\n    for name in (\"Z\", \"A\", \"B\"):\n        assert client.post(\"/workouts\", json={\"name\": name}).status_code == 201\n    assert [row[\"name\"] for row in client.get(\"/workouts?offset=1&limit=1\").json()] == [\"A\"]\n    assert client.get(\"/workouts?offset=10\").json() == []\n    for query in (\"offset=-1\", \"limit=0\", \"limit=101\", \"limit=abc\"):\n        assert client.get(\"/workouts?\" + query).status_code == 422\n\ndef test_delete_preserves_other_rows(client, engine):\n    first = client.post(\"/workouts\", json={\"name\": \"First\"}).json()[\"id\"]\n    second = client.post(\"/workouts\", json={\"name\": \"Second\"}).json()[\"id\"]\n    response = client.delete(f\"/workouts/{first}\")\n    assert response.status_code == 204 and response.content == b\"\"\n    assert client.get(f\"/workouts/{first}\").status_code == 404\n    assert client.get(f\"/workouts/{second}\").status_code == 200\n    with Session(engine) as session:\n        assert session.get(app.Workout, first) is None\n'''[1:]\n_SM_IDS = ['test_factory_initializes_tables', 'test_empty_list', 'test_create_and_read', 'test_create_is_durable', 'test_invalid_body', 'test_missing_and_invalid_id', 'test_order_and_pagination', 'test_delete_preserves_other_rows']\n\n\nimport json as _json\nfrom pathlib import Path as _Path\nimport os as _os\nimport subprocess as _subprocess\nimport sys as _sys\nimport tempfile as _tempfile\nimport xml.etree.ElementTree as _xml\n\n_SM_RESULTS = None\n\n\ndef _sm_run_tests():\n    source = _Path(__file__).read_text().split('# === SUPPLIED SQLMODEL TESTS ===', 1)[0]\n    with _tempfile.TemporaryDirectory(prefix='sqlmodel-tests-') as folder:\n        work = _Path(folder)\n        (work / 'workout_app.py').write_text(source)\n        (work / 'test_workout.py').write_text(_SM_TESTS)\n        report = work / 'results.xml'\n        env = dict(_os.environ)\n        for key in ('PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'PYTHONPATH'):\n            env.pop(key, None)\n        env['PYTEST_DISABLE_PLUGIN_AUTOLOAD'] = '1'\n        try:\n            done = _subprocess.run(\n                [_sys.executable, '-m', 'pytest', '-c', '/dev/null', '-p', 'no:cacheprovider',\n                 '-q', '--tb=short', '--junitxml=' + str(report), str(work / 'test_workout.py')],\n                cwd=work, env=env, capture_output=True, text=True, timeout=20)\n            if report.exists():\n                results = {}\n                for case in _xml.parse(report).iter('testcase'):\n                    name = case.get('name')\n                    failures = [child for child in case if child.tag in ('failure', 'error', 'skipped')]\n                    results[name] = ('FAILED ' + name + ' | ' +\n                                     (failures[0].text or failures[0].get('message', 'test did not pass'))[-1800:]\n                                     if failures else 'passed')\n                if set(results) == set(_SM_IDS) and done.returncode in (0, 1):\n                    return {key: value.replace('\\n', ' | ') for key, value in results.items()}\n            error = (done.stdout + done.stderr)[-2200:].replace('\\n', ' | ')\n        except _subprocess.TimeoutExpired:\n            error = 'pytest exceeded 20 seconds'\n        except Exception as exc:\n            error = str(exc).replace('\\n', ' | ')\n        return {name: 'FAILED ' + name + ' | ' + error for name in _SM_IDS}\n\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        global _SM_RESULTS\n        target = _json.loads(payload)['test']\n        if target == '--list':\n            return _json.dumps(_SM_IDS)\n        if target not in _SM_IDS:\n            return 'Unknown test: ' + str(target)\n        if _SM_RESULTS is None:\n            _SM_RESULTS = _sm_run_tests()\n        return _SM_RESULTS[target]\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"test\": \"test_factory_initializes_tables\"}"
+    },
+    {
+      "payload": "{\"test\": \"test_empty_list\"}"
+    },
+    {
+      "payload": "{\"test\": \"test_create_and_read\"}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

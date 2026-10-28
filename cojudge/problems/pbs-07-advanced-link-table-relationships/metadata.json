@@ -1,0 +1,44 @@
+{
+  "id": "pbs-07-advanced-link-table-relationships",
+  "title": "07. Advanced Link Table Relationships",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "02-relationships-and-schemas",
+  "examples": [
+    {
+      "input": "{\"test\": \"test_log_links_to_pair\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_pair_isolation\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_workout_filter\"}",
+      "output": "passed"
+    }
+  ],
+  "starterCode": {
+    "python": "from typing import Optional\nfrom sqlmodel import SQLModel, Field, Session, create_engine, select, Relationship\n\nclass Workout(SQLModel, table=True):\n    id: Optional[int] = Field(default=None, primary_key=True)\n    name: str\n    exercise_links: list[\"WorkoutExercise\"] = Relationship(back_populates=\"workout\")\n\nclass Exercise(SQLModel, table=True):\n    id: Optional[int] = Field(default=None, primary_key=True)\n    name: str\n    workout_links: list[\"WorkoutExercise\"] = Relationship(back_populates=\"exercise\")\n\nclass WorkoutExercise(SQLModel, table=True):\n    id: Optional[int] = Field(default=None, primary_key=True)\n    workout_id: int = Field(foreign_key=\"workout.id\")\n    exercise_id: int = Field(foreign_key=\"exercise.id\")\n    workout: Optional[Workout] = Relationship(back_populates=\"exercise_links\")\n    exercise: Optional[Exercise] = Relationship(back_populates=\"workout_links\")\n    logs: list[\"LogEntry\"] = Relationship(back_populates=\"workout_exercise\")\n\nclass LogEntry(SQLModel, table=True):\n    id: Optional[int] = Field(default=None, primary_key=True)\n    workout_exercise_id: int = Field(foreign_key=\"workoutexercise.id\")\n    sets: int\n    reps: int\n    weight: float = 0.0\n    workout_exercise: Optional[WorkoutExercise] = Relationship(back_populates=\"logs\")\n\ndef add_pair_log(session, pair_id, sets, reps, weight=0.0):\n    raise NotImplementedError\n\ndef get_pair_logs(session, workout_id=None, exercise_id=None):\n    raise NotImplementedError\n\n# === SUPPLIED SQLMODEL TESTS ===\n# Read the tests below. Keep the supplied tests and runner.\n_SM_TESTS = r'''\nimport pytest\nfrom sqlmodel import SQLModel, Session, create_engine, select\nimport workout_app as app\n\n@pytest.fixture\ndef engine():\n    engine = create_engine(\"sqlite://\")\n    SQLModel.metadata.create_all(engine)\n    yield engine\n    engine.dispose()\n\n@pytest.fixture\ndef session(engine):\n    with Session(engine) as session:\n        yield session\n\n\n@pytest.fixture\ndef seeded(session):\n    session.add_all([app.Workout(id=1, name=\"Upper\"), app.Workout(id=2, name=\"Push\"), app.Exercise(id=1, name=\"Bench\"), app.Exercise(id=2, name=\"Rows\")])\n    session.commit()\n    session.add_all([app.WorkoutExercise(id=10, workout_id=1, exercise_id=1), app.WorkoutExercise(id=20, workout_id=2, exercise_id=1), app.WorkoutExercise(id=30, workout_id=1, exercise_id=2)])\n    session.commit()\n    return session\n\n@pytest.fixture\ndef logged(seeded):\n    app.add_pair_log(seeded, 10, 3, 8, 50)\n    app.add_pair_log(seeded, 20, 2, 10, 30)\n    app.add_pair_log(seeded, 30, 1, 12, 20)\n    return seeded\n\ndef test_log_links_to_pair(seeded):\n    row = app.add_pair_log(seeded, 20, 2, 10, 30)\n    assert row.id is not None and row.workout_exercise_id == 20\n    assert row.workout_exercise.workout_id == 2 and row.workout_exercise.exercise_id == 1\n    assert row.workout_exercise.logs[0].id == row.id\n\ndef test_pair_isolation(logged):\n    rows = app.get_pair_logs(logged, workout_id=1, exercise_id=1)\n    assert len(rows) == 1 and rows[0].weight == 50\n\ndef test_workout_filter(logged):\n    assert [r.weight for r in app.get_pair_logs(logged, workout_id=1)] == [50, 20]\n\ndef test_exercise_filter(logged):\n    assert [r.weight for r in app.get_pair_logs(logged, exercise_id=1)] == [50, 30]\n\ndef test_all_and_no_match(logged):\n    assert [r.weight for r in app.get_pair_logs(logged)] == [50, 30, 20]\n    assert app.get_pair_logs(logged, workout_id=99) == []\n    assert app.get_pair_logs(logged, workout_id=2, exercise_id=2) == []\n    assert app.get_pair_logs(logged, workout_id=0) == []\n    assert app.get_pair_logs(logged, exercise_id=0) == []\n\ndef test_invalid_and_missing(seeded):\n    assert app.add_pair_log(seeded, 99, 1, 1) is None\n    for sets, reps, weight in [(0, 2, 0), (1, 0, 0), (1, 1, -1)]:\n        with pytest.raises(ValueError):\n            app.add_pair_log(seeded, 10, sets, reps, weight)\n    assert app.get_pair_logs(seeded) == []\n\ndef test_pair_log_is_durable(seeded, engine):\n    app.add_pair_log(seeded, 10, 1, 2)\n    seeded.close()\n    with Session(engine) as check:\n        row = check.exec(select(app.LogEntry)).one()\n        assert row.workout_exercise_id == 10 and row.sets == 1 and row.reps == 2 and row.weight == 0\n'''[1:]\n_SM_IDS = ['test_log_links_to_pair', 'test_pair_isolation', 'test_workout_filter', 'test_exercise_filter', 'test_all_and_no_match', 'test_invalid_and_missing', 'test_pair_log_is_durable']\n\n\nimport json as _json\nfrom pathlib import Path as _Path\nimport os as _os\nimport subprocess as _subprocess\nimport sys as _sys\nimport tempfile as _tempfile\nimport xml.etree.ElementTree as _xml\n\n_SM_RESULTS = None\n\n\ndef _sm_run_tests():\n    source = _Path(__file__).read_text().split('# === SUPPLIED SQLMODEL TESTS ===', 1)[0]\n    with _tempfile.TemporaryDirectory(prefix='sqlmodel-tests-') as folder:\n        work = _Path(folder)\n        (work / 'workout_app.py').write_text(source)\n        (work / 'test_workout.py').write_text(_SM_TESTS)\n        report = work / 'results.xml'\n        env = dict(_os.environ)\n        for key in ('PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'PYTHONPATH'):\n            env.pop(key, None)\n        env['PYTEST_DISABLE_PLUGIN_AUTOLOAD'] = '1'\n        try:\n            done = _subprocess.run(\n                [_sys.executable, '-m', 'pytest', '-c', '/dev/null', '-p', 'no:cacheprovider',\n                 '-q', '--tb=short', '--junitxml=' + str(report), str(work / 'test_workout.py')],\n                cwd=work, env=env, capture_output=True, text=True, timeout=20)\n            if report.exists():\n                results = {}\n                for case in _xml.parse(report).iter('testcase'):\n                    name = case.get('name')\n                    failures = [child for child in case if child.tag in ('failure', 'error', 'skipped')]\n                    results[name] = ('FAILED ' + name + ' | ' +\n                                     (failures[0].text or failures[0].get('message', 'test did not pass'))[-1800:]\n                                     if failures else 'passed')\n                if set(results) == set(_SM_IDS) and done.returncode in (0, 1):\n                    return {key: value.replace('\\n', ' | ') for key, value in results.items()}\n            error = (done.stdout + done.stderr)[-2200:].replace('\\n', ' | ')\n        except _subprocess.TimeoutExpired:\n            error = 'pytest exceeded 20 seconds'\n        except Exception as exc:\n            error = str(exc).replace('\\n', ' | ')\n        return {name: 'FAILED ' + name + ' | ' + error for name in _SM_IDS}\n\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        global _SM_RESULTS\n        target = _json.loads(payload)['test']\n        if target == '--list':\n            return _json.dumps(_SM_IDS)\n        if target not in _SM_IDS:\n            return 'Unknown test: ' + str(target)\n        if _SM_RESULTS is None:\n            _SM_RESULTS = _sm_run_tests()\n        return _SM_RESULTS[target]\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"test\": \"test_log_links_to_pair\"}"
+    },
+    {
+      "payload": "{\"test\": \"test_pair_isolation\"}"
+    },
+    {
+      "payload": "{\"test\": \"test_workout_filter\"}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

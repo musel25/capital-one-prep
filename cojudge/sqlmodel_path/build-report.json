@@ -1,0 +1,325 @@
+{
+  "passed": [
+    {
+      "id": "pbs-01-your-first-sqlmodel-tables",
+      "cases": 6,
+      "tests": [
+        "test_workout_table_fields",
+        "test_exercise_table_fields",
+        "test_defaults",
+        "test_required_name",
+        "test_create_and_persist",
+        "test_create_tables_is_idempotent"
+      ],
+      "template_failures": 6,
+      "mutations": [
+        {
+          "name": "wrong description default",
+          "detected_by": [
+            "test_defaults"
+          ]
+        },
+        {
+          "name": "table creation omitted",
+          "detected_by": [
+            "test_create_and_persist"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pbs-02-session-management-basic-inserts",
+      "cases": 6,
+      "tests": [
+        "test_add_workout",
+        "test_add_exercise",
+        "test_defaults_and_duplicate_names",
+        "test_rows_survive_a_new_session",
+        "test_session_generator_committed_rows",
+        "test_session_generator_rolls_back"
+      ],
+      "template_failures": 6,
+      "mutations": [
+        {
+          "name": "workout insert is not committed",
+          "detected_by": [
+            "test_session_generator_committed_rows"
+          ]
+        },
+        {
+          "name": "muscle group is discarded",
+          "detected_by": [
+            "test_add_exercise"
+          ]
+        },
+        {
+          "name": "caller session is closed",
+          "detected_by": [
+            "test_add_workout"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pbs-03-reading-data-with-select",
+      "cases": 6,
+      "tests": [
+        "test_empty_results",
+        "test_workouts_are_in_id_order",
+        "test_get_one_and_missing",
+        "test_filter_is_exact",
+        "test_empty_filter_is_not_all",
+        "test_reads_do_not_write"
+      ],
+      "template_failures": 6,
+      "mutations": [
+        {
+          "name": "empty group treated as no filter",
+          "detected_by": [
+            "test_empty_filter_is_not_all"
+          ]
+        },
+        {
+          "name": "reverse workout order",
+          "detected_by": [
+            "test_workouts_are_in_id_order"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pbs-04-update-and-delete-operations",
+      "cases": 6,
+      "tests": [
+        "test_update_fields",
+        "test_partial_and_empty_update",
+        "test_update_is_durable",
+        "test_missing_rows",
+        "test_invalid_field_is_atomic",
+        "test_delete_is_durable"
+      ],
+      "template_failures": 6,
+      "mutations": [
+        {
+          "name": "update is not committed",
+          "detected_by": [
+            "test_update_is_durable"
+          ]
+        },
+        {
+          "name": "deletion reports false",
+          "detected_by": [
+            "test_delete_is_durable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pbs-05-one-to-many-relationships",
+      "cases": 7,
+      "tests": [
+        "test_foreign_key",
+        "test_empty_relationship",
+        "test_relationships_in_both_directions",
+        "test_other_workouts_are_separate",
+        "test_missing_workout",
+        "test_invalid_performance",
+        "test_log_survives_a_new_session"
+      ],
+      "template_failures": 7,
+      "mutations": [
+        {
+          "name": "zero sets allowed",
+          "detected_by": [
+            "test_invalid_performance"
+          ]
+        },
+        {
+          "name": "log weight discarded",
+          "detected_by": [
+            "test_relationships_in_both_directions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pbs-06-many-to-many-relationships",
+      "cases": 6,
+      "tests": [
+        "test_composite_key_and_foreign_keys",
+        "test_link_and_both_relationships",
+        "test_shared_exercise",
+        "test_duplicate_link_is_idempotent",
+        "test_missing_endpoints",
+        "test_link_is_durable"
+      ],
+      "template_failures": 5,
+      "mutations": [
+        {
+          "name": "link is not committed",
+          "detected_by": [
+            "test_link_is_durable"
+          ]
+        },
+        {
+          "name": "duplicate pair inserted",
+          "detected_by": [
+            "test_duplicate_link_is_idempotent"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pbs-07-advanced-link-table-relationships",
+      "cases": 7,
+      "tests": [
+        "test_log_links_to_pair",
+        "test_pair_isolation",
+        "test_workout_filter",
+        "test_exercise_filter",
+        "test_all_and_no_match",
+        "test_invalid_and_missing",
+        "test_pair_log_is_durable"
+      ],
+      "template_failures": 7,
+      "mutations": [
+        {
+          "name": "exercise filter omitted",
+          "detected_by": [
+            "test_pair_isolation",
+            "test_exercise_filter",
+            "test_all_and_no_match"
+          ]
+        },
+        {
+          "name": "pair log is not committed",
+          "detected_by": [
+            "test_pair_log_is_durable"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pbs-08-model-inheritance-and-api-schemas",
+      "cases": 7,
+      "tests": [
+        "test_only_workout_is_a_table",
+        "test_create_has_no_id",
+        "test_read_requires_id",
+        "test_name_validation",
+        "test_patch_omitted_and_null",
+        "test_nested_serialization",
+        "test_nested_default_is_independent"
+      ],
+      "template_failures": 6,
+      "mutations": [
+        {
+          "name": "empty names allowed",
+          "detected_by": [
+            "test_name_validation"
+          ]
+        },
+        {
+          "name": "read id is optional",
+          "detected_by": [
+            "test_read_requires_id"
+          ]
+        },
+        {
+          "name": "update name cannot be null",
+          "detected_by": [
+            "test_patch_omitted_and_null"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pbs-09-fastapi-integration-basic-endpoints",
+      "cases": 8,
+      "tests": [
+        "test_factory_initializes_tables",
+        "test_empty_list",
+        "test_create_and_read",
+        "test_create_is_durable",
+        "test_invalid_body",
+        "test_missing_and_invalid_id",
+        "test_order_and_pagination",
+        "test_delete_preserves_other_rows"
+      ],
+      "template_failures": 7,
+      "mutations": [
+        {
+          "name": "creation returns wrong status",
+          "detected_by": [
+            "test_create_and_read",
+            "test_order_and_pagination"
+          ]
+        },
+        {
+          "name": "pagination ignores offset",
+          "detected_by": [
+            "test_order_and_pagination"
+          ]
+        },
+        {
+          "name": "factory does not create tables",
+          "detected_by": [
+            "test_factory_initializes_tables"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pbs-10-fastapi-integration-complex-queries",
+      "cases": 17,
+      "tests": [
+        "test_factory_initializes_tables",
+        "test_empty_list",
+        "test_create_and_read",
+        "test_create_is_durable",
+        "test_invalid_body",
+        "test_missing_and_invalid_id",
+        "test_order_and_pagination",
+        "test_delete_preserves_other_rows",
+        "test_create_log_and_persist",
+        "test_missing_pair",
+        "test_invalid_log_body",
+        "test_list_all_in_id_order",
+        "test_filter_by_workout",
+        "test_filter_by_exercise",
+        "test_combined_filters_are_intersection",
+        "test_workout_exercises",
+        "test_duplicate_links_return_distinct_exercises"
+      ],
+      "template_failures": 9,
+      "mutations": [
+        {
+          "name": "exercise filter omitted",
+          "detected_by": [
+            "test_filter_by_exercise",
+            "test_combined_filters_are_intersection"
+          ]
+        },
+        {
+          "name": "missing pair returns wrong status",
+          "detected_by": [
+            "test_missing_pair"
+          ]
+        },
+        {
+          "name": "factory does not create tables",
+          "detected_by": [
+            "test_factory_initializes_tables"
+          ]
+        },
+        {
+          "name": "duplicate exercises returned",
+          "detected_by": [
+            "test_duplicate_links_return_distinct_exercises"
+          ]
+        }
+      ]
+    }
+  ],
+  "failed": []
+}

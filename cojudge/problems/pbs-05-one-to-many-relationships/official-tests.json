@@ -1,0 +1,23 @@
+[
+  {
+    "payload": "{\"test\": \"test_foreign_key\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_relationship\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_relationships_in_both_directions\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_other_workouts_are_separate\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_workout\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_performance\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_log_survives_a_new_session\"}"
+  }
+]

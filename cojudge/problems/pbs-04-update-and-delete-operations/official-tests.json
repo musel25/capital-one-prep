@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"test\": \"test_update_fields\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_partial_and_empty_update\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_update_is_durable\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_rows\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_field_is_atomic\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_delete_is_durable\"}"
+  }
+]

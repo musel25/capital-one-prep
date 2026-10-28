@@ -1,0 +1,44 @@
+{
+  "id": "pbs-01-your-first-sqlmodel-tables",
+  "title": "01. Your First SQLModel Tables",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-tables-and-crud",
+  "examples": [
+    {
+      "input": "{\"test\": \"test_workout_table_fields\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_exercise_table_fields\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_defaults\"}",
+      "output": "passed"
+    }
+  ],
+  "starterCode": {
+    "python": "from typing import Optional\nfrom sqlmodel import SQLModel, Field, Session, create_engine, select, Relationship\n\nclass Workout(SQLModel):\n    # Add table=True and the required fields.\n    pass\n\nclass Exercise(SQLModel):\n    # Add table=True and the required fields.\n    pass\n\ndef create_tables(engine):\n    raise NotImplementedError\n\n# === SUPPLIED SQLMODEL TESTS ===\n# Read the tests below. Keep the supplied tests and runner.\n_SM_TESTS = r'''\nimport pytest\nfrom sqlmodel import SQLModel, Session, create_engine, select\nimport workout_app as app\n\n@pytest.fixture\ndef engine():\n    engine = create_engine(\"sqlite://\")\n    SQLModel.metadata.create_all(engine)\n    yield engine\n    engine.dispose()\n\n@pytest.fixture\ndef session(engine):\n    with Session(engine) as session:\n        yield session\n\n\ndef test_workout_table_fields():\n    assert app.Workout.__tablename__ == \"workout\"\n    assert set(app.Workout.__table__.columns.keys()) == {\"id\", \"name\", \"description\"}\n    assert app.Workout.__table__.c.id.primary_key\n\ndef test_exercise_table_fields():\n    assert set(app.Exercise.__table__.columns.keys()) == {\"id\", \"name\", \"muscle_group\"}\n    assert app.Exercise.__table__.c.id.primary_key\n\ndef test_defaults():\n    workout, exercise = app.Workout(name=\"Leg Day\"), app.Exercise(name=\"Squats\")\n    assert workout.id is None and workout.description == \"\"\n    assert exercise.id is None and exercise.muscle_group == \"\"\n\ndef test_required_name():\n    assert app.Workout.model_fields[\"name\"].is_required()\n    assert app.Exercise.model_fields[\"name\"].is_required()\n\ndef test_create_and_persist():\n    engine = create_engine(\"sqlite://\")\n    try:\n        app.create_tables(engine)\n        with Session(engine) as session:\n            session.add(app.Workout(name=\"Upper Body\", description=\"Press\"))\n            session.add(app.Exercise(name=\"Bench Press\", muscle_group=\"chest\"))\n            session.commit()\n        with Session(engine) as session:\n            assert session.exec(select(app.Workout)).one().description == \"Press\"\n            assert session.exec(select(app.Exercise)).one().muscle_group == \"chest\"\n    finally:\n        engine.dispose()\n\ndef test_create_tables_is_idempotent(engine):\n    with Session(engine) as session:\n        session.add(app.Workout(name=\"Keep me\"))\n        session.commit()\n    app.create_tables(engine)\n    app.create_tables(engine)\n    with Session(engine) as session:\n        assert session.exec(select(app.Workout)).one().name == \"Keep me\"\n'''[1:]\n_SM_IDS = ['test_workout_table_fields', 'test_exercise_table_fields', 'test_defaults', 'test_required_name', 'test_create_and_persist', 'test_create_tables_is_idempotent']\n\n\nimport json as _json\nfrom pathlib import Path as _Path\nimport os as _os\nimport subprocess as _subprocess\nimport sys as _sys\nimport tempfile as _tempfile\nimport xml.etree.ElementTree as _xml\n\n_SM_RESULTS = None\n\n\ndef _sm_run_tests():\n    source = _Path(__file__).read_text().split('# === SUPPLIED SQLMODEL TESTS ===', 1)[0]\n    with _tempfile.TemporaryDirectory(prefix='sqlmodel-tests-') as folder:\n        work = _Path(folder)\n        (work / 'workout_app.py').write_text(source)\n        (work / 'test_workout.py').write_text(_SM_TESTS)\n        report = work / 'results.xml'\n        env = dict(_os.environ)\n        for key in ('PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'PYTHONPATH'):\n            env.pop(key, None)\n        env['PYTEST_DISABLE_PLUGIN_AUTOLOAD'] = '1'\n        try:\n            done = _subprocess.run(\n                [_sys.executable, '-m', 'pytest', '-c', '/dev/null', '-p', 'no:cacheprovider',\n                 '-q', '--tb=short', '--junitxml=' + str(report), str(work / 'test_workout.py')],\n                cwd=work, env=env, capture_output=True, text=True, timeout=20)\n            if report.exists():\n                results = {}\n                for case in _xml.parse(report).iter('testcase'):\n                    name = case.get('name')\n                    failures = [child for child in case if child.tag in ('failure', 'error', 'skipped')]\n                    results[name] = ('FAILED ' + name + ' | ' +\n                                     (failures[0].text or failures[0].get('message', 'test did not pass'))[-1800:]\n                                     if failures else 'passed')\n                if set(results) == set(_SM_IDS) and done.returncode in (0, 1):\n                    return {key: value.replace('\\n', ' | ') for key, value in results.items()}\n            error = (done.stdout + done.stderr)[-2200:].replace('\\n', ' | ')\n        except _subprocess.TimeoutExpired:\n            error = 'pytest exceeded 20 seconds'\n        except Exception as exc:\n            error = str(exc).replace('\\n', ' | ')\n        return {name: 'FAILED ' + name + ' | ' + error for name in _SM_IDS}\n\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        global _SM_RESULTS\n        target = _json.loads(payload)['test']\n        if target == '--list':\n            return _json.dumps(_SM_IDS)\n        if target not in _SM_IDS:\n            return 'Unknown test: ' + str(target)\n        if _SM_RESULTS is None:\n            _SM_RESULTS = _sm_run_tests()\n        return _SM_RESULTS[target]\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"test\": \"test_workout_table_fields\"}"
+    },
+    {
+      "payload": "{\"test\": \"test_exercise_table_fields\"}"
+    },
+    {
+      "payload": "{\"test\": \"test_defaults\"}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

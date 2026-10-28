@@ -1,0 +1,53 @@
+[
+  {
+    "payload": "{\"test\": \"test_factory_initializes_tables\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_list\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_create_and_read\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_create_is_durable\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_body\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_and_invalid_id\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_order_and_pagination\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_delete_preserves_other_rows\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_create_log_and_persist\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_pair\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_log_body\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_list_all_in_id_order\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_filter_by_workout\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_filter_by_exercise\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_combined_filters_are_intersection\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_workout_exercises\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_duplicate_links_return_distinct_exercises\"}"
+  }
+]

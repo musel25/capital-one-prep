@@ -1,0 +1,44 @@
+{
+  "id": "pbs-08-model-inheritance-and-api-schemas",
+  "title": "08. Model Inheritance and API Schemas",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "02-relationships-and-schemas",
+  "examples": [
+    {
+      "input": "{\"test\": \"test_only_workout_is_a_table\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_create_has_no_id\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_read_requires_id\"}",
+      "output": "passed"
+    }
+  ],
+  "starterCode": {
+    "python": "from typing import Optional\nfrom sqlmodel import SQLModel, Field, Session, create_engine, select, Relationship\n\nclass WorkoutBase(SQLModel):\n    # Add shared fields and name validation.\n    pass\n\nclass Workout(WorkoutBase, table=True):\n    id: Optional[int] = Field(default=None, primary_key=True)\n\nclass WorkoutCreate(WorkoutBase):\n    pass\n\nclass WorkoutRead(WorkoutBase):\n    pass\n\nclass WorkoutUpdate(SQLModel):\n    pass\n\nclass ExerciseRead(SQLModel):\n    pass\n\nclass WorkoutWithExercises(WorkoutRead):\n    pass\n\n# === SUPPLIED SQLMODEL TESTS ===\n# Read the tests below. Keep the supplied tests and runner.\n_SM_TESTS = r'''\nimport pytest\nfrom sqlmodel import SQLModel, Session, create_engine, select\nimport workout_app as app\n\n@pytest.fixture\ndef engine():\n    engine = create_engine(\"sqlite://\")\n    SQLModel.metadata.create_all(engine)\n    yield engine\n    engine.dispose()\n\n@pytest.fixture\ndef session(engine):\n    with Session(engine) as session:\n        yield session\n\nfrom pydantic import ValidationError\n\ndef test_only_workout_is_a_table():\n    assert set(SQLModel.metadata.tables) == {\"workout\"}\n    assert issubclass(app.WorkoutCreate, app.WorkoutBase)\n    assert issubclass(app.WorkoutRead, app.WorkoutBase)\n\ndef test_create_has_no_id():\n    row = app.WorkoutCreate(name=\"Leg Day\")\n    assert row.model_dump() == {\"name\": \"Leg Day\", \"description\": \"\"}\n    assert \"id\" not in app.WorkoutCreate.model_fields\n\ndef test_read_requires_id():\n    with pytest.raises(ValidationError):\n        app.WorkoutRead(name=\"A\")\n    assert app.WorkoutRead(id=7, name=\"A\").id == 7\n\ndef test_name_validation():\n    for schema in (app.WorkoutCreate, app.WorkoutRead):\n        with pytest.raises(ValidationError):\n            schema(id=1, name=\"\")\n    with pytest.raises(ValidationError):\n        app.WorkoutUpdate(name=\"\")\n\ndef test_patch_omitted_and_null():\n    assert app.WorkoutUpdate().name is None and app.WorkoutUpdate().description is None\n    assert app.WorkoutUpdate().model_dump(exclude_unset=True) == {}\n    assert app.WorkoutUpdate(name=None).model_dump(exclude_unset=True) == {\"name\": None}\n    assert app.WorkoutUpdate(description=None).model_dump(exclude_unset=True) == {\"description\": None}\n    assert app.WorkoutUpdate(name=\"A\").model_dump(exclude_unset=True) == {\"name\": \"A\"}\n\ndef test_nested_serialization():\n    row = app.WorkoutWithExercises(id=1, name=\"Upper\", exercises=[{\"id\": 2, \"name\": \"Bench\"}])\n    assert isinstance(row.exercises[0], app.ExerciseRead)\n    assert row.model_dump()[\"exercises\"] == [{\"id\": 2, \"name\": \"Bench\"}]\n\ndef test_nested_default_is_independent():\n    first = app.WorkoutWithExercises(id=1, name=\"A\")\n    second = app.WorkoutWithExercises(id=2, name=\"B\")\n    first.exercises.append(app.ExerciseRead(id=1, name=\"Squat\"))\n    assert second.exercises == []\n'''[1:]\n_SM_IDS = ['test_only_workout_is_a_table', 'test_create_has_no_id', 'test_read_requires_id', 'test_name_validation', 'test_patch_omitted_and_null', 'test_nested_serialization', 'test_nested_default_is_independent']\n\n\nimport json as _json\nfrom pathlib import Path as _Path\nimport os as _os\nimport subprocess as _subprocess\nimport sys as _sys\nimport tempfile as _tempfile\nimport xml.etree.ElementTree as _xml\n\n_SM_RESULTS = None\n\n\ndef _sm_run_tests():\n    source = _Path(__file__).read_text().split('# === SUPPLIED SQLMODEL TESTS ===', 1)[0]\n    with _tempfile.TemporaryDirectory(prefix='sqlmodel-tests-') as folder:\n        work = _Path(folder)\n        (work / 'workout_app.py').write_text(source)\n        (work / 'test_workout.py').write_text(_SM_TESTS)\n        report = work / 'results.xml'\n        env = dict(_os.environ)\n        for key in ('PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'PYTHONPATH'):\n            env.pop(key, None)\n        env['PYTEST_DISABLE_PLUGIN_AUTOLOAD'] = '1'\n        try:\n            done = _subprocess.run(\n                [_sys.executable, '-m', 'pytest', '-c', '/dev/null', '-p', 'no:cacheprovider',\n                 '-q', '--tb=short', '--junitxml=' + str(report), str(work / 'test_workout.py')],\n                cwd=work, env=env, capture_output=True, text=True, timeout=20)\n            if report.exists():\n                results = {}\n                for case in _xml.parse(report).iter('testcase'):\n                    name = case.get('name')\n                    failures = [child for child in case if child.tag in ('failure', 'error', 'skipped')]\n                    results[name] = ('FAILED ' + name + ' | ' +\n                                     (failures[0].text or failures[0].get('message', 'test did not pass'))[-1800:]\n                                     if failures else 'passed')\n                if set(results) == set(_SM_IDS) and done.returncode in (0, 1):\n                    return {key: value.replace('\\n', ' | ') for key, value in results.items()}\n            error = (done.stdout + done.stderr)[-2200:].replace('\\n', ' | ')\n        except _subprocess.TimeoutExpired:\n            error = 'pytest exceeded 20 seconds'\n        except Exception as exc:\n            error = str(exc).replace('\\n', ' | ')\n        return {name: 'FAILED ' + name + ' | ' + error for name in _SM_IDS}\n\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        global _SM_RESULTS\n        target = _json.loads(payload)['test']\n        if target == '--list':\n            return _json.dumps(_SM_IDS)\n        if target not in _SM_IDS:\n            return 'Unknown test: ' + str(target)\n        if _SM_RESULTS is None:\n            _SM_RESULTS = _sm_run_tests()\n        return _SM_RESULTS[target]\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"test\": \"test_only_workout_is_a_table\"}"
+    },
+    {
+      "payload": "{\"test\": \"test_create_has_no_id\"}"
+    },
+    {
+      "payload": "{\"test\": \"test_read_requires_id\"}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

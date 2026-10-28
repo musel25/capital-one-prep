@@ -1,0 +1,23 @@
+[
+  {
+    "payload": "{\"test\": \"test_log_links_to_pair\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pair_isolation\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_workout_filter\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_exercise_filter\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_all_and_no_match\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_and_missing\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_pair_log_is_durable\"}"
+  }
+]

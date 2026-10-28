@@ -1,0 +1,72 @@
+[
+  {
+    "description": "Welcome to the SQLModel learning path! You're about to build a workout tracking app for a local gym.\nThe gym owner wants to digitize their workout programs and exercises. Your first task? Create the database schema to store workouts (like \"Upper Body Day\" or \"Leg Day\") and exercises (like \"Bench Press\" or \"Squats\").",
+    "level": "Beginner",
+    "n": 1,
+    "slug": "your-first-sqlmodel-tables",
+    "title": "Your First SQLModel Tables"
+  },
+  {
+    "description": "Great job creating your database tables! Now the gym owner wants to start adding workout programs to the database.\nIn this exercise, you'll learn how to safely insert data into your database using SQLModel's Session object.",
+    "level": "Beginner",
+    "n": 2,
+    "slug": "session-management-basic-inserts",
+    "title": "Session Management & Basic Inserts"
+  },
+  {
+    "description": "Now that you can insert workouts and exercises, the gym staff needs to retrieve them. Time to learn how to query your database!\nIn SQLModel, you build queries using the select() function. Think of it like asking the database a question: \"Give me all workouts\" or \"Find the exercise named 'Squats'\".",
+    "level": "Beginner",
+    "n": 3,
+    "slug": "reading-data-with-select",
+    "title": "Reading Data with Select"
+  },
+  {
+    "description": "The gym needs to fix typos in workout names and remove discontinued programs. Time to complete your CRUD (Create, Read, Update, Delete) skills!\nSQLModel makes updates simple: fetch the object, modify it, commit. No special UPDATE statements needed!",
+    "level": "Beginner",
+    "n": 4,
+    "slug": "update-and-delete-operations",
+    "title": "Update and Delete Operations"
+  },
+  {
+    "description": "The gym wants to track workout performance over time! Each time someone completes a workout, they log their sets, reps, and weights.\nThis introduces a relationship: one workout can have many log entries, but each log entry belongs to exactly one workout. This is called a one-to-many relationship.",
+    "level": "Beginner",
+    "n": 5,
+    "slug": "one-to-many-relationships",
+    "title": "One-to-Many Relationships"
+  },
+  {
+    "description": "Here's the reality: workouts are composed of multiple exercises, and the same exercise appears in different workouts.\nFor example:\n\n\"Upper Body Day\" includes: Bench Press, Pull Ups, Shoulder Press\n\"Push Day\" also includes: Bench Press, Shoulder Press\n\nThis is a many-to-many relationship - each workout has many exercises, and each exercise belongs to many workouts.",
+    "level": "Intermediate",
+    "n": 6,
+    "slug": "many-to-many-relationships",
+    "title": "Many-to-Many Relationships"
+  },
+  {
+    "description": "Here's the challenge: you need to track performance for specific workout-exercise combinations.\nWhen someone does Bench Press in \"Upper Body Day\" vs \"Push Day\", those are different contexts with potentially different weights and reps. The log entries should link to the specific workout-exercise pair, not just the workout.\nThis means LogEntry will link to WorkoutExercise (the link table) instead of directly to Workout.",
+    "level": "Intermediate",
+    "n": 7,
+    "slug": "advanced-link-table-relationships",
+    "title": "Advanced Link Table Relationships"
+  },
+  {
+    "description": "You're about to build a REST API for the gym app. There's a problem: APIs need different shapes of data for different operations.\nWhen creating a workout, you don't send an id (database generates it). When reading a workout, you want the id included. When returning a workout with exercises, you want nested data.\nInstead of duplicating fields, you'll use model inheritance to share common fields and create specialized schemas for different use cases.",
+    "level": "Intermediate",
+    "n": 8,
+    "slug": "model-inheritance-and-api-schemas",
+    "title": "Model Inheritance and API Schemas"
+  },
+  {
+    "description": "Time to expose your gym database to the world! You'll build a REST API using FastAPI, the modern web framework designed to work seamlessly with SQLModel.\nFastAPI lets you create HTTP endpoints that receive requests and return responses. Combined with SQLModel, you get automatic validation, serialization, and documentation.",
+    "level": "Advanced",
+    "n": 9,
+    "slug": "fastapi-integration-basic-endpoints",
+    "title": "FastAPI Integration - Basic Endpoints"
+  },
+  {
+    "description": "Time for the grand finale! You'll build advanced API endpoints that handle the full complexity of the gym app: creating log entries, viewing workout exercises, and filtering logs with optional query parameters.\nThis exercise brings together everything you've learned: relationships, link tables, complex queries, and FastAPI integration.",
+    "level": "Advanced",
+    "n": 10,
+    "slug": "fastapi-integration-complex-queries",
+    "title": "FastAPI Integration - Complex Queries"
+  }
+]

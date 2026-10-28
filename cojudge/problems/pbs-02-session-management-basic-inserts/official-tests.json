@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"test\": \"test_add_workout\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_add_exercise\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_defaults_and_duplicate_names\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rows_survive_a_new_session\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_session_generator_committed_rows\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_session_generator_rolls_back\"}"
+  }
+]

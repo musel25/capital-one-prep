@@ -1,0 +1,23 @@
+[
+  {
+    "payload": "{\"test\": \"test_only_workout_is_a_table\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_create_has_no_id\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_read_requires_id\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_name_validation\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_patch_omitted_and_null\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_nested_serialization\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_nested_default_is_independent\"}"
+  }
+]

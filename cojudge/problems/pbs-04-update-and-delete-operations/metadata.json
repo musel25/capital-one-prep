@@ -1,0 +1,44 @@
+{
+  "id": "pbs-04-update-and-delete-operations",
+  "title": "04. Update and Delete Operations",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "01-tables-and-crud",
+  "examples": [
+    {
+      "input": "{\"test\": \"test_update_fields\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_partial_and_empty_update\"}",
+      "output": "passed"
+    },
+    {
+      "input": "{\"test\": \"test_update_is_durable\"}",
+      "output": "passed"
+    }
+  ],
+  "starterCode": {
+    "python": "from typing import Optional\nfrom sqlmodel import SQLModel, Field, Session, create_engine, select, Relationship\n\nclass Workout(SQLModel, table=True):\n    id: Optional[int] = Field(default=None, primary_key=True)\n    name: str\n    description: str = \"\"\n\nclass Exercise(SQLModel, table=True):\n    id: Optional[int] = Field(default=None, primary_key=True)\n    name: str\n    muscle_group: str = \"\"\n\ndef update_workout(session, workout_id, **changes):\n    raise NotImplementedError\n\ndef delete_workout(session, workout_id):\n    raise NotImplementedError\n\n# === SUPPLIED SQLMODEL TESTS ===\n# Read the tests below. Keep the supplied tests and runner.\n_SM_TESTS = r'''\nimport pytest\nfrom sqlmodel import SQLModel, Session, create_engine, select\nimport workout_app as app\n\n@pytest.fixture\ndef engine():\n    engine = create_engine(\"sqlite://\")\n    SQLModel.metadata.create_all(engine)\n    yield engine\n    engine.dispose()\n\n@pytest.fixture\ndef session(engine):\n    with Session(engine) as session:\n        yield session\n\n\n@pytest.fixture\ndef seeded(session):\n    session.add_all([app.Workout(id=1, name=\"A\", description=\"old\"), app.Workout(id=2, name=\"B\")])\n    session.commit()\n    return session\n\ndef test_update_fields(seeded):\n    row = app.update_workout(seeded, 1, name=\"New\", description=\"\")\n    assert row.id == 1 and row.name == \"New\" and row.description == \"\"\n    assert seeded.get(app.Workout, 2).name == \"B\"\n\ndef test_partial_and_empty_update(seeded):\n    row = app.update_workout(seeded, 1, description=\"changed\")\n    assert row.name == \"A\" and row.description == \"changed\"\n    assert app.update_workout(seeded, 1).name == \"A\"\n\ndef test_update_is_durable(seeded, engine):\n    app.update_workout(seeded, 1, name=\"Saved\")\n    seeded.close()\n    with Session(engine) as check:\n        assert check.get(app.Workout, 1).name == \"Saved\"\n\ndef test_missing_rows(seeded):\n    assert app.update_workout(seeded, 99, name=\"No\") is None\n    assert app.delete_workout(seeded, 99) is False\n\ndef test_invalid_field_is_atomic(seeded):\n    with pytest.raises(ValueError):\n        app.update_workout(seeded, 1, name=\"Must not change\", id=7)\n    assert seeded.get(app.Workout, 1).name == \"A\"\n    assert seeded.get(app.Workout, 7) is None\n\ndef test_delete_is_durable(seeded, engine):\n    assert app.delete_workout(seeded, 1) is True\n    assert app.delete_workout(seeded, 1) is False\n    seeded.close()\n    with Session(engine) as check:\n        assert check.get(app.Workout, 1) is None and check.get(app.Workout, 2).name == \"B\"\n'''[1:]\n_SM_IDS = ['test_update_fields', 'test_partial_and_empty_update', 'test_update_is_durable', 'test_missing_rows', 'test_invalid_field_is_atomic', 'test_delete_is_durable']\n\n\nimport json as _json\nfrom pathlib import Path as _Path\nimport os as _os\nimport subprocess as _subprocess\nimport sys as _sys\nimport tempfile as _tempfile\nimport xml.etree.ElementTree as _xml\n\n_SM_RESULTS = None\n\n\ndef _sm_run_tests():\n    source = _Path(__file__).read_text().split('# === SUPPLIED SQLMODEL TESTS ===', 1)[0]\n    with _tempfile.TemporaryDirectory(prefix='sqlmodel-tests-') as folder:\n        work = _Path(folder)\n        (work / 'workout_app.py').write_text(source)\n        (work / 'test_workout.py').write_text(_SM_TESTS)\n        report = work / 'results.xml'\n        env = dict(_os.environ)\n        for key in ('PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'PYTHONPATH'):\n            env.pop(key, None)\n        env['PYTEST_DISABLE_PLUGIN_AUTOLOAD'] = '1'\n        try:\n            done = _subprocess.run(\n                [_sys.executable, '-m', 'pytest', '-c', '/dev/null', '-p', 'no:cacheprovider',\n                 '-q', '--tb=short', '--junitxml=' + str(report), str(work / 'test_workout.py')],\n                cwd=work, env=env, capture_output=True, text=True, timeout=20)\n            if report.exists():\n                results = {}\n                for case in _xml.parse(report).iter('testcase'):\n                    name = case.get('name')\n                    failures = [child for child in case if child.tag in ('failure', 'error', 'skipped')]\n                    results[name] = ('FAILED ' + name + ' | ' +\n                                     (failures[0].text or failures[0].get('message', 'test did not pass'))[-1800:]\n                                     if failures else 'passed')\n                if set(results) == set(_SM_IDS) and done.returncode in (0, 1):\n                    return {key: value.replace('\\n', ' | ') for key, value in results.items()}\n            error = (done.stdout + done.stderr)[-2200:].replace('\\n', ' | ')\n        except _subprocess.TimeoutExpired:\n            error = 'pytest exceeded 20 seconds'\n        except Exception as exc:\n            error = str(exc).replace('\\n', ' | ')\n        return {name: 'FAILED ' + name + ' | ' + error for name in _SM_IDS}\n\n\nclass Solution:\n    def run(self, payload: str) -> str:\n        global _SM_RESULTS\n        target = _json.loads(payload)['test']\n        if target == '--list':\n            return _json.dumps(_SM_IDS)\n        if target not in _SM_IDS:\n            return 'Unknown test: ' + str(target)\n        if _SM_RESULTS is None:\n            _SM_RESULTS = _sm_run_tests()\n        return _SM_RESULTS[target]\n"
+  },
+  "testCases": [
+    {
+      "payload": "{\"test\": \"test_update_fields\"}"
+    },
+    {
+      "payload": "{\"test\": \"test_partial_and_empty_update\"}"
+    },
+    {
+      "payload": "{\"test\": \"test_update_is_durable\"}"
+    }
+  ],
+  "functionName": "run",
+  "params": [
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": []
+}

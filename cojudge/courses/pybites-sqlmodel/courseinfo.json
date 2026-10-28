@@ -1,0 +1,27 @@
+{
+  "title": "Pybites SQLModel Path",
+  "description": "The 10 SQLModel learning path exercises, in the original order. Build a workout tracker with real SQLModel, SQLite, relationships, API schemas, and FastAPI. All templates and tests are recreations based on the public descriptions. The original exercises require Pybites premium. Select Python. The supplied runtime includes all required packages.",
+  "category-order": [
+    "01-tables-and-crud",
+    "02-relationships-and-schemas",
+    "03-fastapi"
+  ],
+  "problems-of-category": {
+    "01-tables-and-crud": [
+      "pbs-01-your-first-sqlmodel-tables",
+      "pbs-02-session-management-basic-inserts",
+      "pbs-03-reading-data-with-select",
+      "pbs-04-update-and-delete-operations"
+    ],
+    "02-relationships-and-schemas": [
+      "pbs-05-one-to-many-relationships",
+      "pbs-06-many-to-many-relationships",
+      "pbs-07-advanced-link-table-relationships",
+      "pbs-08-model-inheritance-and-api-schemas"
+    ],
+    "03-fastapi": [
+      "pbs-09-fastapi-integration-basic-endpoints",
+      "pbs-10-fastapi-integration-complex-queries"
+    ]
+  }
+}
