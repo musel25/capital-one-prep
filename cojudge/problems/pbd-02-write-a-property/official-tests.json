@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_promo_expired\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_promo_not_expired\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_uses_property\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_expired_is_read_only\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_expired_follows_a_new_date\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_expiry_boundary_and_boolean_result\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_constructor_preserves_values_and_empty_name\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_expired_can_become_current_again\"}"
+  }
+]

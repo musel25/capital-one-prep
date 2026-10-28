@@ -1,0 +1,218 @@
+[
+  {
+    "n": 1,
+    "slug": "pybites-date-generator",
+    "title": "Pybites date generator",
+    "level": "Beginner",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>Write a <a href=\"https://pybit.es/articles/generators/\" target=\"_blank\" rel=\"noopener\"><em>generator</em></a> that yields every 100th day counting forward from the <code>PYBITES_BORN</code> date.</p>\r\n<p><span style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;\">Here is how the generator would work if you import and use it in your REPL:</span></p>\r\n<pre>&gt;&gt;&gt; from itertools import islice<br>&gt;&gt;&gt; from pprint import pprint as pp<br>&gt;&gt;&gt; from gendates import gen_special_pybites_dates<br>&gt;&gt;&gt; gen = gen_special_pybites_dates()<br>&gt;&gt;&gt; pp(list(islice(gen, 5)))<br>[datetime.datetime(2017, 3, 29, 0, 0),<br> datetime.datetime(2017, 7, 7, 0, 0),<br> datetime.datetime(2017, 10, 15, 0, 0),<br> datetime.datetime(2018, 1, 23, 0, 0),<br>&nbsp;datetime.datetime(2018, 5, 3, 0, 0)]</pre>\r\n<p><strong>Note:</strong> the tests will take the first 10 dates your generator yields, each exactly 100 days after the previous one.</p>\r\n<p>Keep calm and code in Python, have fun!</p>\r\n<p><strong>Update</strong> 3rd of Jan 2021: previously we also asked for the PyBites N year marks as well, but this unnecessarily complicated this beginner Bite so simplified the requirements a bit.</p></p>",
+    "template": "from datetime import datetime, timedelta\n\nPYBITES_BORN = datetime(year=2016, month=12, day=19)\n\n\ndef gen_special_pybites_dates():\n    pass",
+    "tests": "from datetime import datetime\nfrom itertools import islice\n\nfrom gendates import gen_special_pybites_dates\n\n\ndef test_gen_special_pybites_dates():\n    gen = gen_special_pybites_dates()\n    dates = list(islice(gen, 10))\n    expected = [datetime(2017, 3, 29, 0, 0),\n                datetime(2017, 7, 7, 0, 0),\n                datetime(2017, 10, 15, 0, 0),\n                datetime(2018, 1, 23, 0, 0),\n                datetime(2018, 5, 3, 0, 0),\n                datetime(2018, 8, 11, 0, 0),\n                datetime(2018, 11, 19, 0, 0),\n                datetime(2019, 2, 27, 0, 0),\n                datetime(2019, 6, 7, 0, 0),\n                datetime(2019, 9, 15, 0, 0)]\n    assert dates == expected"
+  },
+  {
+    "n": 2,
+    "slug": "write-a-property",
+    "title": "Write a property",
+    "level": "Beginner",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>Write a simple <code>Promo</code> class. Its constructor receives two variables: <code>name</code> (which must be a string) and <code>expires</code> (which must be a <code>datetime</code> object).</p>\r\n<p>Add a <a href=\"https://docs.python.org/3/library/functions.html#property\" target=\"_blank\" rel=\"noopener\"><code>property</code></a> called <code>expired</code> which returns a boolean value indicating whether the promo has expired or not.</p>\r\n<p>Checkout the tests and <code>datetime</code> module for more info. Have fun!</p></p>",
+    "template": "from datetime import datetime\n\nNOW = datetime.now()\n\n\nclass Promo:\n    pass",
+    "tests": "from datetime import timedelta\nimport inspect\n\nfrom simple_property import Promo, NOW\n\n\ndef test_promo_expired():\n    past_time = NOW - timedelta(seconds=3)\n    twitter_promo = Promo('twitter', past_time)\n    assert twitter_promo.expired\n\n\ndef test_promo_not_expired():\n    future_date = NOW + timedelta(days=1)\n    newsletter_promo = Promo('newsletter', future_date)\n    assert not newsletter_promo.expired\n\n\ndef test_uses_property():\n    assert 'property' in inspect.getsource(Promo)"
+  },
+  {
+    "n": 3,
+    "slug": "working-with-datetimes",
+    "title": "Working with datetimes",
+    "level": "Beginner",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>This Bite involves solving two problems using <code>datetime</code>:</p>\r\n<ol>\r\n<li>We kicked off our 100 Days of Code project on March 30th, 2017. Calculate what date we finished the full 100 days!</li>\r\n<li><em>PyBites</em> was founded on the 19th of December 2016. We're attending our first PyCon together on May 8th, 2018. Can you calculate how many days from PyBites' inception to our first PyCon meet up?</li>\r\n</ol></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 4,
+    "slug": "work-with-datetimes-strptime-and-strftime",
+    "title": "Work with datetime's strptime and strftime",
+    "level": "Beginner",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>In this Bite you get some more practice with <code>datetime</code>'s useful <code>strptime</code> and <code>stftime</code>.</p>\r\n<p>Complete the two functions: <code>years_ago</code> and <code>convert_eu_to_us_date</code> following the instructions in their <em>docstrings</em>.</p>\r\n<p>This is the definition&nbsp;and difference between the two:</p>\r\n<ul>\r\n<li><code>strptime</code>: <em>parse (convert) string to datetime object.</em></li>\r\n<li><code>strftime</code>: <em>create formatted string for given time/date/datetime object according to specified format.</em></li>\r\n</ul>\r\n<p>Reference: <a href=\"https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior\" target=\"_blank\" rel=\"noopener\">8.1.8. strftime() and strptime() Behavior</a>. Good luck and keep calm and code in Python!</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 5,
+    "slug": "like-theres-no-tomorrow",
+    "title": "Like there's no tomorrow?",
+    "level": "Beginner",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>Ever have difficulty remembering what today's date is?</p>\r\n<p>How about tomorrow's?</p>\r\n<p>I know I do...&nbsp; Help me out by completing the <code>tomorrow()</code> function to return a <code><a href=\"https://docs.python.org/3/library/datetime.html?highlight=datetime#datetime.date\" target=\"_blank\" rel=\"noopener\">date</a></code> object with tomorrow's date.</p>\r\n<p>&nbsp;</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 6,
+    "slug": "parsing-dates-from-logs",
+    "title": "Parsing dates from logs",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>In this Bite we will look at this short server <a href=\"https://bites-data.s3.us-east-2.amazonaws.com/messages.log\" target=\"_blank\" rel=\"noopener\">log</a>, finding the <strong>first </strong>and <strong>last</strong>&nbsp;system shutdown events:</p>\r\n<pre>INFO 2014-07-03T23:27:51 supybot Shutdown initiated.<br>...<br>INFO 2014-07-03T23:31:22 supybot Shutdown initiated.</pre>\r\n<p>You'll need to calculate the time between these two events. First extract the timestamps from the log entries and convert them to <code>datetime</code> objects. Then use <code>datetime.timedelta</code> to calculate the time difference between them.</p>\r\n<p>You can assume the log is sorted in ascending order. Check out each function's <code>docstring</code> and the <strong>TESTS</strong> for more details on how to solve this Bite.</p>\r\n<p>Good luck, keep calm, and code in Python!</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 7,
+    "slug": "converting-date-strings-to-datetimes",
+    "title": "Converting date strings to datetimes",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>In this Bite you are provided with a list of publish dates of all our PyBites blog posts. They are in this format: <em>Thu, 04 May 2017 20:46:00 +0200</em>.</p>\r\n<p>Write a function called <code>convert_to_datetime</code> that takes a date string and convert it to a <code>datetime</code> object. You can leave the timezone part (e.g. <em>+0200</em>) off.</p>\r\n<p>Secondly complete the <code>get_month_most_posts</code> function: it should take a list of <code>datetime</code> objects and return the month that we posted the most. You should get <strong>2017-01</strong>. See also the <em>TESTS</em> tab how your code will be tested.</p>\r\n<p>Have fun and let us know how you experienced this Bite. Have fun!</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 8,
+    "slug": "calculate-the-total-duration-of-a-course",
+    "title": "Calculate the total duration of a course",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>In this Bite you read in a text file with course times (<em>MM:SS</em>) per video.</p>\r\n<p>You extract these and calculate the total course duration in <em>HH:MM:SS</em>.</p>\r\n<p>See the <em>docstrings</em> and tests for more details.</p>\r\n<p>Have fun and we hope you learn a thing or two.</p>\r\n<blockquote>Trivia: in honor of our <a href=\"https://pybit.es/articles/js_time_scraper_ch/\" target=\"_blank\" rel=\"noopener\">Code Challenges Pilot</a>: this was the exercise we used to test the waters when we started out :)</blockquote></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 9,
+    "slug": "when-does-python-2-die-on-planet-miller",
+    "title": "When does python 2 die on planet miller?",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>Imagine you landed on <em>Planet Miller</em> (from the movie <a href=\"http://www.imdb.com/title/tt0816692/?ref_=nv_sr_1\" target=\"_blank\" rel=\"noopener\">Interstellar</a>) <strong>where 1 hour takes 7 Earth years</strong> (known as the <em>gravitational time dilation effect</em> - see <a href=\"https://www.quora.com/Interstellar-2014-movie-Why-did-every-hour-on-the-first-planet-take-7-years-on-Earth\" target=\"_blank\" rel=\"noopener\">here</a> if interested).</p>\r\n<p>Given a fixed start date <code>BITE_CREATED_DT</code> (26th of Feb 2018) calculate:</p>\r\n<ol>\r\n<li>How many hours Python 2 has left on Planet Earth</li>\r\n<li>How many minutes Python 2 has left on Planet Miller</li>\r\n</ol>\r\n<p>As per <a href=\"https://pythonclock.org/\" target=\"_blank\" rel=\"noopener\">pythonclock.org</a> Python 2.7 will retire on 1st of Jan 2020 (after this date you can still do this Bite because we work a fixed start date.)</p>\r\n<p>Have fun and keep calm and code in Python!</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 10,
+    "slug": "organize-a-meeting-between-timezones",
+    "title": "Organize a meeting between timezones",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p><em>We used pytz for this Bite before, but since 3.9 you can use the <a href=\"https://docs.python.org/3/library/zoneinfo.html\" target=\"_blank\" rel=\"noopener\">zoneinfo</a> (Standard lib) module \ud83d\udcc8</em></p>\r\n<p>Help Pybites community friends find a reasonable common time to meet!</p>\r\n<p>Complete the function below receiving a UTC <code>datetime</code> and one or more timezones (<em>US/Arizona</em>, <em>Europe/Madrid</em>, etc).</p>\r\n<p>Use the <code>zoneinfo</code> module &nbsp;to see if the given datetime is within <code>MIN_MEETING_HOUR</code> and <code>MAX_MEETING_HOUR</code> for all provided timezones. Return a boolean.</p>\r\n<p>If a wrong timezone is given raise a <code>ValueError</code>.</p>\r\n<p>See the TESTS tab for <code>True</code>/<code>False</code> scenarios. Good luck and have fun!</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 11,
+    "slug": "humanize-a-datetime",
+    "title": "Humanize a datetime",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>In this Bite you will convert a timedelta object into something readable.</p>\r\n<p>There are modules to do this, but the goal in this Bite is to try to solve it yourself using standard Python.</p>\r\n<p>- If the date passed into&nbsp;<code>pretty_date</code> is &lt;= 2 days ago return the pretty date string, you can use <code>TIME_OFFSETS</code> for this</p>\r\n<p>- If the date passed in is older than that, return the date in the format month/day/year, 2 digits each, e.g.&nbsp;<code>05/19/18</code>)</p>\r\n<p>- If a non&nbsp;<code>datetime</code> object is passed into the <code>pretty_date</code> function, raise a <code>ValueError</code>.</p>\r\n<p>Check out the tests for argument passed into the function -&gt; expected return.</p>\r\n<p>Good luck and keep calm and code in Python!</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 12,
+    "slug": "primitive-date-format-inferrer",
+    "title": "Primitive date format inferrer",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>Complete the <code>get_dates</code> method given the following:</p>\r\n<ul>\r\n<li>a listing of date strings in unknown date format and</li>\r\n<li>an <code>enum</code> class which contains allowed/supported date formats</li>\r\n</ul>\r\n<p>Although the following assignment text is wordy, once you will see test cases the task definition will become clearer.</p>\r\n<p>The <code>get_dates</code> method will return a list of date strings in the format <em>yyyy-mm-dd</em>.</p>\r\n<p>The date format of input date strings will be inferred based on the most prevalent allowed date format of items in the list. Allowed/supported date formats are defined in an <code>enum</code> class.</p>\r\n<p>The most prevalent allowed date format of items must represent a single most frequent date format. If there are two most frequent formats with the same frequency raise a (custom) <code>InfDateFmtError</code> exception.</p>\r\n<p>Items in an input list can be in any format no matter whether or not this format is listed in the DateFormat <code>enum</code> class. Items can be even values which cannot represent a date at all. Those items are nonparsable. If the frequency of nonparsable elements is higher than the frequency of other allowed date formats (counted individually for each format) raise a custom <code>InfDateFmtError</code> exception.</p>\r\n<p>Once you have the most prevalent date format, parse dates in an input list and return them as a list of strings in the format <em>yyyy-mm-dd</em>.</p>\r\n<p>Dates which are not parsable replace with the string <em>Invalid</em>.</p>\r\n<p><strong>Important note</strong>: the list of allowed/supported date formats is supposed to be stored in the <code>DateFormat enum</code> class only. The <code>DateFormat enum</code> class is subject of change and this change is not under your control.</p>\r\n<p>As a hint, you are provided with a helper method <code>_maybe_DFs</code> which shows how to work with the <code>DateFormat enum</code> class.</p>\r\n<p>This assignment introduces a very simple date format inferrer. For more serious work you can check out: <a href=\"https://dateparser.readthedocs.io\" target=\"_blank\" rel=\"noopener\"><code>dateparser</code></a> or <a href=\"https://github.com/jeffreystarr/dateinfer\" target=\"_blank\" rel=\"noopener\"><code>dateinfer</code></a></p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 13,
+    "slug": "calculate-the-number-of-months-passed",
+    "title": "Calculate the number of months passed",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>Some more fun working with dates! In this Bite you will calculate the number of months between the fixed <code>START_DATE = date(2018, 11, 1)</code> and the date you will construct from the input arguments.</p>\r\n<p>You should raise the proper <code>exception</code>s and perform the proper upper rounding based on the fact that <code>&gt;= 10 days</code> in the <em>datetime difference</em> adds another month to the counter.</p>\r\n<p>Best to give you some examples of the expected results so check out the docstring and tests, then start coding Python \ud83d\udcaa. You probably want to use <a href=\"https://dateutil.readthedocs.io/en/stable/\" target=\"_blank\" rel=\"noopener\"><code>dateutil.relativedelta</code></a> for this one! Good luck!</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 14,
+    "slug": "100-weekdays-of-code-date-range",
+    "title": "100 weekdays of code date range",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>Doing a <a href=\"https://talkpython.fm/episodes/show/140/level-up-your-python-with-100daysofcode-challenge\" target=\"_blank\" rel=\"noopener\">#100DaysOfCode can be challenging</a>, and some of it is because you dedicate to do it on workdays AND during weekends.</p>\r\n<p>PyBites coding to the rescue. In this Bite you plan your next 100 days <strong>excluding</strong> weekends.</p>\r\n<p>Complete <code>get_hundred_weekdays</code> that takes a <code>start_date</code> which defaults to the <code>TODAY</code> constant.</p>\r\n<p>Read up on the awesome <code>dateutil</code> module and try to use it to generate a list of 100 <strong>weekdays</strong> from <code>start_date</code>. By completion you would have a cool new snippet for your coding arsenal :) - good luck and enjoy the ride!</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 15,
+    "slug": "contemporary-composers",
+    "title": "Contemporary composers",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>You are given a list of <code>operas</code> and a list of <code>composers</code>. For two given composers find operas (where one of the composers is the author) at which premiere both could have been together (i.e. they both had to be alive). Consider just a theoretical possibility of presence, so omit health condition, traveling problems, resources, and any other problems (excluding death) which could restrict their presence.</p>\r\n<p>The list of <code>operas</code> consists of <code>namedtuple('Opera', 'author play date')</code> objects. The list of <code>composers</code> contains dictionaries with keys =&gt; composer names and values =&gt; <code>namedtuple('Composer', 'name born died')</code> objects.</p>\r\n<p>Complete the <code>operas_both_at_premiere(guest, composers)</code> function. Parameters:</p>\r\n<pre>  guest - one of the composers but not the author of an opera\r\n  composer - the author of an opera\r\n</pre>\r\n<p>If the required composer or guest is not in the list of composers, raise a <code>ValueError</code> exception. You can use the <code>_get_date</code> helper to convert date strings into <code>datetime</code> objects.</p>\r\n<p>Return a <code>list</code> (or generator) of titles of operas. See the tests for more information.</p>\r\n<hr />\r\n<p>Note that the list of operas in the Bite is shortened.<br />Sources:<br /><a href=\"https://en.wikipedia.org/wiki/List_of_operas_by_Wolfgang_Amadeus_Mozart\">https://en.wikipedia.org/wiki/List_of_operas_by_Wolfgang_Amadeus_Mozart</a> <a href=\"https://en.wikipedia.org/wiki/List_of_compositions_by_Ludwig_van_Beethoven\">https://en.wikipedia.org/wiki/List_of_compositions_by_Ludwig_van_Beethoven</a> <a href=\"https://en.wikipedia.org/wiki/List_of_works_for_the_stage_by_Richard_Wagner\">https://en.wikipedia.org/wiki/List_of_works_for_the_stage_by_Richard_Wagner</a> <a href=\"https://en.wikipedia.org/wiki/List_of_compositions_by_Giuseppe_Verdi\">https://en.wikipedia.org/wiki/List_of_compositions_by_Giuseppe_Verdi</a></p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 16,
+    "slug": "set-up-future-notifications",
+    "title": "Set up future notifications",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>Let's do another <code>datetime</code> processing Bite. Complete <code>add_todo</code> below that converts time units to future timestamps.</p>\r\n<p>Here is how it works with given default <code>start_time</code> of <code>NOW</code>:</p>\r\n<pre>&gt;&gt;&gt; from timer import add_todo, NOW\r\n&gt;&gt;&gt; str(NOW)\r\n'2019-02-06 22:00:00'\r\n&gt;&gt;&gt; add_todo(\"11h 10m\", \"Wash my car\")\r\n'Wash my car @ 2019-02-07 09:10:00'\r\n&gt;&gt;&gt; add_todo(\"30d\", \"Code a Bite\")\r\n'Code a Bite @ 2019-03-08 22:00:00'\r\n&gt;&gt;&gt; add_todo(\"5m 3s\", \"Go to Bed\")\r\n'Go to Bed @ 2019-02-06 22:05:03'\r\n</pre>\r\n<p>See the <em>docstring</em> and tests for more output examples. Good luck and code more Python!</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 17,
+    "slug": "find-missing-dates",
+    "title": "Find missing dates",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>Complete <code>get_misssing_dates</code> that takes an (unordered) sequence of <code>datetime.date</code> objects. It should determine what the start and end date of this sequence is and return the missing dates.</p>\r\n<p>Here is an example (horizontal scroll code below):</p>\r\n<pre>&gt;&gt;&gt; from datetime import date\r\n&gt;&gt;&gt; from missing_dates import get_misssing_dates\r\n&gt;&gt;&gt; date_range = [date(year=2019, month=2, day=n) for n in range(1, 11, 2)]\r\n&gt;&gt;&gt; date_range\r\n[datetime.date(2019, 2, 1), datetime.date(2019, 2, 3), datetime.date(2019, 2, 5), datetime.date(2019, 2, 7), datetime.date(2019, 2, 9)]\r\n\r\n# our function returns the missing dates\r\n# = the ones that were not generated in the preceding code\r\n&gt;&gt;&gt; sorted(get_misssing_dates(date_range))\r\n[datetime.date(2019, 2, 2), datetime.date(2019, 2, 4), datetime.date(2019, 2, 6), datetime.date(2019, 2, 8)]\r\n</pre>\r\n<p>Some modules make this fairly easy (hint hint).</p>\r\n<p>Thanks <a href=\"https://twitter.com/shravankumar147\" target=\"_blank\" rel=\"noopener\">@shravankumar147</a> for sharing <a href=\"https://twitter.com/shravankumar147/status/1097119970482372611\" target=\"_blank\" rel=\"noopener\">this idea on Twitter</a> last week :)</p>\r\n<p>Good luck and keep calm and code in Python!</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 18,
+    "slug": "parse-pybites-blog-git-commit-log",
+    "title": "Parse pybites blog git commit log",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>In this Bite we want to figure out how active we've been on our blog.</p>\r\n<p>To start our data analysis we ran the following command on our <a href=\"https://github.com/pybites/pybites.github.io-src/commits/master\" target=\"_blank\" rel=\"noopener\">blog repo</a>: <code>git log --stat | egrep \"^Date|file.*changed,\" |grep -B1 changed|grep -v '\\-\\-'|sed 'N;s/\\n/ |/'</code> which resulted in the <a href=\"https://bites-data.s3.us-east-2.amazonaws.com/git_log_stat.out\" target=\"_blank\" rel=\"noopener\">following log</a> which should be easier to work with:</p>\r\n<pre>Date:   Tue Mar 5 22:34:33 2019 +0100 | 2 files changed, 4 insertions(+), 4 deletions(-)\r\nDate:   Tue Mar 5 20:34:34 2019 +0100 | 1 file changed, 2 insertions(+), 2 deletions(-)\r\nDate:   Tue Mar 5 19:02:56 2019 +0100 | 2 files changed, 31 insertions(+), 2 deletions(-)\r\nDate:   Tue Mar 5 14:18:55 2019 +0100 | 3 files changed, 3 insertions(+), 3 deletions(-)\r\nDate:   Tue Mar 5 14:03:55 2019 +0100 | 2 files changed, 51 insertions(+), 39 deletions(-)\r\nDate:   Tue Mar 5 13:23:51 2019 +0100 | 4 files changed, 109 insertions(+), 94 deletions(-)\r\n...\r\n[930 rows more]\r\n...\r\n</pre>\r\n<p>Complete <code>get_min_max_amount_of_commits</code>, parsing this file into a <code>dict</code> where keys are year/months and values are the total number of changes as measured by # insertions + # deletions (number of file changes can be ignored).</p>\r\n<p>For date parsing you can use the <code>datetime</code> or <code>dateutil</code> module. See the provided <code>YEAR_MONTH</code> constant for the exact format.</p>\r\n<p>Return a tuple of (least_active_month, most_active_month).</p>\r\n<p>Your code should work if we call it for a smaller data set as well. So if we pass in the optional <code>year</code> arg of 2018, it should give the min and max month only for that year (see also the tests).</p>\r\n<p>By the way, with a min, max of <code>('2019-01', '2019-03')</code>, this year's trend is looking pretty good so far :)</p>\r\n<p>Good luck and keep calm and code in Python!</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 19,
+    "slug": "calculate-number-of-books-to-have-read-at-date",
+    "title": "Calculate number of books to have read at date ...",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>For this Bite you are asked to start working on a reading goal feature for a books app.</p>\r\n<p>Code up <code>get_number_books_read</code> that takes a yearly # books to read <code>int</code> and then calculates the amount of books user should have read based on the <code>at_date</code> argument which defaults to <code>NOW</code>.</p>\r\n<p>So if the goal is 52, and we call this function week 11, it should return 11. If the goal is 100 and we call this function in week 47 the function should return 90 (47/52*100), rounding to&nbsp;<code>int</code>.</p>\r\n<p>Some more examples:</p>\r\n<pre>&gt;&gt;&gt; get_number_books_read(100, 'Sunday, March 25th, 2019')\r\n25\r\n&gt;&gt;&gt; get_number_books_read(52, 'Sunday, March 18th, 2019')\r\n12\r\n&gt;&gt;&gt; get_number_books_read(52, '5-20-2018')\r\nTraceback (most recent call last):\r\n  File \"\", line 1, in \r\n  File \"/Users/bbelderbos/code/bitesofpy/186/books.py\", line 20, in get_number_books_read\r\n    raise ValueError('Should have positive goal and future date')\r\nValueError: Should have positive goal and future date\r\n</pre>\r\n<p>Check the docstring, comments and tests for more guidance.</p>\r\n<p>For simplicity you can assume that a year has 52 weeks (hence&nbsp;<code>WEEKS_PER_YEAR = 52</code>).</p>\r\n<p><strong>Hint</strong>: to get the week of the year, look into&nbsp;<a href=\"https://docs.python.org/3/library/datetime.html#datetime.date.isocalendar\" target=\"_blank\" rel=\"noopener\"><code>isocalendar</code></a>.</p>\r\n<p>Keep calm and code in Python! \ud83d\udc0d \ud83d\udd25</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 20,
+    "slug": "actoractress-age-at-movie-release",
+    "title": "Actor/actress age at movie release",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>Ever wondered how old an actor/actress was in a particular movie? In this Bite you will write some code to find the answer.</p>\r\n<p>Here is how it should work (the <code>Actor</code> and <code>Movie</code> <code>dataclass</code>es are provided):</p>\r\n<pre>  (Pdb) actor\r\n  Actor(name='Wesley Snipes', born='July 31, 1962')\r\n  (Pdb) movie\r\n  Movie(title='New Jack City', release_date='January 17, 1991')\r\n  (Pdb) get_age(actor, movie)\r\n  'Wesley Snipes was 28 years old when New Jack City came out.'\r\n  ...\r\n  (Pdb) actor\r\n  Actor(name='Jennifer Aniston', born='February 11, 1969')\r\n  (Pdb) movie\r\n  Movie(title='Horrible Bosses', release_date='September 16, 2011')\r\n  (Pdb) get_age(actor, movie)\r\n  'Jennifer Aniston was 42 years old when Horrible Bosses came out.'\r\n</pre>\r\n<p>You might want to look into using <code>dateutil</code> to make this a lot easier :)</p>\r\n<p>Keep calm and code in Python!</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 21,
+    "slug": "what-date-is-mothers-day-celebrated",
+    "title": "What date is mother's day celebrated?",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>It's the 12th of May 2019 when we write this so happy Mother's Day! In many countries this special day is celebrated on the second Sunday of May. In this Bite you will calculate which date this was / will be for year range 2014-2024.</p>\r\n<p>Complete <code>get_mothers_day_date</code> which takes a <code>year int</code> argument and returns a <code>date</code> object = the 2nd Sunday of May for that year. We use <a href=\"http://www.calendarpedia.com/when-is/mothers-day.html\">this table</a> in our tests to verify your code.</p>\r\n<p>Good luck and, Mother's day or not, ABC/ Always Be Coding! And of course best if we keep calm and code in Python :)</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 22,
+    "slug": "find-the-fastest-speech",
+    "title": "Find the fastest speech",
+    "level": "Intermediate",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>In this Bite you will parse an <a href=\"https://en.wikipedia.org/wiki/SubRip\" target=\"_blank\" rel=\"noopener\">SRT</a> (SubRip Subtitle file / video captions or subtitles).&nbsp;</p>\r\n<p>This is a snippet that shows how such a file is formatted:</p>\r\n<pre>...<br />5<br />00:00:18,080 --&gt; 00:00:22,180<br />Because if you're really new to Python, we really recommend to start with the Newbies,<br /><br />6<br />00:00:22,180 --&gt; 00:00:26,260<br />and otherwise gauge your level doing the 10 Introductory Bites.<br />...</pre>\r\n<p>Each block is separated by two newlines and consists of:<br />- a section number,<br />- a start and an end time, separated by <code>--&gt;</code>,<br />- the actual caption or subtitle text.<br /><br />Calculate the differences between start and end times for each section, returning a list of section ids ordered by the fastest speech (= most chars spoken per second).<br /><br />Here is an example how the code should work:</p>\r\n<pre>&gt;&gt;&gt; text = \"\"\"<br />... 1<br />... 00:00:00,498 --&gt; 00:00:02,827<br />... Beautiful is better than ugly.<br />...<br />... 2<br />... 00:00:02,827 --&gt; 00:00:06,383<br />... Explicit is better than implicit.<br />...<br />... 3<br />... 00:00:06,383 --&gt; 00:00:09,427<br />... Simple is better than complex.<br />... \"\"\"<br />&gt;&gt;&gt; from srt import get_srt_section_ids<br />&gt;&gt;&gt; get_srt_section_ids(text)<br />[1, 3, 2]</pre></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 23,
+    "slug": "calculate-a-coding-streak-in-days",
+    "title": "Calculate a coding streak in days",
+    "level": "Advanced",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>In this Bite you are going to calculate the amount of days you are on a coding streak (consecutive days coded. You are presented with this DB table like output of date/activity/count:</p>\r\n<pre>data = \"\"\"\r\n    +------------+------------+---------+\r\n    | date       | activity   | count   |\r\n    |------------+------------+---------|\r\n    | 2018-11-11 | pcc        | 1       |\r\n    | 2018-11-10 | 100d       | 1       |\r\n    | 2018-11-09 | 100d       | 2       |\r\n    | 2018-10-23 | pcc        | 1       |\r\n    | 2018-10-15 | pcc        | 1       |\r\n    | 2018-10-05 | bite       | 1       |\r\n    | 2018-09-21 | bite       | 4       |\r\n    | 2018-09-18 | bite       | 2       |\r\n    | 2018-09-18 | bite       | 4       |\r\n    +------------+------------+---------+\r\n\"\"\"</pre>\r\n<p>Here is what you need to do:</p>\r\n<ul>\r\n<li>Complete <code>extract_dates</code> to extract <code>date</code> (not <code>datetime</code>) objects.</li>\r\n<li>Complete <code>calculate_streak</code> that takes those <code>date</code> objects and returns the streak in (<code>int</code>) days.</li>\r\n<li>Calculate back from <code>TODAY</code> that is set to <code>date(2018, 11, 12)</code>. Note that a streak can be &gt; 0 if today or yesterday is in the date range. This is because we don't assume <em>today</em> to be over yet, so if yesterday was coded that is a valid continuation of a streak. If today was coded that counts towards the streak too of course.</li>\r\n</ul>\r\n<p>Have fun and keep calm and code in Python. Join our Circle community to&nbsp;learn and share more Python with other passionate Pythonistas.</p></p>",
+    "template": "",
+    "tests": ""
+  },
+  {
+    "n": 24,
+    "slug": "calculate-my-macs-longest-uptime",
+    "title": "Calculate my mac's longest uptime",
+    "level": "Advanced",
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"><p>Given the following output, calculate the longest uptime / time between reboots:</p>\r\n<pre>[bbelderbos@imac log]$ last reboot\r\nreboot    ~                         Wed Apr 10 22:39\r\nreboot    ~                         Wed Mar 27 16:24\r\nreboot    ~                         Wed Mar 27 15:01\r\nreboot    ~                         Sun Mar  3 14:51\r\nreboot    ~                         Sun Feb 17 11:36\r\nreboot    ~                         Thu Jan 17 21:54\r\nreboot    ~                         Mon Jan 14 09:25\r\n</pre>\r\n<p>The tests will check your code against different <code>last reboot</code> outputs. You can assume all dates are within the same year.</p>\r\n<p>Have fun and code in Python!</p></p>",
+    "template": "",
+    "tests": ""
+  }
+]

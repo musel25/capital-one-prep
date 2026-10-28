@@ -1,0 +1,41 @@
+{
+  "title": "Pybites Datetimes and Timezones Path",
+  "description": "All 24 exercises from the Pybites Datetimes and Timezones learning path, in source order. The two free exercises retain their original templates and tests. The other exercises use recreated templates and tests. Data is supplied offline. Select Python.",
+  "category-order": [
+    "01-beginner",
+    "02-intermediate",
+    "03-advanced"
+  ],
+  "problems-of-category": {
+    "01-beginner": [
+      "pbd-01-pybites-date-generator",
+      "pbd-02-write-a-property",
+      "pbd-03-working-with-datetimes",
+      "pbd-04-work-with-datetimes-strptime-and-strftime",
+      "pbd-05-like-theres-no-tomorrow"
+    ],
+    "02-intermediate": [
+      "pbd-06-parsing-dates-from-logs",
+      "pbd-07-converting-date-strings-to-datetimes",
+      "pbd-08-calculate-the-total-duration-of-a-course",
+      "pbd-09-when-does-python-2-die-on-planet-miller",
+      "pbd-10-organize-a-meeting-between-timezones",
+      "pbd-11-humanize-a-datetime",
+      "pbd-12-primitive-date-format-inferrer",
+      "pbd-13-calculate-the-number-of-months-passed",
+      "pbd-14-100-weekdays-of-code-date-range",
+      "pbd-15-contemporary-composers",
+      "pbd-16-set-up-future-notifications",
+      "pbd-17-find-missing-dates",
+      "pbd-18-parse-pybites-blog-git-commit-log",
+      "pbd-19-calculate-number-of-books-to-have-read-at-date",
+      "pbd-20-actoractress-age-at-movie-release",
+      "pbd-21-what-date-is-mothers-day-celebrated",
+      "pbd-22-find-the-fastest-speech"
+    ],
+    "03-advanced": [
+      "pbd-23-calculate-a-coding-streak-in-days",
+      "pbd-24-calculate-my-macs-longest-uptime"
+    ]
+  }
+}
