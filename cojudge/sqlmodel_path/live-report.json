@@ -1,0 +1,50 @@
+{
+  "passed": [
+    {
+      "id": "pbs-01-your-first-sqlmodel-tables",
+      "cases": 6
+    },
+    {
+      "id": "pbs-02-session-management-basic-inserts",
+      "cases": 6
+    },
+    {
+      "id": "pbs-03-reading-data-with-select",
+      "cases": 6
+    },
+    {
+      "id": "pbs-04-update-and-delete-operations",
+      "cases": 6
+    },
+    {
+      "id": "pbs-05-one-to-many-relationships",
+      "cases": 7
+    },
+    {
+      "id": "pbs-06-many-to-many-relationships",
+      "cases": 6
+    },
+    {
+      "id": "pbs-07-advanced-link-table-relationships",
+      "cases": 7
+    },
+    {
+      "id": "pbs-08-model-inheritance-and-api-schemas",
+      "cases": 7
+    },
+    {
+      "id": "pbs-09-fastapi-integration-basic-endpoints",
+      "cases": 8
+    },
+    {
+      "id": "pbs-10-fastapi-integration-complex-queries",
+      "cases": 17
+    }
+  ],
+  "failed": [],
+  "samples": {
+    "exercise": "pbs-10-fastapi-integration-complex-queries",
+    "reference_passed": true,
+    "starter_rejected": true
+  }
+}

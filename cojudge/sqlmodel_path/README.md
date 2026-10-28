@@ -84,3 +84,36 @@ docker tag cojudge/python-stock:pre-sqlmodel-2026-10-28 python:3.11-slim
 
 Allow existing course execution containers to expire after rollback. Restore only
 this course's content from its deployment backup when content rollback is needed.
+
+## Published checks — October 28, 2026
+
+- All 76 reference tests passed locally and on the live judge.
+- All ten unfinished starters were rejected locally and on the live judge.
+- All 25 supplied faulty implementations failed verification.
+- The Cojudge CLI generated Python starter files for all ten problems.
+- The final repository test run passed all 147 tests.
+- Live Run checks passed for the first and last exercises. Exercise 10's unfinished
+  starter failed its Run samples after the new endpoint tests were moved first.
+- The existing OOP bite 01 still passed its eight live tests. Its starter was rejected.
+- The browser showed the course with ten exercises. The advanced problem page
+  returned its title, recreation notice, and seventeen-test count.
+
+Review found four test gaps: table creation, caller session ownership, optional
+schema fields, and duplicate exercise links. Added assertions and faulty
+implementations cover all four. A separate regression check first reproduced
+exercise 10's sample-order issue, then passed after the order changed.
+
+Content backup: `/home/ubuntu/cojudge-backups/sqlmodel-20261028.0UEpbZ/`.
+The application at verification was `cojudge:typer-b58c197` on loopback port 5379.
+The SQLModel runtime image ID was
+`sha256:c2a1e4e43f2d24fe34ab7912e54364c30c0c270e544d787956ca1bc2e427d966`.
+It includes SQLModel 0.0.48, FastAPI 0.161.1, pytest 8.4.2, and HTTPX 0.28.1.
+
+The deployed default tag `python:3.11-slim` and the FastAPI deployment tag
+`cojudge-python:fastapi-20261028` pointed to that runtime. The previous FastAPI
+image is preserved as `cojudge-python:fastapi-pre-sqlmodel-20261028`. Restore that
+tag too if rolling back its runtime. The FastAPI course's locked project now
+also includes SQLModel, so rebuilding its runtime preserves both courses.
+
+Publication changed only this course's problem files and course index. The checks
+used Run and Submit APIs. They did not write learner progress or solutions.
