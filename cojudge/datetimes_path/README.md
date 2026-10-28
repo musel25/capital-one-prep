@@ -53,3 +53,9 @@ Use `cojudge init`, `cojudge run`, and `cojudge submit` as described in the main
 Cojudge guide. Keep the supplied tests and runner with the reference solution.
 Use an isolated OS home directory for CLI submission checks, since the CLI marks
 accepted problems as solved in its local progress file.
+
+
+Published on October 28, 2026, from commit `73a2788`. All 24 live reference
+submissions passed (174 test cases). All 24 starters failed. Local verification
+also rejected 51 deliberate faults. Seven course and OOP regression tests passed.
+The Cojudge CLI accepted the timezone reference and rejected its starter.
