@@ -1,0 +1,34 @@
+{
+  "title": "Pybites Data Formats Path",
+  "description": "The 17 exercises from the Pybites Data Formats learning path, in their original order. Practice XML, JSON, CSV, pickle, APIs, and SQLite. Available free exercises retain original tests. Premium exercises use recreated templates and tests. Data is supplied offline. Select Python.",
+  "category-order": [
+    "01-beginner",
+    "02-intermediate",
+    "03-advanced"
+  ],
+  "problems-of-category": {
+    "01-beginner": [
+      "pdf-01-using-elementtree-to-parse-xml",
+      "pdf-02-analyze-some-basic-car-data",
+      "pdf-03-pickling-objects"
+    ],
+    "02-intermediate": [
+      "pdf-04-convert-dict-to-namedtuplejson",
+      "pdf-05-parse-omdb-movie-json-data",
+      "pdf-06-movie-data-analysis",
+      "pdf-07-parse-a-csv-file-and-create-a-bar-chart",
+      "pdf-08-what-south-park-characters-talk-most",
+      "pdf-09-use-the-ipinfo-api-to-lookup-ip-country",
+      "pdf-10-analyze-stock-data",
+      "pdf-11-turn-messy-csv-into-json",
+      "pdf-12-analyze-some-bite-stats-data",
+      "pdf-13-parse-income-distribution-from-latin-america-xml",
+      "pdf-14-analyze-nba-data-with-sqlite3",
+      "pdf-15-analyze-some-bite-stats-data-part-ii"
+    ],
+    "03-advanced": [
+      "pdf-16-marvel-data-analysis",
+      "pdf-17-15-way-rock-paper-scissors"
+    ]
+  }
+}

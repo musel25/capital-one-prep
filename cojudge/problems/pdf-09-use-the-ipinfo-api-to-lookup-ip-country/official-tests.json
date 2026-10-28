@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_default_local_country\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_injected_client_and_exact_url\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_ipv6_address\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_preserve_code_and_response\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_country\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_client_errors_propagate\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_json_errors_propagate\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_default_client_can_be_replaced\"}"
+  }
+]

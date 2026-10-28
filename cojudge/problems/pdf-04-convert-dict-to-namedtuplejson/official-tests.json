@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"test\": \"test_dict2nt\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_nt2json\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_custom_fields_and_order\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_record\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_json_types\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_distinct_schemas\"}"
+  }
+]

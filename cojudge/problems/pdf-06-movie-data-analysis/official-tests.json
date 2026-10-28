@@ -1,0 +1,53 @@
+[
+  {
+    "payload": "{\"test\": \"test_get_movies_by_director\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_director_movies_data_structure\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_calc_mean_score\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_get_average_scores_top_directors\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_director_in_top_scores[Quentin Tarantino]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_director_in_top_scores[Hayao Miyazaki]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_director_in_top_scores[Frank Darabont]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_director_in_top_scores[Stanley Kubrick]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_director_in_top_scores[James Cameron]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_director_in_top_scores[Joss Whedon]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_director_in_top_scores[Alejandro G. I\\u00f1\\u00e1rritu]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_ignore_older_movies\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_year_boundary_missing_fields_and_quotes\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_dataset\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_minimum_count_and_stable_ties\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_mean_rounding\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_truncated_rows_are_missing_data\"}"
+  }
+]

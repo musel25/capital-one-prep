@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_every_original_matchup_in_both_argument_orders\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_every_valid_tie\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_mapping_exact_edges_and_degree\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_helper_parses_supplied_csv_and_duplicates\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_strings_and_argument_positions\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_nonstring_inputs_raise_valueerror\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_helper_returns_independent_sets\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_get_winner_uses_csv_mapping\"}"
+  }
+]

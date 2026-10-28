@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"test\": \"test_default_data\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_nested_types\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_quoted_and_multiline_dialogue\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_accumulate_multiple_lines\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_line_and_empty_dataset\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_quoted_character_and_whitespace\"}"
+  }
+]

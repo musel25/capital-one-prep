@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_default_json_and_types\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_custom_json_and_empty\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_sector_filter_order_and_exact_case\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_largest_default_and_numeric_units\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_known_zero_and_unknown_caps\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_equal_cap_keeps_first_and_decimal_precision\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_market_counts_and_duplicate_records\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_independent_loads_and_unchanged_inputs\"}"
+  }
+]

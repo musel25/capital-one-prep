@@ -1,0 +1,23 @@
+[
+  {
+    "payload": "{\"test\": \"test_default_json_data\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_filter_year_before_counting\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_and_missing_year\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_first_seen_tie\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_exact_name_and_both_filters\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_duplicate_models_and_order\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_inputs_unchanged_and_results_independent\"}"
+  }
+]

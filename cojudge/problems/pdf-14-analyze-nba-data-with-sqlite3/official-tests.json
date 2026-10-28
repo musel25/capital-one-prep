@@ -1,0 +1,29 @@
+[
+  {
+    "payload": "{\"test\": \"test_team_filter_and_sort\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_and_exact_team_names\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_top_scorers_default_and_ties\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_limit_boundaries_and_null_exclusion\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_averages_and_nulls\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_average_rounding_and_raw_average_order\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_age_inclusive_boundary\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_database_and_no_changes\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_real_sql_operations_and_connection_stays_open\"}"
+  }
+]

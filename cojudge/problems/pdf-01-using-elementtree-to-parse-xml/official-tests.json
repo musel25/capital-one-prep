@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_default_xml\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_nested_movies_and_xml_entities\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_document\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_numeric_runtime_comparison\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_unknown_and_zero_runtime\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_runtime_ties_and_no_input_change\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_returned_attributes_are_independent\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_malformed_xml\"}"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_default_all_records\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_mixed_delimiters_in_one_row\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_strings_preserve_zeroes_and_spaces\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_fields_are_retained\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_blank_lines_crlf_and_empty_input\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_unicode_and_json_escaping\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_wrong_field_counts\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_single_column_duplicate_rows_and_fresh_result\"}"
+  }
+]

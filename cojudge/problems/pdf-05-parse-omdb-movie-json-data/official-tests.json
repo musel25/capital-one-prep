@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_read_json_files_in_order\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_comedy_token_and_first_match\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_numeric_nominations_and_other_awards\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_singular_and_repeated_nomination_phrases\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_unknown_awards_and_first_tie\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_numeric_runtime_and_unknown\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_zero_runtime_tie_and_inputs_unchanged\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_inputs\"}"
+  }
+]

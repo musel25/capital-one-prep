@@ -1,0 +1,29 @@
+[
+  {
+    "payload": "{\"test\": \"test_default_popularity_and_tsv_types\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_distinct_characters_with_same_name\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_numeric_sort_pid_ties_and_blank_appearances\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_popularity_limit_boundaries\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_year_counts_defaults_and_ties\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_and_single_year\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_female_percentage_ignores_unspecified_gender\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_percentage_zero_and_full_boundaries\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_inputs_unchanged_and_new_results\"}"
+  }
+]

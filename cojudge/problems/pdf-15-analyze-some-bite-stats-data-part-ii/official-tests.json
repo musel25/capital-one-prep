@@ -1,0 +1,23 @@
+[
+  {
+    "payload": "{\"test\": \"test_default_local_data\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_numeric_sort_and_top_n\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_scores_and_valid_zero\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_equal_scores_keep_file_order\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_bom_quoted_fields_and_spaces\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_dataset_and_limit_boundaries\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_numeric_score\"}"
+  }
+]

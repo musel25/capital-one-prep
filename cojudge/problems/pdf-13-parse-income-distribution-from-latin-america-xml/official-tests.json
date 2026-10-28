@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_default_local_sample\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_custom_file_and_namespace_prefix\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_root\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_strip_text_and_decode_entities\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_order_duplicates_and_labels_not_ids\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_only_direct_country_name\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_fresh_results\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_parse_and_file_errors\"}"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_default_namedtuples\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_deserialize_supplied_path\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_serialize_namedtuples_and_string_path\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_explicit_false_values\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_default_calls_deserialize\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_overwrite_old_data\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_and_invalid_file\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_default_is_independent\"}"
+  }
+]
