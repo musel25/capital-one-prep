@@ -1,0 +1,134 @@
+[
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[1234-1234]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[0-0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[12.34-12.34]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[0.0-0.0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[abc-abc]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[\\u00e9\\u6f22-\\u00e9\\u6f22]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[-]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[value7-12ab]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[value8-x0y]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[value9-ba2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[value10-102a]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[value11-]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[value12-]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[value13-]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_prints_character_countdown[value14-]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[True]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[False]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[-1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[-0.1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[inf]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[-inf]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[nan]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[None]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value8]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value9]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value10]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value11]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value12]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value13]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value14]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value15]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value16]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value17]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value18]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value19]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value20]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value21]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value22]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value23]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value24]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_invalid_values_before_printing[value25]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_valid_prefix_is_not_printed_before_invalid_item\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_does_not_change_containers\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_has_registered_dispatch_handlers\"}"
+  }
+]

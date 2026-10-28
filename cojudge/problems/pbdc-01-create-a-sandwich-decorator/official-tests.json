@@ -1,0 +1,23 @@
+[
+  {
+    "payload": "{\"test\": \"test_constants_have_the_required_text\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_output_surrounds_the_wrapped_call\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_forwards_arguments_once_and_returns_the_same_object\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_preserves_function_metadata\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_decoration_does_not_call_the_function_or_print\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_repeated_calls_and_separate_wrappers_keep_no_result_state\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_propagates_the_original_exception\"}"
+  }
+]

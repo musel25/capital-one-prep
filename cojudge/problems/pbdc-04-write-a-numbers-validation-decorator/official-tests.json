@@ -1,0 +1,56 @@
+[
+  {
+    "payload": "{\"test\": \"test_allows_zero_positive_and_large_integers\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_non_integers_without_calling_the_function[True]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_non_integers_without_calling_the_function[False]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_non_integers_without_calling_the_function[1.0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_non_integers_without_calling_the_function[-1.5]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_non_integers_without_calling_the_function[3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_non_integers_without_calling_the_function[None]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_non_integers_without_calling_the_function[bad6]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_non_integers_without_calling_the_function[bad7]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_negative_integers_before_the_function_runs[values0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_negative_integers_before_the_function_runs[values1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_negative_integers_before_the_function_runs[values2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_checks_arguments_from_left_to_right\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_keywords_are_forwarded_unchanged_and_are_not_validated\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_preserves_function_metadata\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_repeated_calls_and_wrappers_keep_no_validation_or_result_state\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_decoration_does_not_call_the_wrapped_function\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_wrapped_exceptions_reach_the_caller_unchanged\"}"
+  }
+]

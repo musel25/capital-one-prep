@@ -1,0 +1,56 @@
+[
+  {
+    "payload": "{\"test\": \"test_all_results_are_cached[None]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_all_results_are_cached[False]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_all_results_are_cached[0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_all_results_are_cached[]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_all_results_are_cached[value4]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_all_results_are_cached[value5]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_all_results_are_cached[value6]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_all_results_are_cached[7]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_instances_do_not_share_cache\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_different_properties_have_separate_cache\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_assignment_is_rejected_before_and_after_access[False]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_assignment_is_rejected_before_and_after_access[True]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_deletion_is_rejected_before_and_after_access[False]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_deletion_is_rejected_before_and_after_access[True]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_failed_computation_retries_and_then_caches\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_descriptor_preserves_docstring\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_cached_mutable_result_keeps_identity\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_planet_uses_compute_method_once\"}"
+  }
+]

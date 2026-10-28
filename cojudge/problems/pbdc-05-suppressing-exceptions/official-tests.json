@@ -1,0 +1,44 @@
+[
+  {
+    "payload": "{\"test\": \"test_successful_conversions[values0-0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_conversions[values1-6]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_conversions[values2-11]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_conversions[values3--1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_conversions[values4-0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_conversions[values5-11]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_conversions[values6-9]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_accepts_single_pass_iterable\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_does_not_change_input\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_custom_conversion_is_used\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_other_conversion_errors_propagate[error0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_other_conversion_errors_propagate[error1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_other_conversion_errors_propagate[error2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_iteration_errors_are_not_conversion_errors\"}"
+  }
+]

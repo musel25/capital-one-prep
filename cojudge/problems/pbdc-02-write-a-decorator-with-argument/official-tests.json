@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_wraps_a_string_in_matching_tags\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_stacked_decorators_keep_the_declared_order\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_text_and_html_are_not_escaped\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_forwards_positional_and_keyword_arguments_once\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_preserves_function_metadata\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_decoration_is_lazy_and_the_decorator_is_reusable\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_separate_factories_do_not_share_tags\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_propagates_the_original_exception\"}"
+  }
+]

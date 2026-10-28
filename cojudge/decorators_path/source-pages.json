@@ -1,0 +1,134 @@
+[
+  {
+    "n": 1,
+    "title": "Create a sandwich decorator",
+    "slug": "create-a-sandwich-decorator",
+    "url": "https://pybitesplatform.com/bites/create-a-sandwich-decorator/",
+    "level": "Beginner",
+    "template": "",
+    "tests": "",
+    "retrieved": "2026-10-28",
+    "access": "Public description only; template and tests recreated"
+  },
+  {
+    "n": 2,
+    "title": "Write a decorator with argument",
+    "slug": "write-a-decorator-with-argument",
+    "url": "https://pybitesplatform.com/bites/write-a-decorator-with-argument/",
+    "level": "Intermediate",
+    "template": "",
+    "tests": "",
+    "retrieved": "2026-10-28",
+    "access": "Public description only; template and tests recreated"
+  },
+  {
+    "n": 3,
+    "title": "Write a login_required decorator",
+    "slug": "write-a-login_required-decorator",
+    "url": "https://pybitesplatform.com/bites/write-a-login_required-decorator/",
+    "level": "Intermediate",
+    "template": "",
+    "tests": "",
+    "retrieved": "2026-10-28",
+    "access": "Public description only; template and tests recreated"
+  },
+  {
+    "n": 4,
+    "title": "Write a numbers validation decorator",
+    "slug": "write-a-numbers-validation-decorator",
+    "url": "https://pybitesplatform.com/bites/write-a-numbers-validation-decorator/",
+    "level": "Intermediate",
+    "template": "",
+    "tests": "",
+    "retrieved": "2026-10-28",
+    "access": "Public description only; template and tests recreated"
+  },
+  {
+    "n": 5,
+    "title": "Suppressing exceptions",
+    "slug": "suppressing-exceptions",
+    "url": "https://pybitesplatform.com/bites/suppressing-exceptions/",
+    "level": "Intermediate",
+    "template": "",
+    "tests": "",
+    "retrieved": "2026-10-28",
+    "access": "Public description only; template and tests recreated"
+  },
+  {
+    "n": 6,
+    "title": "Capture stdout",
+    "slug": "capture-stdout",
+    "url": "https://pybitesplatform.com/bites/capture-stdout/",
+    "level": "Intermediate",
+    "template": "",
+    "tests": "",
+    "retrieved": "2026-10-28",
+    "access": "Public description only; template and tests recreated"
+  },
+  {
+    "n": 7,
+    "title": "Write a context manager",
+    "slug": "write-a-context-manager",
+    "url": "https://pybitesplatform.com/bites/write-a-context-manager/",
+    "level": "Advanced",
+    "template": "class Account:\n\n    def __init__(self):\n        self._transactions = []\n\n    @property\n    def balance(self):\n        return sum(self._transactions)\n\n    def __add__(self, amount):\n        self._transactions.append(amount)\n\n    def __sub__(self, amount):\n        self._transactions.append(-amount)\n\n    # add 2 dunder methods here to turn this class \n    # into a 'rollback' context manager",
+    "tests": "import pytest\n\nfrom account import Account\n\n\n@pytest.fixture()\ndef account():\n    return Account()\n\n\ndef test_balance(account):\n    assert account.balance == 0\n    account + 10\n    assert account.balance == 10\n    account - 5\n    assert account.balance == 5\n\n\ndef test_without_contextman_balance_negative(account):\n    assert account.balance == 0\n    account - 5\n    assert account.balance == -5\n\n\ndef test_with_contextman_performs_rollback(account):\n    account + 3\n    assert account.balance == 3\n    # trigger rollback\n    with account as acc:\n        acc - 5\n    assert account.balance == 3\n    # adding this ensures all required dunders are used:\n    with account as acc:\n        acc + 10\n        acc - 3\n    assert account.balance == 10\n    # make sure composite transactions are properly rolled back\n    with account as acc:\n        acc - 11\n        acc - 2\n    assert account.balance == 10",
+    "retrieved": "2026-10-28",
+    "access": "Original free template and tests visible"
+  },
+  {
+    "n": 8,
+    "title": "The singledispatch countdown challenge",
+    "slug": "the-singledispatch-countdown-challenge",
+    "url": "https://pybitesplatform.com/bites/the-singledispatch-countdown-challenge/",
+    "level": "Advanced",
+    "template": "",
+    "tests": "",
+    "retrieved": "2026-10-28",
+    "access": "Public description only; template and tests recreated"
+  },
+  {
+    "n": 9,
+    "title": "Write a performance monitoring context manager",
+    "slug": "write-a-performance-monitoring-context-manager",
+    "url": "https://pybitesplatform.com/bites/write-a-performance-monitoring-context-manager/",
+    "level": "Advanced",
+    "template": "",
+    "tests": "",
+    "retrieved": "2026-10-28",
+    "access": "Public description only; template and tests recreated"
+  },
+  {
+    "n": 10,
+    "title": "Manipulate string decorator",
+    "slug": "manipulate-string-decorator",
+    "url": "https://pybitesplatform.com/bites/manipulate-string-decorator/",
+    "level": "Advanced",
+    "template": "",
+    "tests": "",
+    "retrieved": "2026-10-28",
+    "access": "Public description only; template and tests recreated"
+  },
+  {
+    "n": 11,
+    "title": "Cached property decorator",
+    "slug": "cached-property-decorator",
+    "url": "https://pybitesplatform.com/bites/cached-property-decorator/",
+    "level": "Advanced",
+    "template": "",
+    "tests": "",
+    "retrieved": "2026-10-28",
+    "access": "Public description only; template and tests recreated"
+  },
+  {
+    "n": 12,
+    "title": "Write a retry decorator",
+    "slug": "write-a-retry-decorator",
+    "url": "https://pybitesplatform.com/bites/write-a-retry-decorator/",
+    "level": "Advanced",
+    "template": "",
+    "tests": "",
+    "retrieved": "2026-10-28",
+    "access": "Public description only; template and tests recreated"
+  }
+]

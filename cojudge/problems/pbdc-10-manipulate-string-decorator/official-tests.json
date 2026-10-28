@@ -1,0 +1,47 @@
+[
+  {
+    "payload": "{\"test\": \"test_selected_indices_preserve_length[Hello world-3-5-Hel.. world]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_selected_indices_preserve_length[abcdef-0-1-.bcdef]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_selected_indices_preserve_length[abcdef-5-6-abcde.]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_selected_indices_preserve_length[abcdef-0-6-......]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_selected_indices_preserve_length[abcdef-2-99-ab....]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_selected_indices_preserve_length[abcdef-99-100-abcdef]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_selected_indices_preserve_length[abcdef-3-3-abcdef]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_selected_indices_preserve_length[abcdef-5-2-abcdef]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_selected_indices_preserve_length[-0-100-]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_selected_indices_preserve_length[a.b c!-1-5-a....!]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_selected_indices_preserve_length[caf\\u00e9 \\ud83d\\udc0d-3-6-caf...]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_arguments_are_forwarded_and_function_runs_once\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_metadata_and_wrapped_function_are_preserved\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_original_error_propagates_once\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_stacked_decorators_and_repeated_calls\"}"
+  }
+]

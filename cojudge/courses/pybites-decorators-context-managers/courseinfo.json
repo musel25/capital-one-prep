@@ -1,0 +1,29 @@
+{
+  "title": "Pybites Decorators and Context Managers Path",
+  "description": "The 12 exercises from the Pybites Decorators and Context Managers learning path, in their original order. Practice decorators, context managers, singledispatch, caching, and retries. The Account exercise keeps its original free template and tests. Other templates and tests are recreated from public descriptions. Select Python.",
+  "category-order": [
+    "01-beginner",
+    "02-intermediate",
+    "03-advanced"
+  ],
+  "problems-of-category": {
+    "01-beginner": [
+      "pbdc-01-create-a-sandwich-decorator"
+    ],
+    "02-intermediate": [
+      "pbdc-02-write-a-decorator-with-argument",
+      "pbdc-03-write-a-login_required-decorator",
+      "pbdc-04-write-a-numbers-validation-decorator",
+      "pbdc-05-suppressing-exceptions",
+      "pbdc-06-capture-stdout"
+    ],
+    "03-advanced": [
+      "pbdc-07-write-a-context-manager",
+      "pbdc-08-the-singledispatch-countdown-challenge",
+      "pbdc-09-write-a-performance-monitoring-context-manager",
+      "pbdc-10-manipulate-string-decorator",
+      "pbdc-11-cached-property-decorator",
+      "pbdc-12-write-a-retry-decorator"
+    ]
+  }
+}

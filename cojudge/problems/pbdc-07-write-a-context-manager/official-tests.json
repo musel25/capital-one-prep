@@ -1,0 +1,38 @@
+[
+  {
+    "payload": "{\"test\": \"test_balance\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_without_contextman_balance_negative\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_with_contextman_performs_rollback\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_enter_returns_the_account\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_block_that_stays_positive_is_kept\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rollback_only_undoes_the_block\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_exception_in_block_is_not_hidden\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_block_keeps_balance\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_only_final_balance_triggers_rollback\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_exception_uses_final_balance_rule[3-2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_exception_uses_final_balance_rule[8-5]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_two_accounts_do_not_share_rollback_state\"}"
+  }
+]

@@ -1,0 +1,59 @@
+[
+  {
+    "payload": "{\"test\": \"test_accepts_builtin_functions_and_bound_methods[value0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_accepts_builtin_functions_and_bound_methods[value1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_accepts_builtin_functions_and_bound_methods[value2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_accepts_builtin_functions_and_bound_methods[value3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_accepts_builtin_functions_and_bound_methods[value4]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_counts_characters_exactly[]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_counts_characters_exactly[x]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_counts_characters_exactly[a\\nb\\n]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_counts_characters_exactly[\\u00e9\\u6f22\\ud83d\\ude00\\n]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_other_objects_before_help[value0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_other_objects_before_help[value1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_other_objects_before_help[value2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_other_objects_before_help[len]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_other_objects_before_help[1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_other_objects_before_help[None]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_other_objects_before_help[value6]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejects_other_objects_before_help[value7]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_actual_help_matches_independent_capture\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_help_exception_restores_stdout\"}"
+  }
+]

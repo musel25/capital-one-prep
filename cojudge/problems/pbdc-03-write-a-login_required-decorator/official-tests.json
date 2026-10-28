@@ -1,0 +1,50 @@
+[
+  {
+    "payload": "{\"test\": \"test_initial_user_lists\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_welcome_outcomes[bob-please login]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_welcome_outcomes[julian-please login]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_welcome_outcomes[carmen-please login]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_welcome_outcomes[mike-welcome back mike]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_welcome_outcomes[sue-welcome back sue]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_welcome_outcomes[ada-please create an account]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_welcome_outcomes[-please create an account]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_welcome_outcomes[Mike-please create an account]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_keyword_user_and_extra_arguments_reach_the_function_once\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_rejected_users_do_not_run_the_wrapped_function\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_unknown_user_takes_precedence_over_logged_in_list\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_current_lists_are_checked_on_each_call\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_preserves_function_metadata\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_authorization_and_result_do_not_leak_between_calls\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_authorized_call_propagates_the_original_exception\"}"
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "payload": "{\"test\": \"test_public_retry_configuration\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_results_stop_immediately[None]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_results_stop_immediately[False]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_results_stop_immediately[0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_results_stop_immediately[]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_results_stop_immediately[value4]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_results_stop_immediately[value5]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_successful_results_stop_immediately[ready]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_recovers_after_exception[1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_recovers_after_exception[2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_three_total_attempts_and_final_exception_cause\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_exception_subclasses_are_retried\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_base_exceptions_are_not_retried[error_type0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_base_exceptions_are_not_retried[error_type1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_base_exceptions_are_not_retried[error_type2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_attempts_reset_after_exhaustion_and_after_success\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_positional_and_keyword_arguments_are_forwarded_on_each_attempt\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_metadata_and_wrapped_function_are_preserved\"}"
+  }
+]
