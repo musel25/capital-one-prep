@@ -109,7 +109,7 @@ def build_problem(spec, destination):
     write_json(folder / 'official-tests.json', [{'payload': encode(c['input'])} for c in spec['cases']])
     (folder / 'Marker.java').write_text(java_source(verification_spec(spec)))
     (folder / 'statement.md').write_text(
-        f"# {metadata['title']}\n\n{spec['ticket']}\n\n{spec['task'].strip()}\n\n"
+        f"{spec['ticket']}\n\n{spec['task'].strip()}\n\n"
         '**Constraints:**\n\n' + '\n'.join('- ' + c for c in spec['constraints']) +
         '\n- Do not change the input objects. Each call starts with fresh state.\n'
         '- Python 3.11. Standard library only.\n\n'

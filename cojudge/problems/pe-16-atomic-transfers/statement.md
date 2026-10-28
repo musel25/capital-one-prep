@@ -1,5 +1,3 @@
-# 16. Apply account transfers atomically
-
 A balance service must apply each transfer without a partial debit or credit.
 
 Implement `apply_transfers(balances, transfers)`. `balances` maps account names to integer cents. Each transfer has `from`, `to`, and `amount`. Process transfers in input order. Accept only when both accounts exist and the source has at least `amount` cents. On success, subtract from the source and add to the target as one atomic change. A self-transfer succeeds only when funds are sufficient and leaves the balance unchanged. Rejected transfers change no balances and create no accounts. Return `{"accepted": [...], "balances": {...}}` with one boolean per transfer and every final account balance. Empty inputs are allowed. Do not modify the inputs. Calls are independent.

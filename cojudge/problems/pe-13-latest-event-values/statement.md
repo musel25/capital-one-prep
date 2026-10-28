@@ -1,5 +1,3 @@
-# 13. Keep the latest event values
-
 A consumer must ignore stale events and retain the latest value for each entity.
 
 Implement `latest_events(events)`. Each event has `entity`, `version`, and `value`. Process events in input order. Store the first event for each entity. Replace its value only when a later event has a strictly greater version. The first event wins when versions are equal. Return an object that maps each entity to its retained value. Values can be any JSON value, including null, false, and empty collections. An empty input returns an empty object. Do not modify the input. Calls are independent.

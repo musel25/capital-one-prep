@@ -1,5 +1,3 @@
-# 17. Parse an inventory CSV import
-
 The inventory importer must preserve quoted SKU data while it converts quantities to integers.
 
 Implement parse_inventory(csv_text). The first CSV record has exactly the fields sku and quantity, in that order. The text has valid CSV syntax with LF or CRLF record endings. Quoted fields may contain commas, escaped double quotes or newlines. Every nonblank data record has exactly two fields. A SKU is a nonempty ASCII string; preserve it exactly, including spaces and quoted newlines. A quantity is a canonical non-negative decimal integer: 0, or digits without a leading zero. Return a list of {'sku': string, 'quantity': integer} objects in record order. Keep duplicate SKUs as separate records. Use the standard-library csv.reader. Skip fully blank records, which csv.reader returns as empty lists. A blank physical line inside a quoted field belongs to that field. A header-only file returns an empty list. A final record ending is optional. Do not validate malformed CSV; it is outside the contract.

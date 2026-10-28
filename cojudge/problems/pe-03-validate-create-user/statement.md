@@ -1,5 +1,3 @@
-# 03. Validate a create-user request
-
 The create-user endpoint must report invalid fields before it writes a record.
 
 Given a dictionary `payload`, return a list of invalid field names in this order: `name`, `email`, `age`.

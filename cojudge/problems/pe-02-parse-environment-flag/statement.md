@@ -1,5 +1,3 @@
-# 02. Parse an environment flag
-
 A service must parse feature flags from environment variables.
 
 Given `value` and a boolean `default`, return the parsed flag. If `value` is `None`, return `default`. Otherwise, remove surrounding spaces, tabs, carriage returns, and newlines. Compare without letter case. `true`, `1`, `yes`, and `on` mean `True`. `false`, `0`, `no`, and `off` mean `False`. Return `None` for every other string, including an empty string.

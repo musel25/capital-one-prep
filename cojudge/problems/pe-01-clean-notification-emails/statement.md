@@ -1,5 +1,3 @@
-# 01. Clean notification emails
-
 The notification service receives duplicate email addresses from an import.
 
 Given a list of strings `emails`, return the cleaned addresses. Remove leading and trailing spaces, tabs, carriage returns, and newlines. Convert letters to lowercase. Skip empty results. Keep each cleaned address once, in its first input position. Do not validate email syntax or remove internal characters.

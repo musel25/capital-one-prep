@@ -1,5 +1,3 @@
-# 24. Render HTML placeholders safely
-
 The page renderer must escape inserted values while preserving the trusted HTML template.
 
 Implement `render_html(template, values)`. The template is trusted HTML text. Match each substring `{{name}}` whose name follows `[A-Za-z_][A-Za-z0-9_]*`, with no spaces. If name is a key in values, replace that occurrence with its escaped string value. Escape `&` as `&amp;`, `<` as `&lt;`, `>` as `&gt;`, double quotes as `&quot;`, and single quotes as `&#x27;`. Leave missing placeholders and all other template text unchanged. Perform one pass over the original template: inserted placeholders must not be processed again. Compare names exactly. Empty strings are valid. Return the rendered string. Do not change the input.

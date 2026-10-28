@@ -1,5 +1,3 @@
-# 06. Apply a settings patch
-
 The settings endpoint must distinguish deletion from valid false, zero and empty replacement values.
 
 Implement apply_settings_patch(settings, patch). Both arguments are JSON objects with string keys and arbitrary JSON values. Return a new settings object. Start with all existing entries. For each patch entry, remove the key if its value is null. Removing an absent key does nothing. Otherwise set the key to that value, replacing any existing value. Apply these rules only at the top level: nested objects and lists replace entire values, and null inside a nested value is retained. Unpatched entries remain unchanged, including existing null values. Keys are case-sensitive and may be empty strings. Do not change settings, patch or their nested values. An empty patch still returns a new object. Each call is independent.

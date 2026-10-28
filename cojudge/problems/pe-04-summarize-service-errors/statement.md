@@ -1,5 +1,3 @@
-# 04. Summarize service errors
-
 The operations dashboard needs request and server-error counts for each service.
 
 Given a list `logs`, return a dictionary keyed by service name. Each input row has `service` and `status`. Each output value has `requests`, the number of rows for that service, and `errors`, the number with status 500 or more. Count duplicate rows. Service names are case-sensitive. Return an empty dictionary for empty logs.

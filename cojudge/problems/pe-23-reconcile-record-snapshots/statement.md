@@ -1,5 +1,3 @@
-# 23. Plan record synchronization
-
 The sync client needs an action plan for local and remote records without inferring deletions.
 
 Implement `reconcile_records(local, remote)`. Each list contains records with `id`, `version`, and `checksum`. IDs are unique within each list. For an ID found only locally, upload it. For an ID found only remotely, download it. For an ID on both sides, upload when its local version is higher and download when its remote version is higher. When versions are equal, matching checksums require no action; different checksums produce a conflict. Version comparison takes priority over checksum comparison. Return `{'upload': [...], 'download': [...], 'conflicts': [...]}` with IDs in ASCII lexical order within each list. Compare IDs and checksums exactly. Do not infer deletions. Do not change the input.

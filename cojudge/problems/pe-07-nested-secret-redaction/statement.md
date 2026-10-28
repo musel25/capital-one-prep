@@ -1,5 +1,3 @@
-# 07. Redact secrets from JSON logs
-
 The request logger must remove secret values from nested payloads before it writes them.
 
 Implement redact_secrets(value) for any JSON value. For each object key, compare its ASCII letters without regard to case. If the whole key equals password, token or secret, replace its entire value with the string '[REDACTED]'. Preserve the original key spelling. Do not inspect that replaced subtree. Recursively process values under all other object keys and every list element. Return scalar values unchanged, including strings that contain secret words. Matching does not trim whitespace or match substrings. Empty objects and lists remain empty. Do not change the input tree. Repeated calls must be independent and redacting an already redacted result must leave its JSON value unchanged.
