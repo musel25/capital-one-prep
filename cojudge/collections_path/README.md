@@ -31,3 +31,7 @@ uv run python scripts/collections_course.py live --base-url http://127.0.0.1:153
 Publish only `cojudge/problems/pbc-*` and `cojudge/courses/pybites-collections` into the matching directories under `/var/lib/docker/volumes/cojudge-trial-data/_data/`. Check that those paths do not already exist before the first publication. No application restart is required. The live checks submit code directly to the judge. They do not call the progress API or save learner files.
 
 For CLI checks, set `COJUDGE_CONTENT_DIR` to this repository's `cojudge` folder. Extract the reference implementation from `solution.md` and keep the supplied tests and runner below it. Use `cojudge init`, `cojudge run`, and `cojudge submit` as described in the main Cojudge problem guide.
+
+## Publication checks — October 28, 2026
+
+All 11 exercises are published. The live judge accepted all 79 reference test cases and rejected all 11 unfinished templates. The 14 local course tests pass. CLI init produced all 11 exact templates. CLI run accepted the queue reference and rejected its starter. The browser displays all 11 titles in source order, with progress at `0 / 11`. No progress API requests were used for verification.
