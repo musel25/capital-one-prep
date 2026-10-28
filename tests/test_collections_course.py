@@ -16,6 +16,7 @@ def test_course_contains_all_eleven_bites_in_source_order():
     for spec in specs:
         assert spec['contract'] and spec['mutations']
         assert 'BLOCKED' not in spec['page']['desc_html']
+        assert '\r' not in spec['page']['desc_html']
 
 
 @pytest.mark.parametrize('number', range(1, 12))

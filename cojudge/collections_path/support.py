@@ -16,7 +16,9 @@ def problem_id(spec):
 
 def load_specs(numbers=None):
     from cojudge.collections_path.bites import SPECS
-    pages = json.loads((HERE / 'source-pages.json').read_text())
+    pages = [{key: value.replace('\r\n', '\n') if isinstance(value, str) else value
+              for key, value in page.items()}
+             for page in json.loads((HERE / 'source-pages.json').read_text())]
     return [{**spec, 'number': page['n'], 'page': page}
             for spec, page in zip(SPECS, pages, strict=True)
             if not numbers or page['n'] in numbers]
