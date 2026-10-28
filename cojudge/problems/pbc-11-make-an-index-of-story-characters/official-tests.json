@@ -1,0 +1,23 @@
+[
+  {
+    "payload": "{\"test\": \"test_case_and_line_numbers\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_synonyms_use_first_alias_once_per_line\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_whole_word_matching\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_blank_lines_count\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_missing_and_empty\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_literal_names_and_phrases\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_inputs_unchanged\"}"
+  }
+]

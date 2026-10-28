@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"test\": \"test_get_total_points_given_belts\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_get_total_points_more_belts\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_default_belts\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_belts\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_zero_values\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_unfamiliar_belts_and_unchanged_input\"}"
+  }
+]

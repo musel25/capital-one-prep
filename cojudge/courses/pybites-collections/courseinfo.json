@@ -1,0 +1,25 @@
+{
+  "title": "Pybites Collections Path",
+  "description": "The 11 exercises from the Pybites Collections Module learning path, in their original order. Practice namedtuple, deque, defaultdict, and Counter. Free exercises retain their original tests. Premium exercises use recreated templates and tests. Data is supplied offline. Select Python.",
+  "category-order": [
+    "01-beginner",
+    "02-intermediate"
+  ],
+  "problems-of-category": {
+    "01-beginner": [
+      "pbc-01-loop-over-a-dict-of-namedtuples-calculating-a-total-score",
+      "pbc-02-keep-a-queue-of-last-n-items",
+      "pbc-03-group-names-by-country"
+    ],
+    "02-intermediate": [
+      "pbc-04-top-10-pybites-tags",
+      "pbc-05-pybites-die-hard",
+      "pbc-06-convert-dict-to-namedtuplejson",
+      "pbc-07-find-the-most-common-word",
+      "pbc-08-movie-data-analysis",
+      "pbc-09-what-south-park-characters-talk-most",
+      "pbc-10-beautifulsoup-ii-scrape-us-holidays",
+      "pbc-11-make-an-index-of-story-characters"
+    ]
+  }
+}

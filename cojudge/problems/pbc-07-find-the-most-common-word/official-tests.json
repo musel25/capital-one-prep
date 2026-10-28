@@ -1,0 +1,23 @@
+[
+  {
+    "payload": "{\"test\": \"test_default\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_lowercase_and_punctuation\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_stopwords_and_digits\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_empty_and_all_excluded\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_first_appearance_breaks_tie\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_internal_punctuation_is_removed\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_stopwords_not_changed\"}"
+  }
+]
