@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-28",
+  "course": "https://cojudge.musel.dev/?course=pybites-typer",
+  "official_cases": 62,
+  "sample_cases": 21,
+  "exercises": [
+    {
+      "id": "pbty-01-transform-a-script-into-a-command-line-interface-cli",
+      "cases": 9,
+      "reference": "accepted",
+      "starter": "rejected",
+      "samples": "passed"
+    },
+    {
+      "id": "pbty-02-create-your-first-typer-command-line-interface-cli-application",
+      "cases": 10,
+      "reference": "accepted",
+      "starter": "rejected",
+      "samples": "passed"
+    },
+    {
+      "id": "pbty-03-add-a-progress-bar-to-your-command-line-interface-cli",
+      "cases": 8,
+      "reference": "accepted",
+      "starter": "rejected",
+      "samples": "passed"
+    },
+    {
+      "id": "pbty-04-when-to-use-command-line-option-cli-options-and-when-cli-arguments",
+      "cases": 10,
+      "reference": "accepted",
+      "starter": "rejected",
+      "samples": "passed"
+    },
+    {
+      "id": "pbty-05-using-typer-callbacks-to-create-command-line-interface-cli-parameters",
+      "cases": 11,
+      "reference": "accepted",
+      "starter": "rejected",
+      "samples": "passed"
+    },
+    {
+      "id": "pbty-06-rich-excursion-create-beautiful-tables",
+      "cases": 7,
+      "reference": "accepted",
+      "starter": "rejected",
+      "samples": "passed"
+    },
+    {
+      "id": "pbty-07-add-a-password-prompt-to-your-command-line-interface-cli",
+      "cases": 7,
+      "reference": "accepted",
+      "starter": "rejected",
+      "samples": "passed"
+    }
+  ]
+}
