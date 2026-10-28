@@ -51,3 +51,20 @@ def test_judge_adapter_rejects_input_changes_even_with_correct_output():
     exec(full_source(spec, source), namespace)
     with pytest.raises(ValueError, match='input'):
         namespace['Solution']().run('{"emails":["a@b"]}')
+
+
+def test_live_check_counts_user_runtime_errors_but_rejects_infrastructure_errors():
+    from scripts.production_course import rejection_kind
+
+    actual_runtime_failure = {
+        'ready': True,
+        'error': 'Submission failed: details: Traceback (most recent call last):\n  File "/app/Solution.py", line 5, in paginate_records\nIndexError: list index out of range',
+        'errorTestCase': {'payload': '{"records":[{"id":1}],"limit":1,"after_id":0}'},
+        'errorTestIndex': 4,
+    }
+    assert rejection_kind(actual_runtime_failure) == 'runtime_error'
+    assert rejection_kind({'accepted': False, 'results': [{'isCorrect': False}]}) == 'wrong_answer'
+    with pytest.raises(AssertionError):
+        rejection_kind({'ready': True, 'error': 'Docker is unavailable'})
+    with pytest.raises(AssertionError):
+        rejection_kind({'accepted': True, 'results': [{'isCorrect': True}]})

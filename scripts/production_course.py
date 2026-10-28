@@ -11,6 +11,17 @@ from cojudge.production.support import COURSE_ID, build_problem, course_info, fu
 from scripts.pybites_course import submit
 
 
+def rejection_kind(response):
+    """A fault can cause a wrong result or a runtime error in the learner function."""
+    assert not response.get('accepted'), f'Fault accepted: {response}'
+    if any(result.get('isCorrect') is False for result in response.get('results', [])):
+        return 'wrong_answer'
+    error = response.get('error', '')
+    if response.get('errorTestCase') and 'Traceback' in error and 'File "/app/Solution.py"' in error:
+        return 'runtime_error'
+    raise AssertionError(f'Judge did not reject a learner fault: {response}')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command', choices=['verify', 'build', 'live'])
@@ -36,8 +47,7 @@ def main():
                 for mutation in spec['mutations']:
                     faulty = spec['reference'].replace(mutation['old'], mutation['new'], mutation.get('count', 1))
                     bad = submit(args.base_url, args.user, problem_id(spec), full_source(spec, faulty))
-                    assert not bad.get('accepted') and bad.get('results'), f"Fault accepted or runner failed: {bad}"
-                    assert any(r.get('isCorrect') is False for r in bad['results']), str(bad)[:2000]
+                    rejection_kind(bad)
                 record = {'id': problem_id(spec), 'cases': len(spec['cases'])}
             records.append(record)
             print(f"PASS {record['id']} ({record['cases']} cases)", flush=True)
