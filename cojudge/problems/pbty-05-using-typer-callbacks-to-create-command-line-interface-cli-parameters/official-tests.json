@@ -1,0 +1,35 @@
+[
+  {
+    "payload": "{\"test\": \"test_callback_output[args0-8]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_callback_output[args1-The sum is 8]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_callback_output[args2-The sum is 0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_callback_output[args3--1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_callback_output[args4-1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_callback_output[args5-0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_callback_output[args6-d=5 is greater than c=3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_callback_output[args7-c=5 is greater than d=3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_callback_output[args8-c=3 is equal to d=3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_verbose_does_not_leak_between_invocations\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_unknown_root_option\"}"
+  }
+]

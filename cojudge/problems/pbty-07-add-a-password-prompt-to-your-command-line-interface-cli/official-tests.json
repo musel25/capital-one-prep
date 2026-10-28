@@ -1,0 +1,23 @@
+[
+  {
+    "payload": "{\"test\": \"test_explicit_options[alice]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_explicit_options[musel25]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_explicit_options[user-name]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_hidden_password_and_confirmation\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_mismatch_retries_without_echoing_secrets\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_end_of_input_aborts\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_password_option_is_hidden_in_help\"}"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "payload": "{\"test\": \"test_commands[args0-The sum is 8]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_commands[args1-The sum is 0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_commands[args2-d=5 is greater than c=3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_commands[args3-c=8 is greater than d=2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_commands[args4-c=4 is equal to d=4]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_commands[args5-d=-1 is greater than c=-3]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_reject_bad_command[args0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_reject_bad_command[args1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_reject_bad_command[args2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_help_lists_both_commands\"}"
+  }
+]

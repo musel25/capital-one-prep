@@ -1,0 +1,183 @@
+[
+  {
+    "id": "pbty-01-transform-a-script-into-a-command-line-interface-cli",
+    "cases": 9,
+    "tests": [
+      "test_sum[args0-The sum is 8]",
+      "test_sum[args1-The sum is 0]",
+      "test_sum[args2-The sum is 3]",
+      "test_sum[args3-The sum is -11]",
+      "test_invalid_arguments[args0]",
+      "test_invalid_arguments[args1]",
+      "test_invalid_arguments[args2]",
+      "test_invalid_arguments[args3]",
+      "test_help"
+    ],
+    "template_failures": 4,
+    "mutations": [
+      {
+        "name": "subtract instead of add",
+        "detected_by": [
+          "test_sum[args0-The sum is 8]",
+          "test_sum[args2-The sum is 3]",
+          "test_sum[args3-The sum is -11]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pbty-02-create-your-first-typer-command-line-interface-cli-application",
+    "cases": 10,
+    "tests": [
+      "test_commands[args0-The sum is 8]",
+      "test_commands[args1-The sum is 0]",
+      "test_commands[args2-d=5 is greater than c=3]",
+      "test_commands[args3-c=8 is greater than d=2]",
+      "test_commands[args4-c=4 is equal to d=4]",
+      "test_commands[args5-d=-1 is greater than c=-3]",
+      "test_reject_bad_command[args0]",
+      "test_reject_bad_command[args1]",
+      "test_reject_bad_command[args2]",
+      "test_help_lists_both_commands"
+    ],
+    "template_failures": 6,
+    "mutations": [
+      {
+        "name": "equality handled as greater",
+        "detected_by": [
+          "test_commands[args4-c=4 is equal to d=4]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pbty-03-add-a-progress-bar-to-your-command-line-interface-cli",
+    "cases": 8,
+    "tests": [
+      "test_count[0]",
+      "test_count[1]",
+      "test_count[5]",
+      "test_count[100]",
+      "test_invalid_count[args0]",
+      "test_invalid_count[args1]",
+      "test_invalid_count[args2]",
+      "test_progress_iterates_all_items_with_custom_label"
+    ],
+    "template_failures": 5,
+    "mutations": [
+      {
+        "name": "skip progress iteration",
+        "detected_by": [
+          "test_progress_iterates_all_items_with_custom_label"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pbty-04-when-to-use-command-line-option-cli-options-and-when-cli-arguments",
+    "cases": 10,
+    "tests": [
+      "test_option_comparison[args0-The sum is 5]",
+      "test_option_comparison[args1-The sum is 5 and c is smaller]",
+      "test_option_comparison[args2-The sum is 5 and c is greater]",
+      "test_option_comparison[args3-The sum is 5 and c is equal]",
+      "test_option_comparison[args4-The sum is 5 and c is smaller]",
+      "test_option_comparison[args5-The sum is 0 and c is equal]",
+      "test_option_comparison[args6-The sum is -2 and c is equal]",
+      "test_reject_invalid_values[args0]",
+      "test_reject_invalid_values[args1]",
+      "test_reject_invalid_values[args2]"
+    ],
+    "template_failures": 7,
+    "mutations": [
+      {
+        "name": "treat zero option as absent",
+        "detected_by": [
+          "test_option_comparison[args4-The sum is 5 and c is smaller]",
+          "test_option_comparison[args5-The sum is 0 and c is equal]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pbty-05-using-typer-callbacks-to-create-command-line-interface-cli-parameters",
+    "cases": 11,
+    "tests": [
+      "test_callback_output[args0-8]",
+      "test_callback_output[args1-The sum is 8]",
+      "test_callback_output[args2-The sum is 0]",
+      "test_callback_output[args3--1]",
+      "test_callback_output[args4-1]",
+      "test_callback_output[args5-0]",
+      "test_callback_output[args6-d=5 is greater than c=3]",
+      "test_callback_output[args7-c=5 is greater than d=3]",
+      "test_callback_output[args8-c=3 is equal to d=3]",
+      "test_verbose_does_not_leak_between_invocations",
+      "test_unknown_root_option"
+    ],
+    "template_failures": 10,
+    "mutations": [
+      {
+        "name": "always verbose",
+        "detected_by": [
+          "test_callback_output[args0-8]",
+          "test_callback_output[args3--1]",
+          "test_callback_output[args4-1]",
+          "test_callback_output[args5-0]",
+          "test_verbose_does_not_leak_between_invocations"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pbty-06-rich-excursion-create-beautiful-tables",
+    "cases": 6,
+    "tests": [
+      "test_real_table_and_headers",
+      "test_row_values_and_order",
+      "test_duplicate_rows_are_kept",
+      "test_show_table",
+      "test_cli_table",
+      "test_unicode_cells"
+    ],
+    "template_failures": 6,
+    "mutations": [
+      {
+        "name": "omit final row",
+        "detected_by": [
+          "test_row_values_and_order",
+          "test_duplicate_rows_are_kept",
+          "test_show_table",
+          "test_cli_table",
+          "test_unicode_cells"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pbty-07-add-a-password-prompt-to-your-command-line-interface-cli",
+    "cases": 7,
+    "tests": [
+      "test_explicit_options[alice]",
+      "test_explicit_options[musel25]",
+      "test_explicit_options[user-name]",
+      "test_hidden_password_and_confirmation",
+      "test_mismatch_retries_without_echoing_secrets",
+      "test_end_of_input_aborts",
+      "test_password_option_is_hidden_in_help"
+    ],
+    "template_failures": 5,
+    "mutations": [
+      {
+        "name": "leak password",
+        "detected_by": [
+          "test_explicit_options[alice]",
+          "test_explicit_options[musel25]",
+          "test_explicit_options[user-name]",
+          "test_hidden_password_and_confirmation",
+          "test_mismatch_retries_without_echoing_secrets"
+        ]
+      }
+    ]
+  }
+]

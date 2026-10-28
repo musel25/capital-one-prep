@@ -1,0 +1,26 @@
+[
+  {
+    "payload": "{\"test\": \"test_count[0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_count[1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_count[5]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_count[100]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_count[args0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_count[args1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_invalid_count[args2]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_progress_iterates_all_items_with_custom_label\"}"
+  }
+]

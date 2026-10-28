@@ -1,0 +1,20 @@
+[
+  {
+    "payload": "{\"test\": \"test_real_table_and_headers\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_row_values_and_order\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_duplicate_rows_are_kept\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_show_table\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_cli_table\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_unicode_cells\"}"
+  }
+]

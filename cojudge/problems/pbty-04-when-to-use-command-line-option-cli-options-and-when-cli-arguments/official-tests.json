@@ -1,0 +1,32 @@
+[
+  {
+    "payload": "{\"test\": \"test_option_comparison[args0-The sum is 5]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_option_comparison[args1-The sum is 5 and c is smaller]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_option_comparison[args2-The sum is 5 and c is greater]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_option_comparison[args3-The sum is 5 and c is equal]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_option_comparison[args4-The sum is 5 and c is smaller]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_option_comparison[args5-The sum is 0 and c is equal]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_option_comparison[args6-The sum is -2 and c is equal]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_reject_invalid_values[args0]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_reject_invalid_values[args1]\"}"
+  },
+  {
+    "payload": "{\"test\": \"test_reject_invalid_values[args2]\"}"
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "title": "Pybites Typer Path",
+  "description": "The seven exercises of the Pybites Typer learning path, in the source order. Practice arguments, commands, progress bars, options, callbacks, Rich tables, and password prompts. Recreated templates and tests. Real libraries are bundled for offline use. Select Python.",
+  "category-order": [
+    "01-cli-basics",
+    "02-options-and-callbacks",
+    "03-rich-and-prompts"
+  ],
+  "problems-of-category": {
+    "01-cli-basics": [
+      "pbty-01-transform-a-script-into-a-command-line-interface-cli",
+      "pbty-02-create-your-first-typer-command-line-interface-cli-application",
+      "pbty-03-add-a-progress-bar-to-your-command-line-interface-cli"
+    ],
+    "02-options-and-callbacks": [
+      "pbty-04-when-to-use-command-line-option-cli-options-and-when-cli-arguments",
+      "pbty-05-using-typer-callbacks-to-create-command-line-interface-cli-parameters"
+    ],
+    "03-rich-and-prompts": [
+      "pbty-06-rich-excursion-create-beautiful-tables",
+      "pbty-07-add-a-password-prompt-to-your-command-line-interface-cli"
+    ]
+  }
+}

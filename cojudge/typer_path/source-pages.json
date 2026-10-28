@@ -1,0 +1,58 @@
+[
+  {
+    "desc_html": "<p></p>\n<p>There are several Python frameworks to create CLIs, check out this overview of CLI framework options. </p>\n<p>In this Bite we will leverage Typer to create a CLI based on a simple Python script.</p>\n<p>Therefore, a script with a simple function will be provided so that you will only need to extend the provided script with Typer annotations to allow it to be called with typer.run(main).</p>\n<p>Typing python script.py --help should return the following:</p>\n<pre>Usage: script.py [OPTIONS] a b  CLI that allows you to add two numbersArguments:  a  The value of the first summand  [required]  b  The value of the second summand  [required]Options:  --install-completion  Install completion for the current shell.  --show-completion     Show completion for the current shell, to copy it or                        customize the installation.  --help                Show this message and exit.</pre>\n<p>The Options are standard Typer switches which are available out-of-the-box, so you don't need to worry about them.</p>\n<p>If this description is unclear, check out the tests to better understand what is required.</p>\n<p>One last hint: Make sure to always use lowercase arguments, since there is a bug in click concerning mixed and upper case arguments.</p>\n<p>Enjoy!</p>\n<p>PS: Just use typer.Argument for now. If you stumble over typer.Option and wonder what the difference is, wait for the next Bite. :)</p>\n<p></p>",
+    "level": "Beginner",
+    "n": 1,
+    "original": false,
+    "slug": "transform-a-script-into-a-command-line-interface-cli",
+    "title": "Transform a script into a command line interface (cli)"
+  },
+  {
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"></p>\n<p>In the previous Bites, you have successfully transformed an existing script into a CLI using <code>typer.run()</code>.</p>\n<p>In this Bite, you will create a CLI application including more than one command to run, leveraging <code>app = typer.Typer()</code>. See the <a href=\"https://typer.tiangolo.com/tutorial/commands/\" target=\"_blank\" rel=\"noopener\">Commands documentation</a> for reference.</p>\n<p>So, create a command <code>sum</code> that sums two numbers and a command <code>compare</code> that compares two numbers:</p>\n<pre>$ python script.py sum 3 5<br>The sum is 8<br><br>$ python script.py compare 3 5<br>d=5 is greater than c=3</pre>\n<p>Check out the tests for more information on how to format the output.</p>\n<p></p>",
+    "level": "Beginner",
+    "n": 2,
+    "original": false,
+    "slug": "create-your-first-typer-command-line-interface-cli-application",
+    "title": "Create your first typer command line interface (cli) application"
+  },
+  {
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"></p>\n<p>In this Bite, you will create a simplistic CLI application with a simple progress bar.</p>\n<p>Refer to the <a href=\"https://typer.tiangolo.com/tutorial/progressbar/\" target=\"_blank\" rel=\"noopener\">progress bar documentation</a> for more information.</p>\n<p>Enjoy!</p>\n<p></p>",
+    "level": "Beginner",
+    "n": 3,
+    "original": false,
+    "slug": "add-a-progress-bar-to-your-command-line-interface-cli",
+    "title": "Add a progress bar to your command line interface (cli)"
+  },
+  {
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"></p>\n<p>In Typer, you can use either <code>typer.Option</code> or <code>typer.Argument</code>.</p>\n<p>Well, you might have guessed it:</p>\n<p>CLI options are similar to CLI arguments - but options are optional by default (while arguments are required by default).</p>\n<p>Furthermore, CLI options have some additional functionality compared to arguments.</p>\n<p>In this Bite, you will extend the previous CLI script and implement a simple CLI option.</p>\n<p>For documentation, see the <a href=\"https://typer.tiangolo.com/tutorial/options/\" target=\"_blank\" rel=\"noopener\">CLI Options Intro</a>.</p>\n<p>Extend the code such that it also receives an optional number <code>c</code> and then compare whether the sum of <code>a</code> and <code>b</code> is greater than <code>c</code>.</p>\n<p>Hence, when one runs <code>python script.py 2 3 --c 1</code>, we expect the following response:</p>\n<pre>The sum is 5 and c is smaller</pre>\n<p></p>",
+    "level": "Intermediate",
+    "n": 4,
+    "original": false,
+    "slug": "when-to-use-command-line-option-cli-options-and-when-cli-arguments",
+    "title": "When to use command line option (cli) options and when cli arguments?"
+  },
+  {
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"></p>\n<p>In the previous Bite you have created your first simple Typer application with several commands.</p>\n<p>You might have asked yourself, \"How do I create arguments or options that are initialized once and can be used by several commands?\". Without a feature like that, one could potentially have lots of redundant code that initializes the same arguments and options for multiple commands.</p>\n<p>Luckily, <a href=\"https://typer.tiangolo.com/tutorial/commands/callback/\" target=\"_blank\" rel=\"noopener\">Typer Callback</a> serves exactly this purpose.</p>\n<p>In this Bite, you will implement a simple Typer Callback, to get familiar with the concept.</p>\n<p>Let's add a verbosity option such that the commands can return a less verbose output by default.</p>\n<p>Check out the tests for more information about what output is expected.</p>\n<p>Enjoy!</p>\n<p></p>",
+    "level": "Intermediate",
+    "n": 5,
+    "original": false,
+    "slug": "using-typer-callbacks-to-create-command-line-interface-cli-parameters",
+    "title": "Using typer callbacks to create command line interface (cli) parameters"
+  },
+  {
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"></p>\n<p>This will be a quick Bite showing you how to create a beautiful table with <a href=\"https://github.com/Textualize/rich\" target=\"_blank\" rel=\"noopener\">Rich</a>.</p>\n<p>You might be surprised how easy it is and it might come in handy when improving your CLI.</p>\n<p>Refer to the <a href=\"https://typer.tiangolo.com/tutorial/printing/#rich-tables\" target=\"_blank\" rel=\"noopener\">Rich table documentation</a> for more help.</p>\n<p>Enjoy!</p>\n<p>PS: You may need to adjust the width of the rows to pass the tests.</p>\n<p></p>",
+    "level": "Intermediate",
+    "n": 6,
+    "original": false,
+    "slug": "rich-excursion-create-beautiful-tables",
+    "title": "Rich excursion - create beautiful tables"
+  },
+  {
+    "desc_html": "<p class=\"text-gray-700 dark:text-gray-300\"></p>\n<p>Let's get serious. Your Command Line Interface (CLI) works and you want to authenticate who is using your application.</p>\n<p>Here is a simple example of how to receive credentials via a password prompt.</p>\n<p>Refer to <a href=\"https://typer.tiangolo.com/tutorial/options/password/\" target=\"_blank\" rel=\"noopener\">Typer password documentation</a> for more help.</p>\n<p>Enjoy!</p>\n<p></p>",
+    "level": "Intermediate",
+    "n": 7,
+    "original": false,
+    "slug": "add-a-password-prompt-to-your-command-line-interface-cli",
+    "title": "Add a password prompt to your command line interface (cli)"
+  }
+]
