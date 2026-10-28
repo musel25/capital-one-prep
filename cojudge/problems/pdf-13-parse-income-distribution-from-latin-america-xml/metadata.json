@@ -6,16 +6,8 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_local_sample\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_custom_file_and_namespace_prefix\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_empty_root\"}",
-      "output": "passed"
+      "input": "get_income_distribution()",
+      "output": "{'Upper middle income': ['Argentina', 'Brazil'], 'High income': ['Chile', 'Uruguay'], 'Lower middle income': ['Bolivia']}"
     }
   ],
   "starterCode": {
@@ -40,5 +32,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_local_sample": {
+      "title": "test_default_local_sample",
+      "code": "def test_default_local_sample():\n    assert get_income_distribution() == {\n        'Upper middle income': ['Argentina', 'Brazil'],\n        'High income': ['Chile', 'Uruguay'], 'Lower middle income': ['Bolivia']}"
+    },
+    "test_custom_file_and_namespace_prefix": {
+      "title": "test_custom_file_and_namespace_prefix",
+      "code": "def test_custom_file_and_namespace_prefix(tmp_path):\n    text = '<x:countries xmlns:x=\"http://www.worldbank.org\"><x:country>'\n    text += '<x:name>Example</x:name><x:incomeLevel id=\"OTHER\">Custom label</x:incomeLevel>'\n    text += '</x:country></x:countries>'\n    path = save(tmp_path, text)\n    assert get_income_distribution(path) == {'Custom label': ['Example']}\n    assert get_income_distribution(str(path)) == {'Custom label': ['Example']}"
+    },
+    "test_empty_root": {
+      "title": "test_empty_root",
+      "code": "def test_empty_root(tmp_path):\n    path = save(tmp_path, '<countries xmlns=\"http://www.worldbank.org\"/>')\n    assert get_income_distribution(path) == {}"
+    },
+    "test_strip_text_and_decode_entities": {
+      "title": "test_strip_text_and_decode_entities",
+      "code": "def test_strip_text_and_decode_entities(tmp_path):\n    text = '<countries xmlns=\"http://www.worldbank.org\"><country>'\n    text += '<name>  S\u00e3o Tom\u00e9 &amp; Pr\u00edncipe  </name><incomeLevel id=\"L\"> Low income </incomeLevel>'\n    text += '</country></countries>'\n    assert get_income_distribution(save(tmp_path, text)) == {'Low income': ['S\u00e3o Tom\u00e9 & Pr\u00edncipe']}"
+    },
+    "test_order_duplicates_and_labels_not_ids": {
+      "title": "test_order_duplicates_and_labels_not_ids",
+      "code": "def test_order_duplicates_and_labels_not_ids(tmp_path):\n    text = '<countries xmlns=\"http://www.worldbank.org\">'\n    for name, code, label in [('Zed', 'X', 'Group'), ('Other', 'X', 'Other group'),\n                              ('Alpha', 'Y', 'Group'), ('Zed', 'X', 'Group')]:\n        text += '<country><name>' + name + '</name><incomeLevel id=\"' + code + '\">' + label + '</incomeLevel></country>'\n    text += '</countries>'\n    assert get_income_distribution(save(tmp_path, text)) == {'Group': ['Zed', 'Alpha', 'Zed'], 'Other group': ['Other']}"
+    },
+    "test_only_direct_country_name": {
+      "title": "test_only_direct_country_name",
+      "code": "def test_only_direct_country_name(tmp_path):\n    text = '<countries xmlns=\"http://www.worldbank.org\"><country>'\n    text += '<region><name>Ignore this nested name</name></region><name>Country name</name>'\n    text += '<incomeLevel id=\"X\">Label</incomeLevel></country></countries>'\n    assert get_income_distribution(save(tmp_path, text)) == {'Label': ['Country name']}"
+    },
+    "test_fresh_results": {
+      "title": "test_fresh_results",
+      "code": "def test_fresh_results():\n    first = get_income_distribution()\n    first['High income'].append('extra')\n    first['new'] = ['extra']\n    assert get_income_distribution()['High income'] == ['Chile', 'Uruguay']\n    assert 'new' not in get_income_distribution()"
+    },
+    "test_parse_and_file_errors": {
+      "title": "test_parse_and_file_errors",
+      "code": "def test_parse_and_file_errors(tmp_path):\n    with pytest.raises(ET.ParseError):\n        get_income_distribution(save(tmp_path, '<broken>'))\n    with pytest.raises(FileNotFoundError):\n        get_income_distribution(tmp_path / 'missing.xml')"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/parse-income-distribution-from-latin-america-xml/)"
+  }
 }

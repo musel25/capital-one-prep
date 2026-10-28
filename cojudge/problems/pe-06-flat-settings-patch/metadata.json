@@ -6,17 +6,17 @@
   "category": "01-data-and-api",
   "examples": [
     {
-      "input": "{\"settings\": {\"theme\": \"dark\", \"lang\": \"en\"}, \"patch\": {\"theme\": \"light\"}}",
-      "output": "{\"theme\": \"light\", \"lang\": \"en\"}",
+      "input": "apply_settings_patch(\n    settings={'theme': 'dark', 'lang': 'en'},\n    patch={'theme': 'light'}\n)",
+      "output": "{'theme': 'light', 'lang': 'en'}",
       "explanation": "replace one setting and preserve another"
     },
     {
-      "input": "{\"settings\": {\"theme\": \"dark\"}, \"patch\": {\"theme\": null}}",
+      "input": "apply_settings_patch(\n    settings={'theme': 'dark'},\n    patch={'theme': None}\n)",
       "output": "{}",
       "explanation": "null removes an existing key"
     },
     {
-      "input": "{\"settings\": {}, \"patch\": {}}",
+      "input": "apply_settings_patch(\n    settings={},\n    patch={}\n)",
       "output": "{}",
       "explanation": "both objects empty"
     }
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

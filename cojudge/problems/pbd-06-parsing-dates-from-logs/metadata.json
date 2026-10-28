@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_case_01\"}",
-      "output": "passed"
+      "input": "get_shutdown_times('INFO 2014-07-03T23:27:51 Shutdown initiated.')",
+      "output": "[datetime.datetime(2014, 7, 3, 23, 27, 51)]"
     },
     {
-      "input": "{\"test\": \"test_case_02\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_case_03\"}",
-      "output": "passed"
+      "input": "get_time_between_shutdowns('INFO 2014-07-03T23:27:51 Shutdown initiated.\\nINFO 2014-07-03T23:31:22 Shutdown initiated.')",
+      "output": "datetime.timedelta(seconds=211)"
     }
   ],
   "starterCode": {
@@ -40,5 +36,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_case_01": {
+      "title": "test_case_01",
+      "code": "def test_case_01():\n    assert (get_shutdown_times('')) == []"
+    },
+    "test_case_02": {
+      "title": "test_case_02",
+      "code": "def test_case_02():\n    assert (get_shutdown_times('INFO 2014-07-03T23:27:51 supybot Shutdown initiated.')) == [datetime(2014, 7, 3, 23, 27, 51)]"
+    },
+    "test_case_03": {
+      "title": "test_case_03",
+      "code": "def test_case_03():\n    assert (get_shutdown_times('INFO 2014-07-03T23:27:51 Started')) == []"
+    },
+    "test_case_04": {
+      "title": "test_case_04",
+      "code": "def test_case_04():\n    assert (get_time_between_shutdowns('INFO 2014-07-03T23:27:51 Shutdown initiated.\\nINFO 2014-07-03T23:31:22 Shutdown initiated.')) == timedelta(seconds=211)"
+    },
+    "test_case_05": {
+      "title": "test_case_05",
+      "code": "def test_case_05():\n    assert (get_time_between_shutdowns('I 2020-02-28T23:00:00 Shutdown initiated.\\nI 2020-02-29T00:00:00 Shutdown initiated.\\nI 2020-03-01T00:00:00 Shutdown initiated.')) == timedelta(days=1, hours=1)"
+    },
+    "test_too_few_events": {
+      "title": "test_too_few_events",
+      "code": "def test_too_few_events():\n    with pytest.raises(ValueError):\n        get_time_between_shutdowns('')"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/parsing-dates-from-logs/)"
+  }
 }

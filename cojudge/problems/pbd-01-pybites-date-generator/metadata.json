@@ -6,16 +6,12 @@
   "category": "01-beginner",
   "examples": [
     {
-      "input": "{\"test\": \"test_gen_special_pybites_dates\"}",
-      "output": "passed"
+      "input": "next(gen_special_pybites_dates())",
+      "output": "datetime.datetime(2017, 3, 29, 0, 0)"
     },
     {
-      "input": "{\"test\": \"test_case_01\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_case_02\"}",
-      "output": "passed"
+      "input": "from itertools import islice\nlist(islice(gen_special_pybites_dates(), 3))",
+      "output": "[datetime.datetime(2017, 3, 29, 0, 0), datetime.datetime(2017, 7, 7, 0, 0), datetime.datetime(2017, 10, 15, 0, 0)]"
     }
   ],
   "starterCode": {
@@ -40,5 +36,31 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_gen_special_pybites_dates": {
+      "title": "test_gen_special_pybites_dates",
+      "code": "def test_gen_special_pybites_dates():\n    gen = gen_special_pybites_dates()\n    dates = list(islice(gen, 10))\n    expected = [datetime(2017, 3, 29, 0, 0),\n                datetime(2017, 7, 7, 0, 0),\n                datetime(2017, 10, 15, 0, 0),\n                datetime(2018, 1, 23, 0, 0),\n                datetime(2018, 5, 3, 0, 0),\n                datetime(2018, 8, 11, 0, 0),\n                datetime(2018, 11, 19, 0, 0),\n                datetime(2019, 2, 27, 0, 0),\n                datetime(2019, 6, 7, 0, 0),\n                datetime(2019, 9, 15, 0, 0)]\n    assert dates == expected"
+    },
+    "test_case_01": {
+      "title": "test_case_01",
+      "code": "def test_case_01():\n    assert (next(gen_special_pybites_dates())) == datetime(2017, 3, 29)"
+    },
+    "test_case_02": {
+      "title": "test_case_02",
+      "code": "def test_case_02():\n    assert (list(__import__('itertools').islice(gen_special_pybites_dates(), 3))) == [datetime(2017, 3, 29), datetime(2017, 7, 7), datetime(2017, 10, 15)]"
+    },
+    "test_case_03": {
+      "title": "test_case_03",
+      "code": "def test_case_03():\n    assert (list(__import__('itertools').islice(gen_special_pybites_dates(), 100, 101))) == [datetime(2044, 8, 14)]"
+    },
+    "test_case_04": {
+      "title": "test_case_04",
+      "code": "def test_case_04():\n    assert (next(gen_special_pybites_dates()) == next(gen_special_pybites_dates())) == True"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe original free template and tests are retained, with added boundary tests.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/pybites-date-generator/)"
+  }
 }

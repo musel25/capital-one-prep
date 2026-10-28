@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_case_01\"}",
-      "output": "passed"
+      "input": "get_number_books_read(100, 'Sunday, March 25th, 2019')",
+      "output": "25"
     },
     {
-      "input": "{\"test\": \"test_case_02\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_case_03\"}",
-      "output": "passed"
+      "input": "get_number_books_read(52, 'Sunday, March 18th, 2019')",
+      "output": "12"
     }
   ],
   "starterCode": {
@@ -40,5 +36,51 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_case_01": {
+      "title": "test_case_01",
+      "code": "def test_case_01():\n    assert (get_number_books_read(100, 'Sunday, March 25th, 2019')) == 25"
+    },
+    "test_case_02": {
+      "title": "test_case_02",
+      "code": "def test_case_02():\n    assert (get_number_books_read(52, 'Sunday, March 18th, 2019')) == 12"
+    },
+    "test_case_03": {
+      "title": "test_case_03",
+      "code": "def test_case_03():\n    assert (get_number_books_read(100, '2019-11-18')) == 90"
+    },
+    "test_case_04": {
+      "title": "test_case_04",
+      "code": "def test_case_04():\n    assert (get_number_books_read(52, '3-18-2019')) == 12"
+    },
+    "test_case_05": {
+      "title": "test_case_05",
+      "code": "def test_case_05():\n    assert (get_number_books_read(52)) == 1"
+    },
+    "test_case_06": {
+      "title": "test_case_06",
+      "code": "def test_case_06():\n    assert (get_number_books_read(100)) == 2"
+    },
+    "test_case_07": {
+      "title": "test_case_07",
+      "code": "def test_case_07():\n    assert (get_number_books_read(52, date(2020, 12, 31))) == 53"
+    },
+    "test_case_08": {
+      "title": "test_case_08",
+      "code": "def test_case_08():\n    assert (get_number_books_read(52, '2019-12-30')) == 1"
+    },
+    "test_case_09": {
+      "title": "test_case_09",
+      "code": "def test_case_09():\n    assert (get_number_books_read(26, '2019-01-01')) == 0"
+    },
+    "test_invalid_goal_and_date": {
+      "title": "test_invalid_goal_and_date",
+      "code": "def test_invalid_goal_and_date():\n    for goal, value in ((0, NOW), (-2, NOW), (True, NOW), (1.5, NOW), (52, '5-20-2018'), (52, 'not a date'), (52, None)):\n        with pytest.raises(ValueError):\n            get_number_books_read(goal, value)"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/calculate-number-of-books-to-have-read-at-date/)"
+  }
 }

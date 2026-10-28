@@ -1,29 +1,22 @@
-# 06. Pydantic part ii
+In order to measure daily food intake as a user our current Food model is not enough. We also need User and FoodEntry models, so let's create them!
+In database-speak, FoodEntry is a many-to-many relation between User and Food. Users would add many foods and foods will be added by many users.
+For this learning path, we'll work with these Pydantic models in memory to keep things simpler. In the SQLModel learning path we'll use a database.
+Create the User and FoodEntry models based on what you learned in A little detour: Pydantic.
+Required attributes and their types:
+User
+- id -> int
+- username -> str
+- password -> str (needed for authentication later)
+* For password override the constructor (__init__.py) to hash the password upon creation of the module. You can use the provided get_password_hash() function for this.
+FoodEntry
+- id -> int (what in a DB would be the primary key)
+- user -> User (here we see that Pydantic models can be nested)
+- food -> Food (from previous Bite and provided in the template)
+- date_added -> datetime (defaults to datetime.now())
+- number_servings -> float (fitness nerds can be quite exact about this)
+* Additionally add a property to calculate the total calories of a food entry (number_servings * food.kcal_per_serving) and call it total_calories.
+Good luck and in the next Bite we'll expand our API to work with these new objects.
 
-[Course list](/?course=pybites-fastapi) · [Original Pybites exercise](https://pybitesplatform.com/bites/pydantic-part-ii/)
+**Constraints:**
 
-## Required behavior
-
-Define User with `id: int`, `username: str`, and `password: str`. Hash the input password with the supplied helper. Define FoodEntry with `id: int`, `user: User`, `food: Food`, `number_servings: float`, and `date_added: datetime` defaulting to the creation time. Its `total_calories` property multiplies servings by food calories. Preserve explicit dates.
-
-## How to solve it
-
-Use Python. Write your solution at the top of the editor. The supplied tests follow it.
-Run checks up to three tests. Submit checks all 6 tests.
-Each check runs real pytest and FastAPI in a fresh process. No server or network is needed.
-Keep the supplied tests and adapter unchanged. Failures show the pytest test name and error.
-
-## Source and changes
-
-The starter and tests were imported from the exercise pages accessible in the user's Pybites session.
-Example password fields and the classroom signing key were restored with explicit test values after export redaction.
-FoodEntry uses a per-instance timestamp default. Tests labelled `test_added_` are added Cojudge checks.
-The required behavior above summarizes the source description and states the added checks.
-The reference solution was written for this course.
-
-The runtime uses Python 3.11, FastAPI 0.161.1, Pydantic 2, real pytest,
-HTTPX, Passlib/bcrypt, python-jose, python-multipart, and BeautifulSoup.
-Package versions are locked in `cojudge/fastapi_path/uv.lock` in the content repository.
-
-For an old saved solution, use **+** beside the editor tabs to open the current starter.
-Copy your code into that tab. Keep your old saved tab.
+- Create a fresh default timestamp for each entry. Keep an explicit timestamp when supplied.

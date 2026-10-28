@@ -6,16 +6,14 @@
   "category": "01-beginner",
   "examples": [
     {
-      "input": "{\"test\": \"test_get_total_points_given_belts\"}",
-      "output": "passed"
+      "input": "get_total_points({\"yellow\": BeltStats(50, 3), \"orange\": BeltStats(100, 2)})",
+      "output": "350",
+      "explanation": "Three yellow belts and two orange belts earn 150 + 200 points."
     },
     {
-      "input": "{\"test\": \"test_get_total_points_more_belts\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_default_belts\"}",
-      "output": "passed"
+      "input": "get_total_points({})",
+      "output": "0",
+      "explanation": "An empty dictionary earns no points."
     }
   ],
   "starterCode": {
@@ -40,5 +38,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_get_total_points_given_belts": {
+      "title": "test_get_total_points_given_belts",
+      "code": "def test_get_total_points_given_belts():\n    assert get_total_points(ninja_belts) == 2675"
+    },
+    "test_get_total_points_more_belts": {
+      "title": "test_get_total_points_more_belts",
+      "code": "def test_get_total_points_more_belts():\n    more_belts = dict(brown=BeltStats(400, 2),\n                      black=BeltStats(600, 5))\n\n    # this way to dict merge is >= 3.5 (PEP 448)\n    ninja_belts_updated = {**ninja_belts, **more_belts}\n\n    assert get_total_points(ninja_belts_updated) == 6475"
+    },
+    "test_default_belts": {
+      "title": "test_default_belts",
+      "code": "def test_default_belts():\n    assert get_total_points() == 2675"
+    },
+    "test_empty_belts": {
+      "title": "test_empty_belts",
+      "code": "def test_empty_belts():\n    assert get_total_points({}) == 0"
+    },
+    "test_zero_values": {
+      "title": "test_zero_values",
+      "code": "def test_zero_values():\n    assert get_total_points({'a': BeltStats(0, 8), 'b': BeltStats(100, 0)}) == 0"
+    },
+    "test_unfamiliar_belts_and_unchanged_input": {
+      "title": "test_unfamiliar_belts_and_unchanged_input",
+      "code": "def test_unfamiliar_belts_and_unchanged_input():\n    belts = {'new': BeltStats(7, 9), 'other': BeltStats(3, 4)}\n    before = dict(belts)\n    assert get_total_points(belts) == 75\n    assert belts == before"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis version keeps the original free template and tests, with added boundary tests. Python 3.11. Data is supplied offline. Use the standard library.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/loop-over-a-dict-of-namedtuples-calculating-a-total-score/)"
+  }
 }

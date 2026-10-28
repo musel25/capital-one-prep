@@ -6,19 +6,14 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_is_dataclass\"}",
-      "output": "passed",
-      "explanation": "Test test_is_dataclass must pass."
+      "input": "Bite(2, \"fizz BUZZ\")",
+      "output": "Bite(number=2, title='Fizz buzz', level='Beginner')",
+      "explanation": "The title is capitalized and the level has a default."
     },
     {
-      "input": "{\"test\": \"test_default_level\"}",
-      "output": "passed",
-      "explanation": "Test test_default_level must pass."
-    },
-    {
-      "input": "{\"test\": \"test_title_is_capitalized\"}",
-      "output": "passed",
-      "explanation": "Test test_title_is_capitalized must pass."
+      "input": "[bite.number for bite in sorted([Bite(3, \"classes\"), Bite(1, \"properties\")])]",
+      "output": "[1, 3]",
+      "explanation": "The dataclass compares number first."
     }
   ],
   "starterCode": {
@@ -43,5 +38,63 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_is_dataclass": {
+      "title": "test_is_dataclass",
+      "code": "def test_is_dataclass():\n    assert is_dataclass(Bite)\n    assert [f.name for f in fields(Bite)] == ['number', 'title', 'level']\n    assert [f.type for f in fields(Bite)] in ([int, str, str], ['int', 'str', 'str'])"
+    },
+    "test_default_level": {
+      "title": "test_default_level",
+      "code": "def test_default_level():\n    assert Bite(1, 'Fizz buzz').level == 'Beginner'\n    assert Bite(1, 'Fizz buzz', 'Advanced').level == 'Advanced'"
+    },
+    "test_title_is_capitalized": {
+      "title": "test_title_is_capitalized",
+      "code": "def test_title_is_capitalized():\n    \"\"\"Hint: __post_init__ runs right after the generated __init__.\"\"\"\n    assert Bite(1, 'sum of numbers').title == 'Sum of numbers'\n    assert Bite(2, 'fizz BUZZ').title == 'Fizz buzz'"
+    },
+    "test_ordering": {
+      "title": "test_ordering",
+      "code": "def test_ordering(bites):\n    assert [b.number for b in sorted(bites)] == [1, 2, 3]\n    bites.sort()\n    assert bites[0].title == 'Fizz buzz'\n    assert Bite(1, 'a') < Bite(1, 'b')"
+    },
+    "test_repr_and_equality": {
+      "title": "test_repr_and_equality",
+      "code": "def test_repr_and_equality():\n    bite = Bite(5, 'parse a list of names')\n    assert repr(bite) == \"Bite(number=5, title='Parse a list of names', level='Beginner')\"\n    assert bite == Bite(5, 'Parse a list of names')\n    assert bite != Bite(5, 'Parse a list of names', 'Advanced')"
+    },
+    "test_mutable_unlike_a_namedtuple": {
+      "title": "test_mutable_unlike_a_namedtuple",
+      "code": "def test_mutable_unlike_a_namedtuple():\n    bite = Bite(1, 'fizz buzz')\n    bite.level = 'Intermediate'\n    assert bite.level == 'Intermediate'"
+    },
+    "test_not_a_tuple": {
+      "title": "test_not_a_tuple",
+      "code": "def test_not_a_tuple():\n    bite = Bite(1, 'fizz buzz')\n    with pytest.raises(TypeError):\n        number, title, level = bite\n    assert astuple(bite) == (1, 'Fizz buzz', 'Beginner')"
+    },
+    "test_not_frozen": {
+      "title": "test_not_frozen",
+      "code": "def test_not_frozen():\n    bite = Bite(1, 'fizz buzz')\n    try:\n        bite.number = 2\n    except FrozenInstanceError:\n        pytest.fail('Bite should be mutable')"
+    },
+    "test_title_boundaries[-]": {
+      "title": "test_title_boundaries[-]",
+      "code": "@pytest.mark.parametrize('title, expected', [\n    ('', ''), ('  fizz BUZZ', '  fizz buzz'), ('123 ABC', '123 abc'),\n])\ndef test_title_boundaries(title, expected):\n    assert Bite(0, title).title == expected"
+    },
+    "test_title_boundaries[  fizz BUZZ-  fizz buzz]": {
+      "title": "test_title_boundaries[  fizz BUZZ-  fizz buzz]",
+      "code": "@pytest.mark.parametrize('title, expected', [\n    ('', ''), ('  fizz BUZZ', '  fizz buzz'), ('123 ABC', '123 abc'),\n])\ndef test_title_boundaries(title, expected):\n    assert Bite(0, title).title == expected"
+    },
+    "test_title_boundaries[123 ABC-123 abc]": {
+      "title": "test_title_boundaries[123 ABC-123 abc]",
+      "code": "@pytest.mark.parametrize('title, expected', [\n    ('', ''), ('  fizz BUZZ', '  fizz buzz'), ('123 ABC', '123 abc'),\n])\ndef test_title_boundaries(title, expected):\n    assert Bite(0, title).title == expected"
+    },
+    "test_level_breaks_ties_and_empty_values_are_kept": {
+      "title": "test_level_breaks_ties_and_empty_values_are_kept",
+      "code": "def test_level_breaks_ties_and_empty_values_are_kept():\n    assert Bite(-1, '', '') < Bite(-1, '', 'Beginner')\n    assert Bite(-1, '', '').level == ''\n    assert Bite(-1, '', '') != Bite(-1, '', 'Beginner')"
+    },
+    "test_title_normalization_only_happens_at_construction": {
+      "title": "test_title_normalization_only_happens_at_construction",
+      "code": "def test_title_normalization_only_happens_at_construction():\n    bite = Bite(1, 'first TITLE')\n    bite.title = 'new TITLE'\n    assert bite.title == 'new TITLE'"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/write-your-own-data-class/)"
+  }
 }

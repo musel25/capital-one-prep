@@ -1,29 +1,13 @@
-# 03. Create food objects
+Now with the Pydantic Food model defined we can start creating objects through FastAPI - exciting!
+In this Bite you will make a create_food() endpoint that receives a Food object payload and adds the food to a dictionary. We use an in memory data structure to keep things simple for starters.
+The endpoint should return the created Food object as JSON and a 201 Created status upon success.
+The global foods dictionary will use food IDs (int) as keys and Food objects as values.
+After creating a food object, the foods dictionary will look like this:
+{1: Food(id=1, name='egg', serving_size='piece', kcal_per_serving=78, protein_grams=6.3, fibre_grams=0)}
+We know that using a global object isn't ideal, but we want to separate FastAPI from SQLModel to teach this gradually.
+This Bite only covers the happy path. We'll handle errors (like duplicates or invalid payloads) in a later Bite.
+So go ahead and write the endpoint, and check the tests to see how we validate the code. Have fun!
 
-[Course list](/?course=pybites-fastapi) · [Original Pybites exercise](https://pybitesplatform.com/bites/create-food-objects/)
+**Constraints:**
 
-## Required behavior
-
-POST `/` receives a Food, stores it in `foods` by ID, and returns it with status 201. Keep the other items. Missing required fields return 422. Duplicate-ID handling is deferred to a later exercise.
-
-## How to solve it
-
-Use Python. Write your solution at the top of the editor. The supplied tests follow it.
-Run checks up to three tests. Submit checks all 5 tests.
-Each check runs real pytest and FastAPI in a fresh process. No server or network is needed.
-Keep the supplied tests and adapter unchanged. Failures show the pytest test name and error.
-
-## Source and changes
-
-The starter and tests were imported from the exercise pages accessible in the user's Pybites session.
-Example password fields and the classroom signing key were restored with explicit test values after export redaction.
-FoodEntry uses a per-instance timestamp default. Tests labelled `test_added_` are added Cojudge checks.
-The required behavior above summarizes the source description and states the added checks.
-The reference solution was written for this course.
-
-The runtime uses Python 3.11, FastAPI 0.161.1, Pydantic 2, real pytest,
-HTTPX, Passlib/bcrypt, python-jose, python-multipart, and BeautifulSoup.
-Package versions are locked in `cojudge/fastapi_path/uv.lock` in the content repository.
-
-For an old saved solution, use **+** beside the editor tabs to open the current starter.
-Copy your code into that tab. Keep your old saved tab.
+- Use POST `/`. Let FastAPI validate the request body.

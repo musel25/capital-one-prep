@@ -1,16 +1,18 @@
-# 10. Test a movie db class
+Time for fixtures, one of pytest's killer features or as Brian Okken said: pytest fixtures are one of the unique core features that make pytest stand out above other test frameworks, and are the reason why many people switch to and stay with pytest (Python Testing with pytest).
 
-Write **tests**, not the implementation. [Original Pybites exercise](https://pybitesplatform.com/bites/test-a-movie-db-class/).
+Why fixtures? The purpose of test fixtures is to provide a fixed baseline upon which tests can reliably and repeatedly execute. pytest fixtures offer dramatic improvements over the classic xUnit style of setup/teardown functions (docs).
 
-This is an offline recreation from the public description. The original code and template are premium and were not available. The API below belongs to this recreation.
+In this Bite we wrote a little movie DB using sqlite3. The idea is that you write a db fixture to instantiate this class and run its init method to get the movies table created and populated.
 
-## Contract
+At the end of the fixture you use drop_table to undo any changes.
 
-MovieDB(path=":memory:") opens SQLite. init() creates and seeds the table with the three supplied rows. query(title=None, min_score=0, year=None) returns (title, year, score) tuples sorted by title. title is a case-insensitive SQL LIKE substring; min_score is inclusive; all filters combine. add inserts and commits; duplicate titles raise sqlite3.IntegrityError. delete removes an exact title, commits, and returns its row count. drop_table removes the table. close closes the connection. Use a yield fixture with teardown. Use tmp_path to test file persistence.
+Apart from this setup and teardown there are 3 methods you need to test: query, add and delete. Specially query has various args, so make sure you test them all. Apart from the docs we also wrote an article on fixtures you might want to check out: All You Need to Know to Start Using Fixtures in Your pytest Code. Let us know on Twitter when you finish our pytest learning path ...
 
-## Code to test
+Good luck and keep calm and code in Python / pytest!
 
-Import this module as `movies`. The judge supplies it automatically.
+For this version, write tests for the supplied code. Your tests must pass against the correct code, cover at least 90% of its executable statements, and detect every supplied faulty version. A fault is detected when at least one test fails. An empty test suite does not pass.
+
+Import the target as `movies`. The judge supplies it automatically.
 
 ```python
 import sqlite3
@@ -52,21 +54,3 @@ class MovieDB:
     def close(self):
         self.connection.close()
 ```
-
-## Your task
-
-Scroll to **WRITE YOUR TESTS BELOW** in the editor. Replace the placeholder with `test_` functions. Keep the supplied target, runner, and adapter unchanged.
-
-1. All tests must pass against the correct code.
-2. Cover at least 90% of executable statements in the supplied target.
-3. Detect every supplied faulty variant. A faulty variant is detected when at least one test fails against it.
-
-**Run** checks the baseline and the first two faults. **Submit** checks the baseline and all 7 faults. `SURVIVED` identifies a fault your tests missed. A baseline failure shows the test name and error. Empty suites do not pass.
-
-## Offline pytest support
-
-The supplied runner implements the same small pytest subset used by the OOP course: `pytest.raises` (with `match`), `pytest.mark.parametrize`, function and yield fixtures, `pytest.approx` for numbers, `pytest.fail`, `capsys` / `capfd` for Python output, `monkeypatch`, and `tmp_path`. Standard-library `unittest.mock.patch` also works. Use function-scoped fixtures and top-level test functions. Plugins, async tests, pytest classes with setup hooks, skip/xfail, and advanced fixture scopes are not supported.
-
-The judge uses Python 3.11 and no network. This runner measures statement coverage with Python tracing and uses explicit faulty variants. It does **not** run pytest-cov or mutatest. Its acceptance result is specific to this course.
-
-For an older saved tab, use **+** to open the current template. Keep the old tab intact.

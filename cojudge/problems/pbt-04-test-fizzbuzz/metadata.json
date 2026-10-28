@@ -6,16 +6,8 @@
   "category": "pytest",
   "examples": [
     {
-      "input": "{\"check\": \"baseline\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"wrong combined divisor\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"wrong fizz divisor\"}",
-      "output": "passed"
+      "input": "from fizzbuzz import *\nprint([fizzbuzz(n) for n in [1, 3, 5, 15]])",
+      "output": "[1, 'Fizz', 'Buzz', 'FizzBuzz']"
     }
   ],
   "starterCode": {
@@ -44,5 +36,35 @@
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "baseline": {
+      "title": "Correct code: tests pass and cover at least 90%",
+      "code": "def fizzbuzz(n):\n    if n % 15 == 0:\n        return 'FizzBuzz'\n    if n % 3 == 0:\n        return 'Fizz'\n    if n % 5 == 0:\n        return 'Buzz'\n    return n"
+    },
+    "wrong combined divisor": {
+      "title": "Detect fault: wrong combined divisor",
+      "code": "def fizzbuzz(n):\n    if n % 15 == 1:\n        return 'FizzBuzz'\n    if n % 3 == 0:\n        return 'Fizz'\n    if n % 5 == 0:\n        return 'Buzz'\n    return n"
+    },
+    "wrong fizz divisor": {
+      "title": "Detect fault: wrong fizz divisor",
+      "code": "def fizzbuzz(n):\n    if n % 15 == 0:\n        return 'FizzBuzz'\n    if n % 3 == 1:\n        return 'Fizz'\n    if n % 5 == 0:\n        return 'Buzz'\n    return n"
+    },
+    "wrong buzz divisor": {
+      "title": "Detect fault: wrong buzz divisor",
+      "code": "def fizzbuzz(n):\n    if n % 15 == 0:\n        return 'FizzBuzz'\n    if n % 3 == 0:\n        return 'Fizz'\n    if n % 5 == 1:\n        return 'Buzz'\n    return n"
+    },
+    "wrong combined text": {
+      "title": "Detect fault: wrong combined text",
+      "code": "def fizzbuzz(n):\n    if n % 15 == 0:\n        return 'BuzzFizz'\n    if n % 3 == 0:\n        return 'Fizz'\n    if n % 5 == 0:\n        return 'Buzz'\n    return n"
+    },
+    "convert plain integers to text": {
+      "title": "Detect fault: convert plain integers to text",
+      "code": "def fizzbuzz(n):\n    if n % 15 == 0:\n        return 'FizzBuzz'\n    if n % 3 == 0:\n        return 'Fizz'\n    if n % 5 == 0:\n        return 'Buzz'\n    return str(n)"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write tests below the marked line in the editor. Run checks the correct implementation and a sample of the faulty versions. Submit checks every version. Keep the supplied code and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis target and its tests are an offline recreation from the public description. The original code and template require Pybites premium.\n\nThe offline runner supports `pytest.raises` with `match`, `pytest.mark.parametrize`, function and yield fixtures, numeric `pytest.approx`, `pytest.fail`, `capsys`, `capfd`, `monkeypatch`, and `tmp_path`. `unittest.mock.patch` also works. Use top-level test functions and function-scoped fixtures. Async tests, pytest classes with setup hooks, plugins, skip/xfail, and advanced fixture scopes are not supported.\n\nThis course measures statement coverage with Python tracing and checks explicit faulty variants. It does not run pytest-cov or mutatest. `SURVIVED` names a fault that your tests did not detect.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/test-fizzbuzz/)"
+  }
 }

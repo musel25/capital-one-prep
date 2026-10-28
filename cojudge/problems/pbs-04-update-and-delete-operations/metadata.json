@@ -6,16 +6,8 @@
   "category": "01-tables-and-crud",
   "examples": [
     {
-      "input": "{\"test\": \"test_update_fields\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_partial_and_empty_update\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_update_is_durable\"}",
-      "output": "passed"
+      "input": "engine = create_engine(\"sqlite://\")\nSQLModel.metadata.create_all(engine)\nwith Session(engine) as session:\n    session.add(Workout(id=1, name=\"Old\"))\n    session.commit()\n    print(update_workout(session, 1, name=\"New\").name)\n    print(delete_workout(session, 1))\n    print(delete_workout(session, 1))",
+      "output": "New\nTrue\nFalse"
     }
   ],
   "starterCode": {
@@ -40,5 +32,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_update_fields": {
+      "title": "test_update_fields",
+      "code": "def test_update_fields(seeded):\n    row = app.update_workout(seeded, 1, name=\"New\", description=\"\")\n    assert row.id == 1 and row.name == \"New\" and row.description == \"\"\n    assert seeded.get(app.Workout, 2).name == \"B\""
+    },
+    "test_partial_and_empty_update": {
+      "title": "test_partial_and_empty_update",
+      "code": "def test_partial_and_empty_update(seeded):\n    row = app.update_workout(seeded, 1, description=\"changed\")\n    assert row.name == \"A\" and row.description == \"changed\"\n    assert app.update_workout(seeded, 1).name == \"A\""
+    },
+    "test_update_is_durable": {
+      "title": "test_update_is_durable",
+      "code": "def test_update_is_durable(seeded, engine):\n    app.update_workout(seeded, 1, name=\"Saved\")\n    seeded.close()\n    with Session(engine) as check:\n        assert check.get(app.Workout, 1).name == \"Saved\""
+    },
+    "test_missing_rows": {
+      "title": "test_missing_rows",
+      "code": "def test_missing_rows(seeded):\n    assert app.update_workout(seeded, 99, name=\"No\") is None\n    assert app.delete_workout(seeded, 99) is False"
+    },
+    "test_invalid_field_is_atomic": {
+      "title": "test_invalid_field_is_atomic",
+      "code": "def test_invalid_field_is_atomic(seeded):\n    with pytest.raises(ValueError):\n        app.update_workout(seeded, 1, name=\"Must not change\", id=7)\n    assert seeded.get(app.Workout, 1).name == \"A\"\n    assert seeded.get(app.Workout, 7) is None"
+    },
+    "test_delete_is_durable": {
+      "title": "test_delete_is_durable",
+      "code": "def test_delete_is_durable(seeded, engine):\n    assert app.delete_workout(seeded, 1) is True\n    assert app.delete_workout(seeded, 1) is False\n    seeded.close()\n    with Session(engine) as check:\n        assert check.get(app.Workout, 1) is None and check.get(app.Workout, 2).name == \"B\""
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. The original templates and tests require Pybites premium. The runtime supplies SQLModel, SQLite, SQLAlchemy, Pydantic, FastAPI, HTTPX, and pytest. Each check uses a separate database. No server is needed. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/update-and-delete-operations/)"
+  }
 }

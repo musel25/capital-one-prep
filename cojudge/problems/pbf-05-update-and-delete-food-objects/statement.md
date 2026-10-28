@@ -1,29 +1,17 @@
-# 05. Update and delete food objects
+Now that we're able to create and retrieve Food objects, it's time to add code to update and delete them.
+Create the two corresponding endpoints:
+1. To update, the API should
+   1. receive a PUT request with the Food object's id and new / updated object
+   2. update the item in the foods dictionary (to keep it simple, no need to update individual attributes, just swap out the whole Food object matching its id)
+   3. return the updated item.
+2. To delete the API should
+   1. receive a DELETE request with the id of the food to be deleted
+   2. delete it from the foods dictionary
+   3. return a respone of {"ok": True} (as found here).
+* We use PUT because we're replacing the whole item. For a partial update, PATCH would be the more appropriate HTTP verb / action.
+For both endpoints raise an HTTPException with a status_code of 404 and message (detail) of Food not found, when the id passed in is not in the foods dictionary.
+WIN: You have a simple API for food objects up and running with minimal code! We still need to add authentication, but first we'll make two more Pydantic models so that a user can start logging daily food intake.
 
-[Course list](/?course=pybites-fastapi) · [Original Pybites exercise](https://pybitesplatform.com/bites/update-and-delete-food-objects/)
+**Constraints:**
 
-## Required behavior
-
-Keep the supplied create/read endpoints. PUT `/{food_id}` replaces an existing Food and returns it. DELETE `/{food_id}` removes it and returns `{"ok": true}`. A missing ID in either write returns 404 with detail `Food not found`. Tests use matching body and path IDs.
-
-## How to solve it
-
-Use Python. Write your solution at the top of the editor. The supplied tests follow it.
-Run checks up to three tests. Submit checks all 4 tests.
-Each check runs real pytest and FastAPI in a fresh process. No server or network is needed.
-Keep the supplied tests and adapter unchanged. Failures show the pytest test name and error.
-
-## Source and changes
-
-The starter and tests were imported from the exercise pages accessible in the user's Pybites session.
-Example password fields and the classroom signing key were restored with explicit test values after export redaction.
-FoodEntry uses a per-instance timestamp default. Tests labelled `test_added_` are added Cojudge checks.
-The required behavior above summarizes the source description and states the added checks.
-The reference solution was written for this course.
-
-The runtime uses Python 3.11, FastAPI 0.161.1, Pydantic 2, real pytest,
-HTTPX, Passlib/bcrypt, python-jose, python-multipart, and BeautifulSoup.
-Package versions are locked in `cojudge/fastapi_path/uv.lock` in the content repository.
-
-For an old saved solution, use **+** beside the editor tabs to open the current starter.
-Copy your code into that tab. Keep your old saved tab.
+- Use PUT and DELETE `/{food_id}`. Tests use matching body and path IDs.

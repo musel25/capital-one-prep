@@ -6,16 +6,8 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_local_data\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_numeric_sort_and_top_n\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_missing_scores_and_valid_zero\"}",
-      "output": "passed"
+      "input": "get_most_complex_bites(n=2)",
+      "output": "[('Bite 6. PyBites Die Hard', 6.8), ('Bite 7. Parsing dates from logs', 5.76)]"
     }
   ],
   "starterCode": {
@@ -40,5 +32,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_local_data": {
+      "title": "test_default_local_data",
+      "code": "def test_default_local_data():\n    result = get_most_complex_bites()\n    assert len(result) == 9\n    assert result[:3] == [('Bite 6. PyBites Die Hard', 6.8),\n                          ('Bite 7. Parsing dates from logs', 5.76),\n                          ('Bite 2. Regex Fun', 4.89)]\n    assert result[-1] == ('Bite 1. Sum n numbers', 3.45)"
+    },
+    "test_numeric_sort_and_top_n": {
+      "title": "test_numeric_sort_and_top_n",
+      "code": "def test_numeric_sort_and_top_n(tmp_path):\n    path = write_csv(tmp_path, 'Bite;Difficulty\\nA;9.9\\nB;10.1\\nC;2.0\\n')\n    assert get_most_complex_bites(path, 2) == [('B', 10.1), ('A', 9.9)]\n    assert get_most_complex_bites(str(path), 1) == [('B', 10.1)]"
+    },
+    "test_missing_scores_and_valid_zero": {
+      "title": "test_missing_scores_and_valid_zero",
+      "code": "def test_missing_scores_and_valid_zero(tmp_path):\n    path = write_csv(tmp_path, 'Bite;Difficulty\\nA;None\\nB;\\nC;0\\nD;  None  \\n')\n    assert get_most_complex_bites(path) == [('C', 0.0)]"
+    },
+    "test_equal_scores_keep_file_order": {
+      "title": "test_equal_scores_keep_file_order",
+      "code": "def test_equal_scores_keep_file_order(tmp_path):\n    path = write_csv(tmp_path, 'Bite;Difficulty\\nZ;5\\nA;5.0\\nM;5\\n')\n    assert get_most_complex_bites(path, 2) == [('Z', 5.0), ('A', 5.0)]"
+    },
+    "test_bom_quoted_fields_and_spaces": {
+      "title": "test_bom_quoted_fields_and_spaces",
+      "code": "def test_bom_quoted_fields_and_spaces(tmp_path):\n    path = write_csv(tmp_path, 'Bite;Difficulty\\n\"  Title; with punctuation  \"; 7.25 \\n', True)\n    before = path.read_bytes()\n    assert get_most_complex_bites(path) == [('Title; with punctuation', 7.25)]\n    assert path.read_bytes() == before"
+    },
+    "test_empty_dataset_and_limit_boundaries": {
+      "title": "test_empty_dataset_and_limit_boundaries",
+      "code": "def test_empty_dataset_and_limit_boundaries(tmp_path):\n    path = write_csv(tmp_path, 'Bite;Difficulty\\n')\n    assert get_most_complex_bites(path) == []\n    assert get_most_complex_bites(n=0) == []\n    with pytest.raises(ValueError):\n        get_most_complex_bites(n=-1)"
+    },
+    "test_invalid_numeric_score": {
+      "title": "test_invalid_numeric_score",
+      "code": "def test_invalid_numeric_score(tmp_path):\n    path = write_csv(tmp_path, 'Bite;Difficulty\\nA;unknown\\n')\n    with pytest.raises(ValueError):\n        get_most_complex_bites(path)"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\nThe premium docstring and tests are unavailable. This version states its return shape, tie rule, and limit behavior explicitly. Its small local CSV uses the public description sample instead of a download.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/analyze-some-bite-stats-data-part-ii/)"
+  }
 }

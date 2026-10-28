@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_case_01\"}",
-      "output": "passed"
+      "input": "from datetime import datetime\nis_good_meeting_time(datetime(2020, 1, 1, 10), ['UTC', 'Europe/Madrid'])",
+      "output": "True"
     },
     {
-      "input": "{\"test\": \"test_case_02\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_case_03\"}",
-      "output": "passed"
+      "input": "from datetime import datetime\nis_good_meeting_time(datetime(2020, 1, 1, 18), ['UTC'])",
+      "output": "False"
     }
   ],
   "starterCode": {
@@ -40,5 +36,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_case_01": {
+      "title": "test_case_01",
+      "code": "def test_case_01():\n    assert (is_good_meeting_time(datetime(2020, 1, 1, 9), ['UTC'])) == True"
+    },
+    "test_case_02": {
+      "title": "test_case_02",
+      "code": "def test_case_02():\n    assert (is_good_meeting_time(datetime(2020, 1, 1, 18), ['UTC'])) == False"
+    },
+    "test_case_03": {
+      "title": "test_case_03",
+      "code": "def test_case_03():\n    assert (is_good_meeting_time(datetime(2020, 1, 1, 16), ['US/Arizona', 'Europe/Madrid'])) == True"
+    },
+    "test_case_04": {
+      "title": "test_case_04",
+      "code": "def test_case_04():\n    assert (is_good_meeting_time(datetime(2020, 7, 1, 16), ['US/Arizona', 'Europe/Madrid'])) == False"
+    },
+    "test_case_05": {
+      "title": "test_case_05",
+      "code": "def test_case_05():\n    assert (is_good_meeting_time(datetime(2020, 1, 1, 0), [])) == True"
+    },
+    "test_case_06": {
+      "title": "test_case_06",
+      "code": "def test_case_06():\n    assert (is_good_meeting_time(datetime(2020, 1, 1, 10, tzinfo=timezone(timedelta(hours=2))), ['UTC'])) == False"
+    },
+    "test_unknown_timezone": {
+      "title": "test_unknown_timezone",
+      "code": "def test_unknown_timezone():\n    with pytest.raises(ValueError):\n        is_good_meeting_time(datetime(2020, 1, 1, 0), ['UTC', 'Wrong/Zone'])"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/organize-a-meeting-between-timezones/)"
+  }
 }

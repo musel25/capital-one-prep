@@ -9,16 +9,8 @@
   },
   "examples": [
     {
-      "input": "{\"test\": \"test_get_is_not_allowed\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_create_food\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_create_two_foods\"}",
-      "output": "passed"
+      "input": "from fastapi.testclient import TestClient\nclient = TestClient(app)\nfoods.clear()\nresponse = client.post(\"/\", json={\"id\": 1, \"name\": \"egg\", \"serving_size\": \"piece\", \"kcal_per_serving\": 78, \"protein_grams\": 6.3})\nprint(response.status_code)\nprint(response.json())",
+      "output": "201\n{'id': 1, 'name': 'egg', 'serving_size': 'piece', 'kcal_per_serving': 78, 'protein_grams': 6.3, 'fibre_grams': 0.0}"
     }
   ],
   "testCases": [
@@ -46,5 +38,31 @@
   "hints": [
     "Read the supplied pytest tests.",
     "Use the real FastAPI and Pydantic packages."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "test_get_is_not_allowed": {
+      "title": "test_get_is_not_allowed",
+      "code": "def test_get_is_not_allowed(client):\n    resp = client.get(\"/\")\n    assert resp.status_code == 405"
+    },
+    "test_create_food": {
+      "title": "test_create_food",
+      "code": "def test_create_food(client, food_payload, food):\n    resp = client.post(\"/\", json=food_payload)\n    assert resp.status_code == 201\n    assert resp.json() == dict(food)\n    assert foods == {1: food}"
+    },
+    "test_create_two_foods": {
+      "title": "test_create_two_foods",
+      "code": "def test_create_two_foods(client, food_payload, second_food_payload):\n    for pl in (food_payload, second_food_payload):\n        resp = client.post(\"/\", json=pl)\n        assert resp.status_code == 201\n    assert len(foods) == 2\n    names = [food.name for food in foods.values()]\n    assert names == [\"egg\", \"oatmeal\"]\n    total_calories = sum(food.kcal_per_serving for food in foods.values())\n    assert total_calories == 414"
+    },
+    "test_create_food_default_fibre": {
+      "title": "test_create_food_default_fibre",
+      "code": "def test_create_food_default_fibre(client, food_payload):\n    del food_payload[\"fibre_grams\"]\n    resp = client.post(\"/\", json=food_payload)\n    assert resp.status_code == 201\n    assert foods[1].fibre_grams == 0"
+    },
+    "test_create_food_wrong_food_payload": {
+      "title": "test_create_food_wrong_food_payload",
+      "code": "def test_create_food_wrong_food_payload(client, food_payload):\n    del food_payload[\"kcal_per_serving\"]\n    resp = client.post(\"/\", json=food_payload)\n    assert resp.status_code == 422\n    details = resp.json()[\"detail\"][0]\n    assert details[\"msg\"] == 'Field required'\n    assert details[\"type\"] == 'missing'"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis path uses real FastAPI and Pydantic 2 with pytest and TestClient. No server is needed. The imported starter and tests include added boundary checks named test_added_. Example password fields and the classroom signing key were restored after export redaction. The signing key and /create_user route are exercise fixtures. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/create-food-objects/)"
+  }
 }

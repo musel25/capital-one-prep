@@ -6,16 +6,16 @@
   "category": "03-advanced",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_popularity_and_tsv_types\"}",
-      "output": "passed"
+      "input": "most_popular_characters(n=1)",
+      "output": "[Character(pid='1678', name='Spider-Man', sid='Secret Identity', align='Good Characters', sex='Male Characters', appearances='4043', year='1962')]"
     },
     {
-      "input": "{\"test\": \"test_distinct_characters_with_same_name\"}",
-      "output": "passed"
+      "input": "max_and_min_years_new_characters()",
+      "output": "((1963, 2), (1950, 1))"
     },
     {
-      "input": "{\"test\": \"test_numeric_sort_pid_ties_and_blank_appearances\"}",
-      "output": "passed"
+      "input": "get_percentage_female_characters()",
+      "output": "28.57"
     }
   ],
   "starterCode": {
@@ -40,5 +40,47 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_popularity_and_tsv_types": {
+      "title": "test_default_popularity_and_tsv_types",
+      "code": "def test_default_popularity_and_tsv_types():\n    assert [ch.pid for ch in most_popular_characters()] == ['1678', '2460', '101', '100', '103']\n    assert all(isinstance(ch, Character) for ch in characters)\n    assert characters[3].appearances == ''"
+    },
+    "test_distinct_characters_with_same_name": {
+      "title": "test_distinct_characters_with_same_name",
+      "code": "def test_distinct_characters_with_same_name():\n    data = [hero(3, 'Thor', 10), hero(2, 'Thor', 11), hero(1, 'Other', 15)]\n    assert [ch.pid for ch in most_popular_characters(data)] == ['1', '2', '3']\n    assert max_and_min_years_new_characters([hero(1, 'Thor', year=2000),\n                                           hero(2, 'Thor', year=2000)]) == ((2000, 2), (2000, 2))"
+    },
+    "test_numeric_sort_pid_ties_and_blank_appearances": {
+      "title": "test_numeric_sort_pid_ties_and_blank_appearances",
+      "code": "def test_numeric_sort_pid_ties_and_blank_appearances():\n    data = [hero(20, appearances=9), hero(10, appearances=10),\n            hero(2, appearances=10), hero(1), hero(3, appearances=0)]\n    assert [ch.pid for ch in most_popular_characters(data)] == ['2', '10', '20', '1', '3']"
+    },
+    "test_popularity_limit_boundaries": {
+      "title": "test_popularity_limit_boundaries",
+      "code": "def test_popularity_limit_boundaries():\n    data = [hero(1, appearances=2)]\n    assert most_popular_characters(data, 0) == []\n    assert most_popular_characters(data, 1) == data\n    assert most_popular_characters([], 10) == []\n    with pytest.raises(ValueError):\n        most_popular_characters(data, -1)"
+    },
+    "test_year_counts_defaults_and_ties": {
+      "title": "test_year_counts_defaults_and_ties",
+      "code": "def test_year_counts_defaults_and_ties():\n    assert max_and_min_years_new_characters() == ((1963, 2), (1950, 1))\n    data = [hero(1, year=2002), hero(2, year=2002), hero(3, year=2000),\n            hero(4, year=2000), hero(5, year=2001), hero(6, year=1999)]\n    assert max_and_min_years_new_characters(data) == ((2000, 2), (1999, 1))"
+    },
+    "test_missing_and_single_year": {
+      "title": "test_missing_and_single_year",
+      "code": "def test_missing_and_single_year():\n    assert max_and_min_years_new_characters([]) == (None, None)\n    assert max_and_min_years_new_characters([hero(1)]) == (None, None)\n    assert max_and_min_years_new_characters([hero(1, year=1962), hero(2)]) == ((1962, 1), (1962, 1))"
+    },
+    "test_female_percentage_ignores_unspecified_gender": {
+      "title": "test_female_percentage_ignores_unspecified_gender",
+      "code": "def test_female_percentage_ignores_unspecified_gender():\n    assert get_percentage_female_characters() == 28.57\n    data = [hero(1, sex='Female Characters'), hero(2),\n            hero(3, sex='Genderfluid Characters'), hero(4, sex='Male Characters')]\n    assert get_percentage_female_characters(data) == 33.33"
+    },
+    "test_percentage_zero_and_full_boundaries": {
+      "title": "test_percentage_zero_and_full_boundaries",
+      "code": "def test_percentage_zero_and_full_boundaries():\n    assert get_percentage_female_characters([]) == 0.0\n    assert get_percentage_female_characters([hero(1)]) == 0.0\n    assert get_percentage_female_characters([hero(1, sex='Male Characters')]) == 0.0\n    assert get_percentage_female_characters([hero(1, sex='Female Characters')]) == 100.0"
+    },
+    "test_inputs_unchanged_and_new_results": {
+      "title": "test_inputs_unchanged_and_new_results",
+      "code": "def test_inputs_unchanged_and_new_results():\n    data = [hero(2, appearances=1, year=2000), hero(1, appearances=2, year=2001)]\n    before = list(data)\n    result = most_popular_characters(data)\n    max_and_min_years_new_characters(data)\n    get_percentage_female_characters(data)\n    assert data == before and result is not data"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\nThe premium docstrings and tests are unavailable. This version defines return shapes and tie rules explicitly. Its TSV is a small local practice sample. Characters with equal names remain separate, as required by the public description.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/marvel-data-analysis/)"
+  }
 }

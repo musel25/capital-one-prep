@@ -1,16 +1,14 @@
-# 02. Write tests for list_to_decimal
+Our 4th test Bite. Michael made a calculator that will be able to accept a list of decimal digits and returns an integer where each int of the given list represents decimal place values from first element to last. He wrote the function in such a way that it only accepts positive digits in range(0, 10) and anything that is not raises a ValueError if its out of range, or a TypeError if its not an int type.
 
-Write **tests**, not the implementation. [Original Pybites exercise](https://pybitesplatform.com/bites/write-tests-for-list_to_decimal/).
+Some examples: [0, 4, 2, 8] => 428 [1, 2] => 12 [3] => 3 [6, 2, True] => raises TypeError [-3, 12] => raises ValueError [3.6, 4, 1] => raises TypeError ['4', 5, 3, 1] => raises TypeError
 
-This is an offline recreation from the public description. The original code and template are premium and were not available. The API below belongs to this recreation.
+In this Bite you are tasked to write the tests for this function.
 
-## Contract
+Good luck and keep calm and code in Python!
 
-list_to_decimal(digits) accepts a list of integer digits 0..9. Booleans and other types raise TypeError. Out-of-range integers raise ValueError. Empty input returns 0. Leading zeroes are allowed.
+For this version, write tests for the supplied code. Your tests must pass against the correct code, cover at least 90% of its executable statements, and detect every supplied faulty version. A fault is detected when at least one test fails. An empty test suite does not pass.
 
-## Code to test
-
-Import this module as `digits`. The judge supplies it automatically.
+Import the target as `digits`. The judge supplies it automatically.
 
 ```python
 def list_to_decimal(digits):
@@ -23,21 +21,3 @@ def list_to_decimal(digits):
         result = result * 10 + digit
     return result
 ```
-
-## Your task
-
-Scroll to **WRITE YOUR TESTS BELOW** in the editor. Replace the placeholder with `test_` functions. Keep the supplied target, runner, and adapter unchanged.
-
-1. All tests must pass against the correct code.
-2. Cover at least 90% of executable statements in the supplied target.
-3. Detect every supplied faulty variant. A faulty variant is detected when at least one test fails against it.
-
-**Run** checks the baseline and the first two faults. **Submit** checks the baseline and all 5 faults. `SURVIVED` identifies a fault your tests missed. A baseline failure shows the test name and error. Empty suites do not pass.
-
-## Offline pytest support
-
-The supplied runner implements the same small pytest subset used by the OOP course: `pytest.raises` (with `match`), `pytest.mark.parametrize`, function and yield fixtures, `pytest.approx` for numbers, `pytest.fail`, `capsys` / `capfd` for Python output, `monkeypatch`, and `tmp_path`. Standard-library `unittest.mock.patch` also works. Use function-scoped fixtures and top-level test functions. Plugins, async tests, pytest classes with setup hooks, skip/xfail, and advanced fixture scopes are not supported.
-
-The judge uses Python 3.11 and no network. This runner measures statement coverage with Python tracing and uses explicit faulty variants. It does **not** run pytest-cov or mutatest. Its acceptance result is specific to this course.
-
-For an older saved tab, use **+** to open the current template. Keep the old tab intact.

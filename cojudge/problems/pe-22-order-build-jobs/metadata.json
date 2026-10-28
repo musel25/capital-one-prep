@@ -6,18 +6,18 @@
   "category": "06-application-logic",
   "examples": [
     {
-      "input": "{\"dependencies\": {\"app\": [\"lib\"], \"lib\": [], \"docs\": []}}",
-      "output": "[\"docs\", \"lib\", \"app\"]",
+      "input": "build_order(\n    dependencies={'app': ['lib'], 'lib': [], 'docs': []}\n)",
+      "output": "['docs', 'lib', 'app']",
       "explanation": "independent jobs and dependent job"
     },
     {
-      "input": "{\"dependencies\": {\"a\": [], \"b\": [\"a\"], \"z\": []}}",
-      "output": "[\"a\", \"b\", \"z\"]",
+      "input": "build_order(\n    dependencies={'a': [], 'b': ['a'], 'z': []}\n)",
+      "output": "['a', 'b', 'z']",
       "explanation": "newly ready job can precede an earlier ready job"
     },
     {
-      "input": "{\"dependencies\": {\"a\": [], \"b\": [\"c\"], \"c\": [\"b\"]}}",
-      "output": "null",
+      "input": "build_order(\n    dependencies={'a': [], 'b': ['c'], 'c': ['b']}\n)",
+      "output": "None",
       "explanation": "cycle returns no partial build list"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

@@ -6,16 +6,12 @@
   "category": "01-beginner",
   "examples": [
     {
-      "input": "{\"test\": \"test_promo_expired\"}",
-      "output": "passed"
+      "input": "Promo('newsletter', NOW).expired",
+      "output": "False"
     },
     {
-      "input": "{\"test\": \"test_promo_not_expired\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_uses_property\"}",
-      "output": "passed"
+      "input": "from datetime import timedelta\nPromo('sale', NOW - timedelta(days=1)).expired",
+      "output": "True"
     }
   ],
   "starterCode": {
@@ -40,5 +36,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_promo_expired": {
+      "title": "test_promo_expired",
+      "code": "def test_promo_expired():\n    past_time = NOW - timedelta(seconds=3)\n    twitter_promo = Promo('twitter', past_time)\n    assert twitter_promo.expired"
+    },
+    "test_promo_not_expired": {
+      "title": "test_promo_not_expired",
+      "code": "def test_promo_not_expired():\n    future_date = NOW + timedelta(days=1)\n    newsletter_promo = Promo('newsletter', future_date)\n    assert not newsletter_promo.expired"
+    },
+    "test_uses_property": {
+      "title": "test_uses_property",
+      "code": "def test_uses_property():\n    assert 'property' in inspect.getsource(Promo)"
+    },
+    "test_expired_is_read_only": {
+      "title": "test_expired_is_read_only",
+      "code": "def test_expired_is_read_only():\n    promo = Promo('old', NOW - timedelta(days=1))\n    with pytest.raises(AttributeError):\n        promo.expired = False"
+    },
+    "test_expired_follows_a_new_date": {
+      "title": "test_expired_follows_a_new_date",
+      "code": "def test_expired_follows_a_new_date():\n    promo = Promo('moving', NOW + timedelta(days=1))\n    assert not promo.expired\n    promo.expires = NOW - timedelta(days=1)\n    assert promo.expired"
+    },
+    "test_expiry_boundary_and_boolean_result": {
+      "title": "test_expiry_boundary_and_boolean_result",
+      "code": "def test_expiry_boundary_and_boolean_result():\n    assert Promo('equal', NOW).expired is False\n    assert Promo('before', NOW - timedelta(microseconds=1)).expired is True\n    assert Promo('after', NOW + timedelta(microseconds=1)).expired is False"
+    },
+    "test_constructor_preserves_values_and_empty_name": {
+      "title": "test_constructor_preserves_values_and_empty_name",
+      "code": "def test_constructor_preserves_values_and_empty_name():\n    promo = Promo('', NOW)\n    assert promo.name == ''\n    assert promo.expires == NOW"
+    },
+    "test_expired_can_become_current_again": {
+      "title": "test_expired_can_become_current_again",
+      "code": "def test_expired_can_become_current_again():\n    promo = Promo('extended', NOW - timedelta(days=1))\n    assert promo.expired is True\n    promo.expires = NOW + timedelta(days=1)\n    assert promo.expired is False"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe original free template and tests are retained, with added boundary tests.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/write-a-property/)"
+  }
 }

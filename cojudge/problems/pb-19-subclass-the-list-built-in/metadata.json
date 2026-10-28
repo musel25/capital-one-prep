@@ -6,19 +6,14 @@
   "category": "03-advanced",
   "examples": [
     {
-      "input": "{\"test\": \"test_mean_and_median\"}",
-      "output": "passed",
-      "explanation": "Test test_mean_and_median must pass."
+      "input": "numbers = IntList([1, 3])\nnumbers.append([5, 7])\n(list(numbers), numbers.mean, numbers.median)",
+      "output": "([1, 3, 5, 7], 4, 4.0)",
+      "explanation": "Appending a list adds its values to the numeric list."
     },
     {
-      "input": "{\"test\": \"test_median_of_even_length\"}",
-      "output": "passed",
-      "explanation": "Test test_median_of_even_length must pass."
-    },
-    {
-      "input": "{\"test\": \"test_append_rejects_other_types\"}",
-      "output": "passed",
-      "explanation": "Test test_append_rejects_other_types must pass."
+      "input": "list(IntList([1.0]) + [2, 3])",
+      "output": "[1.0, 2, 3]",
+      "explanation": "Addition accepts both integers and floats."
     }
   ],
   "starterCode": {
@@ -43,5 +38,71 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_mean_and_median": {
+      "title": "test_mean_and_median",
+      "code": "def test_mean_and_median():\n    mylist = IntList([1, 3, 5])\n    assert mylist.mean == 3\n    assert mylist.median == 3\n    mylist.append(7)\n    mylist.append(1.0)\n    assert mylist.mean == pytest.approx(3.4)\n    assert mylist.median == 3"
+    },
+    "test_median_of_even_length": {
+      "title": "test_median_of_even_length",
+      "code": "def test_median_of_even_length():\n    assert IntList([1, 2, 3, 4]).median == 2.5"
+    },
+    "test_append_rejects_other_types": {
+      "title": "test_append_rejects_other_types",
+      "code": "def test_append_rejects_other_types():\n    mylist = IntList([1, 3, 5])\n    with pytest.raises(TypeError):\n        mylist.append('a')\n    with pytest.raises(TypeError):\n        mylist.append(None)\n    assert mylist == [1, 3, 5]"
+    },
+    "test_append_a_list_of_numbers": {
+      "title": "test_append_a_list_of_numbers",
+      "code": "def test_append_a_list_of_numbers():\n    mylist = IntList([1, 3, 5])\n    mylist.append([2, 3])\n    assert mylist == [1, 3, 5, 2, 3]\n    with pytest.raises(TypeError):\n        mylist.append([2, 'a'])\n    assert mylist == [1, 3, 5, 2, 3]"
+    },
+    "test_iadd": {
+      "title": "test_iadd",
+      "code": "def test_iadd():\n    mylist = IntList([1, 3, 5])\n    original = mylist\n    mylist += [1]\n    assert mylist == [1, 3, 5, 1]\n    assert mylist is original\n    with pytest.raises(TypeError):\n        mylist += [1, 'a']\n    assert original == [1, 3, 5, 1]"
+    },
+    "test_add_returns_an_intlist": {
+      "title": "test_add_returns_an_intlist",
+      "code": "def test_add_returns_an_intlist():\n    mylist = IntList([2, 4])\n    result = mylist + [6]\n    assert result == [2, 4, 6]\n    assert isinstance(result, IntList)\n    assert result.mean == 4\n    assert mylist == [2, 4]\n    with pytest.raises(TypeError):\n        mylist + ['x']"
+    },
+    "test_is_a_list_and_properties": {
+      "title": "test_is_a_list_and_properties",
+      "code": "def test_is_a_list_and_properties():\n    assert issubclass(IntList, list)\n    assert isinstance(IntList.__dict__['mean'], property)\n    assert isinstance(IntList.__dict__['median'], property)"
+    },
+    "test_empty_properties": {
+      "title": "test_empty_properties",
+      "code": "def test_empty_properties():\n    from statistics import StatisticsError\n    values = IntList()\n    for name in ('mean', 'median'):\n        with pytest.raises(StatisticsError):\n            getattr(values, name)\n    values.append([])\n    assert values == []\n    assert values + [] == []\n    alias = values\n    values += []\n    assert values is alias\n    assert values == []"
+    },
+    "test_fractional_negative_values_and_unsorted_median": {
+      "title": "test_fractional_negative_values_and_unsorted_median",
+      "code": "def test_fractional_negative_values_and_unsorted_median():\n    values = IntList([9, -2, 1.5])\n    assert values.mean == pytest.approx(8.5 / 3)\n    assert values.median == 1.5\n    assert values == [9, -2, 1.5]\n    single = IntList([-2.5])\n    assert single.mean == single.median == -2.5\n    for name in ('mean', 'median'):\n        with pytest.raises(AttributeError):\n            setattr(values, name, 1)"
+    },
+    "test_invalid_elements_are_atomic_in_all_named_operations[True]": {
+      "title": "test_invalid_elements_are_atomic_in_all_named_operations[True]",
+      "code": "@pytest.mark.parametrize(\"bad\", [True, False, '2', None, [2]])\ndef test_invalid_elements_are_atomic_in_all_named_operations(bad):\n    values = IntList([1])\n    with pytest.raises(TypeError):\n        values.append([2, bad])\n    assert values == [1]\n    with pytest.raises(TypeError):\n        values + [2, bad]\n    assert values == [1]\n    with pytest.raises(TypeError):\n        values += [2, bad]\n    assert values == [1]"
+    },
+    "test_invalid_elements_are_atomic_in_all_named_operations[False]": {
+      "title": "test_invalid_elements_are_atomic_in_all_named_operations[False]",
+      "code": "@pytest.mark.parametrize(\"bad\", [True, False, '2', None, [2]])\ndef test_invalid_elements_are_atomic_in_all_named_operations(bad):\n    values = IntList([1])\n    with pytest.raises(TypeError):\n        values.append([2, bad])\n    assert values == [1]\n    with pytest.raises(TypeError):\n        values + [2, bad]\n    assert values == [1]\n    with pytest.raises(TypeError):\n        values += [2, bad]\n    assert values == [1]"
+    },
+    "test_invalid_elements_are_atomic_in_all_named_operations[2]": {
+      "title": "test_invalid_elements_are_atomic_in_all_named_operations[2]",
+      "code": "@pytest.mark.parametrize(\"bad\", [True, False, '2', None, [2]])\ndef test_invalid_elements_are_atomic_in_all_named_operations(bad):\n    values = IntList([1])\n    with pytest.raises(TypeError):\n        values.append([2, bad])\n    assert values == [1]\n    with pytest.raises(TypeError):\n        values + [2, bad]\n    assert values == [1]\n    with pytest.raises(TypeError):\n        values += [2, bad]\n    assert values == [1]"
+    },
+    "test_invalid_elements_are_atomic_in_all_named_operations[None]": {
+      "title": "test_invalid_elements_are_atomic_in_all_named_operations[None]",
+      "code": "@pytest.mark.parametrize(\"bad\", [True, False, '2', None, [2]])\ndef test_invalid_elements_are_atomic_in_all_named_operations(bad):\n    values = IntList([1])\n    with pytest.raises(TypeError):\n        values.append([2, bad])\n    assert values == [1]\n    with pytest.raises(TypeError):\n        values + [2, bad]\n    assert values == [1]\n    with pytest.raises(TypeError):\n        values += [2, bad]\n    assert values == [1]"
+    },
+    "test_invalid_elements_are_atomic_in_all_named_operations[bad4]": {
+      "title": "test_invalid_elements_are_atomic_in_all_named_operations[bad4]",
+      "code": "@pytest.mark.parametrize(\"bad\", [True, False, '2', None, [2]])\ndef test_invalid_elements_are_atomic_in_all_named_operations(bad):\n    values = IntList([1])\n    with pytest.raises(TypeError):\n        values.append([2, bad])\n    assert values == [1]\n    with pytest.raises(TypeError):\n        values + [2, bad]\n    assert values == [1]\n    with pytest.raises(TypeError):\n        values += [2, bad]\n    assert values == [1]"
+    },
+    "test_append_rejects_scalar_bool": {
+      "title": "test_append_rejects_scalar_bool",
+      "code": "def test_append_rejects_scalar_bool():\n    values = IntList([1])\n    with pytest.raises(TypeError):\n        values.append(True)\n    assert values == [1]"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. As in the description's REPL example, numbers such as `1.0` are accepted; other types raise `TypeError`. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/subclass-the-list-built-in/)"
+  }
 }

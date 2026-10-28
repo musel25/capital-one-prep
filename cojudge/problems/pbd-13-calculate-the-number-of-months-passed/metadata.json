@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_case_01\"}",
-      "output": "passed"
+      "input": "get_months_passed(2018, 11, 10)",
+      "output": "0"
     },
     {
-      "input": "{\"test\": \"test_case_02\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_case_03\"}",
-      "output": "passed"
+      "input": "get_months_passed(2018, 11, 11)",
+      "output": "1"
     }
   ],
   "starterCode": {
@@ -40,5 +36,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_case_01": {
+      "title": "test_case_01",
+      "code": "def test_case_01():\n    assert (get_months_passed(2018, 11, 1)) == 0"
+    },
+    "test_case_02": {
+      "title": "test_case_02",
+      "code": "def test_case_02():\n    assert (get_months_passed(2018, 11, 10)) == 0"
+    },
+    "test_case_03": {
+      "title": "test_case_03",
+      "code": "def test_case_03():\n    assert (get_months_passed(2018, 11, 11)) == 1"
+    },
+    "test_case_04": {
+      "title": "test_case_04",
+      "code": "def test_case_04():\n    assert (get_months_passed(2019, 1, 1)) == 2"
+    },
+    "test_case_05": {
+      "title": "test_case_05",
+      "code": "def test_case_05():\n    assert (get_months_passed(2020, 2, 29)) == 16"
+    },
+    "test_case_06": {
+      "title": "test_case_06",
+      "code": "def test_case_06():\n    assert (get_months_passed(2019, 11, 1)) == 12"
+    },
+    "test_invalid_calendar_and_past": {
+      "title": "test_invalid_calendar_and_past",
+      "code": "def test_invalid_calendar_and_past():\n    for args in ((2018, 10, 31), (2019, 2, 29), (2020, 13, 1)):\n        with pytest.raises(ValueError):\n            get_months_passed(*args)\n    with pytest.raises(TypeError):\n        get_months_passed('2020', 1, 1)"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/calculate-the-number-of-months-passed/)"
+  }
 }

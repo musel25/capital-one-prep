@@ -6,19 +6,14 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_mro\"}",
-      "output": "passed",
-      "explanation": "Test test_mro must pass."
+      "input": "[str(cls()) for cls in [Person, Father, Mother, Child]]",
+      "output": "['I am a person', 'I am a person and cool daddy', 'I am a person and awesome mom', 'I am the coolest kid']",
+      "explanation": "Each class supplies its specified string."
     },
     {
-      "input": "{\"test\": \"test_inheritance\"}",
-      "output": "passed",
-      "explanation": "Test test_inheritance must pass."
-    },
-    {
-      "input": "{\"test\": \"test_str[cls0-I am a person]\"}",
-      "output": "passed",
-      "explanation": "Test test_str[cls0-I am a person] must pass."
+      "input": "[cls.__name__ for cls in Child.__mro__]",
+      "output": "['Child', 'Father', 'Mother', 'Person', 'object']",
+      "explanation": "Python searches the parents in this method resolution order."
     }
   ],
   "starterCode": {
@@ -43,5 +38,55 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_mro": {
+      "title": "test_mro",
+      "code": "def test_mro():\n    assert [cls.__name__ for cls in Child.__mro__] == ['Child', 'Father', 'Mother', 'Person', 'object']"
+    },
+    "test_inheritance": {
+      "title": "test_inheritance",
+      "code": "def test_inheritance():\n    assert issubclass(Father, Person)\n    assert issubclass(Mother, Person)\n    assert issubclass(Child, Father)\n    assert issubclass(Child, Mother)"
+    },
+    "test_str[cls0-I am a person]": {
+      "title": "test_str[cls0-I am a person]",
+      "code": "@pytest.mark.parametrize(\"cls, expected\", [\n    (Person, 'I am a person'),\n    (Father, 'I am a person and cool daddy'),\n    (Mother, 'I am a person and awesome mom'),\n    (Child, 'I am the coolest kid'),\n])\ndef test_str(cls, expected):\n    assert str(cls()) == expected"
+    },
+    "test_str[cls1-I am a person and cool daddy]": {
+      "title": "test_str[cls1-I am a person and cool daddy]",
+      "code": "@pytest.mark.parametrize(\"cls, expected\", [\n    (Person, 'I am a person'),\n    (Father, 'I am a person and cool daddy'),\n    (Mother, 'I am a person and awesome mom'),\n    (Child, 'I am the coolest kid'),\n])\ndef test_str(cls, expected):\n    assert str(cls()) == expected"
+    },
+    "test_str[cls2-I am a person and awesome mom]": {
+      "title": "test_str[cls2-I am a person and awesome mom]",
+      "code": "@pytest.mark.parametrize(\"cls, expected\", [\n    (Person, 'I am a person'),\n    (Father, 'I am a person and cool daddy'),\n    (Mother, 'I am a person and awesome mom'),\n    (Child, 'I am the coolest kid'),\n])\ndef test_str(cls, expected):\n    assert str(cls()) == expected"
+    },
+    "test_str[cls3-I am the coolest kid]": {
+      "title": "test_str[cls3-I am the coolest kid]",
+      "code": "@pytest.mark.parametrize(\"cls, expected\", [\n    (Person, 'I am a person'),\n    (Father, 'I am a person and cool daddy'),\n    (Mother, 'I am a person and awesome mom'),\n    (Child, 'I am the coolest kid'),\n])\ndef test_str(cls, expected):\n    assert str(cls()) == expected"
+    },
+    "test_person_text_only_in_base_class[cls0]": {
+      "title": "test_person_text_only_in_base_class[cls0]",
+      "code": "@pytest.mark.parametrize(\"cls\", [Father, Mother, Child])\ndef test_person_text_only_in_base_class(cls):\n    assert 'I am a person' in inspect.getsource(Person)\n    assert 'I am a person' not in inspect.getsource(cls)"
+    },
+    "test_person_text_only_in_base_class[cls1]": {
+      "title": "test_person_text_only_in_base_class[cls1]",
+      "code": "@pytest.mark.parametrize(\"cls\", [Father, Mother, Child])\ndef test_person_text_only_in_base_class(cls):\n    assert 'I am a person' in inspect.getsource(Person)\n    assert 'I am a person' not in inspect.getsource(cls)"
+    },
+    "test_person_text_only_in_base_class[cls2]": {
+      "title": "test_person_text_only_in_base_class[cls2]",
+      "code": "@pytest.mark.parametrize(\"cls\", [Father, Mother, Child])\ndef test_person_text_only_in_base_class(cls):\n    assert 'I am a person' in inspect.getsource(Person)\n    assert 'I am a person' not in inspect.getsource(cls)"
+    },
+    "test_print": {
+      "title": "test_print",
+      "code": "def test_print(capsys):\n    for cls in (Person, Father, Mother, Child):\n        print(cls())\n    assert capsys.readouterr().out.splitlines() == [\n        'I am a person', 'I am a person and cool daddy',\n        'I am a person and awesome mom', 'I am the coolest kid']"
+    },
+    "test_parent_text_is_reused": {
+      "title": "test_parent_text_is_reused",
+      "code": "def test_parent_text_is_reused(monkeypatch):\n    monkeypatch.setattr(Person, '__str__', lambda self: 'Base text')\n    assert str(Father()) == 'Base text and cool daddy'\n    assert str(Mother()) == 'Base text and awesome mom'\n    assert str(Child()) == 'I am the coolest kid'"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/multiple-inheritance-__mro/)"
+  }
 }

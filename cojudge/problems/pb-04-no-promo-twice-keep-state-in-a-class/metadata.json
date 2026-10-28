@@ -6,19 +6,14 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_promo_has_state\"}",
-      "output": "passed",
-      "explanation": "Test test_promo_has_state must pass."
+      "input": "promo = Promo({1: \"Properties\", 2: \"Classes\"}, {1})\npromo.new_bite()",
+      "output": "2",
+      "explanation": "Only bite 2 is available."
     },
     {
-      "input": "{\"test\": \"test_pick_random_bite_returns_an_available_bite\"}",
-      "output": "passed",
-      "explanation": "Test test_pick_random_bite_returns_an_available_bite must pass."
-    },
-    {
-      "input": "{\"test\": \"test_pick_random_bite_does_not_change_state\"}",
-      "output": "passed",
-      "explanation": "Test test_pick_random_bite_does_not_change_state must pass."
+      "input": "promo = Promo({}, set())\ntry:\n    promo.new_bite()\nexcept NoBitesAvailable:\n    print(\"No bites available\")",
+      "output": "No bites available",
+      "explanation": "An empty catalog raises the supplied exception."
     }
   ],
   "starterCode": {
@@ -43,5 +38,67 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_promo_has_state": {
+      "title": "test_promo_has_state",
+      "code": "def test_promo_has_state(promo):\n    assert promo.all_bites == BITES\n    assert promo.bites_done == BITES_DONE"
+    },
+    "test_pick_random_bite_returns_an_available_bite": {
+      "title": "test_pick_random_bite_returns_an_available_bite",
+      "code": "def test_pick_random_bite_returns_an_available_bite(promo):\n    for _ in range(20):\n        bite = promo._pick_random_bite()\n        assert bite in BITES\n        assert bite not in BITES_DONE"
+    },
+    "test_pick_random_bite_does_not_change_state": {
+      "title": "test_pick_random_bite_does_not_change_state",
+      "code": "def test_pick_random_bite_does_not_change_state(promo):\n    promo._pick_random_bite()\n    promo._pick_random_bite()\n    assert promo.bites_done == BITES_DONE"
+    },
+    "test_new_bite_updates_bites_done": {
+      "title": "test_new_bite_updates_bites_done",
+      "code": "def test_new_bite_updates_bites_done(promo):\n    bite = promo.new_bite()\n    assert bite in BITES\n    assert bite not in BITES_DONE\n    assert promo.bites_done == BITES_DONE | {bite}"
+    },
+    "test_no_bite_twice_then_exception": {
+      "title": "test_no_bite_twice_then_exception",
+      "code": "def test_no_bite_twice_then_exception(promo):\n    available = set(BITES) - BITES_DONE\n    picked = [promo.new_bite() for _ in range(len(available))]\n    assert sorted(picked) == sorted(available)\n    with pytest.raises(NoBitesAvailable):\n        promo.new_bite()\n    with pytest.raises(NoBitesAvailable):\n        promo._pick_random_bite()"
+    },
+    "test_uses_random": {
+      "title": "test_uses_random",
+      "code": "def test_uses_random():\n    first_picks = set()\n    for seed in range(30):\n        random.seed(seed)\n        first_picks.add(Promo().new_bite())\n    assert len(first_picks) > 1"
+    },
+    "test_instances_and_constants_are_independent": {
+      "title": "test_instances_and_constants_are_independent",
+      "code": "def test_instances_and_constants_are_independent():\n    one, two = Promo(), Promo()\n    bite = one.new_bite()\n    assert bite not in two.bites_done\n    assert bite not in BITES_DONE"
+    },
+    "test_custom_bites": {
+      "title": "test_custom_bites",
+      "code": "def test_custom_bites():\n    promo = Promo({1: 'a', 2: 'b'}, {1})\n    assert promo.new_bite() == 2\n    with pytest.raises(NoBitesAvailable):\n        promo.new_bite()"
+    },
+    "test_custom_exception": {
+      "title": "test_custom_exception",
+      "code": "def test_custom_exception():\n    assert issubclass(NoBitesAvailable, Exception)"
+    },
+    "test_initially_empty_availability[bites0-done0]": {
+      "title": "test_initially_empty_availability[bites0-done0]",
+      "code": "@pytest.mark.parametrize('bites, done', [({}, set()), ({1: 'one'}, {1})])\ndef test_initially_empty_availability(bites, done):\n    promo = Promo(bites, done)\n    for method in (promo._pick_random_bite, promo.new_bite):\n        with pytest.raises(NoBitesAvailable):\n            method()\n    assert promo.all_bites == bites\n    assert promo.bites_done == done"
+    },
+    "test_initially_empty_availability[bites1-done1]": {
+      "title": "test_initially_empty_availability[bites1-done1]",
+      "code": "@pytest.mark.parametrize('bites, done', [({}, set()), ({1: 'one'}, {1})])\ndef test_initially_empty_availability(bites, done):\n    promo = Promo(bites, done)\n    for method in (promo._pick_random_bite, promo.new_bite):\n        with pytest.raises(NoBitesAvailable):\n            method()\n    assert promo.all_bites == bites\n    assert promo.bites_done == done"
+    },
+    "test_empty_done_set_is_not_the_default": {
+      "title": "test_empty_done_set_is_not_the_default",
+      "code": "def test_empty_done_set_is_not_the_default():\n    promo = Promo({6: 'six'}, set())\n    assert promo._pick_random_bite() == 6\n    assert promo.bites_done == set()\n    assert promo.new_bite() == 6"
+    },
+    "test_custom_input_containers_are_copied": {
+      "title": "test_custom_input_containers_are_copied",
+      "code": "def test_custom_input_containers_are_copied():\n    bites, done = {1: 'one', 2: 'two'}, {1}\n    promo = Promo(bites, done)\n    bites[3] = 'three'\n    done.add(2)\n    assert promo.all_bites == {1: 'one', 2: 'two'}\n    assert promo.bites_done == {1}\n    assert promo.new_bite() == 2\n    assert bites == {1: 'one', 2: 'two', 3: 'three'}"
+    },
+    "test_new_bite_uses_the_selection_helper": {
+      "title": "test_new_bite_uses_the_selection_helper",
+      "code": "def test_new_bite_uses_the_selection_helper(monkeypatch):\n    promo = Promo({1: 'one', 2: 'two'}, set())\n    monkeypatch.setattr(promo, '_pick_random_bite', lambda: 2)\n    assert promo.new_bite() == 2\n    assert promo.bites_done == {2}"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/no-promo-twice-keep-state-in-a-class/)"
+  }
 }

@@ -5,6 +5,8 @@ from pathlib import Path
 from cojudge.authoring.support import ROOT, write_json
 from cojudge.pybites.runner import MARKER
 from cojudge.pybites.support import description, full_source, run_all
+from cojudge.presentation import course_help, statement_text, test_case_details
+from cojudge.data_formats.presentation import ADAPTATIONS, ASSUMPTIONS, EXAMPLES
 
 COURSE_ID = 'pybites-data-formats'
 HERE = Path(__file__).parent
@@ -63,38 +65,30 @@ def course_info(specs):
     }
 
 
-def statement(spec, count):
-    page = spec['page']
-    origin = ('This version keeps the original free template and tests, with added boundary tests.'
+def present_problem(spec, test_ids):
+    """Keep task text, Python examples, sample checks, and course help separate."""
+    number = spec['number']
+    original = description(spec)
+    if number in ADAPTATIONS:
+        original += '\n\n' + ADAPTATIONS[number]
+    origin = ('The original free template and tests are retained, with added boundary tests.'
               if spec.get('original') else
-              'The premium template and tests are not available in this account. '
-              'This version uses a recreated template and tests based on the public description.')
-    if spec.get('adapted'):
-        origin = spec['adapted']
-    notes = f"\n\n{spec['notes']}" if spec.get('notes') else ''
-    return f"""# {spec['number']:02d}. {spec['title']}
+              'The template and tests are recreated from the public Pybites description.')
+    notes = [origin, spec.get('adapted', ''), spec.get('notes', ''),
+             f'[Course list](/?course={COURSE_ID})']
+    return {
+        'statement': statement_text(original, ASSUMPTIONS.get(number, ())),
+        'examples': [{'input': code, 'output': expected}
+                     for code, expected in EXAMPLES[number]],
+        'testCaseDescriptions': test_case_details(spec['tests'], test_ids),
+        'courseHelp': course_help(
+            f"https://pybitesplatform.com/bites/{spec['page']['slug']}/",
+            '\n\n'.join(note for note in notes if note)),
+    }
 
-[Course list](/?course={COURSE_ID}) · [Original bite](https://pybitesplatform.com/bites/{page['slug']}/)
 
-{spec['contract']}
-
-**Source and offline changes:** {origin}{notes}
-
-<details>
-<summary>Original public description</summary>
-
-{description(spec)}
-
-</details>
-
-Write your implementation at the top of the editor. The tests below it import your code as
-`{spec['module']}`. **Run** checks the first three tests. **Submit** checks all {count} tests.
-A failed test shows its name, error, and test line.
-
-- Python 3.11. Use the standard library. All required data is supplied. No network access.
-- Keep the supplied tests and runner. Implement the functions above them.
-- For a saved solution, use **+** beside the editor tabs to open the current template in a new tab.
-"""
+def statement(spec, count):
+    return present_problem(spec, [])['statement']
 
 
 def build_problem(spec, destination=ROOT / 'cojudge'):
@@ -102,13 +96,16 @@ def build_problem(spec, destination=ROOT / 'cojudge'):
     folder = Path(destination) / 'problems' / result['id']
     folder.mkdir(parents=True, exist_ok=True)
     payloads = [json.dumps({'test': test}) for test in result['tests']]
+    presented = present_problem(spec, result['tests'])
     category, _, difficulty = next(row for row in LEVELS if row[1] == spec['page']['level'])
     metadata = {
         'id': result['id'], 'title': f"{spec['number']:02d}. {spec['title']}",
         'difficulty': difficulty,
         'link': f"https://pybitesplatform.com/bites/{spec['page']['slug']}/",
         'category': category,
-        'examples': [{'input': p, 'output': 'passed'} for p in payloads[:3]],
+        'examples': presented['examples'],
+        'testCaseDescriptions': presented['testCaseDescriptions'],
+        'courseHelp': presented['courseHelp'],
         'starterCode': {'python': full_source(spec, spec['template'])},
         'testCases': [{'payload': p} for p in payloads[:3]],
         'functionName': 'run', 'params': [{'name': 'payload', 'type': 'string'}],
@@ -116,7 +113,7 @@ def build_problem(spec, destination=ROOT / 'cojudge'):
     }
     write_json(folder / 'metadata.json', metadata)
     write_json(folder / 'official-tests.json', [{'payload': p} for p in payloads])
-    (folder / 'statement.md').write_text(statement(spec, result['cases']))
+    (folder / 'statement.md').write_text(presented['statement'])
     (folder / 'Marker.java').write_text(MARKER)
     (folder / 'solution.md').write_text(
         f"## Reference solution\n\nPaste this code above the supplied tests and runner.\n\n"

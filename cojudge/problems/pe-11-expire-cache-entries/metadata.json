@@ -6,18 +6,18 @@
   "category": "03-stateful-services",
   "examples": [
     {
-      "input": "{\"operations\": [{\"op\": \"put\", \"key\": \"a\", \"value\": \"ready\", \"now\": 5, \"ttl\": 3}, {\"op\": \"get\", \"key\": \"a\", \"now\": 7}]}",
-      "output": "[null, {\"hit\": true, \"value\": \"ready\"}]",
+      "input": "run_cache(\n    operations=[{'op': 'put', 'key': 'a', 'value': 'ready', 'now': 5, 'ttl': 3},\n     {'op': 'get', 'key': 'a', 'now': 7}]\n)",
+      "output": "[None, {'hit': True, 'value': 'ready'}]",
       "explanation": "value is available before expiry"
     },
     {
-      "input": "{\"operations\": [{\"op\": \"put\", \"key\": \"a\", \"value\": 9, \"now\": 5, \"ttl\": 3}, {\"op\": \"get\", \"key\": \"a\", \"now\": 8}]}",
-      "output": "[null, {\"hit\": false, \"value\": null}]",
+      "input": "run_cache(\n    operations=[{'op': 'put', 'key': 'a', 'value': 9, 'now': 5, 'ttl': 3},\n     {'op': 'get', 'key': 'a', 'now': 8}]\n)",
+      "output": "[None, {'hit': False, 'value': None}]",
       "explanation": "entry expires exactly at its deadline"
     },
     {
-      "input": "{\"operations\": [{\"op\": \"put\", \"key\": \"a\", \"value\": null, \"now\": 0, \"ttl\": 1}, {\"op\": \"get\", \"key\": \"a\", \"now\": 0}, {\"op\": \"get\", \"key\": \"missing\", \"now\": 0}]}",
-      "output": "[null, {\"hit\": true, \"value\": null}, {\"hit\": false, \"value\": null}]",
+      "input": "run_cache(\n    operations=[{'op': 'put', 'key': 'a', 'value': None, 'now': 0, 'ttl': 1},\n     {'op': 'get', 'key': 'a', 'now': 0},\n     {'op': 'get', 'key': 'missing', 'now': 0}]\n)",
+      "output": "[None, {'hit': True, 'value': None}, {'hit': False, 'value': None}]",
       "explanation": "cached null is distinct from a miss"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_local_country\"}",
-      "output": "passed"
+      "input": "get_country('8.8.8.8')",
+      "output": "'US'"
     },
     {
-      "input": "{\"test\": \"test_injected_client_and_exact_url\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_ipv6_address\"}",
-      "output": "passed"
+      "input": "get_country('2001:db8::1')",
+      "output": "'MX'"
     }
   ],
   "starterCode": {
@@ -40,5 +36,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_local_country": {
+      "title": "test_default_local_country",
+      "code": "def test_default_local_country():\n    assert get_country() == 'US'\n    assert get_country('1.1.1.1') == 'AU'"
+    },
+    "test_injected_client_and_exact_url": {
+      "title": "test_injected_client_and_exact_url",
+      "code": "def test_injected_client_and_exact_url():\n    client = Client({'country': 'NZ', 'city': 'Wellington'})\n    assert get_country('203.0.113.7', client) == 'NZ'\n    assert client.calls == ['https://ipinfo.io/203.0.113.7/json']\n    assert client.json_calls == 1"
+    },
+    "test_ipv6_address": {
+      "title": "test_ipv6_address",
+      "code": "def test_ipv6_address():\n    client = Client({'country': 'DE'})\n    assert get_country('2001:db8::123', client) == 'DE'\n    assert client.calls == ['https://ipinfo.io/2001:db8::123/json']\n    assert get_country('2001:db8::1') == 'MX'"
+    },
+    "test_preserve_code_and_response": {
+      "title": "test_preserve_code_and_response",
+      "code": "def test_preserve_code_and_response():\n    payload = {'country': 'gb', 'region': 'England'}\n    client = Client(payload)\n    assert get_country('192.0.2.1', client) == 'gb'\n    assert payload == {'country': 'gb', 'region': 'England'}"
+    },
+    "test_missing_country": {
+      "title": "test_missing_country",
+      "code": "def test_missing_country():\n    with pytest.raises(KeyError):\n        get_country('192.0.2.1', Client({'city': 'Unknown'}))"
+    },
+    "test_client_errors_propagate": {
+      "title": "test_client_errors_propagate",
+      "code": "def test_client_errors_propagate():\n    class Broken:\n        def get(self, url):\n            raise RuntimeError('local transport failure')\n    with pytest.raises(RuntimeError, match='local transport failure'):\n        get_country('192.0.2.1', Broken())"
+    },
+    "test_json_errors_propagate": {
+      "title": "test_json_errors_propagate",
+      "code": "def test_json_errors_propagate():\n    class Broken(Client):\n        def json(self):\n            raise ValueError('invalid JSON')\n    with pytest.raises(ValueError, match='invalid JSON'):\n        get_country('192.0.2.1', Broken({}))"
+    },
+    "test_default_client_can_be_replaced": {
+      "title": "test_default_client_can_be_replaced",
+      "code": "def test_default_client_can_be_replaced(monkeypatch):\n    client = Client({'country': 'JP'})\n    monkeypatch.setattr(ip_country, 'requests', client)\n    assert get_country('198.51.100.4') == 'JP'\n    assert client.calls == ['https://ipinfo.io/198.51.100.4/json']"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\nThe public exercise uses requests. This version supplies a local object with the same get()/response.json() interface. An optional client parameter supports injection. The original premium template and tests are unavailable; these interfaces and tests are recreated.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/use-the-ipinfo-api-to-lookup-ip-country/)"
+  }
 }

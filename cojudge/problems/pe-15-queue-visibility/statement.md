@@ -1,6 +1,12 @@
 A worker queue must redeliver unacknowledged jobs after their visibility timeout.
 
-Implement `process_queue(operations, visibility)`. Process operations in input order. `enqueue` has `id` and `at`: append a job and return null. `poll` has `at`: return the earliest unacknowledged job in enqueue order that has never been polled or whose deadline is at or before `at`; return null if none exists. A successful poll sets its deadline to `at + visibility`. `ack` has `id` and `at`: remove the job and return true only if it is currently in flight and `at` is strictly before its deadline. Otherwise, return false without a state change. At exact expiry, acknowledgment fails and polling can redeliver the job. Return a list with one result per operation. An empty list returns an empty list. Do not modify the input. Calls are independent.
+Implement `process_queue(operations, visibility)`. Return one result per operation, in input order.
+
+- `enqueue` has `id` and `at`. Append the job and return `None`.
+- `poll` has `at`. Return the earliest unacknowledged job in enqueue order that was never polled or whose deadline is at or before `at`. Set its deadline to `at + visibility`. Return `None` if no job is available.
+- `ack` has `id` and `at`. Remove the job and return `True` only when it is in flight and `at` is strictly before its deadline. Otherwise return `False` without a state change.
+
+At exact expiry, acknowledgment fails and polling can redeliver the job. Empty input returns an empty list.
 
 **Constraints:**
 
@@ -8,8 +14,4 @@ Implement `process_queue(operations, visibility)`. Process operations in input o
 - Job IDs are nonempty ASCII strings of at most 80 characters. Each ID is enqueued at most once.
 - Times are integers from 0 to 2000000000 in nondecreasing order. Equal times are allowed.
 - Visibility is an integer from 1 to 1000. Operations run sequentially; no parallel execution.
-- Inputs satisfy the contract; no validation is required.
-- Do not change the input objects. Each call starts with fresh state.
-- Python 3.11. Standard library only.
-
-Implement `process_queue`. **Run** checks the examples. **Submit** checks all 16 cases.
+- Do not change input objects or their nested values. Each call starts with fresh state.

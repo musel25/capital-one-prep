@@ -6,19 +6,19 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_rgb_from_color_names[white-rgb0]\"}",
-      "output": "passed",
-      "explanation": "Test test_rgb_from_color_names[white-rgb0] must pass."
+      "input": "Color.hex2rgb(\"#ff8000\")",
+      "output": "(255, 128, 0)",
+      "explanation": "Convert each hexadecimal pair to one channel."
     },
     {
-      "input": "{\"test\": \"test_rgb_from_color_names[ALICEBLUE-rgb1]\"}",
-      "output": "passed",
-      "explanation": "Test test_rgb_from_color_names[ALICEBLUE-rgb1] must pass."
+      "input": "Color.rgb2hex((0, 15, 255))",
+      "output": "'#000fff'",
+      "explanation": "Each channel uses two lowercase hexadecimal digits."
     },
     {
-      "input": "{\"test\": \"test_rgb_from_color_names[Tomato-rgb2]\"}",
-      "output": "passed",
-      "explanation": "Test test_rgb_from_color_names[Tomato-rgb2] must pass."
+      "input": "(str(Color(\"RED\")), str(Color(\"unknown\")))",
+      "output": "('(255, 0, 0)', 'Unknown')",
+      "explanation": "Color names are case insensitive."
     }
   ],
   "starterCode": {
@@ -43,5 +43,263 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_rgb_from_color_names[white-rgb0]": {
+      "title": "test_rgb_from_color_names[white-rgb0]",
+      "code": "@pytest.mark.parametrize(\"name, rgb\", [\n    (\"white\", (255, 255, 255)),\n    (\"ALICEBLUE\", (240, 248, 255)),\n    (\"Tomato\", (255, 99, 71)),\n])\ndef test_rgb_from_color_names(name, rgb):\n    assert Color(name).rgb == rgb"
+    },
+    "test_rgb_from_color_names[ALICEBLUE-rgb1]": {
+      "title": "test_rgb_from_color_names[ALICEBLUE-rgb1]",
+      "code": "@pytest.mark.parametrize(\"name, rgb\", [\n    (\"white\", (255, 255, 255)),\n    (\"ALICEBLUE\", (240, 248, 255)),\n    (\"Tomato\", (255, 99, 71)),\n])\ndef test_rgb_from_color_names(name, rgb):\n    assert Color(name).rgb == rgb"
+    },
+    "test_rgb_from_color_names[Tomato-rgb2]": {
+      "title": "test_rgb_from_color_names[Tomato-rgb2]",
+      "code": "@pytest.mark.parametrize(\"name, rgb\", [\n    (\"white\", (255, 255, 255)),\n    (\"ALICEBLUE\", (240, 248, 255)),\n    (\"Tomato\", (255, 99, 71)),\n])\ndef test_rgb_from_color_names(name, rgb):\n    assert Color(name).rgb == rgb"
+    },
+    "test_unknown_color_has_no_rgb": {
+      "title": "test_unknown_color_has_no_rgb",
+      "code": "def test_unknown_color_has_no_rgb():\n    assert Color(\"puke\").rgb is None"
+    },
+    "test_repr": {
+      "title": "test_repr",
+      "code": "def test_repr():\n    assert repr(Color(\"white\")) == \"Color('white')\"\n    assert repr(Color(\"puke\")) == \"Color('puke')\""
+    },
+    "test_str": {
+      "title": "test_str",
+      "code": "def test_str():\n    assert str(Color(\"white\")) == \"(255, 255, 255)\"\n    assert str(Color(\"navy\")) == \"(0, 0, 128)\"\n    assert str(Color(\"puke\")) == \"Unknown\""
+    },
+    "test_hex2rgb[#000000-rgb0]": {
+      "title": "test_hex2rgb[#000000-rgb0]",
+      "code": "@pytest.mark.parametrize(\"hex_value, rgb\", [\n    (\"#000000\", (0, 0, 0)),\n    (\"#ffffff\", (255, 255, 255)),\n    (\"#FF8000\", (255, 128, 0)),\n    (\"#0a0B0c\", (10, 11, 12)),\n])\ndef test_hex2rgb(hex_value, rgb):\n    assert Color.hex2rgb(hex_value) == rgb"
+    },
+    "test_hex2rgb[#ffffff-rgb1]": {
+      "title": "test_hex2rgb[#ffffff-rgb1]",
+      "code": "@pytest.mark.parametrize(\"hex_value, rgb\", [\n    (\"#000000\", (0, 0, 0)),\n    (\"#ffffff\", (255, 255, 255)),\n    (\"#FF8000\", (255, 128, 0)),\n    (\"#0a0B0c\", (10, 11, 12)),\n])\ndef test_hex2rgb(hex_value, rgb):\n    assert Color.hex2rgb(hex_value) == rgb"
+    },
+    "test_hex2rgb[#FF8000-rgb2]": {
+      "title": "test_hex2rgb[#FF8000-rgb2]",
+      "code": "@pytest.mark.parametrize(\"hex_value, rgb\", [\n    (\"#000000\", (0, 0, 0)),\n    (\"#ffffff\", (255, 255, 255)),\n    (\"#FF8000\", (255, 128, 0)),\n    (\"#0a0B0c\", (10, 11, 12)),\n])\ndef test_hex2rgb(hex_value, rgb):\n    assert Color.hex2rgb(hex_value) == rgb"
+    },
+    "test_hex2rgb[#0a0B0c-rgb3]": {
+      "title": "test_hex2rgb[#0a0B0c-rgb3]",
+      "code": "@pytest.mark.parametrize(\"hex_value, rgb\", [\n    (\"#000000\", (0, 0, 0)),\n    (\"#ffffff\", (255, 255, 255)),\n    (\"#FF8000\", (255, 128, 0)),\n    (\"#0a0B0c\", (10, 11, 12)),\n])\ndef test_hex2rgb(hex_value, rgb):\n    assert Color.hex2rgb(hex_value) == rgb"
+    },
+    "test_rgb2hex[rgb0-#000000]": {
+      "title": "test_rgb2hex[rgb0-#000000]",
+      "code": "@pytest.mark.parametrize(\"rgb, hex_value\", [\n    ((0, 0, 0), \"#000000\"),\n    ((255, 255, 255), \"#ffffff\"),\n    ((255, 128, 0), \"#ff8000\"),\n    ((10, 11, 12), \"#0a0b0c\"),\n])\ndef test_rgb2hex(rgb, hex_value):\n    assert Color.rgb2hex(rgb) == hex_value"
+    },
+    "test_rgb2hex[rgb1-#ffffff]": {
+      "title": "test_rgb2hex[rgb1-#ffffff]",
+      "code": "@pytest.mark.parametrize(\"rgb, hex_value\", [\n    ((0, 0, 0), \"#000000\"),\n    ((255, 255, 255), \"#ffffff\"),\n    ((255, 128, 0), \"#ff8000\"),\n    ((10, 11, 12), \"#0a0b0c\"),\n])\ndef test_rgb2hex(rgb, hex_value):\n    assert Color.rgb2hex(rgb) == hex_value"
+    },
+    "test_rgb2hex[rgb2-#ff8000]": {
+      "title": "test_rgb2hex[rgb2-#ff8000]",
+      "code": "@pytest.mark.parametrize(\"rgb, hex_value\", [\n    ((0, 0, 0), \"#000000\"),\n    ((255, 255, 255), \"#ffffff\"),\n    ((255, 128, 0), \"#ff8000\"),\n    ((10, 11, 12), \"#0a0b0c\"),\n])\ndef test_rgb2hex(rgb, hex_value):\n    assert Color.rgb2hex(rgb) == hex_value"
+    },
+    "test_rgb2hex[rgb3-#0a0b0c]": {
+      "title": "test_rgb2hex[rgb3-#0a0b0c]",
+      "code": "@pytest.mark.parametrize(\"rgb, hex_value\", [\n    ((0, 0, 0), \"#000000\"),\n    ((255, 255, 255), \"#ffffff\"),\n    ((255, 128, 0), \"#ff8000\"),\n    ((10, 11, 12), \"#0a0b0c\"),\n])\ndef test_rgb2hex(rgb, hex_value):\n    assert Color.rgb2hex(rgb) == hex_value"
+    },
+    "test_hex2rgb_bad_values[ffffff]": {
+      "title": "test_hex2rgb_bad_values[ffffff]",
+      "code": "@pytest.mark.parametrize(\"bad\", [\"ffffff\", \"#fff\", \"#fffffff\", \"#gggggg\", \"#12_456\", 123456, None])\ndef test_hex2rgb_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_bad_values[#fff]": {
+      "title": "test_hex2rgb_bad_values[#fff]",
+      "code": "@pytest.mark.parametrize(\"bad\", [\"ffffff\", \"#fff\", \"#fffffff\", \"#gggggg\", \"#12_456\", 123456, None])\ndef test_hex2rgb_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_bad_values[#fffffff]": {
+      "title": "test_hex2rgb_bad_values[#fffffff]",
+      "code": "@pytest.mark.parametrize(\"bad\", [\"ffffff\", \"#fff\", \"#fffffff\", \"#gggggg\", \"#12_456\", 123456, None])\ndef test_hex2rgb_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_bad_values[#gggggg]": {
+      "title": "test_hex2rgb_bad_values[#gggggg]",
+      "code": "@pytest.mark.parametrize(\"bad\", [\"ffffff\", \"#fff\", \"#fffffff\", \"#gggggg\", \"#12_456\", 123456, None])\ndef test_hex2rgb_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_bad_values[#12_456]": {
+      "title": "test_hex2rgb_bad_values[#12_456]",
+      "code": "@pytest.mark.parametrize(\"bad\", [\"ffffff\", \"#fff\", \"#fffffff\", \"#gggggg\", \"#12_456\", 123456, None])\ndef test_hex2rgb_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_bad_values[123456]": {
+      "title": "test_hex2rgb_bad_values[123456]",
+      "code": "@pytest.mark.parametrize(\"bad\", [\"ffffff\", \"#fff\", \"#fffffff\", \"#gggggg\", \"#12_456\", 123456, None])\ndef test_hex2rgb_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_bad_values[None]": {
+      "title": "test_hex2rgb_bad_values[None]",
+      "code": "@pytest.mark.parametrize(\"bad\", [\"ffffff\", \"#fff\", \"#fffffff\", \"#gggggg\", \"#12_456\", 123456, None])\ndef test_hex2rgb_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_rgb2hex_bad_values[bad0]": {
+      "title": "test_rgb2hex_bad_values[bad0]",
+      "code": "@pytest.mark.parametrize(\"bad\", [(256, 0, 0), (0, -1, 0), (0, 0), (0, 0, 0, 0), \"#ffffff\", (1.5, 0, 0), None])\ndef test_rgb2hex_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_bad_values[bad1]": {
+      "title": "test_rgb2hex_bad_values[bad1]",
+      "code": "@pytest.mark.parametrize(\"bad\", [(256, 0, 0), (0, -1, 0), (0, 0), (0, 0, 0, 0), \"#ffffff\", (1.5, 0, 0), None])\ndef test_rgb2hex_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_bad_values[bad2]": {
+      "title": "test_rgb2hex_bad_values[bad2]",
+      "code": "@pytest.mark.parametrize(\"bad\", [(256, 0, 0), (0, -1, 0), (0, 0), (0, 0, 0, 0), \"#ffffff\", (1.5, 0, 0), None])\ndef test_rgb2hex_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_bad_values[bad3]": {
+      "title": "test_rgb2hex_bad_values[bad3]",
+      "code": "@pytest.mark.parametrize(\"bad\", [(256, 0, 0), (0, -1, 0), (0, 0), (0, 0, 0, 0), \"#ffffff\", (1.5, 0, 0), None])\ndef test_rgb2hex_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_bad_values[#ffffff]": {
+      "title": "test_rgb2hex_bad_values[#ffffff]",
+      "code": "@pytest.mark.parametrize(\"bad\", [(256, 0, 0), (0, -1, 0), (0, 0), (0, 0, 0, 0), \"#ffffff\", (1.5, 0, 0), None])\ndef test_rgb2hex_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_bad_values[bad5]": {
+      "title": "test_rgb2hex_bad_values[bad5]",
+      "code": "@pytest.mark.parametrize(\"bad\", [(256, 0, 0), (0, -1, 0), (0, 0), (0, 0, 0, 0), \"#ffffff\", (1.5, 0, 0), None])\ndef test_rgb2hex_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_bad_values[None]": {
+      "title": "test_rgb2hex_bad_values[None]",
+      "code": "@pytest.mark.parametrize(\"bad\", [(256, 0, 0), (0, -1, 0), (0, 0), (0, 0, 0, 0), \"#ffffff\", (1.5, 0, 0), None])\ndef test_rgb2hex_bad_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_staticmethods": {
+      "title": "test_staticmethods",
+      "code": "def test_staticmethods():\n    assert isinstance(Color.__dict__[\"hex2rgb\"], staticmethod)\n    assert isinstance(Color.__dict__[\"rgb2hex\"], staticmethod)\n    # static methods also work through an instance\n    assert Color(\"red\").hex2rgb(\"#00ff00\") == (0, 255, 0)"
+    },
+    "test_round_trip_all_names": {
+      "title": "test_round_trip_all_names",
+      "code": "def test_round_trip_all_names():\n    for name, rgb in COLOR_NAMES.items():\n        assert Color.hex2rgb(Color.rgb2hex(rgb)) == rgb"
+    },
+    "test_unknown_names_are_not_normalized[]": {
+      "title": "test_unknown_names_are_not_normalized[]",
+      "code": "@pytest.mark.parametrize('name', ['', ' white ', 'not-a-color'])\ndef test_unknown_names_are_not_normalized(name):\n    color = Color(name)\n    assert color.rgb is None\n    assert str(color) == 'Unknown'"
+    },
+    "test_unknown_names_are_not_normalized[ white ]": {
+      "title": "test_unknown_names_are_not_normalized[ white ]",
+      "code": "@pytest.mark.parametrize('name', ['', ' white ', 'not-a-color'])\ndef test_unknown_names_are_not_normalized(name):\n    color = Color(name)\n    assert color.rgb is None\n    assert str(color) == 'Unknown'"
+    },
+    "test_unknown_names_are_not_normalized[not-a-color]": {
+      "title": "test_unknown_names_are_not_normalized[not-a-color]",
+      "code": "@pytest.mark.parametrize('name', ['', ' white ', 'not-a-color'])\ndef test_unknown_names_are_not_normalized(name):\n    color = Color(name)\n    assert color.rgb is None\n    assert str(color) == 'Unknown'"
+    },
+    "test_repr_preserves_original_case": {
+      "title": "test_repr_preserves_original_case",
+      "code": "def test_repr_preserves_original_case():\n    assert repr(Color('ToMaTo')) == \"Color('ToMaTo')\""
+    },
+    "test_hex2rgb_rejects_malformed_values[]": {
+      "title": "test_hex2rgb_rejects_malformed_values[]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[#]": {
+      "title": "test_hex2rgb_rejects_malformed_values[#]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[#12345]": {
+      "title": "test_hex2rgb_rejects_malformed_values[#12345]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[#1234567]": {
+      "title": "test_hex2rgb_rejects_malformed_values[#1234567]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[# 12345]": {
+      "title": "test_hex2rgb_rejects_malformed_values[# 12345]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[#+12345]": {
+      "title": "test_hex2rgb_rejects_malformed_values[#+12345]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[#\uff11\uff12\uff13\uff14\uff15\uff16]": {
+      "title": "test_hex2rgb_rejects_malformed_values[#\uff11\uff12\uff13\uff14\uff15\uff16]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[#12345\n]": {
+      "title": "test_hex2rgb_rejects_malformed_values[#12345\n]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[ #123456]": {
+      "title": "test_hex2rgb_rejects_malformed_values[ #123456]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[#123456 ]": {
+      "title": "test_hex2rgb_rejects_malformed_values[#123456 ]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[bad10]": {
+      "title": "test_hex2rgb_rejects_malformed_values[bad10]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[bad11]": {
+      "title": "test_hex2rgb_rejects_malformed_values[bad11]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[bad12]": {
+      "title": "test_hex2rgb_rejects_malformed_values[bad12]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_hex2rgb_rejects_malformed_values[True]": {
+      "title": "test_hex2rgb_rejects_malformed_values[True]",
+      "code": "@pytest.mark.parametrize('bad', [\n    '', '#', '#12345', '#1234567', '# 12345', '#+12345', '#\uff11\uff12\uff13\uff14\uff15\uff16',\n    '#12345\\n', ' #123456', '#123456 ', b'#123456', [], {}, True,\n])\ndef test_hex2rgb_rejects_malformed_values(bad):\n    with pytest.raises(ValueError):\n        Color.hex2rgb(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad0]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad0]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad1]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad1]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad2]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad2]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad3]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad3]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad4]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad4]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad5]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad5]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad6]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad6]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad7]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad7]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad8]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad8]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad9]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad9]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad10]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad10]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad11]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad11]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_rgb2hex_rejects_wrong_container_and_channel_values[bad12]": {
+      "title": "test_rgb2hex_rejects_wrong_container_and_channel_values[bad12]",
+      "code": "@pytest.mark.parametrize('bad', [\n    [0, 0, 0], {0: 0, 1: 0, 2: 0}, (), (True, 0, 0), (0, False, 0),\n    (0, 0, True), (-1, 0, 0), (0, 256, 0), (0, 0, -1), (0, 0, 256),\n    ('1', 0, 0), (0, 0.0, 0), (0, 0, None),\n])\ndef test_rgb2hex_rejects_wrong_container_and_channel_values(bad):\n    with pytest.raises(ValueError):\n        Color.rgb2hex(bad)"
+    },
+    "test_asymmetric_channels_and_both_instance_converters": {
+      "title": "test_asymmetric_channels_and_both_instance_converters",
+      "code": "def test_asymmetric_channels_and_both_instance_converters():\n    color = Color('red')\n    assert color.hex2rgb('#0102Fe') == (1, 2, 254)\n    assert color.rgb2hex((1, 2, 254)) == '#0102fe'"
+    },
+    "test_every_supplied_name_resolves_to_its_literal_rgb": {
+      "title": "test_every_supplied_name_resolves_to_its_literal_rgb",
+      "code": "def test_every_supplied_name_resolves_to_its_literal_rgb():\n    for name, rgb in COLOR_NAMES.items():\n        assert Color(name.lower()).rgb == rgb"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/implement-a-color-class-with-staticmethod/)"
+  }
 }

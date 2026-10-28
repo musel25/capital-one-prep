@@ -6,18 +6,18 @@
   "category": "04-jobs-and-storage",
   "examples": [
     {
-      "input": "{\"operations\": [{\"op\": \"enqueue\", \"id\": \"a\", \"at\": 0}, {\"op\": \"poll\", \"at\": 0}, {\"op\": \"ack\", \"id\": \"a\", \"at\": 4}, {\"op\": \"poll\", \"at\": 4}], \"visibility\": 5}",
-      "output": "[null, \"a\", true, null]",
+      "input": "process_queue(\n    operations=[{'op': 'enqueue', 'id': 'a', 'at': 0},\n     {'op': 'poll', 'at': 0},\n     {'op': 'ack', 'id': 'a', 'at': 4},\n     {'op': 'poll', 'at': 4}],\n    visibility=5\n)",
+      "output": "[None, 'a', True, None]",
       "explanation": "acknowledged job is removed"
     },
     {
-      "input": "{\"operations\": [{\"op\": \"enqueue\", \"id\": \"a\", \"at\": 0}, {\"op\": \"poll\", \"at\": 0}, {\"op\": \"poll\", \"at\": 4}], \"visibility\": 5}",
-      "output": "[null, \"a\", null]",
+      "input": "process_queue(\n    operations=[{'op': 'enqueue', 'id': 'a', 'at': 0},\n     {'op': 'poll', 'at': 0},\n     {'op': 'poll', 'at': 4}],\n    visibility=5\n)",
+      "output": "[None, 'a', None]",
       "explanation": "invisible before exact expiry"
     },
     {
-      "input": "{\"operations\": [{\"op\": \"enqueue\", \"id\": \"a\", \"at\": 0}, {\"op\": \"poll\", \"at\": 0}, {\"op\": \"ack\", \"id\": \"a\", \"at\": 5}, {\"op\": \"poll\", \"at\": 5}], \"visibility\": 5}",
-      "output": "[null, \"a\", false, \"a\"]",
+      "input": "process_queue(\n    operations=[{'op': 'enqueue', 'id': 'a', 'at': 0},\n     {'op': 'poll', 'at': 0},\n     {'op': 'ack', 'id': 'a', 'at': 5},\n     {'op': 'poll', 'at': 5}],\n    visibility=5\n)",
+      "output": "[None, 'a', False, 'a']",
       "explanation": "ack fails and redelivery succeeds at exact expiry"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

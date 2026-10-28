@@ -1,14 +1,3 @@
-# 06. Movie data analysis
-
-[Course list](/?course=pybites-data-formats) · [Original bite](https://pybitesplatform.com/bites/movie-data-analysis/)
-
-Implement `get_movies_by_director()`, `calc_mean_score(movies)`, and `get_average_scores(directors)`. `MOVIE_DATA` is a supplied local CSV path. Read it with `csv.DictReader`. Ignore rows missing director_name, movie_title, title_year, or imdb_score. Convert year to int and score to float. Include years >= MIN_YEAR (1960). Strip title whitespace. Return `defaultdict(list)` values containing `Movie(title, year, score)` records. `calc_mean_score` accepts a nonempty list of Movie records and rounds the mean to one decimal place. `get_average_scores` returns `(director, mean)` tuples for directors with at least MIN_MOVIES (4) films, highest rounded score first. Ties keep director insertion order. Present numeric CSV values are valid. An empty CSV produces an empty defaultdict.
-
-**Source and offline changes:** The original free tests are retained, with added boundary tests. The template replaces the network download with a compressed copy of the original movie CSV. Only the four columns used in this exercise are retained. The public function signatures are unchanged.
-
-<details>
-<summary>Original public description</summary>
-
 In this Bite we are going to parse a *csv* movie dataset to identify the directors with the *highest rated movies.*
 
 1. Write `get_movies_by_director`: use `csv.DictReader` to convert *movie_metadata.csv* into a `(default)dict` of `list`s of *Movie* `namedtuple`s. Convert/filter the data:
@@ -35,12 +24,8 @@ Here is an extract:
 
 See the tests for more info. This could be tough one, but we really hope you learn a thing or two. Good luck and keep calm and code in Python!
 
-</details>
+The supplied local CSV replaces the network download.
 
-Write your implementation at the top of the editor. The tests below it import your code as
-`directors`. **Run** checks the first three tests. **Submit** checks all 17 tests.
-A failed test shows its name, error, and test line.
+**Constraints:**
 
-- Python 3.11. Use the standard library. All required data is supplied. No network access.
-- Keep the supplied tests and runner. Implement the functions above them.
-- For a saved solution, use **+** beside the editor tabs to open the current template in a new tab.
+- Ties in average scores keep director insertion order; the supplied numeric CSV values are valid.

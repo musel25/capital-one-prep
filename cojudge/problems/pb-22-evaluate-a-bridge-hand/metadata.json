@@ -6,19 +6,9 @@
   "category": "03-advanced",
   "examples": [
     {
-      "input": "{\"test\": \"test_evaluation[S:AK8 H:JT94 D:A2 C:KQ74-17-1-0-0-1-18-6]\"}",
-      "output": "passed",
-      "explanation": "Test test_evaluation[S:AK8 H:JT94 D:A2 C:KQ74-17-1-0-0-1-18-6] must pass."
-    },
-    {
-      "input": "{\"test\": \"test_evaluation[S:9 H:KJT9 D:432 C:AJ742-9-0-1-0-2-11-8]\"}",
-      "output": "passed",
-      "explanation": "Test test_evaluation[S:9 H:KJT9 D:432 C:AJ742-9-0-1-0-2-11-8] must pass."
-    },
-    {
-      "input": "{\"test\": \"test_evaluation[H:AKQJT94 D:4 C:KQJ72-16-0-1-1-5-21-2]\"}",
-      "output": "passed",
-      "explanation": "Test test_evaluation[H:AKQJT94 D:4 C:KQJ72-16-0-1-1-5-21-2] must pass."
+      "input": "text = \"S:AK8 H:JT94 D:A2 C:KQ74\"\ncards = [Card(Suit[part[0]], Rank[rank]) for part in text.split() for rank in part[2:]]\nhand = BridgeHand(cards)\n(str(hand), hand.hcp, hand.ssp, hand.total_points, hand.ltc)",
+      "output": "('S:AK8 H:JT94 D:A2 C:KQ74', 17, 1, 18, 6)",
+      "explanation": "This hand has one doubleton and six losing tricks."
     }
   ],
   "starterCode": {
@@ -43,5 +33,211 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_evaluation[S:AK8 H:JT94 D:A2 C:KQ74-17-1-0-0-1-18-6]": {
+      "title": "test_evaluation[S:AK8 H:JT94 D:A2 C:KQ74-17-1-0-0-1-18-6]",
+      "code": "@pytest.mark.parametrize(\"text, hcp, doubletons, singletons, voids, ssp, total, ltc\", HANDS)\ndef test_evaluation(text, hcp, doubletons, singletons, voids, ssp, total, ltc):\n    hand = BridgeHand(make_hand(text))\n    assert hand.hcp == hcp\n    assert hand.doubletons == doubletons\n    assert hand.singletons == singletons\n    assert hand.voids == voids\n    assert hand.ssp == ssp\n    assert hand.total_points == total\n    assert hand.ltc == ltc"
+    },
+    "test_evaluation[S:9 H:KJT9 D:432 C:AJ742-9-0-1-0-2-11-8]": {
+      "title": "test_evaluation[S:9 H:KJT9 D:432 C:AJ742-9-0-1-0-2-11-8]",
+      "code": "@pytest.mark.parametrize(\"text, hcp, doubletons, singletons, voids, ssp, total, ltc\", HANDS)\ndef test_evaluation(text, hcp, doubletons, singletons, voids, ssp, total, ltc):\n    hand = BridgeHand(make_hand(text))\n    assert hand.hcp == hcp\n    assert hand.doubletons == doubletons\n    assert hand.singletons == singletons\n    assert hand.voids == voids\n    assert hand.ssp == ssp\n    assert hand.total_points == total\n    assert hand.ltc == ltc"
+    },
+    "test_evaluation[H:AKQJT94 D:4 C:KQJ72-16-0-1-1-5-21-2]": {
+      "title": "test_evaluation[H:AKQJT94 D:4 C:KQJ72-16-0-1-1-5-21-2]",
+      "code": "@pytest.mark.parametrize(\"text, hcp, doubletons, singletons, voids, ssp, total, ltc\", HANDS)\ndef test_evaluation(text, hcp, doubletons, singletons, voids, ssp, total, ltc):\n    hand = BridgeHand(make_hand(text))\n    assert hand.hcp == hcp\n    assert hand.doubletons == doubletons\n    assert hand.singletons == singletons\n    assert hand.voids == voids\n    assert hand.ssp == ssp\n    assert hand.total_points == total\n    assert hand.ltc == ltc"
+    },
+    "test_evaluation[S:QJ H:KQ D:AQ7 C:987643-14-2-0-0-2-16-7]": {
+      "title": "test_evaluation[S:QJ H:KQ D:AQ7 C:987643-14-2-0-0-2-16-7]",
+      "code": "@pytest.mark.parametrize(\"text, hcp, doubletons, singletons, voids, ssp, total, ltc\", HANDS)\ndef test_evaluation(text, hcp, doubletons, singletons, voids, ssp, total, ltc):\n    hand = BridgeHand(make_hand(text))\n    assert hand.hcp == hcp\n    assert hand.doubletons == doubletons\n    assert hand.singletons == singletons\n    assert hand.voids == voids\n    assert hand.ssp == ssp\n    assert hand.total_points == total\n    assert hand.ltc == ltc"
+    },
+    "test_evaluation[S:AKQJT98765432-10-0-0-3-9-19-0]": {
+      "title": "test_evaluation[S:AKQJT98765432-10-0-0-3-9-19-0]",
+      "code": "@pytest.mark.parametrize(\"text, hcp, doubletons, singletons, voids, ssp, total, ltc\", HANDS)\ndef test_evaluation(text, hcp, doubletons, singletons, voids, ssp, total, ltc):\n    hand = BridgeHand(make_hand(text))\n    assert hand.hcp == hcp\n    assert hand.doubletons == doubletons\n    assert hand.singletons == singletons\n    assert hand.voids == voids\n    assert hand.ssp == ssp\n    assert hand.total_points == total\n    assert hand.ltc == ltc"
+    },
+    "test_str_is_sorted[S:AK8 H:JT94 D:A2 C:KQ74]": {
+      "title": "test_str_is_sorted[S:AK8 H:JT94 D:A2 C:KQ74]",
+      "code": "@pytest.mark.parametrize(\"text\", [h[0] for h in HANDS])\ndef test_str_is_sorted(text):\n    cards = make_hand(text)\n    shuffled = cards[::2] + cards[1::2]\n    assert str(BridgeHand(shuffled)) == text"
+    },
+    "test_str_is_sorted[S:9 H:KJT9 D:432 C:AJ742]": {
+      "title": "test_str_is_sorted[S:9 H:KJT9 D:432 C:AJ742]",
+      "code": "@pytest.mark.parametrize(\"text\", [h[0] for h in HANDS])\ndef test_str_is_sorted(text):\n    cards = make_hand(text)\n    shuffled = cards[::2] + cards[1::2]\n    assert str(BridgeHand(shuffled)) == text"
+    },
+    "test_str_is_sorted[H:AKQJT94 D:4 C:KQJ72]": {
+      "title": "test_str_is_sorted[H:AKQJT94 D:4 C:KQJ72]",
+      "code": "@pytest.mark.parametrize(\"text\", [h[0] for h in HANDS])\ndef test_str_is_sorted(text):\n    cards = make_hand(text)\n    shuffled = cards[::2] + cards[1::2]\n    assert str(BridgeHand(shuffled)) == text"
+    },
+    "test_str_is_sorted[S:QJ H:KQ D:AQ7 C:987643]": {
+      "title": "test_str_is_sorted[S:QJ H:KQ D:AQ7 C:987643]",
+      "code": "@pytest.mark.parametrize(\"text\", [h[0] for h in HANDS])\ndef test_str_is_sorted(text):\n    cards = make_hand(text)\n    shuffled = cards[::2] + cards[1::2]\n    assert str(BridgeHand(shuffled)) == text"
+    },
+    "test_str_is_sorted[S:AKQJT98765432]": {
+      "title": "test_str_is_sorted[S:AKQJT98765432]",
+      "code": "@pytest.mark.parametrize(\"text\", [h[0] for h in HANDS])\ndef test_str_is_sorted(text):\n    cards = make_hand(text)\n    shuffled = cards[::2] + cards[1::2]\n    assert str(BridgeHand(shuffled)) == text"
+    },
+    "test_tuple_input": {
+      "title": "test_tuple_input",
+      "code": "def test_tuple_input():\n    hand = BridgeHand(tuple(make_hand(HANDS[0][0])))\n    assert hand.hcp == 17"
+    },
+    "test_not_a_sequence[bad0]": {
+      "title": "test_not_a_sequence[bad0]",
+      "code": "@pytest.mark.parametrize(\"bad\", [set(make_hand(HANDS[0][0])), 13, None,\n                                 (card for card in make_hand(HANDS[0][0]))])\ndef test_not_a_sequence(bad):\n    with pytest.raises(TypeError):\n        BridgeHand(bad)"
+    },
+    "test_not_a_sequence[13]": {
+      "title": "test_not_a_sequence[13]",
+      "code": "@pytest.mark.parametrize(\"bad\", [set(make_hand(HANDS[0][0])), 13, None,\n                                 (card for card in make_hand(HANDS[0][0]))])\ndef test_not_a_sequence(bad):\n    with pytest.raises(TypeError):\n        BridgeHand(bad)"
+    },
+    "test_not_a_sequence[None]": {
+      "title": "test_not_a_sequence[None]",
+      "code": "@pytest.mark.parametrize(\"bad\", [set(make_hand(HANDS[0][0])), 13, None,\n                                 (card for card in make_hand(HANDS[0][0]))])\ndef test_not_a_sequence(bad):\n    with pytest.raises(TypeError):\n        BridgeHand(bad)"
+    },
+    "test_not_a_sequence[bad3]": {
+      "title": "test_not_a_sequence[bad3]",
+      "code": "@pytest.mark.parametrize(\"bad\", [set(make_hand(HANDS[0][0])), 13, None,\n                                 (card for card in make_hand(HANDS[0][0]))])\ndef test_not_a_sequence(bad):\n    with pytest.raises(TypeError):\n        BridgeHand(bad)"
+    },
+    "test_wrong_number_of_cards": {
+      "title": "test_wrong_number_of_cards",
+      "code": "def test_wrong_number_of_cards():\n    cards = make_hand(HANDS[0][0])\n    with pytest.raises(ValueError):\n        BridgeHand(cards[:12])\n    with pytest.raises(ValueError):\n        BridgeHand(cards + [Card(Suit.S, Rank[\"2\"])])"
+    },
+    "test_not_cards": {
+      "title": "test_not_cards",
+      "code": "def test_not_cards():\n    cards = make_hand(HANDS[0][0])\n    with pytest.raises(ValueError):\n        BridgeHand(cards[:12] + [(\"S\", \"A\")])\n    with pytest.raises(ValueError):\n        BridgeHand(\"SAKQJT98765432\"[:13])"
+    },
+    "test_read_only_properties": {
+      "title": "test_read_only_properties",
+      "code": "def test_read_only_properties():\n    hand = BridgeHand(make_hand(HANDS[0][0]))\n    for name in (\"hcp\", \"doubletons\", \"singletons\", \"voids\", \"ssp\", \"total_points\", \"ltc\"):\n        assert isinstance(BridgeHand.__dict__[name], property)\n        with pytest.raises(AttributeError):\n            setattr(hand, name, 0)"
+    },
+    "test_empty_and_invalid_card_sequences[cards0]": {
+      "title": "test_empty_and_invalid_card_sequences[cards0]",
+      "code": "@pytest.mark.parametrize(\"cards\", [[], (), '', [None], list(range(13))])\ndef test_empty_and_invalid_card_sequences(cards):\n    with pytest.raises(ValueError):\n        BridgeHand(cards)"
+    },
+    "test_empty_and_invalid_card_sequences[cards1]": {
+      "title": "test_empty_and_invalid_card_sequences[cards1]",
+      "code": "@pytest.mark.parametrize(\"cards\", [[], (), '', [None], list(range(13))])\ndef test_empty_and_invalid_card_sequences(cards):\n    with pytest.raises(ValueError):\n        BridgeHand(cards)"
+    },
+    "test_empty_and_invalid_card_sequences[]": {
+      "title": "test_empty_and_invalid_card_sequences[]",
+      "code": "@pytest.mark.parametrize(\"cards\", [[], (), '', [None], list(range(13))])\ndef test_empty_and_invalid_card_sequences(cards):\n    with pytest.raises(ValueError):\n        BridgeHand(cards)"
+    },
+    "test_empty_and_invalid_card_sequences[cards3]": {
+      "title": "test_empty_and_invalid_card_sequences[cards3]",
+      "code": "@pytest.mark.parametrize(\"cards\", [[], (), '', [None], list(range(13))])\ndef test_empty_and_invalid_card_sequences(cards):\n    with pytest.raises(ValueError):\n        BridgeHand(cards)"
+    },
+    "test_empty_and_invalid_card_sequences[cards4]": {
+      "title": "test_empty_and_invalid_card_sequences[cards4]",
+      "code": "@pytest.mark.parametrize(\"cards\", [[], (), '', [None], list(range(13))])\ndef test_empty_and_invalid_card_sequences(cards):\n    with pytest.raises(ValueError):\n        BridgeHand(cards)"
+    },
+    "test_each_losing_trick_rule[A-0]": {
+      "title": "test_each_losing_trick_rule[A-0]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[K-1]": {
+      "title": "test_each_losing_trick_rule[K-1]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[Q-1]": {
+      "title": "test_each_losing_trick_rule[Q-1]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[2-1]": {
+      "title": "test_each_losing_trick_rule[2-1]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[AK-0]": {
+      "title": "test_each_losing_trick_rule[AK-0]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[A2-1]": {
+      "title": "test_each_losing_trick_rule[A2-1]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[K2-1]": {
+      "title": "test_each_losing_trick_rule[K2-1]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[Q2-2]": {
+      "title": "test_each_losing_trick_rule[Q2-2]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[32-2]": {
+      "title": "test_each_losing_trick_rule[32-2]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[AKQ-0]": {
+      "title": "test_each_losing_trick_rule[AKQ-0]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[AK2-1]": {
+      "title": "test_each_losing_trick_rule[AK2-1]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[AQ2-1]": {
+      "title": "test_each_losing_trick_rule[AQ2-1]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[KQ2-1]": {
+      "title": "test_each_losing_trick_rule[KQ2-1]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[A32-2]": {
+      "title": "test_each_losing_trick_rule[A32-2]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[K32-2]": {
+      "title": "test_each_losing_trick_rule[K32-2]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[Q32-2]": {
+      "title": "test_each_losing_trick_rule[Q32-2]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[432-3]": {
+      "title": "test_each_losing_trick_rule[432-3]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[A432-2]": {
+      "title": "test_each_losing_trick_rule[A432-2]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[K432-2]": {
+      "title": "test_each_losing_trick_rule[K432-2]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[Q432-2]": {
+      "title": "test_each_losing_trick_rule[Q432-2]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_each_losing_trick_rule[5432-3]": {
+      "title": "test_each_losing_trick_rule[5432-3]",
+      "code": "@pytest.mark.parametrize(\"ranks,losers\", [\n    ('A', 0), ('K', 1), ('Q', 1), ('2', 1),\n    ('AK', 0), ('A2', 1), ('K2', 1), ('Q2', 2), ('32', 2),\n    ('AKQ', 0), ('AK2', 1), ('AQ2', 1), ('KQ2', 1),\n    ('A32', 2), ('K32', 2), ('Q32', 2), ('432', 3),\n    ('A432', 2), ('K432', 2), ('Q432', 2), ('5432', 3),\n])\ndef test_each_losing_trick_rule(ranks, losers):\n    # The hearts holding always has AKQ and therefore contributes zero losers.\n    hearts = 'AKQJT98765432'[:13 - len(ranks)]\n    hand = BridgeHand(make_hand(f'S:{ranks} H:{hearts}'))\n    assert hand.ltc == losers"
+    },
+    "test_no_high_cards_or_short_suits": {
+      "title": "test_no_high_cards_or_short_suits",
+      "code": "def test_no_high_cards_or_short_suits():\n    hand = BridgeHand(make_hand('S:9876 H:987 D:987 C:987'))\n    assert hand.hcp == 0\n    assert hand.ssp == 0\n    assert hand.total_points == 0\n    assert hand.ltc == 12"
+    },
+    "test_input_sequence_is_not_retained_or_reordered": {
+      "title": "test_input_sequence_is_not_retained_or_reordered",
+      "code": "def test_input_sequence_is_not_retained_or_reordered():\n    cards = make_hand(HANDS[0][0])[::-1]\n    before = cards[:]\n    hand = BridgeHand(cards)\n    assert cards == before\n    cards.clear()\n    assert str(hand) == HANDS[0][0]\n    assert hand.hcp == 17"
+    },
+    "test_multiple_short_suits[S:AK H:AK D:AK C:AKQJT98-3-0-0-3]": {
+      "title": "test_multiple_short_suits[S:AK H:AK D:AK C:AKQJT98-3-0-0-3]",
+      "code": "@pytest.mark.parametrize(\"text,doubletons,singletons,voids,ssp\", [\n    ('S:AK H:AK D:AK C:AKQJT98', 3, 0, 0, 3),\n    ('S:A H:A D:A C:AKQJT98765', 0, 3, 0, 6),\n    ('S:AKQJT9 H:AKQJT98', 0, 0, 2, 6),\n    ('S:A H:A D:AKQJT987654', 0, 2, 1, 7),\n])\ndef test_multiple_short_suits(text, doubletons, singletons, voids, ssp):\n    hand = BridgeHand(make_hand(text))\n    assert hand.doubletons == doubletons\n    assert hand.singletons == singletons\n    assert hand.voids == voids\n    assert hand.ssp == ssp"
+    },
+    "test_multiple_short_suits[S:A H:A D:A C:AKQJT98765-0-3-0-6]": {
+      "title": "test_multiple_short_suits[S:A H:A D:A C:AKQJT98765-0-3-0-6]",
+      "code": "@pytest.mark.parametrize(\"text,doubletons,singletons,voids,ssp\", [\n    ('S:AK H:AK D:AK C:AKQJT98', 3, 0, 0, 3),\n    ('S:A H:A D:A C:AKQJT98765', 0, 3, 0, 6),\n    ('S:AKQJT9 H:AKQJT98', 0, 0, 2, 6),\n    ('S:A H:A D:AKQJT987654', 0, 2, 1, 7),\n])\ndef test_multiple_short_suits(text, doubletons, singletons, voids, ssp):\n    hand = BridgeHand(make_hand(text))\n    assert hand.doubletons == doubletons\n    assert hand.singletons == singletons\n    assert hand.voids == voids\n    assert hand.ssp == ssp"
+    },
+    "test_multiple_short_suits[S:AKQJT9 H:AKQJT98-0-0-2-6]": {
+      "title": "test_multiple_short_suits[S:AKQJT9 H:AKQJT98-0-0-2-6]",
+      "code": "@pytest.mark.parametrize(\"text,doubletons,singletons,voids,ssp\", [\n    ('S:AK H:AK D:AK C:AKQJT98', 3, 0, 0, 3),\n    ('S:A H:A D:A C:AKQJT98765', 0, 3, 0, 6),\n    ('S:AKQJT9 H:AKQJT98', 0, 0, 2, 6),\n    ('S:A H:A D:AKQJT987654', 0, 2, 1, 7),\n])\ndef test_multiple_short_suits(text, doubletons, singletons, voids, ssp):\n    hand = BridgeHand(make_hand(text))\n    assert hand.doubletons == doubletons\n    assert hand.singletons == singletons\n    assert hand.voids == voids\n    assert hand.ssp == ssp"
+    },
+    "test_multiple_short_suits[S:A H:A D:AKQJT987654-0-2-1-7]": {
+      "title": "test_multiple_short_suits[S:A H:A D:AKQJT987654-0-2-1-7]",
+      "code": "@pytest.mark.parametrize(\"text,doubletons,singletons,voids,ssp\", [\n    ('S:AK H:AK D:AK C:AKQJT98', 3, 0, 0, 3),\n    ('S:A H:A D:A C:AKQJT98765', 0, 3, 0, 6),\n    ('S:AKQJT9 H:AKQJT98', 0, 0, 2, 6),\n    ('S:A H:A D:AKQJT987654', 0, 2, 1, 7),\n])\ndef test_multiple_short_suits(text, doubletons, singletons, voids, ssp):\n    hand = BridgeHand(make_hand(text))\n    assert hand.doubletons == doubletons\n    assert hand.singletons == singletons\n    assert hand.voids == voids\n    assert hand.ssp == ssp"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. The second example hand in the description has 14 cards (`H:KJT94`). The tests use `S:9 H:KJT9 D:432 C:AJ742`, which has 13 cards and the same values. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/evaluate-a-bridge-hand/)"
+  }
 }

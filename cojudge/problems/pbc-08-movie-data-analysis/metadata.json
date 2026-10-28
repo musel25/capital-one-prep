@@ -6,16 +6,14 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_get_movies_by_director\"}",
-      "output": "passed"
+      "input": "calc_mean_score([Movie(\"A\", 2000, 8.0), Movie(\"B\", 2001, 7.5)])",
+      "output": "7.8",
+      "explanation": "Round the average to one decimal place."
     },
     {
-      "input": "{\"test\": \"test_director_movies_data_structure\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_calc_mean_score\"}",
-      "output": "passed"
+      "input": "directors = {\"Ada\": [Movie(\"A\", 2000, 8.0)] * 4, \"Bob\": [Movie(\"B\", 2001, 9.0)] * 3}\nget_average_scores(directors)",
+      "output": "[('Ada', 8.0)]",
+      "explanation": "A director needs at least four movies."
     }
   ],
   "starterCode": {
@@ -40,5 +38,75 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_get_movies_by_director": {
+      "title": "test_get_movies_by_director",
+      "code": "def test_get_movies_by_director(movies):\n    assert 'Sergio Leone' in movies\n    assert len(movies['Sergio Leone']) == 4\n    assert len(movies['Peter Jackson']) == 12"
+    },
+    "test_director_movies_data_structure": {
+      "title": "test_director_movies_data_structure",
+      "code": "def test_director_movies_data_structure(movies):\n    assert type(movies) in (dict, defaultdict)\n    assert type(movies['Peter Jackson']) == list\n    assert type(movies['Peter Jackson'][0]) == Movie"
+    },
+    "test_calc_mean_score": {
+      "title": "test_calc_mean_score",
+      "code": "def test_calc_mean_score(movies):\n    movies_sergio = movies['Sergio Leone']\n    movies_nolan = movies['Christopher Nolan']\n    assert calc_mean_score(movies_sergio) == 8.5\n    assert calc_mean_score(movies_nolan) == 8.4"
+    },
+    "test_get_average_scores_top_directors": {
+      "title": "test_get_average_scores_top_directors",
+      "code": "def test_get_average_scores_top_directors(scores):\n    expected = [('Sergio Leone', 8.5),\n                ('Christopher Nolan', 8.4),\n                ('Quentin Tarantino', 8.2),\n                ('Hayao Miyazaki', 8.2),\n                ('Frank Darabont', 8.0),\n                ('Stanley Kubrick', 8.0),\n                ('James Cameron', 7.9),\n                ('Joss Whedon', 7.9)]\n    assert scores[0:8] == expected"
+    },
+    "test_director_in_top_scores[Quentin Tarantino]": {
+      "title": "test_director_in_top_scores[Quentin Tarantino]",
+      "code": "@pytest.mark.parametrize(\"director\", [\n    'Quentin Tarantino', 'Hayao Miyazaki',\n    'Frank Darabont', 'Stanley Kubrick',\n    'James Cameron', 'Joss Whedon',\n    'Alejandro G. I\u00f1\u00e1rritu',\n])\ndef test_director_in_top_scores(director, scores):\n    # order / score might slightly change depending the way the mean\n    # is calculated so only test director names in top scores\n    top_scores = scores[2:13]\n    directors = {score[0] for score in top_scores}\n    assert director in directors"
+    },
+    "test_director_in_top_scores[Hayao Miyazaki]": {
+      "title": "test_director_in_top_scores[Hayao Miyazaki]",
+      "code": "@pytest.mark.parametrize(\"director\", [\n    'Quentin Tarantino', 'Hayao Miyazaki',\n    'Frank Darabont', 'Stanley Kubrick',\n    'James Cameron', 'Joss Whedon',\n    'Alejandro G. I\u00f1\u00e1rritu',\n])\ndef test_director_in_top_scores(director, scores):\n    # order / score might slightly change depending the way the mean\n    # is calculated so only test director names in top scores\n    top_scores = scores[2:13]\n    directors = {score[0] for score in top_scores}\n    assert director in directors"
+    },
+    "test_director_in_top_scores[Frank Darabont]": {
+      "title": "test_director_in_top_scores[Frank Darabont]",
+      "code": "@pytest.mark.parametrize(\"director\", [\n    'Quentin Tarantino', 'Hayao Miyazaki',\n    'Frank Darabont', 'Stanley Kubrick',\n    'James Cameron', 'Joss Whedon',\n    'Alejandro G. I\u00f1\u00e1rritu',\n])\ndef test_director_in_top_scores(director, scores):\n    # order / score might slightly change depending the way the mean\n    # is calculated so only test director names in top scores\n    top_scores = scores[2:13]\n    directors = {score[0] for score in top_scores}\n    assert director in directors"
+    },
+    "test_director_in_top_scores[Stanley Kubrick]": {
+      "title": "test_director_in_top_scores[Stanley Kubrick]",
+      "code": "@pytest.mark.parametrize(\"director\", [\n    'Quentin Tarantino', 'Hayao Miyazaki',\n    'Frank Darabont', 'Stanley Kubrick',\n    'James Cameron', 'Joss Whedon',\n    'Alejandro G. I\u00f1\u00e1rritu',\n])\ndef test_director_in_top_scores(director, scores):\n    # order / score might slightly change depending the way the mean\n    # is calculated so only test director names in top scores\n    top_scores = scores[2:13]\n    directors = {score[0] for score in top_scores}\n    assert director in directors"
+    },
+    "test_director_in_top_scores[James Cameron]": {
+      "title": "test_director_in_top_scores[James Cameron]",
+      "code": "@pytest.mark.parametrize(\"director\", [\n    'Quentin Tarantino', 'Hayao Miyazaki',\n    'Frank Darabont', 'Stanley Kubrick',\n    'James Cameron', 'Joss Whedon',\n    'Alejandro G. I\u00f1\u00e1rritu',\n])\ndef test_director_in_top_scores(director, scores):\n    # order / score might slightly change depending the way the mean\n    # is calculated so only test director names in top scores\n    top_scores = scores[2:13]\n    directors = {score[0] for score in top_scores}\n    assert director in directors"
+    },
+    "test_director_in_top_scores[Joss Whedon]": {
+      "title": "test_director_in_top_scores[Joss Whedon]",
+      "code": "@pytest.mark.parametrize(\"director\", [\n    'Quentin Tarantino', 'Hayao Miyazaki',\n    'Frank Darabont', 'Stanley Kubrick',\n    'James Cameron', 'Joss Whedon',\n    'Alejandro G. I\u00f1\u00e1rritu',\n])\ndef test_director_in_top_scores(director, scores):\n    # order / score might slightly change depending the way the mean\n    # is calculated so only test director names in top scores\n    top_scores = scores[2:13]\n    directors = {score[0] for score in top_scores}\n    assert director in directors"
+    },
+    "test_director_in_top_scores[Alejandro G. I\u00f1\u00e1rritu]": {
+      "title": "test_director_in_top_scores[Alejandro G. I\u00f1\u00e1rritu]",
+      "code": "@pytest.mark.parametrize(\"director\", [\n    'Quentin Tarantino', 'Hayao Miyazaki',\n    'Frank Darabont', 'Stanley Kubrick',\n    'James Cameron', 'Joss Whedon',\n    'Alejandro G. I\u00f1\u00e1rritu',\n])\ndef test_director_in_top_scores(director, scores):\n    # order / score might slightly change depending the way the mean\n    # is calculated so only test director names in top scores\n    top_scores = scores[2:13]\n    directors = {score[0] for score in top_scores}\n    assert director in directors"
+    },
+    "test_ignore_older_movies": {
+      "title": "test_ignore_older_movies",
+      "code": "def test_ignore_older_movies(movies):\n    \"\"\"Lowell Sherman's Black and White is from 1933 and should\n       be skipped\"\"\"\n    assert len(movies[\"Lowell Sherman\"]) == 0"
+    },
+    "test_year_boundary_missing_fields_and_quotes": {
+      "title": "test_year_boundary_missing_fields_and_quotes",
+      "code": "def test_year_boundary_missing_fields_and_quotes(tmp_path, monkeypatch):\n    import directors\n    path = tmp_path / 'movies.csv'\n    path.write_text('director_name,movie_title,title_year,imdb_score\\n'\n                    'A,Old,1959,9.9\\nA,\" Title, One \",1960,7.1\\n'\n                    ',No director,2020,9\\nA,,2020,9\\nA,No year,,9\\nA,No score,2020,\\n')\n    monkeypatch.setattr(directors, 'MOVIE_DATA', str(path))\n    assert get_movies_by_director() == {'A': [Movie('Title, One', 1960, 7.1)]}"
+    },
+    "test_empty_dataset": {
+      "title": "test_empty_dataset",
+      "code": "def test_empty_dataset(tmp_path, monkeypatch):\n    import directors\n    path = tmp_path / 'empty.csv'\n    path.write_text('director_name,movie_title,title_year,imdb_score\\n')\n    monkeypatch.setattr(directors, 'MOVIE_DATA', str(path))\n    assert dict(get_movies_by_director()) == {}"
+    },
+    "test_minimum_count_and_stable_ties": {
+      "title": "test_minimum_count_and_stable_ties",
+      "code": "def test_minimum_count_and_stable_ties():\n    directors = {'Z': [Movie('z', 2000, 8.0)] * 4,\n                 'A': [Movie('a', 2001, 8.0)] * 5,\n                 'Too few': [Movie('x', 2002, 10.0)] * 3}\n    assert get_average_scores(directors) == [('Z', 8.0), ('A', 8.0)]\n    assert get_average_scores({}) == []"
+    },
+    "test_mean_rounding": {
+      "title": "test_mean_rounding",
+      "code": "def test_mean_rounding():\n    assert calc_mean_score([Movie('a', 2000, 7.0), Movie('b', 2000, 7.3)]) == 7.2"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe original free tests are retained, with added boundary tests. The template replaces the network download with a compressed copy of the original movie CSV. Only the four columns used in this exercise are retained. The public function signatures are unchanged. Python 3.11. Data is supplied offline. Use the standard library.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/movie-data-analysis/)"
+  }
 }

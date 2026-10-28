@@ -6,16 +6,8 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_all_records\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_mixed_delimiters_in_one_row\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_strings_preserve_zeroes_and_spaces\"}",
-      "output": "passed"
+      "input": "convert_to_json('id,name\\n01|Ada\\n02;Bo')",
+      "output": "'[{\"id\": \"01\", \"name\": \"Ada\"}, {\"id\": \"02\", \"name\": \"Bo\"}]'"
     }
   ],
   "starterCode": {
@@ -40,5 +32,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_all_records": {
+      "title": "test_default_all_records",
+      "code": "def test_default_all_records():\n    output = convert_to_json()\n    assert isinstance(output, str)\n    rows = json.loads(output)\n    assert len(rows) == 10\n    assert rows[0] == {'id': '1', 'first_name': 'Junie', 'last_name': 'Kybert', 'email': 'jkybert0@army.mil'}\n    assert rows[2]['last_name'] == 'Dudbridge' and rows[-1]['id'] == '10'"
+    },
+    "test_mixed_delimiters_in_one_row": {
+      "title": "test_mixed_delimiters_in_one_row",
+      "code": "def test_mixed_delimiters_in_one_row():\n    assert json.loads(convert_to_json('a,b,c,d\\n1|2;3,4')) == [{'a': '1', 'b': '2', 'c': '3', 'd': '4'}]"
+    },
+    "test_strings_preserve_zeroes_and_spaces": {
+      "title": "test_strings_preserve_zeroes_and_spaces",
+      "code": "def test_strings_preserve_zeroes_and_spaces():\n    assert json.loads(convert_to_json('id,name\\n001; Ada ')) == [{'id': '001', 'name': ' Ada '}]"
+    },
+    "test_empty_fields_are_retained": {
+      "title": "test_empty_fields_are_retained",
+      "code": "def test_empty_fields_are_retained():\n    assert json.loads(convert_to_json('a,b,c\\n|middle;\\nleft,,right')) == [\n        {'a': '', 'b': 'middle', 'c': ''}, {'a': 'left', 'b': '', 'c': 'right'}]"
+    },
+    "test_blank_lines_crlf_and_empty_input": {
+      "title": "test_blank_lines_crlf_and_empty_input",
+      "code": "def test_blank_lines_crlf_and_empty_input():\n    assert json.loads(convert_to_json('\\r\\na,b\\r\\n\\r\\n1;2\\r\\n   \\r\\n3|4\\r\\n')) == [\n        {'a': '1', 'b': '2'}, {'a': '3', 'b': '4'}]\n    assert json.loads(convert_to_json('')) == []\n    assert json.loads(convert_to_json('a,b\\n')) == []"
+    },
+    "test_unicode_and_json_escaping": {
+      "title": "test_unicode_and_json_escaping",
+      "code": "def test_unicode_and_json_escaping():\n    data = 'id,name\\n1;Zo\u00eb \"Z\"\\n2|back\\\\slash'\n    assert json.loads(convert_to_json(data)) == [\n        {'id': '1', 'name': 'Zo\u00eb \"Z\"'}, {'id': '2', 'name': 'back\\\\slash'}]"
+    },
+    "test_wrong_field_counts": {
+      "title": "test_wrong_field_counts",
+      "code": "def test_wrong_field_counts():\n    with pytest.raises(ValueError):\n        convert_to_json('a,b\\n1')\n    with pytest.raises(ValueError):\n        convert_to_json('a,b\\n1;2;3')"
+    },
+    "test_single_column_duplicate_rows_and_fresh_result": {
+      "title": "test_single_column_duplicate_rows_and_fresh_result",
+      "code": "def test_single_column_duplicate_rows_and_fresh_result():\n    text = 'value\\nalpha\\nalpha'\n    assert json.loads(convert_to_json(text)) == [{'value': 'alpha'}, {'value': 'alpha'}]\n    assert convert_to_json(text) == convert_to_json(text)"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/turn-messy-csv-into-json/)"
+  }
 }

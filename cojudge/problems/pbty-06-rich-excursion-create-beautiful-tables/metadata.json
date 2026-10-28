@@ -10,16 +10,8 @@
   },
   "examples": [
     {
-      "input": "{\"test\": \"test_real_table_and_headers\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_row_values_and_order\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_duplicate_rows_are_kept\"}",
-      "output": "passed"
+      "input": "table = create_table([(\"Zoe\", 0, \"Lima\"), (\"Ari\", 120, \"Rome\")])\nprint(table.title)\nprint([column.header for column in table.columns])\nprint([[str(cell) for cell in column.cells] for column in table.columns])",
+      "output": "People\n['Name', 'Age', 'City']\n[['Zoe', 'Ari'], ['0', '120'], ['Lima', 'Rome']]"
     }
   ],
   "testCases": [
@@ -41,5 +33,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_real_table_and_headers": {
+      "title": "test_real_table_and_headers",
+      "code": "def test_real_table_and_headers():\n    table = cli.create_table([])\n    assert isinstance(table, Table)\n    assert table.title == \"People\"\n    assert [c.header for c in table.columns] == [\"Name\", \"Age\", \"City\"]"
+    },
+    "test_row_values_and_order": {
+      "title": "test_row_values_and_order",
+      "code": "def test_row_values_and_order():\n    table = cli.create_table([(\"Zoe\", 0, \"Lima\"), (\"Ari\", 120, \"Rome\")])\n    assert table.row_count == 2\n    assert [[str(cell) for cell in c.cells] for c in table.columns] == [[\"Zoe\", \"Ari\"], [\"0\", \"120\"], [\"Lima\", \"Rome\"]]"
+    },
+    "test_duplicate_rows_are_kept": {
+      "title": "test_duplicate_rows_are_kept",
+      "code": "def test_duplicate_rows_are_kept():\n    table = cli.create_table([(\"Ana\", 9, \"Oslo\"), (\"Ana\", 9, \"Oslo\")])\n    assert table.row_count == 2"
+    },
+    "test_show_table": {
+      "title": "test_show_table",
+      "code": "def test_show_table(capsys):\n    cli.show_table([(\"Rene\", 44, \"Tokyo\")])\n    text = capsys.readouterr().out\n    assert all(word in text for word in [\"People\", \"Name\", \"Age\", \"City\", \"Rene\", \"44\", \"Tokyo\"])"
+    },
+    "test_cli_table": {
+      "title": "test_cli_table",
+      "code": "def test_cli_table():\n    result = invoke([])\n    assert result.exit_code == 0, result.output\n    assert all(word in result.output for word in [\"People\", \"Alice\", \"30\", \"London\", \"Bob\", \"25\", \"Paris\"])"
+    },
+    "test_unicode_cells": {
+      "title": "test_unicode_cells",
+      "code": "def test_unicode_cells():\n    table = cli.create_table([(\"M\u00fcsel\", 25, \"M\u00e9xico\")])\n    buffer = io.StringIO()\n    Console(file=buffer, width=80, color_system=None).print(table)\n    assert \"M\u00fcsel\" in buffer.getvalue() and \"M\u00e9xico\" in buffer.getvalue()"
+    },
+    "test_brackets_in_cells_are_literal_text": {
+      "title": "test_brackets_in_cells_are_literal_text",
+      "code": "def test_brackets_in_cells_are_literal_text(capsys):\n    cli.show_table([(\"[/red]\", 30, \"[bold]Lima[/bold]\"), (\"[red]\", 20, \"Rome\")])\n    text = capsys.readouterr().out\n    assert \"[/red]\" in text and \"[red]\" in text and \"[bold]Lima[/bold]\" in text"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. Real Typer, Click, and Rich packages are bundled for offline use. Use Run and Submit; the playground and debugger do not load the library archive. Keep script entry points inside `if __name__ == \"__main__\":`. The runner supports the pytest features used by the supplied tests. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/rich-excursion-create-beautiful-tables/)"
+  }
 }

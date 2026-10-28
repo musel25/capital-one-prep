@@ -6,16 +6,16 @@
   "category": "03-advanced",
   "examples": [
     {
-      "input": "{\"test\": \"test_every_original_matchup_in_both_argument_orders\"}",
-      "output": "passed"
+      "input": "get_winner('paper', 'rock')",
+      "output": "'paper defeats rock'"
     },
     {
-      "input": "{\"test\": \"test_every_valid_tie\"}",
-      "output": "passed"
+      "input": "get_winner('devil', 'human')",
+      "output": "'devil defeats human'"
     },
     {
-      "input": "{\"test\": \"test_mapping_exact_edges_and_degree\"}",
-      "output": "passed"
+      "input": "get_winner('rock', 'rock')",
+      "output": "'Tie'"
     }
   ],
   "starterCode": {
@@ -40,5 +40,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_every_original_matchup_in_both_argument_orders": {
+      "title": "test_every_original_matchup_in_both_argument_orders",
+      "code": "def test_every_original_matchup_in_both_argument_orders():\n    for winner, loser in MATCHUPS:\n        expected = f'{winner} defeats {loser}'\n        assert get_winner(winner, loser) == expected\n        assert get_winner(loser, winner) == expected"
+    },
+    "test_every_valid_tie": {
+      "title": "test_every_valid_tie",
+      "code": "def test_every_valid_tie():\n    for gesture in BEATS:\n        assert get_winner(gesture, gesture) == 'Tie'"
+    },
+    "test_mapping_exact_edges_and_degree": {
+      "title": "test_mapping_exact_edges_and_degree",
+      "code": "def test_mapping_exact_edges_and_degree():\n    mapping = _create_defeat_mapping()\n    assert mapping == {winner: set(losers.split()) for winner, losers in BEATS.items()}\n    assert len(GESTURES) == 15 and sum(map(len, mapping.values())) == 105"
+    },
+    "test_helper_parses_supplied_csv_and_duplicates": {
+      "title": "test_helper_parses_supplied_csv_and_duplicates",
+      "code": "def test_helper_parses_supplied_csv_and_duplicates():\n    csv_text = 'winner,loser\\nrock,fire\\nrock,fire\\nrock,scissors\\npaper,rock\\n'\n    assert _create_defeat_mapping(csv_text) == {'rock': {'fire', 'scissors'}, 'paper': {'rock'}}\n    assert _create_defeat_mapping('winner,loser\\n') == {}"
+    },
+    "test_invalid_strings_and_argument_positions": {
+      "title": "test_invalid_strings_and_argument_positions",
+      "code": "def test_invalid_strings_and_argument_positions():\n    for invalid in ('Rock', ' rock', 'rock ', '', 'lizard', 'Tie'):\n        with pytest.raises(ValueError):\n            get_winner(invalid, 'rock')\n        with pytest.raises(ValueError):\n            get_winner('rock', invalid)\n        with pytest.raises(ValueError):\n            get_winner(invalid, invalid)"
+    },
+    "test_nonstring_inputs_raise_valueerror": {
+      "title": "test_nonstring_inputs_raise_valueerror",
+      "code": "def test_nonstring_inputs_raise_valueerror():\n    for invalid in (None, 1, [], {}, True):\n        with pytest.raises(ValueError):\n            get_winner(invalid, 'paper')\n        with pytest.raises(ValueError):\n            get_winner('paper', invalid)"
+    },
+    "test_helper_returns_independent_sets": {
+      "title": "test_helper_returns_independent_sets",
+      "code": "def test_helper_returns_independent_sets():\n    first = _create_defeat_mapping()\n    first['rock'].clear()\n    assert _create_defeat_mapping()['rock'] == set(BEATS['rock'].split())"
+    },
+    "test_get_winner_uses_csv_mapping": {
+      "title": "test_get_winner_uses_csv_mapping",
+      "code": "def test_get_winner_uses_csv_mapping(monkeypatch):\n    monkeypatch.setattr(rps15, '_create_defeat_mapping',\n                        lambda: {'rock': set(), 'fire': {'rock'}})\n    assert get_winner('rock', 'fire') == 'fire defeats rock'"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\nThe premium CSV, docstring, and original RPS15 phrase tests are unavailable. The local CSV preserves all 105 defeat relationships from [David C. Lovelace\u2019s RPS15 graph](https://www.umop.com/rps15.htm). Output is simplified to \"winner defeats loser\"; it does not reproduce the original action phrases.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/15-way-rock-paper-scissors/)"
+  }
 }

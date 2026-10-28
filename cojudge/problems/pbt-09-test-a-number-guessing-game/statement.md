@@ -1,16 +1,10 @@
-# 09. Test a number guessing game
+In this Bite you test a simple number guessing game (class). Ready to write some pytest code? Read on ... You again will need to mock out a standard library function, input this time. We tried to use random.randint to get the secret number, but mutation testing became a bit too strict on us, so for now we just pass the secret number into the constructor. That said, there is some validation going on that you will need to test. Check for boundaries and to check exception strings, pytest's raises has a nice match kwarg. The constructor also takes an optional max_guesses arg to make the game easier or harder. You will need to the use capfd/capsys fixture again to test the standard output of the game (100% test coverage remember).
 
-Write **tests**, not the implementation. [Original Pybites exercise](https://pybitesplatform.com/bites/test-a-number-guessing-game/).
+Good luck and keep calm and code in Python / pytest.
 
-This is an offline recreation from the public description. The original code and template are premium and were not available. The API below belongs to this recreation.
+For this version, write tests for the supplied code. Your tests must pass against the correct code, cover at least 90% of its executable statements, and detect every supplied faulty version. A fault is detected when at least one test fails. An empty test suite does not pass.
 
-## Contract
-
-GuessingGame(secret, max_guesses=5) accepts an integer secret in 1..20 and a positive integer limit; reject booleans. Use the exact validation messages in the supplied code. play() reads input for at most max_guesses attempts. Non-numeric input consumes an attempt. Print Enter a number, Too low, Too high, or You win! as applicable. A win returns True immediately. Exhausted attempts print You lose! The number was N and return False. Mock builtins.input. The default prompt is Guess a number: .
-
-## Code to test
-
-Import this module as `guessing`. The judge supplies it automatically.
+Import the target as `guessing`. The judge supplies it automatically.
 
 ```python
 class GuessingGame:
@@ -39,21 +33,3 @@ class GuessingGame:
         print(f'You lose! The number was {self.secret}')
         return False
 ```
-
-## Your task
-
-Scroll to **WRITE YOUR TESTS BELOW** in the editor. Replace the placeholder with `test_` functions. Keep the supplied target, runner, and adapter unchanged.
-
-1. All tests must pass against the correct code.
-2. Cover at least 90% of executable statements in the supplied target.
-3. Detect every supplied faulty variant. A faulty variant is detected when at least one test fails against it.
-
-**Run** checks the baseline and the first two faults. **Submit** checks the baseline and all 7 faults. `SURVIVED` identifies a fault your tests missed. A baseline failure shows the test name and error. Empty suites do not pass.
-
-## Offline pytest support
-
-The supplied runner implements the same small pytest subset used by the OOP course: `pytest.raises` (with `match`), `pytest.mark.parametrize`, function and yield fixtures, `pytest.approx` for numbers, `pytest.fail`, `capsys` / `capfd` for Python output, `monkeypatch`, and `tmp_path`. Standard-library `unittest.mock.patch` also works. Use function-scoped fixtures and top-level test functions. Plugins, async tests, pytest classes with setup hooks, skip/xfail, and advanced fixture scopes are not supported.
-
-The judge uses Python 3.11 and no network. This runner measures statement coverage with Python tracing and uses explicit faulty variants. It does **not** run pytest-cov or mutatest. Its acceptance result is specific to this course.
-
-For an older saved tab, use **+** to open the current template. Keep the old tab intact.

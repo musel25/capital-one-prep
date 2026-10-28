@@ -6,16 +6,8 @@
   "category": "pytest",
   "examples": [
     {
-      "input": "{\"check\": \"baseline\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"reject lower endpoint\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"reject upper endpoint\"}",
-      "output": "passed"
+      "input": "from guessing import *\nfrom unittest.mock import patch\nwith patch(\"builtins.input\", side_effect=[\"9\", \"10\"]):\n    result = GuessingGame(10, max_guesses=2).play()\nprint(\"Return value:\", result)",
+      "output": "Too low\nYou win!\nReturn value: True"
     }
   ],
   "starterCode": {
@@ -44,5 +36,43 @@
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "baseline": {
+      "title": "Correct code: tests pass and cover at least 90%",
+      "code": "class GuessingGame:\n    def __init__(self, secret, max_guesses=5):\n        if type(secret) is not int or not 1 <= secret <= 20:\n            raise ValueError('secret must be an integer from 1 to 20')\n        if type(max_guesses) is not int or max_guesses < 1:\n            raise ValueError('max_guesses must be a positive integer')\n        self.secret, self.max_guesses = secret, max_guesses\n\n    def play(self):\n        for _ in range(self.max_guesses):\n            text = input('Guess a number: ')\n            try:\n                guess = int(text)\n            except ValueError:\n                print('Enter a number')\n                continue\n            if guess == self.secret:\n                print('You win!')\n                return True\n            if guess < self.secret:\n                print('Too low')\n            else:\n                print('Too high')\n        print(f'You lose! The number was {self.secret}')\n        return False"
+    },
+    "reject lower endpoint": {
+      "title": "Detect fault: reject lower endpoint",
+      "code": "class GuessingGame:\n    def __init__(self, secret, max_guesses=5):\n        if type(secret) is not int or not 1 < secret <= 20:\n            raise ValueError('secret must be an integer from 1 to 20')\n        if type(max_guesses) is not int or max_guesses < 1:\n            raise ValueError('max_guesses must be a positive integer')\n        self.secret, self.max_guesses = secret, max_guesses\n\n    def play(self):\n        for _ in range(self.max_guesses):\n            text = input('Guess a number: ')\n            try:\n                guess = int(text)\n            except ValueError:\n                print('Enter a number')\n                continue\n            if guess == self.secret:\n                print('You win!')\n                return True\n            if guess < self.secret:\n                print('Too low')\n            else:\n                print('Too high')\n        print(f'You lose! The number was {self.secret}')\n        return False"
+    },
+    "reject upper endpoint": {
+      "title": "Detect fault: reject upper endpoint",
+      "code": "class GuessingGame:\n    def __init__(self, secret, max_guesses=5):\n        if type(secret) is not int or not 1 <= secret < 20:\n            raise ValueError('secret must be an integer from 1 to 20')\n        if type(max_guesses) is not int or max_guesses < 1:\n            raise ValueError('max_guesses must be a positive integer')\n        self.secret, self.max_guesses = secret, max_guesses\n\n    def play(self):\n        for _ in range(self.max_guesses):\n            text = input('Guess a number: ')\n            try:\n                guess = int(text)\n            except ValueError:\n                print('Enter a number')\n                continue\n            if guess == self.secret:\n                print('You win!')\n                return True\n            if guess < self.secret:\n                print('Too low')\n            else:\n                print('Too high')\n        print(f'You lose! The number was {self.secret}')\n        return False"
+    },
+    "accept boolean secret": {
+      "title": "Detect fault: accept boolean secret",
+      "code": "class GuessingGame:\n    def __init__(self, secret, max_guesses=5):\n        if not isinstance(secret, int) or not 1 <= secret <= 20:\n            raise ValueError('secret must be an integer from 1 to 20')\n        if type(max_guesses) is not int or max_guesses < 1:\n            raise ValueError('max_guesses must be a positive integer')\n        self.secret, self.max_guesses = secret, max_guesses\n\n    def play(self):\n        for _ in range(self.max_guesses):\n            text = input('Guess a number: ')\n            try:\n                guess = int(text)\n            except ValueError:\n                print('Enter a number')\n                continue\n            if guess == self.secret:\n                print('You win!')\n                return True\n            if guess < self.secret:\n                print('Too low')\n            else:\n                print('Too high')\n        print(f'You lose! The number was {self.secret}')\n        return False"
+    },
+    "omit last attempt": {
+      "title": "Detect fault: omit last attempt",
+      "code": "class GuessingGame:\n    def __init__(self, secret, max_guesses=5):\n        if type(secret) is not int or not 1 <= secret <= 20:\n            raise ValueError('secret must be an integer from 1 to 20')\n        if type(max_guesses) is not int or max_guesses < 1:\n            raise ValueError('max_guesses must be a positive integer')\n        self.secret, self.max_guesses = secret, max_guesses\n\n    def play(self):\n        for _ in range(self.max_guesses - 1):\n            text = input('Guess a number: ')\n            try:\n                guess = int(text)\n            except ValueError:\n                print('Enter a number')\n                continue\n            if guess == self.secret:\n                print('You win!')\n                return True\n            if guess < self.secret:\n                print('Too low')\n            else:\n                print('Too high')\n        print(f'You lose! The number was {self.secret}')\n        return False"
+    },
+    "swap high and low": {
+      "title": "Detect fault: swap high and low",
+      "code": "class GuessingGame:\n    def __init__(self, secret, max_guesses=5):\n        if type(secret) is not int or not 1 <= secret <= 20:\n            raise ValueError('secret must be an integer from 1 to 20')\n        if type(max_guesses) is not int or max_guesses < 1:\n            raise ValueError('max_guesses must be a positive integer')\n        self.secret, self.max_guesses = secret, max_guesses\n\n    def play(self):\n        for _ in range(self.max_guesses):\n            text = input('Guess a number: ')\n            try:\n                guess = int(text)\n            except ValueError:\n                print('Enter a number')\n                continue\n            if guess == self.secret:\n                print('You win!')\n                return True\n            if guess > self.secret:\n                print('Too low')\n            else:\n                print('Too high')\n        print(f'You lose! The number was {self.secret}')\n        return False"
+    },
+    "wrong winning result": {
+      "title": "Detect fault: wrong winning result",
+      "code": "class GuessingGame:\n    def __init__(self, secret, max_guesses=5):\n        if type(secret) is not int or not 1 <= secret <= 20:\n            raise ValueError('secret must be an integer from 1 to 20')\n        if type(max_guesses) is not int or max_guesses < 1:\n            raise ValueError('max_guesses must be a positive integer')\n        self.secret, self.max_guesses = secret, max_guesses\n\n    def play(self):\n        for _ in range(self.max_guesses):\n            text = input('Guess a number: ')\n            try:\n                guess = int(text)\n            except ValueError:\n                print('Enter a number')\n                continue\n            if guess == self.secret:\n                print('You win!')\n                return False\n            if guess < self.secret:\n                print('Too low')\n            else:\n                print('Too high')\n        print(f'You lose! The number was {self.secret}')\n        return False"
+    },
+    "wrong losing result": {
+      "title": "Detect fault: wrong losing result",
+      "code": "class GuessingGame:\n    def __init__(self, secret, max_guesses=5):\n        if type(secret) is not int or not 1 <= secret <= 20:\n            raise ValueError('secret must be an integer from 1 to 20')\n        if type(max_guesses) is not int or max_guesses < 1:\n            raise ValueError('max_guesses must be a positive integer')\n        self.secret, self.max_guesses = secret, max_guesses\n\n    def play(self):\n        for _ in range(self.max_guesses):\n            text = input('Guess a number: ')\n            try:\n                guess = int(text)\n            except ValueError:\n                print('Enter a number')\n                continue\n            if guess == self.secret:\n                print('You win!')\n                return True\n            if guess < self.secret:\n                print('Too low')\n            else:\n                print('Too high')\n        print(f'You lose! The number was {self.secret}')\n        return True"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write tests below the marked line in the editor. Run checks the correct implementation and a sample of the faulty versions. Submit checks every version. Keep the supplied code and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis target and its tests are an offline recreation from the public description. The original code and template require Pybites premium.\n\nThe offline runner supports `pytest.raises` with `match`, `pytest.mark.parametrize`, function and yield fixtures, numeric `pytest.approx`, `pytest.fail`, `capsys`, `capfd`, `monkeypatch`, and `tmp_path`. `unittest.mock.patch` also works. Use top-level test functions and function-scoped fixtures. Async tests, pytest classes with setup hooks, plugins, skip/xfail, and advanced fixture scopes are not supported.\n\nThis course measures statement coverage with Python tracing and checks explicit faulty variants. It does not run pytest-cov or mutatest. `SURVIVED` names a fault that your tests did not detect.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/test-a-number-guessing-game/)"
+  }
 }

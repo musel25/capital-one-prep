@@ -6,16 +6,8 @@
   "category": "pytest",
   "examples": [
     {
-      "input": "{\"check\": \"baseline\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"reject zero\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"accept negative input\"}",
-      "output": "passed"
+      "input": "from fibonacci import *\nprint(fib(0), fib(1), fib(10), fib(50))",
+      "output": "0 1 55 12586269025"
     }
   ],
   "starterCode": {
@@ -44,5 +36,35 @@
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "baseline": {
+      "title": "Correct code: tests pass and cover at least 90%",
+      "code": "from functools import cache\n\n@cache\ndef fib(n):\n   if n < 0:\n        raise ValueError\n   elif n in (0, 1):\n       return n\n   else:\n       return(fib(n-1) + fib(n-2))"
+    },
+    "reject zero": {
+      "title": "Detect fault: reject zero",
+      "code": "from functools import cache\n\n@cache\ndef fib(n):\n   if n <= 0:\n        raise ValueError\n   elif n in (0, 1):\n       return n\n   else:\n       return(fib(n-1) + fib(n-2))"
+    },
+    "accept negative input": {
+      "title": "Detect fault: accept negative input",
+      "code": "from functools import cache\n\n@cache\ndef fib(n):\n   if n < 0:\n        return 0\n   elif n in (0, 1):\n       return n\n   else:\n       return(fib(n-1) + fib(n-2))"
+    },
+    "wrong base case": {
+      "title": "Detect fault: wrong base case",
+      "code": "from functools import cache\n\n@cache\ndef fib(n):\n   if n < 0:\n        raise ValueError\n   elif n in (0, 1):\n       return 1\n   else:\n       return(fib(n-1) + fib(n-2))"
+    },
+    "subtract recursive terms": {
+      "title": "Detect fault: subtract recursive terms",
+      "code": "from functools import cache\n\n@cache\ndef fib(n):\n   if n < 0:\n        raise ValueError\n   elif n in (0, 1):\n       return n\n   else:\n       return(fib(n-1) - fib(n-2))"
+    },
+    "wrong recurrence": {
+      "title": "Detect fault: wrong recurrence",
+      "code": "from functools import cache\n\n@cache\ndef fib(n):\n   if n < 0:\n        raise ValueError\n   elif n in (0, 1):\n       return n\n   else:\n       return(fib(n-1) + fib(n-1))"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write tests below the marked line in the editor. Run checks the correct implementation and a sample of the faulty versions. Submit checks every version. Keep the supplied code and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe Fibonacci target is the original code visible on Pybites.\n\nThe offline runner supports `pytest.raises` with `match`, `pytest.mark.parametrize`, function and yield fixtures, numeric `pytest.approx`, `pytest.fail`, `capsys`, `capfd`, `monkeypatch`, and `tmp_path`. `unittest.mock.patch` also works. Use top-level test functions and function-scoped fixtures. Async tests, pytest classes with setup hooks, plugins, skip/xfail, and advanced fixture scopes are not supported.\n\nThis course measures statement coverage with Python tracing and checks explicit faulty variants. It does not run pytest-cov or mutatest. `SURVIVED` names a fault that your tests did not detect.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/write-tests-for-fibonacci/)"
+  }
 }

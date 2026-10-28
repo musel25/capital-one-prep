@@ -6,16 +6,14 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_default\"}",
-      "output": "passed"
+      "input": "get_most_common_word(\"The owl, the OWL and wizard.\", {\"the\", \"and\"})",
+      "output": "('owl', 2)",
+      "explanation": "Remove punctuation and stopwords before counting."
     },
     {
-      "input": "{\"test\": \"test_lowercase_and_punctuation\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_stopwords_and_digits\"}",
-      "output": "passed"
+      "input": "get_most_common_word(\"the and\", {\"the\", \"and\"})",
+      "output": "(None, 0)",
+      "explanation": "Return an empty result if every word is excluded."
     }
   ],
   "starterCode": {
@@ -40,5 +38,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default": {
+      "title": "test_default",
+      "code": "def test_default():\n    assert get_most_common_word() == ('wizard', 2)"
+    },
+    "test_lowercase_and_punctuation": {
+      "title": "test_lowercase_and_punctuation",
+      "code": "def test_lowercase_and_punctuation():\n    assert get_most_common_word('Owl, OWL! owl?', []) == ('owl', 3)"
+    },
+    "test_stopwords_and_digits": {
+      "title": "test_stopwords_and_digits",
+      "code": "def test_stopwords_and_digits():\n    assert get_most_common_word('THE the 42 42 owl', ['The']) == ('42', 2)"
+    },
+    "test_empty_and_all_excluded": {
+      "title": "test_empty_and_all_excluded",
+      "code": "def test_empty_and_all_excluded():\n    assert get_most_common_word('', []) == (None, 0)\n    assert get_most_common_word('!!! ---', []) == (None, 0)\n    assert get_most_common_word('the THE', ['the']) == (None, 0)"
+    },
+    "test_first_appearance_breaks_tie": {
+      "title": "test_first_appearance_breaks_tie",
+      "code": "def test_first_appearance_breaks_tie():\n    assert get_most_common_word('zebra apple', []) == ('zebra', 1)"
+    },
+    "test_internal_punctuation_is_removed": {
+      "title": "test_internal_punctuation_is_removed",
+      "code": "def test_internal_punctuation_is_removed():\n    assert get_most_common_word(\"can't cant can-t\", []) == ('cant', 3)"
+    },
+    "test_stopwords_not_changed": {
+      "title": "test_stopwords_not_changed",
+      "code": "def test_stopwords_not_changed():\n    words = ['THE']\n    get_most_common_word('the owl', words)\n    assert words == ['THE']"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public description. Python 3.11. Data is supplied offline. Use the standard library.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/find-the-most-common-word/)"
+  }
 }

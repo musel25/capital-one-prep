@@ -6,16 +6,12 @@
   "category": "01-beginner",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_xml\"}",
-      "output": "passed"
+      "input": "get_movies(get_tree('<root><movie title=\"Memento\" runtime=\"113 min\"/></root>'))",
+      "output": "[{'title': 'Memento', 'runtime': '113 min'}]"
     },
     {
-      "input": "{\"test\": \"test_nested_movies_and_xml_entities\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_empty_document\"}",
-      "output": "passed"
+      "input": "get_movie_longest_runtime(get_movies(get_tree()))",
+      "output": "{'title': 'Interstellar', 'year': '2014', 'runtime': '169 min'}"
     }
   ],
   "starterCode": {
@@ -40,5 +36,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_xml": {
+      "title": "test_default_xml",
+      "code": "def test_default_xml():\n    root = get_tree()\n    assert isinstance(root, ET.Element)\n    movies = get_movies(root)\n    assert [movie['title'] for movie in movies] == ['Memento', 'The Dark Knight', 'Interstellar']\n    assert get_movie_longest_runtime(movies)['title'] == 'Interstellar'"
+    },
+    "test_nested_movies_and_xml_entities": {
+      "title": "test_nested_movies_and_xml_entities",
+      "code": "def test_nested_movies_and_xml_entities():\n    root = get_tree('<root><group><movie title=\"A &amp; B\" runtime=\"9 min\"/></group><movie title=\"C\" runtime=\"10 min\"/></root>')\n    assert get_movies(root) == [{'title': 'A & B', 'runtime': '9 min'}, {'title': 'C', 'runtime': '10 min'}]"
+    },
+    "test_empty_document": {
+      "title": "test_empty_document",
+      "code": "def test_empty_document():\n    assert get_movies(get_tree('<root/>')) == []\n    assert get_movie_longest_runtime([]) is None"
+    },
+    "test_numeric_runtime_comparison": {
+      "title": "test_numeric_runtime_comparison",
+      "code": "def test_numeric_runtime_comparison():\n    movies = [{'title': 'short', 'runtime': '99 min'}, {'title': 'long', 'runtime': '100 min'}]\n    assert get_movie_longest_runtime(movies) == movies[1]"
+    },
+    "test_unknown_and_zero_runtime": {
+      "title": "test_unknown_and_zero_runtime",
+      "code": "def test_unknown_and_zero_runtime():\n    movies = [{'title': 'unknown', 'runtime': 'N/A'}, {'title': 'zero', 'runtime': '0 min'}]\n    assert get_movie_longest_runtime(movies) == movies[1]\n    assert get_movie_longest_runtime(movies[:1]) is None"
+    },
+    "test_runtime_ties_and_no_input_change": {
+      "title": "test_runtime_ties_and_no_input_change",
+      "code": "def test_runtime_ties_and_no_input_change():\n    movies = [{'title': 'first', 'runtime': '7 min'}, {'title': 'second', 'runtime': '7 min'}]\n    before = [dict(movie) for movie in movies]\n    assert get_movie_longest_runtime(movies) == movies[0]\n    assert movies == before"
+    },
+    "test_returned_attributes_are_independent": {
+      "title": "test_returned_attributes_are_independent",
+      "code": "def test_returned_attributes_are_independent():\n    tree = get_tree('<root><movie title=\"Original\" runtime=\"1 min\"/></root>')\n    get_movies(tree)[0]['title'] = 'Changed'\n    assert tree.find('movie').attrib['title'] == 'Original'"
+    },
+    "test_malformed_xml": {
+      "title": "test_malformed_xml",
+      "code": "def test_malformed_xml():\n    with pytest.raises(ET.ParseError):\n        get_tree('<root>')"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\nThe premium template and tests are recreated. The small Nolan XML example is constructed locally. The public description does not specify return types or empty-input behavior; this version defines them above.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/using-elementtree-to-parse-xml/)"
+  }
 }

@@ -1,14 +1,3 @@
-# 17. Find missing dates
-
-[Course list](/?course=pybites-datetimes-timezones) · [Original bite](https://pybitesplatform.com/bites/find-missing-dates/)
-
-Keep the source spelling: get_misssing_dates(dates) returns a set of missing date objects strictly between the minimum and maximum supplied dates. Accept unordered values and duplicates. Empty and singleton sequences return an empty set.
-
-**Source and offline changes:** The premium template and tests are not available in this account. This version uses a recreated template and tests based on the public description.
-
-<details>
-<summary>Original public description</summary>
-
 Complete `get_misssing_dates` that takes an (unordered) sequence of `datetime.date` objects. It should determine what the start and end date of this sequence is and return the missing dates.
 
 Here is an example (horizontal scroll code below):
@@ -33,12 +22,6 @@ Thanks [@shravankumar147](https://twitter.com/shravankumar147) for sharing [this
 
 Good luck and keep calm and code in Python!
 
-</details>
+**Constraints:**
 
-Write your implementation at the top of the editor. The tests below it import your code as
-`missing_dates`. **Run** checks the first three tests. **Submit** checks all 6 tests.
-A failed test shows its name, error, and test line.
-
-- Python 3.11. Use the standard library. All required data is supplied. No network access.
-- Keep the supplied tests and runner. Implement the functions above them.
-- For a saved solution, use **+** beside the editor tabs to open the current template in a new tab.
+- Accept duplicates; empty input returns an empty set.

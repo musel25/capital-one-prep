@@ -6,19 +6,14 @@
   "category": "03-advanced",
   "examples": [
     {
-      "input": "{\"test\": \"test_balance\"}",
-      "output": "passed",
-      "explanation": "Test test_balance must pass."
+      "input": "account = Account()\naccount + 10\nwith account:\n    account - 15\naccount.balance",
+      "output": "10",
+      "explanation": "A negative final balance rolls back all transactions in the block."
     },
     {
-      "input": "{\"test\": \"test_without_contextman_balance_negative\"}",
-      "output": "passed",
-      "explanation": "Test test_without_contextman_balance_negative must pass."
-    },
-    {
-      "input": "{\"test\": \"test_with_contextman_performs_rollback\"}",
-      "output": "passed",
-      "explanation": "Test test_with_contextman_performs_rollback must pass."
+      "input": "account = Account()\nwith account:\n    account - 5\n    account + 8\naccount.balance",
+      "output": "3",
+      "explanation": "A temporary negative balance is allowed if the final balance is nonnegative."
     }
   ],
   "starterCode": {
@@ -43,5 +38,59 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_balance": {
+      "title": "test_balance",
+      "code": "def test_balance(account):\n    assert account.balance == 0\n    account + 10\n    assert account.balance == 10\n    account - 5\n    assert account.balance == 5"
+    },
+    "test_without_contextman_balance_negative": {
+      "title": "test_without_contextman_balance_negative",
+      "code": "def test_without_contextman_balance_negative(account):\n    assert account.balance == 0\n    account - 5\n    assert account.balance == -5"
+    },
+    "test_with_contextman_performs_rollback": {
+      "title": "test_with_contextman_performs_rollback",
+      "code": "def test_with_contextman_performs_rollback(account):\n    account + 3\n    assert account.balance == 3\n    # trigger rollback\n    with account as acc:\n        acc - 5\n    assert account.balance == 3\n    # adding this ensures all required dunders are used:\n    with account as acc:\n        acc + 10\n        acc - 3\n    assert account.balance == 10\n    # make sure composite transactions are properly rolled back\n    with account as acc:\n        acc - 11\n        acc - 2\n    assert account.balance == 10"
+    },
+    "test_enter_returns_the_account": {
+      "title": "test_enter_returns_the_account",
+      "code": "def test_enter_returns_the_account(account):\n    with account as acc:\n        assert acc is account"
+    },
+    "test_block_that_stays_positive_is_kept": {
+      "title": "test_block_that_stays_positive_is_kept",
+      "code": "def test_block_that_stays_positive_is_kept(account):\n    account + 5\n    with account as acc:\n        acc - 5\n    assert account.balance == 0"
+    },
+    "test_rollback_only_undoes_the_block": {
+      "title": "test_rollback_only_undoes_the_block",
+      "code": "def test_rollback_only_undoes_the_block(account):\n    account + 20\n    with account as acc:\n        acc - 5\n    with account as acc:\n        acc + 1\n        acc - 100\n        acc + 50\n    assert account.balance == 15"
+    },
+    "test_exception_in_block_is_not_hidden": {
+      "title": "test_exception_in_block_is_not_hidden",
+      "code": "def test_exception_in_block_is_not_hidden(account):\n    account + 1\n    with pytest.raises(ZeroDivisionError):\n        with account as acc:\n            acc - 1\n            1 / 0"
+    },
+    "test_empty_block_keeps_balance": {
+      "title": "test_empty_block_keeps_balance",
+      "code": "def test_empty_block_keeps_balance(account):\n    account + 7\n    with account:\n        pass\n    assert account.balance == 7"
+    },
+    "test_only_final_balance_triggers_rollback": {
+      "title": "test_only_final_balance_triggers_rollback",
+      "code": "def test_only_final_balance_triggers_rollback(account):\n    account + 5\n    with account as acc:\n        acc - 10\n        acc + 6\n    assert account.balance == 1"
+    },
+    "test_exception_uses_final_balance_rule[3-2]": {
+      "title": "test_exception_uses_final_balance_rule[3-2]",
+      "code": "@pytest.mark.parametrize('withdrawal, expected', [(3, 2), (8, 5)])\ndef test_exception_uses_final_balance_rule(account, withdrawal, expected):\n    account + 5\n    with pytest.raises(ValueError):\n        with account as acc:\n            acc - withdrawal\n            raise ValueError('stop')\n    assert account.balance == expected"
+    },
+    "test_exception_uses_final_balance_rule[8-5]": {
+      "title": "test_exception_uses_final_balance_rule[8-5]",
+      "code": "@pytest.mark.parametrize('withdrawal, expected', [(3, 2), (8, 5)])\ndef test_exception_uses_final_balance_rule(account, withdrawal, expected):\n    account + 5\n    with pytest.raises(ValueError):\n        with account as acc:\n            acc - withdrawal\n            raise ValueError('stop')\n    assert account.balance == expected"
+    },
+    "test_two_accounts_do_not_share_rollback_state": {
+      "title": "test_two_accounts_do_not_share_rollback_state",
+      "code": "def test_two_accounts_do_not_share_rollback_state():\n    first, second = Account(), Account()\n    first + 5\n    second + 10\n    with first as acc:\n        acc - 6\n    with second as acc:\n        acc - 3\n    assert first.balance == 5\n    assert second.balance == 7"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are the originals from this free bite. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/write-a-context-manager/)"
+  }
 }

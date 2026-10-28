@@ -10,16 +10,8 @@
   },
   "examples": [
     {
-      "input": "{\"test\": \"test_explicit_options[alice]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_explicit_options[musel25]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_explicit_options[user-name]\"}",
-      "output": "passed"
+      "input": "from typer.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(app, [\"--username\", \"Ada\", \"--password\", \"test-password\"])\nprint(result.exit_code)\nprint(result.output, end=\"\")",
+      "output": "0\nAuthenticated as Ada"
     }
   ],
   "testCases": [
@@ -41,5 +33,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_explicit_options[alice]": {
+      "title": "test_explicit_options[alice]",
+      "code": "@pytest.mark.parametrize(\"username\", [\"alice\", \"musel25\", \"user-name\"])\ndef test_explicit_options(username):\n    result = invoke([\"--username\", username, \"--password\", \"test-secret-42\"])\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == f\"Authenticated as {username}\"\n    assert \"test-secret-42\" not in result.output"
+    },
+    "test_explicit_options[musel25]": {
+      "title": "test_explicit_options[musel25]",
+      "code": "@pytest.mark.parametrize(\"username\", [\"alice\", \"musel25\", \"user-name\"])\ndef test_explicit_options(username):\n    result = invoke([\"--username\", username, \"--password\", \"test-secret-42\"])\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == f\"Authenticated as {username}\"\n    assert \"test-secret-42\" not in result.output"
+    },
+    "test_explicit_options[user-name]": {
+      "title": "test_explicit_options[user-name]",
+      "code": "@pytest.mark.parametrize(\"username\", [\"alice\", \"musel25\", \"user-name\"])\ndef test_explicit_options(username):\n    result = invoke([\"--username\", username, \"--password\", \"test-secret-42\"])\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == f\"Authenticated as {username}\"\n    assert \"test-secret-42\" not in result.output"
+    },
+    "test_hidden_password_and_confirmation": {
+      "title": "test_hidden_password_and_confirmation",
+      "code": "def test_hidden_password_and_confirmation():\n    result = invoke([], input=\"alice\\nprivate-value\\nprivate-value\\n\")\n    assert result.exit_code == 0, result.output\n    assert \"Username\" in result.output and \"Password\" in result.output\n    assert \"Repeat for confirmation\" in result.output\n    assert \"Authenticated as alice\" in result.output\n    assert \"private-value\" not in result.output"
+    },
+    "test_mismatch_retries_without_echoing_secrets": {
+      "title": "test_mismatch_retries_without_echoing_secrets",
+      "code": "def test_mismatch_retries_without_echoing_secrets():\n    result = invoke([\"--username\", \"bob\"], input=\"wrong-value\\nother-value\\ncorrect-value\\ncorrect-value\\n\")\n    assert result.exit_code == 0, result.output\n    assert \"do not match\" in result.output\n    assert \"Authenticated as bob\" in result.output\n    assert all(secret not in result.output for secret in [\"wrong-value\", \"other-value\", \"correct-value\"])"
+    },
+    "test_end_of_input_aborts": {
+      "title": "test_end_of_input_aborts",
+      "code": "def test_end_of_input_aborts():\n    # Click 8.1's test stream returns an empty string forever at EOF.\n    # Supply a stream that raises EOFError, as the real terminal input does.\n    import io\n    class EndOfInput(io.BytesIO):\n        def read1(self, *args):\n            raise EOFError\n    result = invoke([], input=EndOfInput())\n    assert result.exit_code != 0\n    assert \"Authenticated as\" not in result.output"
+    },
+    "test_password_option_is_hidden_in_help": {
+      "title": "test_password_option_is_hidden_in_help",
+      "code": "def test_password_option_is_hidden_in_help():\n    result = invoke([\"--help\"])\n    assert result.exit_code == 0\n    assert \"--username\" in result.output and \"--password\" in result.output"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. Real Typer, Click, and Rich packages are bundled for offline use. Use Run and Submit; the playground and debugger do not load the library archive. Keep script entry points inside `if __name__ == \"__main__\":`. The runner supports the pytest features used by the supplied tests. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/add-a-password-prompt-to-your-command-line-interface-cli/)"
+  }
 }

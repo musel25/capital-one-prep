@@ -1,14 +1,3 @@
-# 22. Evaluate a bridge hand
-
-[Course list](/?course=pybites-oop) · Pybites Advanced · [Original bite](https://pybitesplatform.com/bites/evaluate-a-bridge-hand/)
-
-**Inputs and required behavior for this version:**
-
-A valid hand is a sequence of 13 distinct Card objects from the supplied deck. Each Card contains a Suit member and a Rank member. Non-sequences raise TypeError. Sequences with a length other than 13, or any non-Card element, raise ValueError. The hand stores a snapshot; later changes to the input sequence do not change it. String output sorts suits in SHDC order and ranks in AKQJT98765432 order, and omits void suits. All seven evaluation properties are read-only and follow the stated point and losing-trick rules. Duplicate cards and malformed Card fields are outside this exercise; additional validation for them is not required.
-
-<details>
-<summary>Original bite description</summary>
-
 In this bite you will implement a `BridgeHand` class representing a collection of 13 playing cards randomly chosen from a 52-card [French deck](https://en.wikipedia.org/wiki/French_playing_cards).
 
 Each card features a suit (spades, hearts, diamonds or clubs) and a rank
@@ -63,17 +52,6 @@ H:AKQJT94 D:4 C:KQJ72  hcp=16, doubletons=0, singletons=1, voids=1, ssp=5, total
 
 Hope you will enjoy this bite, and perhaps be inspired to learn more about Bridge, easily the finest card game ever created!
 
-</details>
-
-**Notes for this version:** The second example hand in the description has 14 cards (`H:KJT94`). The tests use `S:9 H:KJT9 D:432 C:AJ742`, which has 13 cards and the same values.
-
-**How to solve it here:** write your code at the top of the editor, like the Pybites Code tab.
-The Pybites tests are in the editor below your code (the Tests tab). The tests import your code as
-the module `bridgehand`. **Run** checks the first three tests. **Submit** runs all
-50. A failing test shows its name, the error, and the failed test line. The original template and tests are in Pybites premium, so the template and tests here are a recreation that follows the description.
-
 **Constraints:**
 
-- Python 3.11, standard library only. No network access.
-- Do not edit the tests or the supplied runner at the bottom of the editor.
-- For an older saved solution, use **+** beside the editor tabs to open the current template in a new tab. Copy your implementation into that tab. This keeps the saved solution and gives you the current tests.
+- Valid hands contain 13 distinct cards. The second source example has 14 cards; use `S:9 H:KJT9 D:432 C:AJ742` for that example.

@@ -6,16 +6,8 @@
   "category": "pytest",
   "examples": [
     {
-      "input": "{\"check\": \"baseline\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"swap region and service\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"skip the first range\"}",
-      "output": "passed"
+      "input": "from ips import *\ntext = '{\"prefixes\": [{\"ip_prefix\": \"10.0.0.0/24\", \"region\": \"west\", \"service\": \"EC2\"}]}'\nranges = parse_ranges(text)\nprint(ranges)\nprint(filter_ranges(ranges, region=\"east\"))",
+      "output": "[IPRange(network=IPv4Network('10.0.0.0/24'), region='west', service='EC2')]\n[]"
     }
   ],
   "starterCode": {
@@ -44,5 +36,35 @@
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "baseline": {
+      "title": "Correct code: tests pass and cover at least 90%",
+      "code": "import json\nfrom dataclasses import dataclass\nfrom ipaddress import IPv4Network\n\n@dataclass(frozen=True)\nclass IPRange:\n    network: IPv4Network\n    region: str\n    service: str\n\ndef parse_ranges(text):\n    return [IPRange(IPv4Network(item['ip_prefix']), item['region'], item['service'])\n            for item in json.loads(text)['prefixes']]\n\ndef get_ranges(path):\n    with open(path, encoding='utf-8') as stream:\n        return parse_ranges(stream.read())\n\ndef filter_ranges(ranges, region=None, service=None):\n    return [item for item in ranges\n            if (region is None or item.region == region)\n            and (service is None or item.service == service)]"
+    },
+    "swap region and service": {
+      "title": "Detect fault: swap region and service",
+      "code": "import json\nfrom dataclasses import dataclass\nfrom ipaddress import IPv4Network\n\n@dataclass(frozen=True)\nclass IPRange:\n    network: IPv4Network\n    region: str\n    service: str\n\ndef parse_ranges(text):\n    return [IPRange(IPv4Network(item['ip_prefix']), item['service'], item['region'])\n            for item in json.loads(text)['prefixes']]\n\ndef get_ranges(path):\n    with open(path, encoding='utf-8') as stream:\n        return parse_ranges(stream.read())\n\ndef filter_ranges(ranges, region=None, service=None):\n    return [item for item in ranges\n            if (region is None or item.region == region)\n            and (service is None or item.service == service)]"
+    },
+    "skip the first range": {
+      "title": "Detect fault: skip the first range",
+      "code": "import json\nfrom dataclasses import dataclass\nfrom ipaddress import IPv4Network\n\n@dataclass(frozen=True)\nclass IPRange:\n    network: IPv4Network\n    region: str\n    service: str\n\ndef parse_ranges(text):\n    return [IPRange(IPv4Network(item['ip_prefix']), item['region'], item['service'])\n            for item in json.loads(text)['prefixes'][1:]]\n\ndef get_ranges(path):\n    with open(path, encoding='utf-8') as stream:\n        return parse_ranges(stream.read())\n\ndef filter_ranges(ranges, region=None, service=None):\n    return [item for item in ranges\n            if (region is None or item.region == region)\n            and (service is None or item.service == service)]"
+    },
+    "invert region filter": {
+      "title": "Detect fault: invert region filter",
+      "code": "import json\nfrom dataclasses import dataclass\nfrom ipaddress import IPv4Network\n\n@dataclass(frozen=True)\nclass IPRange:\n    network: IPv4Network\n    region: str\n    service: str\n\ndef parse_ranges(text):\n    return [IPRange(IPv4Network(item['ip_prefix']), item['region'], item['service'])\n            for item in json.loads(text)['prefixes']]\n\ndef get_ranges(path):\n    with open(path, encoding='utf-8') as stream:\n        return parse_ranges(stream.read())\n\ndef filter_ranges(ranges, region=None, service=None):\n    return [item for item in ranges\n            if (region is None or item.region != region)\n            and (service is None or item.service == service)]"
+    },
+    "invert service filter": {
+      "title": "Detect fault: invert service filter",
+      "code": "import json\nfrom dataclasses import dataclass\nfrom ipaddress import IPv4Network\n\n@dataclass(frozen=True)\nclass IPRange:\n    network: IPv4Network\n    region: str\n    service: str\n\ndef parse_ranges(text):\n    return [IPRange(IPv4Network(item['ip_prefix']), item['region'], item['service'])\n            for item in json.loads(text)['prefixes']]\n\ndef get_ranges(path):\n    with open(path, encoding='utf-8') as stream:\n        return parse_ranges(stream.read())\n\ndef filter_ranges(ranges, region=None, service=None):\n    return [item for item in ranges\n            if (region is None or item.region == region)\n            and (service is None or item.service != service)]"
+    },
+    "combine filters with or": {
+      "title": "Detect fault: combine filters with or",
+      "code": "import json\nfrom dataclasses import dataclass\nfrom ipaddress import IPv4Network\n\n@dataclass(frozen=True)\nclass IPRange:\n    network: IPv4Network\n    region: str\n    service: str\n\ndef parse_ranges(text):\n    return [IPRange(IPv4Network(item['ip_prefix']), item['region'], item['service'])\n            for item in json.loads(text)['prefixes']]\n\ndef get_ranges(path):\n    with open(path, encoding='utf-8') as stream:\n        return parse_ranges(stream.read())\n\ndef filter_ranges(ranges, region=None, service=None):\n    return [item for item in ranges\n            if (region is None or item.region == region)\n            or (service is None or item.service == service)]"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write tests below the marked line in the editor. Run checks the correct implementation and a sample of the faulty versions. Submit checks every version. Keep the supplied code and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis target and its tests are an offline recreation from the public description. The original code and template require Pybites premium.\n\nThe offline runner supports `pytest.raises` with `match`, `pytest.mark.parametrize`, function and yield fixtures, numeric `pytest.approx`, `pytest.fail`, `capsys`, `capfd`, `monkeypatch`, and `tmp_path`. `unittest.mock.patch` also works. Use top-level test functions and function-scoped fixtures. Async tests, pytest classes with setup hooks, plugins, skip/xfail, and advanced fixture scopes are not supported.\n\nThis course measures statement coverage with Python tracing and checks explicit faulty variants. It does not run pytest-cov or mutatest. `SURVIVED` names a fault that your tests did not detect.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/test-code-that-parses-json-and-ip-ranges/)"
+  }
 }

@@ -8,6 +8,8 @@ from pathlib import Path
 from cojudge.authoring.support import ROOT, write_json
 from cojudge.pybites.runner import MARKER
 from cojudge.pybites.support import description, full_source
+from cojudge.presentation import course_help, statement_text, test_case_details
+from cojudge.typer_path.presentation import CLARIFICATIONS, EXAMPLES
 
 HERE = Path(__file__).parent
 COURSE_ID = 'pybites-typer'
@@ -56,34 +58,22 @@ def verify(spec):
             'template_failures': sum(value != 'passed' for value in template.values()), 'mutations': mutations}
 
 
+def present_problem(spec, test_ids):
+    return {
+        'statement': statement_text(description(spec), CLARIFICATIONS[spec['number']]),
+        'examples': [{'input': code, 'output': result} for code, result in EXAMPLES[spec['number']]],
+        'testCaseDescriptions': test_case_details(spec['tests'], test_ids),
+        'courseHelp': course_help(f"https://pybitesplatform.com/bites/{spec['page']['slug']}/",
+            'These templates and tests are recreations from the public descriptions. '
+            'Real Typer, Click, and Rich packages are bundled for offline use. Use Run '
+            'and Submit; the playground and debugger do not load the library archive. '
+            'Keep script entry points inside `if __name__ == "__main__":`. The runner '
+            'supports the pytest features used by the supplied tests. Select Python.'),
+    }
+
+
 def statement(spec, count):
-    return f"""# {spec['number']:02d}. {spec['title']}
-
-[Course list](/?course={COURSE_ID}) · [Original bite](https://pybitesplatform.com/bites/{spec['page']['slug']}/)
-
-{spec['contract']}
-
-**Source:** The original template and tests are not visible in this account.
-This template and these tests are recreations based on the public description.
-The contract above defines behavior that the public description does not specify.
-
-<details>
-<summary>Original public description</summary>
-
-{description(spec)}
-
-</details>
-
-Write your code at the top of the editor. The tests below it import your code as `cli`.
-**Run** checks the first three tests. **Submit** checks all {count} tests.
-A failure shows the test name, error, and test line.
-
-- Python 3.11. The judge supplies real Typer 0.12.5, Click 8.1.7, and Rich 13.9.4.
-- All libraries are bundled. No installation or network access is needed.
-- Use the problem's Run and Submit actions. The playground and debugger do not load the library archive.
-- Keep the supplied tests and runner. Guard any `typer.run(...)` or `app()` script entry point with `if __name__ == "__main__":`.
-- The runner supports the pytest features used by these supplied tests. It is not a complete pytest installation.
-"""
+    return present_problem(spec, [])['statement']
 
 
 def build(destination=ROOT / 'cojudge'):
@@ -93,18 +83,19 @@ def build(destination=ROOT / 'cojudge'):
         folder = Path(destination) / 'problems' / spec['id']
         folder.mkdir(parents=True, exist_ok=True)
         payloads = [json.dumps({'test': name}) for name in result['tests']]
+        presentation = present_problem(spec, result['tests'])
         metadata = {
             'id': spec['id'], 'title': f"{spec['number']:02d}. {spec['title']}",
             'difficulty': 'Easy' if spec['number'] <= 3 else 'Medium', 'link': '',
             'category': spec['category'], 'pythonDependencies': True,
             'starterCode': {'python': full_source(spec, spec['template'])},
-            'examples': [{'input': p, 'output': 'passed'} for p in payloads[:3]],
+            **{key: value for key, value in presentation.items() if key != 'statement'},
             'testCases': [{'payload': p} for p in payloads[:3]], 'functionName': 'run',
             'params': [{'name': 'payload', 'type': 'string'}], 'outputType': 'string', 'hints': [],
         }
         write_json(folder / 'metadata.json', metadata)
         write_json(folder / 'official-tests.json', [{'payload': p} for p in payloads])
-        (folder / 'statement.md').write_text(statement(spec, result['cases']))
+        (folder / 'statement.md').write_text(presentation['statement'])
         (folder / 'Marker.java').write_text(MARKER)
         (folder / 'solution.md').write_text(
             '## Reference solution\n\nPaste above the supplied tests and runner.\n\n```python\n' +

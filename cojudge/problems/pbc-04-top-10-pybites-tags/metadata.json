@@ -6,16 +6,9 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_feed\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_limit\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_default_limit_is_ten\"}",
-      "output": "passed"
+      "input": "xml = \"<rss><category>Python</category><category>Flask</category><category>Python</category></rss>\"\nget_top_tags(xml, n=2)",
+      "output": "[('Python', 2), ('Flask', 1)]",
+      "explanation": "Rank category counts from highest to lowest."
     }
   ],
   "starterCode": {
@@ -40,5 +33,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_feed": {
+      "title": "test_default_feed",
+      "code": "def test_default_feed():\n    assert get_top_tags() == [('Python', 3), ('learning', 2), ('Flask', 1)]"
+    },
+    "test_limit": {
+      "title": "test_limit",
+      "code": "def test_limit():\n    assert get_top_tags(n=1) == [('Python', 3)]"
+    },
+    "test_default_limit_is_ten": {
+      "title": "test_default_limit_is_ten",
+      "code": "def test_default_limit_is_ten():\n    xml = '<rss>' + ''.join(f'<category>tag{i}</category>' for i in range(12)) + '</rss>'\n    assert get_top_tags(xml) == [(f'tag{i}', 1) for i in range(10)]"
+    },
+    "test_empty_and_zero": {
+      "title": "test_empty_and_zero",
+      "code": "def test_empty_and_zero():\n    assert get_top_tags('<rss/>') == []\n    assert get_top_tags(n=0) == []"
+    },
+    "test_strip_entities_empty_and_tie_order": {
+      "title": "test_strip_entities_empty_and_tie_order",
+      "code": "def test_strip_entities_empty_and_tie_order():\n    xml = '<rss><category> z </category><category>a &amp; b</category><category/><category> </category></rss>'\n    assert get_top_tags(xml) == [('z', 1), ('a & b', 1)]"
+    },
+    "test_case_and_repeat": {
+      "title": "test_case_and_repeat",
+      "code": "def test_case_and_repeat():\n    xml = '<rss><category>Python</category><category>python</category><category>python</category></rss>'\n    assert get_top_tags(xml) == [('python', 2), ('Python', 1)]"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public description. The supplied RSS example is constructed for this offline version. Python 3.11. Data is supplied offline. Use the standard library.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/top-10-pybites-tags/)"
+  }
 }

@@ -6,16 +6,8 @@
   "category": "pytest",
   "examples": [
     {
-      "input": "{\"check\": \"baseline\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"ignore starting amount\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"subtract transactions\"}",
-      "output": "passed"
+      "input": "from account import *\naccount = Account(\"Ada\", 10)\naccount.add_transaction(5)\naccount.add_transaction(-3)\nprint(account.balance, len(account), list(account))",
+      "output": "12 2 [5, -3]"
     }
   ],
   "starterCode": {
@@ -44,5 +36,43 @@
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "baseline": {
+      "title": "Correct code: tests pass and cover at least 90%",
+      "code": "class Account:\n    def __init__(self, owner, amount=0):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self.owner, self.amount = owner, amount\n        self._transactions = []\n\n    @property\n    def balance(self):\n        return self.amount + sum(self._transactions)\n\n    def add_transaction(self, amount):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self._transactions.append(amount)\n\n    def __len__(self):\n        return len(self._transactions)\n\n    def __getitem__(self, index):\n        return self._transactions[index]\n\n    def __str__(self):\n        return f'Account of {self.owner} with starting amount: {self.amount}'\n\n    def __repr__(self):\n        return f'Account({self.owner!r}, {self.amount!r})'\n\n    def __eq__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance == other.balance\n\n    def __lt__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance < other.balance"
+    },
+    "ignore starting amount": {
+      "title": "Detect fault: ignore starting amount",
+      "code": "class Account:\n    def __init__(self, owner, amount=0):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self.owner, self.amount = owner, amount\n        self._transactions = []\n\n    @property\n    def balance(self):\n        return sum(self._transactions)\n\n    def add_transaction(self, amount):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self._transactions.append(amount)\n\n    def __len__(self):\n        return len(self._transactions)\n\n    def __getitem__(self, index):\n        return self._transactions[index]\n\n    def __str__(self):\n        return f'Account of {self.owner} with starting amount: {self.amount}'\n\n    def __repr__(self):\n        return f'Account({self.owner!r}, {self.amount!r})'\n\n    def __eq__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance == other.balance\n\n    def __lt__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance < other.balance"
+    },
+    "subtract transactions": {
+      "title": "Detect fault: subtract transactions",
+      "code": "class Account:\n    def __init__(self, owner, amount=0):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self.owner, self.amount = owner, amount\n        self._transactions = []\n\n    @property\n    def balance(self):\n        return self.amount - sum(self._transactions)\n\n    def add_transaction(self, amount):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self._transactions.append(amount)\n\n    def __len__(self):\n        return len(self._transactions)\n\n    def __getitem__(self, index):\n        return self._transactions[index]\n\n    def __str__(self):\n        return f'Account of {self.owner} with starting amount: {self.amount}'\n\n    def __repr__(self):\n        return f'Account({self.owner!r}, {self.amount!r})'\n\n    def __eq__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance == other.balance\n\n    def __lt__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance < other.balance"
+    },
+    "reject zero transactions": {
+      "title": "Detect fault: reject zero transactions",
+      "code": "class Account:\n    def __init__(self, owner, amount=0):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self.owner, self.amount = owner, amount\n        self._transactions = []\n\n    @property\n    def balance(self):\n        return self.amount + sum(self._transactions)\n\n    def add_transaction(self, amount):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self._transactions.append(amount) if amount else None\n\n    def __len__(self):\n        return len(self._transactions)\n\n    def __getitem__(self, index):\n        return self._transactions[index]\n\n    def __str__(self):\n        return f'Account of {self.owner} with starting amount: {self.amount}'\n\n    def __repr__(self):\n        return f'Account({self.owner!r}, {self.amount!r})'\n\n    def __eq__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance == other.balance\n\n    def __lt__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance < other.balance"
+    },
+    "accept booleans as amounts": {
+      "title": "Detect fault: accept booleans as amounts",
+      "code": "class Account:\n    def __init__(self, owner, amount=0):\n        if not isinstance(amount, int):\n            raise TypeError('amount must be an integer')\n        self.owner, self.amount = owner, amount\n        self._transactions = []\n\n    @property\n    def balance(self):\n        return self.amount + sum(self._transactions)\n\n    def add_transaction(self, amount):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self._transactions.append(amount)\n\n    def __len__(self):\n        return len(self._transactions)\n\n    def __getitem__(self, index):\n        return self._transactions[index]\n\n    def __str__(self):\n        return f'Account of {self.owner} with starting amount: {self.amount}'\n\n    def __repr__(self):\n        return f'Account({self.owner!r}, {self.amount!r})'\n\n    def __eq__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance == other.balance\n\n    def __lt__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance < other.balance"
+    },
+    "count starting amount as a transaction": {
+      "title": "Detect fault: count starting amount as a transaction",
+      "code": "class Account:\n    def __init__(self, owner, amount=0):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self.owner, self.amount = owner, amount\n        self._transactions = []\n\n    @property\n    def balance(self):\n        return self.amount + sum(self._transactions)\n\n    def add_transaction(self, amount):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self._transactions.append(amount)\n\n    def __len__(self):\n        return len(self._transactions) + 1\n\n    def __getitem__(self, index):\n        return self._transactions[index]\n\n    def __str__(self):\n        return f'Account of {self.owner} with starting amount: {self.amount}'\n\n    def __repr__(self):\n        return f'Account({self.owner!r}, {self.amount!r})'\n\n    def __eq__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance == other.balance\n\n    def __lt__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance < other.balance"
+    },
+    "compare initial amounts": {
+      "title": "Detect fault: compare initial amounts",
+      "code": "class Account:\n    def __init__(self, owner, amount=0):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self.owner, self.amount = owner, amount\n        self._transactions = []\n\n    @property\n    def balance(self):\n        return self.amount + sum(self._transactions)\n\n    def add_transaction(self, amount):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self._transactions.append(amount)\n\n    def __len__(self):\n        return len(self._transactions)\n\n    def __getitem__(self, index):\n        return self._transactions[index]\n\n    def __str__(self):\n        return f'Account of {self.owner} with starting amount: {self.amount}'\n\n    def __repr__(self):\n        return f'Account({self.owner!r}, {self.amount!r})'\n\n    def __eq__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.amount == other.amount\n\n    def __lt__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance < other.balance"
+    },
+    "less than includes equality": {
+      "title": "Detect fault: less than includes equality",
+      "code": "class Account:\n    def __init__(self, owner, amount=0):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self.owner, self.amount = owner, amount\n        self._transactions = []\n\n    @property\n    def balance(self):\n        return self.amount + sum(self._transactions)\n\n    def add_transaction(self, amount):\n        if type(amount) is not int:\n            raise TypeError('amount must be an integer')\n        self._transactions.append(amount)\n\n    def __len__(self):\n        return len(self._transactions)\n\n    def __getitem__(self, index):\n        return self._transactions[index]\n\n    def __str__(self):\n        return f'Account of {self.owner} with starting amount: {self.amount}'\n\n    def __repr__(self):\n        return f'Account({self.owner!r}, {self.amount!r})'\n\n    def __eq__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance == other.balance\n\n    def __lt__(self, other):\n        if not isinstance(other, Account):\n            return NotImplemented\n        return self.balance <= other.balance"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write tests below the marked line in the editor. Run checks the correct implementation and a sample of the faulty versions. Submit checks every version. Keep the supplied code and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis target and its tests are an offline recreation from the public description. The original code and template require Pybites premium.\n\nThe offline runner supports `pytest.raises` with `match`, `pytest.mark.parametrize`, function and yield fixtures, numeric `pytest.approx`, `pytest.fail`, `capsys`, `capfd`, `monkeypatch`, and `tmp_path`. `unittest.mock.patch` also works. Use top-level test functions and function-scoped fixtures. Async tests, pytest classes with setup hooks, plugins, skip/xfail, and advanced fixture scopes are not supported.\n\nThis course measures statement coverage with Python tracing and checks explicit faulty variants. It does not run pytest-cov or mutatest. `SURVIVED` names a fault that your tests did not detect.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/write-tests-for-an-account-class/)"
+  }
 }

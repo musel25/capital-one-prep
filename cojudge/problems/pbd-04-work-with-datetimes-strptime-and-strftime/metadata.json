@@ -6,16 +6,12 @@
   "category": "01-beginner",
   "examples": [
     {
-      "input": "{\"test\": \"test_case_01\"}",
-      "output": "passed"
+      "input": "years_ago('2000-08-02')",
+      "output": "17"
     },
     {
-      "input": "{\"test\": \"test_case_02\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_case_03\"}",
-      "output": "passed"
+      "input": "convert_eu_to_us_date('29/02/2020')",
+      "output": "'02/29/2020'"
     }
   ],
   "starterCode": {
@@ -40,5 +36,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_case_01": {
+      "title": "test_case_01",
+      "code": "def test_case_01():\n    assert (years_ago('2000-08-01')) == 18"
+    },
+    "test_case_02": {
+      "title": "test_case_02",
+      "code": "def test_case_02():\n    assert (years_ago('2000-08-02')) == 17"
+    },
+    "test_case_03": {
+      "title": "test_case_03",
+      "code": "def test_case_03():\n    assert (years_ago('2018-08-01')) == 0"
+    },
+    "test_case_04": {
+      "title": "test_case_04",
+      "code": "def test_case_04():\n    assert (convert_eu_to_us_date('29/02/2020')) == '02/29/2020'"
+    },
+    "test_case_05": {
+      "title": "test_case_05",
+      "code": "def test_case_05():\n    assert (convert_eu_to_us_date('31/12/1999')) == '12/31/1999'"
+    },
+    "test_invalid_dates": {
+      "title": "test_invalid_dates",
+      "code": "def test_invalid_dates():\n    assert convert_eu_to_us_date('01/01/0001') == '01/01/0001'\n    with pytest.raises(ValueError):\n        convert_eu_to_us_date('29/02/2019')\n    with pytest.raises(ValueError):\n        years_ago('2019-01-01')"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/work-with-datetimes-strptime-and-strftime/)"
+  }
 }

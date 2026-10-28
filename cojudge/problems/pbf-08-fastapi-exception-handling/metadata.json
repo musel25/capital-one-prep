@@ -9,16 +9,8 @@
   },
   "examples": [
     {
-      "input": "{\"test\": \"test_cannot_insert_same_food_entry_id_twice\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_cannot_overeat\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_added_calorie_boundary_and_user_isolation\"}",
-      "output": "passed"
+      "input": "from fastapi.testclient import TestClient\nclient = TestClient(app)\nfood_log.clear()\nentry = {\"id\": 1, \"user\": {\"id\": 1, \"username\": \"Ada\", \"password\": \"test-password\"}, \"food\": {\"id\": 1, \"name\": \"egg\", \"serving_size\": \"piece\", \"kcal_per_serving\": 78, \"protein_grams\": 6.3}, \"number_servings\": 1}\nprint(client.post(\"/\", json=entry).status_code)\nresponse = client.post(\"/\", json=entry)\nprint(response.status_code, response.json())",
+      "output": "201\n400 {'detail': 'Food entry already logged, use an update request'}"
     }
   ],
   "testCases": [
@@ -46,5 +38,27 @@
   "hints": [
     "Read the supplied pytest tests.",
     "Use the real FastAPI and Pydantic packages."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "test_cannot_insert_same_food_entry_id_twice": {
+      "title": "test_cannot_insert_same_food_entry_id_twice",
+      "code": "def test_cannot_insert_same_food_entry_id_twice(client, food_entry1):\n    resp = client.post(\"/\", json=food_entry1)\n    assert resp.status_code == 400\n    error = \"Food entry already logged, use an update request\"\n    expected = {\"detail\": error}\n    assert resp.json() == expected"
+    },
+    "test_cannot_overeat": {
+      "title": "test_cannot_overeat",
+      "code": "def test_cannot_overeat(client, food_entry1, food_entry2):\n    # food entry 1 is posted in the autouse fixture = 1.5 eggs\n    # posting food entry 2 would lead of a consumption of:\n    # 28 (1.5 + 26.5) x 78 kcal == 2.184 which is still < 2.250 = ok\n    resp = client.post(\"/\", json=food_entry2)\n    assert resp.status_code == 201\n    # however posting one more egg on top of that we go over max\n    # daily kcal allowance = 29 x 78 kcal = 2.262 > 2.250 -> not ok\n    food_entry3 = food_entry1.copy()\n    food_entry3[\"id\"] = 3\n    food_entry3[\"number_servings\"] = 1\n    resp = client.post(\"/\", json=food_entry3)\n    assert resp.status_code == 400\n    error = (\"Cannot add more food than daily caloric \"\n             \"allowance = 2250 kcal / day\")\n    expected = {\"detail\": error}\n    assert resp.json() == expected"
+    },
+    "test_added_calorie_boundary_and_user_isolation": {
+      "title": "test_added_calorie_boundary_and_user_isolation",
+      "code": "def test_added_calorie_boundary_and_user_isolation(client, food_entry1):\n    from copy import deepcopy\n    original = dict(food_log)\n    payload = deepcopy(food_entry1)\n    payload['id'] = 31\n    payload['user']['id'] = 31\n    payload['user']['username'] = 'other'\n    payload['user']['max_daily_calories'] = 156\n    payload['number_servings'] = 2\n    assert client.post('/', json=payload).status_code == 201\n    too_much = deepcopy(payload)\n    too_much['id'] = 32\n    too_much['number_servings'] = 0.5\n    before = dict(food_log)\n    response = client.post('/', json=too_much)\n    assert response.status_code == 400\n    assert response.json()['detail'].endswith('156 kcal / day')\n    assert food_log == before\n    assert all(food_log[key] == value for key, value in original.items())"
+    },
+    "test_added_duplicate_does_not_overwrite": {
+      "title": "test_added_duplicate_does_not_overwrite",
+      "code": "def test_added_duplicate_does_not_overwrite(client, food_entry1):\n    before = dict(food_log)\n    changed = dict(food_entry1, number_servings=0)\n    assert client.post('/', json=changed).status_code == 400\n    assert food_log == before"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis path uses real FastAPI and Pydantic 2 with pytest and TestClient. No server is needed. The imported starter and tests include added boundary checks named test_added_. Example password fields and the classroom signing key were restored after export redaction. The signing key and /create_user route are exercise fixtures. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/fastapi-exception-handling/)"
+  }
 }

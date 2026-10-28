@@ -6,19 +6,9 @@
   "category": "03-advanced",
   "examples": [
     {
-      "input": "{\"test\": \"test_ninja\"}",
-      "output": "passed",
-      "explanation": "Test test_ninja must pass."
-    },
-    {
-      "input": "{\"test\": \"test_ninja_comparison\"}",
-      "output": "passed",
-      "explanation": "Test test_ninja_comparison must pass."
-    },
-    {
-      "input": "{\"test\": \"test_len\"}",
-      "output": "passed",
-      "explanation": "Test test_len must pass."
+      "input": "rankings = Rankings()\nfor name, bites in [(\"Ada\", 20), (\"Bob\", 10), (\"Cy\", 30), (\"Dee\", 5)]:\n    rankings.add(Ninja(name, bites))\n[(str(high), str(low)) for high, low in rankings.pair_up()]",
+      "output": "[('[30] Cy', '[5] Dee'), ('[20] Ada', '[10] Bob')]",
+      "explanation": "Pair the highest and lowest scores without reusing a person."
     }
   ],
   "starterCode": {
@@ -43,5 +33,87 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_ninja": {
+      "title": "test_ninja",
+      "code": "def test_ninja():\n    bob = Ninja(\"bob\", 469)\n    assert bob.name == \"bob\"\n    assert bob.bites == 469\n    assert str(bob) == \"[469] bob\""
+    },
+    "test_ninja_comparison": {
+      "title": "test_ninja_comparison",
+      "code": "def test_ninja_comparison():\n    bob, julian, clone = Ninja(\"bob\", 469), Ninja(\"julian\", 487), Ninja(\"bob2\", 469)\n    assert bob < julian\n    assert julian > bob\n    assert bob == clone\n    assert not bob == julian"
+    },
+    "test_len": {
+      "title": "test_len",
+      "code": "def test_len(rankings):\n    assert len(rankings) == 7\n    assert len(Rankings()) == 0"
+    },
+    "test_highest": {
+      "title": "test_highest",
+      "code": "def test_highest(rankings):\n    assert [str(n) for n in rankings.highest()] == [\"[487] julian\"]\n    assert [n.name for n in rankings.highest(3)] == [\"julian\", \"bob\", \"sam\"]"
+    },
+    "test_lowest": {
+      "title": "test_lowest",
+      "code": "def test_lowest(rankings):\n    assert [str(n) for n in rankings.lowest()] == [\"[96] anthony\"]\n    assert [n.name for n in rankings.lowest(2)] == [\"anthony\", \"nick\"]"
+    },
+    "test_dump": {
+      "title": "test_dump",
+      "code": "def test_dump(rankings):\n    dumped = rankings.dump()\n    assert str(dumped) == \"[96] anthony\"\n    assert len(rankings) == 6\n    assert rankings.lowest()[0].name == \"nick\""
+    },
+    "test_pair_up": {
+      "title": "test_pair_up",
+      "code": "def test_pair_up(rankings):\n    pairs = rankings.pair_up()\n    assert [(high.name, low.name) for high, low in pairs] == [\n        (\"julian\", \"anthony\"), (\"bob\", \"nick\"), (\"sam\", \"martin\")]\n    assert len(rankings) == 7"
+    },
+    "test_pair_up_with_count": {
+      "title": "test_pair_up_with_count",
+      "code": "def test_pair_up_with_count(rankings):\n    pairs = rankings.pair_up(count=1)\n    assert len(pairs) == 1\n    high, low = pairs[0]\n    assert (str(high), str(low)) == (\"[487] julian\", \"[96] anthony\")"
+    },
+    "test_add_after_ranking": {
+      "title": "test_add_after_ranking",
+      "code": "def test_add_after_ranking(rankings):\n    rankings.add(Ninja(\"pro\", 999))\n    rankings.add(Ninja(\"newbie\", 1))\n    assert rankings.highest()[0].name == \"pro\"\n    assert rankings.lowest()[0].name == \"newbie\"\n    assert len(rankings) == 9"
+    },
+    "test_pairs_use_each_person_at_most_once[0-3]": {
+      "title": "test_pairs_use_each_person_at_most_once[0-3]",
+      "code": "@pytest.mark.parametrize(\"size,count\", [(0, 3), (1, 3), (3, 3), (4, 3),\n                                         (7, 99), (6, 3), (6, 0)])\ndef test_pairs_use_each_person_at_most_once(size, count):\n    ranking = Rankings()\n    for score in range(size):\n        ranking.add(Ninja(str(score), score))\n    pairs = ranking.pair_up(count)\n    expected_count = min(count, size // 2)\n    assert [(high.bites, low.bites) for high, low in pairs] == [\n        (size - 1 - offset, offset) for offset in range(expected_count)]\n    people = [id(person) for pair in pairs for person in pair]\n    assert len(set(people)) == len(people)\n    assert len(ranking) == size"
+    },
+    "test_pairs_use_each_person_at_most_once[1-3]": {
+      "title": "test_pairs_use_each_person_at_most_once[1-3]",
+      "code": "@pytest.mark.parametrize(\"size,count\", [(0, 3), (1, 3), (3, 3), (4, 3),\n                                         (7, 99), (6, 3), (6, 0)])\ndef test_pairs_use_each_person_at_most_once(size, count):\n    ranking = Rankings()\n    for score in range(size):\n        ranking.add(Ninja(str(score), score))\n    pairs = ranking.pair_up(count)\n    expected_count = min(count, size // 2)\n    assert [(high.bites, low.bites) for high, low in pairs] == [\n        (size - 1 - offset, offset) for offset in range(expected_count)]\n    people = [id(person) for pair in pairs for person in pair]\n    assert len(set(people)) == len(people)\n    assert len(ranking) == size"
+    },
+    "test_pairs_use_each_person_at_most_once[3-3]": {
+      "title": "test_pairs_use_each_person_at_most_once[3-3]",
+      "code": "@pytest.mark.parametrize(\"size,count\", [(0, 3), (1, 3), (3, 3), (4, 3),\n                                         (7, 99), (6, 3), (6, 0)])\ndef test_pairs_use_each_person_at_most_once(size, count):\n    ranking = Rankings()\n    for score in range(size):\n        ranking.add(Ninja(str(score), score))\n    pairs = ranking.pair_up(count)\n    expected_count = min(count, size // 2)\n    assert [(high.bites, low.bites) for high, low in pairs] == [\n        (size - 1 - offset, offset) for offset in range(expected_count)]\n    people = [id(person) for pair in pairs for person in pair]\n    assert len(set(people)) == len(people)\n    assert len(ranking) == size"
+    },
+    "test_pairs_use_each_person_at_most_once[4-3]": {
+      "title": "test_pairs_use_each_person_at_most_once[4-3]",
+      "code": "@pytest.mark.parametrize(\"size,count\", [(0, 3), (1, 3), (3, 3), (4, 3),\n                                         (7, 99), (6, 3), (6, 0)])\ndef test_pairs_use_each_person_at_most_once(size, count):\n    ranking = Rankings()\n    for score in range(size):\n        ranking.add(Ninja(str(score), score))\n    pairs = ranking.pair_up(count)\n    expected_count = min(count, size // 2)\n    assert [(high.bites, low.bites) for high, low in pairs] == [\n        (size - 1 - offset, offset) for offset in range(expected_count)]\n    people = [id(person) for pair in pairs for person in pair]\n    assert len(set(people)) == len(people)\n    assert len(ranking) == size"
+    },
+    "test_pairs_use_each_person_at_most_once[7-99]": {
+      "title": "test_pairs_use_each_person_at_most_once[7-99]",
+      "code": "@pytest.mark.parametrize(\"size,count\", [(0, 3), (1, 3), (3, 3), (4, 3),\n                                         (7, 99), (6, 3), (6, 0)])\ndef test_pairs_use_each_person_at_most_once(size, count):\n    ranking = Rankings()\n    for score in range(size):\n        ranking.add(Ninja(str(score), score))\n    pairs = ranking.pair_up(count)\n    expected_count = min(count, size // 2)\n    assert [(high.bites, low.bites) for high, low in pairs] == [\n        (size - 1 - offset, offset) for offset in range(expected_count)]\n    people = [id(person) for pair in pairs for person in pair]\n    assert len(set(people)) == len(people)\n    assert len(ranking) == size"
+    },
+    "test_pairs_use_each_person_at_most_once[6-3]": {
+      "title": "test_pairs_use_each_person_at_most_once[6-3]",
+      "code": "@pytest.mark.parametrize(\"size,count\", [(0, 3), (1, 3), (3, 3), (4, 3),\n                                         (7, 99), (6, 3), (6, 0)])\ndef test_pairs_use_each_person_at_most_once(size, count):\n    ranking = Rankings()\n    for score in range(size):\n        ranking.add(Ninja(str(score), score))\n    pairs = ranking.pair_up(count)\n    expected_count = min(count, size // 2)\n    assert [(high.bites, low.bites) for high, low in pairs] == [\n        (size - 1 - offset, offset) for offset in range(expected_count)]\n    people = [id(person) for pair in pairs for person in pair]\n    assert len(set(people)) == len(people)\n    assert len(ranking) == size"
+    },
+    "test_pairs_use_each_person_at_most_once[6-0]": {
+      "title": "test_pairs_use_each_person_at_most_once[6-0]",
+      "code": "@pytest.mark.parametrize(\"size,count\", [(0, 3), (1, 3), (3, 3), (4, 3),\n                                         (7, 99), (6, 3), (6, 0)])\ndef test_pairs_use_each_person_at_most_once(size, count):\n    ranking = Rankings()\n    for score in range(size):\n        ranking.add(Ninja(str(score), score))\n    pairs = ranking.pair_up(count)\n    expected_count = min(count, size // 2)\n    assert [(high.bites, low.bites) for high, low in pairs] == [\n        (size - 1 - offset, offset) for offset in range(expected_count)]\n    people = [id(person) for pair in pairs for person in pair]\n    assert len(set(people)) == len(people)\n    assert len(ranking) == size"
+    },
+    "test_empty_ranking_queries_and_dump": {
+      "title": "test_empty_ranking_queries_and_dump",
+      "code": "def test_empty_ranking_queries_and_dump():\n    ranking = Rankings()\n    assert ranking.highest() == []\n    assert ranking.lowest() == []\n    assert ranking.pair_up() == []\n    with pytest.raises(IndexError):\n        ranking.dump()"
+    },
+    "test_zero_and_large_query_counts_and_last_dump": {
+      "title": "test_zero_and_large_query_counts_and_last_dump",
+      "code": "def test_zero_and_large_query_counts_and_last_dump():\n    ranking = Rankings()\n    person = Ninja('', 0)\n    ranking.add(person)\n    assert ranking.highest(0) == ranking.lowest(0) == []\n    assert ranking.highest(99)[0] is person\n    assert ranking.lowest(99)[0] is person\n    result = ranking.highest(99)\n    result.clear()\n    assert len(ranking) == 1\n    assert ranking.dump() is person\n    assert len(ranking) == 0"
+    },
+    "test_equal_scores_and_separate_rankings": {
+      "title": "test_equal_scores_and_separate_rankings",
+      "code": "def test_equal_scores_and_separate_rankings():\n    one, two = Ninja('a', 0), Ninja('b', 0)\n    assert one == two\n    assert not one < two\n    assert not one > two\n    ranking = Rankings()\n    ranking.add(one)\n    ranking.add(two)\n    assert {id(n) for n in ranking.highest(99)} == {id(one), id(two)}\n    assert len(Rankings()) == 0"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/ninja-rankings/)"
+  }
 }

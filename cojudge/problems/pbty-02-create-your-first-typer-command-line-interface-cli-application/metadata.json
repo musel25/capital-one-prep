@@ -10,16 +10,8 @@
   },
   "examples": [
     {
-      "input": "{\"test\": \"test_commands[args0-The sum is 8]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_commands[args1-The sum is 0]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_commands[args2-d=5 is greater than c=3]\"}",
-      "output": "passed"
+      "input": "from typer.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(app, [\"compare\", \"3\", \"5\"])\nprint(result.exit_code)\nprint(result.output, end=\"\")",
+      "output": "0\nd=5 is greater than c=3"
     }
   ],
   "testCases": [
@@ -41,5 +33,51 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_commands[args0-The sum is 8]": {
+      "title": "test_commands[args0-The sum is 8]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"sum\", \"--\", \"-2\", \"2\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"compare\", \"8\", \"2\"], \"c=8 is greater than d=2\"),\n    ([\"compare\", \"4\", \"4\"], \"c=4 is equal to d=4\"),\n    ([\"compare\", \"--\", \"-3\", \"-1\"], \"d=-1 is greater than c=-3\")])\ndef test_commands(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_commands[args1-The sum is 0]": {
+      "title": "test_commands[args1-The sum is 0]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"sum\", \"--\", \"-2\", \"2\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"compare\", \"8\", \"2\"], \"c=8 is greater than d=2\"),\n    ([\"compare\", \"4\", \"4\"], \"c=4 is equal to d=4\"),\n    ([\"compare\", \"--\", \"-3\", \"-1\"], \"d=-1 is greater than c=-3\")])\ndef test_commands(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_commands[args2-d=5 is greater than c=3]": {
+      "title": "test_commands[args2-d=5 is greater than c=3]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"sum\", \"--\", \"-2\", \"2\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"compare\", \"8\", \"2\"], \"c=8 is greater than d=2\"),\n    ([\"compare\", \"4\", \"4\"], \"c=4 is equal to d=4\"),\n    ([\"compare\", \"--\", \"-3\", \"-1\"], \"d=-1 is greater than c=-3\")])\ndef test_commands(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_commands[args3-c=8 is greater than d=2]": {
+      "title": "test_commands[args3-c=8 is greater than d=2]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"sum\", \"--\", \"-2\", \"2\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"compare\", \"8\", \"2\"], \"c=8 is greater than d=2\"),\n    ([\"compare\", \"4\", \"4\"], \"c=4 is equal to d=4\"),\n    ([\"compare\", \"--\", \"-3\", \"-1\"], \"d=-1 is greater than c=-3\")])\ndef test_commands(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_commands[args4-c=4 is equal to d=4]": {
+      "title": "test_commands[args4-c=4 is equal to d=4]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"sum\", \"--\", \"-2\", \"2\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"compare\", \"8\", \"2\"], \"c=8 is greater than d=2\"),\n    ([\"compare\", \"4\", \"4\"], \"c=4 is equal to d=4\"),\n    ([\"compare\", \"--\", \"-3\", \"-1\"], \"d=-1 is greater than c=-3\")])\ndef test_commands(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_commands[args5-d=-1 is greater than c=-3]": {
+      "title": "test_commands[args5-d=-1 is greater than c=-3]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"sum\", \"--\", \"-2\", \"2\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"compare\", \"8\", \"2\"], \"c=8 is greater than d=2\"),\n    ([\"compare\", \"4\", \"4\"], \"c=4 is equal to d=4\"),\n    ([\"compare\", \"--\", \"-3\", \"-1\"], \"d=-1 is greater than c=-3\")])\ndef test_commands(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_reject_bad_command[args0]": {
+      "title": "test_reject_bad_command[args0]",
+      "code": "@pytest.mark.parametrize(\"args\", [[\"sum\", \"1\"], [\"compare\", \"x\", \"2\"], [\"unknown\"]])\ndef test_reject_bad_command(args):\n    assert invoke(args).exit_code != 0"
+    },
+    "test_reject_bad_command[args1]": {
+      "title": "test_reject_bad_command[args1]",
+      "code": "@pytest.mark.parametrize(\"args\", [[\"sum\", \"1\"], [\"compare\", \"x\", \"2\"], [\"unknown\"]])\ndef test_reject_bad_command(args):\n    assert invoke(args).exit_code != 0"
+    },
+    "test_reject_bad_command[args2]": {
+      "title": "test_reject_bad_command[args2]",
+      "code": "@pytest.mark.parametrize(\"args\", [[\"sum\", \"1\"], [\"compare\", \"x\", \"2\"], [\"unknown\"]])\ndef test_reject_bad_command(args):\n    assert invoke(args).exit_code != 0"
+    },
+    "test_help_lists_both_commands": {
+      "title": "test_help_lists_both_commands",
+      "code": "def test_help_lists_both_commands():\n    result = invoke([\"--help\"])\n    assert result.exit_code == 0\n    assert \"sum\" in result.output and \"compare\" in result.output"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. Real Typer, Click, and Rich packages are bundled for offline use. Use Run and Submit; the playground and debugger do not load the library archive. Keep script entry points inside `if __name__ == \"__main__\":`. The runner supports the pytest features used by the supplied tests. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/create-your-first-typer-command-line-interface-cli-application/)"
+  }
 }

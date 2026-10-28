@@ -6,16 +6,16 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_team_filter_and_sort\"}",
-      "output": "passed"
+      "input": "connection = create_database()\nget_players_for_team(connection, \"Blue\")",
+      "output": "[('Ada Guard', 24.0), ('Ben Center', 18.0)]"
     },
     {
-      "input": "{\"test\": \"test_missing_and_exact_team_names\"}",
-      "output": "passed"
+      "input": "connection = create_database()\nget_top_scorers(connection, 2)",
+      "output": "[('Ada Guard', 'Blue', 24.0), ('Cy Forward', 'Gold', 24.0)]"
     },
     {
-      "input": "{\"test\": \"test_top_scorers_default_and_ties\"}",
-      "output": "passed"
+      "input": "connection = create_database()\n(get_average_points_by_team(connection), get_player_count_by_age(connection, 28))",
+      "output": "([('Blue', 21.0), ('Gold', 18.0)], 3)"
     }
   ],
   "starterCode": {
@@ -40,5 +40,47 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_team_filter_and_sort": {
+      "title": "test_team_filter_and_sort",
+      "code": "def test_team_filter_and_sort(db):\n    assert get_players_for_team(db, 'Blue') == [('Ada Guard', 24.0), ('Ben Center', 18.0)]\n    assert get_players_for_team(db, 'Red') == [('Eli Center', None)]\n    other = create_database([('Z', 'X', None, 1), ('C', 'X', 0, 1),\n                             ('B', 'X', 10, 1), ('A', 'X', 10, 1)])\n    assert get_players_for_team(other, 'X') == [('A', 10.0), ('B', 10.0), ('C', 0.0), ('Z', None)]"
+    },
+    "test_missing_and_exact_team_names": {
+      "title": "test_missing_and_exact_team_names",
+      "code": "def test_missing_and_exact_team_names(db):\n    assert get_players_for_team(db, 'blue') == []\n    assert get_players_for_team(db, 'missing') == []\n    assert get_players_for_team(db, \"Blue' OR 1=1 --\") == []"
+    },
+    "test_top_scorers_default_and_ties": {
+      "title": "test_top_scorers_default_and_ties",
+      "code": "def test_top_scorers_default_and_ties(db):\n    assert get_top_scorers(db) == [('Ada Guard', 'Blue', 24.0),\n                                  ('Cy Forward', 'Gold', 24.0),\n                                  ('Ben Center', 'Blue', 18.0)]"
+    },
+    "test_limit_boundaries_and_null_exclusion": {
+      "title": "test_limit_boundaries_and_null_exclusion",
+      "code": "def test_limit_boundaries_and_null_exclusion(db):\n    assert get_top_scorers(db, 0) == []\n    assert get_top_scorers(db, 1) == [('Ada Guard', 'Blue', 24.0)]\n    assert len(get_top_scorers(db, 100)) == 4\n    with pytest.raises(ValueError):\n        get_top_scorers(db, -1)"
+    },
+    "test_averages_and_nulls": {
+      "title": "test_averages_and_nulls",
+      "code": "def test_averages_and_nulls(db):\n    assert get_average_points_by_team(db) == [('Blue', 21.0), ('Gold', 18.0)]\n    other = create_database([('a', 'B', 1, 1), ('b', 'B', 2, 1),\n                             ('c', 'A', 1.5, 1), ('d', 'B', None, 1),\n                             ('e', 'C', None, 1)])\n    assert get_average_points_by_team(other) == [('A', 1.5), ('B', 1.5)]"
+    },
+    "test_average_rounding_and_raw_average_order": {
+      "title": "test_average_rounding_and_raw_average_order",
+      "code": "def test_average_rounding_and_raw_average_order():\n    db = create_database([('a', 'A', 1.331, 1), ('b', 'Z', 1.334, 1)])\n    assert get_average_points_by_team(db) == [('Z', 1.33), ('A', 1.33)]"
+    },
+    "test_age_inclusive_boundary": {
+      "title": "test_age_inclusive_boundary",
+      "code": "def test_age_inclusive_boundary(db):\n    assert get_player_count_by_age(db, 30) == 2\n    assert get_player_count_by_age(db, 35) == 1\n    assert get_player_count_by_age(db, 36) == 0\n    assert get_player_count_by_age(db, -1) == 5"
+    },
+    "test_empty_database_and_no_changes": {
+      "title": "test_empty_database_and_no_changes",
+      "code": "def test_empty_database_and_no_changes():\n    db = create_database([])\n    assert get_players_for_team(db, 'Blue') == []\n    assert get_top_scorers(db) == []\n    assert get_average_points_by_team(db) == []\n    assert get_player_count_by_age(db, 0) == 0\n    assert db.execute('SELECT COUNT(*) FROM players').fetchone() == (0,)"
+    },
+    "test_real_sql_operations_and_connection_stays_open": {
+      "title": "test_real_sql_operations_and_connection_stays_open",
+      "code": "def test_real_sql_operations_and_connection_stays_open(db):\n    statements = []\n    db.set_trace_callback(statements.append)\n    get_players_for_team(db, 'Blue')\n    get_top_scorers(db, 2)\n    get_average_points_by_team(db)\n    get_player_count_by_age(db, 28)\n    queries = [' '.join(statement.upper().split()) for statement in statements]\n    assert any('WHERE' in sql and 'ORDER BY' in sql for sql in queries)\n    assert any('ORDER BY' in sql and 'LIMIT' in sql for sql in queries)\n    assert any('GROUP BY' in sql and 'AVG(' in sql for sql in queries)\n    assert any('COUNT(' in sql and 'WHERE' in sql for sql in queries)\n    assert not any(sql.startswith(('INSERT', 'UPDATE', 'DELETE', 'DROP')) for sql in queries)\n    assert db.execute('SELECT COUNT(*) FROM players').fetchone() == (5,)"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\nThe premium function signatures are unavailable. This version defines four explicit SQL queries against constructed local data. It preserves the public SQL analysis task.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/analyze-nba-data-with-sqlite3/)"
+  }
 }

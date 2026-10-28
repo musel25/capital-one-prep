@@ -6,16 +6,12 @@
   "category": "01-beginner",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_json_data\"}",
-      "output": "passed"
+      "input": "most_prolific_automaker(2008)",
+      "output": "'Dodge'"
     },
     {
-      "input": "{\"test\": \"test_filter_year_before_counting\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_empty_and_missing_year\"}",
-      "output": "passed"
+      "input": "get_models('Dodge', 2008)",
+      "output": "['Charger', 'Avenger']"
     }
   ],
   "starterCode": {
@@ -40,5 +36,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_json_data": {
+      "title": "test_default_json_data",
+      "code": "def test_default_json_data():\n    assert most_prolific_automaker(2008) == 'Dodge'\n    assert get_models('Dodge', 2008) == ['Charger', 'Avenger']"
+    },
+    "test_filter_year_before_counting": {
+      "title": "test_filter_year_before_counting",
+      "code": "def test_filter_year_before_counting():\n    cars = [{'automaker': 'Old', 'model': 'A', 'year': 1999}, {'automaker': 'Old', 'model': 'B', 'year': 1999}, {'automaker': 'New', 'model': 'C', 'year': 2026}]\n    assert most_prolific_automaker(2026, cars) == 'New'\n    assert get_models('Old', 2026, cars) == []"
+    },
+    "test_empty_and_missing_year": {
+      "title": "test_empty_and_missing_year",
+      "code": "def test_empty_and_missing_year():\n    assert most_prolific_automaker(2000, []) is None\n    assert get_models('Dodge', 2000, []) == []\n    assert most_prolific_automaker(1800) is None"
+    },
+    "test_first_seen_tie": {
+      "title": "test_first_seen_tie",
+      "code": "def test_first_seen_tie():\n    cars = [{'automaker': 'Zed', 'model': 'Z', 'year': 1}, {'automaker': 'Alpha', 'model': 'A', 'year': 1}]\n    assert most_prolific_automaker(1, cars) == 'Zed'"
+    },
+    "test_exact_name_and_both_filters": {
+      "title": "test_exact_name_and_both_filters",
+      "code": "def test_exact_name_and_both_filters():\n    assert get_models('dodge', 2008) == []\n    assert get_models('Dodge', 1999) == ['Ram Van 1500']\n    assert get_models('Porsche', 2008) == ['Cayenne']"
+    },
+    "test_duplicate_models_and_order": {
+      "title": "test_duplicate_models_and_order",
+      "code": "def test_duplicate_models_and_order():\n    cars = [{'automaker': 'X', 'model': model, 'year': 2020} for model in ['Z', 'A', 'Z']]\n    assert get_models('X', 2020, cars) == ['Z', 'A', 'Z']\n    cars += [{'automaker': 'Y', 'model': str(i), 'year': 2020} for i in range(2)]\n    assert most_prolific_automaker(2020, cars) == 'X'"
+    },
+    "test_inputs_unchanged_and_results_independent": {
+      "title": "test_inputs_unchanged_and_results_independent",
+      "code": "def test_inputs_unchanged_and_results_independent():\n    before = [dict(car) for car in CARS]\n    models = get_models('Dodge', 2008)\n    models.append('extra')\n    most_prolific_automaker(2008)\n    assert CARS == before\n    assert get_models('Dodge', 2008) == ['Charger', 'Avenger']"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\nThe premium template and tests are recreated. A small local JSON fixture replaces the unavailable 1,000-record download. Argument order, tie rules, and empty-input results are defined for this version.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/analyze-some-basic-car-data/)"
+  }
 }

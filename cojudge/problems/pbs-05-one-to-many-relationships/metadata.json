@@ -6,16 +6,8 @@
   "category": "02-relationships-and-schemas",
   "examples": [
     {
-      "input": "{\"test\": \"test_foreign_key\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_empty_relationship\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_relationships_in_both_directions\"}",
-      "output": "passed"
+      "input": "engine = create_engine(\"sqlite://\")\nSQLModel.metadata.create_all(engine)\nwith Session(engine) as session:\n    session.add(Workout(id=1, name=\"Leg Day\"))\n    session.commit()\n    log = add_log(session, 1, sets=3, reps=10)\n    print(log.workout_id, log.sets, log.reps, log.weight)\n    print(add_log(session, 99, sets=3, reps=10))",
+      "output": "1 3 10 0.0\nNone"
     }
   ],
   "starterCode": {
@@ -40,5 +32,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_foreign_key": {
+      "title": "test_foreign_key",
+      "code": "def test_foreign_key():\n    assert {fk.target_fullname for fk in app.LogEntry.__table__.c.workout_id.foreign_keys} == {\"workout.id\"}"
+    },
+    "test_empty_relationship": {
+      "title": "test_empty_relationship",
+      "code": "def test_empty_relationship(session):\n    workout = app.Workout(name=\"A\")\n    session.add(workout)\n    session.commit()\n    assert workout.logs == []"
+    },
+    "test_relationships_in_both_directions": {
+      "title": "test_relationships_in_both_directions",
+      "code": "def test_relationships_in_both_directions(session):\n    session.add(app.Workout(id=1, name=\"A\"))\n    session.commit()\n    row = app.add_log(session, 1, 3, 8, 42.5)\n    assert row.id is not None and row.sets == 3 and row.reps == 8 and row.weight == 42.5\n    assert row.workout.name == \"A\"\n    assert row.workout.logs[0].id == row.id"
+    },
+    "test_other_workouts_are_separate": {
+      "title": "test_other_workouts_are_separate",
+      "code": "def test_other_workouts_are_separate(session):\n    session.add_all([app.Workout(id=1, name=\"A\"), app.Workout(id=2, name=\"B\")])\n    session.commit()\n    app.add_log(session, 1, 1, 1)\n    app.add_log(session, 1, 2, 2)\n    session.expire_all()\n    assert len(session.get(app.Workout, 1).logs) == 2\n    assert session.get(app.Workout, 2).logs == []"
+    },
+    "test_missing_workout": {
+      "title": "test_missing_workout",
+      "code": "def test_missing_workout(session):\n    assert app.add_log(session, 99, 1, 1) is None\n    assert session.exec(select(app.LogEntry)).all() == []"
+    },
+    "test_invalid_performance": {
+      "title": "test_invalid_performance",
+      "code": "def test_invalid_performance(session):\n    session.add(app.Workout(id=1, name=\"A\"))\n    session.commit()\n    for sets, reps, weight in [(0, 5, 1), (2, 0, 1), (2, 5, -0.1)]:\n        with pytest.raises(ValueError):\n            app.add_log(session, 1, sets, reps, weight)\n    assert session.exec(select(app.LogEntry)).all() == []"
+    },
+    "test_log_survives_a_new_session": {
+      "title": "test_log_survives_a_new_session",
+      "code": "def test_log_survives_a_new_session(session, engine):\n    session.add(app.Workout(id=1, name=\"A\"))\n    session.commit()\n    app.add_log(session, 1, 1, 1)\n    session.close()\n    with Session(engine) as check:\n        assert check.exec(select(app.LogEntry)).one().weight == 0.0"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. The original templates and tests require Pybites premium. The runtime supplies SQLModel, SQLite, SQLAlchemy, Pydantic, FastAPI, HTTPX, and pytest. Each check uses a separate database. No server is needed. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/one-to-many-relationships/)"
+  }
 }

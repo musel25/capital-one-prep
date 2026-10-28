@@ -6,18 +6,18 @@
   "category": "05-files-time-and-boundaries",
   "examples": [
     {
-      "input": "{\"user\": {\"id\": \"root\", \"role\": \"admin\", \"suspended\": true}, \"resource\": {\"owner_id\": \"x\", \"public\": true}, \"action\": \"read\"}",
-      "output": "false",
+      "input": "can_access(\n    user={'id': 'root', 'role': 'admin', 'suspended': True},\n    resource={'owner_id': 'x', 'public': True},\n    action='read'\n)",
+      "output": "False",
       "explanation": "suspension overrides admin and public access"
     },
     {
-      "input": "{\"user\": {\"id\": null, \"role\": \"guest\", \"suspended\": false}, \"resource\": {\"owner_id\": \"x\", \"public\": true}, \"action\": \"read\"}",
-      "output": "true",
+      "input": "can_access(\n    user={'id': None, 'role': 'guest', 'suspended': False},\n    resource={'owner_id': 'x', 'public': True},\n    action='read'\n)",
+      "output": "True",
       "explanation": "guest can read a public resource"
     },
     {
-      "input": "{\"user\": {\"id\": \"a\", \"role\": \"member\", \"suspended\": false}, \"resource\": {\"owner_id\": \"a\", \"public\": false}, \"action\": \"write\"}",
-      "output": "true",
+      "input": "can_access(\n    user={'id': 'a', 'role': 'member', 'suspended': False},\n    resource={'owner_id': 'a', 'public': False},\n    action='write'\n)",
+      "output": "True",
       "explanation": "member can write an owned private resource"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

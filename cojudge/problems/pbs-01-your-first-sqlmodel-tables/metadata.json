@@ -6,16 +6,8 @@
   "category": "01-tables-and-crud",
   "examples": [
     {
-      "input": "{\"test\": \"test_workout_table_fields\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_exercise_table_fields\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_defaults\"}",
-      "output": "passed"
+      "input": "workout = Workout(name=\"Leg Day\")\nexercise = Exercise(name=\"Squats\")\nprint(workout.id, repr(workout.description), repr(exercise.muscle_group))",
+      "output": "None '' ''"
     }
   ],
   "starterCode": {
@@ -40,5 +32,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_workout_table_fields": {
+      "title": "test_workout_table_fields",
+      "code": "def test_workout_table_fields():\n    assert app.Workout.__tablename__ == \"workout\"\n    assert set(app.Workout.__table__.columns.keys()) == {\"id\", \"name\", \"description\"}\n    assert app.Workout.__table__.c.id.primary_key"
+    },
+    "test_exercise_table_fields": {
+      "title": "test_exercise_table_fields",
+      "code": "def test_exercise_table_fields():\n    assert set(app.Exercise.__table__.columns.keys()) == {\"id\", \"name\", \"muscle_group\"}\n    assert app.Exercise.__table__.c.id.primary_key"
+    },
+    "test_defaults": {
+      "title": "test_defaults",
+      "code": "def test_defaults():\n    workout, exercise = app.Workout(name=\"Leg Day\"), app.Exercise(name=\"Squats\")\n    assert workout.id is None and workout.description == \"\"\n    assert exercise.id is None and exercise.muscle_group == \"\""
+    },
+    "test_required_name": {
+      "title": "test_required_name",
+      "code": "def test_required_name():\n    assert app.Workout.model_fields[\"name\"].is_required()\n    assert app.Exercise.model_fields[\"name\"].is_required()"
+    },
+    "test_create_and_persist": {
+      "title": "test_create_and_persist",
+      "code": "def test_create_and_persist():\n    engine = create_engine(\"sqlite://\")\n    try:\n        app.create_tables(engine)\n        with Session(engine) as session:\n            session.add(app.Workout(name=\"Upper Body\", description=\"Press\"))\n            session.add(app.Exercise(name=\"Bench Press\", muscle_group=\"chest\"))\n            session.commit()\n        with Session(engine) as session:\n            assert session.exec(select(app.Workout)).one().description == \"Press\"\n            assert session.exec(select(app.Exercise)).one().muscle_group == \"chest\"\n    finally:\n        engine.dispose()"
+    },
+    "test_create_tables_is_idempotent": {
+      "title": "test_create_tables_is_idempotent",
+      "code": "def test_create_tables_is_idempotent(engine):\n    with Session(engine) as session:\n        session.add(app.Workout(name=\"Keep me\"))\n        session.commit()\n    app.create_tables(engine)\n    app.create_tables(engine)\n    with Session(engine) as session:\n        assert session.exec(select(app.Workout)).one().name == \"Keep me\""
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. The original templates and tests require Pybites premium. The runtime supplies SQLModel, SQLite, SQLAlchemy, Pydantic, FastAPI, HTTPX, and pytest. Each check uses a separate database. No server is needed. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/your-first-sqlmodel-tables/)"
+  }
 }

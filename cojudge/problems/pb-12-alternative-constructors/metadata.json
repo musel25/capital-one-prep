@@ -6,19 +6,14 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_valid_domain[google.com]\"}",
-      "output": "passed",
-      "explanation": "Test test_valid_domain[google.com] must pass."
+      "input": "str(Domain.parse_url(\"https://pybit.es/articles/\"))",
+      "output": "'pybit.es'",
+      "explanation": "The constructor extracts the network location."
     },
     {
-      "input": "{\"test\": \"test_valid_domain[pybit.es]\"}",
-      "output": "passed",
-      "explanation": "Test test_valid_domain[pybit.es] must pass."
-    },
-    {
-      "input": "{\"test\": \"test_valid_domain[bbc.co.uk]\"}",
-      "output": "passed",
-      "explanation": "Test test_valid_domain[bbc.co.uk] must pass."
+      "input": "str(Domain.parse_email(\"ada@example.com\"))",
+      "output": "'example.com'",
+      "explanation": "The email constructor extracts the text after @."
     }
   ],
   "starterCode": {
@@ -43,5 +38,115 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_valid_domain[google.com]": {
+      "title": "test_valid_domain[google.com]",
+      "code": "@pytest.mark.parametrize(\"name\", [\"google.com\", \"pybit.es\", \"bbc.co.uk\", \"python.org\"])\ndef test_valid_domain(name):\n    domain = Domain(name)\n    assert domain.name == name\n    assert str(domain) == name"
+    },
+    "test_valid_domain[pybit.es]": {
+      "title": "test_valid_domain[pybit.es]",
+      "code": "@pytest.mark.parametrize(\"name\", [\"google.com\", \"pybit.es\", \"bbc.co.uk\", \"python.org\"])\ndef test_valid_domain(name):\n    domain = Domain(name)\n    assert domain.name == name\n    assert str(domain) == name"
+    },
+    "test_valid_domain[bbc.co.uk]": {
+      "title": "test_valid_domain[bbc.co.uk]",
+      "code": "@pytest.mark.parametrize(\"name\", [\"google.com\", \"pybit.es\", \"bbc.co.uk\", \"python.org\"])\ndef test_valid_domain(name):\n    domain = Domain(name)\n    assert domain.name == name\n    assert str(domain) == name"
+    },
+    "test_valid_domain[python.org]": {
+      "title": "test_valid_domain[python.org]",
+      "code": "@pytest.mark.parametrize(\"name\", [\"google.com\", \"pybit.es\", \"bbc.co.uk\", \"python.org\"])\ndef test_valid_domain(name):\n    domain = Domain(name)\n    assert domain.name == name\n    assert str(domain) == name"
+    },
+    "test_invalid_domain[google]": {
+      "title": "test_invalid_domain[google]",
+      "code": "@pytest.mark.parametrize(\"name\", [\"google\", \"pybit.e\", \"pybites.comm\", \"python.org/\", \"python.42\"])\ndef test_invalid_domain(name):\n    with pytest.raises(DomainException):\n        Domain(name)"
+    },
+    "test_invalid_domain[pybit.e]": {
+      "title": "test_invalid_domain[pybit.e]",
+      "code": "@pytest.mark.parametrize(\"name\", [\"google\", \"pybit.e\", \"pybites.comm\", \"python.org/\", \"python.42\"])\ndef test_invalid_domain(name):\n    with pytest.raises(DomainException):\n        Domain(name)"
+    },
+    "test_invalid_domain[pybites.comm]": {
+      "title": "test_invalid_domain[pybites.comm]",
+      "code": "@pytest.mark.parametrize(\"name\", [\"google\", \"pybit.e\", \"pybites.comm\", \"python.org/\", \"python.42\"])\ndef test_invalid_domain(name):\n    with pytest.raises(DomainException):\n        Domain(name)"
+    },
+    "test_invalid_domain[python.org/]": {
+      "title": "test_invalid_domain[python.org/]",
+      "code": "@pytest.mark.parametrize(\"name\", [\"google\", \"pybit.e\", \"pybites.comm\", \"python.org/\", \"python.42\"])\ndef test_invalid_domain(name):\n    with pytest.raises(DomainException):\n        Domain(name)"
+    },
+    "test_invalid_domain[python.42]": {
+      "title": "test_invalid_domain[python.42]",
+      "code": "@pytest.mark.parametrize(\"name\", [\"google\", \"pybit.e\", \"pybites.comm\", \"python.org/\", \"python.42\"])\ndef test_invalid_domain(name):\n    with pytest.raises(DomainException):\n        Domain(name)"
+    },
+    "test_parse_url[http://pybit.es-pybit.es]": {
+      "title": "test_parse_url[http://pybit.es-pybit.es]",
+      "code": "@pytest.mark.parametrize(\"url, expected\", [\n    (\"http://pybit.es\", \"pybit.es\"),\n    (\"https://www.python.org/downloads/\", \"www.python.org\"),\n    (\"https://docs.python.org/3/library/re.html?highlight=match#re.match\", \"docs.python.org\"),\n])\ndef test_parse_url(url, expected):\n    domain = Domain.parse_url(url)\n    assert type(domain) is Domain\n    assert str(domain) == expected"
+    },
+    "test_parse_url[https://www.python.org/downloads/-www.python.org]": {
+      "title": "test_parse_url[https://www.python.org/downloads/-www.python.org]",
+      "code": "@pytest.mark.parametrize(\"url, expected\", [\n    (\"http://pybit.es\", \"pybit.es\"),\n    (\"https://www.python.org/downloads/\", \"www.python.org\"),\n    (\"https://docs.python.org/3/library/re.html?highlight=match#re.match\", \"docs.python.org\"),\n])\ndef test_parse_url(url, expected):\n    domain = Domain.parse_url(url)\n    assert type(domain) is Domain\n    assert str(domain) == expected"
+    },
+    "test_parse_url[https://docs.python.org/3/library/re.html?highlight=match#re.match-docs.python.org]": {
+      "title": "test_parse_url[https://docs.python.org/3/library/re.html?highlight=match#re.match-docs.python.org]",
+      "code": "@pytest.mark.parametrize(\"url, expected\", [\n    (\"http://pybit.es\", \"pybit.es\"),\n    (\"https://www.python.org/downloads/\", \"www.python.org\"),\n    (\"https://docs.python.org/3/library/re.html?highlight=match#re.match\", \"docs.python.org\"),\n])\ndef test_parse_url(url, expected):\n    domain = Domain.parse_url(url)\n    assert type(domain) is Domain\n    assert str(domain) == expected"
+    },
+    "test_parse_email[julian@pybit.es-pybit.es]": {
+      "title": "test_parse_email[julian@pybit.es-pybit.es]",
+      "code": "@pytest.mark.parametrize(\"email, expected\", [\n    (\"julian@pybit.es\", \"pybit.es\"),\n    (\"bob@gmail.com\", \"gmail.com\"),\n])\ndef test_parse_email(email, expected):\n    domain = Domain.parse_email(email)\n    assert type(domain) is Domain\n    assert str(domain) == expected"
+    },
+    "test_parse_email[bob@gmail.com-gmail.com]": {
+      "title": "test_parse_email[bob@gmail.com-gmail.com]",
+      "code": "@pytest.mark.parametrize(\"email, expected\", [\n    (\"julian@pybit.es\", \"pybit.es\"),\n    (\"bob@gmail.com\", \"gmail.com\"),\n])\ndef test_parse_email(email, expected):\n    domain = Domain.parse_email(email)\n    assert type(domain) is Domain\n    assert str(domain) == expected"
+    },
+    "test_parsed_domains_are_validated": {
+      "title": "test_parsed_domains_are_validated",
+      "code": "def test_parsed_domains_are_validated():\n    with pytest.raises(DomainException):\n        Domain.parse_url(\"http://localhost:8000/admin\")\n    with pytest.raises(DomainException):\n        Domain.parse_email(\"root@localhost\")"
+    },
+    "test_classmethods_return_subclass_instances": {
+      "title": "test_classmethods_return_subclass_instances",
+      "code": "def test_classmethods_return_subclass_instances():\n    class SubDomain(Domain):\n        pass\n    assert type(SubDomain.parse_url(\"http://pybit.es\")) is SubDomain\n    assert type(SubDomain.parse_email(\"bob@pybit.es\")) is SubDomain\n    assert isinstance(Domain.__dict__[\"parse_url\"], classmethod)\n    assert isinstance(Domain.__dict__[\"parse_email\"], classmethod)"
+    },
+    "test_domain_rule_boundaries[]": {
+      "title": "test_domain_rule_boundaries[]",
+      "code": "@pytest.mark.parametrize('name', ['', 'a.b', 'a.abcd', 'a.COM'])\ndef test_domain_rule_boundaries(name):\n    with pytest.raises(DomainException):\n        Domain(name)"
+    },
+    "test_domain_rule_boundaries[a.b]": {
+      "title": "test_domain_rule_boundaries[a.b]",
+      "code": "@pytest.mark.parametrize('name', ['', 'a.b', 'a.abcd', 'a.COM'])\ndef test_domain_rule_boundaries(name):\n    with pytest.raises(DomainException):\n        Domain(name)"
+    },
+    "test_domain_rule_boundaries[a.abcd]": {
+      "title": "test_domain_rule_boundaries[a.abcd]",
+      "code": "@pytest.mark.parametrize('name', ['', 'a.b', 'a.abcd', 'a.COM'])\ndef test_domain_rule_boundaries(name):\n    with pytest.raises(DomainException):\n        Domain(name)"
+    },
+    "test_domain_rule_boundaries[a.COM]": {
+      "title": "test_domain_rule_boundaries[a.COM]",
+      "code": "@pytest.mark.parametrize('name', ['', 'a.b', 'a.abcd', 'a.COM'])\ndef test_domain_rule_boundaries(name):\n    with pytest.raises(DomainException):\n        Domain(name)"
+    },
+    "test_short_names_and_subdomains[a.io]": {
+      "title": "test_short_names_and_subdomains[a.io]",
+      "code": "@pytest.mark.parametrize('name', ['a.io', 'a.xyz', 'sub.example.io'])\ndef test_short_names_and_subdomains(name):\n    assert str(Domain(name)) == name"
+    },
+    "test_short_names_and_subdomains[a.xyz]": {
+      "title": "test_short_names_and_subdomains[a.xyz]",
+      "code": "@pytest.mark.parametrize('name', ['a.io', 'a.xyz', 'sub.example.io'])\ndef test_short_names_and_subdomains(name):\n    assert str(Domain(name)) == name"
+    },
+    "test_short_names_and_subdomains[sub.example.io]": {
+      "title": "test_short_names_and_subdomains[sub.example.io]",
+      "code": "@pytest.mark.parametrize('name', ['a.io', 'a.xyz', 'sub.example.io'])\ndef test_short_names_and_subdomains(name):\n    assert str(Domain(name)) == name"
+    },
+    "test_url_and_email_keep_the_full_host": {
+      "title": "test_url_and_email_keep_the_full_host",
+      "code": "def test_url_and_email_keep_the_full_host():\n    assert str(Domain.parse_url('https://sub.example.io/?q=other.com#other.org')) == 'sub.example.io'\n    assert str(Domain.parse_email('first.last+tag@sub.example.io')) == 'sub.example.io'"
+    },
+    "test_url_port_is_not_removed_before_validation": {
+      "title": "test_url_port_is_not_removed_before_validation",
+      "code": "def test_url_port_is_not_removed_before_validation():\n    with pytest.raises(DomainException):\n        Domain.parse_url('https://pybit.es:443/')"
+    },
+    "test_invalid_domains_are_rejected_through_subclasses": {
+      "title": "test_invalid_domains_are_rejected_through_subclasses",
+      "code": "def test_invalid_domains_are_rejected_through_subclasses():\n    class SubDomain(Domain):\n        pass\n    with pytest.raises(DomainException):\n        SubDomain.parse_email('person@example.abcd')\n    with pytest.raises(DomainException):\n        SubDomain.parse_url('https://example.abcd/')"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/alternative-constructors/)"
+  }
 }

@@ -1,14 +1,3 @@
-# 18. Parse pybites blog git commit log
-
-[Course list](/?course=pybites-datetimes-timezones) · [Original bite](https://pybitesplatform.com/bites/parse-pybites-blog-git-commit-log/)
-
-get_min_max_amount_of_commits(log, year=None) parses nonblank git-stat rows of the form "Date: Tue Mar 5 22:34:33 2019 +0100 | 2 files changed, 4 insertions(+), 3 deletions(-)". Sum insertions plus deletions by YYYY-MM in the printed local date. A missing insertion/deletion term counts as zero. Ignore file counts. Optional year filters months. Return (least_month, most_month), selecting the earliest month for ties in either position. No matching rows returns (None, None). Malformed rows raise ValueError.
-
-**Source and offline changes:** The premium template and tests are not available in this account. This version uses a recreated template and tests based on the public description.
-
-<details>
-<summary>Original public description</summary>
-
 In this Bite we want to figure out how active we've been on our blog.
 
 To start our data analysis we ran the following command on our [blog repo](https://github.com/pybites/pybites.github.io-src/commits/master): `git log --stat | egrep "^Date|file.*changed," |grep -B1 changed|grep -v '\-\-'|sed 'N;s/\n/ |/'` which resulted in the [following log](https://bites-data.s3.us-east-2.amazonaws.com/git_log_stat.out) which should be easier to work with:
@@ -38,12 +27,7 @@ By the way, with a min, max of `('2019-01', '2019-03')`, this year's trend is lo
 
 Good luck and keep calm and code in Python!
 
-</details>
+**Constraints:**
 
-Write your implementation at the top of the editor. The tests below it import your code as
-`commit_log`. **Run** checks the first three tests. **Submit** checks all 8 tests.
-A failed test shows its name, error, and test line.
-
-- Python 3.11. Use the standard library. All required data is supplied. No network access.
-- Keep the supplied tests and runner. Implement the functions above them.
-- For a saved solution, use **+** beside the editor tabs to open the current template in a new tab.
+- Pass log text directly; absent insertion/deletion counts are zero.
+- Choose the earliest month for ties; no matches returns `(None, None)`.

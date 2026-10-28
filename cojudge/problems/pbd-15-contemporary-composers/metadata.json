@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_case_01\"}",
-      "output": "passed"
+      "input": "operas_both_at_premiere('Birch', 'Aster')",
+      "output": "['Together', 'Farewell']"
     },
     {
-      "input": "{\"test\": \"test_case_02\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_case_03\"}",
-      "output": "passed"
+      "input": "operas_both_at_premiere('Cedar', 'Aster')",
+      "output": "[]"
     }
   ],
   "starterCode": {
@@ -40,5 +36,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_case_01": {
+      "title": "test_case_01",
+      "code": "def test_case_01():\n    assert (operas_both_at_premiere('Birch', 'Aster')) == ['Together', 'Farewell']"
+    },
+    "test_case_02": {
+      "title": "test_case_02",
+      "code": "def test_case_02():\n    assert (operas_both_at_premiere('Cedar', 'Aster')) == []"
+    },
+    "test_case_03": {
+      "title": "test_case_03",
+      "code": "def test_case_03():\n    assert (operas_both_at_premiere('Aster', 'Birch')) == []"
+    },
+    "test_case_04": {
+      "title": "test_case_04",
+      "code": "def test_case_04():\n    assert (operas_both_at_premiere('Cedar', 'Birch')) == ['Later']"
+    },
+    "test_case_05": {
+      "title": "test_case_05",
+      "code": "def test_case_05():\n    assert (operas_both_at_premiere('Aster', 'Aster')) == ['Early', 'Together', 'Farewell']"
+    },
+    "test_unknown_people": {
+      "title": "test_unknown_people",
+      "code": "def test_unknown_people():\n    with pytest.raises(ValueError):\n        operas_both_at_premiere('unknown', 'Aster')\n    with pytest.raises(ValueError):\n        operas_both_at_premiere('Aster', 'unknown')"
+    },
+    "test_birth_day_and_author_lifetime": {
+      "title": "test_birth_day_and_author_lifetime",
+      "code": "def test_birth_day_and_author_lifetime(monkeypatch):\n    monkeypatch.setattr(subject, 'operas', [Opera('Aster', 'Birth', '1730-06-01'), Opera('Aster', 'Posthumous', '1770-01-01')])\n    assert operas_both_at_premiere('Birch', 'Aster') == ['Birth']"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/contemporary-composers/)"
+  }
 }

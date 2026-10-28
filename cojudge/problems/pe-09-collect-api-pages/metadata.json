@@ -6,18 +6,18 @@
   "category": "02-clients-and-reliability",
   "examples": [
     {
-      "input": "{\"pages\": {\"a\": {\"items\": [3, 1, 3], \"next\": \"b\"}, \"b\": {\"items\": [1, 2, 0], \"next\": null}}, \"start\": \"a\"}",
-      "output": "{\"items\": [3, 1, 2, 0], \"error\": null}",
+      "input": "collect_pages(\n    pages={'a': {'items': [3, 1, 3], 'next': 'b'},\n     'b': {'items': [1, 2, 0], 'next': None}},\n    start='a'\n)",
+      "output": "{'items': [3, 1, 2, 0], 'error': None}",
       "explanation": "deduplicate across pages in arrival order"
     },
     {
-      "input": "{\"pages\": {\"a\": {\"items\": [7], \"next\": \"absent\"}}, \"start\": \"a\"}",
-      "output": "{\"items\": [7], \"error\": \"missing_page\"}",
+      "input": "collect_pages(\n    pages={'a': {'items': [7], 'next': 'absent'}},\n    start='a'\n)",
+      "output": "{'items': [7], 'error': 'missing_page'}",
       "explanation": "keep items before missing next page"
     },
     {
-      "input": "{\"pages\": {\"a\": {\"items\": [2], \"next\": \"b\"}, \"b\": {\"items\": [4, 2], \"next\": \"a\"}}, \"start\": \"a\"}",
-      "output": "{\"items\": [2, 4], \"error\": \"cycle\"}",
+      "input": "collect_pages(\n    pages={'a': {'items': [2], 'next': 'b'},\n     'b': {'items': [4, 2], 'next': 'a'}},\n    start='a'\n)",
+      "output": "{'items': [2, 4], 'error': 'cycle'}",
       "explanation": "stop before reading a repeated page"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

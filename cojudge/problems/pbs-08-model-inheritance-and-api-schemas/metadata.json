@@ -6,16 +6,8 @@
   "category": "02-relationships-and-schemas",
   "examples": [
     {
-      "input": "{\"test\": \"test_only_workout_is_a_table\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_create_has_no_id\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_read_requires_id\"}",
-      "output": "passed"
+      "input": "print(WorkoutCreate(name=\"Leg Day\").model_dump())\nprint(WorkoutUpdate().model_dump(exclude_unset=True))\nprint(WorkoutUpdate(description=None).model_dump(exclude_unset=True))",
+      "output": "{'name': 'Leg Day', 'description': ''}\n{}\n{'description': None}"
     }
   ],
   "starterCode": {
@@ -40,5 +32,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_only_workout_is_a_table": {
+      "title": "test_only_workout_is_a_table",
+      "code": "def test_only_workout_is_a_table():\n    assert set(SQLModel.metadata.tables) == {\"workout\"}\n    assert issubclass(app.WorkoutCreate, app.WorkoutBase)\n    assert issubclass(app.WorkoutRead, app.WorkoutBase)"
+    },
+    "test_create_has_no_id": {
+      "title": "test_create_has_no_id",
+      "code": "def test_create_has_no_id():\n    row = app.WorkoutCreate(name=\"Leg Day\")\n    assert row.model_dump() == {\"name\": \"Leg Day\", \"description\": \"\"}\n    assert \"id\" not in app.WorkoutCreate.model_fields"
+    },
+    "test_read_requires_id": {
+      "title": "test_read_requires_id",
+      "code": "def test_read_requires_id():\n    with pytest.raises(ValidationError):\n        app.WorkoutRead(name=\"A\")\n    assert app.WorkoutRead(id=7, name=\"A\").id == 7"
+    },
+    "test_name_validation": {
+      "title": "test_name_validation",
+      "code": "def test_name_validation():\n    for schema in (app.WorkoutCreate, app.WorkoutRead):\n        with pytest.raises(ValidationError):\n            schema(id=1, name=\"\")\n    with pytest.raises(ValidationError):\n        app.WorkoutUpdate(name=\"\")"
+    },
+    "test_patch_omitted_and_null": {
+      "title": "test_patch_omitted_and_null",
+      "code": "def test_patch_omitted_and_null():\n    assert app.WorkoutUpdate().name is None and app.WorkoutUpdate().description is None\n    assert app.WorkoutUpdate().model_dump(exclude_unset=True) == {}\n    assert app.WorkoutUpdate(name=None).model_dump(exclude_unset=True) == {\"name\": None}\n    assert app.WorkoutUpdate(description=None).model_dump(exclude_unset=True) == {\"description\": None}\n    assert app.WorkoutUpdate(name=\"A\").model_dump(exclude_unset=True) == {\"name\": \"A\"}"
+    },
+    "test_nested_serialization": {
+      "title": "test_nested_serialization",
+      "code": "def test_nested_serialization():\n    row = app.WorkoutWithExercises(id=1, name=\"Upper\", exercises=[{\"id\": 2, \"name\": \"Bench\"}])\n    assert isinstance(row.exercises[0], app.ExerciseRead)\n    assert row.model_dump()[\"exercises\"] == [{\"id\": 2, \"name\": \"Bench\"}]"
+    },
+    "test_nested_default_is_independent": {
+      "title": "test_nested_default_is_independent",
+      "code": "def test_nested_default_is_independent():\n    first = app.WorkoutWithExercises(id=1, name=\"A\")\n    second = app.WorkoutWithExercises(id=2, name=\"B\")\n    first.exercises.append(app.ExerciseRead(id=1, name=\"Squat\"))\n    assert second.exercises == []"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. The original templates and tests require Pybites premium. The runtime supplies SQLModel, SQLite, SQLAlchemy, Pydantic, FastAPI, HTTPX, and pytest. Each check uses a separate database. No server is needed. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/model-inheritance-and-api-schemas/)"
+  }
 }

@@ -10,16 +10,8 @@
   },
   "examples": [
     {
-      "input": "{\"test\": \"test_option_comparison[args0-The sum is 5]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_option_comparison[args1-The sum is 5 and c is smaller]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_option_comparison[args2-The sum is 5 and c is greater]\"}",
-      "output": "passed"
+      "input": "from typer.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(app, [\"2\", \"3\", \"--c\", \"0\"])\nprint(result.exit_code)\nprint(result.output, end=\"\")",
+      "output": "0\nThe sum is 5 and c is smaller"
     }
   ],
   "testCases": [
@@ -41,5 +33,51 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_option_comparison[args0-The sum is 5]": {
+      "title": "test_option_comparison[args0-The sum is 5]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"2\", \"3\"], \"The sum is 5\"),\n    ([\"2\", \"3\", \"--c\", \"1\"], \"The sum is 5 and c is smaller\"),\n    ([\"2\", \"3\", \"--c\", \"8\"], \"The sum is 5 and c is greater\"),\n    ([\"2\", \"3\", \"--c\", \"5\"], \"The sum is 5 and c is equal\"),\n    ([\"2\", \"3\", \"--c\", \"0\"], \"The sum is 5 and c is smaller\"),\n    ([\"0\", \"0\", \"--c\", \"0\"], \"The sum is 0 and c is equal\"),\n    ([\"--c\", \"-2\", \"--\", \"-3\", \"1\"], \"The sum is -2 and c is equal\")])\ndef test_option_comparison(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_option_comparison[args1-The sum is 5 and c is smaller]": {
+      "title": "test_option_comparison[args1-The sum is 5 and c is smaller]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"2\", \"3\"], \"The sum is 5\"),\n    ([\"2\", \"3\", \"--c\", \"1\"], \"The sum is 5 and c is smaller\"),\n    ([\"2\", \"3\", \"--c\", \"8\"], \"The sum is 5 and c is greater\"),\n    ([\"2\", \"3\", \"--c\", \"5\"], \"The sum is 5 and c is equal\"),\n    ([\"2\", \"3\", \"--c\", \"0\"], \"The sum is 5 and c is smaller\"),\n    ([\"0\", \"0\", \"--c\", \"0\"], \"The sum is 0 and c is equal\"),\n    ([\"--c\", \"-2\", \"--\", \"-3\", \"1\"], \"The sum is -2 and c is equal\")])\ndef test_option_comparison(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_option_comparison[args2-The sum is 5 and c is greater]": {
+      "title": "test_option_comparison[args2-The sum is 5 and c is greater]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"2\", \"3\"], \"The sum is 5\"),\n    ([\"2\", \"3\", \"--c\", \"1\"], \"The sum is 5 and c is smaller\"),\n    ([\"2\", \"3\", \"--c\", \"8\"], \"The sum is 5 and c is greater\"),\n    ([\"2\", \"3\", \"--c\", \"5\"], \"The sum is 5 and c is equal\"),\n    ([\"2\", \"3\", \"--c\", \"0\"], \"The sum is 5 and c is smaller\"),\n    ([\"0\", \"0\", \"--c\", \"0\"], \"The sum is 0 and c is equal\"),\n    ([\"--c\", \"-2\", \"--\", \"-3\", \"1\"], \"The sum is -2 and c is equal\")])\ndef test_option_comparison(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_option_comparison[args3-The sum is 5 and c is equal]": {
+      "title": "test_option_comparison[args3-The sum is 5 and c is equal]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"2\", \"3\"], \"The sum is 5\"),\n    ([\"2\", \"3\", \"--c\", \"1\"], \"The sum is 5 and c is smaller\"),\n    ([\"2\", \"3\", \"--c\", \"8\"], \"The sum is 5 and c is greater\"),\n    ([\"2\", \"3\", \"--c\", \"5\"], \"The sum is 5 and c is equal\"),\n    ([\"2\", \"3\", \"--c\", \"0\"], \"The sum is 5 and c is smaller\"),\n    ([\"0\", \"0\", \"--c\", \"0\"], \"The sum is 0 and c is equal\"),\n    ([\"--c\", \"-2\", \"--\", \"-3\", \"1\"], \"The sum is -2 and c is equal\")])\ndef test_option_comparison(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_option_comparison[args4-The sum is 5 and c is smaller]": {
+      "title": "test_option_comparison[args4-The sum is 5 and c is smaller]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"2\", \"3\"], \"The sum is 5\"),\n    ([\"2\", \"3\", \"--c\", \"1\"], \"The sum is 5 and c is smaller\"),\n    ([\"2\", \"3\", \"--c\", \"8\"], \"The sum is 5 and c is greater\"),\n    ([\"2\", \"3\", \"--c\", \"5\"], \"The sum is 5 and c is equal\"),\n    ([\"2\", \"3\", \"--c\", \"0\"], \"The sum is 5 and c is smaller\"),\n    ([\"0\", \"0\", \"--c\", \"0\"], \"The sum is 0 and c is equal\"),\n    ([\"--c\", \"-2\", \"--\", \"-3\", \"1\"], \"The sum is -2 and c is equal\")])\ndef test_option_comparison(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_option_comparison[args5-The sum is 0 and c is equal]": {
+      "title": "test_option_comparison[args5-The sum is 0 and c is equal]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"2\", \"3\"], \"The sum is 5\"),\n    ([\"2\", \"3\", \"--c\", \"1\"], \"The sum is 5 and c is smaller\"),\n    ([\"2\", \"3\", \"--c\", \"8\"], \"The sum is 5 and c is greater\"),\n    ([\"2\", \"3\", \"--c\", \"5\"], \"The sum is 5 and c is equal\"),\n    ([\"2\", \"3\", \"--c\", \"0\"], \"The sum is 5 and c is smaller\"),\n    ([\"0\", \"0\", \"--c\", \"0\"], \"The sum is 0 and c is equal\"),\n    ([\"--c\", \"-2\", \"--\", \"-3\", \"1\"], \"The sum is -2 and c is equal\")])\ndef test_option_comparison(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_option_comparison[args6-The sum is -2 and c is equal]": {
+      "title": "test_option_comparison[args6-The sum is -2 and c is equal]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"2\", \"3\"], \"The sum is 5\"),\n    ([\"2\", \"3\", \"--c\", \"1\"], \"The sum is 5 and c is smaller\"),\n    ([\"2\", \"3\", \"--c\", \"8\"], \"The sum is 5 and c is greater\"),\n    ([\"2\", \"3\", \"--c\", \"5\"], \"The sum is 5 and c is equal\"),\n    ([\"2\", \"3\", \"--c\", \"0\"], \"The sum is 5 and c is smaller\"),\n    ([\"0\", \"0\", \"--c\", \"0\"], \"The sum is 0 and c is equal\"),\n    ([\"--c\", \"-2\", \"--\", \"-3\", \"1\"], \"The sum is -2 and c is equal\")])\ndef test_option_comparison(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_reject_invalid_values[args0]": {
+      "title": "test_reject_invalid_values[args0]",
+      "code": "@pytest.mark.parametrize(\"args\", [[\"1\"], [\"1\", \"2\", \"--c\", \"x\"], [\"1\", \"2\", \"3\"]])\ndef test_reject_invalid_values(args):\n    assert invoke(args).exit_code != 0"
+    },
+    "test_reject_invalid_values[args1]": {
+      "title": "test_reject_invalid_values[args1]",
+      "code": "@pytest.mark.parametrize(\"args\", [[\"1\"], [\"1\", \"2\", \"--c\", \"x\"], [\"1\", \"2\", \"3\"]])\ndef test_reject_invalid_values(args):\n    assert invoke(args).exit_code != 0"
+    },
+    "test_reject_invalid_values[args2]": {
+      "title": "test_reject_invalid_values[args2]",
+      "code": "@pytest.mark.parametrize(\"args\", [[\"1\"], [\"1\", \"2\", \"--c\", \"x\"], [\"1\", \"2\", \"3\"]])\ndef test_reject_invalid_values(args):\n    assert invoke(args).exit_code != 0"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. Real Typer, Click, and Rich packages are bundled for offline use. Use Run and Submit; the playground and debugger do not load the library archive. Keep script entry points inside `if __name__ == \"__main__\":`. The runner supports the pytest features used by the supplied tests. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/when-to-use-command-line-option-cli-options-and-when-cli-arguments/)"
+  }
 }

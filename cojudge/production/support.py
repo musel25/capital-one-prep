@@ -3,10 +3,10 @@ from __future__ import annotations
 
 import copy
 import importlib.util
-import json
 from pathlib import Path
 
 from cojudge.authoring.support import ROOT, check_java, encode, java_source, json_equal, python_solver, write_json
+from cojudge.production.presentation import present
 
 HERE = ROOT / 'cojudge/production'
 COURSE_ID = 'software-engineering'
@@ -91,15 +91,21 @@ def verify(spec, java_dir=None):
     return report
 
 
+def present_problem(spec, test_ids):
+    return present(spec)
+
+
 def build_problem(spec, destination):
     report = verify(spec)
     folder = Path(destination) / 'problems' / problem_id(spec)
     folder.mkdir(parents=True, exist_ok=True)
+    presentation = present_problem(spec, [])
     metadata = {
         'id': problem_id(spec), 'title': f"{spec['number']:02d}. {spec['title']}",
         'difficulty': spec['difficulty'], 'link': '', 'category': spec['category'],
-        'examples': [{'input': json.dumps(c['input']), 'output': json.dumps(c['expected']), 'explanation': c['label']}
-                     for c in spec['cases'][:3]],
+        'examples': presentation['examples'],
+        'testCaseDescriptions': presentation['testCaseDescriptions'],
+        'courseHelp': presentation['courseHelp'],
         'starterCode': {'python': full_source(spec, spec['starter'])},
         'testCases': [{'payload': encode(c['input'])} for c in spec['cases'][:3]],
         'functionName': 'run', 'params': [{'name': 'payload', 'type': 'string'}],
@@ -108,13 +114,7 @@ def build_problem(spec, destination):
     write_json(folder / 'metadata.json', metadata)
     write_json(folder / 'official-tests.json', [{'payload': encode(c['input'])} for c in spec['cases']])
     (folder / 'Marker.java').write_text(java_source(verification_spec(spec)))
-    (folder / 'statement.md').write_text(
-        f"{spec['ticket']}\n\n{spec['task'].strip()}\n\n"
-        '**Constraints:**\n\n' + '\n'.join('- ' + c for c in spec['constraints']) +
-        '\n- Do not change the input objects. Each call starts with fresh state.\n'
-        '- Python 3.11. Standard library only.\n\n'
-        f"Implement `{spec['function']}`. **Run** checks the examples. **Submit** checks all {report['cases']} cases.\n"
-    )
+    (folder / 'statement.md').write_text(presentation['statement'])
     (folder / 'solution.md').write_text(f"## Reference solution\n\n```python\n{spec['reference'].strip()}\n```\n")
     return {**report, 'number': spec['number'], 'category': spec['category']}
 

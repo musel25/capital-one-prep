@@ -6,19 +6,14 @@
   "category": "03-advanced",
   "examples": [
     {
-      "input": "{\"test\": \"test_matmul\"}",
-      "output": "passed",
-      "explanation": "Test test_matmul must pass."
+      "input": "left = Matrix([[1, 2], [3, 4]])\nright = Matrix([[5], [6]])\n(left @ right).values",
+      "output": "[[17], [39]]",
+      "explanation": "Multiply each left row by the right column."
     },
     {
-      "input": "{\"test\": \"test_matmul_does_not_change_operands\"}",
-      "output": "passed",
-      "explanation": "Test test_matmul_does_not_change_operands must pass."
-    },
-    {
-      "input": "{\"test\": \"test_not_commutative\"}",
-      "output": "passed",
-      "explanation": "Test test_not_commutative must pass."
+      "input": "([[2, 3]] @ Matrix([[4], [5]])).values",
+      "output": "[[23]]",
+      "explanation": "A plain list can be the left operand."
     }
   ],
   "starterCode": {
@@ -43,5 +38,71 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_matmul": {
+      "title": "test_matmul",
+      "code": "def test_matmul():\n    result = Matrix(A) @ Matrix(B)\n    assert isinstance(result, Matrix)\n    assert result.values == AB"
+    },
+    "test_matmul_does_not_change_operands": {
+      "title": "test_matmul_does_not_change_operands",
+      "code": "def test_matmul_does_not_change_operands():\n    a, b = Matrix([row[:] for row in A]), Matrix([row[:] for row in B])\n    a @ b\n    assert a.values == A\n    assert b.values == B"
+    },
+    "test_not_commutative": {
+      "title": "test_not_commutative",
+      "code": "def test_not_commutative():\n    assert (Matrix(B) @ Matrix(A)).values == [[47, 70], [55, 82]]"
+    },
+    "test_rmatmul": {
+      "title": "test_rmatmul",
+      "code": "def test_rmatmul():\n    \"\"\"A plain list of lists on the left uses Matrix.__rmatmul__.\"\"\"\n    result = A @ Matrix(B)\n    assert isinstance(result, Matrix)\n    assert result.values == AB"
+    },
+    "test_imatmul": {
+      "title": "test_imatmul",
+      "code": "def test_imatmul():\n    a = Matrix([row[:] for row in A])\n    original = a\n    a @= Matrix(B)\n    assert a is original\n    assert a.values == AB"
+    },
+    "test_non_square": {
+      "title": "test_non_square",
+      "code": "def test_non_square():\n    left = Matrix([[1, 2, 3], [4, 5, 6]])\n    right = Matrix([[7, 8], [9, 10], [11, 12]])\n    assert (left @ right).values == [[58, 64], [139, 154]]\n    assert (right @ left).values == [[39, 54, 69], [49, 68, 87], [59, 82, 105]]"
+    },
+    "test_identity_and_vector": {
+      "title": "test_identity_and_vector",
+      "code": "def test_identity_and_vector():\n    identity = Matrix([[1, 0], [0, 1]])\n    assert (Matrix(A) @ identity).values == A\n    assert (Matrix(A) @ Matrix([[1], [1]])).values == [[3], [7]]"
+    },
+    "test_repr": {
+      "title": "test_repr",
+      "code": "def test_repr():\n    assert repr(Matrix(A) @ Matrix(B)) == '<Matrix values=\"[[37, 40], [85, 92]]\">'"
+    },
+    "test_matrix_boundaries[left0-right0-expected0]": {
+      "title": "test_matrix_boundaries[left0-right0-expected0]",
+      "code": "@pytest.mark.parametrize(\"left,right,expected\", [\n    ([[0]], [[-8]], [[0]]),\n    ([[-2]], [[1.5]], [[-3.0]]),\n    ([[1, -2, 0]], [[3], [4], [9]], [[-5]]),\n    ([[2], [-1]], [[0, 3, -2]], [[0, 6, -4], [0, -3, 2]]),\n])\ndef test_matrix_boundaries(left, right, expected):\n    assert (Matrix(left) @ Matrix(right)).values == expected\n    assert (left @ Matrix(right)).values == expected"
+    },
+    "test_matrix_boundaries[left1-right1-expected1]": {
+      "title": "test_matrix_boundaries[left1-right1-expected1]",
+      "code": "@pytest.mark.parametrize(\"left,right,expected\", [\n    ([[0]], [[-8]], [[0]]),\n    ([[-2]], [[1.5]], [[-3.0]]),\n    ([[1, -2, 0]], [[3], [4], [9]], [[-5]]),\n    ([[2], [-1]], [[0, 3, -2]], [[0, 6, -4], [0, -3, 2]]),\n])\ndef test_matrix_boundaries(left, right, expected):\n    assert (Matrix(left) @ Matrix(right)).values == expected\n    assert (left @ Matrix(right)).values == expected"
+    },
+    "test_matrix_boundaries[left2-right2-expected2]": {
+      "title": "test_matrix_boundaries[left2-right2-expected2]",
+      "code": "@pytest.mark.parametrize(\"left,right,expected\", [\n    ([[0]], [[-8]], [[0]]),\n    ([[-2]], [[1.5]], [[-3.0]]),\n    ([[1, -2, 0]], [[3], [4], [9]], [[-5]]),\n    ([[2], [-1]], [[0, 3, -2]], [[0, 6, -4], [0, -3, 2]]),\n])\ndef test_matrix_boundaries(left, right, expected):\n    assert (Matrix(left) @ Matrix(right)).values == expected\n    assert (left @ Matrix(right)).values == expected"
+    },
+    "test_matrix_boundaries[left3-right3-expected3]": {
+      "title": "test_matrix_boundaries[left3-right3-expected3]",
+      "code": "@pytest.mark.parametrize(\"left,right,expected\", [\n    ([[0]], [[-8]], [[0]]),\n    ([[-2]], [[1.5]], [[-3.0]]),\n    ([[1, -2, 0]], [[3], [4], [9]], [[-5]]),\n    ([[2], [-1]], [[0, 3, -2]], [[0, 6, -4], [0, -3, 2]]),\n])\ndef test_matrix_boundaries(left, right, expected):\n    assert (Matrix(left) @ Matrix(right)).values == expected\n    assert (left @ Matrix(right)).values == expected"
+    },
+    "test_inplace_square_uses_original_values": {
+      "title": "test_inplace_square_uses_original_values",
+      "code": "def test_inplace_square_uses_original_values():\n    matrix = Matrix([[1, 2], [3, 4]])\n    alias = matrix\n    matrix @= matrix\n    assert matrix is alias\n    assert matrix.values == [[7, 10], [15, 22]]"
+    },
+    "test_product_storage_is_independent": {
+      "title": "test_product_storage_is_independent",
+      "code": "def test_product_storage_is_independent():\n    left, right = Matrix([[1, 2]]), Matrix([[3, 4], [5, 6]])\n    result = left @ right\n    result.values[0][0] = 100\n    assert left.values == [[1, 2]]\n    assert right.values == [[3, 4], [5, 6]]"
+    },
+    "test_inplace_preserves_distinct_right_operand": {
+      "title": "test_inplace_preserves_distinct_right_operand",
+      "code": "def test_inplace_preserves_distinct_right_operand():\n    left, right = Matrix([[1, 2]]), Matrix([[3], [4]])\n    left @= right\n    assert left.values == [[11]]\n    assert right.values == [[3], [4]]"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/matrix-multiplication-operator/)"
+  }
 }

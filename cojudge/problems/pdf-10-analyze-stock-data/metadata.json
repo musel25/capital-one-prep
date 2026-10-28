@@ -6,16 +6,16 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_json_and_types\"}",
-      "output": "passed"
+      "input": "get_largest_stock(get_stock_data())['symbol']",
+      "output": "'CLD'"
     },
     {
-      "input": "{\"test\": \"test_custom_json_and_empty\"}",
-      "output": "passed"
+      "input": "[stock['symbol'] for stock in get_stocks_by_sector(get_stock_data(), 'Health Care')]",
+      "output": "['MED', 'CARE']"
     },
     {
-      "input": "{\"test\": \"test_sector_filter_order_and_exact_case\"}",
-      "output": "passed"
+      "input": "dict(get_market_distribution(get_stock_data()))",
+      "output": "{'NYSE': 2, 'NASDAQ': 3}"
     }
   ],
   "starterCode": {
@@ -40,5 +40,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_json_and_types": {
+      "title": "test_default_json_and_types",
+      "code": "def test_default_json_and_types():\n    stocks = get_stock_data()\n    assert isinstance(stocks, list) and len(stocks) == 5\n    assert stocks[0]['symbol'] == 'HBR'\n    assert stocks[1]['id'] == 2"
+    },
+    "test_custom_json_and_empty": {
+      "title": "test_custom_json_and_empty",
+      "code": "def test_custom_json_and_empty():\n    assert get_stock_data('[]') == []\n    assert get_stock_data('[{\"symbol\": \"CAF\u00c9\", \"id\": 7}]') == [{'symbol': 'CAF\u00c9', 'id': 7}]"
+    },
+    "test_sector_filter_order_and_exact_case": {
+      "title": "test_sector_filter_order_and_exact_case",
+      "code": "def test_sector_filter_order_and_exact_case():\n    stocks = get_stock_data()\n    assert [s['symbol'] for s in get_stocks_by_sector(stocks, 'Health Care')] == ['MED', 'CARE']\n    assert get_stocks_by_sector(stocks, 'health care') == []\n    assert get_stocks_by_sector([], 'Technology') == []"
+    },
+    "test_largest_default_and_numeric_units": {
+      "title": "test_largest_default_and_numeric_units",
+      "code": "def test_largest_default_and_numeric_units():\n    assert get_largest_stock(get_stock_data())['symbol'] == 'CLD'\n    stocks = [{'cap': '$999B'}, {'cap': '$1T'}, {'cap': '$999999M'}]\n    assert get_largest_stock(stocks) is stocks[1]\n    stocks = [{'cap': '$99M'}, {'cap': '$100M'}, {'cap': '$9M'}]\n    assert get_largest_stock(stocks) is stocks[1]"
+    },
+    "test_known_zero_and_unknown_caps": {
+      "title": "test_known_zero_and_unknown_caps",
+      "code": "def test_known_zero_and_unknown_caps():\n    zero = {'cap': '$0'}\n    assert get_largest_stock([{'cap': 'n/a'}, zero]) is zero\n    assert get_largest_stock([{'cap': 'n/a'}]) is None\n    assert get_largest_stock([]) is None"
+    },
+    "test_equal_cap_keeps_first_and_decimal_precision": {
+      "title": "test_equal_cap_keeps_first_and_decimal_precision",
+      "code": "def test_equal_cap_keeps_first_and_decimal_precision():\n    stocks = [{'cap': '$1.25B'}, {'cap': '$1250M'}, {'cap': '$1250000000'}]\n    assert get_largest_stock(stocks) is stocks[0]\n    stocks = [{'cap': '$1000000000000000000'}, {'cap': '$1000000000000000001'}]\n    assert get_largest_stock(stocks) is stocks[1]\n    stocks = [{'cap': '$10000000000000000000000000000M'},\n              {'cap': '$10000000000000000000000000001M'}]\n    assert get_largest_stock(stocks) is stocks[1]"
+    },
+    "test_market_counts_and_duplicate_records": {
+      "title": "test_market_counts_and_duplicate_records",
+      "code": "def test_market_counts_and_duplicate_records():\n    assert get_market_distribution(get_stock_data()) == Counter({'NASDAQ': 3, 'NYSE': 2})\n    stock = {'market': 'OTHER'}\n    result = get_market_distribution([stock, stock, {'market': 'NYSE'}])\n    assert isinstance(result, Counter) and result == Counter({'OTHER': 2, 'NYSE': 1})\n    assert get_market_distribution([]) == Counter()"
+    },
+    "test_independent_loads_and_unchanged_inputs": {
+      "title": "test_independent_loads_and_unchanged_inputs",
+      "code": "def test_independent_loads_and_unchanged_inputs():\n    stocks = get_stock_data()\n    before = json.dumps(stocks, sort_keys=True)\n    get_stocks_by_sector(stocks, 'Technology')\n    get_largest_stock(stocks)\n    get_market_distribution(stocks)\n    assert json.dumps(stocks, sort_keys=True) == before\n    stocks[0]['symbol'] = 'changed'\n    assert get_stock_data()[0]['symbol'] == 'HBR'"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/analyze-stock-data/)"
+  }
 }

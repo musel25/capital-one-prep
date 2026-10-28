@@ -1,14 +1,20 @@
 The resource endpoint must apply suspension and action checks before it grants access by role or ownership.
 
-Implement can_access(user, resource, action) using this fixed policy. Return a bool. user has id, role and suspended fields; resource has owner_id and public fields. The only known actions are the exact strings read, write and delete. Deny every unknown action. Deny suspended users for every action, including admins. Otherwise admins may perform every known action. Any unsuspended user may read a public resource. A member whose id equals owner_id may read, write or delete that resource, including a private one. Deny every remaining request. Guest IDs are null; member and admin IDs are nonempty strings. Owner IDs are nonempty strings. Compare IDs and action names exactly, without case conversion or whitespace changes. Do not change either input object. All required fields and valid field types are supplied.
+Implement `can_access(user, resource, action)`. Return a boolean using these checks in order:
+
+1. Deny unknown actions. Only the exact strings `read`, `write`, and `delete` are known.
+2. Deny suspended users, including admins.
+3. Allow admins to perform every known action.
+4. Allow any unsuspended user to read a public resource.
+5. Allow a member whose `id` equals `owner_id` to read, write, or delete that resource, including a private one.
+6. Deny every remaining request.
+
+Compare IDs and actions exactly. Do not change letter case or whitespace.
 
 **Constraints:**
 
 - role is exactly admin, member or guest; suspended and public are bool values.
 - IDs contain 1–100 ASCII characters, except guest IDs, which are null.
 - action is an ASCII string of 0–100 characters; unknown strings are valid inputs and are denied.
-- Apply only the stated policy. No authentication, storage or network access is required.
-- Do not change the input objects. Each call starts with fresh state.
-- Python 3.11. Standard library only.
-
-Implement `can_access`. **Run** checks the examples. **Submit** checks all 21 cases.
+- `user` has `id`, `role`, and `suspended`; `resource` has `owner_id` and `public`.
+- Do not change input objects or their nested values. Each call starts with fresh state.

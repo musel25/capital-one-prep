@@ -9,16 +9,8 @@
   },
   "examples": [
     {
-      "input": "{\"test\": \"test_get_foods_user1\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_get_foods_user2\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_update_food_entry\"}",
-      "output": "passed"
+      "input": "from fastapi.testclient import TestClient\nclient = TestClient(app)\nfood_log.clear()\nprint(client.get(\"/users/42\").json())\nresponse = client.delete(\"/999\")\nprint(response.status_code, response.json())",
+      "output": "[]\n404 {'detail': 'Food entry not found'}"
     }
   ],
   "testCases": [
@@ -46,5 +38,39 @@
   "hints": [
     "Read the supplied pytest tests.",
     "Use the real FastAPI and Pydantic packages."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "test_get_foods_user1": {
+      "title": "test_get_foods_user1",
+      "code": "def test_get_foods_user1(client):\n    resp = client.get(\"/users/1\")\n    data = resp.json()\n    assert len(data) == 1\n    entry = data[0]\n    assert entry[\"id\"] == 1\n    assert entry[\"user\"][\"username\"] == \"user1\"\n    assert entry[\"food\"][\"name\"] == \"egg\"\n    assert entry[\"number_servings\"] == 1.5\n    assert FoodEntry(**entry).total_calories == 117.0"
+    },
+    "test_get_foods_user2": {
+      "title": "test_get_foods_user2",
+      "code": "def test_get_foods_user2(client, user2):\n    new_food = dict(\n        id=3,\n        name=\"almendras\",\n        serving_size=\"20 grams\",\n        kcal_per_serving=104,\n        protein_grams=2.3,\n        fibre_grams=1.1,\n    )\n    payload = dict(id=3, user=user2, food=new_food, number_servings=2)\n    client.post(\"/\", json=payload)\n    resp = client.get(\"/users/2\")\n    data = resp.json()\n    assert len(data) == 2\n    assert data[0][\"food\"][\"name\"] == \"oatmeal\"\n    assert data[1][\"food\"][\"name\"] == \"almendras\"\n    assert data[0][\"user\"][\"id\"] == 2\n    assert data[1][\"user\"][\"id\"] == 2\n    assert data[0][\"number_servings\"] == 2.2\n    assert data[1][\"number_servings\"] == 2.0\n    # need to create Pydantic model to test property\n    assert FoodEntry(**data[0]).total_calories == 739.2\n    assert FoodEntry(**data[1]).total_calories == 208.0\n    # clean up for next tests (price of having global dict)\n    client.delete(\"/3\")"
+    },
+    "test_update_food_entry": {
+      "title": "test_update_food_entry",
+      "code": "def test_update_food_entry(client):\n    entry = client.get(\"/users/1\").json()[0]\n    assert entry[\"number_servings\"] == 1.5\n    new_entry = entry.copy()\n    new_entry[\"number_servings\"] = 3\n    client.put(f\"/{entry['id']}\", json=new_entry)\n    entry = client.get(\"/users/1\").json()[0]\n    assert entry[\"number_servings\"] == 3.0"
+    },
+    "test_update_nonexisting_food_entry_returns_404": {
+      "title": "test_update_nonexisting_food_entry_returns_404",
+      "code": "def test_update_nonexisting_food_entry_returns_404(client):\n    entry = client.get(\"/users/2\").json()[0]\n    resp = client.put(\"/3\", json=entry)\n    assert resp.status_code == 404\n    assert resp.json() == {\"detail\": \"Food entry not found\"}"
+    },
+    "test_delete_food_entry": {
+      "title": "test_delete_food_entry",
+      "code": "def test_delete_food_entry(client):\n    resp = client.delete(\"/2\")\n    assert resp.json() == {\"ok\": True}\n    # user1's item still there\n    assert len(client.get(\"/users/1\").json()) == 1\n    # user2's item deleted\n    assert len(client.get(\"/users/2\").json()) == 0"
+    },
+    "test_delete_nonexisting_food_entry_returns_404": {
+      "title": "test_delete_nonexisting_food_entry_returns_404",
+      "code": "def test_delete_nonexisting_food_entry_returns_404(client):\n    resp = client.delete(\"/3\")\n    assert resp.status_code == 404\n    assert resp.json() == {\"detail\": \"Food entry not found\"}"
+    },
+    "test_added_unknown_user_has_empty_log": {
+      "title": "test_added_unknown_user_has_empty_log",
+      "code": "def test_added_unknown_user_has_empty_log(client):\n    response = client.get('/users/999')\n    assert response.status_code == 200\n    assert response.json() == []"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis path uses real FastAPI and Pydantic 2 with pytest and TestClient. No server is needed. The imported starter and tests include added boundary checks named test_added_. Example password fields and the classroom signing key were restored after export redaction. The signing key and /create_user route are exercise fixtures. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/food-logging-crud/)"
+  }
 }

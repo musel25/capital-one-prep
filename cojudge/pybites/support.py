@@ -20,6 +20,8 @@ from pathlib import Path
 
 from cojudge.authoring.support import ROOT, write_json
 from cojudge.pybites.runner import MARKER, RUNNER
+from cojudge.presentation import course_help, statement_text, test_case_details
+from cojudge.pybites.examples import ASSUMPTIONS, examples
 
 COURSE_ID = "pybites-oop"
 PREFIX = "pb"
@@ -105,13 +107,18 @@ class _Markdown(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.out, self.href, self.pre, self.lists, self.cell = [], None, False, [], 0
+        self.inline_code = False
 
     def handle_starttag(self, tag, attrs):
+        if self.inline_code and tag != "code":
+            self.out.append(self.get_starttag_text())
+            return
         attrs = dict(attrs)
         if tag == "pre":
             self.pre = True
             self.out.append("\n\n```python\n")
         elif tag == "code" and not self.pre:
+            self.inline_code = True
             self.out.append("`")
         elif tag in ("strong", "b"):
             self.out.append("**")
@@ -138,10 +145,14 @@ class _Markdown(HTMLParser):
             self.out.append(" ")
 
     def handle_endtag(self, tag):
+        if self.inline_code and tag != "code":
+            self.out.append(f"</{tag}>")
+            return
         if tag == "pre":
             self.pre = False
             self.out.append("\n```\n\n")
         elif tag == "code" and not self.pre:
+            self.inline_code = False
             self.out.append("`")
         elif tag in ("strong", "b"):
             self.out.append("**")
@@ -161,7 +172,7 @@ class _Markdown(HTMLParser):
 
 def description(spec):
     parser = _Markdown()
-    parser.feed(spec["page"]["desc_html"])
+    parser.feed(spec["page"]["desc_html"].replace("\r\n", "\n").replace("\r", "\n"))
     text = "".join(parser.out)
     text = re.sub(r"```python\n\s*>>>", "```python\n>>>", text)
     # Outside code blocks, drop indentation and trailing spaces left by the HTML.
@@ -174,40 +185,23 @@ def description(spec):
     return html.unescape(text).strip()
 
 
-def statement(spec, test_ids):
+def present_problem(spec, test_ids):
     page = spec["page"]
-    url = f"https://pybitesplatform.com/bites/{page['slug']}/"
     origin = ("The template and tests are the originals from this free bite."
               if spec.get("original") else
-              "The original template and tests are in Pybites premium, so the template and tests here "
-              "are a recreation that follows the description.")
-    notes = f"\n\n**Notes for this version:** {spec['notes'].strip()}" if spec.get("notes") else ""
-    return f"""# {spec['number']:02d}. {spec['title']}
+              "The template and tests are recreations based on the public bite description.")
+    note = " ".join(filter(None, [origin, spec.get("notes"),
+                                  "Python 3.11. Use the standard library. No network access."]))
+    return {
+        "statement": statement_text(description(spec), ASSUMPTIONS.get(spec["number"], ())),
+        "examples": examples(spec["number"]),
+        "testCaseDescriptions": test_case_details(spec["tests"], test_ids),
+        "courseHelp": course_help(f"https://pybitesplatform.com/bites/{page['slug']}/", note),
+    }
 
-[Course list](/?course={COURSE_ID}) · Pybites {page['level']} · [Original bite]({url})
 
-**Inputs and required behavior for this version:**
-
-{spec.get('contract', '').strip()}
-
-<details>
-<summary>Original bite description</summary>
-
-{description(spec)}
-
-</details>{notes}
-
-**How to solve it here:** write your code at the top of the editor, like the Pybites Code tab.
-The Pybites tests are in the editor below your code (the Tests tab). The tests import your code as
-the module `{spec['module']}`. **Run** checks the first three tests. **Submit** runs all
-{len(test_ids)}. A failing test shows its name, the error, and the failed test line. {origin}
-
-**Constraints:**
-
-- Python 3.11, standard library only. No network access.
-- Do not edit the tests or the supplied runner at the bottom of the editor.
-- For an older saved solution, use **+** beside the editor tabs to open the current template in a new tab. Copy your implementation into that tab. This keeps the saved solution and gives you the current tests.
-"""
+def statement(spec, test_ids):
+    return present_problem(spec, test_ids)["statement"]
 
 
 def build_problem(spec, destination):
@@ -216,12 +210,14 @@ def build_problem(spec, destination):
     folder = Path(destination) / "problems" / pid
     folder.mkdir(parents=True, exist_ok=True)
     payloads = [json.dumps({"test": test_id}) for test_id in ids]
+    presentation = present_problem(spec, ids)
     metadata = {
         "id": pid, "title": f"{spec['number']:02d}. {spec['title']}",
         "difficulty": DIFFICULTY[spec["page"]["level"]], "link": "",
         "category": LEVELS[list(DIFFICULTY).index(spec["page"]["level"])],
-        "examples": [{"input": p, "output": "passed", "explanation": f"Test {i} must pass."}
-                     for p, i in zip(payloads[:3], ids[:3])],
+        "examples": presentation["examples"],
+        "testCaseDescriptions": presentation["testCaseDescriptions"],
+        "courseHelp": presentation["courseHelp"],
         "starterCode": {"python": full_source(spec, spec["template"])},
         "testCases": [{"payload": p} for p in payloads[:3]],
         "functionName": "run", "params": [{"name": "payload", "type": "string"}],
@@ -229,7 +225,7 @@ def build_problem(spec, destination):
     }
     write_json(folder / "metadata.json", metadata)
     write_json(folder / "official-tests.json", [{"payload": p} for p in payloads])
-    (folder / "statement.md").write_text(statement(spec, ids))
+    (folder / "statement.md").write_text(presentation["statement"])
     (folder / "Marker.java").write_text(MARKER)
     (folder / "solution.md").write_text(
         f"## Reference solution\n\n```python\n{spec['reference'].strip()}\n```\n")

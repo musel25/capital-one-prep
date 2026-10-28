@@ -9,12 +9,8 @@
   },
   "examples": [
     {
-      "input": "{\"test\": \"test_show_foods_for_user\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_added_html_filters_and_escapes\"}",
-      "output": "passed"
+      "input": "from fastapi.testclient import TestClient\nclient = TestClient(app)\nfrom bs4 import BeautifulSoup\nfood_log.clear()\nresponse = client.get(\"/Ada\")\nsoup = BeautifulSoup(response.text, \"html.parser\")\nprint(response.status_code)\nprint(soup.title.text)\nprint([cell.text for cell in soup.find_all(\"th\")])\nprint(len(soup.find(\"tbody\").find_all(\"tr\")))",
+      "output": "200\nFood log for Ada\n['Food', 'Added', 'Servings', 'Calories (kcal)']\n0"
     }
   ],
   "testCases": [
@@ -38,5 +34,19 @@
   "hints": [
     "Read the supplied pytest tests.",
     "Use the real FastAPI and Pydantic packages."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "test_show_foods_for_user": {
+      "title": "test_show_foods_for_user",
+      "code": "def test_show_foods_for_user(client):\n    resp = client.get(\"/Julian\")\n    assert resp.status_code == 200\n    try:\n        soup = BeautifulSoup(resp.text, \"html.parser\")\n    except Exception as exc:\n        pytest.fail(f\"Could not make soup object for testing, exception: {exc}\")\n\n    assert soup.title.text == \"Food log for Julian\"\n\n    assert len(soup.findAll(\"tr\")) == 2\n    tds = soup.findAll(\"td\")\n    assert len(tds) == 8\n\n    # datetimes change and freezegun did not work so best we can do is assert type\n    dt1, dt2 = tds.pop(1).text, tds.pop(4).text\n    for dt in (dt1, dt2):\n        isinstance(datetime.strptime(dt, \"%Y-%m-%d %H:%M:%S.%f\"), datetime)\n\n    # remaining cells are plain text\n    text_cells = [td.text for td in tds]\n    assert text_cells == [\n        \"egg\",\n        \"1.5 x piece\",\n        \"117.0\",\n        \"oatmeal\",\n        \"2.0 x 100 grams\",\n        \"672.0\",\n    ]"
+    },
+    "test_added_html_filters_and_escapes": {
+      "title": "test_added_html_filters_and_escapes",
+      "code": "def test_added_html_filters_and_escapes(client, food_entry1):\n    from copy import deepcopy\n    payload = deepcopy(food_entry1)\n    payload['id'] = 10\n    payload['user']['username'] = 'Other'\n    payload['food']['name'] = 'private-food'\n    assert client.post('/', json=payload).status_code == 201\n    response = client.get('/Julian')\n    assert response.headers['content-type'].startswith('text/html')\n    assert 'private-food' not in response.text\n    payload['id'] = 11\n    payload['user']['username'] = 'Julian'\n    payload['food']['name'] = '<script>alert(1)</script>'\n    assert client.post('/', json=payload).status_code == 201\n    text = client.get('/Julian').text\n    assert '<script>' not in text\n    assert '&lt;script&gt;' in text\n    empty = BeautifulSoup(client.get('/nobody').text, 'html.parser')\n    assert empty.find_all('td') == []"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis path uses real FastAPI and Pydantic 2 with pytest and TestClient. No server is needed. The imported starter and tests include added boundary checks named test_added_. Example password fields and the classroom signing key were restored after export redaction. The signing key and /create_user route are exercise fixtures. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/return-an-html-response/)"
+  }
 }

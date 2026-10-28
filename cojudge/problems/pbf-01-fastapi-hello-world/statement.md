@@ -1,29 +1,18 @@
-# 01. Fastapi hello world
-
-[Course list](/?course=pybites-fastapi) · [Original Pybites exercise](https://pybitesplatform.com/bites/fastapi-hello-world/)
-
-## Required behavior
-
-Create `app = FastAPI()`. GET `/` returns the welcome message shown in the tests. POST `/` returns 405.
-
-## How to solve it
-
-Use Python. Write your solution at the top of the editor. The supplied tests follow it.
-Run checks up to three tests. Submit checks all 2 tests.
-Each check runs real pytest and FastAPI in a fresh process. No server or network is needed.
-Keep the supplied tests and adapter unchanged. Failures show the pytest test name and error.
-
-## Source and changes
-
-The starter and tests were imported from the exercise pages accessible in the user's Pybites session.
-Example password fields and the classroom signing key were restored with explicit test values after export redaction.
-FoodEntry uses a per-instance timestamp default. Tests labelled `test_added_` are added Cojudge checks.
-The required behavior above summarizes the source description and states the added checks.
-The reference solution was written for this course.
-
-The runtime uses Python 3.11, FastAPI 0.161.1, Pydantic 2, real pytest,
-HTTPX, Passlib/bcrypt, python-jose, python-multipart, and BeautifulSoup.
-Package versions are locked in `cojudge/fastapi_path/uv.lock` in the content repository.
-
-For an old saved solution, use **+** beside the editor tabs to open the current starter.
-Copy your code into that tab. Keep your old saved tab.
+Welcome to this FastAPI learning path. In the next 10 Bites you will write a simple API to track food / calories.
+Let's break this problem down in some easily digestable steps or Bite exercises:
+1. Learn how to instantiate a FastAPI app instance and write your first view or endpoint < this Bite.
+2. Get familiar with typing using the Pydantic library. We'll make a Food model which we'll use throughout this Learning Path.
+3. Create food objects. To keep things simple we will use a simple list of Food objects in memory. We'll introduce databases and relational tables in our SQLModel learning path.
+4. Retrieve food objects (all or a particular one).
+5. Update and delete food object. This concludes the full CRUD (create-read-update-delete) of foods.
+6. Pydantic part II: define two more models: User and FoodEntry.
+7. Repeat the CRUD but now for food logging.
+8. Add exception handling to our API.
+9. Render the food log in a basic HTML template (Yes! FastAPI can also be used as web framework!)
+10. Add authentication to our API.
+---
+In this first Bite of the challenge, let's make a FastAPI app instance and a view that returns {"message": "Welcome to PyBites' FastAPI Learning Path 🐍 🎉"} when hitting the root endpoint (/) with a GET request (see the tests).
+Some notes on this learning path:
+- To use earlier solutions as template code for later exercises without spoiling anything, you must solve the exercises in order, that is completing earlier exercises unlocks later ones.
+- You can make the FastAPI endpoints async or not, the tests will work either way.
+Good luck and welcome onboard! We hope this will be a fun and rich learning experience.

@@ -10,16 +10,8 @@
   },
   "examples": [
     {
-      "input": "{\"test\": \"test_sum[args0-The sum is 8]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_sum[args1-The sum is 0]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_sum[args2-The sum is 3]\"}",
-      "output": "passed"
+      "input": "from typer.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(app, [\"3\", \"5\"])\nprint(result.exit_code)\nprint(result.output, end=\"\")",
+      "output": "0\nThe sum is 8"
     }
   ],
   "testCases": [
@@ -41,5 +33,47 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_sum[args0-The sum is 8]": {
+      "title": "test_sum[args0-The sum is 8]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"3\", \"5\"], \"The sum is 8\"),\n    ([\"0\", \"0\"], \"The sum is 0\"), ([\"--\", \"-4\", \"7\"], \"The sum is 3\"),\n    ([\"--\", \"-4\", \"-7\"], \"The sum is -11\")])\ndef test_sum(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_sum[args1-The sum is 0]": {
+      "title": "test_sum[args1-The sum is 0]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"3\", \"5\"], \"The sum is 8\"),\n    ([\"0\", \"0\"], \"The sum is 0\"), ([\"--\", \"-4\", \"7\"], \"The sum is 3\"),\n    ([\"--\", \"-4\", \"-7\"], \"The sum is -11\")])\ndef test_sum(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_sum[args2-The sum is 3]": {
+      "title": "test_sum[args2-The sum is 3]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"3\", \"5\"], \"The sum is 8\"),\n    ([\"0\", \"0\"], \"The sum is 0\"), ([\"--\", \"-4\", \"7\"], \"The sum is 3\"),\n    ([\"--\", \"-4\", \"-7\"], \"The sum is -11\")])\ndef test_sum(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_sum[args3-The sum is -11]": {
+      "title": "test_sum[args3-The sum is -11]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"3\", \"5\"], \"The sum is 8\"),\n    ([\"0\", \"0\"], \"The sum is 0\"), ([\"--\", \"-4\", \"7\"], \"The sum is 3\"),\n    ([\"--\", \"-4\", \"-7\"], \"The sum is -11\")])\ndef test_sum(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_invalid_arguments[args0]": {
+      "title": "test_invalid_arguments[args0]",
+      "code": "@pytest.mark.parametrize(\"args\", [[], [\"2\"], [\"two\", \"3\"], [\"1.5\", \"2\"]])\ndef test_invalid_arguments(args):\n    assert invoke(args).exit_code != 0"
+    },
+    "test_invalid_arguments[args1]": {
+      "title": "test_invalid_arguments[args1]",
+      "code": "@pytest.mark.parametrize(\"args\", [[], [\"2\"], [\"two\", \"3\"], [\"1.5\", \"2\"]])\ndef test_invalid_arguments(args):\n    assert invoke(args).exit_code != 0"
+    },
+    "test_invalid_arguments[args2]": {
+      "title": "test_invalid_arguments[args2]",
+      "code": "@pytest.mark.parametrize(\"args\", [[], [\"2\"], [\"two\", \"3\"], [\"1.5\", \"2\"]])\ndef test_invalid_arguments(args):\n    assert invoke(args).exit_code != 0"
+    },
+    "test_invalid_arguments[args3]": {
+      "title": "test_invalid_arguments[args3]",
+      "code": "@pytest.mark.parametrize(\"args\", [[], [\"2\"], [\"two\", \"3\"], [\"1.5\", \"2\"]])\ndef test_invalid_arguments(args):\n    assert invoke(args).exit_code != 0"
+    },
+    "test_help": {
+      "title": "test_help",
+      "code": "def test_help():\n    result = invoke([\"--help\"])\n    assert result.exit_code == 0\n    assert \"first summand\" in result.output and \"second summand\" in result.output"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. Real Typer, Click, and Rich packages are bundled for offline use. Use Run and Submit; the playground and debugger do not load the library archive. Keep script entry points inside `if __name__ == \"__main__\":`. The runner supports the pytest features used by the supplied tests. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/transform-a-script-into-a-command-line-interface-cli/)"
+  }
 }

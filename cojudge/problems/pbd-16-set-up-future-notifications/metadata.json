@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_case_01\"}",
-      "output": "passed"
+      "input": "add_todo(\"11h 10m\", \"Wash my car\")",
+      "output": "'Wash my car @ 2019-02-07 09:10:00'"
     },
     {
-      "input": "{\"test\": \"test_case_02\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_case_03\"}",
-      "output": "passed"
+      "input": "add_todo(\"5m 3s\", \"Go to Bed\")",
+      "output": "'Go to Bed @ 2019-02-06 22:05:03'"
     }
   ],
   "starterCode": {
@@ -40,5 +36,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_case_01": {
+      "title": "test_case_01",
+      "code": "def test_case_01():\n    assert (add_todo('11h 10m', 'Wash my car')) == 'Wash my car @ 2019-02-07 09:10:00'"
+    },
+    "test_case_02": {
+      "title": "test_case_02",
+      "code": "def test_case_02():\n    assert (add_todo('30d', 'Code a Bite')) == 'Code a Bite @ 2019-03-08 22:00:00'"
+    },
+    "test_case_03": {
+      "title": "test_case_03",
+      "code": "def test_case_03():\n    assert (add_todo('5m 3s', 'Go to Bed')) == 'Go to Bed @ 2019-02-06 22:05:03'"
+    },
+    "test_case_04": {
+      "title": "test_case_04",
+      "code": "def test_case_04():\n    assert (add_todo('1m 2m 0s', 'repeat')) == 'repeat @ 2019-02-06 22:03:00'"
+    },
+    "test_case_05": {
+      "title": "test_case_05",
+      "code": "def test_case_05():\n    assert (add_todo('1s', '', datetime(2019, 12, 31, 23, 59, 59))) == ' @ 2020-01-01 00:00:00'"
+    },
+    "test_case_06": {
+      "title": "test_case_06",
+      "code": "def test_case_06():\n    assert (add_todo('0s', 'now')) == 'now @ 2019-02-06 22:00:00'"
+    },
+    "test_four_digit_year": {
+      "title": "test_four_digit_year",
+      "code": "def test_four_digit_year():\n    assert add_todo('0s', 'test', datetime(1, 1, 1)) == 'test @ 0001-01-01 00:00:00'"
+    },
+    "test_invalid_tokens": {
+      "title": "test_invalid_tokens",
+      "code": "def test_invalid_tokens():\n    for value in ('', '-1h', '1w', '2mJUNK', '1 h'):\n        with pytest.raises(ValueError):\n            add_todo(value, 'bad')"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/set-up-future-notifications/)"
+  }
 }

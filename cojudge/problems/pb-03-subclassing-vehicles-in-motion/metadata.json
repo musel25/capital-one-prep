@@ -6,19 +6,14 @@
   "category": "01-beginner",
   "examples": [
     {
-      "input": "{\"test\": \"test_vehicle\"}",
-      "output": "passed",
-      "explanation": "Test test_vehicle must pass."
+      "input": "Car(\"Toyota\", \"Corolla\", 4, 4).description()",
+      "output": "'Toyota Corolla with 4 wheels'",
+      "explanation": "Car inherits the vehicle description."
     },
     {
-      "input": "{\"test\": \"test_car\"}",
-      "output": "passed",
-      "explanation": "Test test_car must pass."
-    },
-    {
-      "input": "{\"test\": \"test_motorbike\"}",
-      "output": "passed",
-      "explanation": "Test test_motorbike must pass."
+      "input": "Motorbike(\"Yamaha\", \"R3\", 2, 321).rev_engine()",
+      "output": "'Yamaha R3 with 2 wheels goes Vroom vroom!'",
+      "explanation": "The engine message extends the parent description."
     }
   ],
   "starterCode": {
@@ -43,5 +38,51 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_vehicle": {
+      "title": "test_vehicle",
+      "code": "def test_vehicle():\n    vehicle = Vehicle(\"Toyota\", \"Corolla\", 4)\n    assert vehicle.brand == \"Toyota\"\n    assert vehicle.model == \"Corolla\"\n    assert vehicle.wheels == 4\n    assert vehicle.description() == \"Toyota Corolla with 4 wheels\""
+    },
+    "test_car": {
+      "title": "test_car",
+      "code": "def test_car():\n    car = Car(\"Tesla\", \"Model 3\", 4, 4)\n    assert car.doors == 4\n    assert car.brand == \"Tesla\"\n    assert car.description() == \"Tesla Model 3 with 4 wheels\"\n    assert car.honk() == \"Beep beep!\""
+    },
+    "test_motorbike": {
+      "title": "test_motorbike",
+      "code": "def test_motorbike():\n    bike = Motorbike(\"Yamaha\", \"R3\", 2, 321)\n    assert bike.engine_cc == 321\n    assert bike.wheels == 2\n    assert bike.description() == \"Yamaha R3 with 2 wheels\"\n    assert bike.rev_engine() == \"Yamaha R3 with 2 wheels goes Vroom vroom!\""
+    },
+    "test_keyword_arguments": {
+      "title": "test_keyword_arguments",
+      "code": "def test_keyword_arguments():\n    bike = Motorbike(brand=\"Ducati\", model=\"Monster\", wheels=2, engine_cc=937)\n    assert bike.rev_engine() == \"Ducati Monster with 2 wheels goes Vroom vroom!\"\n    car = Car(brand=\"Fiat\", model=\"500\", wheels=4, doors=3)\n    assert (car.model, car.doors) == (\"500\", 3)"
+    },
+    "test_subclasses_inherit_from_vehicle": {
+      "title": "test_subclasses_inherit_from_vehicle",
+      "code": "def test_subclasses_inherit_from_vehicle():\n    assert issubclass(Car, Vehicle)\n    assert issubclass(Motorbike, Vehicle)\n    assert isinstance(Car(\"A\", \"B\", 4, 2), Vehicle)\n    assert not hasattr(Car(\"A\", \"B\", 4, 2), \"rev_engine\")\n    assert not hasattr(Motorbike(\"A\", \"B\", 2, 125), \"honk\")"
+    },
+    "test_subclass_constructor_uses_super[cls0]": {
+      "title": "test_subclass_constructor_uses_super[cls0]",
+      "code": "@pytest.mark.parametrize(\"cls\", [Car, Motorbike])\ndef test_subclass_constructor_uses_super(cls):\n    assert \"super()\" in inspect.getsource(cls.__init__)"
+    },
+    "test_subclass_constructor_uses_super[cls1]": {
+      "title": "test_subclass_constructor_uses_super[cls1]",
+      "code": "@pytest.mark.parametrize(\"cls\", [Car, Motorbike])\ndef test_subclass_constructor_uses_super(cls):\n    assert \"super()\" in inspect.getsource(cls.__init__)"
+    },
+    "test_rev_engine_reuses_description": {
+      "title": "test_rev_engine_reuses_description",
+      "code": "def test_rev_engine_reuses_description():\n    \"\"\"rev_engine must build on description(), so a change there shows up.\"\"\"\n    class LoudBike(Motorbike):\n        def description(self):\n            return \"A loud bike\"\n    assert LoudBike(\"x\", \"y\", 2, 50).rev_engine() == \"A loud bike goes Vroom vroom!\""
+    },
+    "test_zero_and_unusual_counts_are_not_replaced_with_defaults": {
+      "title": "test_zero_and_unusual_counts_are_not_replaced_with_defaults",
+      "code": "def test_zero_and_unusual_counts_are_not_replaced_with_defaults():\n    car = Car('Custom', 'Prototype', 6, 0)\n    bike = Motorbike('Electric', 'Test', 0, 0)\n    assert car.description() == 'Custom Prototype with 6 wheels'\n    assert car.doors == 0\n    assert bike.engine_cc == 0\n    assert bike.rev_engine() == 'Electric Test with 0 wheels goes Vroom vroom!'"
+    },
+    "test_description_uses_current_instance_attributes": {
+      "title": "test_description_uses_current_instance_attributes",
+      "code": "def test_description_uses_current_instance_attributes():\n    first, second = Vehicle('A', 'B', 3), Vehicle('C', 'D', 5)\n    first.brand, first.model, first.wheels = 'New', 'Model', 1\n    assert first.description() == 'New Model with 1 wheels'\n    assert second.description() == 'C D with 5 wheels'"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/subclassing-vehicles-in-motion/)"
+  }
 }

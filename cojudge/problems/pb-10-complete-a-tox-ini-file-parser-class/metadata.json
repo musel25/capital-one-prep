@@ -6,19 +6,9 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_django\"}",
-      "output": "passed",
-      "explanation": "Test test_django must pass."
-    },
-    {
-      "input": "{\"test\": \"test_comma_separated_envlist\"}",
-      "output": "passed",
-      "explanation": "Test test_comma_separated_envlist must pass."
-    },
-    {
-      "input": "{\"test\": \"test_commas_and_newlines_mixed\"}",
-      "output": "passed",
-      "explanation": "Test test_commas_and_newlines_mixed must pass."
+      "input": "from pathlib import Path\nfrom tempfile import TemporaryDirectory\nwith TemporaryDirectory() as folder:\n    path = Path(folder) / \"tox.ini\"\n    path.write_text(\"[tox]\\nenvlist = py311, py312\\n[testenv]\\nbasepython = python3.11\\n\")\n    parser = ToxIniParser(path)\n    result = (parser.number_of_sections, parser.environments, parser.base_python_versions)\nresult",
+      "output": "(2, ['py311', 'py312'], ['python3.11'])",
+      "explanation": "Read the section count and interpreter lists from a local file."
     }
   ],
   "starterCode": {
@@ -43,5 +33,47 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_django": {
+      "title": "test_django",
+      "code": "def test_django(make_parser):\n    tox = make_parser(django)\n    assert tox.number_of_sections == 7\n    assert tox.environments == ['py3', 'flake8', 'docs', 'isort']\n    assert tox.base_python_versions == ['python3']"
+    },
+    "test_comma_separated_envlist": {
+      "title": "test_comma_separated_envlist",
+      "code": "def test_comma_separated_envlist(make_parser):\n    tox = make_parser(library)\n    assert tox.number_of_sections == 5\n    assert tox.environments == ['py38', 'py39', 'py310', 'py311', 'pypy3', 'lint', 'docs']\n    assert tox.base_python_versions == ['pypy3', 'python3.11']"
+    },
+    "test_commas_and_newlines_mixed": {
+      "title": "test_commas_and_newlines_mixed",
+      "code": "def test_commas_and_newlines_mixed(make_parser):\n    tox = make_parser(mixed)\n    assert tox.number_of_sections == 4\n    assert tox.environments == ['py39', 'py310', 'coverage']\n    assert tox.base_python_versions == ['python3.10', 'python3.9']"
+    },
+    "test_no_basepython": {
+      "title": "test_no_basepython",
+      "code": "def test_no_basepython(make_parser):\n    tox = make_parser(\"[tox]\\nenvlist = py311\\n\\n[testenv]\\ncommands = pytest\\n\")\n    assert tox.number_of_sections == 2\n    assert tox.environments == ['py311']\n    assert tox.base_python_versions == []"
+    },
+    "test_config_attribute_and_properties": {
+      "title": "test_config_attribute_and_properties",
+      "code": "def test_config_attribute_and_properties(make_parser):\n    tox = make_parser(library)\n    assert hasattr(tox, 'config')\n    for name in ('number_of_sections', 'environments', 'base_python_versions'):\n        assert isinstance(ToxIniParser.__dict__[name], property)"
+    },
+    "test_missing_or_empty_envlist[[tox]\n]": {
+      "title": "test_missing_or_empty_envlist[[tox]\n]",
+      "code": "@pytest.mark.parametrize('text', ['[tox]\\n', '[tox]\\nenvlist = , ,\\n    ,\\n'])\ndef test_missing_or_empty_envlist(make_parser, text):\n    tox = make_parser(text)\n    assert tox.number_of_sections == 1\n    assert tox.environments == []\n    assert tox.base_python_versions == []"
+    },
+    "test_missing_or_empty_envlist[[tox]\nenvlist = , ,\n    ,\n]": {
+      "title": "test_missing_or_empty_envlist[[tox]\nenvlist = , ,\n    ,\n]",
+      "code": "@pytest.mark.parametrize('text', ['[tox]\\n', '[tox]\\nenvlist = , ,\\n    ,\\n'])\ndef test_missing_or_empty_envlist(make_parser, text):\n    tox = make_parser(text)\n    assert tox.number_of_sections == 1\n    assert tox.environments == []\n    assert tox.base_python_versions == []"
+    },
+    "test_blank_basepython_and_case_sensitive_names": {
+      "title": "test_blank_basepython_and_case_sensitive_names",
+      "code": "def test_blank_basepython_and_case_sensitive_names(make_parser):\n    tox = make_parser(\"\"\"[tox]\nenvlist = py311, Py311, py311, py{310,311}\n[testenv]\nbasepython =\n[testenv:first]\nbasepython = python3\n[testenv:second]\nbasepython = Python3\n[testenv:third]\nbasepython = python3\n\"\"\")\n    assert tox.environments == ['py311', 'Py311', 'py{310', '311}']\n    assert tox.base_python_versions == ['python3', 'Python3']"
+    },
+    "test_instances_do_not_share_config": {
+      "title": "test_instances_do_not_share_config",
+      "code": "def test_instances_do_not_share_config(make_parser):\n    first = make_parser(library, 'first.ini')\n    second = make_parser('[tox]\\nenvlist = other\\n', 'second.ini')\n    assert second.environments == ['other']\n    assert first.environments == ['py38', 'py39', 'py310', 'py311', 'pypy3', 'lint', 'docs']"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. The tests write sample tox ini files to a temporary folder and pass the file path, as in the description's REPL example. The first sample has the same shape as the Django tox file in that example. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/complete-a-tox-ini-file-parser-class/)"
+  }
 }

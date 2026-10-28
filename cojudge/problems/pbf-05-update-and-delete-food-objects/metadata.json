@@ -9,16 +9,8 @@
   },
   "examples": [
     {
-      "input": "{\"test\": \"test_update_food\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_update_nonexisting_food_returns_404\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_delete_food\"}",
-      "output": "passed"
+      "input": "from fastapi.testclient import TestClient\nclient = TestClient(app)\nfoods.clear()\nclient.post(\"/\", json={\"id\": 1, \"name\": \"egg\", \"serving_size\": \"piece\", \"kcal_per_serving\": 78, \"protein_grams\": 6.3})\nresponse = client.delete(\"/1\")\nprint(response.status_code, response.json())\nprint(client.delete(\"/1\").status_code)",
+      "output": "200 {'ok': True}\n404"
     }
   ],
   "testCases": [
@@ -46,5 +38,27 @@
   "hints": [
     "Read the supplied pytest tests.",
     "Use the real FastAPI and Pydantic packages."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "test_update_food": {
+      "title": "test_update_food",
+      "code": "def test_update_food(client):\n    orig_egg = client.get(\"/1\").json()\n    resp = client.get(\"/2\")\n    orig_food = resp.json()\n    food = orig_food.copy()\n    food[\"kcal_per_serving\"] = 350\n    client.put(\"/2\", json=food)\n    resp = client.get(\"/2\")\n    updated_food = resp.json()\n    diff = set(updated_food.values()) - set(orig_food.values())\n    assert diff == {350}\n    # the other item is not updated\n    egg = client.get(\"/1\").json()\n    assert orig_egg == egg"
+    },
+    "test_update_nonexisting_food_returns_404": {
+      "title": "test_update_nonexisting_food_returns_404",
+      "code": "def test_update_nonexisting_food_returns_404(client):\n    resp = client.get(\"/2\")\n    payload = resp.json()\n    resp = client.put(\"/3\", json=payload)\n    assert resp.status_code == 404\n    assert resp.json() == {\"detail\": \"Food not found\"}"
+    },
+    "test_delete_food": {
+      "title": "test_delete_food",
+      "code": "def test_delete_food(client):\n    resp = client.get(\"/\")\n    assert len(resp.json()) == 2\n    resp = client.delete(\"/2\")\n    assert resp.json() == {\"ok\": True}\n    # oatmeal deleted\n    with pytest.raises(KeyError):\n        client.get(\"/2\")\n    resp = client.get(\"/\")\n    data = resp.json()\n    assert len(data) == 1\n    # only egg remains\n    assert data[0][\"id\"] == 1\n    assert data[0][\"name\"] == \"egg\""
+    },
+    "test_delete_nonexisting_food_returns_404": {
+      "title": "test_delete_nonexisting_food_returns_404",
+      "code": "def test_delete_nonexisting_food_returns_404(client):\n    resp = client.delete(\"/3\")\n    assert resp.status_code == 404\n    assert resp.json() == {\"detail\": \"Food not found\"}"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis path uses real FastAPI and Pydantic 2 with pytest and TestClient. No server is needed. The imported starter and tests include added boundary checks named test_added_. Example password fields and the classroom signing key were restored after export redaction. The signing key and /create_user route are exercise fixtures. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/update-and-delete-food-objects/)"
+  }
 }

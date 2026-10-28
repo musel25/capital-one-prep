@@ -6,18 +6,18 @@
   "category": "06-application-logic",
   "examples": [
     {
-      "input": "{\"template\": \"<p>{{name}}</p>\", \"values\": {\"name\": \"<&>\\\"'\"}}",
-      "output": "\"<p>&lt;&amp;&gt;&quot;&#x27;</p>\"",
+      "input": "render_html(\n    template='<p>{{name}}</p>',\n    values={'name': '<&>\"\\''}\n)",
+      "output": "'<p>&lt;&amp;&gt;&quot;&#x27;</p>'",
       "explanation": "escape all five HTML special characters"
     },
     {
-      "input": "{\"template\": \"Hello {{missing}}.\", \"values\": {\"name\": \"Ada\"}}",
-      "output": "\"Hello {{missing}}.\"",
+      "input": "render_html(\n    template='Hello {{missing}}.',\n    values={'name': 'Ada'}\n)",
+      "output": "'Hello {{missing}}.'",
       "explanation": "missing placeholder remains unchanged"
     },
     {
-      "input": "{\"template\": \"{{a}} {{b}}\", \"values\": {\"a\": \"{{b}}\", \"b\": \"resolved\"}}",
-      "output": "\"{{b}} resolved\"",
+      "input": "render_html(\n    template='{{a}} {{b}}',\n    values={'a': '{{b}}', 'b': 'resolved'}\n)",
+      "output": "'{{b}} resolved'",
       "explanation": "inserted placeholders are not processed again"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

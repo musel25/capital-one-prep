@@ -6,16 +6,9 @@
   "category": "01-beginner",
   "examples": [
     {
-      "input": "{\"test\": \"test_example\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_default_factory\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_header_only\"}",
-      "output": "passed"
+      "input": "data = \"last_name,first_name,country_code\\nLovelace,Ada,GB\\nHopper,Grace,US\\nTuring,Alan,GB\\n\"\ndict(group_names_by_country(data))",
+      "output": "{'GB': ['Ada Lovelace', 'Alan Turing'], 'US': ['Grace Hopper']}",
+      "explanation": "Group full names under the country code."
     }
   ],
   "starterCode": {
@@ -40,5 +33,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_example": {
+      "title": "test_example",
+      "code": "def test_example():\n    groups = group_names_by_country()\n    assert sorted(groups['ID']) == ['Husain Watsham', 'Sula Wasielewski']\n    assert groups['BR'] == ['Alphonso Harrold']\n    assert groups['CN'] == ['Margo Apdell']"
+    },
+    "test_default_factory": {
+      "title": "test_default_factory",
+      "code": "def test_default_factory():\n    groups = group_names_by_country()\n    assert isinstance(groups, defaultdict) and groups.default_factory is list\n    assert groups['ZZ'] == []"
+    },
+    "test_header_only": {
+      "title": "test_header_only",
+      "code": "def test_header_only():\n    assert dict(group_names_by_country('last_name,first_name,country_code\\n')) == {}"
+    },
+    "test_quoted_comma_and_blank_lines": {
+      "title": "test_quoted_comma_and_blank_lines",
+      "code": "def test_quoted_comma_and_blank_lines():\n    text = 'last_name,first_name,country_code\\n\"Smith, Jr.\",Ada,US\\n\\nLee,Bo,KR\\n'\n    result = group_names_by_country(text)\n    assert result['US'] == ['Ada Smith, Jr.'] and result['KR'] == ['Bo Lee']"
+    },
+    "test_duplicates_and_custom_country": {
+      "title": "test_duplicates_and_custom_country",
+      "code": "def test_duplicates_and_custom_country():\n    text = 'last_name,first_name,country_code\\nDoe,Jo,XX\\nDoe,Jo,XX\\n'\n    assert group_names_by_country(text)['XX'] == ['Jo Doe', 'Jo Doe']"
+    },
+    "test_instances_are_independent": {
+      "title": "test_instances_are_independent",
+      "code": "def test_instances_are_independent():\n    first = group_names_by_country()\n    first['ID'].append('extra')\n    assert 'extra' not in group_names_by_country()['ID']"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public description. Python 3.11. Data is supplied offline. Use the standard library.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/group-names-by-country/)"
+  }
 }

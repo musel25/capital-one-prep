@@ -6,16 +6,14 @@
   "category": "01-beginner",
   "examples": [
     {
-      "input": "{\"test\": \"test_default\"}",
-      "output": "passed"
+      "input": "queue = my_queue(3)\nqueue.extend([1, 2, 3, 4, 5])\nlist(queue)",
+      "output": "[3, 4, 5]",
+      "explanation": "Only the latest three items remain."
     },
     {
-      "input": "{\"test\": \"test_bounded_appends[0]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_bounded_appends[1]\"}",
-      "output": "passed"
+      "input": "queue = my_queue(0)\nqueue.append(\"item\")\nlist(queue)",
+      "output": "[]",
+      "explanation": "A maximum length of zero retains nothing."
     }
   ],
   "starterCode": {
@@ -40,5 +38,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default": {
+      "title": "test_default",
+      "code": "def test_default():\n    q = my_queue()\n    assert isinstance(q, deque) and q.maxlen == 5 and list(q) == []"
+    },
+    "test_bounded_appends[0]": {
+      "title": "test_bounded_appends[0]",
+      "code": "@pytest.mark.parametrize('n', [0, 1, 2, 5, 20])\ndef test_bounded_appends(n):\n    q = my_queue(n)\n    for i in range(12):\n        q.append(i)\n    assert list(q) == (list(range(12))[-n:] if n else [])\n    assert q.maxlen == n"
+    },
+    "test_bounded_appends[1]": {
+      "title": "test_bounded_appends[1]",
+      "code": "@pytest.mark.parametrize('n', [0, 1, 2, 5, 20])\ndef test_bounded_appends(n):\n    q = my_queue(n)\n    for i in range(12):\n        q.append(i)\n    assert list(q) == (list(range(12))[-n:] if n else [])\n    assert q.maxlen == n"
+    },
+    "test_bounded_appends[2]": {
+      "title": "test_bounded_appends[2]",
+      "code": "@pytest.mark.parametrize('n', [0, 1, 2, 5, 20])\ndef test_bounded_appends(n):\n    q = my_queue(n)\n    for i in range(12):\n        q.append(i)\n    assert list(q) == (list(range(12))[-n:] if n else [])\n    assert q.maxlen == n"
+    },
+    "test_bounded_appends[5]": {
+      "title": "test_bounded_appends[5]",
+      "code": "@pytest.mark.parametrize('n', [0, 1, 2, 5, 20])\ndef test_bounded_appends(n):\n    q = my_queue(n)\n    for i in range(12):\n        q.append(i)\n    assert list(q) == (list(range(12))[-n:] if n else [])\n    assert q.maxlen == n"
+    },
+    "test_bounded_appends[20]": {
+      "title": "test_bounded_appends[20]",
+      "code": "@pytest.mark.parametrize('n', [0, 1, 2, 5, 20])\ndef test_bounded_appends(n):\n    q = my_queue(n)\n    for i in range(12):\n        q.append(i)\n    assert list(q) == (list(range(12))[-n:] if n else [])\n    assert q.maxlen == n"
+    },
+    "test_queue_remains_bounded": {
+      "title": "test_queue_remains_bounded",
+      "code": "def test_queue_remains_bounded():\n    q = my_queue(2)\n    q.extend(['first', 'second', 'third'])\n    assert q.popleft() == 'second'\n    q.append('fourth')\n    q.append('fifth')\n    assert list(q) == ['fourth', 'fifth']"
+    },
+    "test_independent_queues": {
+      "title": "test_independent_queues",
+      "code": "def test_independent_queues():\n    a, b = my_queue(1), my_queue(1)\n    a.append('a')\n    assert list(b) == []"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public description. Python 3.11. Data is supplied offline. Use the standard library.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/keep-a-queue-of-last-n-items/)"
+  }
 }

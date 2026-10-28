@@ -6,18 +6,18 @@
   "category": "01-data-and-api",
   "examples": [
     {
-      "input": "{\"records\": [{\"id\": 3}, {\"id\": 1}, {\"id\": 2}], \"after_id\": null, \"limit\": 2}",
-      "output": "{\"items\": [{\"id\": 1}, {\"id\": 2}], \"next_cursor\": 2}",
+      "input": "paginate_records(\n    records=[{'id': 3}, {'id': 1}, {'id': 2}],\n    after_id=None,\n    limit=2\n)",
+      "output": "{'items': [{'id': 1}, {'id': 2}], 'next_cursor': 2}",
       "explanation": "sort before selecting the first page"
     },
     {
-      "input": "{\"records\": [{\"id\": 3}, {\"id\": 1}, {\"id\": 2}], \"after_id\": 1, \"limit\": 2}",
-      "output": "{\"items\": [{\"id\": 2}, {\"id\": 3}], \"next_cursor\": null}",
+      "input": "paginate_records(\n    records=[{'id': 3}, {'id': 1}, {'id': 2}],\n    after_id=1,\n    limit=2\n)",
+      "output": "{'items': [{'id': 2}, {'id': 3}], 'next_cursor': None}",
       "explanation": "cursor is exclusive and final full page has no cursor"
     },
     {
-      "input": "{\"records\": [], \"after_id\": null, \"limit\": 1}",
-      "output": "{\"items\": [], \"next_cursor\": null}",
+      "input": "paginate_records(\n    records=[],\n    after_id=None,\n    limit=1\n)",
+      "output": "{'items': [], 'next_cursor': None}",
       "explanation": "empty collection"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

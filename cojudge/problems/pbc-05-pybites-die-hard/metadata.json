@@ -6,16 +6,14 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_public_example\"}",
-      "output": "passed"
+      "input": "diehard_pybites([\"01/ada\", \"02/bob\", \"01/ada\", \"02/pybites\"])",
+      "output": "Stats(user='ada', challenge=('01', 2))",
+      "explanation": "Exclude Pybites accounts before counting users and challenges."
     },
     {
-      "input": "{\"test\": \"test_generator_and_local_file\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_exclude_team_from_both_counts\"}",
-      "output": "passed"
+      "input": "diehard_pybites([])",
+      "output": "Stats(user=None, challenge=(None, 0))",
+      "explanation": "No eligible paths produce empty statistics."
     }
   ],
   "starterCode": {
@@ -40,5 +38,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_public_example": {
+      "title": "test_public_example",
+      "code": "def test_public_example():\n    assert diehard_pybites() == Stats('santiagobenitez', ('25', 2))"
+    },
+    "test_generator_and_local_file": {
+      "title": "test_generator_and_local_file",
+      "code": "def test_generator_and_local_file(tmp_path):\n    path = tmp_path / 'paths.txt'\n    path.write_text(' 01/ana  \\n\\n02/bob\\n', encoding='utf-8')\n    assert inspect.isgeneratorfunction(gen_files)\n    result = gen_files(path)\n    assert inspect.isgenerator(result)\n    assert list(result) == ['01/ana', '02/bob']"
+    },
+    "test_exclude_team_from_both_counts": {
+      "title": "test_exclude_team_from_both_counts",
+      "code": "def test_exclude_team_from_both_counts():\n    paths = ['99/bbelderbos', '99/juliansequeira', '99/pybites', '02/ana']\n    assert diehard_pybites(paths) == Stats('ana', ('02', 1))"
+    },
+    "test_first_seen_ties": {
+      "title": "test_first_seen_ties",
+      "code": "def test_first_seen_ties():\n    assert diehard_pybites(['09/zoe', '01/ana']) == Stats('zoe', ('09', 1))"
+    },
+    "test_single_pass_iterable": {
+      "title": "test_single_pass_iterable",
+      "code": "def test_single_pass_iterable():\n    assert diehard_pybites(iter(['01/ana', '02/ana', '02/bob'])) == Stats('ana', ('02', 2))"
+    },
+    "test_no_eligible_paths": {
+      "title": "test_no_eligible_paths",
+      "code": "def test_no_eligible_paths():\n    assert diehard_pybites([]) == Stats(None, (None, 0))\n    assert diehard_pybites(['01/pybites']) == Stats(None, (None, 0))"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public description. Python 3.11. Data is supplied offline. Use the standard library.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/pybites-die-hard/)"
+  }
 }

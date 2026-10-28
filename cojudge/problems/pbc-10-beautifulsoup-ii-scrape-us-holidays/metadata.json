@@ -6,16 +6,14 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_original_table\"}",
-      "output": "passed"
+      "input": "html = '<table class=\"list-table\"><tr><td><time datetime=\"2026-01-01\"></time></td><td>Thursday</td><td>US</td><td> New Year </td></tr></table>'\ndict(get_us_bank_holidays(html))",
+      "output": "{'01': ['New Year']}",
+      "explanation": "Group the stripped holiday name under its two-digit month."
     },
     {
-      "input": "{\"test\": \"test_missing_table_and_default_factory\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_select_class_and_strip_nested_text\"}",
-      "output": "passed"
+      "input": "dict(get_us_bank_holidays(\"<p>No table</p>\"))",
+      "output": "{}",
+      "explanation": "A missing holiday table produces an empty mapping."
     }
   ],
   "starterCode": {
@@ -40,5 +38,31 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_original_table": {
+      "title": "test_original_table",
+      "code": "def test_original_table():\n    result = get_us_bank_holidays()\n    assert result == {'01': [\"New Year's Day\", 'Martin Luther King Jr. Day'],\n                      '02': [\"Presidents' Day\"], '04': ['Emancipation Day'],\n                      '05': [\"Mother's Day\", 'Memorial Day'], '06': [\"Father's Day\"],\n                      '07': ['Independence Day'], '09': ['Labor Day'], '10': ['Columbus Day'],\n                      '11': ['Veterans Day', 'Thanksgiving', 'Day after Thanksgiving'],\n                      '12': ['Christmas Day']}"
+    },
+    "test_missing_table_and_default_factory": {
+      "title": "test_missing_table_and_default_factory",
+      "code": "def test_missing_table_and_default_factory():\n    result = get_us_bank_holidays('<table><tr><td>unrelated</td></tr></table>')\n    assert isinstance(result, defaultdict) and result.default_factory is list\n    assert dict(result) == {} and result['03'] == []"
+    },
+    "test_select_class_and_strip_nested_text": {
+      "title": "test_select_class_and_strip_nested_text",
+      "code": "def test_select_class_and_strip_nested_text():\n    html = '<table><tr><td>ignore</td></tr></table><table class=\"other list-table wide\">'\n    html += '<tr><td>Day</td><td><time datetime=\"2024-03-01\">March</time></td><td>2024</td><td> <a>Spring &amp; Sun</a> </td></tr></table>'\n    assert get_us_bank_holidays(html) == {'03': ['Spring & Sun']}"
+    },
+    "test_skip_header_missing_time_and_short_rows": {
+      "title": "test_skip_header_missing_time_and_short_rows",
+      "code": "def test_skip_header_missing_time_and_short_rows():\n    html = '<table class=\"list-table\"><tr><th>Header</th></tr>'\n    html += '<tr><td>A</td><td>B</td><td>C</td><td>D</td></tr>'\n    html += '<tr><td><time datetime=\"2024-01-01\">Date</time></td></tr></table>'\n    assert dict(get_us_bank_holidays(html)) == {}"
+    },
+    "test_input_order_and_fresh_result": {
+      "title": "test_input_order_and_fresh_result",
+      "code": "def test_input_order_and_fresh_result():\n    first = get_us_bank_holidays()\n    first['01'].append('extra')\n    assert get_us_bank_holidays()['01'] == [\"New Year's Day\", 'Martin Luther King Jr. Day']"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis premium exercise uses recreated tests and the original cached holiday table. The judge has no BeautifulSoup package. The template supplies a small standard-library adapter named BeautifulSoup. It supports find/find_all(name, class_=...), get, get_text(strip=...), and text. It is limited to the well-formed HTML in this version. Python 3.11. Data is supplied offline. Use the standard library.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/beautifulsoup-ii-scrape-us-holidays/)"
+  }
 }

@@ -6,19 +6,9 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_empty_zoo\"}",
-      "output": "passed",
-      "explanation": "Test test_empty_zoo must pass."
-    },
-    {
-      "input": "{\"test\": \"test_zoo_string\"}",
-      "output": "passed",
-      "explanation": "Test test_zoo_string must pass."
-    },
-    {
-      "input": "{\"test\": \"test_next_animal_continues_the_sequence\"}",
-      "output": "passed",
-      "explanation": "Test test_next_animal_continues_the_sequence must pass."
+      "input": "Animal(\"lion\")\nAnimal(\"red panda\")\nAnimal.zoo()",
+      "output": "'10001. Lion\\n10002. Red Panda'",
+      "explanation": "A new zoo assigns consecutive IDs in creation order."
     }
   ],
   "starterCode": {
@@ -43,5 +33,47 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_empty_zoo": {
+      "title": "test_empty_zoo",
+      "code": "def test_empty_zoo():\n    assert Animal.zoo() == ''"
+    },
+    "test_zoo_string": {
+      "title": "test_zoo_string",
+      "code": "def test_zoo_string():\n    dog = Animal('dog')\n    cat = Animal('cat')\n    fish = Animal('fish')\n    lion = Animal('lion')\n    mouse = Animal('mouse')\n    assert str(dog) == '10001. Dog'\n    assert str(mouse) == '10005. Mouse'\n    zoo = Animal.zoo()\n    assert zoo == '\\n'.join(['10001. Dog', '10002. Cat', '10003. Fish',\n                              '10004. Lion', '10005. Mouse'])"
+    },
+    "test_next_animal_continues_the_sequence": {
+      "title": "test_next_animal_continues_the_sequence",
+      "code": "def test_next_animal_continues_the_sequence():\n    horse = Animal('horse')\n    assert str(horse) == '10006. Horse'\n    assert Animal.zoo().splitlines()[-1] == '10006. Horse'\n    assert len(Animal.zoo().splitlines()) == 6"
+    },
+    "test_title_case": {
+      "title": "test_title_case",
+      "code": "def test_title_case():\n    leopard = Animal('snow leopard')\n    assert str(leopard) == '10007. Snow Leopard'"
+    },
+    "test_zoo_is_a_classmethod": {
+      "title": "test_zoo_is_a_classmethod",
+      "code": "def test_zoo_is_a_classmethod():\n    assert isinstance(Animal.__dict__['zoo'], classmethod)"
+    },
+    "test_sequence_is_shared_by_all_instances": {
+      "title": "test_sequence_is_shared_by_all_instances",
+      "code": "def test_sequence_is_shared_by_all_instances():\n    first, second = Animal('ant'), Animal('bee')\n    number = int(str(first).split('.')[0])\n    assert str(second) == f'{number + 1}. Bee'"
+    },
+    "test_duplicate_names_are_distinct_animals": {
+      "title": "test_duplicate_names_are_distinct_animals",
+      "code": "def test_duplicate_names_are_distinct_animals():\n    first, second = Animal('DOG'), Animal('DOG')\n    number = int(str(first).split('.')[0])\n    assert str(first) == f'{number}. Dog'\n    assert str(second) == f'{number + 1}. Dog'\n    assert Animal.zoo().splitlines()[-2:] == [str(first), str(second)]"
+    },
+    "test_reading_zoo_and_str_does_not_change_sequence": {
+      "title": "test_reading_zoo_and_str_does_not_change_sequence",
+      "code": "def test_reading_zoo_and_str_does_not_change_sequence():\n    first = Animal('parrot')\n    text = str(first)\n    snapshot = Animal.zoo()\n    assert str(first) == text\n    assert Animal.zoo() == snapshot\n    second = Animal('owl')\n    number = int(text.split('.')[0])\n    assert str(second) == f'{number + 1}. Owl'\n    assert str(first) == text"
+    },
+    "test_empty_and_spaced_names_preserve_spacing": {
+      "title": "test_empty_and_spaced_names_preserve_spacing",
+      "code": "def test_empty_and_spaced_names_preserve_spacing():\n    empty, spaced = Animal(''), Animal('  sNOW leopard  ')\n    number = int(str(empty).split('.')[0])\n    assert str(empty) == f'{number}. '\n    assert str(spaced) == f'{number + 1}.   Snow Leopard  '\n    assert Animal.zoo().endswith(str(empty) + '\\n' + str(spaced))"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/oop-fun-at-the-zoo/)"
+  }
 }

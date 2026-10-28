@@ -10,16 +10,8 @@
   },
   "examples": [
     {
-      "input": "{\"test\": \"test_count[0]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_count[1]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_count[5]\"}",
-      "output": "passed"
+      "input": "from typer.testing import CliRunner\nrunner = CliRunner()\nresult = runner.invoke(app, [\"3\", \"--label\", \"Importing\"])\nprint(result.exit_code)\nprint(result.output, end=\"\")",
+      "output": "0\nImporting\nProcessed 3 items"
     }
   ],
   "testCases": [
@@ -41,5 +33,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_count[0]": {
+      "title": "test_count[0]",
+      "code": "@pytest.mark.parametrize(\"count\", [0, 1, 5, 100])\ndef test_count(count):\n    result = invoke([str(count)])\n    assert result.exit_code == 0, result.output\n    assert f\"Processed {count} items\" in result.output"
+    },
+    "test_count[1]": {
+      "title": "test_count[1]",
+      "code": "@pytest.mark.parametrize(\"count\", [0, 1, 5, 100])\ndef test_count(count):\n    result = invoke([str(count)])\n    assert result.exit_code == 0, result.output\n    assert f\"Processed {count} items\" in result.output"
+    },
+    "test_count[5]": {
+      "title": "test_count[5]",
+      "code": "@pytest.mark.parametrize(\"count\", [0, 1, 5, 100])\ndef test_count(count):\n    result = invoke([str(count)])\n    assert result.exit_code == 0, result.output\n    assert f\"Processed {count} items\" in result.output"
+    },
+    "test_count[100]": {
+      "title": "test_count[100]",
+      "code": "@pytest.mark.parametrize(\"count\", [0, 1, 5, 100])\ndef test_count(count):\n    result = invoke([str(count)])\n    assert result.exit_code == 0, result.output\n    assert f\"Processed {count} items\" in result.output"
+    },
+    "test_invalid_count[args0]": {
+      "title": "test_invalid_count[args0]",
+      "code": "@pytest.mark.parametrize(\"args\", [[\"--\", \"-1\"], [\"101\"], [\"abc\"]])\ndef test_invalid_count(args):\n    assert invoke(args).exit_code != 0"
+    },
+    "test_invalid_count[args1]": {
+      "title": "test_invalid_count[args1]",
+      "code": "@pytest.mark.parametrize(\"args\", [[\"--\", \"-1\"], [\"101\"], [\"abc\"]])\ndef test_invalid_count(args):\n    assert invoke(args).exit_code != 0"
+    },
+    "test_invalid_count[args2]": {
+      "title": "test_invalid_count[args2]",
+      "code": "@pytest.mark.parametrize(\"args\", [[\"--\", \"-1\"], [\"101\"], [\"abc\"]])\ndef test_invalid_count(args):\n    assert invoke(args).exit_code != 0"
+    },
+    "test_progress_iterates_all_items_with_custom_label": {
+      "title": "test_progress_iterates_all_items_with_custom_label",
+      "code": "def test_progress_iterates_all_items_with_custom_label(monkeypatch):\n    original = typer.progressbar\n    seen, labels = [], []\n    def observe(iterable, **kwargs):\n        labels.append(kwargs.get(\"label\"))\n        def values():\n            for value in iterable:\n                seen.append(value)\n                yield value\n        return original(values(), length=4, **kwargs)\n    monkeypatch.setattr(typer, \"progressbar\", observe)\n    result = invoke([\"4\", \"--label\", \"Importing\"])\n    assert result.exit_code == 0, result.output\n    assert seen == [0, 1, 2, 3] and labels == [\"Importing\"]\n    assert \"Importing\" in result.output"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. Real Typer, Click, and Rich packages are bundled for offline use. Use Run and Submit; the playground and debugger do not load the library archive. Keep script entry points inside `if __name__ == \"__main__\":`. The runner supports the pytest features used by the supplied tests. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/add-a-progress-bar-to-your-command-line-interface-cli/)"
+  }
 }

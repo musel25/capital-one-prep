@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_case_01\"}",
-      "output": "passed"
+      "input": "get_age(Actor('Wesley Snipes', 'July 31, 1962'), Movie('New Jack City', 'January 17, 1991'))",
+      "output": "'Wesley Snipes was 28 years old when New Jack City came out.'"
     },
     {
-      "input": "{\"test\": \"test_case_02\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_case_03\"}",
-      "output": "passed"
+      "input": "get_age(Actor('Jennifer Aniston', 'February 11, 1969'), Movie('Horrible Bosses', 'September 16, 2011'))",
+      "output": "'Jennifer Aniston was 42 years old when Horrible Bosses came out.'"
     }
   ],
   "starterCode": {
@@ -40,5 +36,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_case_01": {
+      "title": "test_case_01",
+      "code": "def test_case_01():\n    assert (get_age(Actor('Wesley Snipes', 'July 31, 1962'), Movie('New Jack City', 'January 17, 1991'))) == 'Wesley Snipes was 28 years old when New Jack City came out.'"
+    },
+    "test_case_02": {
+      "title": "test_case_02",
+      "code": "def test_case_02():\n    assert (get_age(Actor('Jennifer Aniston', 'February 11, 1969'), Movie('Horrible Bosses', 'September 16, 2011'))) == 'Jennifer Aniston was 42 years old when Horrible Bosses came out.'"
+    },
+    "test_case_03": {
+      "title": "test_case_03",
+      "code": "def test_case_03():\n    assert (get_age(Actor('A', 'May 10, 2000'), Movie('B', 'May 10, 2020'))) == 'A was 20 years old when B came out.'"
+    },
+    "test_case_04": {
+      "title": "test_case_04",
+      "code": "def test_case_04():\n    assert (get_age(Actor('A', 'May 10, 2000'), Movie('B', 'May 9, 2020'))) == 'A was 19 years old when B came out.'"
+    },
+    "test_case_05": {
+      "title": "test_case_05",
+      "code": "def test_case_05():\n    assert (get_age(Actor('A', 'February 29, 2000'), Movie('B', 'February 28, 2021'))) == 'A was 20 years old when B came out.'"
+    },
+    "test_case_06": {
+      "title": "test_case_06",
+      "code": "def test_case_06():\n    assert (get_age(Actor('A', 'February 29, 2000'), Movie('B', 'March 1, 2021'))) == 'A was 21 years old when B came out.'"
+    },
+    "test_release_before_birth": {
+      "title": "test_release_before_birth",
+      "code": "def test_release_before_birth():\n    with pytest.raises(ValueError):\n        get_age(Actor('A', 'May 10, 2000'), Movie('B', 'May 9, 2000'))"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/actoractress-age-at-movie-release/)"
+  }
 }

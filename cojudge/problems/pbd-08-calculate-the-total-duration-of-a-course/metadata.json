@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_case_01\"}",
-      "output": "passed"
+      "input": "get_total_duration('Intro 00:59\\nNext 00:01')",
+      "output": "'00:01:00'"
     },
     {
-      "input": "{\"test\": \"test_case_02\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_case_03\"}",
-      "output": "passed"
+      "input": "get_total_duration('120:30')",
+      "output": "'02:00:30'"
     }
   ],
   "starterCode": {
@@ -40,5 +36,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_case_01": {
+      "title": "test_case_01",
+      "code": "def test_case_01():\n    assert (get_total_duration('')) == '00:00:00'"
+    },
+    "test_case_02": {
+      "title": "test_case_02",
+      "code": "def test_case_02():\n    assert (get_total_duration('Intro 00:59\\nNext 00:01')) == '00:01:00'"
+    },
+    "test_case_03": {
+      "title": "test_case_03",
+      "code": "def test_case_03():\n    assert (get_total_duration('59:59\\n00:01')) == '01:00:00'"
+    },
+    "test_case_04": {
+      "title": "test_case_04",
+      "code": "def test_case_04():\n    assert (get_total_duration('120:30')) == '02:00:30'"
+    },
+    "test_case_05": {
+      "title": "test_case_05",
+      "code": "def test_case_05():\n    assert (get_total_duration('6000:00\\n\\n00:01')) == '100:00:01'"
+    },
+    "test_invalid_seconds": {
+      "title": "test_invalid_seconds",
+      "code": "def test_invalid_seconds():\n    with pytest.raises(ValueError):\n        get_total_duration('01:60')"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/calculate-the-total-duration-of-a-course/)"
+  }
 }

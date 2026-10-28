@@ -6,19 +6,14 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_record_score\"}",
-      "output": "passed",
-      "explanation": "Test test_record_score must pass."
+      "input": "record = RecordScore()\n[record(score) for score in [10, 8, 15, 15]]",
+      "output": "[10, 10, 15, 15]",
+      "explanation": "Each call returns the highest score so far."
     },
     {
-      "input": "{\"test\": \"test_negative_numbers\"}",
-      "output": "passed",
-      "explanation": "Test test_negative_numbers must pass."
-    },
-    {
-      "input": "{\"test\": \"test_first_score_is_the_record\"}",
-      "output": "passed",
-      "explanation": "Test test_first_score_is_the_record must pass."
+      "input": "record = RecordScore()\n[record(score) for score in [-8, -3, -10]]",
+      "output": "[-8, -3, -3]",
+      "explanation": "The first score sets the record even when negative."
     }
   ],
   "starterCode": {
@@ -43,5 +38,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_record_score": {
+      "title": "test_record_score",
+      "code": "def test_record_score():\n    record = RecordScore()\n    assert record(10) == 10\n    assert record(9) == 10\n    assert record(11) == 11\n    assert record(5) == 11"
+    },
+    "test_negative_numbers": {
+      "title": "test_negative_numbers",
+      "code": "def test_negative_numbers():\n    record = RecordScore()\n    assert record(-5) == -5\n    assert record(-10) == -5\n    assert record(-2) == -2"
+    },
+    "test_first_score_is_the_record": {
+      "title": "test_first_score_is_the_record",
+      "code": "def test_first_score_is_the_record():\n    assert RecordScore()(-100) == -100\n    assert RecordScore()(0) == 0"
+    },
+    "test_instances_keep_their_own_record": {
+      "title": "test_instances_keep_their_own_record",
+      "code": "def test_instances_keep_their_own_record():\n    one, two = RecordScore(), RecordScore()\n    assert one(50) == 50\n    assert two(3) == 3\n    assert one(4) == 50\n    assert two(2) == 3"
+    },
+    "test_instance_is_callable": {
+      "title": "test_instance_is_callable",
+      "code": "def test_instance_is_callable():\n    record = RecordScore()\n    assert callable(record)\n    assert \"__call__\" in RecordScore.__dict__"
+    },
+    "test_zero_record_is_not_replaced_by_a_negative_score": {
+      "title": "test_zero_record_is_not_replaced_by_a_negative_score",
+      "code": "def test_zero_record_is_not_replaced_by_a_negative_score():\n    record = RecordScore()\n    assert record(0) == 0\n    assert record(-1) == 0\n    assert record(0) == 0"
+    },
+    "test_fractional_scores_and_ties": {
+      "title": "test_fractional_scores_and_ties",
+      "code": "def test_fractional_scores_and_ties():\n    record = RecordScore()\n    assert record(-0.5) == -0.5\n    assert record(0.25) == 0.25\n    assert record(0.125) == 0.25\n    assert record(0.25) == 0.25\n    assert record(1) == 1"
+    },
+    "test_arbitrarily_large_integer_scores": {
+      "title": "test_arbitrarily_large_integer_scores",
+      "code": "def test_arbitrarily_large_integer_scores():\n    record = RecordScore()\n    assert record(-(10 ** 100)) == -(10 ** 100)\n    assert record(10 ** 100) == 10 ** 100\n    assert record(1) == 10 ** 100"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/keep-state-in-a-class-make-its-instance-callable/)"
+  }
 }

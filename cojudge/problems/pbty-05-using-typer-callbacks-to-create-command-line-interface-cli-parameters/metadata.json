@@ -10,16 +10,8 @@
   },
   "examples": [
     {
-      "input": "{\"test\": \"test_callback_output[args0-8]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_callback_output[args1-The sum is 8]\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_callback_output[args2-The sum is 0]\"}",
-      "output": "passed"
+      "input": "from typer.testing import CliRunner\nrunner = CliRunner()\nprint(runner.invoke(app, [\"sum\", \"3\", \"5\"]).output, end=\"\")\nprint(runner.invoke(app, [\"--verbose\", \"sum\", \"3\", \"5\"]).output, end=\"\")",
+      "output": "8\nThe sum is 8"
     }
   ],
   "testCases": [
@@ -41,5 +33,55 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_callback_output[args0-8]": {
+      "title": "test_callback_output[args0-8]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"8\"),\n    ([\"--verbose\", \"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"-v\", \"sum\", \"0\", \"0\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"-1\"), ([\"compare\", \"5\", \"3\"], \"1\"),\n    ([\"compare\", \"3\", \"3\"], \"0\"),\n    ([\"--verbose\", \"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"-v\", \"compare\", \"5\", \"3\"], \"c=5 is greater than d=3\"),\n    ([\"-v\", \"compare\", \"3\", \"3\"], \"c=3 is equal to d=3\")])\ndef test_callback_output(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_callback_output[args1-The sum is 8]": {
+      "title": "test_callback_output[args1-The sum is 8]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"8\"),\n    ([\"--verbose\", \"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"-v\", \"sum\", \"0\", \"0\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"-1\"), ([\"compare\", \"5\", \"3\"], \"1\"),\n    ([\"compare\", \"3\", \"3\"], \"0\"),\n    ([\"--verbose\", \"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"-v\", \"compare\", \"5\", \"3\"], \"c=5 is greater than d=3\"),\n    ([\"-v\", \"compare\", \"3\", \"3\"], \"c=3 is equal to d=3\")])\ndef test_callback_output(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_callback_output[args2-The sum is 0]": {
+      "title": "test_callback_output[args2-The sum is 0]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"8\"),\n    ([\"--verbose\", \"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"-v\", \"sum\", \"0\", \"0\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"-1\"), ([\"compare\", \"5\", \"3\"], \"1\"),\n    ([\"compare\", \"3\", \"3\"], \"0\"),\n    ([\"--verbose\", \"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"-v\", \"compare\", \"5\", \"3\"], \"c=5 is greater than d=3\"),\n    ([\"-v\", \"compare\", \"3\", \"3\"], \"c=3 is equal to d=3\")])\ndef test_callback_output(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_callback_output[args3--1]": {
+      "title": "test_callback_output[args3--1]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"8\"),\n    ([\"--verbose\", \"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"-v\", \"sum\", \"0\", \"0\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"-1\"), ([\"compare\", \"5\", \"3\"], \"1\"),\n    ([\"compare\", \"3\", \"3\"], \"0\"),\n    ([\"--verbose\", \"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"-v\", \"compare\", \"5\", \"3\"], \"c=5 is greater than d=3\"),\n    ([\"-v\", \"compare\", \"3\", \"3\"], \"c=3 is equal to d=3\")])\ndef test_callback_output(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_callback_output[args4-1]": {
+      "title": "test_callback_output[args4-1]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"8\"),\n    ([\"--verbose\", \"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"-v\", \"sum\", \"0\", \"0\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"-1\"), ([\"compare\", \"5\", \"3\"], \"1\"),\n    ([\"compare\", \"3\", \"3\"], \"0\"),\n    ([\"--verbose\", \"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"-v\", \"compare\", \"5\", \"3\"], \"c=5 is greater than d=3\"),\n    ([\"-v\", \"compare\", \"3\", \"3\"], \"c=3 is equal to d=3\")])\ndef test_callback_output(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_callback_output[args5-0]": {
+      "title": "test_callback_output[args5-0]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"8\"),\n    ([\"--verbose\", \"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"-v\", \"sum\", \"0\", \"0\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"-1\"), ([\"compare\", \"5\", \"3\"], \"1\"),\n    ([\"compare\", \"3\", \"3\"], \"0\"),\n    ([\"--verbose\", \"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"-v\", \"compare\", \"5\", \"3\"], \"c=5 is greater than d=3\"),\n    ([\"-v\", \"compare\", \"3\", \"3\"], \"c=3 is equal to d=3\")])\ndef test_callback_output(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_callback_output[args6-d=5 is greater than c=3]": {
+      "title": "test_callback_output[args6-d=5 is greater than c=3]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"8\"),\n    ([\"--verbose\", \"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"-v\", \"sum\", \"0\", \"0\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"-1\"), ([\"compare\", \"5\", \"3\"], \"1\"),\n    ([\"compare\", \"3\", \"3\"], \"0\"),\n    ([\"--verbose\", \"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"-v\", \"compare\", \"5\", \"3\"], \"c=5 is greater than d=3\"),\n    ([\"-v\", \"compare\", \"3\", \"3\"], \"c=3 is equal to d=3\")])\ndef test_callback_output(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_callback_output[args7-c=5 is greater than d=3]": {
+      "title": "test_callback_output[args7-c=5 is greater than d=3]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"8\"),\n    ([\"--verbose\", \"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"-v\", \"sum\", \"0\", \"0\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"-1\"), ([\"compare\", \"5\", \"3\"], \"1\"),\n    ([\"compare\", \"3\", \"3\"], \"0\"),\n    ([\"--verbose\", \"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"-v\", \"compare\", \"5\", \"3\"], \"c=5 is greater than d=3\"),\n    ([\"-v\", \"compare\", \"3\", \"3\"], \"c=3 is equal to d=3\")])\ndef test_callback_output(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_callback_output[args8-c=3 is equal to d=3]": {
+      "title": "test_callback_output[args8-c=3 is equal to d=3]",
+      "code": "@pytest.mark.parametrize(\"args, expected\", [([\"sum\", \"3\", \"5\"], \"8\"),\n    ([\"--verbose\", \"sum\", \"3\", \"5\"], \"The sum is 8\"),\n    ([\"-v\", \"sum\", \"0\", \"0\"], \"The sum is 0\"),\n    ([\"compare\", \"3\", \"5\"], \"-1\"), ([\"compare\", \"5\", \"3\"], \"1\"),\n    ([\"compare\", \"3\", \"3\"], \"0\"),\n    ([\"--verbose\", \"compare\", \"3\", \"5\"], \"d=5 is greater than c=3\"),\n    ([\"-v\", \"compare\", \"5\", \"3\"], \"c=5 is greater than d=3\"),\n    ([\"-v\", \"compare\", \"3\", \"3\"], \"c=3 is equal to d=3\")])\ndef test_callback_output(args, expected):\n    result = invoke(args)\n    assert result.exit_code == 0, result.output\n    assert result.output.strip() == expected"
+    },
+    "test_verbose_does_not_leak_between_invocations": {
+      "title": "test_verbose_does_not_leak_between_invocations",
+      "code": "def test_verbose_does_not_leak_between_invocations():\n    assert invoke([\"--verbose\", \"sum\", \"1\", \"2\"]).output.strip() == \"The sum is 3\"\n    assert invoke([\"sum\", \"1\", \"2\"]).output.strip() == \"3\""
+    },
+    "test_unknown_root_option": {
+      "title": "test_unknown_root_option",
+      "code": "def test_unknown_root_option():\n    assert invoke([\"--unknown\", \"sum\", \"1\", \"2\"]).exit_code != 0"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. Real Typer, Click, and Rich packages are bundled for offline use. Use Run and Submit; the playground and debugger do not load the library archive. Keep script entry points inside `if __name__ == \"__main__\":`. The runner supports the pytest features used by the supplied tests. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/using-typer-callbacks-to-create-command-line-interface-cli-parameters/)"
+  }
 }

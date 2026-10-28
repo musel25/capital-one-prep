@@ -1,14 +1,3 @@
-# 23. Calculate a coding streak in days
-
-[Course list](/?course=pybites-datetimes-timezones) · [Original bite](https://pybitesplatform.com/bites/calculate-a-coding-streak-in-days/)
-
-extract_dates(text) returns a list of date objects from pipe-table rows whose first cell is YYYY-MM-DD. Ignore headers and borders. Keep duplicates and input order. Invalid ISO-shaped dates raise ValueError. calculate_streak(dates, today=TODAY) returns consecutive unique coding days ending today, or yesterday if today is absent. If both are absent, return 0. Ignore future dates. TODAY is fixed at date(2018, 11, 12).
-
-**Source and offline changes:** The premium template and tests are not available in this account. This version uses a recreated template and tests based on the public description.
-
-<details>
-<summary>Original public description</summary>
-
 In this Bite you are going to calculate the amount of days you are on a coding streak (consecutive days coded. You are presented with this DB table like output of date/activity/count:
 
 ```python
@@ -37,12 +26,6 @@ Here is what you need to do:
 
 Have fun and keep calm and code in Python. Join our Circle community to learn and share more Python with other passionate Pythonistas.
 
-</details>
+**Constraints:**
 
-Write your implementation at the top of the editor. The tests below it import your code as
-`coding_streak`. **Run** checks the first three tests. **Submit** checks all 9 tests.
-A failed test shows its name, error, and test line.
-
-- Python 3.11. Use the standard library. All required data is supplied. No network access.
-- Keep the supplied tests and runner. Implement the functions above them.
-- For a saved solution, use **+** beside the editor tabs to open the current template in a new tab.
+- Keep duplicate dates when extracting; count unique dates for the streak and ignore future dates.

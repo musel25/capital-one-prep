@@ -6,18 +6,18 @@
   "category": "02-clients-and-reliability",
   "examples": [
     {
-      "input": "{\"value\": {\"user\": \"sam\", \"password\": \"abc\"}}",
-      "output": "{\"user\": \"sam\", \"password\": \"[REDACTED]\"}",
+      "input": "redact_secrets(\n    value={'user': 'sam', 'password': 'abc'}\n)",
+      "output": "{'user': 'sam', 'password': '[REDACTED]'}",
       "explanation": "redact a top-level password"
     },
     {
-      "input": "{\"value\": {\"Token\": \"abc\", \"SECRET\": null}}",
-      "output": "{\"Token\": \"[REDACTED]\", \"SECRET\": \"[REDACTED]\"}",
+      "input": "redact_secrets(\n    value={'Token': 'abc', 'SECRET': None}\n)",
+      "output": "{'Token': '[REDACTED]', 'SECRET': '[REDACTED]'}",
       "explanation": "case-insensitive secret key matching"
     },
     {
-      "input": "{\"value\": {\"profile\": {\"password\": \"abc\"}, \"events\": [{\"token\": 42}, \"ok\"]}}",
-      "output": "{\"profile\": {\"password\": \"[REDACTED]\"}, \"events\": [{\"token\": \"[REDACTED]\"}, \"ok\"]}",
+      "input": "redact_secrets(\n    value={'profile': {'password': 'abc'}, 'events': [{'token': 42}, 'ok']}\n)",
+      "output": "{'profile': {'password': '[REDACTED]'}, 'events': [{'token': '[REDACTED]'}, 'ok']}",
       "explanation": "recurse through objects and arrays"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

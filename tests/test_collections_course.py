@@ -38,7 +38,8 @@ def test_builder_writes_a_complete_python_only_problem(tmp_path):
     assert metadata['functionName'] == 'run'
     assert len(metadata['testCases']) == 3
     assert len(json.loads((folder / 'official-tests.json').read_text())) == record['cases']
-    assert 'pybites-collections' in (folder / 'statement.md').read_text()
+    assert metadata['testCaseDescriptions'][record['tests'][0]]['code'] in spec['tests']
+    assert metadata['examples'][0]['output'] == '[3, 4, 5]'
 
 
 def test_equivalent_mutation_is_rejected_by_verifier():

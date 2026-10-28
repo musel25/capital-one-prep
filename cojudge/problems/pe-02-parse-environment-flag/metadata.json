@@ -6,18 +6,18 @@
   "category": "01-data-and-api",
   "examples": [
     {
-      "input": "{\"value\": \" true \", \"default\": false}",
-      "output": "true",
+      "input": "parse_flag(\n    value=' true ',\n    default=False\n)",
+      "output": "True",
       "explanation": "trim truthy value"
     },
     {
-      "input": "{\"value\": \"OFF\", \"default\": true}",
-      "output": "false",
+      "input": "parse_flag(\n    value='OFF',\n    default=True\n)",
+      "output": "False",
       "explanation": "case insensitive false"
     },
     {
-      "input": "{\"value\": null, \"default\": true}",
-      "output": "true",
+      "input": "parse_flag(\n    value=None,\n    default=True\n)",
+      "output": "True",
       "explanation": "missing uses true default"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

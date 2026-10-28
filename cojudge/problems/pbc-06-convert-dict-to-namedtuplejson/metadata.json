@@ -6,16 +6,14 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_dict2nt\"}",
-      "output": "passed"
+      "input": "record = dict2nt({\"name\": \"Ada\", \"score\": 7})\n(record.name, record.score, record._fields)",
+      "output": "('Ada', 7, ('name', 'score'))",
+      "explanation": "Dictionary order becomes namedtuple field order."
     },
     {
-      "input": "{\"test\": \"test_nt2json\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_custom_fields_and_order\"}",
-      "output": "passed"
+      "input": "nt2json(dict2nt({\"name\": \"Ada\", \"score\": 7}))",
+      "output": "'{\"name\": \"Ada\", \"score\": 7}'",
+      "explanation": "Namedtuple fields become JSON object keys."
     }
   ],
   "starterCode": {
@@ -40,5 +38,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_dict2nt": {
+      "title": "test_dict2nt",
+      "code": "def test_dict2nt():\n    assert nt.name == 'PyBites'\n    assert nt.founders[1] == 'Bob'\n    assert nt.tags[2] == 'Learn by Doing'\n    assert nt.started.year == 2016\n\n    assert nt.__class__.__base__ == tuple\n    assert hasattr(nt, '_asdict')"
+    },
+    "test_nt2json": {
+      "title": "test_nt2json",
+      "code": "def test_nt2json():\n    output = nt2json(nt)\n    assert type(output) == str\n\n    data = json.loads(output)\n    assert data['name'] == 'PyBites'\n    assert data['founders'][0] == 'Julian'\n    assert data['tags'][0] == 'Python'\n    assert data['started'][:4] == '2016'"
+    },
+    "test_custom_fields_and_order": {
+      "title": "test_custom_fields_and_order",
+      "code": "def test_custom_fields_and_order():\n    data = {'z': 3, 'a': ['x']}\n    record = dict2nt(data)\n    assert record._fields == ('z', 'a') and record.z == 3 and record.a == ['x']\n    assert data == {'z': 3, 'a': ['x']}"
+    },
+    "test_empty_record": {
+      "title": "test_empty_record",
+      "code": "def test_empty_record():\n    record = dict2nt({})\n    assert record._fields == () and json.loads(nt2json(record)) == {}"
+    },
+    "test_json_types": {
+      "title": "test_json_types",
+      "code": "def test_json_types():\n    data = {'active': True, 'missing': None, 'nested': {'x': [1, 2]}}\n    assert json.loads(nt2json(dict2nt(data))) == data"
+    },
+    "test_distinct_schemas": {
+      "title": "test_distinct_schemas",
+      "code": "def test_distinct_schemas():\n    one, two = dict2nt({'x': 1}), dict2nt({'y': 2})\n    assert one.x == 1 and two.y == 2 and not hasattr(two, 'x')"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis version keeps the original free template and tests, with added boundary tests. Python 3.11. Data is supplied offline. Use the standard library.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/convert-dict-to-namedtuplejson/)"
+  }
 }

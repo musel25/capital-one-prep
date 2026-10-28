@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_read_json_files_in_order\"}",
-      "output": "passed"
+      "input": "movies = [{'Title': 'A', 'Genre': 'Drama', 'Awards': '2 nominations.', 'Runtime': '90 min'},\n          {'Title': 'B', 'Genre': 'Drama, Comedy', 'Awards': '10 nominations.', 'Runtime': '120 min'}]\nget_single_comedy(movies)",
+      "output": "{'Title': 'B', 'Genre': 'Drama, Comedy', 'Awards': '10 nominations.', 'Runtime': '120 min'}"
     },
     {
-      "input": "{\"test\": \"test_comedy_token_and_first_match\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_numeric_nominations_and_other_awards\"}",
-      "output": "passed"
+      "input": "movies = [{'Title': 'A', 'Genre': 'Drama', 'Awards': '2 wins & 9 nominations.', 'Runtime': '100 min'},\n          {'Title': 'B', 'Genre': 'Comedy', 'Awards': '20 wins & 2 nominations.', 'Runtime': '90 min'}]\nget_movie_most_nominations(movies)",
+      "output": "{'Title': 'A', 'Genre': 'Drama', 'Awards': '2 wins & 9 nominations.', 'Runtime': '100 min'}"
     }
   ],
   "starterCode": {
@@ -40,5 +36,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_read_json_files_in_order": {
+      "title": "test_read_json_files_in_order",
+      "code": "def test_read_json_files_in_order(tmp_path):\n    data = [movie('Caf\u00e9', 'Drama, Comedy', '3 nominations.', '90 min'), movie('Long', runtime='120 min')]\n    files = []\n    for index, row in enumerate(data):\n        path = tmp_path / f'movie{index}.json'\n        path.write_text(json.dumps(row, ensure_ascii=False), encoding='utf-8')\n        files.append(str(path) if index == 0 else path)\n    assert get_movie_data(files) == data"
+    },
+    "test_comedy_token_and_first_match": {
+      "title": "test_comedy_token_and_first_match",
+      "code": "def test_comedy_token_and_first_match():\n    rows = [movie('Wrong', 'ComedyDrama'), movie('First', 'Drama, Comedy, Romance'), movie('Second', 'Comedy')]\n    assert get_single_comedy(rows) == rows[1]\n    assert get_single_comedy([movie('No comedy', 'comedy')]) is None"
+    },
+    "test_numeric_nominations_and_other_awards": {
+      "title": "test_numeric_nominations_and_other_awards",
+      "code": "def test_numeric_nominations_and_other_awards():\n    rows = [movie('Wins', awards='Won 2 Oscars. 100 wins & 9 nominations.'), movie('Nominations', awards='1 win & 12 nominations.')]\n    assert get_movie_most_nominations(rows) == rows[1]"
+    },
+    "test_singular_and_repeated_nomination_phrases": {
+      "title": "test_singular_and_repeated_nomination_phrases",
+      "code": "def test_singular_and_repeated_nomination_phrases():\n    rows = [movie('One', awards='1 nomination.'), movie('Sum', awards='2 nominations. Another 3 nominations.'), movie('Four', awards='4 nominations.')]\n    assert get_movie_most_nominations(rows) == rows[1]"
+    },
+    "test_unknown_awards_and_first_tie": {
+      "title": "test_unknown_awards_and_first_tie",
+      "code": "def test_unknown_awards_and_first_tie():\n    rows = [movie('First'), movie('Second', awards='7 wins.')]\n    assert get_movie_most_nominations(rows) == rows[0]\n    rows = [movie('First', awards='4 nominations.'), movie('Second', awards='4 nominations.')]\n    assert get_movie_most_nominations(rows) == rows[0]"
+    },
+    "test_numeric_runtime_and_unknown": {
+      "title": "test_numeric_runtime_and_unknown",
+      "code": "def test_numeric_runtime_and_unknown():\n    rows = [movie('Unknown'), movie('Short', runtime='99 min'), movie('Long', runtime='100 min')]\n    assert get_movie_longest_runtime(rows) == rows[2]\n    assert get_movie_longest_runtime(rows[:1]) is None"
+    },
+    "test_zero_runtime_tie_and_inputs_unchanged": {
+      "title": "test_zero_runtime_tie_and_inputs_unchanged",
+      "code": "def test_zero_runtime_tie_and_inputs_unchanged():\n    rows = [movie('First', 'Comedy', runtime='0 min'), movie('Second', 'Comedy', runtime='0 min')]\n    before = [dict(row) for row in rows]\n    assert get_movie_longest_runtime(rows) == rows[0]\n    get_single_comedy(rows)\n    get_movie_most_nominations(rows)\n    assert rows == before"
+    },
+    "test_empty_inputs": {
+      "title": "test_empty_inputs",
+      "code": "def test_empty_inputs():\n    assert get_movie_data([]) == []\n    assert get_single_comedy([]) is None\n    assert get_movie_most_nominations([]) is None\n    assert get_movie_longest_runtime([]) is None"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\nThe premium template and tests are recreated. Tests write small constructed OMDb-style JSON files locally. Award parsing and empty-input rules are explicit for this version; no external data download is required.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/parse-omdb-movie-json-data/)"
+  }
 }

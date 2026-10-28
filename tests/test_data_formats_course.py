@@ -45,7 +45,7 @@ def test_builder_writes_complete_problem_and_original_link(tmp_path):
     assert meta['link'].startswith('https://pybitesplatform.com/bites/')
     assert len(meta['testCases']) == 3
     assert len(json.loads((folder / 'official-tests.json').read_text())) == result['cases']
-    assert 'pybites-data-formats' in (folder / 'statement.md').read_text()
+    assert 'pybites-data-formats' in meta['courseHelp']['body']
 
 
 def test_available_free_tests_are_preserved_before_added_cases():

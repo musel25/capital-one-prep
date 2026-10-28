@@ -6,16 +6,8 @@
   "category": "pytest",
   "examples": [
     {
-      "input": "{\"check\": \"baseline\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"accept booleans\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"reject zero digit\"}",
-      "output": "passed"
+      "input": "from digits import *\nprint(list_to_decimal([0, 4, 2, 8]))\nprint(list_to_decimal([]))",
+      "output": "428\n0"
     }
   ],
   "starterCode": {
@@ -44,5 +36,35 @@
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "baseline": {
+      "title": "Correct code: tests pass and cover at least 90%",
+      "code": "def list_to_decimal(digits):\n    result = 0\n    for digit in digits:\n        if type(digit) is not int:\n            raise TypeError('digits must be integers')\n        if not 0 <= digit <= 9:\n            raise ValueError('digits must be in range 0..9')\n        result = result * 10 + digit\n    return result"
+    },
+    "accept booleans": {
+      "title": "Detect fault: accept booleans",
+      "code": "def list_to_decimal(digits):\n    result = 0\n    for digit in digits:\n        if not isinstance(digit, int):\n            raise TypeError('digits must be integers')\n        if not 0 <= digit <= 9:\n            raise ValueError('digits must be in range 0..9')\n        result = result * 10 + digit\n    return result"
+    },
+    "reject zero digit": {
+      "title": "Detect fault: reject zero digit",
+      "code": "def list_to_decimal(digits):\n    result = 0\n    for digit in digits:\n        if type(digit) is not int:\n            raise TypeError('digits must be integers')\n        if not 0 < digit <= 9:\n            raise ValueError('digits must be in range 0..9')\n        result = result * 10 + digit\n    return result"
+    },
+    "accept ten": {
+      "title": "Detect fault: accept ten",
+      "code": "def list_to_decimal(digits):\n    result = 0\n    for digit in digits:\n        if type(digit) is not int:\n            raise TypeError('digits must be integers')\n        if not 0 <= digit <= 10:\n            raise ValueError('digits must be in range 0..9')\n        result = result * 10 + digit\n    return result"
+    },
+    "wrong place value": {
+      "title": "Detect fault: wrong place value",
+      "code": "def list_to_decimal(digits):\n    result = 0\n    for digit in digits:\n        if type(digit) is not int:\n            raise TypeError('digits must be integers')\n        if not 0 <= digit <= 9:\n            raise ValueError('digits must be in range 0..9')\n        result = result + digit\n    return result"
+    },
+    "wrong empty result": {
+      "title": "Detect fault: wrong empty result",
+      "code": "def list_to_decimal(digits):\n    result = 1\n    for digit in digits:\n        if type(digit) is not int:\n            raise TypeError('digits must be integers')\n        if not 0 <= digit <= 9:\n            raise ValueError('digits must be in range 0..9')\n        result = result * 10 + digit\n    return result"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write tests below the marked line in the editor. Run checks the correct implementation and a sample of the faulty versions. Submit checks every version. Keep the supplied code and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis target and its tests are an offline recreation from the public description. The original code and template require Pybites premium.\n\nThe offline runner supports `pytest.raises` with `match`, `pytest.mark.parametrize`, function and yield fixtures, numeric `pytest.approx`, `pytest.fail`, `capsys`, `capfd`, `monkeypatch`, and `tmp_path`. `unittest.mock.patch` also works. Use top-level test functions and function-scoped fixtures. Async tests, pytest classes with setup hooks, plugins, skip/xfail, and advanced fixture scopes are not supported.\n\nThis course measures statement coverage with Python tracing and checks explicit faulty variants. It does not run pytest-cov or mutatest. `SURVIVED` names a fault that your tests did not detect.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/write-tests-for-list_to_decimal/)"
+  }
 }

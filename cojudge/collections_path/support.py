@@ -5,6 +5,8 @@ from pathlib import Path
 from cojudge.authoring.support import ROOT, write_json
 from cojudge.pybites.runner import MARKER
 from cojudge.pybites.support import description, full_source, run_all
+from cojudge.presentation import course_help, statement_text, test_case_details
+from cojudge.collections_path.examples import ASSUMPTIONS, examples
 
 COURSE_ID = 'pybites-collections'
 HERE = Path(__file__).parent
@@ -58,37 +60,24 @@ def course_info(specs):
     }
 
 
-def statement(spec, count):
+def present_problem(spec, test_ids):
     page = spec['page']
     origin = ('This version keeps the original free template and tests, with added boundary tests.'
               if spec.get('original') else
-              'The premium template and tests are not available in this account. '
-              'This version uses a recreated template and tests based on the public description.')
-    if spec.get('adapted'):
-        origin = spec['adapted']
-    return f"""# {spec['number']:02d}. {spec['title']}
+              'The template and tests are recreations based on the public description.')
+    origin = spec.get('adapted', origin)
+    note = ' '.join(filter(None, [origin, spec.get('notes'),
+                                 'Python 3.11. Data is supplied offline. Use the standard library.']))
+    return {
+        'statement': statement_text(description(spec), ASSUMPTIONS.get(spec['number'], ())),
+        'examples': examples(spec['number']),
+        'testCaseDescriptions': test_case_details(spec['tests'], test_ids),
+        'courseHelp': course_help(f"https://pybitesplatform.com/bites/{page['slug']}/", note),
+    }
 
-[Course list](/?course={COURSE_ID}) · [Original bite](https://pybitesplatform.com/bites/{page['slug']}/)
 
-{spec['contract']}
-
-**Source and offline changes:** {origin}
-
-<details>
-<summary>Original public description</summary>
-
-{description(spec)}
-
-</details>
-
-Write your implementation at the top of the editor. The tests below it import your code as
-`{spec['module']}`. **Run** checks the first three tests. **Submit** checks all {count} tests.
-A failed test shows its name, error, and test line.
-
-- Python 3.11. Use the standard library. All required data is supplied. No network access.
-- Keep the supplied tests and runner. Implement the functions above them.
-- For a saved solution, use **+** beside the editor tabs to open the current template in a new tab.
-"""
+def statement(spec, count):
+    return present_problem(spec, [])['statement']
 
 
 def build_problem(spec, destination=ROOT / 'cojudge'):
@@ -96,12 +85,15 @@ def build_problem(spec, destination=ROOT / 'cojudge'):
     folder = Path(destination) / 'problems' / result['id']
     folder.mkdir(parents=True, exist_ok=True)
     payloads = [json.dumps({'test': test}) for test in result['tests']]
+    presentation = present_problem(spec, result['tests'])
     metadata = {
         'id': result['id'], 'title': f"{spec['number']:02d}. {spec['title']}",
         'difficulty': 'Easy' if spec['page']['level'] == 'Beginner' else 'Medium',
         'link': '',
         'category': '01-beginner' if spec['page']['level'] == 'Beginner' else '02-intermediate',
-        'examples': [{'input': p, 'output': 'passed'} for p in payloads[:3]],
+        'examples': presentation['examples'],
+        'testCaseDescriptions': presentation['testCaseDescriptions'],
+        'courseHelp': presentation['courseHelp'],
         'starterCode': {'python': full_source(spec, spec['template'])},
         'testCases': [{'payload': p} for p in payloads[:3]],
         'functionName': 'run', 'params': [{'name': 'payload', 'type': 'string'}],
@@ -109,7 +101,7 @@ def build_problem(spec, destination=ROOT / 'cojudge'):
     }
     write_json(folder / 'metadata.json', metadata)
     write_json(folder / 'official-tests.json', [{'payload': p} for p in payloads])
-    (folder / 'statement.md').write_text(statement(spec, result['cases']))
+    (folder / 'statement.md').write_text(presentation['statement'])
     (folder / 'Marker.java').write_text(MARKER)
     (folder / 'solution.md').write_text(
         f"## Reference solution\n\nPaste this code above the supplied tests and runner.\n\n"

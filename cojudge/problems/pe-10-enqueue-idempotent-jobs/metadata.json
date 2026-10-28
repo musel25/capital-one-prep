@@ -6,18 +6,18 @@
   "category": "02-clients-and-reliability",
   "examples": [
     {
-      "input": "{\"requests\": [{\"key\": \"a\", \"task\": \"send\"}, {\"key\": \"b\", \"task\": \"index\"}]}",
-      "output": "[{\"status\": \"created\", \"id\": 1}, {\"status\": \"created\", \"id\": 2}]",
+      "input": "enqueue_jobs(\n    requests=[{'key': 'a', 'task': 'send'}, {'key': 'b', 'task': 'index'}]\n)",
+      "output": "[{'status': 'created', 'id': 1}, {'status': 'created', 'id': 2}]",
       "explanation": "new keys get consecutive IDs"
     },
     {
-      "input": "{\"requests\": [{\"key\": \"a\", \"task\": \"send\"}, {\"key\": \"a\", \"task\": \"send\"}]}",
-      "output": "[{\"status\": \"created\", \"id\": 1}, {\"status\": \"replayed\", \"id\": 1}]",
+      "input": "enqueue_jobs(\n    requests=[{'key': 'a', 'task': 'send'}, {'key': 'a', 'task': 'send'}]\n)",
+      "output": "[{'status': 'created', 'id': 1}, {'status': 'replayed', 'id': 1}]",
       "explanation": "same key and task replays original ID"
     },
     {
-      "input": "{\"requests\": [{\"key\": \"a\", \"task\": \"old\"}, {\"key\": \"a\", \"task\": \"new\"}, {\"key\": \"a\", \"task\": \"old\"}]}",
-      "output": "[{\"status\": \"created\", \"id\": 1}, {\"status\": \"conflict\", \"id\": null}, {\"status\": \"replayed\", \"id\": 1}]",
+      "input": "enqueue_jobs(\n    requests=[{'key': 'a', 'task': 'old'},\n     {'key': 'a', 'task': 'new'},\n     {'key': 'a', 'task': 'old'}]\n)",
+      "output": "[{'status': 'created', 'id': 1}, {'status': 'conflict', 'id': None}, {'status': 'replayed', 'id': 1}]",
       "explanation": "changed task conflicts without replacing original"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

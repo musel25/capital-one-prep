@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_data\"}",
-      "output": "passed"
+      "input": "dict(get_num_words_spoken_by_character_per_episode()['Cartman'])",
+      "output": "{'1': 3, '2': 3}"
     },
     {
-      "input": "{\"test\": \"test_nested_types\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_quoted_and_multiline_dialogue\"}",
-      "output": "passed"
+      "input": "data = 'Season,Episode,Character,Line\\n1,2,Stan,One two three\\n1,2,Stan,Four\\n'\ndict(get_num_words_spoken_by_character_per_episode(data)['Stan'])",
+      "output": "{'2': 4}"
     }
   ],
   "starterCode": {
@@ -40,5 +36,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_data": {
+      "title": "test_default_data",
+      "code": "def test_default_data():\n    result = count()\n    assert result['Cartman'] == Counter({'1': 3, '2': 3})\n    assert result['Stan'] == Counter({'1': 1})"
+    },
+    "test_nested_types": {
+      "title": "test_nested_types",
+      "code": "def test_nested_types():\n    result = count()\n    assert isinstance(result, defaultdict) and result.default_factory is Counter\n    assert isinstance(result['new'], Counter)\n    assert result['new']['99'] == 0"
+    },
+    "test_quoted_and_multiline_dialogue": {
+      "title": "test_quoted_and_multiline_dialogue",
+      "code": "def test_quoted_and_multiline_dialogue():\n    text = 'Season,Episode,Character,Line\\n2,03,A,\"hello, dear friend\\nnext line\"\\n'\n    assert count(text)['A'] == Counter({'03': 5})"
+    },
+    "test_accumulate_multiple_lines": {
+      "title": "test_accumulate_multiple_lines",
+      "code": "def test_accumulate_multiple_lines():\n    text = 'Season,Episode,Character,Line\\n1,1,A,one two\\n1,1,A,three four five\\n'\n    assert count(text)['A']['1'] == 5"
+    },
+    "test_empty_line_and_empty_dataset": {
+      "title": "test_empty_line_and_empty_dataset",
+      "code": "def test_empty_line_and_empty_dataset():\n    assert dict(count('Season,Episode,Character,Line\\n')) == {}\n    assert count('Season,Episode,Character,Line\\n1,1,A,\\n')['A'] == Counter({'1': 0})"
+    },
+    "test_quoted_character_and_whitespace": {
+      "title": "test_quoted_character_and_whitespace",
+      "code": "def test_quoted_character_and_whitespace():\n    text = 'Season,Episode,Character,Line\\n1,1,\"Agent, One\",\"one   two\\tthree\"\\n'\n    assert count(text)['Agent, One']['1'] == 3"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/what-south-park-characters-talk-most/)"
+  }
 }

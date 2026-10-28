@@ -12,6 +12,8 @@ from cojudge.fastapi_path.extra_tests import EXTRA
 from cojudge.fastapi_path.runner import ADAPTER
 from cojudge.fastapi_path.specs import ADDITIONS, AUTH, CONTRACTS, ERROR_CHECKS, HTML_BODY, MUTATIONS
 from cojudge.pybites.runner import MARKER
+from cojudge.presentation import course_help, statement_text, test_case_details
+from cojudge.fastapi_path.presentation import CLARIFICATIONS, EXAMPLES, original_description
 
 HERE = Path(__file__).parent
 COURSE_ID = 'pybites-fastapi'
@@ -50,7 +52,7 @@ def load_specs(numbers=None):
         tree = ast.parse(tests)
         ids = [node.name for node in tree.body if isinstance(node, ast.FunctionDef) and node.name.startswith('test_')]
         specs.append({
-            'number': n, 'id': f"pbf-{n:02d}-{page['slug']}", 'title': page['title'],
+            'page': page, 'number': n, 'id': f"pbf-{n:02d}-{page['slug']}", 'title': page['title'],
             'url': page['url'], 'module': 'models' if n in (2, 6) else 'app',
             'template': template, 'tests': tests, 'reference': reference, 'test_ids': ids,
             'contract': CONTRACTS[n - 1], 'mutations': MUTATIONS[n],
@@ -95,17 +97,32 @@ def verify(spec):
     return {'id': spec['id'], 'cases': len(good), 'faults': faults}
 
 
+def present_problem(spec, test_ids):
+    return {
+        'statement': statement_text(original_description(spec), CLARIFICATIONS[spec['number']]),
+        'examples': [{'input': code, 'output': result} for code, result in EXAMPLES[spec['number']]],
+        'testCaseDescriptions': test_case_details(spec['tests'], test_ids),
+        'courseHelp': course_help(spec['url'],
+            'This path uses real FastAPI and Pydantic 2 with pytest and TestClient. '
+            'No server is needed. The imported starter and tests include added boundary '
+            'checks named test_added_. Example password fields and the classroom signing '
+            'key were restored after export redaction. The signing key and /create_user '
+            'route are exercise fixtures. Select Python.'),
+    }
+
+
 def build_problem(spec):
     folder = ROOT / 'cojudge/problems' / spec['id']
     folder.mkdir(parents=True, exist_ok=True)
     # Real pytest and bcrypt need a separate execution budget for each check.
     cases = [{'payload': json.dumps({'test': name}), '_isLargeTest': True} for name in spec['test_ids']]
+    presentation = present_problem(spec, spec['test_ids'])
     write_json(folder / 'metadata.json', {
         'id': spec['id'], 'title': f"{spec['number']:02d}. {spec['title']}",
         'difficulty': 'Easy' if spec['number'] <= 2 else 'Hard' if spec['number'] == 10 else 'Medium',
         'category': spec['category'], 'link': '',
         'starterCode': {'python': full_source(spec, spec['template'])},
-        'examples': [{'input': case['payload'], 'output': 'passed'} for case in cases[:3]],
+        **{key: value for key, value in presentation.items() if key != 'statement'},
         'testCases': cases[:3], 'functionName': 'run',
         'params': [{'name': 'payload', 'type': 'string'}], 'outputType': 'string',
         'hints': ['Read the supplied pytest tests.', 'Use the real FastAPI and Pydantic packages.'],
@@ -113,36 +130,7 @@ def build_problem(spec):
     write_json(folder / 'official-tests.json', cases)
     (folder / 'Marker.java').write_text(MARKER)
     (folder / 'solution.md').write_text('## Reference solution\n\n```python\n' + spec['reference'].strip() + '\n```\n')
-    (folder / 'statement.md').write_text(f'''# {spec['number']:02d}. {spec['title']}
-
-[Course list](/?course={COURSE_ID}) · [Original Pybites exercise]({spec['url']})
-
-## Required behavior
-
-{spec['contract']}
-
-## How to solve it
-
-Use Python. Write your solution at the top of the editor. The supplied tests follow it.
-Run checks up to three tests. Submit checks all {len(cases)} tests.
-Each check runs real pytest and FastAPI in a fresh process. No server or network is needed.
-Keep the supplied tests and adapter unchanged. Failures show the pytest test name and error.
-
-## Source and changes
-
-The starter and tests were imported from the exercise pages accessible in the user's Pybites session.
-Example password fields and the classroom signing key were restored with explicit test values after export redaction.
-FoodEntry uses a per-instance timestamp default. Tests labelled `test_added_` are added Cojudge checks.
-The required behavior above summarizes the source description and states the added checks.
-The reference solution was written for this course.
-
-The runtime uses Python 3.11, FastAPI 0.161.1, Pydantic 2, real pytest,
-HTTPX, Passlib/bcrypt, python-jose, python-multipart, and BeautifulSoup.
-Package versions are locked in `cojudge/fastapi_path/uv.lock` in the content repository.
-
-For an old saved solution, use **+** beside the editor tabs to open the current starter.
-Copy your code into that tab. Keep your old saved tab.
-''')
+    (folder / 'statement.md').write_text(presentation['statement'])
 
 
 def build(specs):

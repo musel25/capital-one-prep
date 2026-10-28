@@ -6,18 +6,18 @@
   "category": "05-files-time-and-boundaries",
   "examples": [
     {
-      "input": "{\"path\": \"photos/./2026//image.png\"}",
-      "output": "\"photos/2026/image.png\"",
+      "input": "resolve_upload_path(\n    path='photos/./2026//image.png'\n)",
+      "output": "'photos/2026/image.png'",
       "explanation": "remove dot and empty components"
     },
     {
-      "input": "{\"path\": \"a/b/../file.txt\"}",
-      "output": "\"a/file.txt\"",
+      "input": "resolve_upload_path(\n    path='a/b/../file.txt'\n)",
+      "output": "'a/file.txt'",
       "explanation": "parent component removes one prior component"
     },
     {
-      "input": "{\"path\": \"../safe/file.txt\"}",
-      "output": "null",
+      "input": "resolve_upload_path(\n    path='../safe/file.txt'\n)",
+      "output": "None",
       "explanation": "reject an initial parent escape"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

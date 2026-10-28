@@ -6,19 +6,14 @@
   "category": "03-advanced",
   "examples": [
     {
-      "input": "{\"test\": \"test_base_class_is_abstract\"}",
-      "output": "passed",
-      "explanation": "Test test_base_class_is_abstract must pass."
+      "input": "challenge = BlogChallenge(7, \"Classes\", [12, 18])\n(challenge.pretty_title, challenge.verify(18), challenge.verify(20))",
+      "output": "('PCC7 - Classes', True, False)",
+      "explanation": "A blog challenge checks merged pull request numbers."
     },
     {
-      "input": "{\"test\": \"test_subclass_must_implement_the_api\"}",
-      "output": "passed",
-      "explanation": "Test test_subclass_must_implement_the_api must pass."
-    },
-    {
-      "input": "{\"test\": \"test_blog_challenge\"}",
-      "output": "passed",
-      "explanation": "Test test_blog_challenge must pass."
+      "input": "challenge = BiteChallenge(4, \"Add\", 7)\n(challenge.pretty_title, challenge.verify(7))",
+      "output": "('Bite 4. Add', True)",
+      "explanation": "A bite checks equality with the expected result."
     }
   ],
   "starterCode": {
@@ -43,5 +38,67 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_base_class_is_abstract": {
+      "title": "test_base_class_is_abstract",
+      "code": "def test_base_class_is_abstract():\n    with pytest.raises(TypeError):\n        Challenge(1, 'title')\n    assert inspect.isabstract(Challenge)"
+    },
+    "test_subclass_must_implement_the_api": {
+      "title": "test_subclass_must_implement_the_api",
+      "code": "def test_subclass_must_implement_the_api():\n    class Incomplete(Challenge):\n        def verify(self, value):\n            return True\n    with pytest.raises(TypeError):\n        Incomplete(1, 'title')\n\n    class NoVerify(Challenge):\n        @property\n        def pretty_title(self):\n            return 'x'\n    with pytest.raises(TypeError):\n        NoVerify(1, 'title')"
+    },
+    "test_blog_challenge": {
+      "title": "test_blog_challenge",
+      "code": "def test_blog_challenge(blog_challenge):\n    assert blog_challenge.number == 1\n    assert blog_challenge.title == 'Wordvalues'\n    assert blog_challenge.merged_prs == [41, 42, 44]\n    assert blog_challenge.pretty_title == 'PCC1 - Wordvalues'\n    assert blog_challenge.verify(42)\n    assert not blog_challenge.verify(43)"
+    },
+    "test_bite_challenge": {
+      "title": "test_bite_challenge",
+      "code": "def test_bite_challenge(bite_challenge):\n    assert bite_challenge.number == 24\n    assert bite_challenge.title == 'ABC and class inheritance'\n    assert bite_challenge.result == 'your function return value'\n    assert bite_challenge.pretty_title == 'Bite 24. ABC and class inheritance'\n    assert bite_challenge.verify('your function return value')\n    assert not bite_challenge.verify('something else')"
+    },
+    "test_pretty_title_is_a_property": {
+      "title": "test_pretty_title_is_a_property",
+      "code": "def test_pretty_title_is_a_property():\n    assert isinstance(BlogChallenge.__dict__['pretty_title'], property)\n    assert isinstance(BiteChallenge.__dict__['pretty_title'], property)"
+    },
+    "test_subclasses_call_parent_constructor[cls0]": {
+      "title": "test_subclasses_call_parent_constructor[cls0]",
+      "code": "@pytest.mark.parametrize(\"cls\", [BlogChallenge, BiteChallenge])\ndef test_subclasses_call_parent_constructor(cls):\n    assert issubclass(cls, Challenge)\n    assert 'super()' in inspect.getsource(cls.__init__)"
+    },
+    "test_subclasses_call_parent_constructor[cls1]": {
+      "title": "test_subclasses_call_parent_constructor[cls1]",
+      "code": "@pytest.mark.parametrize(\"cls\", [BlogChallenge, BiteChallenge])\ndef test_subclasses_call_parent_constructor(cls):\n    assert issubclass(cls, Challenge)\n    assert 'super()' in inspect.getsource(cls.__init__)"
+    },
+    "test_empty_merged_prs": {
+      "title": "test_empty_merged_prs",
+      "code": "def test_empty_merged_prs():\n    challenge = BlogChallenge(0, '', [])\n    assert challenge.pretty_title == 'PCC0 - '\n    assert challenge.verify(0) is False"
+    },
+    "test_falsy_and_unhashable_results[0-1]": {
+      "title": "test_falsy_and_unhashable_results[0-1]",
+      "code": "@pytest.mark.parametrize('result, other', [(0, 1), ('', 'x'), (None, ''), ([], [1]), ({}, {'a': 1})])\ndef test_falsy_and_unhashable_results(result, other):\n    challenge = BiteChallenge(-1, '', result)\n    assert challenge.verify(result) is True\n    assert challenge.verify(other) is False\n    assert challenge.pretty_title == 'Bite -1. '"
+    },
+    "test_falsy_and_unhashable_results[-x]": {
+      "title": "test_falsy_and_unhashable_results[-x]",
+      "code": "@pytest.mark.parametrize('result, other', [(0, 1), ('', 'x'), (None, ''), ([], [1]), ({}, {'a': 1})])\ndef test_falsy_and_unhashable_results(result, other):\n    challenge = BiteChallenge(-1, '', result)\n    assert challenge.verify(result) is True\n    assert challenge.verify(other) is False\n    assert challenge.pretty_title == 'Bite -1. '"
+    },
+    "test_falsy_and_unhashable_results[None-]": {
+      "title": "test_falsy_and_unhashable_results[None-]",
+      "code": "@pytest.mark.parametrize('result, other', [(0, 1), ('', 'x'), (None, ''), ([], [1]), ({}, {'a': 1})])\ndef test_falsy_and_unhashable_results(result, other):\n    challenge = BiteChallenge(-1, '', result)\n    assert challenge.verify(result) is True\n    assert challenge.verify(other) is False\n    assert challenge.pretty_title == 'Bite -1. '"
+    },
+    "test_falsy_and_unhashable_results[result3-other3]": {
+      "title": "test_falsy_and_unhashable_results[result3-other3]",
+      "code": "@pytest.mark.parametrize('result, other', [(0, 1), ('', 'x'), (None, ''), ([], [1]), ({}, {'a': 1})])\ndef test_falsy_and_unhashable_results(result, other):\n    challenge = BiteChallenge(-1, '', result)\n    assert challenge.verify(result) is True\n    assert challenge.verify(other) is False\n    assert challenge.pretty_title == 'Bite -1. '"
+    },
+    "test_falsy_and_unhashable_results[result4-other4]": {
+      "title": "test_falsy_and_unhashable_results[result4-other4]",
+      "code": "@pytest.mark.parametrize('result, other', [(0, 1), ('', 'x'), (None, ''), ([], [1]), ({}, {'a': 1})])\ndef test_falsy_and_unhashable_results(result, other):\n    challenge = BiteChallenge(-1, '', result)\n    assert challenge.verify(result) is True\n    assert challenge.verify(other) is False\n    assert challenge.pretty_title == 'Bite -1. '"
+    },
+    "test_pretty_titles_use_current_attributes": {
+      "title": "test_pretty_titles_use_current_attributes",
+      "code": "def test_pretty_titles_use_current_attributes():\n    blog = BlogChallenge(1, 'old', [0, 0, 8])\n    bite = BiteChallenge(2, 'old', ['a'])\n    blog.number, blog.title = 3, '  NEW title'\n    bite.number, bite.title = 4, '  NEW title'\n    assert blog.pretty_title == 'PCC3 -   NEW title'\n    assert bite.pretty_title == 'Bite 4.   NEW title'\n    assert blog.verify(0) is True\n    assert blog.verify(9) is False\n    assert bite.verify(['a']) is True"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/abcs-and-class-inheritance/)"
+  }
 }

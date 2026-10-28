@@ -6,16 +6,8 @@
   "category": "01-tables-and-crud",
   "examples": [
     {
-      "input": "{\"test\": \"test_add_workout\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_add_exercise\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_defaults_and_duplicate_names\"}",
-      "output": "passed"
+      "input": "engine = create_engine(\"sqlite://\")\nSQLModel.metadata.create_all(engine)\nwith Session(engine) as session:\n    row = add_workout(session, \"Leg Day\", \"Strength\")\n    print(row.id, row.name, row.description)",
+      "output": "1 Leg Day Strength"
     }
   ],
   "starterCode": {
@@ -40,5 +32,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_add_workout": {
+      "title": "test_add_workout",
+      "code": "def test_add_workout(session):\n    row = app.add_workout(session, \"Leg Day\", \"Strength\")\n    assert row.id is not None and row.name == \"Leg Day\" and row.description == \"Strength\"\n    assert row in session"
+    },
+    "test_add_exercise": {
+      "title": "test_add_exercise",
+      "code": "def test_add_exercise(session):\n    row = app.add_exercise(session, \"Squats\", \"legs\")\n    assert row.id is not None and row.muscle_group == \"legs\"\n    assert row in session"
+    },
+    "test_defaults_and_duplicate_names": {
+      "title": "test_defaults_and_duplicate_names",
+      "code": "def test_defaults_and_duplicate_names(session):\n    first = app.add_workout(session, \"Same\")\n    second = app.add_workout(session, \"Same\")\n    exercise = app.add_exercise(session, \"Same\")\n    assert first.id != second.id and second.description == \"\" and exercise.muscle_group == \"\""
+    },
+    "test_rows_survive_a_new_session": {
+      "title": "test_rows_survive_a_new_session",
+      "code": "def test_rows_survive_a_new_session(engine):\n    with Session(engine) as session:\n        app.add_workout(session, \"Persisted\")\n        app.add_exercise(session, \"Persisted exercise\")\n    with Session(engine) as session:\n        assert session.exec(select(app.Workout)).one().name == \"Persisted\"\n        assert session.exec(select(app.Exercise)).one().name == \"Persisted exercise\""
+    },
+    "test_session_generator_committed_rows": {
+      "title": "test_session_generator_committed_rows",
+      "code": "def test_session_generator_committed_rows(engine):\n    generator = app.get_session(engine)\n    session = next(generator)\n    assert isinstance(session, Session)\n    app.add_workout(session, \"Saved\")\n    generator.close()\n    with Session(engine) as check:\n        assert check.exec(select(app.Workout)).one().name == \"Saved\""
+    },
+    "test_session_generator_rolls_back": {
+      "title": "test_session_generator_rolls_back",
+      "code": "def test_session_generator_rolls_back(engine):\n    generator = app.get_session(engine)\n    session = next(generator)\n    session.add(app.Workout(name=\"Discard\"))\n    session.flush()\n    generator.close()\n    with Session(engine) as check:\n        assert check.exec(select(app.Workout)).all() == []"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. The original templates and tests require Pybites premium. The runtime supplies SQLModel, SQLite, SQLAlchemy, Pydantic, FastAPI, HTTPX, and pytest. Each check uses a separate database. No server is needed. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/session-management-basic-inserts/)"
+  }
 }

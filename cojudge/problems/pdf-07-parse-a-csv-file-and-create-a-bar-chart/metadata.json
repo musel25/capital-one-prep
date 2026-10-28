@@ -6,16 +6,8 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_chart\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_sorted_and_counts\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_header_only\"}",
-      "output": "passed"
+      "input": "create_bar_chart('timezone\\nUTC\\nUTC\\n')",
+      "output": "UTC                  | ++\n"
     }
   ],
   "starterCode": {
@@ -40,5 +32,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_chart": {
+      "title": "test_default_chart",
+      "code": "def test_default_chart(capsys):\n    assert create_bar_chart() is None\n    assert capsys.readouterr().out == 'Africa/Algiers       | +\\nAfrica/Nairobi       | ++\\nEurope/Warsaw        | +\\nPacific/Honolulu     | +\\n'"
+    },
+    "test_sorted_and_counts": {
+      "title": "test_sorted_and_counts",
+      "code": "def test_sorted_and_counts(capsys):\n    create_bar_chart('timezone\\nZ\\nA\\nZ\\nZ\\n')\n    assert capsys.readouterr().out == 'A                    | +\\nZ                    | +++\\n'"
+    },
+    "test_header_only": {
+      "title": "test_header_only",
+      "code": "def test_header_only(capsys):\n    assert create_bar_chart('timezone\\n') is None\n    assert capsys.readouterr().out == ''"
+    },
+    "test_blank_lines_and_empty_timezones": {
+      "title": "test_blank_lines_and_empty_timezones",
+      "code": "def test_blank_lines_and_empty_timezones(capsys):\n    create_bar_chart('name,timezone\\nAda,\\n\\nBo,   \\nCy, UTC \\n')\n    assert capsys.readouterr().out == 'UTC                  | +\\n'"
+    },
+    "test_quoted_other_columns": {
+      "title": "test_quoted_other_columns",
+      "code": "def test_quoted_other_columns(capsys):\n    create_bar_chart('name,timezone\\n\"Last, First\",Europe/Warsaw\\n\"Line\\nBreak\",Europe/Warsaw\\n')\n    assert capsys.readouterr().out == 'Europe/Warsaw        | ++\\n'"
+    },
+    "test_long_timezone_expands_column": {
+      "title": "test_long_timezone_expands_column",
+      "code": "def test_long_timezone_expands_column(capsys):\n    create_bar_chart('timezone\\nAmerica/Argentina/Buenos_Aires\\nUTC\\n')\n    assert capsys.readouterr().out == ('America/Argentina/Buenos_Aires | +\\nUTC                            | +\\n')"
+    },
+    "test_all_empty_and_separate_calls": {
+      "title": "test_all_empty_and_separate_calls",
+      "code": "def test_all_empty_and_separate_calls(capsys):\n    create_bar_chart('name,timezone\\nA,\\nB,\\n')\n    assert capsys.readouterr().out == ''\n    create_bar_chart('timezone\\nUTC\\n')\n    assert capsys.readouterr().out == 'UTC                  | +\\n'\n    create_bar_chart('timezone\\nUTC\\n')\n    assert capsys.readouterr().out == 'UTC                  | +\\n'"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\nThe premium template and tests are recreated. Local CSV text replaces the requests download. This version supplies the function name, header, column width, sorting, and empty-record rules because the public description does not expose the original template or full expected chart.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/parse-a-csv-file-and-create-a-bar-chart/)"
+  }
 }

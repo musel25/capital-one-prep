@@ -6,16 +6,8 @@
   "category": "pytest",
   "examples": [
     {
-      "input": "{\"check\": \"baseline\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"missing hash prefix\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"wrong sample size\"}",
-      "output": "passed"
+      "input": "from colors import *\nfrom unittest.mock import patch\nwith patch(\"colors.sample\", return_value=list(\"A1B2C3\")):\n    print(next(gen_hex_color()))",
+      "output": "#A1B2C3"
     }
   ],
   "starterCode": {
@@ -44,5 +36,35 @@
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "baseline": {
+      "title": "Correct code: tests pass and cover at least 90%",
+      "code": "from random import sample\n\nHEX = '0123456789ABCDEF'\n\ndef gen_hex_color():\n    while True:\n        yield '#' + ''.join(sample(HEX, 6))"
+    },
+    "missing hash prefix": {
+      "title": "Detect fault: missing hash prefix",
+      "code": "from random import sample\n\nHEX = '0123456789ABCDEF'\n\ndef gen_hex_color():\n    while True:\n        yield '' + ''.join(sample(HEX, 6))"
+    },
+    "wrong sample size": {
+      "title": "Detect fault: wrong sample size",
+      "code": "from random import sample\n\nHEX = '0123456789ABCDEF'\n\ndef gen_hex_color():\n    while True:\n        yield '#' + ''.join(sample(HEX, 5))"
+    },
+    "lowercase output": {
+      "title": "Detect fault: lowercase output",
+      "code": "from random import sample\n\nHEX = '0123456789ABCDEF'\n\ndef gen_hex_color():\n    while True:\n        yield '#' + ''.join(sample(HEX, 6)).lower()"
+    },
+    "generator stops early": {
+      "title": "Detect fault: generator stops early",
+      "code": "from random import sample\n\nHEX = '0123456789ABCDEF'\n\ndef gen_hex_color():\n    for _ in range(1):\n        yield '#' + ''.join(sample(HEX, 6))"
+    },
+    "wrong character alphabet": {
+      "title": "Detect fault: wrong character alphabet",
+      "code": "from random import sample\n\nHEX = '0123456789ABCDE'\n\ndef gen_hex_color():\n    while True:\n        yield '#' + ''.join(sample(HEX, 6))"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write tests below the marked line in the editor. Run checks the correct implementation and a sample of the faulty versions. Submit checks every version. Keep the supplied code and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis target and its tests are an offline recreation from the public description. The original code and template require Pybites premium.\n\nThe offline runner supports `pytest.raises` with `match`, `pytest.mark.parametrize`, function and yield fixtures, numeric `pytest.approx`, `pytest.fail`, `capsys`, `capfd`, `monkeypatch`, and `tmp_path`. `unittest.mock.patch` also works. Use top-level test functions and function-scoped fixtures. Async tests, pytest classes with setup hooks, plugins, skip/xfail, and advanced fixture scopes are not supported.\n\nThis course measures statement coverage with Python tracing and checks explicit faulty variants. It does not run pytest-cov or mutatest. `SURVIVED` names a fault that your tests did not detect.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/mocking-a-standard-library-function/)"
+  }
 }

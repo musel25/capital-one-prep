@@ -1,16 +1,12 @@
-# 08. Zodiacal data parsing
+In this Bite we will write tests for a module that parses data from Zodiacal / The Zodiac API (update 2025: this site is no longer online, but don't worry, we use a static copy for this exercise). See the CODE TO TEST tab below. The get_signs function is used in the signs fixture that has been provided in the template. You can use it in your tests by passing it into your test functions (read our article if you have not used them yet). Write code to test get_sign_with_most_famous_people, signs_are_mutually_compatible and get_sign_by_date.
 
-Write **tests**, not the implementation. [Original Pybites exercise](https://pybitesplatform.com/bites/zodiacal-data-parsing/).
+As with all our test Bites, your test code will be tested for: 1. correct syntax, 2. pytest passes all tests, 3. test coverage, and 4. mutation score (mutatest)
 
-This is an offline recreation from the public description. The original code and template are premium and were not available. The API below belongs to this recreation.
+Good luck and keep calm and code in Python + pytest!
 
-## Contract
+For this version, write tests for the supplied code. Your tests must pass against the correct code, cover at least 90% of its executable statements, and detect every supplied faulty version. A fault is detected when at least one test fails. An empty test suite does not pass.
 
-Use the supplied static 12-sign data. get_signs() returns independent copies. get_sign_with_most_famous_people(signs) returns the name with the largest list; ties use the first item; empty input raises ValueError. signs_are_mutually_compatible requires both directions and exact names; unknown names raise KeyError. get_sign_by_date(signs, day) accepts datetime.date. Endpoints are inclusive. Capricorn spans the year boundary. No matching date raises ValueError. The data is constructed for practice.
-
-## Code to test
-
-Import this module as `zodiac`. The judge supplies it automatically.
+Import the target as `zodiac`. The judge supplies it automatically.
 
 ```python
 from datetime import date
@@ -55,21 +51,3 @@ def get_sign_by_date(signs, day):
             return sign['name']
     raise ValueError('date has no matching sign')
 ```
-
-## Your task
-
-Scroll to **WRITE YOUR TESTS BELOW** in the editor. Replace the placeholder with `test_` functions. Keep the supplied target, runner, and adapter unchanged.
-
-1. All tests must pass against the correct code.
-2. Cover at least 90% of executable statements in the supplied target.
-3. Detect every supplied faulty variant. A faulty variant is detected when at least one test fails against it.
-
-**Run** checks the baseline and the first two faults. **Submit** checks the baseline and all 6 faults. `SURVIVED` identifies a fault your tests missed. A baseline failure shows the test name and error. Empty suites do not pass.
-
-## Offline pytest support
-
-The supplied runner implements the same small pytest subset used by the OOP course: `pytest.raises` (with `match`), `pytest.mark.parametrize`, function and yield fixtures, `pytest.approx` for numbers, `pytest.fail`, `capsys` / `capfd` for Python output, `monkeypatch`, and `tmp_path`. Standard-library `unittest.mock.patch` also works. Use function-scoped fixtures and top-level test functions. Plugins, async tests, pytest classes with setup hooks, skip/xfail, and advanced fixture scopes are not supported.
-
-The judge uses Python 3.11 and no network. This runner measures statement coverage with Python tracing and uses explicit faulty variants. It does **not** run pytest-cov or mutatest. Its acceptance result is specific to this course.
-
-For an older saved tab, use **+** to open the current template. Keep the old tab intact.

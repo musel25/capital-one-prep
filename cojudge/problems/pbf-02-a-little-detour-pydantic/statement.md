@@ -1,29 +1,26 @@
-# 02. A little detour: pydantic
+Pydantic is an awesome library to do
+data validation and settings management using python type annotations.
+FastAPI is a heavy user of it so let's learn it now! :)
+If you are new to typing / type annotations, maybe you want to read our article series or checkout the intro in the FastAPI docs.
+In this Bite you are going to define your first Pydantic Food model.
+A model is a class with one or more (typed) attributes. To get all Pydantic's goodness we'll need to subclass Pydantic's BaseModel class, Pydantic's homepage shows you how and it's probably enough detail to solve this Bite.
+This is the Food model you'll define now and use in upcoming Bites. Our tests will use and test it.
 
-[Course list](/?course=pybites-fastapi) · [Original Pybites exercise](https://pybitesplatform.com/bites/a-little-detour-pydantic/)
+| Attribute | Type | Example |
+| --- | --- | --- |
+| id | int | 1 |
+| name | str | oatmeal |
+| serving_size | str | 100 grams |
+| kcal_per_serving | int | 336 |
+| protein_grams | float | 13.2 |
+| fibre_grams | float | 10.1 |
 
-## Required behavior
+* kcal = calories
+** fibre_grams is an optional value which defaults to 0.
+We'll come back to Pydantic in a later Bite to define two more models to track food intake for a user day by day. For we won't overload you with object relationships that multiple models inevitably introduce. Step by step!
+In the following Bites we'll use this Pydantic model to build the API's CRUD (create-read-update-delete) actions around it.
+Have fun with Pydantic!
 
-Define `Food(BaseModel)` with required `id: int`, `name: str`, `serving_size: str`, `kcal_per_serving: int`, and `protein_grams: float`. Set `fibre_grams: float = 0`. Use normal Pydantic 2 coercion and validation.
+**Constraints:**
 
-## How to solve it
-
-Use Python. Write your solution at the top of the editor. The supplied tests follow it.
-Run checks up to three tests. Submit checks all 5 tests.
-Each check runs real pytest and FastAPI in a fresh process. No server or network is needed.
-Keep the supplied tests and adapter unchanged. Failures show the pytest test name and error.
-
-## Source and changes
-
-The starter and tests were imported from the exercise pages accessible in the user's Pybites session.
-Example password fields and the classroom signing key were restored with explicit test values after export redaction.
-FoodEntry uses a per-instance timestamp default. Tests labelled `test_added_` are added Cojudge checks.
-The required behavior above summarizes the source description and states the added checks.
-The reference solution was written for this course.
-
-The runtime uses Python 3.11, FastAPI 0.161.1, Pydantic 2, real pytest,
-HTTPX, Passlib/bcrypt, python-jose, python-multipart, and BeautifulSoup.
-Package versions are locked in `cojudge/fastapi_path/uv.lock` in the content repository.
-
-For an old saved solution, use **+** beside the editor tabs to open the current starter.
-Copy your code into that tab. Keep your old saved tab.
+- Use Pydantic 2 validation and type conversion.

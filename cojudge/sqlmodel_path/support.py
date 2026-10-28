@@ -7,6 +7,8 @@ import tempfile
 
 from cojudge.authoring.support import ROOT, write_json
 from .runner import RUNNER, SENTINEL, MARKER
+from cojudge.presentation import course_help, statement_text, test_case_details
+from .presentation import CLARIFICATIONS, EXAMPLES
 
 HERE = Path(__file__).parent.resolve()
 COURSE_ID = 'pybites-sqlmodel'
@@ -85,32 +87,21 @@ def course_info(specs):
             'problems-of-category': {c: [problem_id(s) for s in specs if category(s) == c] for c in CATEGORIES}}
 
 
+def present_problem(spec, test_ids):
+    return {
+        'statement': statement_text(spec['page']['description'], CLARIFICATIONS[spec['number']]),
+        'examples': [{'input': code, 'output': result} for code, result in EXAMPLES[spec['number']]],
+        'testCaseDescriptions': test_case_details(spec['tests'], test_ids),
+        'courseHelp': course_help(f"https://pybitesplatform.com/bites/{spec['page']['slug']}/",
+            'These templates and tests are recreations from the public descriptions. '
+            'The original templates and tests require Pybites premium. The runtime supplies '
+            'SQLModel, SQLite, SQLAlchemy, Pydantic, FastAPI, HTTPX, and pytest. Each check '
+            'uses a separate database. No server is needed. Select Python.'),
+    }
+
+
 def statement(spec, count):
-    return f"""# {spec['number']:02d}. {spec['title']}
-
-[Course list](/?course={COURSE_ID}) · [Original bite](https://pybitesplatform.com/bites/{spec['page']['slug']}/)
-
-{spec['contract']}
-
-**Source:** The original template and tests require Pybites premium. This version
-uses a recreated template and tests based on the public description.
-
-<details>
-<summary>Original public description</summary>
-
-{spec['page']['description']}
-
-</details>
-
-Write your code above the supplied tests. Use Python 3.11 with the supplied SQLModel,
-SQLAlchemy, Pydantic, FastAPI, HTTPX, and pytest packages. Tests use SQLite without
-network access. Each test gets a separate database.
-
-**Run** checks the first three tests. **Submit** checks all {count} tests. A failure
-shows the pytest error. The runner executes the suite once and returns each test's
-result. Keep the supplied tests and runner. The reference solution button contains
-the implementation to paste above them.
-"""
+    return present_problem(spec, test_ids(spec))['statement']
 
 
 def build_problem(spec, destination=ROOT / 'cojudge'):
@@ -118,17 +109,18 @@ def build_problem(spec, destination=ROOT / 'cojudge'):
     folder = Path(destination) / 'problems' / result['id']
     folder.mkdir(parents=True, exist_ok=True)
     payloads = [json.dumps({'test': name}) for name in result['tests']]
+    presentation = present_problem(spec, result['tests'])
     metadata = {'id': result['id'], 'title': f"{spec['number']:02d}. {spec['title']}",
                 'difficulty': 'Easy' if spec['number'] <= 4 else 'Medium' if spec['number'] <= 8 else 'Hard',
                 'link': '', 'category': category(spec),
-                'examples': [{'input': p, 'output': 'passed'} for p in payloads[:3]],
+                **{key: value for key, value in presentation.items() if key != 'statement'},
                 'starterCode': {'python': full_source(spec, spec['template'])},
                 'testCases': [{'payload': p} for p in payloads[:3]],
                 'functionName': 'run', 'params': [{'name': 'payload', 'type': 'string'}],
                 'outputType': 'string', 'hints': []}
     write_json(folder / 'metadata.json', metadata)
     write_json(folder / 'official-tests.json', [{'payload': p} for p in payloads])
-    (folder / 'statement.md').write_text(statement(spec, result['cases']))
+    (folder / 'statement.md').write_text(presentation['statement'])
     (folder / 'Marker.java').write_text(MARKER)
     (folder / 'solution.md').write_text('## Reference solution\n\nPaste this implementation above the supplied tests.\n\n```python\n' + spec['reference'].strip() + '\n```\n')
     return result

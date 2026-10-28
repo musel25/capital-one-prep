@@ -6,19 +6,14 @@
   "category": "01-beginner",
   "examples": [
     {
-      "input": "{\"test\": \"test_bob\"}",
-      "output": "passed",
-      "explanation": "Test test_bob must pass."
+      "input": "user = User(\"ada\", \"lovelace\")\n(user.get_full_name, user.username, str(user))",
+      "output": "('Ada Lovelace', 'alovelac', 'Ada Lovelace (alovelac)')",
+      "explanation": "The username uses at most seven surname letters."
     },
     {
-      "input": "{\"test\": \"test_julian\"}",
-      "output": "passed",
-      "explanation": "Test test_julian must pass."
-    },
-    {
-      "input": "{\"test\": \"test_short_last_name_and_mixed_case\"}",
-      "output": "passed",
-      "explanation": "Test test_short_last_name_and_mixed_case must pass."
+      "input": "repr(User(\"ada\", \"lovelace\"))",
+      "output": "'User(\"ada\", \"lovelace\")'",
+      "explanation": "The representation preserves the supplied case."
     }
   ],
   "starterCode": {
@@ -43,5 +38,47 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_bob": {
+      "title": "test_bob",
+      "code": "def test_bob():\n    bob = User('bob', 'belderbos')\n    assert bob.get_full_name == 'Bob Belderbos'\n    assert bob.username == 'bbelderb'  # lowercase, max 8 chars\n    assert str(bob) == 'Bob Belderbos (bbelderb)'\n    assert repr(bob) == 'User(\"bob\", \"belderbos\")'"
+    },
+    "test_julian": {
+      "title": "test_julian",
+      "code": "def test_julian():\n    julian = User('julian', 'sequeira')\n    assert julian.get_full_name == 'Julian Sequeira'\n    assert julian.username == 'jsequeir'\n    assert str(julian) == 'Julian Sequeira (jsequeir)'\n    assert repr(julian) == 'User(\"julian\", \"sequeira\")'"
+    },
+    "test_short_last_name_and_mixed_case": {
+      "title": "test_short_last_name_and_mixed_case",
+      "code": "def test_short_last_name_and_mixed_case():\n    tim = User('TIM', 'Lo')\n    assert tim.get_full_name == 'Tim Lo'\n    assert tim.username == 'tlo'\n    assert str(tim) == 'Tim Lo (tlo)'\n    assert repr(tim) == 'User(\"TIM\", \"Lo\")'"
+    },
+    "test_properties_are_properties": {
+      "title": "test_properties_are_properties",
+      "code": "def test_properties_are_properties():\n    assert isinstance(User.__dict__['get_full_name'], property)\n    assert isinstance(User.__dict__['username'], property)"
+    },
+    "test_values_follow_attribute_changes": {
+      "title": "test_values_follow_attribute_changes",
+      "code": "def test_values_follow_attribute_changes():\n    ann = User('ann', 'smith')\n    ann.last_name = 'johnson'\n    assert ann.username == 'ajohnson'\n    assert ann.get_full_name == 'Ann Johnson'"
+    },
+    "test_repr_of_a_subclass": {
+      "title": "test_repr_of_a_subclass",
+      "code": "def test_repr_of_a_subclass():\n    \"\"\"The twist: repr uses the class name of the instance.\"\"\"\n    class Admin(User):\n        pass\n    admin = Admin('ada', 'lovelace')\n    assert repr(admin) == 'Admin(\"ada\", \"lovelace\")'\n    assert str(admin) == 'Ada Lovelace (alovelac)'"
+    },
+    "test_one_letter_names": {
+      "title": "test_one_letter_names",
+      "code": "def test_one_letter_names():\n    user = User('A', 'B')\n    assert user.get_full_name == 'A B'\n    assert user.username == 'ab'\n    assert str(user) == 'A B (ab)'\n    assert repr(user) == 'User(\"A\", \"B\")'"
+    },
+    "test_surname_at_and_above_seven_letters": {
+      "title": "test_surname_at_and_above_seven_letters",
+      "code": "def test_surname_at_and_above_seven_letters():\n    assert User('Ada', 'Abcdefg').username == 'aabcdefg'\n    assert User('Ada', 'Abcdefgh').username == 'aabcdefg'"
+    },
+    "test_both_names_can_change_without_affecting_another_user": {
+      "title": "test_both_names_can_change_without_affecting_another_user",
+      "code": "def test_both_names_can_change_without_affecting_another_user():\n    user, other = User('ann', 'smith'), User('bob', 'jones')\n    user.first_name = 'EVE'\n    user.last_name = 'BROWN'\n    assert user.get_full_name == 'Eve Brown'\n    assert user.username == 'ebrown'\n    assert str(user) == 'Eve Brown (ebrown)'\n    assert repr(user) == 'User(\"EVE\", \"BROWN\")'\n    assert other.get_full_name == 'Bob Jones'\n    assert other.username == 'bjones'"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/complete-a-user-class-properties-and-representation-dunder-methods/)"
+  }
 }

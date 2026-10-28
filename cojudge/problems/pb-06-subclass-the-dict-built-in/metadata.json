@@ -6,19 +6,9 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_birthday_dict\"}",
-      "output": "passed",
-      "explanation": "Test test_birthday_dict must pass."
-    },
-    {
-      "input": "{\"test\": \"test_values_are_stored\"}",
-      "output": "passed",
-      "explanation": "Test test_values_are_stored must pass."
-    },
-    {
-      "input": "{\"test\": \"test_same_year_and_month_is_not_a_match\"}",
-      "output": "passed",
-      "explanation": "Test test_same_year_and_month_is_not_a_match must pass."
+      "input": "from datetime import date\nbirthdays = BirthdayDict()\nbirthdays[\"Ada\"] = date(1815, 12, 10)\nbirthdays[\"Bob\"] = date(1990, 12, 10)",
+      "output": "Hey Bob, there are more people with your birthday!",
+      "explanation": "Only month and day determine a shared birthday."
     }
   ],
   "starterCode": {
@@ -43,5 +33,51 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_birthday_dict": {
+      "title": "test_birthday_dict",
+      "code": "def test_birthday_dict(capsys):\n    bd = BirthdayDict()\n    bd['bob'] = date(1987, 6, 15)\n    bd['tim'] = date(1984, 7, 15)\n    assert capsys.readouterr().out == ''\n    bd['mary'] = date(1987, 6, 15)  # whole date match\n    assert capsys.readouterr().out.strip() == MSG.format('mary')\n    bd['sara'] = date(1987, 6, 14)\n    assert capsys.readouterr().out == ''\n    bd['mike'] = date(1981, 7, 15)  # day + month match\n    assert capsys.readouterr().out.strip() == MSG.format('mike')"
+    },
+    "test_values_are_stored": {
+      "title": "test_values_are_stored",
+      "code": "def test_values_are_stored():\n    bd = BirthdayDict()\n    bd['bob'] = date(1987, 6, 15)\n    bd['mary'] = date(1990, 6, 15)\n    assert bd['bob'] == date(1987, 6, 15)\n    assert bd['mary'] == date(1990, 6, 15)\n    assert len(bd) == 2\n    assert dict(bd) == {'bob': date(1987, 6, 15), 'mary': date(1990, 6, 15)}"
+    },
+    "test_same_year_and_month_is_not_a_match": {
+      "title": "test_same_year_and_month_is_not_a_match",
+      "code": "def test_same_year_and_month_is_not_a_match(capsys):\n    bd = BirthdayDict()\n    bd['ann'] = date(2000, 1, 1)\n    bd['ben'] = date(2000, 1, 2)\n    bd['cid'] = date(2000, 2, 1)\n    assert capsys.readouterr().out == ''"
+    },
+    "test_message_once_per_new_person": {
+      "title": "test_message_once_per_new_person",
+      "code": "def test_message_once_per_new_person(capsys):\n    bd = BirthdayDict()\n    bd['a'] = date(1970, 12, 24)\n    bd['b'] = date(1980, 12, 24)\n    bd['c'] = date(1990, 12, 24)\n    lines = capsys.readouterr().out.strip().splitlines()\n    assert lines == [MSG.format('b'), MSG.format('c')]"
+    },
+    "test_update_and_constructor_use_setitem": {
+      "title": "test_update_and_constructor_use_setitem",
+      "code": "def test_update_and_constructor_use_setitem(capsys):\n    bd = BirthdayDict({'x': date(1999, 3, 3)})\n    bd.update({'y': date(2001, 3, 3)})\n    assert capsys.readouterr().out.strip() == MSG.format('y')\n    assert bd['y'] == date(2001, 3, 3)"
+    },
+    "test_subclasses_userdict": {
+      "title": "test_subclasses_userdict",
+      "code": "def test_subclasses_userdict():\n    assert issubclass(BirthdayDict, UserDict)"
+    },
+    "test_leap_day_and_exact_single_newline": {
+      "title": "test_leap_day_and_exact_single_newline",
+      "code": "def test_leap_day_and_exact_single_newline(capsys):\n    bd = BirthdayDict()\n    bd['first'] = date(2000, 2, 29)\n    assert capsys.readouterr().out == ''\n    bd['second'] = date(2004, 2, 29)\n    assert capsys.readouterr().out == MSG.format('second') + '\\n'\n    bd['third'] = date(2008, 2, 29)\n    assert capsys.readouterr().out == MSG.format('third') + '\\n'\n    assert len(bd) == 3"
+    },
+    "test_constructor_detects_matches_within_its_input": {
+      "title": "test_constructor_detects_matches_within_its_input",
+      "code": "def test_constructor_detects_matches_within_its_input(capsys):\n    bd = BirthdayDict({'a': date(1970, 12, 31), 'b': date(2000, 12, 31)})\n    assert capsys.readouterr().out == MSG.format('b') + '\\n'\n    assert bd['a'] == date(1970, 12, 31)\n    assert bd['b'] == date(2000, 12, 31)"
+    },
+    "test_instances_do_not_share_birthdays": {
+      "title": "test_instances_do_not_share_birthdays",
+      "code": "def test_instances_do_not_share_birthdays(capsys):\n    one, two = BirthdayDict(), BirthdayDict()\n    one['a'] = date(1990, 1, 1)\n    two['b'] = date(2000, 1, 1)\n    assert capsys.readouterr().out == ''\n    assert list(one) == ['a']\n    assert list(two) == ['b']"
+    },
+    "test_empty_constructor_and_nonmatching_update": {
+      "title": "test_empty_constructor_and_nonmatching_update",
+      "code": "def test_empty_constructor_and_nonmatching_update(capsys):\n    bd = BirthdayDict({})\n    assert len(bd) == 0\n    bd.update({'a': date(2001, 1, 1), 'b': date(2001, 1, 2)})\n    assert capsys.readouterr().out == ''\n    assert len(bd) == 2"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/subclass-the-dict-built-in/)"
+  }
 }

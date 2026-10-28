@@ -6,18 +6,18 @@
   "category": "04-jobs-and-storage",
   "examples": [
     {
-      "input": "{\"balances\": {\"a\": 50, \"b\": 10}, \"transfers\": [{\"from\": \"a\", \"to\": \"b\", \"amount\": 20}]}",
-      "output": "{\"accepted\": [true], \"balances\": {\"a\": 30, \"b\": 30}}",
+      "input": "apply_transfers(\n    balances={'a': 50, 'b': 10},\n    transfers=[{'from': 'a', 'to': 'b', 'amount': 20}]\n)",
+      "output": "{'accepted': [True], 'balances': {'a': 30, 'b': 30}}",
       "explanation": "successful transfer debits and credits"
     },
     {
-      "input": "{\"balances\": {\"a\": 50, \"b\": 0}, \"transfers\": [{\"from\": \"a\", \"to\": \"b\", \"amount\": 51}]}",
-      "output": "{\"accepted\": [false], \"balances\": {\"a\": 50, \"b\": 0}}",
+      "input": "apply_transfers(\n    balances={'a': 50, 'b': 0},\n    transfers=[{'from': 'a', 'to': 'b', 'amount': 51}]\n)",
+      "output": "{'accepted': [False], 'balances': {'a': 50, 'b': 0}}",
       "explanation": "insufficient funds change neither account"
     },
     {
-      "input": "{\"balances\": {\"a\": 10}, \"transfers\": [{\"from\": \"a\", \"to\": \"missing\", \"amount\": 1}]}",
-      "output": "{\"accepted\": [false], \"balances\": {\"a\": 10}}",
+      "input": "apply_transfers(\n    balances={'a': 10},\n    transfers=[{'from': 'a', 'to': 'missing', 'amount': 1}]\n)",
+      "output": "{'accepted': [False], 'balances': {'a': 10}}",
       "explanation": "missing target does not debit source"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

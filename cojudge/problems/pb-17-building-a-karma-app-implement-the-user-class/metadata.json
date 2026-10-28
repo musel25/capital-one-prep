@@ -6,19 +6,9 @@
   "category": "03-advanced",
   "examples": [
     {
-      "input": "{\"test\": \"test_name\"}",
-      "output": "passed",
-      "explanation": "Test test_name must pass."
-    },
-    {
-      "input": "{\"test\": \"test_karma\"}",
-      "output": "passed",
-      "explanation": "Test test_karma must pass."
-    },
-    {
-      "input": "{\"test\": \"test_points\"}",
-      "output": "passed",
-      "explanation": "Test test_points must pass."
+      "input": "ada = User(\"Ada\")\nbob = User(\"Bob\")\nada + Transaction(bob, 5)\nada + Transaction(bob, -2)\n(ada.points, ada.karma, ada.fans, str(ada))",
+      "output": "([5, -2], 3, 1, 'Ada has a karma of 3 and 1 fan')",
+      "explanation": "Two transactions from one giver still count as one fan."
     }
   ],
   "starterCode": {
@@ -43,5 +33,63 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_name": {
+      "title": "test_name",
+      "code": "def test_name():\n    assert User('alice').name == 'alice'"
+    },
+    "test_karma": {
+      "title": "test_karma",
+      "code": "def test_karma(users):\n    alice, bob, tim = users\n    assert alice.karma == 6\n    assert bob.karma == 1\n    assert tim.karma == 0"
+    },
+    "test_points": {
+      "title": "test_points",
+      "code": "def test_points(users):\n    alice, bob, tim = users\n    assert alice.points == [1, 2, 3]\n    assert tim.points == []"
+    },
+    "test_fans": {
+      "title": "test_fans",
+      "code": "def test_fans(users):\n    alice, bob, tim = users\n    assert alice.fans == 2  # bob gave twice, he is one fan\n    assert bob.fans == 1\n    assert tim.fans == 0"
+    },
+    "test_str": {
+      "title": "test_str",
+      "code": "def test_str(users):\n    alice, bob, tim = users\n    assert str(alice) == 'alice has a karma of 6 and 2 fans'\n    assert str(bob) == 'bob has a karma of 1 and 1 fan'\n    assert str(tim) == 'tim has a karma of 0 and 0 fans'"
+    },
+    "test_comparison": {
+      "title": "test_comparison",
+      "code": "def test_comparison(users):\n    alice, bob, tim = users\n    assert tim < bob < alice\n    assert alice > bob\n    assert [u.name for u in sorted([alice, tim, bob])] == ['tim', 'bob', 'alice']"
+    },
+    "test_add_more_karma": {
+      "title": "test_add_more_karma",
+      "code": "def test_add_more_karma(users):\n    alice, bob, tim = users\n    tim + Transaction(giver=alice, points=5)\n    assert tim.karma == 5\n    assert tim > bob\n    assert str(tim) == 'tim has a karma of 5 and 1 fan'"
+    },
+    "test_properties": {
+      "title": "test_properties",
+      "code": "def test_properties():\n    for name in ('karma', 'points', 'fans'):\n        assert isinstance(User.__dict__[name], property)"
+    },
+    "test_users_do_not_share_state": {
+      "title": "test_users_do_not_share_state",
+      "code": "def test_users_do_not_share_state():\n    one, two = User('one'), User('two')\n    one + Transaction(giver=two, points=1)\n    assert two.points == []"
+    },
+    "test_zero_negative_points_and_empty_name": {
+      "title": "test_zero_negative_points_and_empty_name",
+      "code": "def test_zero_negative_points_and_empty_name():\n    receiver, giver = User(''), User('giver')\n    assert receiver + Transaction(giver, 0) is receiver\n    assert receiver + Transaction(giver, -3) is receiver\n    assert receiver.points == [0, -3]\n    assert receiver.karma == -3\n    assert receiver < User('zero')\n    assert receiver.fans == 1\n    assert str(receiver) == ' has a karma of -3 and 1 fan'"
+    },
+    "test_same_name_givers_are_one_fan": {
+      "title": "test_same_name_givers_are_one_fan",
+      "code": "def test_same_name_givers_are_one_fan():\n    receiver = User('receiver')\n    receiver + Transaction(User('giver'), 1)\n    receiver + Transaction(User('giver'), 2)\n    assert receiver.fans == 1"
+    },
+    "test_equal_karma_is_not_less_or_greater": {
+      "title": "test_equal_karma_is_not_less_or_greater",
+      "code": "def test_equal_karma_is_not_less_or_greater():\n    one, two = User('one'), User('two')\n    one + Transaction(two, 2)\n    two + Transaction(one, 2)\n    assert not one < two\n    assert not one > two"
+    },
+    "test_points_snapshot_and_read_only_properties": {
+      "title": "test_points_snapshot_and_read_only_properties",
+      "code": "def test_points_snapshot_and_read_only_properties():\n    user = User('user')\n    points = user.points\n    points.append(999)\n    assert user.points == []\n    assert user.karma == 0\n    for name in ('karma', 'points', 'fans'):\n        with pytest.raises(AttributeError):\n            setattr(user, name, 999)"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/building-a-karma-app-implement-the-user-class/)"
+  }
 }

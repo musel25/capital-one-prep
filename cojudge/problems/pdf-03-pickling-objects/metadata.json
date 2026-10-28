@@ -6,16 +6,12 @@
   "category": "01-beginner",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_namedtuples\"}",
-      "output": "passed"
+      "input": "deserialize()",
+      "output": "[Record(name='Ada', score=9), Record(name='Bo', score=7)]"
     },
     {
-      "input": "{\"test\": \"test_deserialize_supplied_path\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_serialize_namedtuples_and_string_path\"}",
-      "output": "passed"
+      "input": "from tempfile import TemporaryDirectory\nfrom pathlib import Path\nwith TemporaryDirectory() as work:\n    path = Path(work) / \"scores.pkl\"\n    serialize(path, [Record(\"Cy\", 10)])\n    result = deserialize(path)\nresult",
+      "output": "[Record(name='Cy', score=10)]"
     }
   ],
   "starterCode": {
@@ -40,5 +36,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_namedtuples": {
+      "title": "test_default_namedtuples",
+      "code": "def test_default_namedtuples():\n    result = deserialize()\n    assert result == [Record('Ada', 9), Record('Bo', 7)]\n    assert isinstance(result[0], Record)\n    assert result[0].name == 'Ada'"
+    },
+    "test_deserialize_supplied_path": {
+      "title": "test_deserialize_supplied_path",
+      "code": "def test_deserialize_supplied_path(tmp_path):\n    path = tmp_path / 'records.pickle'\n    path.write_bytes(pickle.dumps([Record('Zo\u00eb', 0)]))\n    result = deserialize(path)\n    assert result == [Record('Zo\u00eb', 0)]\n    assert type(result[0]) is Record"
+    },
+    "test_serialize_namedtuples_and_string_path": {
+      "title": "test_serialize_namedtuples_and_string_path",
+      "code": "def test_serialize_namedtuples_and_string_path(tmp_path):\n    path = tmp_path / 'records.pickle'\n    records = [Record('Lee', 3)]\n    assert serialize(str(path), records) is None\n    assert pickle.loads(path.read_bytes()) == records\n    assert deserialize(str(path)) == records\n    assert records == [Record('Lee', 3)]"
+    },
+    "test_explicit_false_values": {
+      "title": "test_explicit_false_values",
+      "code": "def test_explicit_false_values(tmp_path):\n    path = tmp_path / 'false.pickle'\n    for value in [[], {}, (), False, 0, '']:\n        serialize(path, value)\n        result = pickle.loads(path.read_bytes())\n        assert type(result) is type(value)\n        assert result == value"
+    },
+    "test_default_calls_deserialize": {
+      "title": "test_default_calls_deserialize",
+      "code": "def test_default_calls_deserialize(tmp_path, monkeypatch):\n    calls = []\n    def load_default():\n        calls.append('called')\n        return [Record('Mocked', 12)]\n    monkeypatch.setattr(pickling, 'deserialize', load_default)\n    path = tmp_path / 'default.pickle'\n    serialize(path)\n    assert calls == ['called']\n    assert pickle.loads(path.read_bytes()) == [Record('Mocked', 12)]"
+    },
+    "test_overwrite_old_data": {
+      "title": "test_overwrite_old_data",
+      "code": "def test_overwrite_old_data(tmp_path):\n    path = tmp_path / 'overwrite.pickle'\n    serialize(path, list(range(100)))\n    serialize(path, [1])\n    assert pickle.loads(path.read_bytes()) == [1]\n    assert len(path.read_bytes()) < len(pickle.dumps(list(range(100))))"
+    },
+    "test_missing_and_invalid_file": {
+      "title": "test_missing_and_invalid_file",
+      "code": "def test_missing_and_invalid_file(tmp_path):\n    with pytest.raises(FileNotFoundError):\n        deserialize(tmp_path / 'missing.pickle')\n    path = tmp_path / 'invalid.pickle'\n    path.write_bytes(b'not a pickle')\n    with pytest.raises(pickle.UnpicklingError):\n        deserialize(path)\n    path.write_bytes(b'')\n    with pytest.raises(EOFError):\n        deserialize(path)"
+    },
+    "test_default_is_independent": {
+      "title": "test_default_is_independent",
+      "code": "def test_default_is_independent():\n    first = deserialize()\n    first.append(Record('Extra', 1))\n    assert deserialize() == [Record('Ada', 9), Record('Bo', 7)]"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\nThe premium template and tests are recreated. Trusted pickle bytes built from a small local namedtuple list replace the downloaded default file. `deserialize(None)` selects that local default; explicit paths still use files.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/pickling-objects/)"
+  }
 }

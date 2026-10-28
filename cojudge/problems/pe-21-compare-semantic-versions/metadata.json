@@ -6,17 +6,17 @@
   "category": "06-application-logic",
   "examples": [
     {
-      "input": "{\"left\": \"1.2.3\", \"right\": \"1.2.3\"}",
+      "input": "compare_versions(\n    left='1.2.3',\n    right='1.2.3'\n)",
       "output": "0",
       "explanation": "equal release versions"
     },
     {
-      "input": "{\"left\": \"1.10.0\", \"right\": \"1.9.9\"}",
+      "input": "compare_versions(\n    left='1.10.0',\n    right='1.9.9'\n)",
       "output": "1",
       "explanation": "core numbers use numeric comparison"
     },
     {
-      "input": "{\"left\": \"1.0.0-alpha\", \"right\": \"1.0.0\"}",
+      "input": "compare_versions(\n    left='1.0.0-alpha',\n    right='1.0.0'\n)",
       "output": "-1",
       "explanation": "prerelease precedes its release"
     }
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

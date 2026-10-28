@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_case_01\"}",
-      "output": "passed"
+      "input": "log = ('Date: Tue Jan 1 12:00:00 2019 +0000 | 1 file changed, 2 insertions(+)\\n'\n       'Date: Fri Feb 1 12:00:00 2019 +0000 | 1 file changed, 8 deletions(-)')\nget_min_max_amount_of_commits(log)",
+      "output": "('2019-01', '2019-02')"
     },
     {
-      "input": "{\"test\": \"test_case_02\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_case_03\"}",
-      "output": "passed"
+      "input": "get_min_max_amount_of_commits('', year=2018)",
+      "output": "(None, None)"
     }
   ],
   "starterCode": {
@@ -40,5 +36,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_case_01": {
+      "title": "test_case_01",
+      "code": "def test_case_01():\n    assert (get_min_max_amount_of_commits('')) == (None, None)"
+    },
+    "test_case_02": {
+      "title": "test_case_02",
+      "code": "def test_case_02():\n    assert (get_min_max_amount_of_commits('Date: Tue Mar 5 22:34:33 2019 +0100 | 2 files changed, 4 insertions(+), 3 deletions(-)')) == ('2019-03', '2019-03')"
+    },
+    "test_case_03": {
+      "title": "test_case_03",
+      "code": "def test_case_03():\n    assert (get_min_max_amount_of_commits('Date: Tue Mar 5 22:34:33 2019 +0100 | 2 files changed, 4 insertions(+)\\nDate: Tue Jan 1 22:00:00 2019 +0100 | 9 files changed, 6 deletions(-)')) == ('2019-03', '2019-01')"
+    },
+    "test_case_04": {
+      "title": "test_case_04",
+      "code": "def test_case_04():\n    assert (get_min_max_amount_of_commits('Date: Tue Mar 5 22:34:33 2019 +0100 | 2 files changed, 4 insertions(+)\\nDate: Tue Jan 1 22:00:00 2019 +0100 | 1 file changed, 4 deletions(-)')) == ('2019-01', '2019-01')"
+    },
+    "test_case_05": {
+      "title": "test_case_05",
+      "code": "def test_case_05():\n    assert (get_min_max_amount_of_commits('Date: Tue Mar 5 22:34:33 2019 +0100 | 2 files changed, 4 insertions(+)', 2018)) == (None, None)"
+    },
+    "test_four_digit_year": {
+      "title": "test_four_digit_year",
+      "code": "def test_four_digit_year():\n    assert get_min_max_amount_of_commits('Date: Mon Jan 1 00:00:00 0001 +0000 | 1 file changed') == ('0001-01', '0001-01')"
+    },
+    "test_malformed_stat_rows": {
+      "title": "test_malformed_stat_rows",
+      "code": "def test_malformed_stat_rows():\n    for line in ('Date: Tue Mar 5 22:34:33 2019 +0100 | garbage', 'Date: Tue Mar 5 22:34:33 2019 +0100 | 1 file changed, four insertions(+)', 'Tue Mar 5 22:34:33 2019 +0100 | 1 file changed, 1 insertion(+)'):\n        with pytest.raises(ValueError):\n            get_min_max_amount_of_commits(line)"
+    },
+    "test_accumulate_same_month_and_keep_local_month": {
+      "title": "test_accumulate_same_month_and_keep_local_month",
+      "code": "def test_accumulate_same_month_and_keep_local_month():\n    log = \"\"\"Date: Tue Jan 1 00:00:00 2019 +1400 | 1 file changed, 3 insertions(+)\nDate: Wed Jan 2 00:00:00 2019 +1400 | 1 file changed, 3 deletions(-)\nDate: Fri Feb 1 00:00:00 2019 +0000 | 1 file changed, 5 insertions(+)\"\"\"\n    assert get_min_max_amount_of_commits(log) == ('2019-02', '2019-01')"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/parse-pybites-blog-git-commit-log/)"
+  }
 }

@@ -6,16 +6,8 @@
   "category": "03-fastapi",
   "examples": [
     {
-      "input": "{\"test\": \"test_factory_initializes_tables\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_empty_list\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_create_and_read\"}",
-      "output": "passed"
+      "input": "from fastapi.testclient import TestClient\nfrom sqlalchemy.pool import StaticPool\nengine = create_engine(\"sqlite://\", connect_args={\"check_same_thread\": False}, poolclass=StaticPool)\nclient = TestClient(create_app(engine))\nresponse = client.post(\"/workouts\", json={\"name\": \"Leg Day\"})\nprint(response.status_code, response.json())\nprint(client.delete(\"/workouts/1\").status_code)\nprint(client.get(\"/workouts\").json())",
+      "output": "201 {'name': 'Leg Day', 'description': '', 'id': 1}\n204\n[]"
     }
   ],
   "starterCode": {
@@ -40,5 +32,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_factory_initializes_tables": {
+      "title": "test_factory_initializes_tables",
+      "code": "def test_factory_initializes_tables():\n    from sqlalchemy import inspect\n    engine = create_engine(\"sqlite://\", connect_args={\"check_same_thread\": False}, poolclass=StaticPool)\n    try:\n        app.create_app(engine)\n        assert set(inspect(engine).get_table_names()) == set(SQLModel.metadata.tables)\n    finally:\n        engine.dispose()"
+    },
+    "test_empty_list": {
+      "title": "test_empty_list",
+      "code": "def test_empty_list(client):\n    response = client.get(\"/workouts\")\n    assert response.status_code == 200 and response.json() == []"
+    },
+    "test_create_and_read": {
+      "title": "test_create_and_read",
+      "code": "def test_create_and_read(client):\n    response = client.post(\"/workouts\", json={\"name\": \"Upper\", \"description\": \"Press\"})\n    assert response.status_code == 201\n    row = response.json()\n    assert isinstance(row[\"id\"], int)\n    assert row == {\"id\": row[\"id\"], \"name\": \"Upper\", \"description\": \"Press\"}\n    assert client.get(f\"/workouts/{row['id']}\").json() == row"
+    },
+    "test_create_is_durable": {
+      "title": "test_create_is_durable",
+      "code": "def test_create_is_durable(client, engine):\n    row = client.post(\"/workouts\", json={\"name\": \"Legs\", \"id\": 9999}).json()\n    assert row[\"description\"] == \"\" and row[\"id\"] != 9999\n    with Session(engine) as session:\n        assert session.get(app.Workout, row[\"id\"]).name == \"Legs\""
+    },
+    "test_invalid_body": {
+      "title": "test_invalid_body",
+      "code": "def test_invalid_body(client):\n    for body in ({}, {\"name\": \"\"}, {\"name\": None}, {\"name\": []}):\n        assert client.post(\"/workouts\", json=body).status_code == 422\n    assert client.get(\"/workouts\").json() == []"
+    },
+    "test_missing_and_invalid_id": {
+      "title": "test_missing_and_invalid_id",
+      "code": "def test_missing_and_invalid_id(client):\n    assert client.get(\"/workouts/999\").status_code == 404\n    assert client.delete(\"/workouts/999\").status_code == 404\n    assert client.get(\"/workouts/abc\").status_code == 422"
+    },
+    "test_order_and_pagination": {
+      "title": "test_order_and_pagination",
+      "code": "def test_order_and_pagination(client):\n    for name in (\"Z\", \"A\", \"B\"):\n        assert client.post(\"/workouts\", json={\"name\": name}).status_code == 201\n    assert [row[\"name\"] for row in client.get(\"/workouts?offset=1&limit=1\").json()] == [\"A\"]\n    assert client.get(\"/workouts?offset=10\").json() == []\n    for query in (\"offset=-1\", \"limit=0\", \"limit=101\", \"limit=abc\"):\n        assert client.get(\"/workouts?\" + query).status_code == 422"
+    },
+    "test_delete_preserves_other_rows": {
+      "title": "test_delete_preserves_other_rows",
+      "code": "def test_delete_preserves_other_rows(client, engine):\n    first = client.post(\"/workouts\", json={\"name\": \"First\"}).json()[\"id\"]\n    second = client.post(\"/workouts\", json={\"name\": \"Second\"}).json()[\"id\"]\n    response = client.delete(f\"/workouts/{first}\")\n    assert response.status_code == 204 and response.content == b\"\"\n    assert client.get(f\"/workouts/{first}\").status_code == 404\n    assert client.get(f\"/workouts/{second}\").status_code == 200\n    with Session(engine) as session:\n        assert session.get(app.Workout, first) is None"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. The original templates and tests require Pybites premium. The runtime supplies SQLModel, SQLite, SQLAlchemy, Pydantic, FastAPI, HTTPX, and pytest. Each check uses a separate database. No server is needed. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/fastapi-integration-basic-endpoints/)"
+  }
 }

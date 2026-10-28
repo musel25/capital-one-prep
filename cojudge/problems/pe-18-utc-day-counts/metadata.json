@@ -6,17 +6,17 @@
   "category": "05-files-time-and-boundaries",
   "examples": [
     {
-      "input": "{\"timestamps\": [\"2026-10-28T00:30:00+02:00\", \"2026-10-27T23:30:00Z\"]}",
-      "output": "{\"2026-10-27\": 2}",
+      "input": "count_utc_days(\n    timestamps=['2026-10-28T00:30:00+02:00', '2026-10-27T23:30:00Z']\n)",
+      "output": "{'2026-10-27': 2}",
       "explanation": "positive offset moves an event to the prior UTC day"
     },
     {
-      "input": "{\"timestamps\": [\"2026-10-28T23:30:00-02:00\", \"2026-10-29T00:00:00Z\"]}",
-      "output": "{\"2026-10-29\": 2}",
+      "input": "count_utc_days(\n    timestamps=['2026-10-28T23:30:00-02:00', '2026-10-29T00:00:00Z']\n)",
+      "output": "{'2026-10-29': 2}",
       "explanation": "negative offset moves an event to the next UTC day"
     },
     {
-      "input": "{\"timestamps\": []}",
+      "input": "count_utc_days(\n    timestamps=[]\n)",
       "output": "{}",
       "explanation": "empty timestamp list"
     }
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

@@ -6,16 +6,8 @@
   "category": "01-tables-and-crud",
   "examples": [
     {
-      "input": "{\"test\": \"test_empty_results\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_workouts_are_in_id_order\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_get_one_and_missing\"}",
-      "output": "passed"
+      "input": "engine = create_engine(\"sqlite://\")\nSQLModel.metadata.create_all(engine)\nwith Session(engine) as session:\n    session.add_all([Workout(id=5, name=\"A\"), Workout(id=2, name=\"Z\")])\n    session.commit()\n    print([row.id for row in get_workouts(session)])\n    print(get_workout(session, 99))",
+      "output": "[2, 5]\nNone"
     }
   ],
   "starterCode": {
@@ -40,5 +32,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_empty_results": {
+      "title": "test_empty_results",
+      "code": "def test_empty_results(session):\n    assert app.get_workouts(session) == [] and app.find_exercises(session) == []"
+    },
+    "test_workouts_are_in_id_order": {
+      "title": "test_workouts_are_in_id_order",
+      "code": "def test_workouts_are_in_id_order(session):\n    session.add_all([app.Workout(id=5, name=\"A\"), app.Workout(id=2, name=\"Z\")])\n    session.commit()\n    assert [w.id for w in app.get_workouts(session)] == [2, 5]"
+    },
+    "test_get_one_and_missing": {
+      "title": "test_get_one_and_missing",
+      "code": "def test_get_one_and_missing(session):\n    session.add_all([app.Workout(id=1, name=\"A\"), app.Workout(id=2, name=\"B\")])\n    session.commit()\n    assert app.get_workout(session, 2).name == \"B\"\n    assert app.get_workout(session, 99) is None"
+    },
+    "test_filter_is_exact": {
+      "title": "test_filter_is_exact",
+      "code": "def test_filter_is_exact(session):\n    session.add_all([app.Exercise(name=\"A\", muscle_group=\"legs\"), app.Exercise(name=\"B\", muscle_group=\"Legs\"), app.Exercise(name=\"C\", muscle_group=\"legs\")])\n    session.commit()\n    assert [e.name for e in app.find_exercises(session, \"legs\")] == [\"A\", \"C\"]\n    assert app.find_exercises(session, \"missing\") == []"
+    },
+    "test_empty_filter_is_not_all": {
+      "title": "test_empty_filter_is_not_all",
+      "code": "def test_empty_filter_is_not_all(session):\n    session.add_all([app.Exercise(name=\"A\"), app.Exercise(name=\"B\", muscle_group=\"legs\")])\n    session.commit()\n    assert [e.name for e in app.find_exercises(session, \"\")] == [\"A\"]\n    assert len(app.find_exercises(session)) == 2"
+    },
+    "test_reads_do_not_write": {
+      "title": "test_reads_do_not_write",
+      "code": "def test_reads_do_not_write(session):\n    app.get_workouts(session)\n    app.get_workout(session, 100)\n    app.find_exercises(session, \"legs\")\n    assert not session.new and not session.dirty and not session.deleted"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. The original templates and tests require Pybites premium. The runtime supplies SQLModel, SQLite, SQLAlchemy, Pydantic, FastAPI, HTTPX, and pytest. Each check uses a separate database. No server is needed. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/reading-data-with-select/)"
+  }
 }

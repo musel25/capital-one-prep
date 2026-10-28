@@ -1,13 +1,15 @@
 The operations dashboard needs request and server-error counts for each service.
 
-Given a list `logs`, return a dictionary keyed by service name. Each input row has `service` and `status`. Each output value has `requests`, the number of rows for that service, and `errors`, the number with status 500 or more. Count duplicate rows. Service names are case-sensitive. Return an empty dictionary for empty logs.
+Implement `summarize_logs(logs)`. Return a dictionary keyed by service name. Each value contains:
+
+- `requests`: the number of rows for that service.
+- `errors`: the number of those rows with status 500 or more.
+
+Count duplicate rows. Compare service names exactly. Empty logs return an empty dictionary.
 
 **Constraints:**
 
 - `0 <= len(logs) <= 10000`.
 - `service` is a nonempty ASCII string with at most 100 characters.
 - `status` is an integer from 100 through 599. Every row has both fields.
-- Do not change the input objects. Each call starts with fresh state.
-- Python 3.11. Standard library only.
-
-Implement `summarize_logs`. **Run** checks the examples. **Submit** checks all 12 cases.
+- Do not change input objects or their nested values. Each call starts with fresh state.

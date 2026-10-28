@@ -6,16 +6,8 @@
   "category": "02-relationships-and-schemas",
   "examples": [
     {
-      "input": "{\"test\": \"test_log_links_to_pair\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_pair_isolation\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_workout_filter\"}",
-      "output": "passed"
+      "input": "engine = create_engine(\"sqlite://\")\nSQLModel.metadata.create_all(engine)\nwith Session(engine) as session:\n    session.add(Workout(id=1, name=\"Upper Body\"))\n    session.add(Exercise(id=1, name=\"Bench Press\"))\n    session.commit()\n    session.add(WorkoutExercise(id=1, workout_id=1, exercise_id=1))\n    session.commit()\n    add_pair_log(session, 1, sets=3, reps=8, weight=40)\n    print([(log.sets, log.reps, log.weight) for log in get_pair_logs(session, workout_id=1)])",
+      "output": "[(3, 8, 40.0)]"
     }
   ],
   "starterCode": {
@@ -40,5 +32,39 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_log_links_to_pair": {
+      "title": "test_log_links_to_pair",
+      "code": "def test_log_links_to_pair(seeded):\n    row = app.add_pair_log(seeded, 20, 2, 10, 30)\n    assert row.id is not None and row.workout_exercise_id == 20\n    assert row.workout_exercise.workout_id == 2 and row.workout_exercise.exercise_id == 1\n    assert row.workout_exercise.logs[0].id == row.id"
+    },
+    "test_pair_isolation": {
+      "title": "test_pair_isolation",
+      "code": "def test_pair_isolation(logged):\n    rows = app.get_pair_logs(logged, workout_id=1, exercise_id=1)\n    assert len(rows) == 1 and rows[0].weight == 50"
+    },
+    "test_workout_filter": {
+      "title": "test_workout_filter",
+      "code": "def test_workout_filter(logged):\n    assert [r.weight for r in app.get_pair_logs(logged, workout_id=1)] == [50, 20]"
+    },
+    "test_exercise_filter": {
+      "title": "test_exercise_filter",
+      "code": "def test_exercise_filter(logged):\n    assert [r.weight for r in app.get_pair_logs(logged, exercise_id=1)] == [50, 30]"
+    },
+    "test_all_and_no_match": {
+      "title": "test_all_and_no_match",
+      "code": "def test_all_and_no_match(logged):\n    assert [r.weight for r in app.get_pair_logs(logged)] == [50, 30, 20]\n    assert app.get_pair_logs(logged, workout_id=99) == []\n    assert app.get_pair_logs(logged, workout_id=2, exercise_id=2) == []\n    assert app.get_pair_logs(logged, workout_id=0) == []\n    assert app.get_pair_logs(logged, exercise_id=0) == []"
+    },
+    "test_invalid_and_missing": {
+      "title": "test_invalid_and_missing",
+      "code": "def test_invalid_and_missing(seeded):\n    assert app.add_pair_log(seeded, 99, 1, 1) is None\n    for sets, reps, weight in [(0, 2, 0), (1, 0, 0), (1, 1, -1)]:\n        with pytest.raises(ValueError):\n            app.add_pair_log(seeded, 10, sets, reps, weight)\n    assert app.get_pair_logs(seeded) == []"
+    },
+    "test_pair_log_is_durable": {
+      "title": "test_pair_log_is_durable",
+      "code": "def test_pair_log_is_durable(seeded, engine):\n    app.add_pair_log(seeded, 10, 1, 2)\n    seeded.close()\n    with Session(engine) as check:\n        row = check.exec(select(app.LogEntry)).one()\n        assert row.workout_exercise_id == 10 and row.sets == 1 and row.reps == 2 and row.weight == 0"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. The original templates and tests require Pybites premium. The runtime supplies SQLModel, SQLite, SQLAlchemy, Pydantic, FastAPI, HTTPX, and pytest. Each check uses a separate database. No server is needed. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/advanced-link-table-relationships/)"
+  }
 }

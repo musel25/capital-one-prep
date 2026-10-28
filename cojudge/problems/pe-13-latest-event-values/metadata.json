@@ -6,18 +6,18 @@
   "category": "03-stateful-services",
   "examples": [
     {
-      "input": "{\"events\": [{\"entity\": \"a\", \"version\": 1, \"value\": \"old\"}, {\"entity\": \"a\", \"version\": 2, \"value\": \"new\"}]}",
-      "output": "{\"a\": \"new\"}",
+      "input": "latest_events(\n    events=[{'entity': 'a', 'version': 1, 'value': 'old'},\n     {'entity': 'a', 'version': 2, 'value': 'new'}]\n)",
+      "output": "{'a': 'new'}",
       "explanation": "new version replaces value"
     },
     {
-      "input": "{\"events\": [{\"entity\": \"a\", \"version\": 2, \"value\": \"new\"}, {\"entity\": \"a\", \"version\": 1, \"value\": \"old\"}]}",
-      "output": "{\"a\": \"new\"}",
+      "input": "latest_events(\n    events=[{'entity': 'a', 'version': 2, 'value': 'new'},\n     {'entity': 'a', 'version': 1, 'value': 'old'}]\n)",
+      "output": "{'a': 'new'}",
       "explanation": "late old event is ignored"
     },
     {
-      "input": "{\"events\": [{\"entity\": \"a\", \"version\": 4, \"value\": \"first\"}, {\"entity\": \"a\", \"version\": 4, \"value\": \"second\"}]}",
-      "output": "{\"a\": \"first\"}",
+      "input": "latest_events(\n    events=[{'entity': 'a', 'version': 4, 'value': 'first'},\n     {'entity': 'a', 'version': 4, 'value': 'second'}]\n)",
+      "output": "{'a': 'first'}",
       "explanation": "first equal version wins"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

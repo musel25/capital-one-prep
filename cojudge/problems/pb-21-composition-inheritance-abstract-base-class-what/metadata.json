@@ -6,19 +6,9 @@
   "category": "03-advanced",
   "examples": [
     {
-      "input": "{\"test\": \"test_namedtuples_have_type_hints\"}",
-      "output": "passed",
-      "explanation": "Test test_namedtuples_have_type_hints must pass."
-    },
-    {
-      "input": "{\"test\": \"test_file\"}",
-      "output": "passed",
-      "explanation": "Test test_file must pass."
-    },
-    {
-      "input": "{\"test\": \"test_web\"}",
-      "output": "passed",
-      "explanation": "Test test_web must pass."
+      "input": "table = \"<table><tr><th>Candidate</th><th>Average</th><th>Delegates</th><th>Contributions</th><th>Coverage</th></tr><tr><td>Ada</td><td>40%</td><td>12</td><td>$5</td><td>8</td></tr></table>\"\nsite = NYTimes(Web(\"https://example.invalid\", File(\"cached.html\")))\nsite.parse_rows(table)",
+      "output": "[LeaderBoard(Candidate='Ada', Average='40%', Delegates=12, Contributions='$5', Coverage=8)]",
+      "explanation": "Convert table cells into the supplied typed record."
     }
   ],
   "starterCode": {
@@ -43,5 +33,71 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_namedtuples_have_type_hints": {
+      "title": "test_namedtuples_have_type_hints",
+      "code": "def test_namedtuples_have_type_hints():\n    assert Candidate.__annotations__ == {\"name\": str, \"votes\": str}\n    assert LeaderBoard.__annotations__ == {\"Candidate\": str, \"Average\": str, \"Delegates\": int,\n                                           \"Contributions\": str, \"Coverage\": int}\n    assert Poll.__annotations__ == {\"Poll\": str, \"Date\": str, \"Sample\": int, \"Sanders\": float,\n                                    \"Biden\": float, \"Gabbard\": float, \"Spread\": str}\n    assert Candidate(\"Bernie\", \"10\")._fields == (\"name\", \"votes\")"
+    },
+    "test_file": {
+      "title": "test_file",
+      "code": "def test_file(tmp):\n    file = File(\"missing.html\")\n    assert file.path == tmp / \"missing.html\"\n    assert file.data is None\n    (tmp / \"missing.html\").write_text(\"<p>now it exists</p>\")\n    assert file.data == \"<p>now it exists</p>\""
+    },
+    "test_web": {
+      "title": "test_web",
+      "code": "def test_web(nyt, tmp):\n    web = nyt.web\n    assert isinstance(web.file, File)\n    assert web.data == NYT_HTML\n    assert isinstance(web.soup, Soup)\n    assert len(web.soup.find_all(\"table\")) == 1"
+    },
+    "test_site_is_an_abstract_base_class": {
+      "title": "test_site_is_an_abstract_base_class",
+      "code": "def test_site_is_an_abstract_base_class(nyt):\n    assert issubclass(Site, scraper.ABC)\n    assert set(Site.__abstractmethods__) == {\"parse_rows\", \"polls\", \"stats\"}\n    with pytest.raises(TypeError):\n        Site(nyt.web)\n\n    class Incomplete(Site):\n        def polls(self, table=0):\n            return []\n    with pytest.raises(TypeError):\n        Incomplete(nyt.web)"
+    },
+    "test_composition": {
+      "title": "test_composition",
+      "code": "def test_composition(nyt, rcp):\n    for site in (nyt, rcp):\n        assert isinstance(site, Site)\n        assert isinstance(site.web, Web)\n        assert not isinstance(site, Web)"
+    },
+    "test_find_table": {
+      "title": "test_find_table",
+      "code": "def test_find_table(rcp):\n    first, third = rcp.find_table(0), rcp.find_table(2)\n    assert isinstance(third, str)\n    assert first.startswith(\"<table\") and 'id=\"t1\"' in first\n    assert 'id=\"t3\"' in third and \"Emerson\" in third\n    assert \"Emerson\" not in first"
+    },
+    "test_nyt_polls": {
+      "title": "test_nyt_polls",
+      "code": "def test_nyt_polls(nyt):\n    polls = nyt.polls()\n    assert len(polls) == 4\n    assert polls[0] == LeaderBoard(\"Pete Buttigieg\", \"10%\", 25, \"$76.2m\", 3)\n    assert polls[2] == LeaderBoard(\"Joseph R. Biden Jr.\", \"26%\", 15, \"$60.6m\", 1)\n    assert all(isinstance(p, LeaderBoard) for p in polls)\n    assert nyt.parse_rows(nyt.find_table(0)) == polls"
+    },
+    "test_rcp_polls": {
+      "title": "test_rcp_polls",
+      "code": "def test_rcp_polls(rcp):\n    polls = rcp.polls(2)\n    assert len(polls) == 4\n    assert polls[0] == Poll(\"Emerson\", \"2/16 - 2/18\", 1250, 30.0, 40.0, 2.0, \"Biden +10\")\n    assert all(isinstance(p.Sample, int) and isinstance(p.Biden, float) for p in polls)"
+    },
+    "test_nyt_stats": {
+      "title": "test_nyt_stats",
+      "code": "def test_nyt_stats(nyt, capsys):\n    nyt.stats()\n    assert capsys.readouterr().out == NYT_STATS"
+    },
+    "test_rcp_stats": {
+      "title": "test_rcp_stats",
+      "code": "def test_rcp_stats(rcp, capsys):\n    rcp.stats(2)\n    assert capsys.readouterr().out == RCP_STATS"
+    },
+    "test_parsers_derive_from_site": {
+      "title": "test_parsers_derive_from_site",
+      "code": "def test_parsers_derive_from_site():\n    assert issubclass(NYTimes, Site)\n    assert issubclass(RealClearPolitics, Site)\n    assert \"find_table\" not in NYTimes.__dict__ and \"find_table\" not in RealClearPolitics.__dict__"
+    },
+    "test_missing_and_empty_web_cache": {
+      "title": "test_missing_and_empty_web_cache",
+      "code": "def test_missing_and_empty_web_cache(tmp):\n    file = File('empty.html')\n    web = Web('https://example.invalid/offline', file)\n    assert web.data is None\n    assert isinstance(web.soup, Soup)\n    assert web.soup.find_all('table') == []\n    file.path.write_text('')\n    assert file.data == ''\n    assert web.data == ''\n    assert web.soup.find_all('table') == []\n    file.path.write_text('<table><tr><th>header</th></tr></table>')\n    assert len(web.soup.find_all('table')) == 1"
+    },
+    "test_header_only_tables": {
+      "title": "test_header_only_tables",
+      "code": "def test_header_only_tables(nyt, rcp):\n    table = '<table><tr><th>header</th></tr></table>'\n    assert nyt.parse_rows(table) == []\n    assert rcp.parse_rows(table) == []"
+    },
+    "test_rcp_default_table_and_changed_poll_data": {
+      "title": "test_rcp_default_table_and_changed_poll_data",
+      "code": "def test_rcp_default_table_and_changed_poll_data(rcp, capsys):\n    assert rcp.polls() == rcp.polls(2)\n    table = ('<table><tr><th>Poll</th><th>Date</th><th>Sample</th><th>Sanders</th>'\n             '<th>Biden</th><th>Gabbard</th><th>Spread</th></tr>'\n             '<tr><td> New &amp; Co </td><td>today</td><td>1</td><td>2.5</td>'\n             '<td>0</td><td>1</td><td>Sanders +2.5</td></tr>'\n             '<tr><td>Other</td><td>yesterday</td><td>0</td><td>3.0</td>'\n             '<td>0</td><td>0</td><td>Sanders +3</td></tr></table>')\n    rcp.web.file.path.write_text(table)\n    assert rcp.polls(0) == [Poll('New & Co', 'today', 1, 2.5, 0.0, 1.0, 'Sanders +2.5'),\n                            Poll('Other', 'yesterday', 0, 3.0, 0.0, 0.0, 'Sanders +3')]\n    rcp.stats(0)\n    assert capsys.readouterr().out == ('\\nRealClearPolitics\\n=================\\n'\n                                     '  Sanders: 5.5\\n  Gabbard: 1.0\\n    Biden: 0.0\\n\\n')"
+    },
+    "test_nyt_parses_other_table_and_current_file_data": {
+      "title": "test_nyt_parses_other_table_and_current_file_data",
+      "code": "def test_nyt_parses_other_table_and_current_file_data(nyt, capsys):\n    table = ('<table><tr><th>Candidate</th><th>Average</th><th>Delegates</th>'\n             '<th>Contributions</th><th>Coverage</th></tr>'\n             '<tr><td><b>A &amp; B</b></td><td>0%</td><td>0</td>'\n             '<td>$0</td><td>0</td></tr></table>')\n    nyt.web.file.path.write_text('<table><tr><th>unused</th></tr></table>' + table)\n    assert nyt.polls(1) == [LeaderBoard('A & B', '0%', 0, '$0', 0)]\n    nyt.stats(1)\n    assert capsys.readouterr().out == ('\\nNYTimes\\n=================================\\n\\n'\n        '                            A & B\\n---------------------------------\\n'\n        'National Polling Average: 0%\\n       Pledged Delegates: 0\\n'\n        'Individual Contributions: $0\\n    Weekly News Coverage: 0\\n\\n')"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreations based on the public bite description. This is an offline version. The judge has no network and no BeautifulSoup, so the template supplies a small `Soup` class with `find_all(\"table\")`, and `Web.data` reads the cached HTML file (the tests create it). The sample pages in the tests are fictional and contain only the tables that are used. Everything else follows the description: the typed namedtuples, `File`, `Web`, the `Site` abstract base class, the two parsers, and the exact output formats. Python 3.11. Use the standard library. No network access.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/composition-inheritance-abstract-base-class-what/)"
+  }
 }

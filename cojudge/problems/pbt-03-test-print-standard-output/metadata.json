@@ -6,16 +6,8 @@
   "category": "pytest",
   "examples": [
     {
-      "input": "{\"check\": \"baseline\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"print odd numbers\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"check\": \"omit zero\"}",
-      "output": "passed"
+      "input": "from printing import *\nresult = print_even_numbers([0, 1, 2, -4, 2])\nprint(\"Return value:\", result)",
+      "output": "0\n2\n-4\n2\nReturn value: None"
     }
   ],
   "starterCode": {
@@ -44,5 +36,35 @@
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."
-  ]
+  ],
+  "testCaseDescriptions": {
+    "baseline": {
+      "title": "Correct code: tests pass and cover at least 90%",
+      "code": "def print_even_numbers(numbers):\n    for number in numbers:\n        if number % 2 == 0:\n            print(number)"
+    },
+    "print odd numbers": {
+      "title": "Detect fault: print odd numbers",
+      "code": "def print_even_numbers(numbers):\n    for number in numbers:\n        if number % 2 != 0:\n            print(number)"
+    },
+    "omit zero": {
+      "title": "Detect fault: omit zero",
+      "code": "def print_even_numbers(numbers):\n    for number in numbers:\n        if number != 0 and number % 2 == 0:\n            print(number)"
+    },
+    "omit negative numbers": {
+      "title": "Detect fault: omit negative numbers",
+      "code": "def print_even_numbers(numbers):\n    for number in numbers:\n        if number >= 0 and number % 2 == 0:\n            print(number)"
+    },
+    "omit newline": {
+      "title": "Detect fault: omit newline",
+      "code": "def print_even_numbers(numbers):\n    for number in numbers:\n        if number % 2 == 0:\n            print(number, end=\"\")"
+    },
+    "deduplicate output": {
+      "title": "Detect fault: deduplicate output",
+      "code": "def print_even_numbers(numbers):\n    for number in dict.fromkeys(numbers):\n        if number % 2 == 0:\n            print(number)"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write tests below the marked line in the editor. Run checks the correct implementation and a sample of the faulty versions. Submit checks every version. Keep the supplied code and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThis target and its tests are an offline recreation from the public description. The original code and template require Pybites premium.\n\nThe offline runner supports `pytest.raises` with `match`, `pytest.mark.parametrize`, function and yield fixtures, numeric `pytest.approx`, `pytest.fail`, `capsys`, `capfd`, `monkeypatch`, and `tmp_path`. `unittest.mock.patch` also works. Use top-level test functions and function-scoped fixtures. Async tests, pytest classes with setup hooks, plugins, skip/xfail, and advanced fixture scopes are not supported.\n\nThis course measures statement coverage with Python tracing and checks explicit faulty variants. It does not run pytest-cov or mutatest. `SURVIVED` names a fault that your tests did not detect.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/test-print-standard-output/)"
+  }
 }

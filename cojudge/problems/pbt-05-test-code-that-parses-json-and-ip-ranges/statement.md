@@ -1,16 +1,10 @@
-# 05. Test code that parses json and ip ranges
+Another Test Bite, we ❤️them 😁- today you will write tests for IPv4Network (ipaddress module) and dataclass objects 💪. Check out the ips module I wrote parsing a JSON file of IP ranges (ip-ranges.json) under CODE TO TEST, then write tests to get to 100% test coverage and a 100% mutation score.
 
-Write **tests**, not the implementation. [Original Pybites exercise](https://pybitesplatform.com/bites/test-code-that-parses-json-and-ip-ranges/).
+Good luck and keep calm and code in Python 🐍 and pytest. Share your accomplishment upon completing the Bite 😎
 
-This is an offline recreation from the public description. The original code and template are premium and were not available. The API below belongs to this recreation.
+For this version, write tests for the supplied code. Your tests must pass against the correct code, cover at least 90% of its executable statements, and detect every supplied faulty version. A fault is detected when at least one test fails. An empty test suite does not pass.
 
-## Contract
-
-parse_ranges(text) parses a JSON object with a prefixes list. Each item has ip_prefix, region, and service. Return frozen IPRange dataclass objects in input order. Use strict IPv4Network parsing. get_ranges(path) reads UTF-8 JSON from a local file. filter_ranges applies optional exact region and service filters together. Propagate JSON, key, IP, and file errors.
-
-## Code to test
-
-Import this module as `ips`. The judge supplies it automatically.
+Import the target as `ips`. The judge supplies it automatically.
 
 ```python
 import json
@@ -36,21 +30,3 @@ def filter_ranges(ranges, region=None, service=None):
             if (region is None or item.region == region)
             and (service is None or item.service == service)]
 ```
-
-## Your task
-
-Scroll to **WRITE YOUR TESTS BELOW** in the editor. Replace the placeholder with `test_` functions. Keep the supplied target, runner, and adapter unchanged.
-
-1. All tests must pass against the correct code.
-2. Cover at least 90% of executable statements in the supplied target.
-3. Detect every supplied faulty variant. A faulty variant is detected when at least one test fails against it.
-
-**Run** checks the baseline and the first two faults. **Submit** checks the baseline and all 5 faults. `SURVIVED` identifies a fault your tests missed. A baseline failure shows the test name and error. Empty suites do not pass.
-
-## Offline pytest support
-
-The supplied runner implements the same small pytest subset used by the OOP course: `pytest.raises` (with `match`), `pytest.mark.parametrize`, function and yield fixtures, `pytest.approx` for numbers, `pytest.fail`, `capsys` / `capfd` for Python output, `monkeypatch`, and `tmp_path`. Standard-library `unittest.mock.patch` also works. Use function-scoped fixtures and top-level test functions. Plugins, async tests, pytest classes with setup hooks, skip/xfail, and advanced fixture scopes are not supported.
-
-The judge uses Python 3.11 and no network. This runner measures statement coverage with Python tracing and uses explicit faulty variants. It does **not** run pytest-cov or mutatest. Its acceptance result is specific to this course.
-
-For an older saved tab, use **+** to open the current template. Keep the old tab intact.

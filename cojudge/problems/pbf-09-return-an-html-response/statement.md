@@ -1,29 +1,21 @@
-# 09. Return an html response
+You use FastAPI primarily to build APIs, but it can also be used as a web framework (although we think Django is a better option for this).
+You can install Jinja2 and return a template response as shown here.
+However on our platform we work with single test and exercise files so in this Bite you will return an HTMLResponse with embedded HTML (docs). The effect will be the same though: the food log of a user in a nice html table!
 
-[Course list](/?course=pybites-fastapi) · [Original Pybites exercise](https://pybitesplatform.com/bites/return-an-html-response/)
+| Food | Added | Servings | Calories (kcal) |
+| --- | --- | --- | --- |
+| egg | 2022-03-13 11:02:37.500968 | 1.5 x piece | 117.0 |
+| oatmeal | 2022-03-13 11:02:37.500968 | 2.0 x 100 grams | 672.0 |
 
-## Required behavior
+We provided the show_foods_for_user endpoint stub, add the logic to build up the HTML for the response. For your convenience we already added some template constants you can use: HTML_TEMPLATE and TABLE_ROW.
+Here is what the final HTML response would look like as per the tests:
 
-Keep the supplied create endpoint. GET `/{username}` returns an HTMLResponse with status 200. Use HTML_TEMPLATE and TABLE_ROW to show that user's entries in insertion order. Include the food name, date, servings and serving size, and total calories. Escape text fields before insertion. An unknown username gets an empty table.
+```html
+<html lang="en"><head>  <meta charset="utf-8">  <meta name="viewport" content="width=device-width, initial-scale=1">  <title>Food log for Julian</title></head><body>    <table>        <thead>            <th>Food</th>            <th>Added</th>            <th>Servings</th>            <th>Calories (kcal)</th>        </thead>        <tbody>              <tr>                  <td>egg</td>                  <td>2022-03-13 11:02:37.500968</td>                  <td>1.5 x piece</td>                  <td>117.0</td>              </tr>              <tr>                  <td>oatmeal</td>                  <td>2022-03-13 11:02:37.500968</td>                  <td>2.0 x 100 grams</td>                  <td>672.0</td>              </tr>        </tbody>    </table></body></html>
+```
 
-## How to solve it
+Good luck and in the next and final FastAPI Bite we will add authentication to the API.
 
-Use Python. Write your solution at the top of the editor. The supplied tests follow it.
-Run checks up to three tests. Submit checks all 2 tests.
-Each check runs real pytest and FastAPI in a fresh process. No server or network is needed.
-Keep the supplied tests and adapter unchanged. Failures show the pytest test name and error.
+**Constraints:**
 
-## Source and changes
-
-The starter and tests were imported from the exercise pages accessible in the user's Pybites session.
-Example password fields and the classroom signing key were restored with explicit test values after export redaction.
-FoodEntry uses a per-instance timestamp default. Tests labelled `test_added_` are added Cojudge checks.
-The required behavior above summarizes the source description and states the added checks.
-The reference solution was written for this course.
-
-The runtime uses Python 3.11, FastAPI 0.161.1, Pydantic 2, real pytest,
-HTTPX, Passlib/bcrypt, python-jose, python-multipart, and BeautifulSoup.
-Package versions are locked in `cojudge/fastapi_path/uv.lock` in the content repository.
-
-For an old saved solution, use **+** beside the editor tabs to open the current starter.
-Copy your code into that tab. Keep your old saved tab.
+- Use GET `/{username}`. Preserve insertion order. Escape text fields in HTML. An unknown username gets an empty table.

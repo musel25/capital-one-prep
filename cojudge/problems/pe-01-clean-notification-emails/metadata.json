@@ -6,17 +6,17 @@
   "category": "01-data-and-api",
   "examples": [
     {
-      "input": "{\"emails\": [\" ADA@EXAMPLE.COM \", \"ada@example.com\", \"bob@example.com\"]}",
-      "output": "[\"ada@example.com\", \"bob@example.com\"]",
+      "input": "clean_emails(\n    emails=[' ADA@EXAMPLE.COM ', 'ada@example.com', 'bob@example.com']\n)",
+      "output": "['ada@example.com', 'bob@example.com']",
       "explanation": "normalize then deduplicate"
     },
     {
-      "input": "{\"emails\": []}",
+      "input": "clean_emails(\n    emails=[]\n)",
       "output": "[]",
       "explanation": "empty batch"
     },
     {
-      "input": "{\"emails\": [\"\", \" \", \"\\t\\r\\n\"]}",
+      "input": "clean_emails(\n    emails=['', ' ', '\\t\\r\\n']\n)",
       "output": "[]",
       "explanation": "blank entries"
     }
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

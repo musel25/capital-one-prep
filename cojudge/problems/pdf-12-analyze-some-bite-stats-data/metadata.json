@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_default_six_statistics\"}",
-      "output": "passed"
+      "input": "stats = BiteStats()\n(stats.total_attempts, stats.total_users, stats.total_bites, stats.total_completed)",
+      "output": "(6, 3, 4, 3)"
     },
     {
-      "input": "{\"test\": \"test_rows_are_string_dictionaries_and_csv_quotes\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_empty_data\"}",
-      "output": "passed"
+      "input": "stats = BiteStats()\n(stats.most_active_user, stats.most_popular_bite)",
+      "output": "('alex', 29)"
     }
   ],
   "starterCode": {
@@ -40,5 +36,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_default_six_statistics": {
+      "title": "test_default_six_statistics",
+      "code": "def test_default_six_statistics():\n    stats = BiteStats()\n    assert (stats.total_attempts, stats.total_users, stats.total_bites, stats.total_completed) == (6, 3, 4, 3)\n    assert stats.most_active_user == 'alex'\n    assert stats.most_popular_bite == 29"
+    },
+    "test_rows_are_string_dictionaries_and_csv_quotes": {
+      "title": "test_rows_are_string_dictionaries_and_csv_quotes",
+      "code": "def test_rows_are_string_dictionaries_and_csv_quotes():\n    stats = BiteStats('bite,user,completed\\n7,\"Lee, Ada\",False\\n')\n    assert stats.rows == [{'bite': '7', 'user': 'Lee, Ada', 'completed': 'False'}]\n    assert stats.most_active_user == 'Lee, Ada'\n    assert stats.most_popular_bite == 7"
+    },
+    "test_empty_data": {
+      "title": "test_empty_data",
+      "code": "def test_empty_data():\n    stats = BiteStats('bite,user,completed\\n')\n    assert stats.rows == []\n    assert (stats.total_attempts, stats.total_users, stats.total_bites, stats.total_completed) == (0, 0, 0, 0)\n    assert stats.most_active_user is None\n    assert stats.most_popular_bite is None"
+    },
+    "test_single_false_is_not_truthy_completion": {
+      "title": "test_single_false_is_not_truthy_completion",
+      "code": "def test_single_false_is_not_truthy_completion():\n    stats = BiteStats('bite,user,completed\\n42,solo,False\\n')\n    assert stats.total_completed == 0\n    assert stats.total_attempts == stats.total_users == stats.total_bites == 1\n    assert stats.most_active_user == 'solo' and stats.most_popular_bite == 42"
+    },
+    "test_duplicate_completions_are_attempts": {
+      "title": "test_duplicate_completions_are_attempts",
+      "code": "def test_duplicate_completions_are_attempts():\n    stats = BiteStats('bite,user,completed\\n1,a,True\\n1,a,True\\n1,a,False\\n')\n    assert stats.total_attempts == 3 and stats.total_completed == 2\n    assert stats.total_users == stats.total_bites == 1"
+    },
+    "test_ties_use_alphabetical_user_and_numeric_bite": {
+      "title": "test_ties_use_alphabetical_user_and_numeric_bite",
+      "code": "def test_ties_use_alphabetical_user_and_numeric_bite():\n    stats = BiteStats('bite,user,completed\\n10,zulu,True\\n2,alpha,False\\n')\n    assert stats.most_active_user == 'alpha'\n    assert stats.most_popular_bite == 2"
+    },
+    "test_frequency_wins_before_tie_rule": {
+      "title": "test_frequency_wins_before_tie_rule",
+      "code": "def test_frequency_wins_before_tie_rule():\n    stats = BiteStats('bite,user,completed\\n2,alpha,False\\n10,zulu,False\\n10,zulu,False\\n')\n    assert stats.most_active_user == 'zulu' and stats.most_popular_bite == 10"
+    },
+    "test_properties_do_not_change_rows_and_instances_are_independent": {
+      "title": "test_properties_do_not_change_rows_and_instances_are_independent",
+      "code": "def test_properties_do_not_change_rows_and_instances_are_independent():\n    stats = BiteStats()\n    before = json.dumps(stats.rows, sort_keys=True)\n    for name in ('total_attempts', 'total_users', 'total_bites', 'total_completed',\n                 'most_active_user', 'most_popular_bite'):\n        getattr(stats, name)\n        assert isinstance(getattr(BiteStats, name), property)\n        with pytest.raises(AttributeError):\n            setattr(stats, name, 0)\n    assert json.dumps(stats.rows, sort_keys=True) == before\n    stats.rows.clear()\n    assert len(BiteStats().rows) == 6"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-data-formats)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/analyze-some-bite-stats-data/)"
+  }
 }

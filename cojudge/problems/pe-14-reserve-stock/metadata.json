@@ -6,18 +6,18 @@
   "category": "03-stateful-services",
   "examples": [
     {
-      "input": "{\"stock\": {\"a\": 5}, \"requests\": [{\"sku\": \"a\", \"quantity\": 2}]}",
-      "output": "{\"accepted\": [true], \"stock\": {\"a\": 3}}",
+      "input": "reserve_stock(\n    stock={'a': 5},\n    requests=[{'sku': 'a', 'quantity': 2}]\n)",
+      "output": "{'accepted': [True], 'stock': {'a': 3}}",
       "explanation": "successful reservation"
     },
     {
-      "input": "{\"stock\": {\"a\": 5}, \"requests\": [{\"sku\": \"a\", \"quantity\": 5}]}",
-      "output": "{\"accepted\": [true], \"stock\": {\"a\": 0}}",
+      "input": "reserve_stock(\n    stock={'a': 5},\n    requests=[{'sku': 'a', 'quantity': 5}]\n)",
+      "output": "{'accepted': [True], 'stock': {'a': 0}}",
       "explanation": "exact stock is accepted"
     },
     {
-      "input": "{\"stock\": {\"a\": 5}, \"requests\": [{\"sku\": \"a\", \"quantity\": 6}]}",
-      "output": "{\"accepted\": [false], \"stock\": {\"a\": 5}}",
+      "input": "reserve_stock(\n    stock={'a': 5},\n    requests=[{'sku': 'a', 'quantity': 6}]\n)",
+      "output": "{'accepted': [False], 'stock': {'a': 5}}",
       "explanation": "insufficient stock is unchanged"
     }
   ],
@@ -43,5 +43,10 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
+  }
 }

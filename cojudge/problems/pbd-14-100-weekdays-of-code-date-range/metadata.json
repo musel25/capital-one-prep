@@ -6,16 +6,12 @@
   "category": "02-intermediate",
   "examples": [
     {
-      "input": "{\"test\": \"test_case_01\"}",
-      "output": "passed"
+      "input": "get_hundred_weekdays(date(2019, 1, 4))[:3]",
+      "output": "[datetime.date(2019, 1, 4), datetime.date(2019, 1, 7), datetime.date(2019, 1, 8)]"
     },
     {
-      "input": "{\"test\": \"test_case_02\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_case_03\"}",
-      "output": "passed"
+      "input": "len(get_hundred_weekdays())",
+      "output": "100"
     }
   ],
   "starterCode": {
@@ -40,5 +36,43 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_case_01": {
+      "title": "test_case_01",
+      "code": "def test_case_01():\n    assert (len(get_hundred_weekdays())) == 100"
+    },
+    "test_case_02": {
+      "title": "test_case_02",
+      "code": "def test_case_02():\n    assert (get_hundred_weekdays(date(2020, 2, 28))[:3]) == [date(2020, 2, 28), date(2020, 3, 2), date(2020, 3, 3)]"
+    },
+    "test_case_03": {
+      "title": "test_case_03",
+      "code": "def test_case_03():\n    assert (get_hundred_weekdays(date(2020, 2, 29))[0]) == date(2020, 3, 2)"
+    },
+    "test_case_04": {
+      "title": "test_case_04",
+      "code": "def test_case_04():\n    assert (get_hundred_weekdays(date(2020, 3, 1))[0]) == date(2020, 3, 2)"
+    },
+    "test_case_05": {
+      "title": "test_case_05",
+      "code": "def test_case_05():\n    assert (get_hundred_weekdays()[0]) == date(2019, 1, 1)"
+    },
+    "test_case_06": {
+      "title": "test_case_06",
+      "code": "def test_case_06():\n    assert (get_hundred_weekdays()[-1]) == date(2019, 5, 20)"
+    },
+    "test_case_07": {
+      "title": "test_case_07",
+      "code": "def test_case_07():\n    assert (all(d.weekday() < 5 for d in get_hundred_weekdays())) == True"
+    },
+    "test_case_08": {
+      "title": "test_case_08",
+      "code": "def test_case_08():\n    assert (len(set(get_hundred_weekdays()))) == 100"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThe template and tests are recreated from the public Pybites description.\n\n[Course list](/?course=pybites-datetimes-timezones)\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/100-weekdays-of-code-date-range/)"
+  }
 }

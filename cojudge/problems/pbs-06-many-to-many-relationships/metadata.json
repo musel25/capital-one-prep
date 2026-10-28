@@ -6,16 +6,8 @@
   "category": "02-relationships-and-schemas",
   "examples": [
     {
-      "input": "{\"test\": \"test_composite_key_and_foreign_keys\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_link_and_both_relationships\"}",
-      "output": "passed"
-    },
-    {
-      "input": "{\"test\": \"test_shared_exercise\"}",
-      "output": "passed"
+      "input": "engine = create_engine(\"sqlite://\")\nSQLModel.metadata.create_all(engine)\nwith Session(engine) as session:\n    session.add(Workout(id=1, name=\"Upper Body\"))\n    session.add(Exercise(id=1, name=\"Bench Press\"))\n    session.commit()\n    print(link_exercise(session, 1, 1))\n    print(link_exercise(session, 1, 1))\n    print([item.name for item in session.get(Workout, 1).exercises])",
+      "output": "True\nTrue\n['Bench Press']"
     }
   ],
   "starterCode": {
@@ -40,5 +32,35 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [],
+  "testCaseDescriptions": {
+    "test_composite_key_and_foreign_keys": {
+      "title": "test_composite_key_and_foreign_keys",
+      "code": "def test_composite_key_and_foreign_keys():\n    table = app.WorkoutExercise.__table__\n    assert set(table.primary_key.columns.keys()) == {\"workout_id\", \"exercise_id\"}\n    assert {fk.target_fullname for fk in table.foreign_keys} == {\"workout.id\", \"exercise.id\"}"
+    },
+    "test_link_and_both_relationships": {
+      "title": "test_link_and_both_relationships",
+      "code": "def test_link_and_both_relationships(seeded):\n    assert app.link_exercise(seeded, 1, 1) is True\n    seeded.expire_all()\n    assert seeded.get(app.Workout, 1).exercises[0].name == \"Bench\"\n    assert seeded.get(app.Exercise, 1).workouts[0].name == \"Upper\""
+    },
+    "test_shared_exercise": {
+      "title": "test_shared_exercise",
+      "code": "def test_shared_exercise(seeded):\n    app.link_exercise(seeded, 1, 1)\n    app.link_exercise(seeded, 2, 1)\n    app.link_exercise(seeded, 1, 2)\n    seeded.expire_all()\n    assert {w.id for w in seeded.get(app.Exercise, 1).workouts} == {1, 2}\n    assert {e.id for e in seeded.get(app.Workout, 1).exercises} == {1, 2}\n    assert [e.id for e in seeded.get(app.Workout, 2).exercises] == [1]"
+    },
+    "test_duplicate_link_is_idempotent": {
+      "title": "test_duplicate_link_is_idempotent",
+      "code": "def test_duplicate_link_is_idempotent(seeded):\n    assert app.link_exercise(seeded, 1, 1) is True\n    assert app.link_exercise(seeded, 1, 1) is True\n    assert len(seeded.exec(select(app.WorkoutExercise)).all()) == 1"
+    },
+    "test_missing_endpoints": {
+      "title": "test_missing_endpoints",
+      "code": "def test_missing_endpoints(seeded):\n    assert app.link_exercise(seeded, 99, 1) is False\n    assert app.link_exercise(seeded, 1, 99) is False\n    assert seeded.exec(select(app.WorkoutExercise)).all() == []"
+    },
+    "test_link_is_durable": {
+      "title": "test_link_is_durable",
+      "code": "def test_link_is_durable(seeded, engine):\n    app.link_exercise(seeded, 1, 1)\n    seeded.close()\n    with Session(engine) as check:\n        assert check.get(app.WorkoutExercise, (1, 1)) is not None"
+    }
+  },
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your implementation above the supplied tests. Run checks the sample tests. Submit checks all supplied tests. Keep the tests and runner unchanged.\n\nFor an older saved solution, use **+** beside the editor tabs to open the current template. Copy your implementation into the new tab. Your old tab stays in place.\n\nThese templates and tests are recreations from the public descriptions. The original templates and tests require Pybites premium. The runtime supplies SQLModel, SQLite, SQLAlchemy, Pydantic, FastAPI, HTTPX, and pytest. Each check uses a separate database. No server is needed. Select Python.\n\n[Original Pybites exercise](https://pybitesplatform.com/bites/many-to-many-relationships/)"
+  }
 }
