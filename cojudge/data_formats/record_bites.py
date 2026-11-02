@@ -18,6 +18,32 @@ def fault(name, old, new):
     return dict(name=name, old=old, new=new)
 
 
+_MESSY_HEADER = r'''import json
+import re
+
+# FOCUS: build the list of dicts by hand and return json.dumps(...).
+# SUPPLIED: _fields splits one row on the three delimiters. It is not the skill
+#        of this exercise. Use it. Do not edit it.
+
+
+def _fields(line):
+    """'1,Junie|Kybert;j@x.mil' -> ['1', 'Junie', 'Kybert', 'j@x.mil']. Spaces are kept."""
+    return re.split(r'[,|;]', line)
+'''.rstrip('\n')
+_STATS_HELPER = r'''
+# FOCUS: read the CSV with csv.DictReader and write six read-only properties with Counter.
+# SUPPLIED: _top does the tie rule. It is not the skill of this exercise.
+#        Use it. Do not edit it.
+
+
+def _top(counts):
+    """Key with the highest count; on a tie the smallest key. None for an empty Counter."""
+    return min(counts, key=lambda key: (-counts[key], key)) if counts else None
+
+
+'''
+
+
 IP_HEADER = '''IPINFO_URL = 'https://ipinfo.io/{ip}/json'
 
 
@@ -315,7 +341,7 @@ add(11, 'messy_csv',
     'have the same number of fields as the header; otherwise raise ValueError. Empty '
     'or header-only input returns the JSON representation of an empty list. The local '
     'sample has ten records; the first three follow the public example.',
-    f'import json\nimport re\n\nmembers = {MEMBERS!r}\n\n\n',
+    _MESSY_HEADER + f'\n\nmembers = {MEMBERS!r}\n\n\n',
     'def convert_to_json(data=members):\n    pass\n',
     '''def convert_to_json(data=members):
     lines = [line for line in data.splitlines() if line.strip()]
@@ -324,7 +350,7 @@ add(11, 'messy_csv',
     header = lines[0].split(',')
     rows = []
     for line in lines[1:]:
-        values = re.split(r'[,|;]', line)
+        values = _fields(line)
         if len(values) != len(header):
             raise ValueError('Row has a different field count from the header')
         rows.append(dict(zip(header, values)))
@@ -382,10 +408,14 @@ def test_single_column_duplicate_rows_and_fresh_result():
     assert json.loads(convert_to_json(text)) == [{'value': 'alpha'}, {'value': 'alpha'}]
     assert convert_to_json(text) == convert_to_json(text)
 ''',
-    [fault('ignore semicolons', "r'[,|;]'", "r'[,|]'"),
-     fault('trim field whitespace', "values = re.split(r'[,|;]', line)",
-           "values = [value.strip() for value in re.split(r'[,|;]', line)]"),
-     fault('silently truncate malformed rows', 'if len(values) != len(header):', 'if False:')])
+    [fault('trim field whitespace', "values = _fields(line)",
+           "values = [value.strip() for value in _fields(line)]"),
+     fault('keep blank lines', "lines = [line for line in data.splitlines() if line.strip()]",
+           "lines = data.splitlines()"),
+     fault('silently truncate malformed rows', 'if len(values) != len(header):', 'if False:')],
+    hints=['Focus: rows = [dict(zip(header, values)), ...], then json.dumps(rows).',
+           'Supplied: _fields(line) splits a data row on comma, pipe and semicolon.',
+           'Skip blank lines. The header is lines[0].split(","). Raise ValueError if len(values) != len(header).'])
 
 
 LOG_DATA = '''bite,user,completed
@@ -396,7 +426,7 @@ LOG_DATA = '''bite,user,completed
 101,bea,True
 29,alex,False
 '''
-STATS_HEADER = f'import csv\nfrom collections import Counter\nfrom io import StringIO\n\nLOG_DATA = {LOG_DATA!r}\n\n\n'
+STATS_HEADER = f'import csv\nfrom collections import Counter\nfrom io import StringIO\n\nLOG_DATA = {LOG_DATA!r}\n\n' + _STATS_HELPER
 STATS_TEMPLATE = '''class BiteStats:
     def __init__(self, data=LOG_DATA):
         pass
@@ -462,13 +492,11 @@ add(12, 'bite_stats',
 
     @property
     def most_active_user(self):
-        counts = Counter(row['user'] for row in self.rows)
-        return min(counts, key=lambda user: (-counts[user], user)) if counts else None
+        return _top(Counter(row['user'] for row in self.rows))
 
     @property
     def most_popular_bite(self):
-        counts = Counter(int(row['bite']) for row in self.rows)
-        return min(counts, key=lambda bite: (-counts[bite], bite)) if counts else None
+        return _top(Counter(int(row['bite']) for row in self.rows))
 ''',
     '''import json
 import pytest
@@ -536,9 +564,13 @@ def test_properties_do_not_change_rows_and_instances_are_independent():
 ''',
     [fault('treat False text as true', "row['completed'] == 'True'", "bool(row['completed'])"),
      fault('count attempts as unique users', "len({row['user'] for row in self.rows})", 'len(self.rows)'),
-     fault('choose least frequent user', '(-counts[user], user)', '(counts[user], user)'),
+     fault('count completed users only', "_top(Counter(row['user'] for row in self.rows))",
+           "_top(Counter(row['user'] for row in self.rows if row['completed'] == 'True'))"),
      fault('compare bite IDs as text', "Counter(int(row['bite']) for row in self.rows)",
-           "Counter(row['bite'] for row in self.rows)")])
+           "Counter(row['bite'] for row in self.rows)")],
+    hints=['Focus: csv.DictReader(StringIO(data)) gives dict rows. Store list(...) in self.rows once, in __init__.',
+           'Each statistic is a @property: len(...), a set comprehension, or sum(...) of booleans.',
+           'Supplied: _top(Counter(...)) gives the most common key with the tie rule.'])
 
 
 COUNTRIES_XML = '''<?xml version="1.0" encoding="utf-8"?>
@@ -651,3 +683,8 @@ def test_parse_and_file_errors(tmp_path):
      fault('replace earlier countries in a group', 'distribution[income].append(name)',
            'distribution[income] = [name]'),
      fault('keep surrounding text whitespace', ".text.strip()", '.text')])
+
+for _spec in SPECS:
+    if _spec['number'] == 9:
+        _spec['hints'] = ['Focus: an injected client. Use client or the module-level requests, call .get(url), then .json().',
+                          "url = IPINFO_URL.format(ip=ip). Return response.json()['country'] (a KeyError must pass through)."]

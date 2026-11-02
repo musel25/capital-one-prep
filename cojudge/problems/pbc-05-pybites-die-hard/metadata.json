@@ -38,7 +38,11 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
+  "hints": [
+    "Focus: a generator (yield) and two Counter objects.",
+    "gen_files: open the file, and yield line.strip() for each nonblank line.",
+    "diehard_pybites: challenge, user = path.split('/'). counter.most_common(1) gives [(key, count)]; ties keep first-seen order."
+  ],
   "testCaseDescriptions": {
     "test_public_example": {
       "title": "test_public_example",

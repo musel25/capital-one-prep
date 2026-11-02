@@ -15,6 +15,20 @@ SPEC = {
              "Django tox file in that example.",
     "template": '''import configparser
 
+# FOCUS: load the file with configparser and write the three read-only properties by hand.
+# SUPPLIED: the two list helpers below do the splitting and the duplicate removal.
+#        They are not the skill of this exercise. Use them. Do not edit them.
+
+
+def _unique(values):
+    """Drop None, empty strings and repeats. Keep first-seen order: ['a', None, 'a', 'b'] -> ['a', 'b']."""
+    return [value for value in dict.fromkeys(values) if value]
+
+
+def _split_list(text):
+    """Split on commas and newlines, strip spaces, then _unique: 'a, b\\n c,a' -> ['a', 'b', 'c']."""
+    return _unique(item.strip() for item in text.replace("\\n", ",").split(","))
+
 
 class ToxIniParser:
 
@@ -32,15 +46,14 @@ class ToxIniParser:
     @property
     def environments(self):
         """Return a list of environments
-           (= "envlist" attribute of [tox] section).
-           Split on commas and newlines, strip spaces, skip empty items,
-           keep the order, and list each environment once."""
+           (= "envlist" attribute of [tox] section; it can be missing).
+           Use _split_list."""
         pass
 
     @property
     def base_python_versions(self):
         """Return a list of all basepython values across the ini file,
-           each value once, in the order they first appear."""
+           each value once, in the order they first appear. Use _unique."""
         pass
 ''',
     "tests": '''import pytest
@@ -224,12 +237,32 @@ def test_instances_do_not_share_config(make_parser):
     assert second.environments == ['other']
     assert first.environments == ['py38', 'py39', 'py310', 'py311', 'pypy3', 'lint', 'docs']
 ''',
+    "hints": [
+        "Focus: @property methods that read from self.config. The tests check that each one is a property.",
+        "Supplied: _split_list and _unique do the splitting and duplicate removal. Use them.",
+        "configparser: config = configparser.ConfigParser(); config.read(path); config.sections(); config[name].get(key, default).",
+    ],
     "mutations": [
         {"name": 'envlist_required', "old": 'self.config["tox"].get("envlist", "")', "new": 'self.config["tox"]["envlist"]'},
-        {"name": 'lowercase_environment_names', "old": 'item.strip() for item in raw', "new": 'item.strip().lower() for item in raw'},
-        {"name": 'keep_duplicate_python_versions', "old": 'return list(dict.fromkeys(v.strip() for v in values if v))', "new": 'return [v.strip() for v in values if v]'},
+        {"name": 'count_default_section', "old": 'len(self.config.sections())', "new": 'len(self.config)'},
+        {"name": 'keep_duplicate_python_versions', "old": 'return _unique(self.config[s].get("basepython") for s in self.config.sections())', "new": 'return [self.config[s]["basepython"] for s in self.config.sections() if self.config[s].get("basepython")]'},
+        {"name": 'shared_config', "old": 'self.config = configparser.ConfigParser(interpolation=None)', "new": 'self.config = ToxIniParser.config = getattr(ToxIniParser, "config", None) or configparser.ConfigParser(interpolation=None)'},
     ],
     "reference": '''import configparser
+
+# FOCUS: load the file with configparser and write the three read-only properties by hand.
+# SUPPLIED: the two list helpers below do the splitting and the duplicate removal.
+#        They are not the skill of this exercise. Use them. Do not edit them.
+
+
+def _unique(values):
+    """Drop None, empty strings and repeats. Keep first-seen order: ['a', None, 'a', 'b'] -> ['a', 'b']."""
+    return [value for value in dict.fromkeys(values) if value]
+
+
+def _split_list(text):
+    """Split on commas and newlines, strip spaces, then _unique: 'a, b\\n c,a' -> ['a', 'b', 'c']."""
+    return _unique(item.strip() for item in text.replace("\\n", ",").split(","))
 
 
 class ToxIniParser:
@@ -245,13 +278,10 @@ class ToxIniParser:
 
     @property
     def environments(self):
-        raw = self.config["tox"].get("envlist", "")
-        items = [item.strip() for item in raw.replace("\\n", ",").split(",")]
-        return list(dict.fromkeys(item for item in items if item))
+        return _split_list(self.config["tox"].get("envlist", ""))
 
     @property
     def base_python_versions(self):
-        values = (self.config[s].get("basepython") for s in self.config.sections())
-        return list(dict.fromkeys(v.strip() for v in values if v))
+        return _unique(self.config[s].get("basepython") for s in self.config.sections())
 ''',
 }

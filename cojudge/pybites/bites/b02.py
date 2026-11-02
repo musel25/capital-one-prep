@@ -156,3 +156,5 @@ SPEC["mutations"] = [
     {"name": "hard-coded repr class", "old": "self.__class__.__name__", "new": '"User"'},
     {"name": "use final first-name letter", "old": "self.first_name[0]", "new": "self.first_name[-1]"},
 ]
+
+SPEC["hints"] = ['Focus: properties, __str__ and __repr__. __str__ is for users; __repr__ is for developers.', 'Do not hard-code the class name in __repr__: use type(self).__name__ (or self.__class__.__name__).']

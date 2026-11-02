@@ -17,15 +17,28 @@ MIN_MOVIES = 4
 MIN_YEAR = 1960
 Movie = namedtuple("Movie", "title year score")
 
-def get_movies_by_director():
-    directors = defaultdict(list)
+
+# FOCUS: write the grouping, the mean and the ranking by hand.
+# SUPPLIED: _movie_rows reads and cleans the CSV. It is not the skill of this
+#        exercise. Use it. Do not edit it.
+
+
+def _movie_rows():
+    """Yield (director, title, year, score) for each row of MOVIE_DATA that has all four values.
+    title is stripped, year is an int and score is a float."""
     with open(MOVIE_DATA, encoding='utf-8', newline='') as source:
         for row in csv.DictReader(source):
-            if not all(row.get(key, '').strip() for key in ('director_name', 'movie_title', 'title_year', 'imdb_score')):
-                continue
-            year = int(row['title_year'])
-            if year >= MIN_YEAR:
-                directors[row['director_name']].append(Movie(row['movie_title'].strip(), year, float(row['imdb_score'])))
+            keys = ('director_name', 'movie_title', 'title_year', 'imdb_score')
+            if all((row.get(key) or '').strip() for key in keys):
+                yield (row['director_name'], row['movie_title'].strip(),
+                       int(row['title_year']), float(row['imdb_score']))
+
+
+def get_movies_by_director():
+    directors = defaultdict(list)
+    for director, title, year, score in _movie_rows():
+        if year >= MIN_YEAR:
+            directors[director].append(Movie(title, year, score))
     return directors
 
 def calc_mean_score(movies):

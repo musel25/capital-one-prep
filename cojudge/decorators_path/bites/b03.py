@@ -42,6 +42,9 @@ loggedin_users = ['mike', 'sue']
 
 def login_required(func):
     """Allow calls from known users who are logged in."""
+    # FOCUS: write the wrapper by hand: @wraps(func), *args/**kwargs, checks, then call func.
+    # SUPPLIED: the user is the first positional argument or the `user` keyword:
+    #     user = args[0] if args else kwargs['user']
     # TODO: return the decorated function.
     pass
 
@@ -190,4 +193,10 @@ SPEC["mutations"] = [
     {"name": "cache the lists at decoration time", "old": "def login_required(func):\n", "new": "def login_required(func):\n    known_users = list(globals()['known_users'])\n    loggedin_users = list(globals()['loggedin_users'])\n"},
     {"name": "drop keyword arguments", "old": "func(*args, **kwargs)", "new": "func(*args)"},
     {"name": "lose function metadata", "old": "    @wraps(func)\n", "new": ""},
+]
+
+SPEC["hints"] = [
+    "Focus: a decorator returns a wrapper. Put @functools.wraps(func) on the wrapper to keep the metadata.",
+    "Read known_users and loggedin_users inside the wrapper, on each call. Do not copy them when you decorate.",
+    "The wrapper forwards everything: return func(*args, **kwargs).",
 ]

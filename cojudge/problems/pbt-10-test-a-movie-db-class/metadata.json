@@ -33,6 +33,8 @@
   ],
   "outputType": "string",
   "hints": [
+    "Focus: a yield fixture: db = MovieDB(); db.init(); yield db; then db.drop_table() and db.close().",
+    "Test each query filter, add and delete, a duplicate title (sqlite3.IntegrityError), and a file database with tmp_path.",
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."

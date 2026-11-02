@@ -114,3 +114,5 @@ class Bite:
         self.title = self.title.capitalize()
 ''',
 }
+
+SPEC["hints"] = ["Focus: @dataclass(order=True) with fields number, title, level='Beginner'.", 'Use __post_init__ to apply self.title = self.title.capitalize() once.']

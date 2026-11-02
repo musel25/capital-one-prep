@@ -171,3 +171,5 @@ class BiteChallenge(Challenge):
         return f'Bite {self.number}. {self.title}'
 ''',
 }
+
+SPEC["hints"] = ['Focus: abc.ABC with @abstractmethod. Put @property above @abstractmethod for pretty_title.', 'Each subclass calls super().__init__(number, title), then sets its own attribute.']

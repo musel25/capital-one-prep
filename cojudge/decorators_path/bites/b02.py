@@ -149,3 +149,5 @@ SPEC["mutations"] = [
     {"name": "call the wrapped function twice", "old": "text = func(*args, **kwargs)", "new": "text = func(*args, **kwargs)\n            func(*args, **kwargs)"},
     {"name": "lose function metadata", "old": "        @wraps(func)\n", "new": ""},
 ]
+
+SPEC["hints"] = ['Focus: a decorator with an argument is three functions: make_html(tag) -> decorator(func) -> wrapper(*args, **kwargs).', "The wrapper returns f'<{tag}>{func(*args, **kwargs)}</{tag}>'. Use @functools.wraps(func)."]

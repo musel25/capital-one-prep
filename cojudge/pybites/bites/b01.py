@@ -77,3 +77,5 @@ SPEC["mutations"] = [
     {"name": "compare calendar dates only", "old": "self.expires < NOW", "new": "self.expires.date() < NOW.date()"},
     {"name": "discard promo name", "old": "self.name = name", "new": "self.name = 'promo'"},
 ]
+
+SPEC["hints"] = ['Focus: @property. A property is a method that you read like an attribute: promo.expired, not promo.expired().', "Compare self.expires with the module's NOW on each access. Do not store the result."]

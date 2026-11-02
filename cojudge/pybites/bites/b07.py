@@ -42,6 +42,24 @@ SPEC = {
     "module": "color",
     "template": _NAMES + '''
 
+# FOCUS: write the two @staticmethod converters and the Color dunder methods by hand.
+#        A static method gets no self and no cls: Color.hex2rgb('#ff8000') works.
+# SUPPLIED: the two checks below do the input validation. They are not the skill
+#        of this exercise. Use them. Do not edit them.
+
+
+def _is_hex(value):
+    """True only for '#' followed by six ASCII hex digits, such as '#FF8000'."""
+    return (isinstance(value, str) and len(value) == 7 and value[0] == "#"
+            and all(ch in "0123456789abcdefABCDEF" for ch in value[1:]))
+
+
+def _is_rgb(value):
+    """True only for a tuple of three ints from 0 to 255, such as (255, 128, 0). bool is not valid."""
+    return (isinstance(value, tuple) and len(value) == 3
+            and all(type(v) is int and 0 <= v <= 255 for v in value))
+
+
 class Color:
     """Color class.
 
@@ -50,18 +68,23 @@ class Color:
 
     def __init__(self, color):
         self.color = color
+        # TODO 1: set self.rgb from COLOR_NAMES (case-insensitive), or None
 
+    # TODO 2: make this a static method
     def hex2rgb(hex_value):
         """Convert a hex value such as '#ff8000' (any case) into an
            RGB tuple such as (255, 128, 0).
-           Raise ValueError for anything else."""
+           If not _is_hex(hex_value), raise ValueError."""
         pass
 
+    # TODO 3: make this a static method
     def rgb2hex(rgb_value):
         """Convert an RGB tuple such as (255, 128, 0) into a lowercase
-           hex value such as '#ff8000'. Each part is an int from 0 to 255.
-           Raise ValueError for anything else."""
+           hex value such as '#ff8000'.
+           If not _is_rgb(rgb_value), raise ValueError."""
         pass
+
+    # TODO 4: add __repr__ -> Color('white') and __str__ -> '(255, 255, 255)' or 'Unknown'
 ''',
     "tests": '''import pytest
 
@@ -137,6 +160,24 @@ def test_round_trip_all_names():
 ''',
     "reference": _NAMES + '''
 
+# FOCUS: write the two @staticmethod converters and the Color dunder methods by hand.
+#        A static method gets no self and no cls: Color.hex2rgb('#ff8000') works.
+# SUPPLIED: the two checks below do the input validation. They are not the skill
+#        of this exercise. Use them. Do not edit them.
+
+
+def _is_hex(value):
+    """True only for '#' followed by six ASCII hex digits, such as '#FF8000'."""
+    return (isinstance(value, str) and len(value) == 7 and value[0] == "#"
+            and all(ch in "0123456789abcdefABCDEF" for ch in value[1:]))
+
+
+def _is_rgb(value):
+    """True only for a tuple of three ints from 0 to 255, such as (255, 128, 0). bool is not valid."""
+    return (isinstance(value, tuple) and len(value) == 3
+            and all(type(v) is int and 0 <= v <= 255 for v in value))
+
+
 class Color:
     """Color class.
 
@@ -149,15 +190,13 @@ class Color:
 
     @staticmethod
     def hex2rgb(hex_value):
-        if (not isinstance(hex_value, str) or len(hex_value) != 7 or hex_value[0] != "#"
-                or any(ch not in "0123456789abcdefABCDEF" for ch in hex_value[1:])):
+        if not _is_hex(hex_value):
             raise ValueError(f"invalid hex value: {hex_value!r}")
         return tuple(int(hex_value[i:i + 2], 16) for i in (1, 3, 5))
 
     @staticmethod
     def rgb2hex(rgb_value):
-        if (not isinstance(rgb_value, tuple) or len(rgb_value) != 3
-                or any(type(v) is not int or not 0 <= v <= 255 for v in rgb_value)):
+        if not _is_rgb(rgb_value):
             raise ValueError(f"invalid rgb value: {rgb_value!r}")
         return "#" + "".join(f"{v:02x}" for v in rgb_value)
 
@@ -223,11 +262,17 @@ def test_every_supplied_name_resolves_to_its_literal_rgb():
     for name, rgb in COLOR_NAMES.items():
         assert Color(name.lower()).rgb == rgb
 '''
+SPEC["hints"] = [
+    "Focus: @staticmethod. Put @staticmethod above def hex2rgb and def rgb2hex. They take no self.",
+    "Supplied: _is_hex and _is_rgb do all input validation. Call them first and raise ValueError when they return False.",
+    "Conversion: int('ff', 16) == 255 and f'{255:02x}' == 'ff'. Slice hex_value[1:3], [3:5], [5:7].",
+]
 SPEC["mutations"] = [
     {"name": "case-sensitive color lookup", "old": "COLOR_NAMES.get(color.upper())", "new": "COLOR_NAMES.get(color)"},
-    {"name": "accept bool RGB channels", "old": "type(v) is not int", "new": "not isinstance(v, int)"},
-    {"name": "accept RGB lists", "old": "isinstance(rgb_value, tuple)", "new": "isinstance(rgb_value, (tuple, list))"},
-    {"name": "exclude upper channel boundary", "old": "0 <= v <= 255", "new": "0 <= v < 255"},
+    {"name": "hex2rgb is not a static method", "old": "    @staticmethod\n    def hex2rgb", "new": "    def hex2rgb"},
+    {"name": "rgb2hex is not a static method", "old": "    @staticmethod\n    def rgb2hex", "new": "    def rgb2hex"},
+    {"name": "skip hex validation", "old": "if not _is_hex(hex_value):", "new": "if False:"},
+    {"name": "skip rgb validation", "old": "if not _is_rgb(rgb_value):", "new": "if False:"},
     {"name": "drop hex zero padding", "old": "f\"{v:02x}\"", "new": "f\"{v:x}\""},
     {"name": "reverse hex channels", "old": "for i in (1, 3, 5)", "new": "for i in (5, 3, 1)"},
 ]

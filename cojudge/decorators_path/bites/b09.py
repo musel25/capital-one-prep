@@ -43,10 +43,24 @@ ALERT_THRESHOLD = 3
 ALERT_MSG = 'ALERT: suffering performance hit today'
 violations = Counter()
 
+# FOCUS: write the generator context manager by hand: start the clock,
+#        yield inside try, and record the time in finally (also when the block raises).
+# SUPPLIED: _record does the threshold, the daily count and the alert. It is not
+#        the skill of this exercise. Use it. Do not edit it.
+
+
+def _record(duration):
+    """Count a violation for today if duration >= the threshold; print ALERT_MSG from the 3rd one on."""
+    if duration >= OPERATION_THRESHOLD_IN_SECONDS:
+        today = date.today()
+        violations[today] += 1
+        if violations[today] >= ALERT_THRESHOLD:
+            print(ALERT_MSG)
+
 
 @contextlib.contextmanager
 def timeit():
-    # Record elapsed time and update the exit date's count.
+    # TODO: measure with time.perf_counter() and call _record(duration) on exit.
     yield
 ''',
     "tests": '''from collections import Counter
@@ -177,6 +191,20 @@ ALERT_THRESHOLD = 3
 ALERT_MSG = 'ALERT: suffering performance hit today'
 violations = Counter()
 
+# FOCUS: write the generator context manager by hand: start the clock,
+#        yield inside try, and record the time in finally (also when the block raises).
+# SUPPLIED: _record does the threshold, the daily count and the alert. It is not
+#        the skill of this exercise. Use it. Do not edit it.
+
+
+def _record(duration):
+    """Count a violation for today if duration >= the threshold; print ALERT_MSG from the 3rd one on."""
+    if duration >= OPERATION_THRESHOLD_IN_SECONDS:
+        today = date.today()
+        violations[today] += 1
+        if violations[today] >= ALERT_THRESHOLD:
+            print(ALERT_MSG)
+
 
 @contextlib.contextmanager
 def timeit():
@@ -184,19 +212,18 @@ def timeit():
     try:
         yield
     finally:
-        duration = time.perf_counter() - started
-        if duration >= OPERATION_THRESHOLD_IN_SECONDS:
-            today = date.today()
-            violations[today] += 1
-            if violations[today] >= ALERT_THRESHOLD:
-                print(ALERT_MSG)
+        _record(time.perf_counter() - started)
 ''',
+    "hints": [
+        "Focus: @contextlib.contextmanager. Code before yield runs on entry; code after yield runs on exit.",
+        "Put yield inside try and call _record in finally, so a failed block is also measured.",
+        "Use time.perf_counter() (call it through the time module, so the tests can replace the clock).",
+    ],
     "mutations": [
-        {"name": "exclusive_duration_threshold", "old": "duration >= OPERATION_THRESHOLD_IN_SECONDS", "new": "duration > OPERATION_THRESHOLD_IN_SECONDS"},
-        {"name": "only_third_violation_alerts", "old": "violations[today] >= ALERT_THRESHOLD", "new": "violations[today] == ALERT_THRESHOLD"},
         {"name": "failed_operations_not_measured", "old": "    finally:\n", "new": "    except BaseException:\n        raise\n    else:\n"},
-        {"name": "each_operation_resets_daily_count", "old": "violations[today] += 1", "new": "violations[today] = 1"},
-        {"name": "entry_date_instead_of_exit_date", "old": "    started = time.perf_counter()\n    try:\n        yield\n    finally:\n        duration = time.perf_counter() - started\n        if duration >= OPERATION_THRESHOLD_IN_SECONDS:\n            today = date.today()", "new": "    started = time.perf_counter()\n    entry_date = date.today()\n    try:\n        yield\n    finally:\n        duration = time.perf_counter() - started\n        if duration >= OPERATION_THRESHOLD_IN_SECONDS:\n            today = entry_date"},
+        {"name": "reversed_duration", "old": "_record(time.perf_counter() - started)", "new": "_record(started - time.perf_counter())"},
+        {"name": "never_records", "old": "        _record(time.perf_counter() - started)", "new": "        pass"},
+        {"name": "exception_swallowed", "old": "    try:\n        yield\n    finally:\n        _record(time.perf_counter() - started)", "new": "    try:\n        yield\n    except Exception:\n        pass\n    finally:\n        _record(time.perf_counter() - started)"},
     ],
     "examples": [{"input": "Three operations of 2.2 seconds on the same date", "output": "ALERT: suffering performance hit today", "explanation": "The third violation reaches the daily alert threshold."}],
     "notes": "Recreated local API. Every later violation alerts. Counts use the exit date. Tests use a fake clock and date; no waiting is required.",

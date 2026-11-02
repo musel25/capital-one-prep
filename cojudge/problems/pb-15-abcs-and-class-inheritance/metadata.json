@@ -38,7 +38,10 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
+  "hints": [
+    "Focus: abc.ABC with @abstractmethod. Put @property above @abstractmethod for pretty_title.",
+    "Each subclass calls super().__init__(number, title), then sets its own attribute."
+  ],
   "testCaseDescriptions": {
     "test_base_class_is_abstract": {
       "title": "test_base_class_is_abstract",

@@ -38,7 +38,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
+  "hints": [
+    "Focus: collections.deque(maxlen=n). When it is full, append drops the oldest item."
+  ],
   "testCaseDescriptions": {
     "test_default": {
       "title": "test_default",

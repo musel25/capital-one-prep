@@ -38,6 +38,24 @@ COLOR_NAMES = {
 
 
 
+# FOCUS: write the two @staticmethod converters and the Color dunder methods by hand.
+#        A static method gets no self and no cls: Color.hex2rgb('#ff8000') works.
+# SUPPLIED: the two checks below do the input validation. They are not the skill
+#        of this exercise. Use them. Do not edit them.
+
+
+def _is_hex(value):
+    """True only for '#' followed by six ASCII hex digits, such as '#FF8000'."""
+    return (isinstance(value, str) and len(value) == 7 and value[0] == "#"
+            and all(ch in "0123456789abcdefABCDEF" for ch in value[1:]))
+
+
+def _is_rgb(value):
+    """True only for a tuple of three ints from 0 to 255, such as (255, 128, 0). bool is not valid."""
+    return (isinstance(value, tuple) and len(value) == 3
+            and all(type(v) is int and 0 <= v <= 255 for v in value))
+
+
 class Color:
     """Color class.
 
@@ -50,15 +68,13 @@ class Color:
 
     @staticmethod
     def hex2rgb(hex_value):
-        if (not isinstance(hex_value, str) or len(hex_value) != 7 or hex_value[0] != "#"
-                or any(ch not in "0123456789abcdefABCDEF" for ch in hex_value[1:])):
+        if not _is_hex(hex_value):
             raise ValueError(f"invalid hex value: {hex_value!r}")
         return tuple(int(hex_value[i:i + 2], 16) for i in (1, 3, 5))
 
     @staticmethod
     def rgb2hex(rgb_value):
-        if (not isinstance(rgb_value, tuple) or len(rgb_value) != 3
-                or any(type(v) is not int or not 0 <= v <= 255 for v in rgb_value)):
+        if not _is_rgb(rgb_value):
             raise ValueError(f"invalid rgb value: {rgb_value!r}")
         return "#" + "".join(f"{v:02x}" for v in rgb_value)
 

@@ -40,7 +40,10 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
+  "hints": [
+    "Focus: SQL with parameters: connection.execute(sql, (value,)).fetchall(). Never put values into the SQL text.",
+    "In SQLite, NULL sorts last with ORDER BY points DESC. AVG ignores NULL. HAVING COUNT(points) > 0 drops all-NULL teams."
+  ],
   "testCaseDescriptions": {
     "test_team_filter_and_sort": {
       "title": "test_team_filter_and_sort",

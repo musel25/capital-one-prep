@@ -38,7 +38,10 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
+  "hints": [
+    "Focus: @dataclass(order=True) with fields number, title, level='Beginner'.",
+    "Use __post_init__ to apply self.title = self.title.capitalize() once."
+  ],
   "testCaseDescriptions": {
     "test_is_dataclass": {
       "title": "test_is_dataclass",

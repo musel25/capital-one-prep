@@ -36,7 +36,10 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
+  "hints": [
+    "Focus: an injected client. Use client or the module-level requests, call .get(url), then .json().",
+    "url = IPINFO_URL.format(ip=ip). Return response.json()['country'] (a KeyError must pass through)."
+  ],
   "testCaseDescriptions": {
     "test_default_local_country": {
       "title": "test_default_local_country",

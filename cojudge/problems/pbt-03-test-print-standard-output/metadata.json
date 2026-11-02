@@ -33,6 +33,7 @@
   ],
   "outputType": "string",
   "hints": [
+    "Focus: the capsys fixture. Call the function, then compare capsys.readouterr().out with the expected text, such as \"0\\n2\\n\".",
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."

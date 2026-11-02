@@ -17,6 +17,63 @@ def fault(name, old, new):
     return dict(name=name, old=old, new=new)
 
 
+_ROWS = r'''# FOCUS: write the grouping by hand with the collections type named in the task.
+# SUPPLIED: _rows reads the CSV text. It is not the skill of this exercise.
+#        Use it. Do not edit it.
+
+
+def _rows(data):
+    """Yield one dict per CSV record, keyed by the header names. Blank lines are skipped."""
+    return csv.DictReader(io.StringIO(data))
+
+
+'''
+
+_CLEAN = r'''# FOCUS: count the words by hand with collections.Counter.
+# SUPPLIED: _clean removes punctuation from one token. It is not the skill of
+#        this exercise. Use it. Do not edit it.
+
+
+def _clean(token):
+    """Keep only letters and digits: _clean("can't,") == 'cant'. Case is not changed."""
+    return ''.join(char for char in token if char.isalnum())
+
+
+'''
+
+_MOVIE_ROWS = r'''
+# FOCUS: write the grouping, the mean and the ranking by hand.
+# SUPPLIED: _movie_rows reads and cleans the CSV. It is not the skill of this
+#        exercise. Use it. Do not edit it.
+
+
+def _movie_rows():
+    """Yield (director, title, year, score) for each row of MOVIE_DATA that has all four values.
+    title is stripped, year is an int and score is a float."""
+    with open(MOVIE_DATA, encoding='utf-8', newline='') as source:
+        for row in csv.DictReader(source):
+            keys = ('director_name', 'movie_title', 'title_year', 'imdb_score')
+            if all((row.get(key) or '').strip() for key in keys):
+                yield (row['director_name'], row['movie_title'].strip(),
+                       int(row['title_year']), float(row['imdb_score']))
+
+
+'''
+
+_MENTIONS = r'''# FOCUS: build the index by hand with defaultdict.
+# SUPPLIED: _mentions does the regex match. It is not the skill of this
+#        exercise. Use it. Do not edit it.
+
+
+def _mentions(line, aliases):
+    """True if any alias is in line as a whole word, any case: _mentions('The WOLF!', ('wolf',)) -> True."""
+    pattern = r'\b(?:' + '|'.join(re.escape(alias) for alias in aliases) + r')\b'
+    return re.search(pattern, line, re.IGNORECASE) is not None
+
+
+'''
+
+
 # 1: Original free template and tests.
 add(1, 'belts',
     'Implement `get_total_points(belts=ninja_belts)`. Each value is a `BeltStats(score, ninjas)` '
@@ -41,7 +98,9 @@ def test_unfamiliar_belts_and_unchanged_input():
     before = dict(belts)
     assert get_total_points(belts) == 75
     assert belts == before
-''', [fault('ignore belt owners', 'b.score * b.ninjas', 'b.score')], original=True)
+''', [fault('ignore belt owners', 'b.score * b.ninjas', 'b.score')], original=True,
+    hints=['Focus: namedtuple attribute access. Loop over belts.values() and use belt.score * belt.ninjas.',
+           'sum(...) of an empty generator is 0.'])
 
 # 2: A bounded deque must remain bounded after new appends.
 add(2, 'myqueue',
@@ -79,7 +138,8 @@ def test_independent_queues():
     a, b = my_queue(1), my_queue(1)
     a.append('a')
     assert list(b) == []
-''', [fault('unbounded queue', 'deque(maxlen=n)', 'deque()')])
+''', [fault('unbounded queue', 'deque(maxlen=n)', 'deque()')],
+    hints=['Focus: collections.deque(maxlen=n). When it is full, append drops the oldest item.'])
 
 # 3: CSV input from the public description; the function uses any valid CSV.
 _GROUP_DATA = 'last_name,first_name,country_code\nWatsham,Husain,ID\nHarrold,Alphonso,BR\nApdell,Margo,CN\nTomblings,Deerdre,RU\nWasielewski,Sula,ID\n'
@@ -89,11 +149,11 @@ add(3, 'countries',
     'to full names in `first_name last_name` form. Quoted fields are valid. Ignore blank lines. '
     'Keep duplicate people. Country and name order does not matter. Header-only input returns '
     'an empty defaultdict. All nonblank records have the three required fields.',
-    'import csv\nimport io\nfrom collections import defaultdict\n\ndata = ' + repr(_GROUP_DATA) + '\n\n',
+    'import csv\nimport io\nfrom collections import defaultdict\n\ndata = ' + repr(_GROUP_DATA) + '\n\n' + _ROWS,
     'def group_names_by_country(data=data):\n    pass\n',
     '''def group_names_by_country(data=data):
     groups = defaultdict(list)
-    for row in csv.DictReader(io.StringIO(data)):
+    for row in _rows(data):
         groups[row['country_code']].append(row['first_name'] + ' ' + row['last_name'])
     return groups
 ''',
@@ -127,7 +187,10 @@ def test_instances_are_independent():
     first = group_names_by_country()
     first['ID'].append('extra')
     assert 'extra' not in group_names_by_country()['ID']
-''', [fault('reverse full name', "row['first_name'] + ' ' + row['last_name']", "row['last_name'] + ' ' + row['first_name']")])
+''', [fault('reverse full name', "row['first_name'] + ' ' + row['last_name']", "row['last_name'] + ' ' + row['first_name']"),
+      fault('plain dict', 'groups = defaultdict(list)', 'groups = {}')],
+    hints=['Focus: defaultdict(list). groups[key].append(value) works even when key is new.',
+           "Supplied: for row in _rows(data): gives dicts such as {'last_name': 'Watsham', 'first_name': 'Husain', 'country_code': 'ID'}."])
 
 # 4: Deterministic, constructed RSS data instead of a network request.
 _TAGS = '<rss><channel><item><category>Python</category><category>learning</category></item><item><category>Python</category><category>Flask</category><category>learning</category><category>Python</category></item></channel></rss>'
@@ -231,7 +294,10 @@ def test_single_pass_iterable():
 def test_no_eligible_paths():
     assert diehard_pybites([]) == Stats(None, (None, 0))
     assert diehard_pybites(['01/pybites']) == Stats(None, (None, 0))
-''', [fault('include core team', 'if user in EXCLUDED:', 'if False:')])
+''', [fault('include core team', 'if user in EXCLUDED:', 'if False:')],
+    hints=['Focus: a generator (yield) and two Counter objects.',
+           "gen_files: open the file, and yield line.strip() for each nonblank line.",
+           "diehard_pybites: challenge, user = path.split('/'). counter.most_common(1) gives [(key, count)]; ties keep first-seen order."])
 
 # 6: Original free template and tests, including the blog's datetime.
 add(6, 'dict_convert',
@@ -278,13 +344,13 @@ add(7, 'common_word',
     'as alphanumeric. Return `(word, frequency)`. Ties keep first appearance order. '
     'Return `(None, 0)` if no words remain. Do not change the stopword collection.',
     'from collections import Counter\n\nTEXT = "The wizard met the owl. The wizard waved."\n'
-    'STOPWORDS = {"the", "a", "and"}\n\n',
+    'STOPWORDS = {"the", "a", "and"}\n\n' + _CLEAN,
     'def get_most_common_word(text=TEXT, stopwords=STOPWORDS):\n    pass\n',
     '''def get_most_common_word(text=TEXT, stopwords=STOPWORDS):
     ignored = {word.lower() for word in stopwords}
     counts = Counter()
     for token in text.lower().split():
-        word = ''.join(char for char in token if char.isalnum())
+        word = _clean(token)
         if word and word not in ignored:
             counts[word] += 1
     return counts.most_common(1)[0] if counts else (None, 0)
@@ -315,7 +381,11 @@ def test_stopwords_not_changed():
     words = ['THE']
     get_most_common_word('the owl', words)
     assert words == ['THE']
-''', [fault('keep original case', 'text.lower().split()', 'text.split()')])
+''', [fault('keep original case', 'text.lower().split()', 'text.split()'),
+      fault('count stopwords', 'if word and word not in ignored:', 'if word:')],
+    hints=['Focus: collections.Counter. counts.most_common(1) gives [(word, count)]; ties keep first-seen order.',
+           "Supplied: _clean(token) removes punctuation: _clean(\"can't,\") == 'cant'. It does not lowercase.",
+           'Lowercase the text, split it, clean each token, skip empty words and stopwords.'])
 
 from cojudge.collections_path.fixtures import MOVIE_HEADER, HOLIDAY_HEADER, SOUP
 
@@ -330,7 +400,7 @@ add(8, 'directors',
     'decimal place. `get_average_scores` returns `(director, mean)` tuples for directors with '
     'at least MIN_MOVIES (4) films, highest rounded score first. Ties keep director insertion '
     'order. Present numeric CSV values are valid. An empty CSV produces an empty defaultdict.',
-    MOVIE_HEADER,
+    MOVIE_HEADER + _MOVIE_ROWS,
     '''def get_movies_by_director():
     pass
 
@@ -342,13 +412,9 @@ def get_average_scores(directors):
 ''',
     '''def get_movies_by_director():
     directors = defaultdict(list)
-    with open(MOVIE_DATA, encoding='utf-8', newline='') as source:
-        for row in csv.DictReader(source):
-            if not all(row.get(key, '').strip() for key in ('director_name', 'movie_title', 'title_year', 'imdb_score')):
-                continue
-            year = int(row['title_year'])
-            if year >= MIN_YEAR:
-                directors[row['director_name']].append(Movie(row['movie_title'].strip(), year, float(row['imdb_score'])))
+    for director, title, year, score in _movie_rows():
+        if year >= MIN_YEAR:
+            directors[director].append(Movie(title, year, score))
     return directors
 
 def calc_mean_score(movies):
@@ -387,7 +453,11 @@ def test_minimum_count_and_stable_ties():
 def test_mean_rounding():
     assert calc_mean_score([Movie('a', 2000, 7.0), Movie('b', 2000, 7.3)]) == 7.2
 ''', [fault('drop year boundary', 'year >= MIN_YEAR', 'year > MIN_YEAR'),
-      fault('exclude exact minimum count', 'len(movies) >= MIN_MOVIES', 'len(movies) > MIN_MOVIES')],
+      fault('exclude exact minimum count', 'len(movies) >= MIN_MOVIES', 'len(movies) > MIN_MOVIES'),
+      fault('ascending scores', 'reverse=True', 'reverse=False')],
+    hints=['Focus: defaultdict(list) of Movie namedtuples, then a mean and a sorted list of (director, mean).',
+           'Supplied: for director, title, year, score in _movie_rows(): gives clean, typed values for complete rows.',
+           'sorted(pairs, key=lambda pair: pair[1], reverse=True) keeps the input order for equal scores.'],
     adapted='The original free tests are retained, with added boundary tests. The template replaces '
             'the network download with a compressed copy of the original movie CSV. Only the four '
             'columns used in this exercise are retained. The public function signatures are unchanged.')
@@ -401,11 +471,11 @@ add(9, 'southpark',
     'dialogue on whitespace. Add counts across rows. Quoted commas, quotes, and newlines are '
     'valid CSV. Include a zero count for an empty dialogue. Header-only input returns an empty '
     'defaultdict. All records belong to one season and contain the four fields.',
-    'import csv\nimport io\nfrom collections import Counter, defaultdict\n\nDATA = ' + repr(_SOUTH) + '\n\n',
+    'import csv\nimport io\nfrom collections import Counter, defaultdict\n\nDATA = ' + repr(_SOUTH) + '\n\n' + _ROWS,
     'def get_num_words_spoken_by_character_per_episode(data=DATA):\n    pass\n',
     '''def get_num_words_spoken_by_character_per_episode(data=DATA):
     counts = defaultdict(Counter)
-    for row in csv.DictReader(io.StringIO(data)):
+    for row in _rows(data):
         counts[row['Character']][row['Episode']] += len(row['Line'].split())
     return counts
 ''',
@@ -438,7 +508,11 @@ def test_empty_line_and_empty_dataset():
 def test_quoted_character_and_whitespace():
     text = 'Season,Episode,Character,Line\n1,1,"Agent, One","one   two\tthree"\n'
     assert count(text)['Agent, One']['1'] == 3
-''', [fault('overwrite earlier dialogue counts', "counts[row['Character']][row['Episode']] +=", "counts[row['Character']][row['Episode']] =")])
+''', [fault('overwrite earlier dialogue counts', "counts[row['Character']][row['Episode']] +=", "counts[row['Character']][row['Episode']] ="),
+      fault('wrong inner type', 'counts = defaultdict(Counter)', 'counts = defaultdict(dict)')],
+    hints=['Focus: a nested structure, defaultdict(Counter). counts[character][episode] += words works for new keys at both levels.',
+           "Supplied: for row in _rows(data): gives dicts with the keys 'Season', 'Episode', 'Character', 'Line'.",
+           "Words in a line: len(row['Line'].split())."])
 
 # 10: Original holiday table; a supplied standard-library BeautifulSoup subset.
 add(10, 'holidays',
@@ -514,15 +588,14 @@ add(11, 'story_index',
     'Blank lines count. One line appears only once per character, even if several aliases match. '
     'Return an empty dictionary for empty text or characters. Canonical keys are unique. Alias '
     'endpoints are word characters. Keep input collections unchanged.',
-    'import re\nfrom collections import defaultdict\n\n',
+    'import re\nfrom collections import defaultdict\n\n' + _MENTIONS,
     'def make_character_index(text, characters):\n    pass\n',
     r'''def make_character_index(text, characters):
     index = defaultdict(list)
     for character in characters:
         aliases = (character,) if isinstance(character, str) else character
-        pattern = re.compile(r'\b(?:' + '|'.join(re.escape(alias) for alias in aliases) + r')\b', re.I)
         for number, line in enumerate(text.splitlines(), 1):
-            if pattern.search(line):
+            if _mentions(line, aliases):
                 index[aliases[0]].append(number)
     return dict(index)
 ''',
@@ -558,4 +631,9 @@ def test_inputs_unchanged():
     make_character_index('Granny and wolf', names)
     assert names == before
 ''', [fault('zero based line numbers', 'enumerate(text.splitlines(), 1)', 'enumerate(text.splitlines(), 0)'),
-      fault('case sensitive names', ', re.I)', ', 0)')])
+      fault('last alias as key', 'index[aliases[0]]', 'index[aliases[-1]]'),
+      fault('split a single name into letters', '(character,) if isinstance(character, str) else character', 'tuple(character)')],
+    hints=['Focus: an inverted index: defaultdict(list) from each name to its line numbers. Return dict(index).',
+           "Supplied: _mentions(line, aliases) does the whole-word, case-insensitive regex match. aliases is a tuple.",
+           'A name can be a str or a tuple: aliases = (character,) if isinstance(character, str) else character. The key is aliases[0].',
+           'enumerate(text.splitlines(), 1) gives 1-based line numbers.'])

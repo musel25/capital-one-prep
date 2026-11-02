@@ -33,6 +33,7 @@
   ],
   "outputType": "string",
   "hints": [
+    "Focus: @pytest.mark.parametrize(\"n, expected\", [...]) for values, and pytest.raises(ValueError) for n < 0.",
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."

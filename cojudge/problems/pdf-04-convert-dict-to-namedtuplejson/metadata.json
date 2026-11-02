@@ -36,7 +36,10 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
+  "hints": [
+    "Focus: namedtuple('Record', dict_)(**dict_) makes a namedtuple from a dict.",
+    "nt._asdict() gives a dict back. json.dumps(..., default=str) converts datetime with str."
+  ],
   "testCaseDescriptions": {
     "test_dict2nt": {
       "title": "test_dict2nt",

@@ -111,7 +111,7 @@ def build(destination=ROOT / 'cojudge'):
             'starterCode': {'python': full_source(spec, spec['starter'])},
             'testCases': cases[:3], 'functionName': 'run',
             'params': [{'name': 'payload', 'type': 'string'}], 'outputType': 'string',
-            'hints': ['Read the supplied code and contract before writing tests.',
+            'hints': spec.get('hints', []) + ['Read the supplied code and contract before writing tests.',
                       'Test boundaries, invalid input, and state changes.',
                       'A SURVIVED result names a fault that your suite must detect.'],
         }

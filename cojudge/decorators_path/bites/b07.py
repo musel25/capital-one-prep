@@ -32,3 +32,5 @@ assert account.balance == 5
     "notes": "The template and original tests come from the free bite. Additional tests check the stated exit rules.",
     "original": True,
 }
+
+SPEC["hints"] = ['Focus: a class context manager has __enter__ and __exit__. __enter__ returns self.', 'In __enter__, remember len(self._transactions). In __exit__, if self.balance < 0, cut the list back to that length.', 'Return None (or False) from __exit__, so an exception is not suppressed.']

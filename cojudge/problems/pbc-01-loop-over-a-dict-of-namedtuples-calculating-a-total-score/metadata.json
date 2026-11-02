@@ -38,7 +38,10 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
+  "hints": [
+    "Focus: namedtuple attribute access. Loop over belts.values() and use belt.score * belt.ninjas.",
+    "sum(...) of an empty generator is 0."
+  ],
   "testCaseDescriptions": {
     "test_get_total_points_given_belts": {
       "title": "test_get_total_points_given_belts",

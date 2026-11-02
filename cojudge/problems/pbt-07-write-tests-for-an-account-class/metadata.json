@@ -33,6 +33,7 @@
   ],
   "outputType": "string",
   "hints": [
+    "Focus: one small test per rule: balance, len, indexing and slicing, str and repr, comparisons, and TypeError for bool.",
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."

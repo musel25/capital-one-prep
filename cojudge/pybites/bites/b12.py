@@ -12,7 +12,29 @@ SPEC = {
                 "Emails have exactly one @ and a nonempty local part and domain part. Other email forms are excluded. "
                 "Both classmethods extract the domain and use the same validation. Return an instance of the calling class. "
                 "str(domain) returns its name. Other input types are excluded.",
-    "template": '''import re
+    "template": r'''import re
+from urllib.parse import urlparse
+
+# FOCUS: write __str__ and the two classmethods by hand.
+#        A classmethod gets the class as `cls` and returns cls(...),
+#        so a subclass gets an instance of the subclass.
+# SUPPLIED: the three helpers below do the regex, URL and email work.
+#        They are not the skill of this exercise. Use them. Do not edit them.
+
+
+def _is_valid_domain(name):
+    """True for names such as 'pybit.es': text, a dot, 2 or 3 lowercase letters."""
+    return re.fullmatch(r'.*\.[a-z]{2,3}', name) is not None
+
+
+def _host_of_url(url):
+    """'https://pybit.es/articles/?q=1' -> 'pybit.es' (a port stays: 'pybit.es:443')."""
+    return urlparse(url).netloc
+
+
+def _domain_of_email(email):
+    """'julian@pybit.es' -> 'pybit.es'"""
+    return email.split('@')[-1]
 
 
 class DomainException(Exception):
@@ -22,13 +44,12 @@ class DomainException(Exception):
 class Domain:
 
     def __init__(self, name):
-        # validate a current domain (r'.*\\.[a-z]{2,3}$' is fine)
-        # if not valid, raise a DomainException
+        # TODO 1: if not _is_valid_domain(name), raise a DomainException
         self.name = name
 
-    # next add a __str__ method and write 2 class methods
-    # called parse_url and parse_email to construct domains
-    # from an URL and email respectively
+    # TODO 2: add a __str__ method that returns the name
+    # TODO 3: add a classmethod parse_url(cls, url)     -> use _host_of_url
+    # TODO 4: add a classmethod parse_email(cls, email) -> use _domain_of_email
 ''',
     "tests": '''import pytest
 
@@ -114,14 +135,41 @@ def test_invalid_domains_are_rejected_through_subclasses():
     with pytest.raises(DomainException):
         SubDomain.parse_url('https://example.abcd/')
 ''',
-    "mutations": [
-        {"name": 'skip_domain_validation', "old": "if not re.match(r'.*\\.[a-z]{2,3}$', name):", "new": 'if False:'},
-        {"name": 'url_returns_base_class', "old": 'return cls(urlparse(url).netloc)', "new": 'return Domain(urlparse(url).netloc)'},
-        {"name": 'url_silently_strips_port', "old": 'return cls(urlparse(url).netloc)', "new": 'return cls(urlparse(url).hostname)'},
-        {"name": 'email_loses_subdomain', "old": 'return cls(email.split("@")[-1])', "new": 'return cls(email.split("@")[-1].split(".", 1)[-1])'},
+    "hints": [
+        "Focus: @classmethod. The method gets the class as cls and returns cls(...). Do not write Domain(...) inside it.",
+        "Supplied: _is_valid_domain, _host_of_url and _domain_of_email do the regex, URL and email work. Use them.",
+        "parse_url is one line: return cls(_host_of_url(url)). The constructor then validates the name.",
     ],
-    "reference": '''import re
+    "mutations": [
+        {"name": 'skip_domain_validation', "old": "if not _is_valid_domain(name):", "new": 'if False:'},
+        {"name": 'url_returns_base_class', "old": 'return cls(_host_of_url(url))', "new": 'return Domain(_host_of_url(url))'},
+        {"name": 'email_returns_base_class', "old": 'return cls(_domain_of_email(email))', "new": 'return Domain(_domain_of_email(email))'},
+        {"name": 'url_bypasses_validation', "old": 'return cls(_host_of_url(url))', "new": 'obj = cls.__new__(cls); obj.name = _host_of_url(url); return obj'},
+        {"name": 'str_returns_repr', "old": 'return self.name', "new": 'return repr(self.name)'},
+    ],
+    "reference": r'''import re
 from urllib.parse import urlparse
+
+# FOCUS: write __str__ and the two classmethods by hand.
+#        A classmethod gets the class as `cls` and returns cls(...),
+#        so a subclass gets an instance of the subclass.
+# SUPPLIED: the three helpers below do the regex, URL and email work.
+#        They are not the skill of this exercise. Use them. Do not edit them.
+
+
+def _is_valid_domain(name):
+    """True for names such as 'pybit.es': text, a dot, 2 or 3 lowercase letters."""
+    return re.fullmatch(r'.*\.[a-z]{2,3}', name) is not None
+
+
+def _host_of_url(url):
+    """'https://pybit.es/articles/?q=1' -> 'pybit.es' (a port stays: 'pybit.es:443')."""
+    return urlparse(url).netloc
+
+
+def _domain_of_email(email):
+    """'julian@pybit.es' -> 'pybit.es'"""
+    return email.split('@')[-1]
 
 
 class DomainException(Exception):
@@ -131,7 +179,7 @@ class DomainException(Exception):
 class Domain:
 
     def __init__(self, name):
-        if not re.match(r'.*\\.[a-z]{2,3}$', name):
+        if not _is_valid_domain(name):
             raise DomainException(f"invalid domain: {name!r}")
         self.name = name
 
@@ -140,10 +188,10 @@ class Domain:
 
     @classmethod
     def parse_url(cls, url):
-        return cls(urlparse(url).netloc)
+        return cls(_host_of_url(url))
 
     @classmethod
     def parse_email(cls, email):
-        return cls(email.split("@")[-1])
+        return cls(_domain_of_email(email))
 ''',
 }

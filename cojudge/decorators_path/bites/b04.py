@@ -33,7 +33,21 @@ total(-1)                    # raises ValueError
 total(True)                  # raises TypeError
 ```
 ''',
-    "template": '''def validate_int_args(func):
+    "template": '''# FOCUS: write the decorator by hand: @wraps(func), a wrapper with *args/**kwargs,
+#        check each positional argument, then call func.
+# SUPPLIED: _check_arg does the type and range check. It is not the skill of
+#        this exercise. Use it. Do not edit it.
+
+
+def _check_arg(value):
+    """Raise TypeError for a non-int (bool too). Raise ValueError for a negative int."""
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise TypeError('positional arguments must be integers')
+    if value < 0:
+        raise ValueError('positional arguments must be nonnegative')
+
+
+def validate_int_args(func):
     """Allow only nonnegative integers in positional arguments."""
     # TODO: return the decorated function.
     pass
@@ -155,24 +169,39 @@ def test_wrapped_exceptions_reach_the_caller_unchanged():
 
 SPEC["reference"] = '''from functools import wraps
 
+# FOCUS: write the decorator by hand: @wraps(func), a wrapper with *args/**kwargs,
+#        check each positional argument, then call func.
+# SUPPLIED: _check_arg does the type and range check. It is not the skill of
+#        this exercise. Use it. Do not edit it.
+
+
+def _check_arg(value):
+    """Raise TypeError for a non-int (bool too). Raise ValueError for a negative int."""
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise TypeError('positional arguments must be integers')
+    if value < 0:
+        raise ValueError('positional arguments must be nonnegative')
+
+
 
 def validate_int_args(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         for value in args:
-            if isinstance(value, bool) or not isinstance(value, int):
-                raise TypeError('positional arguments must be integers')
-            if value < 0:
-                raise ValueError('positional arguments must be nonnegative')
+            _check_arg(value)
         return func(*args, **kwargs)
     return wrapper
 '''
+SPEC["hints"] = [
+    "Focus: the wrapper validates before it calls func. Loop over args and call _check_arg(value).",
+    "Do not check kwargs. Forward them unchanged: return func(*args, **kwargs).",
+    "Put @functools.wraps(func) on the wrapper to keep the name, docstring and annotations.",
+]
 SPEC["mutations"] = [
-    {"name": "accept bool as int", "old": "isinstance(value, bool) or not isinstance(value, int)", "new": "not isinstance(value, int)"},
-    {"name": "reject zero", "old": "value < 0", "new": "value <= 0"},
+    {"name": "skip validation", "old": "            _check_arg(value)\n", "new": "            pass\n"},
     {"name": "check arguments in reverse order", "old": "for value in args:", "new": "for value in reversed(args):"},
     {"name": "validate keyword values", "old": "for value in args:", "new": "for value in (*args, *kwargs.values()):"},
-    {"name": "use the wrong exception for negatives", "old": "raise ValueError('positional arguments must be nonnegative')", "new": "raise TypeError('positional arguments must be nonnegative')"},
+    {"name": "validate after the call", "old": "        for value in args:\n            _check_arg(value)\n        return func(*args, **kwargs)", "new": "        result = func(*args, **kwargs)\n        for value in args:\n            _check_arg(value)\n        return result"},
     {"name": "drop keyword arguments", "old": "func(*args, **kwargs)", "new": "func(*args)"},
     {"name": "lose function metadata", "old": "    @wraps(func)\n", "new": ""},
 ]

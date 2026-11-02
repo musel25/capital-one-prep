@@ -576,3 +576,8 @@ def test_get_winner_uses_csv_mapping(monkeypatch):
           'local CSV preserves all 105 defeat relationships from '
           '[David C. Lovelace’s RPS15 graph](https://www.umop.com/rps15.htm). Output is '
           'simplified to "winner defeats loser"; it does not reproduce the original action phrases.')
+
+for _spec in SPECS:
+    if _spec['number'] == 14:
+        _spec['hints'] = ['Focus: SQL with parameters: connection.execute(sql, (value,)).fetchall(). Never put values into the SQL text.',
+                          'In SQLite, NULL sorts last with ORDER BY points DESC. AVG ignores NULL. HAVING COUNT(points) > 0 drops all-NULL teams.']

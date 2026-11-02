@@ -344,3 +344,8 @@ SPECS = [{'number': 4,
   'mutations': [{'name': 'overwrite earlier dialogue counts',
                  'old': "counts[row['Character']][row['Episode']] +=",
                  'new': "counts[row['Character']][row['Episode']] ="}]}]
+
+for _spec in SPECS:
+    if _spec['number'] == 4:
+        _spec['hints'] = ["Focus: namedtuple('Record', dict_)(**dict_) makes a namedtuple from a dict.",
+                          'nt._asdict() gives a dict back. json.dumps(..., default=str) converts datetime with str.']

@@ -38,7 +38,10 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
+  "hints": [
+    "Focus: state that lives on the instance. new_bite adds the chosen ID to self.bites_done.",
+    "Side work: random.choice(sorted(available_ids)) picks one ID. Raise NoBitesAvailable when none are left."
+  ],
   "testCaseDescriptions": {
     "test_promo_has_state": {
       "title": "test_promo_has_state",

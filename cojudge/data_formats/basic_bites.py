@@ -7,15 +7,41 @@ PAGES = {page['n']: page for page in json.loads(
 SPECS = []
 
 
-def add(number, module, contract, header, template, tests, mutations, notes, reference):
+def add(number, module, contract, header, template, tests, mutations, notes, reference, hints=()):
     SPECS.append(dict(number=number, title=PAGES[number]['title'], module=module,
                       contract=contract, template=header + template,
                       reference=header + reference, tests=tests, mutations=mutations,
-                      original=False, notes=notes))
+                      original=False, notes=notes, hints=list(hints)))
 
 
 def fault(name, old, new):
     return dict(name=name, old=old, new=new)
+
+
+_OMDB_HEADER = r'''import json
+import re
+
+# FOCUS: read the JSON files by hand with json.load, then pick movies with next() and max().
+# SUPPLIED: the three helpers below parse the Genre, Awards and Runtime text.
+#        They are not the skill of this exercise. Use them. Do not edit them.
+
+
+def _genres(movie):
+    """'Drama, Comedy' -> ['Drama', 'Comedy']"""
+    return [genre.strip() for genre in movie['Genre'].split(',')]
+
+
+def _nominations(movie):
+    """'Won 2 Oscars. 1 win & 12 nominations.' -> 12. 'N/A' -> 0."""
+    return sum(int(count) for count in re.findall(r'(\d+)\s+nominations?\b', movie['Awards']))
+
+
+def _minutes(movie):
+    """'113 min' -> 113. 'N/A' -> None."""
+    return None if movie['Runtime'] == 'N/A' else int(movie['Runtime'].split()[0])
+
+
+'''
 
 
 _XML = ('<root response="True"><movie title="Memento" year="2000" runtime="113 min"/>'
@@ -278,7 +304,7 @@ add(5, 'omdb_movies',
     'ignore `N/A` and compare numeric minutes. Numeric ties keep first input '
     'order. All movies contain `Title`, `Genre`, `Awards`, and `Runtime`. '
     'Return `None` for an empty movie list. Do not change the input.',
-    'import json\nimport re\n\n',
+    _OMDB_HEADER,
     'def get_movie_data(files):\n    pass\n\ndef get_single_comedy(movies):\n    pass\n\n'
     'def get_movie_most_nominations(movies):\n    pass\n\n'
     'def get_movie_longest_runtime(movies):\n    pass\n',
@@ -334,11 +360,10 @@ def test_empty_inputs():
     assert get_single_comedy([]) is None
     assert get_movie_most_nominations([]) is None
     assert get_movie_longest_runtime([]) is None
-''', [fault('compare runtime as text', 'key=lambda movie: int(movie["Runtime"].split()[0])',
-           'key=lambda movie: movie["Runtime"]'),
-      fault('match partial comedy genre', "'Comedy' in [genre.strip() for genre in movie['Genre'].split(',')]",
-           "'Comedy' in movie['Genre']"),
-      fault('count wins as nominations', "r'(\\d+)\\s+nominations?\\b'", "r'(\\d+)\\s+wins?\\b'")],
+''', [fault('keep unknown runtimes', 'if _minutes(movie) is not None]', ']'),
+      fault('match partial comedy genre', "'Comedy' in _genres(movie)", "'Comedy' in movie['Genre']"),
+      fault('fewest nominations', 'max(movies, key=_nominations', 'min(movies, key=_nominations'),
+      fault('last comedy', "next((movie for movie in movies\n                 if", "next((movie for movie in reversed(movies)\n                 if")],
     'The premium template and tests are recreated. Tests write small constructed '
     'OMDb-style JSON files locally. Award parsing and empty-input rules are '
     'explicit for this version; no external data download is required.',
@@ -351,17 +376,17 @@ def test_empty_inputs():
 
 def get_single_comedy(movies):
     return next((movie for movie in movies
-                 if 'Comedy' in [genre.strip() for genre in movie['Genre'].split(',')]), None)
+                 if 'Comedy' in _genres(movie)), None)
 
 def get_movie_most_nominations(movies):
-    def nominations(movie):
-        return sum(int(count) for count in re.findall(r'(\d+)\s+nominations?\b', movie['Awards']))
-    return max(movies, key=nominations, default=None)
+    return max(movies, key=_nominations, default=None)
 
 def get_movie_longest_runtime(movies):
-    known = [movie for movie in movies if movie['Runtime'] != 'N/A']
-    return max(known, key=lambda movie: int(movie["Runtime"].split()[0]), default=None)
-''')
+    known = [movie for movie in movies if _minutes(movie) is not None]
+    return max(known, key=_minutes, default=None)
+''', hints=['Focus: json.load on each open file, then next(...) and max(..., key=..., default=None).',
+            'Supplied: _genres(movie), _nominations(movie) and _minutes(movie) parse the text fields. Use them as keys.',
+            'next((m for m in movies if condition), None) gives the first match or None.'])
 
 
 _TIMEZONES = ('name,timezone\nAda,Africa/Nairobi\nBo,Europe/Warsaw\n'
@@ -428,3 +453,8 @@ def test_all_empty_and_separate_calls(capsys):
     for timezone in sorted(counts):
         print(f'{timezone:<{width}} | {"+" * counts[timezone]}')
 ''')
+
+for _spec in SPECS:
+    if _spec['number'] == 2:
+        _spec['hints'] = ['Focus: collections.Counter. Count automakers for that year; most_common(1) gives [(name, count)].',
+                          'get_models is a list comprehension with two conditions.']

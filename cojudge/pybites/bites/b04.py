@@ -217,3 +217,5 @@ SPEC["mutations"] = [
     {"name": "forget selected ID", "old": "self.bites_done.add(bite)", "new": "pass"},
     {"name": "skip selection helper", "old": "bite = self._pick_random_bite()", "new": "bite = min(set(self.all_bites) - self.bites_done)"},
 ]
+
+SPEC["hints"] = ['Focus: state that lives on the instance. new_bite adds the chosen ID to self.bites_done.', 'Side work: random.choice(sorted(available_ids)) picks one ID. Raise NoBitesAvailable when none are left.']

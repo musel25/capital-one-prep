@@ -36,7 +36,10 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
+  "hints": [
+    "Focus: collections.Counter. Count automakers for that year; most_common(1) gives [(name, count)].",
+    "get_models is a list comprehension with two conditions."
+  ],
   "testCaseDescriptions": {
     "test_default_json_data": {
       "title": "test_default_json_data",

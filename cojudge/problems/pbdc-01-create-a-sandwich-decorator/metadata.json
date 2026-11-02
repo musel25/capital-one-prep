@@ -67,5 +67,8 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [
+    "Focus: a decorator returns a wrapper function that runs code before and after func.",
+    "Use @functools.wraps(func) on the wrapper. Return the result of func(*args, **kwargs)."
+  ]
 }

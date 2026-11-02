@@ -553,3 +553,44 @@ exercise(10, 'movies', '''
     ('omit delete commit', "(title,))\n        self.connection.commit()", '(title,))'),
 ], 'MovieDB(path=":memory:") opens SQLite. init() creates and seeds the table with the three supplied rows. query(title=None, min_score=0, year=None) returns (title, year, score) tuples sorted by title. title is a case-insensitive SQL LIKE substring; min_score is inclusive; all filters combine. add inserts and commits; duplicate titles raise sqlite3.IntegrityError. delete removes an exact title, commits, and returns its row count. drop_table removes the table. close closes the connection. Use a yield fixture with teardown. Use tmp_path to test file persistence.'),
 ]
+
+
+# Focus hints, and supplied test data where the data is not the skill.
+_HINTS = {
+    1: ['Focus: @pytest.mark.parametrize("n, expected", [...]) for values, and pytest.raises(ValueError) for n < 0.'],
+    2: ['Focus: one small test per rule: a normal list, [] -> 0, leading zeroes, [True] -> TypeError, [10] -> ValueError.'],
+    3: ['Focus: the capsys fixture. Call the function, then compare capsys.readouterr().out with the expected text, such as "0\\n2\\n".'],
+    5: ['Focus: a fixture that writes SAMPLE to tmp_path, calls get_ranges(path) and returns the ranges.',
+        'Supplied: SAMPLE is ready-made JSON test data. json.dumps(SAMPLE) gives the file text.',
+        'Test each filter alone, both filters together, and pytest.raises for bad JSON, a missing key and a bad IP.'],
+    6: ["Focus: mocking. with unittest.mock.patch('colors.sample', side_effect=[list('A1B2C3'), ...]) as sample:",
+        "Then check next(gen) and sample.assert_called_with('0123456789ABCDEF', 6)."],
+    7: ['Focus: one small test per rule: balance, len, indexing and slicing, str and repr, comparisons, and TypeError for bool.'],
+    9: ["Focus: mocking input. with unittest.mock.patch('builtins.input', side_effect=['x', '9', '10']):",
+        'Use capsys to check the printed lines. Test both endpoints 1 and 20, a win on the last guess, and a loss.'],
+    10: ['Focus: a yield fixture: db = MovieDB(); db.init(); yield db; then db.drop_table() and db.close().',
+         'Test each query filter, add and delete, a duplicate title (sqlite3.IntegrityError), and a file database with tmp_path.'],
+}
+_STARTERS = {
+    5: '''import json
+import pytest
+import ips
+
+# FOCUS: write the tests by hand: a tmp_path fixture, asserts and pytest.raises.
+# SUPPLIED: SAMPLE is ready-made test data in the AWS ip-ranges shape.
+#        Writing test data is not the skill of this exercise. Use it or change it.
+SAMPLE = {'prefixes': [
+    {'ip_prefix': '10.0.0.0/24', 'region': 'west', 'service': 'EC2'},
+    {'ip_prefix': '192.0.2.0/24', 'region': 'east', 'service': 'S3'},
+    {'ip_prefix': '198.51.100.0/24', 'region': 'west', 'service': 'S3'},
+]}
+
+
+def test_example():
+    # Replace this with tests of the supplied module.
+    pass
+''',
+}
+for _spec in SPECS:
+    _spec['hints'] = _HINTS.get(_spec['number'], [])
+    _spec['starter'] = _STARTERS.get(_spec['number'], _spec['starter'])

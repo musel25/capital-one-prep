@@ -71,5 +71,8 @@
     }
   ],
   "outputType": "string",
-  "hints": []
+  "hints": [
+    "Focus: a decorator with an argument is three functions: make_html(tag) -> decorator(func) -> wrapper(*args, **kwargs).",
+    "The wrapper returns f'<{tag}>{func(*args, **kwargs)}</{tag}>'. Use @functools.wraps(func)."
+  ]
 }

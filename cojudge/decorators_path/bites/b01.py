@@ -145,3 +145,5 @@ SPEC["mutations"] = [
     {"name": "call the wrapped function twice", "old": "result = func(*args, **kwargs)", "new": "result = func(*args, **kwargs)\n        func(*args, **kwargs)"},
     {"name": "lose function metadata", "old": "    @wraps(func)\n", "new": ""},
 ]
+
+SPEC["hints"] = ['Focus: a decorator returns a wrapper function that runs code before and after func.', 'Use @functools.wraps(func) on the wrapper. Return the result of func(*args, **kwargs).']

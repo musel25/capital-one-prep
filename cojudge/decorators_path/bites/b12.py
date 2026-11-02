@@ -186,3 +186,5 @@ def retry(func):
     "notes": "Recreated local API. MAX_RETRIES counts total attempts. The final exception is the explicit cause of MaxRetriesException.",
     "original": False,
 }
+
+SPEC["hints"] = ['Focus: a decorator that loops: for attempt in range(MAX_RETRIES): try: return func(*args, **kwargs) except Exception as error: last = error.', 'After the loop: raise MaxRetriesException from last. Use @wraps(func).']

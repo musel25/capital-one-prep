@@ -33,6 +33,8 @@
   ],
   "outputType": "string",
   "hints": [
+    "Focus: mocking input. with unittest.mock.patch('builtins.input', side_effect=['x', '9', '10']):",
+    "Use capsys to check the printed lines. Test both endpoints 1 and 20, a win on the last guess, and a loss.",
     "Read the supplied code and contract before writing tests.",
     "Test boundaries, invalid input, and state changes.",
     "A SURVIVED result names a fault that your suite must detect."

@@ -3,6 +3,20 @@
 ```python
 import configparser
 
+# FOCUS: load the file with configparser and write the three read-only properties by hand.
+# SUPPLIED: the two list helpers below do the splitting and the duplicate removal.
+#        They are not the skill of this exercise. Use them. Do not edit them.
+
+
+def _unique(values):
+    """Drop None, empty strings and repeats. Keep first-seen order: ['a', None, 'a', 'b'] -> ['a', 'b']."""
+    return [value for value in dict.fromkeys(values) if value]
+
+
+def _split_list(text):
+    """Split on commas and newlines, strip spaces, then _unique: 'a, b\n c,a' -> ['a', 'b', 'c']."""
+    return _unique(item.strip() for item in text.replace("\n", ",").split(","))
+
 
 class ToxIniParser:
 
@@ -17,12 +31,9 @@ class ToxIniParser:
 
     @property
     def environments(self):
-        raw = self.config["tox"].get("envlist", "")
-        items = [item.strip() for item in raw.replace("\n", ",").split(",")]
-        return list(dict.fromkeys(item for item in items if item))
+        return _split_list(self.config["tox"].get("envlist", ""))
 
     @property
     def base_python_versions(self):
-        values = (self.config[s].get("basepython") for s in self.config.sections())
-        return list(dict.fromkeys(v.strip() for v in values if v))
+        return _unique(self.config[s].get("basepython") for s in self.config.sections())
 ```

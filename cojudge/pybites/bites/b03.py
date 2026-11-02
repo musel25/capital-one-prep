@@ -146,3 +146,5 @@ SPEC["mutations"] = [
     {"name": "replace zero engine capacity", "old": "self.engine_cc = engine_cc", "new": "self.engine_cc = engine_cc or 125"},
     {"name": "bypass overridden description", "old": "self.description()", "new": "Vehicle.description(self)"},
 ]
+
+SPEC["hints"] = ['Focus: inheritance and super(). Car and Motorbike call super().__init__(brand, model, wheels).', 'rev_engine calls self.description(), so a change to description shows in both methods.']

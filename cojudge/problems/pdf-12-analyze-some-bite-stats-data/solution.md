@@ -10,6 +10,16 @@ from io import StringIO
 LOG_DATA = 'bite,user,completed\n102,alex,False\n101,alex,True\n29,bea,True\n9,cy,False\n101,bea,True\n29,alex,False\n'
 
 
+# FOCUS: read the CSV with csv.DictReader and write six read-only properties with Counter.
+# SUPPLIED: _top does the tie rule. It is not the skill of this exercise.
+#        Use it. Do not edit it.
+
+
+def _top(counts):
+    """Key with the highest count; on a tie the smallest key. None for an empty Counter."""
+    return min(counts, key=lambda key: (-counts[key], key)) if counts else None
+
+
 class BiteStats:
     def __init__(self, data=LOG_DATA):
         self.rows = list(csv.DictReader(StringIO(data)))
@@ -32,11 +42,9 @@ class BiteStats:
 
     @property
     def most_active_user(self):
-        counts = Counter(row['user'] for row in self.rows)
-        return min(counts, key=lambda user: (-counts[user], user)) if counts else None
+        return _top(Counter(row['user'] for row in self.rows))
 
     @property
     def most_popular_bite(self):
-        counts = Counter(int(row['bite']) for row in self.rows)
-        return min(counts, key=lambda bite: (-counts[bite], bite)) if counts else None
+        return _top(Counter(int(row['bite']) for row in self.rows))
 ```

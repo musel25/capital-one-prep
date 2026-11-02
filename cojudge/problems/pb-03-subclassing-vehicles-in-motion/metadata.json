@@ -38,7 +38,10 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
+  "hints": [
+    "Focus: inheritance and super(). Car and Motorbike call super().__init__(brand, model, wheels).",
+    "rev_engine calls self.description(), so a change to description shows in both methods."
+  ],
   "testCaseDescriptions": {
     "test_vehicle": {
       "title": "test_vehicle",

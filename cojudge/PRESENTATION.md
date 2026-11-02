@@ -16,6 +16,16 @@ Use the course's examples module for manually expected examples. Tests execute
 these examples against the reference code. Do not replace the original task with
 a second specification. Keep operation and migration instructions in course help.
 
+## Focus and supplied helpers
+
+Each exercise practises one target skill, such as `@classmethod` or a
+`defaultdict` grouping. Work that is not the target skill goes into the starter
+as small, finished helpers. Examples are regex checks, URL and CSV parsing, text
+cleanup, tie rules, and test data. A `# FOCUS:` and `# SUPPLIED:` comment block
+above the helpers names both parts. The reference solution uses the same
+helpers. Deliberate faults target the learner's part, not the helpers. The first
+hint names the target skill. When you add an exercise, apply the same split.
+
 Refresh presentation fields without rebuilding execution files:
 
 ```bash
