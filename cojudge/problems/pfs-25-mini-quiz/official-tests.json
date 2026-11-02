@@ -1,0 +1,23 @@
+[
+  {
+    "input": "4\nblue\n6"
+  },
+  {
+    "input": "4\nblue\n8"
+  },
+  {
+    "input": "5\nred\n6"
+  },
+  {
+    "input": "4\ngreen\n6"
+  },
+  {
+    "input": "3\nblue\n8"
+  },
+  {
+    "input": "4\nblue\n4"
+  },
+  {
+    "input": "1\nblue\n2"
+  }
+]

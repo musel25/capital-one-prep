@@ -1,0 +1,20 @@
+[
+  {
+    "input": "banana"
+  },
+  {
+    "input": "apple"
+  },
+  {
+    "input": "Banana"
+  },
+  {
+    "input": "bananas"
+  },
+  {
+    "input": "BANANA"
+  },
+  {
+    "input": "ban"
+  }
+]

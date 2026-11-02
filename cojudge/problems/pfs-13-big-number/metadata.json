@@ -1,0 +1,52 @@
+{
+  "id": "pfs-13-big-number",
+  "title": "13. Is It Big?",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "04-if-else",
+  "examples": [
+    {
+      "input": "150",
+      "output": "Big number!\nDone"
+    },
+    {
+      "input": "5",
+      "output": "Done"
+    },
+    {
+      "input": "100",
+      "output": "Done"
+    }
+  ],
+  "starterCode": {
+    "python": "n = int(input())\n\n# Write your if below.\n\nprint(\"Done\")\n"
+  },
+  "testCases": [
+    {
+      "input": "150"
+    },
+    {
+      "input": "5"
+    },
+    {
+      "input": "100"
+    }
+  ],
+  "functionName": "program",
+  "params": [
+    {
+      "name": "input",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "scriptMode": true,
+  "courseHelp": {
+    "title": "How this course works",
+    "body": "Write your program in the editor. Press **Run** to try the sample tests. Press **Submit** to check all tests. A green check means your program printed the right text.\n\nEach test can type an **input** for your program. `input()` reads one line of it. Big and small letters, spaces between words, and punctuation must match. Spaces at the end of a line do not matter.\n\nIf you see `Error on line 3`, look at line 3 of your code. Check quotes, `:`, and the 4 spaces in front of lines inside an `if`.\n\nStuck? Open a hint. The solution tab shows one correct answer. Try first!"
+  },
+  "hints": [
+    "`if n > 100:` and then a line with 4 spaces in front.",
+    "Keep `print(\"Done\")` without spaces in front."
+  ]
+}

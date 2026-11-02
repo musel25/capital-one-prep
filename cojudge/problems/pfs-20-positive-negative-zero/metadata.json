@@ -1,0 +1,51 @@
+{
+  "id": "pfs-20-positive-negative-zero",
+  "title": "20. Positive, Negative, or Zero",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "05-elif",
+  "examples": [
+    {
+      "input": "5",
+      "output": "positive"
+    },
+    {
+      "input": "-3",
+      "output": "negative"
+    },
+    {
+      "input": "0",
+      "output": "zero"
+    }
+  ],
+  "starterCode": {
+    "python": "n = int(input())\n\n# Use if, elif and else.\n"
+  },
+  "testCases": [
+    {
+      "input": "5"
+    },
+    {
+      "input": "-3"
+    },
+    {
+      "input": "0"
+    }
+  ],
+  "functionName": "program",
+  "params": [
+    {
+      "name": "input",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "scriptMode": true,
+  "courseHelp": {
+    "title": "How this course works",
+    "body": "Write your program in the editor. Press **Run** to try the sample tests. Press **Submit** to check all tests. A green check means your program printed the right text.\n\nEach test can type an **input** for your program. `input()` reads one line of it. Big and small letters, spaces between words, and punctuation must match. Spaces at the end of a line do not matter.\n\nIf you see `Error on line 3`, look at line 3 of your code. Check quotes, `:`, and the 4 spaces in front of lines inside an `if`.\n\nStuck? Open a hint. The solution tab shows one correct answer. Try first!"
+  },
+  "hints": [
+    "Check `n > 0` first, then `n < 0`. The `else` is for zero."
+  ]
+}

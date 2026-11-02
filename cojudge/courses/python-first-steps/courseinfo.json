@@ -1,0 +1,54 @@
+{
+  "title": "Python First Steps",
+  "description": "25 tiny Python exercises for a complete beginner. Start with print(), then variables, input(), if/else, elif, and/or, and two small games. Each exercise teaches one new idea. Select Python.",
+  "category-order": [
+    "01-print",
+    "02-variables",
+    "03-input",
+    "04-if-else",
+    "05-elif",
+    "06-and-or",
+    "07-projects"
+  ],
+  "problems-of-category": {
+    "01-print": [
+      "pfs-01-hello-world",
+      "pfs-02-a-short-poem",
+      "pfs-03-calculator",
+      "pfs-04-star-triangle",
+      "pfs-05-days-and-hours"
+    ],
+    "02-variables": [
+      "pfs-06-animal-sounds",
+      "pfs-07-shopping"
+    ],
+    "03-input": [
+      "pfs-08-echo",
+      "pfs-09-say-hello",
+      "pfs-10-double-it",
+      "pfs-11-next-birthday",
+      "pfs-12-add-two-numbers"
+    ],
+    "04-if-else": [
+      "pfs-13-big-number",
+      "pfs-14-even-or-odd",
+      "pfs-15-secret-password",
+      "pfs-16-pass-or-fail",
+      "pfs-17-bigger-number"
+    ],
+    "05-elif": [
+      "pfs-18-weather",
+      "pfs-19-grade-letter",
+      "pfs-20-positive-negative-zero"
+    ],
+    "06-and-or": [
+      "pfs-21-teenager",
+      "pfs-22-weekend",
+      "pfs-23-movie-ticket"
+    ],
+    "07-projects": [
+      "pfs-24-rock-paper-scissors",
+      "pfs-25-mini-quiz"
+    ]
+  }
+}

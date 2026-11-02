@@ -1,0 +1,52 @@
+{
+  "id": "pfs-24-rock-paper-scissors",
+  "title": "24. Rock, Paper, Scissors",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "07-projects",
+  "examples": [
+    {
+      "input": "rock\nscissors",
+      "output": "Player 1 wins"
+    },
+    {
+      "input": "rock\npaper",
+      "output": "Player 2 wins"
+    },
+    {
+      "input": "paper\npaper",
+      "output": "Tie"
+    }
+  ],
+  "starterCode": {
+    "python": "p1 = input()\np2 = input()\n\nif p1 == p2:\n    print(\"Tie\")\n# Add the rest below.\n"
+  },
+  "testCases": [
+    {
+      "input": "rock\nscissors"
+    },
+    {
+      "input": "rock\npaper"
+    },
+    {
+      "input": "paper\npaper"
+    }
+  ],
+  "functionName": "program",
+  "params": [
+    {
+      "name": "input",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "scriptMode": true,
+  "courseHelp": {
+    "title": "How this course works",
+    "body": "Write your program in the editor. Press **Run** to try the sample tests. Press **Submit** to check all tests. A green check means your program printed the right text.\n\nEach test can type an **input** for your program. `input()` reads one line of it. Big and small letters, spaces between words, and punctuation must match. Spaces at the end of a line do not matter.\n\nIf you see `Error on line 3`, look at line 3 of your code. Check quotes, `:`, and the 4 spaces in front of lines inside an `if`.\n\nStuck? Open a hint. The solution tab shows one correct answer. Try first!"
+  },
+  "hints": [
+    "There are three ways for player 1 to win. Use `elif ... and ...` for each one.",
+    "`elif p1 == \"rock\" and p2 == \"scissors\":`"
+  ]
+}

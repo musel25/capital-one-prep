@@ -1,0 +1,51 @@
+{
+  "id": "pfs-16-pass-or-fail",
+  "title": "16. Pass or Fail",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "04-if-else",
+  "examples": [
+    {
+      "input": "75",
+      "output": "You passed!"
+    },
+    {
+      "input": "59",
+      "output": "Try again"
+    },
+    {
+      "input": "60",
+      "output": "You passed!"
+    }
+  ],
+  "starterCode": {
+    "python": "score = int(input())\n\n# Write your if and else below.\n"
+  },
+  "testCases": [
+    {
+      "input": "75"
+    },
+    {
+      "input": "59"
+    },
+    {
+      "input": "60"
+    }
+  ],
+  "functionName": "program",
+  "params": [
+    {
+      "name": "input",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "scriptMode": true,
+  "courseHelp": {
+    "title": "How this course works",
+    "body": "Write your program in the editor. Press **Run** to try the sample tests. Press **Submit** to check all tests. A green check means your program printed the right text.\n\nEach test can type an **input** for your program. `input()` reads one line of it. Big and small letters, spaces between words, and punctuation must match. Spaces at the end of a line do not matter.\n\nIf you see `Error on line 3`, look at line 3 of your code. Check quotes, `:`, and the 4 spaces in front of lines inside an `if`.\n\nStuck? Open a hint. The solution tab shows one correct answer. Try first!"
+  },
+  "hints": [
+    "`if score >= 60:`"
+  ]
+}

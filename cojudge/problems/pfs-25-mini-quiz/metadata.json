@@ -1,0 +1,45 @@
+{
+  "id": "pfs-25-mini-quiz",
+  "title": "25. Mini Quiz",
+  "difficulty": "Medium",
+  "link": "",
+  "category": "07-projects",
+  "examples": [
+    {
+      "input": "4\nblue\n6",
+      "output": "You got 2 out of 3\nGood job!"
+    },
+    {
+      "input": "4\nblue\n8",
+      "output": "You got 3 out of 3\nPerfect!"
+    }
+  ],
+  "starterCode": {
+    "python": "a1 = input(\"What is 2 + 2? \")\na2 = input(\"What color is the sky on a sunny day? \")\na3 = input(\"How many legs does a spider have? \")\n\nscore = 0\nif a1 == \"4\":\n    score = score + 1\n# Check the other answers, then show the score and the message.\n"
+  },
+  "testCases": [
+    {
+      "input": "4\nblue\n6"
+    },
+    {
+      "input": "4\nblue\n8"
+    }
+  ],
+  "functionName": "program",
+  "params": [
+    {
+      "name": "input",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "scriptMode": true,
+  "courseHelp": {
+    "title": "How this course works",
+    "body": "Write your program in the editor. Press **Run** to try the sample tests. Press **Submit** to check all tests. A green check means your program printed the right text.\n\nEach test can type an **input** for your program. `input()` reads one line of it. Big and small letters, spaces between words, and punctuation must match. Spaces at the end of a line do not matter.\n\nIf you see `Error on line 3`, look at line 3 of your code. Check quotes, `:`, and the 4 spaces in front of lines inside an `if`.\n\nStuck? Open a hint. The solution tab shows one correct answer. Try first!"
+  },
+  "hints": [
+    "Use three separate `if` lines, not `elif`. Every correct answer must count.",
+    "Show the score with `print(\"You got\", score, \"out of 3\")`."
+  ]
+}

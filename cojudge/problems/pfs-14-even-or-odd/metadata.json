@@ -1,0 +1,52 @@
+{
+  "id": "pfs-14-even-or-odd",
+  "title": "14. Even or Odd",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "04-if-else",
+  "examples": [
+    {
+      "input": "4",
+      "output": "4 is even"
+    },
+    {
+      "input": "7",
+      "output": "7 is odd"
+    },
+    {
+      "input": "0",
+      "output": "0 is even"
+    }
+  ],
+  "starterCode": {
+    "python": "n = int(input())\n\nif n % 2 == 0:\n    print(n, \"is even\")\n# Add an else below.\n"
+  },
+  "testCases": [
+    {
+      "input": "4"
+    },
+    {
+      "input": "7"
+    },
+    {
+      "input": "0"
+    }
+  ],
+  "functionName": "program",
+  "params": [
+    {
+      "name": "input",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "scriptMode": true,
+  "courseHelp": {
+    "title": "How this course works",
+    "body": "Write your program in the editor. Press **Run** to try the sample tests. Press **Submit** to check all tests. A green check means your program printed the right text.\n\nEach test can type an **input** for your program. `input()` reads one line of it. Big and small letters, spaces between words, and punctuation must match. Spaces at the end of a line do not matter.\n\nIf you see `Error on line 3`, look at line 3 of your code. Check quotes, `:`, and the 4 spaces in front of lines inside an `if`.\n\nStuck? Open a hint. The solution tab shows one correct answer. Try first!"
+  },
+  "hints": [
+    "`else:` has no condition and ends with `:`.",
+    "The line under `else:` starts with 4 spaces."
+  ]
+}

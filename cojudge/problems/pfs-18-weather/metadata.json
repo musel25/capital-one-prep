@@ -1,0 +1,51 @@
+{
+  "id": "pfs-18-weather",
+  "title": "18. What to Wear",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "05-elif",
+  "examples": [
+    {
+      "input": "5",
+      "output": "Cold. Wear a jacket."
+    },
+    {
+      "input": "18",
+      "output": "Nice. Wear a sweater."
+    },
+    {
+      "input": "30",
+      "output": "Hot. Wear a T-shirt."
+    }
+  ],
+  "starterCode": {
+    "python": "temp = int(input())\n\nif temp < 10:\n    print(\"Cold. Wear a jacket.\")\n# Add elif and else below.\n"
+  },
+  "testCases": [
+    {
+      "input": "5"
+    },
+    {
+      "input": "18"
+    },
+    {
+      "input": "30"
+    }
+  ],
+  "functionName": "program",
+  "params": [
+    {
+      "name": "input",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "scriptMode": true,
+  "courseHelp": {
+    "title": "How this course works",
+    "body": "Write your program in the editor. Press **Run** to try the sample tests. Press **Submit** to check all tests. A green check means your program printed the right text.\n\nEach test can type an **input** for your program. `input()` reads one line of it. Big and small letters, spaces between words, and punctuation must match. Spaces at the end of a line do not matter.\n\nIf you see `Error on line 3`, look at line 3 of your code. Check quotes, `:`, and the 4 spaces in front of lines inside an `if`.\n\nStuck? Open a hint. The solution tab shows one correct answer. Try first!"
+  },
+  "hints": [
+    "`elif temp < 25:` works, because temperatures below 10 were already caught."
+  ]
+}

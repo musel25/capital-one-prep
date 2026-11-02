@@ -1,0 +1,29 @@
+[
+  {
+    "input": "rock\nscissors"
+  },
+  {
+    "input": "rock\npaper"
+  },
+  {
+    "input": "paper\npaper"
+  },
+  {
+    "input": "rock\nrock"
+  },
+  {
+    "input": "scissors\nscissors"
+  },
+  {
+    "input": "paper\nrock"
+  },
+  {
+    "input": "paper\nscissors"
+  },
+  {
+    "input": "scissors\npaper"
+  },
+  {
+    "input": "scissors\nrock"
+  }
+]

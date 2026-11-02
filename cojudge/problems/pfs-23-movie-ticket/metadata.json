@@ -1,0 +1,51 @@
+{
+  "id": "pfs-23-movie-ticket",
+  "title": "23. Movie Ticket",
+  "difficulty": "Easy",
+  "link": "",
+  "category": "06-and-or",
+  "examples": [
+    {
+      "input": "8",
+      "output": "Your ticket costs 5 dollars"
+    },
+    {
+      "input": "30",
+      "output": "Your ticket costs 9 dollars"
+    },
+    {
+      "input": "70",
+      "output": "Your ticket costs 5 dollars"
+    }
+  ],
+  "starterCode": {
+    "python": "age = int(input())\n\n# Find the price, then show it.\n"
+  },
+  "testCases": [
+    {
+      "input": "8"
+    },
+    {
+      "input": "30"
+    },
+    {
+      "input": "70"
+    }
+  ],
+  "functionName": "program",
+  "params": [
+    {
+      "name": "input",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "scriptMode": true,
+  "courseHelp": {
+    "title": "How this course works",
+    "body": "Write your program in the editor. Press **Run** to try the sample tests. Press **Submit** to check all tests. A green check means your program printed the right text.\n\nEach test can type an **input** for your program. `input()` reads one line of it. Big and small letters, spaces between words, and punctuation must match. Spaces at the end of a line do not matter.\n\nIf you see `Error on line 3`, look at line 3 of your code. Check quotes, `:`, and the 4 spaces in front of lines inside an `if`.\n\nStuck? Open a hint. The solution tab shows one correct answer. Try first!"
+  },
+  "hints": [
+    "`if age < 12 or age >= 65:`"
+  ]
+}
