@@ -36,3 +36,13 @@ uv run python scripts/refresh_custom_presentations.py --check
 The refresh checks that starter code, test inputs, marker files, solutions, and
 bundled libraries remain unchanged. It covers the nine active custom lists and
 135 problems. It does not add retired course indexes or modify learner data.
+
+### Publication — November 1, 2026
+
+The 39 selected exercises with focus hints and supplied helpers are published.
+The live judge accepts every reference and rejects every starter in the OOP,
+Collections, Data Formats, Decorators and Pytest courses. In the Decorators
+course, it also rejects every prepared fault.
+Private backup of the replaced problem folders:
+`/home/ubuntu/cojudge-backups/focus-helpers-20261101.vDcT7G/old/`.
+Learner progress and saved code were not changed.
