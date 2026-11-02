@@ -12,6 +12,16 @@ from cojudge.decorators_path.support import (
 from scripts.pybites_course import submit
 
 
+def test_failed(row):
+    """True when the judge reports a completed test failure for this row.
+
+    The judge puts the runner's FAILED line in `failureDetail` when it shows a
+    short error in `output`; older judge versions put it in `output`.
+    """
+    detail = row.get('failureDetail') or row.get('output') or ''
+    return row.get('isCorrect') is False and detail.startswith('FAILED ')
+
+
 def check_live(spec, base_url, user, faults=False):
     pid = problem_id(spec)
     expected = len(run_all(spec, spec['reference']))
@@ -20,8 +30,7 @@ def check_live(spec, base_url, user, faults=False):
     bad = submit(base_url, user, pid, full_source(spec, spec['template']))
     assert bad.get('accepted') is False, f'{pid} starter accepted: {str(bad)[:1000]}'
     assert bad.get('totalTc') == expected and any(
-        row.get('isCorrect') is False and row.get('output', '').startswith('FAILED ')
-        for row in bad.get('results', [])
+        test_failed(row) for row in bad.get('results', [])
     ), f'{pid} starter did not produce a test failure: {str(bad)[:1000]}'
     for fault in spec['mutations'] if faults else []:
         code = spec['reference'].replace(fault['old'], fault['new'], fault.get('count', 1))
@@ -29,8 +38,7 @@ def check_live(spec, base_url, user, faults=False):
         assert result.get('accepted') is False, f"{pid} fault accepted: {fault['name']}"
         # A process error does not prove that a faulty implementation is detected.
         assert result.get('totalTc') == expected, f"{pid} fault did not finish: {fault['name']} {str(result)[:1000]}"
-        assert any(row.get('isCorrect') is False and row.get('output', '').startswith('FAILED ')
-                   for row in result.get('results', [])), f"{pid} fault produced no test failure: {fault['name']}"
+        assert any(test_failed(row) for row in result.get('results', [])), f"{pid} fault produced no test failure: {fault['name']}"
     return {'id': pid, 'cases': expected, 'faults_rejected': len(spec['mutations']) if faults else 0}
 
 
