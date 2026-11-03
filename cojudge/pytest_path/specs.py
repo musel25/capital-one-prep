@@ -594,3 +594,11 @@ def test_example():
 for _spec in SPECS:
     _spec['hints'] = _HINTS.get(_spec['number'], [])
     _spec['starter'] = _STARTERS.get(_spec['number'], _spec['starter'])
+
+# Guided starters and hints for the selected exercises (see guided.py).
+from cojudge.pytest_path.guided import HINTS as _GUIDED_HINTS, STARTERS as _GUIDED_STARTERS  # noqa: E402
+
+for _spec in SPECS:
+    if _spec['number'] in _GUIDED_STARTERS:
+        _spec['starter'] = _GUIDED_STARTERS[_spec['number']]
+        _spec['hints'] = _GUIDED_HINTS[_spec['number']]
