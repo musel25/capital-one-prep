@@ -22,6 +22,19 @@ BITES = {6: 'PyBites Die Hard',
          21: 'Query a nested data structure'}
 BITES_DONE = {6, 10, 16, 18, 21}
 
+# What you practise
+# -----------------
+# State in an object: each Promo object keeps its own set of done bite IDs in
+# self.bites_done. A method changes that set, and the next call sees the
+# change. Two Promo objects never share the set (__init__ makes copies).
+#
+# The constructor is complete. Work in two steps. The tests run top to
+# bottom. Submit also runs the edge-case tests.
+#
+#   Step 1 (_pick_random_bite)  -> test_pick_random_bite_returns_an_available_bite,
+#                                  test_pick_random_bite_does_not_change_state
+#   Step 2 (new_bite)           -> test_new_bite_updates_bites_done and the rest
+
 
 class NoBitesAvailable(Exception):
     pass
@@ -30,18 +43,40 @@ class NoBitesAvailable(Exception):
 class Promo:
 
     def __init__(self, bites=None, bites_done=None):
+        """Complete. Uses BITES / BITES_DONE only when an argument is None."""
         if bites is None:
             bites = BITES
         if bites_done is None:
             bites_done = BITES_DONE
-        self.all_bites = bites.copy()
-        self.bites_done = bites_done.copy()
+        self.all_bites = bites.copy()       # {id: title}
+        self.bites_done = bites_done.copy()  # {id, id, ...}
 
+    # Step 1: choose one available ID. Do NOT change self.bites_done here.
+    #
+    #     promo = Promo({1: 'a', 2: 'b', 3: 'c'}, {1})
+    #     promo._pick_random_bite()  -> 2 or 3 (random)
+    #     promo.bites_done           -> {1}         (unchanged)
+    #
+    #     Promo({1: 'a'}, {1})._pick_random_bite()  -> raises NoBitesAvailable
     def _pick_random_bite(self):
-        pass
+        """Return a random ID from all_bites that is not in bites_done."""
+        # TODO: available IDs = the keys of self.all_bites minus self.bites_done.
+        # TODO: if none are available, raise NoBitesAvailable.
+        # TODO: return random.choice(sorted(available)).
+        #       (random.choice needs a sequence, so sort the set into a list.)
+        ...
 
+    # Step 2: choose an ID with the Step 1 helper, mark it as done, return it.
+    #
+    #     promo = Promo({1: 'a', 2: 'b'}, {1})
+    #     promo.new_bite()   -> 2
+    #     promo.bites_done   -> {1, 2}
+    #     promo.new_bite()   -> raises NoBitesAvailable (nothing left)
     def new_bite(self):
-        pass
+        """Return a new ID and add it to self.bites_done."""
+        # TODO: call self._pick_random_bite() (a test replaces it, so call it).
+        # TODO: add the ID to self.bites_done, then return the ID.
+        ...
 ''',
     "tests": '''import random
 
@@ -218,4 +253,8 @@ SPEC["mutations"] = [
     {"name": "skip selection helper", "old": "bite = self._pick_random_bite()", "new": "bite = min(set(self.all_bites) - self.bites_done)"},
 ]
 
-SPEC["hints"] = ['Focus: state that lives on the instance. new_bite adds the chosen ID to self.bites_done.', 'Side work: random.choice(sorted(available_ids)) picks one ID. Raise NoBitesAvailable when none are left.']
+SPEC["hints"] = [
+    'Concept: the object remembers what it already gave out. self.bites_done is the state; new_bite changes it, so the same ID never comes back from that object.',
+    'Available IDs are set(self.all_bites) - self.bites_done. If that set is empty, raise NoBitesAvailable. Otherwise return random.choice(sorted(available)).',
+    'new_bite must call self._pick_random_bite(), then self.bites_done.add(bite), then return bite. _pick_random_bite itself must not change bites_done.',
+]

@@ -16,3 +16,8 @@ Good luck and keep up with the language, exciting new things are getting added!
 On that note feel free to make us more Bite requests via our Bites homepage (you'll find a form per Bite level at the bottom of the page ...)
 
 For more resources on *data classes* we recommned watching [Hettinger's talk](https://www.youtube.com/watch?v=T-TwcmT6Rcw) as well as reading through Anthony Shaw's [A brief tour of Python 3.7 data classes](https://hackernoon.com/a-brief-tour-of-python-3-7-data-classes-22ee5e046517). Have fun!
+
+**Constraints:**
+
+- `Bite` is a `@dataclass(order=True)` with the fields `number: int`, `title: str`, and `level: str = 'Beginner'`, in this order.
+- `__post_init__` capitalizes the title once with `str.capitalize()`. Later changes to `title` stay as assigned. Instances are mutable.

@@ -15,9 +15,28 @@ SPEC = {
              "Django tox file in that example.",
     "template": '''import configparser
 
-# FOCUS: load the file with configparser and write the three read-only properties by hand.
-# SUPPLIED: the two list helpers below do the splitting and the duplicate removal.
-#        They are not the skill of this exercise. Use them. Do not edit them.
+# What you practise
+# -----------------
+# 1. configparser reads an INI file into a dict-like object:
+#
+#        config = configparser.ConfigParser(interpolation=None)
+#        config.read('tox.ini')
+#        config.sections()                -> ['tox', 'testenv', ...]
+#        config['tox'].get('envlist', '') -> the text, or '' if it is missing
+#
+#    interpolation=None keeps text such as {toxinidir} or %(x)s unchanged.
+# 2. Read-only properties that compute their answer from self.config.
+#
+# SUPPLIED: _unique and _split_list below do the splitting and the duplicate
+# removal. They are not the skill of this exercise. Use them. Do not edit them.
+#
+# Work in four steps. The first tests check all three properties together, so
+# finish all steps before you run the tests. Submit also runs edge-case tests.
+#
+#   Step 1 (__init__)               -> self.config
+#   Step 2 (number_of_sections)
+#   Step 3 (environments)
+#   Step 4 (base_python_versions)   -> then test_django and every other test
 
 
 def _unique(values):
@@ -30,31 +49,48 @@ def _split_list(text):
     return _unique(item.strip() for item in text.replace("\\n", ",").split(","))
 
 
+# Example file used in the comments below:
+#
+#     [tox]
+#     envlist = py39, py310
+#
+#     [testenv]
+#     basepython = python3.10
+#
+#     [testenv:docs]
+#     basepython = python3.10
 class ToxIniParser:
 
+    # Step 1: load the file. Each object keeps its own config.
     def __init__(self, ini_file):
-        """Use configparser to load ini_file into self.config"""
-        pass
+        """Load ini_file (a path) into self.config."""
+        # TODO: create configparser.ConfigParser(interpolation=None) as self.config.
+        # TODO: call self.config.read(ini_file).
+        ...
 
+    # Step 2:  number_of_sections  -> 3   ([tox], [testenv], [testenv:docs])
     @property
     def number_of_sections(self):
-        """Return the number of sections in the ini file.
-           New to properties? -> https://pybit.es/articles/property-decorator
-        """
-        pass
+        """Return the number of sections in the ini file."""
+        # TODO: count self.config.sections().
+        ...
 
+    # Step 3:  environments  -> ['py39', 'py310']
+    # envlist can be missing: then return [].
     @property
     def environments(self):
-        """Return a list of environments
-           (= "envlist" attribute of [tox] section; it can be missing).
-           Use _split_list."""
-        pass
+        """Return the envlist of the [tox] section as a list."""
+        # TODO: read self.config['tox'].get('envlist', '') and pass it to _split_list.
+        ...
 
+    # Step 4:  base_python_versions  -> ['python3.10']   (each value once)
+    # Look in every section, in file order. Skip sections without basepython.
     @property
     def base_python_versions(self):
-        """Return a list of all basepython values across the ini file,
-           each value once, in the order they first appear. Use _unique."""
-        pass
+        """Return every basepython value, once each, in first-seen order."""
+        # TODO: collect self.config[name].get('basepython') for each section name,
+        #       then pass the values to _unique (it drops None and repeats).
+        ...
 ''',
     "tests": '''import pytest
 
@@ -285,3 +321,9 @@ class ToxIniParser:
         return _unique(self.config[s].get("basepython") for s in self.config.sections())
 ''',
 }
+
+SPEC["hints"] = [
+    'Concept: configparser.ConfigParser reads an INI file into sections. config.sections() lists the section names, and config[name].get(key, default) reads one value as text. Use interpolation=None so {toxinidir} and % signs stay unchanged.',
+    "Each property computes its value from self.config every time: number_of_sections is len(self.config.sections()), and environments is _split_list(self.config['tox'].get('envlist', '')).",
+    "base_python_versions: _unique(self.config[name].get('basepython') for name in self.config.sections()). .get returns None for a missing key, and _unique drops it.",
+]

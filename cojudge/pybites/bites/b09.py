@@ -9,9 +9,55 @@ SPEC = {
                 "Equality and ordering compare all three fields in that order. Other input types are outside this exercise.",
     "template": '''from dataclasses import dataclass
 
+# What you practise
+# -----------------
+# @dataclass writes the boring methods for you. You list the fields with
+# types, and Python generates __init__, __repr__ and __eq__:
+#
+#     @dataclass
+#     class Point:
+#         x: int
+#         y: int = 0          <- a field with a default value
+#
+#     Point(1)  -> Point(x=1, y=0)
+#
+# @dataclass(order=True) also generates <, <=, > and >=. They compare the
+# fields in the order you list them, like tuples. So sorted() works.
+#
+# __post_init__(self) runs right after the generated __init__. Use it to clean
+# up a field once, when the object is created.
+#
+# Work in two steps. The tests run top to bottom. Submit also runs the
+# edge-case tests.
+#
+#   Step 1 (decorator and fields)  -> test_is_dataclass, test_default_level
+#   Step 2 (__post_init__)         -> test_title_is_capitalized and the rest
 
+
+# Step 1: three fields, in this exact order: number, title, level.
+#
+#     Bite(3, 'Classes', 'Advanced')  -> Bite(number=3, title='Classes', level='Advanced')
+#     Bite(1, 'Fizz buzz').level      -> 'Beginner'                       (the default)
+#     sorted([Bite(3, 'c'), Bite(1, 'a')])  -> Bite 1 first (number is compared first)
+#
+# TODO: put @dataclass(order=True) on the line above the class.
 class Bite:
-    pass
+    # TODO: declare the fields with type annotations:
+    #           number: int
+    #           title: str
+    #           level: str = 'Beginner'
+    #       (Fields only. Do not write __init__: @dataclass creates it.)
+
+    # Step 2: capitalize the title once, at construction.
+    #
+    #     Bite(2, 'fizz BUZZ').title  -> 'Fizz buzz'   (str.capitalize: first
+    #                                                   letter up, rest down)
+    #
+    #     bite = Bite(1, 'ok')
+    #     bite.title = 'new TITLE'     -> stays 'new TITLE' (no re-capitalize later)
+    def __post_init__(self):
+        # TODO: self.title = self.title.capitalize()
+        ...
 ''',
     "tests": '''from dataclasses import FrozenInstanceError, astuple, fields, is_dataclass
 
@@ -115,4 +161,8 @@ class Bite:
 ''',
 }
 
-SPEC["hints"] = ["Focus: @dataclass(order=True) with fields number, title, level='Beginner'.", 'Use __post_init__ to apply self.title = self.title.capitalize() once.']
+SPEC["hints"] = [
+    'Concept: a dataclass is a class with annotated fields. @dataclass(order=True) generates __init__, __repr__, __eq__, and the comparison operators from those fields. You do not write __init__ yourself.',
+    "Field order matters: number: int, then title: str, then level: str = 'Beginner'. Comparisons and the repr use this order, so Bite(1, 'a') < Bite(1, 'b'), and a tie on number and title compares level.",
+    '__post_init__ runs once after the generated __init__. Put self.title = self.title.capitalize() there. Do not use frozen=True: the tests change fields after creation.',
+]

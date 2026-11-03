@@ -41,11 +41,26 @@ SPEC = {
     "title": "Implement a color class with staticmethod",
     "module": "color",
     "template": _NAMES + '''
-
-# FOCUS: write the two @staticmethod converters and the Color dunder methods by hand.
-#        A static method gets no self and no cls: Color.hex2rgb('#ff8000') works.
-# SUPPLIED: the two checks below do the input validation. They are not the skill
-#        of this exercise. Use them. Do not edit them.
+# What you practise
+# -----------------
+# A static method belongs to the class but gets no self and no cls. It is a
+# plain function that lives inside the class, so you call it on the class:
+#
+#     Color.hex2rgb('#ff8000')   -> (255, 128, 0)    (no Color object needed)
+#
+# Put @staticmethod on the line above the def. It also works through an
+# object: Color('red').hex2rgb('#00ff00').
+#
+# SUPPLIED: _is_hex and _is_rgb below do all the input validation. They are
+# not the skill of this exercise. Use them. Do not edit them.
+#
+# Work in four steps. The tests run top to bottom. Submit also runs the
+# edge-case tests.
+#
+#   Step 1 (__init__)            -> test_rgb_from_color_names, test_unknown_color_has_no_rgb
+#   Step 2 (__repr__, __str__)   -> test_repr, test_str
+#   Step 3 (hex2rgb)             -> test_hex2rgb, test_hex2rgb_bad_values
+#   Step 4 (rgb2hex)             -> test_rgb2hex and the tests after it
 
 
 def _is_hex(value):
@@ -66,25 +81,51 @@ class Color:
     Takes the string of a color name and returns its RGB value.
     """
 
+    # Step 1: look up the name in COLOR_NAMES. The keys are UPPERCASE.
+    #
+    #     Color('Tomato').rgb   -> (255, 99, 71)
+    #     Color('white').rgb    -> (255, 255, 255)
+    #     Color('puke').rgb     -> None          (unknown name)
+    #     Color(' white ').rgb  -> None          (do not strip spaces)
     def __init__(self, color):
-        self.color = color
-        # TODO 1: set self.rgb from COLOR_NAMES (case-insensitive), or None
+        self.color = color   # keep the name exactly as given
+        # TODO: set self.rgb = COLOR_NAMES.get(<color in uppercase>).
+        #       dict.get returns None when the key is missing.
+        ...
 
-    # TODO 2: make this a static method
+    # Step 2: the two text forms.
+    #
+    #     repr(Color('ToMaTo'))  -> "Color('ToMaTo')"   (name as given, in quotes)
+    #     str(Color('navy'))     -> '(0, 0, 128)'       (str of the rgb tuple)
+    #     str(Color('puke'))     -> 'Unknown'           (rgb is None)
+    #
+    # TODO: define __repr__(self). {self.color!r} in an f-string adds the quotes.
+    # TODO: define __str__(self).
+
+    # Step 3: hex text -> RGB tuple. Each pair of hex digits is one channel.
+    #
+    #     Color.hex2rgb('#FF8000')  -> (255, 128, 0)   ('FF', '80', '00')
+    #     Color.hex2rgb('#fff')     -> raises ValueError (not 6 digits)
+    #
+    # TODO: put @staticmethod on the line above the def.
     def hex2rgb(hex_value):
-        """Convert a hex value such as '#ff8000' (any case) into an
-           RGB tuple such as (255, 128, 0).
-           If not _is_hex(hex_value), raise ValueError."""
-        pass
+        """Return a tuple of 3 ints. Raise ValueError if not _is_hex(hex_value)."""
+        # TODO: if not _is_hex(hex_value): raise ValueError(...)
+        # TODO: convert hex_value[1:3], [3:5] and [5:7] with int(pair, 16).
+        ...
 
-    # TODO 3: make this a static method
+    # Step 4: RGB tuple -> lowercase hex text, two digits per channel.
+    #
+    #     Color.rgb2hex((255, 128, 0))  -> '#ff8000'
+    #     Color.rgb2hex((10, 11, 12))   -> '#0a0b0c'   (keep the leading 0)
+    #     Color.rgb2hex((256, 0, 0))    -> raises ValueError
+    #
+    # TODO: put @staticmethod on the line above the def.
     def rgb2hex(rgb_value):
-        """Convert an RGB tuple such as (255, 128, 0) into a lowercase
-           hex value such as '#ff8000'.
-           If not _is_rgb(rgb_value), raise ValueError."""
-        pass
-
-    # TODO 4: add __repr__ -> Color('white') and __str__ -> '(255, 255, 255)' or 'Unknown'
+        """Return '#rrggbb' in lowercase. Raise ValueError if not _is_rgb(rgb_value)."""
+        # TODO: if not _is_rgb(rgb_value): raise ValueError(...)
+        # TODO: format each channel with f'{v:02x}' and join them after '#'.
+        ...
 ''',
     "tests": '''import pytest
 
@@ -263,9 +304,9 @@ def test_every_supplied_name_resolves_to_its_literal_rgb():
         assert Color(name.lower()).rgb == rgb
 '''
 SPEC["hints"] = [
-    "Focus: @staticmethod. Put @staticmethod above def hex2rgb and def rgb2hex. They take no self.",
-    "Supplied: _is_hex and _is_rgb do all input validation. Call them first and raise ValueError when they return False.",
-    "Conversion: int('ff', 16) == 255 and f'{255:02x}' == 'ff'. Slice hex_value[1:3], [3:5], [5:7].",
+    "Concept: @staticmethod makes a method that gets no self. Write @staticmethod above def hex2rgb and def rgb2hex, with only the value as the parameter. Then Color.hex2rgb('#ff8000') works without an object.",
+    'Lookup and text forms: self.rgb = COLOR_NAMES.get(color.upper()). __repr__ returns f"Color({self.color!r})". __str__ returns str(self.rgb), or \'Unknown\' when self.rgb is None.',
+    "Conversion: call the supplied check first and raise ValueError when it returns False. int('ff', 16) == 255, and f'{255:02x}' == 'ff'. The :02x format keeps a leading zero: f'{10:02x}' == '0a'.",
 ]
 SPEC["mutations"] = [
     {"name": "case-sensitive color lookup", "old": "COLOR_NAMES.get(color.upper())", "new": "COLOR_NAMES.get(color)"},

@@ -3,42 +3,67 @@
 SPEC = {
     "title": "Complete a user class: properties and representation dunder methods",
     "module": "user",
-    "template": '''class User:
-    """A User class
-       (Django's User model inspired us)
-    """
+    "template": '''# What you practise
+# -----------------
+# 1. Properties: methods that you read like attributes (user.username, no
+#    parentheses). They run on every read, so they follow later changes to
+#    first_name and last_name.
+# 2. The two text forms of an object:
+#      str(user)   calls __str__   -> friendly text for people
+#      repr(user)  calls __repr__  -> code-like text for developers
+#
+# Work in three steps. Every test checks all four members together, so finish
+# all three steps before you run the tests. Submit also runs edge-case tests.
+#
+#   Step 1 -> get_full_name and username
+#   Step 2 -> __str__
+#   Step 3 -> __repr__ (test_repr_of_a_subclass checks the twist)
+
+
+class User:
+    """A User class (Django's User model inspired us)."""
 
     def __init__(self, first_name, last_name):
-        """Constructor, base values"""
+        """Constructor, base values. This part is complete."""
         self.first_name = first_name
         self.last_name = last_name
 
+    # Step 1a: title case for both names, one space between them.
+    #
+    #     User('bob', 'belderbos').get_full_name  -> 'Bob Belderbos'
+    #     User('TIM', 'Lo').get_full_name         -> 'Tim Lo'
     @property
     def get_full_name(self):
-        """Return first and last name separated by a whitespace
-           and using title case for both.
-        """
-        # TODO 1: your code
-        pass
+        """Return 'First Last' in title case."""
+        # TODO: use str.title() on each name.
+        ...
 
+    # Step 1b: first letter of first_name + first 7 letters of last_name,
+    # all lowercase. A short last name is used whole.
+    #
+    #     User('bob', 'belderbos').username  -> 'bbelderb'
+    #     User('TIM', 'Lo').username         -> 'tlo'
     @property
     def username(self):
-        """A username consists of the first char of
-           the user's first_name and the first 7 chars
-           of the user's last_name, both lowercased.
-        """
-        # TODO 2: your code
-        pass
+        """Return the lowercase username, at most 8 characters."""
+        # TODO: slice first_name[0] and last_name[:7], then lowercase.
+        ...
 
-    # TODO 3: your code
+    # Step 2: the friendly form. Reuse the two properties.
     #
-    # add a __str__ and a __repr__
-    # "__repr__ is for devs, __str__ is for customers"
+    #     str(User('bob', 'belderbos'))  -> 'Bob Belderbos (bbelderb)'
     #
-    # see the TESTS for the required output
+    # TODO: define __str__(self).
+
+    # Step 3: the developer form. Use the ORIGINAL names (not title case) and
+    # double quotes. Do not type the class name: read it from the object with
+    # type(self).__name__, so a subclass shows its own name.
     #
-    # Hint for the __repr__ twist: do not hard-code the class name.
-    # A subclass should show its own name: self.__class__.__name__
+    #     repr(User('bob', 'belderbos'))   -> 'User("bob", "belderbos")'
+    #     repr(Admin('ada', 'lovelace'))   -> 'Admin("ada", "lovelace")'
+    #         (Admin is a subclass of User that a test defines)
+    #
+    # TODO: define __repr__(self).
 ''',
     "tests": '''from user import User
 
@@ -157,4 +182,8 @@ SPEC["mutations"] = [
     {"name": "use final first-name letter", "old": "self.first_name[0]", "new": "self.first_name[-1]"},
 ]
 
-SPEC["hints"] = ['Focus: properties, __str__ and __repr__. __str__ is for users; __repr__ is for developers.', 'Do not hard-code the class name in __repr__: use type(self).__name__ (or self.__class__.__name__).']
+SPEC["hints"] = [
+    'Concept: str(obj) calls obj.__str__() and repr(obj) calls obj.__repr__(). Both must return a string. A property is read without parentheses, so inside __str__ write self.username, not self.username().',
+    "Formats: get_full_name is f'{first.title()} {last.title()}'. username is (first_name[0] + last_name[:7]).lower(). A slice past the end of a string is safe: 'Lo'[:7] is 'Lo'.",
+    'For __repr__, use the stored names exactly as given and the class name from the object: f\'{type(self).__name__}("{self.first_name}", "{self.last_name}")\'.',
+]

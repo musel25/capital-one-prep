@@ -3,8 +3,46 @@
 SPEC = {
     "title": "Keep state in a class + make its instance callable",
     "module": "record",
-    "template": '''class RecordScore():
+    "template": '''# What you practise
+# -----------------
+# 1. State in an object: the object remembers the highest score so far.
+# 2. A callable object: define __call__ and you can call the object like a
+#    function. record(10) runs record.__call__(10).
+#
+#     record = RecordScore()
+#     record(10)  -> 10     (first score is the record)
+#     record(9)   -> 10     (9 is lower, the record stays)
+#     record(11)  -> 11     (new record)
+#
+# Each RecordScore object keeps its own record. Negative scores, 0, and floats
+# are valid scores, so do not start the record at 0.
+#
+# Work in two steps. The tests call the object, so finish both steps first.
+#
+#   Step 1 (__init__)  -> start with no record yet
+#   Step 2 (__call__)  -> every test
+
+
+class RecordScore():
     """Class to track a game's maximum score"""
+
+    # Step 1: no score has been seen yet.
+    def __init__(self):
+        # TODO: store None as self.record ("no record yet"). Do not use 0:
+        #       a first score of -5 must become the record.
+        ...
+
+    # Step 2: take one score, update the record, return the record.
+    #
+    #     record = RecordScore()
+    #     record(-5)   -> -5
+    #     record(-10)  -> -5
+    #     record(-2)   -> -2
+    def __call__(self, score):
+        """Return the highest score this object has received, including score."""
+        # TODO: if there is no record yet, or score > the record, store score.
+        # TODO: return the record.
+        ...
 ''',
     "tests": '''from record import RecordScore
 
@@ -93,4 +131,10 @@ SPEC["mutations"] = [
     {"name": "treat zero as uninitialized", "old": "self._max is None", "new": "not self._max"},
     {"name": "keep minimum score", "old": "score > self._max", "new": "score < self._max"},
     {"name": "truncate fractional scores", "old": "self._max = score", "new": "self._max = int(score)"},
+]
+
+SPEC["hints"] = [
+    'Concept: Python turns record(10) into record.__call__(10). Define __call__(self, score) in the class, and the object can be called like a function while it keeps its own data on self.',
+    'Start the record as None in __init__. If you start at 0, a first score of -5 returns 0, but the tests expect -5.',
+    'In __call__: if self.record is None or score > self.record, set self.record = score. Then return self.record. A tie does not change the record.',
 ]

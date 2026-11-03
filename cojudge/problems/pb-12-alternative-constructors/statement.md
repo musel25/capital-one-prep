@@ -28,3 +28,4 @@ Good luck and keep calm and code more Python!
 **Constraints:**
 
 - Use the supplied domain validation rule. URLs use HTTP or HTTPS; emails have one `@` and nonempty parts.
+- `Domain(name)` raises `DomainException` for an invalid name. `str(domain)` returns the name. `parse_url` and `parse_email` are class methods that return `cls(<domain>)`.

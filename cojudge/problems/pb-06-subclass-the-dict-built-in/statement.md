@@ -25,3 +25,4 @@ Good luck and have fun!
 **Constraints:**
 
 - Each assigned name is new. Birthday values are `datetime.date` objects.
+- Before an item is stored, compare its month and day (not the year) with the stored birthdays. On a match, print `MSG.format(name)` once. Assignment, the constructor, and `update()` all follow this rule.

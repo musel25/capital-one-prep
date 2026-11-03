@@ -9,7 +9,50 @@ SPEC = {
     "title": "Write a property",
     "module": "simple_property",
     "original": True,
-    "template": _PAGE["template"],
+    "guided": True,
+    "template": '''from datetime import datetime
+
+NOW = datetime.now()
+
+# What you practise
+# -----------------
+# A property is a method that you read like an attribute. Put @property on
+# the line above the def. Then Python runs the method each time you read it:
+#
+#     promo.expired        <- no parentheses
+#
+# The method runs again on every read, so the result follows later changes to
+# promo.expires. A property without a setter is read-only:
+# promo.expired = False raises AttributeError. Python does that for you.
+#
+# Work in two steps. The tests run top to bottom. Submit also runs the
+# edge-case tests.
+#
+#   Step 1 (__init__)          -> test_constructor_preserves_values_and_empty_name
+#   Step 2 (expired property)  -> every other test
+
+
+class Promo:
+
+    # Step 1: store both arguments unchanged.
+    #
+    #     promo = Promo('twitter', NOW)
+    #     promo.name     -> 'twitter'
+    #     promo.expires  -> NOW
+    def __init__(self, name, expires):
+        # TODO: store name as self.name and expires as self.expires.
+        ...
+
+    # Step 2: a read-only property.
+    # TODO: put @property on the line above the def.
+    #
+    #     Promo('a', NOW - timedelta(seconds=1)).expired  -> True   (before NOW)
+    #     Promo('a', NOW).expired                         -> False  (equal is NOT expired)
+    #     Promo('a', NOW + timedelta(days=1)).expired     -> False
+    def expired(self):
+        """Return True if self.expires is before NOW, else False."""
+        ...
+''',
     "tests": _PAGE["tests"].rstrip() + '''
 
 
@@ -78,4 +121,8 @@ SPEC["mutations"] = [
     {"name": "discard promo name", "old": "self.name = name", "new": "self.name = 'promo'"},
 ]
 
-SPEC["hints"] = ['Focus: @property. A property is a method that you read like an attribute: promo.expired, not promo.expired().', "Compare self.expires with the module's NOW on each access. Do not store the result."]
+SPEC["hints"] = [
+    'Concept: @property turns a method into a value that you read without parentheses. Python calls the method on every read, so do not store the result in __init__.',
+    'Compare with the module-level NOW: return self.expires < NOW. Use <, not <=, because an expiry equal to NOW is not expired yet.',
+    'The tests also assign promo.expired = False and expect AttributeError. A property with no setter does that automatically. Do not add a setter.',
+]

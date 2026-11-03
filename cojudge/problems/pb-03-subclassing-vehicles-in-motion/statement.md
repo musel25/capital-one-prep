@@ -35,3 +35,5 @@ For more OOP exercises, check out our OOP track.
 **Constraints:**
 
 - Counts are nonnegative integers.
+- `description()` returns `<brand> <model> with <wheels> wheels`. `honk()` returns `Beep beep!`. `rev_engine()` returns `description()` followed by ` goes Vroom vroom!`.
+- `Car` and `Motorbike` call `super().__init__(brand, model, wheels)`, then store `doors` or `engine_cc`.

@@ -11,3 +11,8 @@ Your task will be to implement the following:
 Take a look at the tests for a better understanding of the values expected.
 
 Good luck!
+
+**Constraints:**
+
+- `Color(name).rgb` is the `COLOR_NAMES` value for `name.upper()`, or `None`. `str()` returns the tuple as text or `Unknown`. `repr()` returns `Color(<name as given, quoted>)`.
+- `hex2rgb` and `rgb2hex` are static methods. `rgb2hex` returns `#rrggbb` in lowercase. Both raise `ValueError` when the supplied `_is_hex` or `_is_rgb` check fails.

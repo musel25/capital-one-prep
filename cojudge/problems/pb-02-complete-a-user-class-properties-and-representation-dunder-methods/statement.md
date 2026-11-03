@@ -23,3 +23,5 @@ Good luck and keep calm and code in Python!
 **Constraints:**
 
 - Names are nonempty strings of ASCII letters.
+- `get_full_name` returns `<First> <Last>` in title case. `username` is the first letter of `first_name` plus the first 7 letters of `last_name`, all lowercase.
+- `str(user)` returns `<full name> (<username>)`. `repr(user)` returns `<ClassName>("<first_name>", "<last_name>")` with the names as given and the class name of the object.

@@ -7,13 +7,38 @@ SPEC = {
 
 MSG = 'Hey {}, there are more people with your birthday!'
 
+# What you practise
+# -----------------
+# Subclassing a built-in container. UserDict is a dict-like class that is safe
+# to subclass. Its real data is a normal dict in self.data.
+#
+# Every way of adding an item goes through __setitem__:
+#     bd['bob'] = date(1987, 6, 15)       -> bd.__setitem__('bob', date(...))
+#     BirthdayDict({'bob': ...})          -> calls __setitem__ for each item
+#     bd.update({'bob': ...})             -> calls __setitem__ for each item
+# So you override ONE method, and all three paths get the new behaviour.
+#
+# There is one step. Every test uses __setitem__.
+
 
 class BirthdayDict(UserDict):
-    """Override UserDict to print a message every time a new person is added
-       that has the same birthday (day+month) as somebody already in the dict"""
+    """Print a message every time a new person is added who has the same
+    birthday (month and day, any year) as somebody already in the dict."""
 
+    #     bd = BirthdayDict()
+    #     bd['bob'] = date(1987, 6, 15)     prints nothing (dict is empty)
+    #     bd['tim'] = date(1984, 7, 15)     prints nothing (July, not June)
+    #     bd['mary'] = date(1990, 6, 15)    prints:
+    #     Hey mary, there are more people with your birthday!
+    #
+    # Compare month and day only. 2000-01-01 and 2000-01-02 do not match.
     def __setitem__(self, name, birthday):
-        pass
+        # TODO: look at the birthdays that are already stored: self.data.values().
+        #       If any has the same (month, day) as birthday, print(MSG.format(name)).
+        #       Print once, even when several people match.
+        # TODO: store the item with super().__setitem__(name, birthday).
+        #       Check BEFORE you store, or the new person matches itself.
+        ...
 ''',
     "tests": '''from collections import UserDict
 from datetime import date
@@ -140,4 +165,10 @@ SPEC["mutations"] = [
     {"name": "compare day only", "old": "(d.month, d.day) == (birthday.month, birthday.day)", "new": "d.day == birthday.day"},
     {"name": "require every birthday to match", "old": "if any(", "new": "if all("},
     {"name": "omit message newline", "old": "print(MSG.format(name))", "new": "print(MSG.format(name), end='')"},
+]
+
+SPEC["hints"] = [
+    'Concept: UserDict sends every insert (bd[k] = v, the constructor, update) through __setitem__. Override that one method. The stored items are in self.data, a plain dict.',
+    'Check first, then store. A birthday matches when (d.month, d.day) == (birthday.month, birthday.day). any(...) over self.data.values() gives one True/False, so you print at most once.',
+    'Store the item with super().__setitem__(name, birthday). Use print(MSG.format(name)): print adds exactly one newline, which the tests expect.',
 ]

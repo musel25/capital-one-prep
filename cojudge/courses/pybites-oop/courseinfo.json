@@ -1,6 +1,6 @@
 {
   "title": "Pybites OOP Path",
-  "description": "The 22 bites of the Pybites Object Oriented Programming learning path, in the same order. Each problem has the bite's description, a code template, and its pytest tests, which the judge runs on your code. Bites 1 and 14 use the original free template and tests; the others are recreations that follow the public descriptions. Select Python.",
+  "description": "The 22 bites of the Pybites Object Oriented Programming learning path, in the same order. Each problem has the bite's description, a code template, and its pytest tests, which the judge runs on your code. Bites 1 and 14 use the original free tests; the others are recreations that follow the public descriptions. Templates include guidance comments. Select Python.",
   "category-order": [
     "01-beginner",
     "02-intermediate",

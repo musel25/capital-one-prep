@@ -30,3 +30,4 @@ Good luck and keep calm and code in Python!
 **Constraints:**
 
 - Scores are finite integers or floats, including negative values.
+- Calling the object with a score returns the highest score that object has received, including this one. The first score is the first record. Each object keeps its own record.

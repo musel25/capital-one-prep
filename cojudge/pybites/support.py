@@ -187,7 +187,10 @@ def description(spec):
 
 def present_problem(spec, test_ids):
     page = spec["page"]
-    origin = ("The template and tests are the originals from this free bite."
+    origin = ("The tests are the originals from this free bite. The template is the original "
+              "code task with added guidance comments."
+              if spec.get("original") and spec.get("guided") else
+              "The template and tests are the originals from this free bite."
               if spec.get("original") else
               "The template and tests are recreations based on the public bite description.")
     note = " ".join(filter(None, [origin, spec.get("notes"),
@@ -238,7 +241,8 @@ def course_info(records):
         "description": "The 22 bites of the Pybites Object Oriented Programming learning path, in the same "
                        "order. Each problem has the bite's description, a code template, and its pytest "
                        "tests, which the judge runs on your code. Bites 1 and 14 use the original free "
-                       "template and tests; the others are recreations that follow the public descriptions. "
+                       "tests; the others are recreations that follow the public descriptions. Templates "
+                       "include guidance comments. "
                        "Select Python.",
         "category-order": LEVELS,
         "problems-of-category": {level: [r["id"] for r in records if r["category"] == level] for level in LEVELS},

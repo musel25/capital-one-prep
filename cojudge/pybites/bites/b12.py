@@ -12,19 +12,39 @@ SPEC = {
                 "Emails have exactly one @ and a nonempty local part and domain part. Other email forms are excluded. "
                 "Both classmethods extract the domain and use the same validation. Return an instance of the calling class. "
                 "str(domain) returns its name. Other input types are excluded.",
-    "template": r'''import re
+    "template": '''import re
 from urllib.parse import urlparse
 
-# FOCUS: write __str__ and the two classmethods by hand.
-#        A classmethod gets the class as `cls` and returns cls(...),
-#        so a subclass gets an instance of the subclass.
-# SUPPLIED: the three helpers below do the regex, URL and email work.
-#        They are not the skill of this exercise. Use them. Do not edit them.
+# What you practise
+# -----------------
+# An alternative constructor is a @classmethod that builds an object from a
+# different kind of input. A class method gets the CLASS as its first
+# argument, called cls, and returns cls(...):
+#
+#     @classmethod
+#     def parse_email(cls, email):
+#         return cls(<the domain part of email>)
+#
+#     Domain.parse_email('bob@gmail.com')  -> Domain('gmail.com')
+#
+# Use cls(...), not Domain(...). Then a subclass gets an object of its own
+# type: SubDomain.parse_email(...) returns a SubDomain.
+#
+# SUPPLIED: the three helpers below do the regex, URL and email work. They are
+# not the skill of this exercise. Use them. Do not edit them.
+#
+# Work in four steps. The tests run top to bottom. Submit also runs the
+# edge-case tests.
+#
+#   Step 1 (validate in __init__)  -> test_invalid_domain
+#   Step 2 (__str__)               -> test_valid_domain
+#   Step 3 (parse_url)             -> test_parse_url
+#   Step 4 (parse_email)           -> test_parse_email and the tests after it
 
 
 def _is_valid_domain(name):
     """True for names such as 'pybit.es': text, a dot, 2 or 3 lowercase letters."""
-    return re.fullmatch(r'.*\.[a-z]{2,3}', name) is not None
+    return re.fullmatch(r'.*\\.[a-z]{2,3}', name) is not None
 
 
 def _host_of_url(url):
@@ -38,18 +58,39 @@ def _domain_of_email(email):
 
 
 class DomainException(Exception):
-    """Raised when an invalid is created."""
+    """Raised when an invalid domain is created."""
 
 
 class Domain:
 
+    # Step 1: reject invalid names before you store them.
+    #
+    #     Domain('pybit.es').name  -> 'pybit.es'
+    #     Domain('google')         -> raises DomainException (no dot)
+    #     Domain('a.COM')          -> raises DomainException (uppercase ending)
     def __init__(self, name):
-        # TODO 1: if not _is_valid_domain(name), raise a DomainException
+        # TODO: if not _is_valid_domain(name), raise DomainException.
         self.name = name
 
-    # TODO 2: add a __str__ method that returns the name
-    # TODO 3: add a classmethod parse_url(cls, url)     -> use _host_of_url
-    # TODO 4: add a classmethod parse_email(cls, email) -> use _domain_of_email
+    # Step 2:  str(Domain('pybit.es'))  -> 'pybit.es'
+    #
+    # TODO: define __str__(self). It returns self.name.
+
+    # Step 3: build a Domain from a URL. The host is the domain.
+    #
+    #     Domain.parse_url('https://www.python.org/downloads/')  -> Domain('www.python.org')
+    #     Domain.parse_url('http://localhost:8000/admin')        -> raises DomainException
+    #         (the constructor checks the name, so you get this for free)
+    #
+    # TODO: put @classmethod on the line above, then
+    #       def parse_url(cls, url): return cls(<_host_of_url(url)>)
+
+    # Step 4: build a Domain from an email address.
+    #
+    #     Domain.parse_email('julian@pybit.es')  -> Domain('pybit.es')
+    #
+    # TODO: put @classmethod on the line above, then
+    #       def parse_email(cls, email): return cls(<_domain_of_email(email)>)
 ''',
     "tests": '''import pytest
 
@@ -195,3 +236,9 @@ class Domain:
         return cls(_domain_of_email(email))
 ''',
 }
+
+SPEC["hints"] = [
+    'Concept: @classmethod gives the method the class as cls instead of an object as self. An alternative constructor returns cls(...), so Domain.parse_url returns a Domain and SubDomain.parse_url returns a SubDomain.',
+    'Put the check in __init__ only: if not _is_valid_domain(name): raise DomainException(name). Both class methods call cls(...), so the constructor validates their result too.',
+    'Each class method is one line: return cls(_host_of_url(url)) and return cls(_domain_of_email(email)). A test fails if you write Domain(...) instead of cls(...).',
+]

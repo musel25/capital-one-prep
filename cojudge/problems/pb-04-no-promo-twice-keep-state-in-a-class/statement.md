@@ -17,3 +17,5 @@ See also the tests. We hope you learn a thing or two. Enjoy!
 **Constraints:**
 
 - Done IDs belong to the supplied catalog. Empty containers are valid inputs.
+- `_pick_random_bite()` returns a random ID that is in `all_bites` and not in `bites_done`, and does not change state. `new_bite()` calls it, adds the ID to `bites_done`, and returns the ID.
+- Both methods raise `NoBitesAvailable` when no ID is left.

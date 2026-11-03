@@ -7,7 +7,8 @@ in the same order, as CoJudge problems.
 
 - **Description:** the public bite description (`source-pages.json`, downloaded from the bite pages).
 - **Template and tests:** bites 1 and 14 are free bites, so they use the original template and
-  tests (plus a few added tests, marked as added). The other 20 have their template and tests in
+  tests (plus a few added tests, marked as added). Bite 1's template also has added guidance
+  comments. The other 20 have their template and tests in
   Pybites premium; here they are recreations that follow the description. Bite 21 is an offline
   version (no network or BeautifulSoup in the judge; a small `Soup` table parser is supplied).
 - **How it runs:** the editor holds the template, the pytest tests, and a supplied runner

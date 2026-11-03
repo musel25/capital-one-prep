@@ -3,28 +3,70 @@
 SPEC = {
     "title": "Subclassing: Vehicles in Motion",
     "module": "vehicles",
-    "template": '''class Vehicle:
+    "template": '''# What you practise
+# -----------------
+# Inheritance: a subclass gets every method of its parent class.
+#     class Car(Vehicle):  ->  a Car is a Vehicle, so car.description() works.
+# A subclass constructor first runs the parent constructor with super(), then
+# stores its own extra value:
+#     super().__init__(brand, model, wheels)
+#     self.doors = doors
+#
+# Work in three steps. The tests run top to bottom. Submit also runs the
+# edge-case tests.
+#
+#   Step 1 (Vehicle)    -> test_vehicle
+#   Step 2 (Car)        -> test_car
+#   Step 3 (Motorbike)  -> test_motorbike and the tests after it
+
+
+# Step 1: the parent class.
+#
+#     vehicle = Vehicle('Toyota', 'Corolla', 4)
+#     vehicle.brand, vehicle.model, vehicle.wheels  -> 'Toyota', 'Corolla', 4
+#     vehicle.description()  -> 'Toyota Corolla with 4 wheels'
+class Vehicle:
     def __init__(self, brand: str, model: str, wheels: int) -> None:
-        pass
+        # TODO: store brand, model and wheels on self.
+        ...
 
     def description(self) -> str:
-        pass
+        """Return '<brand> <model> with <wheels> wheels'. Always 'wheels', even for 1."""
+        ...
 
 
+# Step 2: a car is a vehicle with doors.
+#
+#     car = Car('Tesla', 'Model 3', 4, 4)
+#     car.doors          -> 4
+#     car.description()  -> 'Tesla Model 3 with 4 wheels'   (inherited, do not rewrite it)
+#     car.honk()         -> 'Beep beep!'
 class Car(Vehicle):
     def __init__(self, brand: str, model: str, wheels: int, doors: int) -> None:
-        pass
+        # TODO: call super().__init__(brand, model, wheels), then store doors.
+        ...
 
     def honk(self) -> str:
-        pass
+        ...
 
 
+# Step 3: a motorbike is a vehicle with an engine size.
+#
+#     bike = Motorbike('Yamaha', 'R3', 2, 321)
+#     bike.engine_cc     -> 321
+#     bike.rev_engine()  -> 'Yamaha R3 with 2 wheels goes Vroom vroom!'
 class Motorbike(Vehicle):
     def __init__(self, brand: str, model: str, wheels: int, engine_cc: int) -> None:
-        pass
+        # TODO: call super().__init__(brand, model, wheels), then store engine_cc.
+        ...
 
     def rev_engine(self) -> str:
-        pass
+        """Return self.description() + ' goes Vroom vroom!'.
+
+        Call self.description(). Do not copy its f-string: a test changes
+        description() in a subclass and expects rev_engine to follow.
+        """
+        ...
 ''',
     "tests": '''import inspect
 
@@ -147,4 +189,8 @@ SPEC["mutations"] = [
     {"name": "bypass overridden description", "old": "self.description()", "new": "Vehicle.description(self)"},
 ]
 
-SPEC["hints"] = ['Focus: inheritance and super(). Car and Motorbike call super().__init__(brand, model, wheels).', 'rev_engine calls self.description(), so a change to description shows in both methods.']
+SPEC["hints"] = [
+    'Concept: class Car(Vehicle) makes Car inherit every Vehicle method. Write description() once in Vehicle; Car and Motorbike use it without changes.',
+    'In each subclass __init__, call super().__init__(brand, model, wheels) first. That runs Vehicle.__init__, which stores the three shared values. Then store the extra value (self.doors or self.engine_cc). A test checks that the source contains super().',
+    "rev_engine returns f'{self.description()} goes Vroom vroom!'. Store values exactly as given: 0 doors and 0 wheels are valid.",
+]

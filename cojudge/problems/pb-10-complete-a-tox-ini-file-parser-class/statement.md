@@ -27,3 +27,4 @@ Good luck and keep calm and code in Python!
 **Constraints:**
 
 - Files are valid INI files with a `[tox]` section. Interpreter values are single names; do not expand brace expressions.
+- `number_of_sections` counts the named sections. `environments` splits `envlist` on commas and newlines; a missing `envlist` gives `[]`. `base_python_versions` lists each `basepython` value once, in file order.
