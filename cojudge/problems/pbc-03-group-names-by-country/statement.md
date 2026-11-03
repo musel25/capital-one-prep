@@ -38,3 +38,4 @@ Good luck and keep calm and code in Python! Read up on [`collections`](https://d
 **Constraints:**
 
 - Input has `last_name,first_name,country_code` headers and valid CSV records.
+- Return a `defaultdict(list)` that maps each country code to names in the form `<first_name> <last_name>`. Keep duplicates.

@@ -37,3 +37,4 @@ Stats(user='santiagobenitez', challenge=('25', 2))
 **Constraints:**
 
 - Paths use the form `NN/user`. Exclude `bbelderbos`, `juliansequeira`, and `pybites` from both counts. Ties keep first appearance order.
+- `gen_files` is a generator that yields the stripped, nonblank lines of a file. `diehard_pybites` returns `Stats(<top user>, (<top challenge>, <count>))`, or `Stats(None, (None, 0))` when no path counts.

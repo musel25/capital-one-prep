@@ -1,17 +1,25 @@
 """Examples use the public functions, not the internal judge selector."""
 
 ASSUMPTIONS = {
-    1: ['Scores and owner counts are nonnegative integers.'],
-    2: ['The maximum length is a nonnegative integer.'],
-    3: ['Input has `last_name,first_name,country_code` headers and valid CSV records.'],
+    1: ['Scores and owner counts are nonnegative integers.',
+        'Return the sum of `belt.score * belt.ninjas` over all belts in the argument. An empty dictionary returns `0`.'],
+    2: ['The maximum length is a nonnegative integer.',
+        'Return a new, empty `collections.deque` with `maxlen=n`.'],
+    3: ['Input has `last_name,first_name,country_code` headers and valid CSV records.',
+        'Return a `defaultdict(list)` that maps each country code to names in the form `<first_name> <last_name>`. Keep duplicates.'],
     4: ['XML is well formed and has no namespaces. Strip category text and ignore empty categories. Ties keep first appearance order.'],
-    5: ['Paths use the form `NN/user`. Exclude `bbelderbos`, `juliansequeira`, and `pybites` from both counts. Ties keep first appearance order.'],
+    5: ['Paths use the form `NN/user`. Exclude `bbelderbos`, `juliansequeira`, and `pybites` from both counts. Ties keep first appearance order.',
+        '`gen_files` is a generator that yields the stripped, nonblank lines of a file. `diehard_pybites` returns `Stats(<top user>, (<top challenge>, <count>))`, or `Stats(None, (None, 0))` when no path counts.'],
     6: ['Dictionary keys are valid namedtuple field names. Encode non-JSON values with `str`.'],
-    7: ['Split on whitespace, then remove non-alphanumeric characters. Ties keep first appearance order.'],
-    8: ['Present CSV numbers are valid. Calculate means from nonempty movie lists.'],
-    9: ['CSV records contain all four fields and belong to one season. Episode keys stay strings.'],
+    7: ['Split on whitespace, then remove non-alphanumeric characters. Ties keep first appearance order.',
+        'Compare words and stopwords in lowercase. Return `(word, count)`, or `(None, 0)` when no word is left.'],
+    8: ['Present CSV numbers are valid. Calculate means from nonempty movie lists.',
+        '`get_movies_by_director` returns a `defaultdict(list)` of `Movie(title, year, score)` for movies from 1960 on. `calc_mean_score` rounds to 1 decimal. `get_average_scores` lists `(director, mean)` for directors with at least 4 movies, highest mean first.'],
+    9: ['CSV records contain all four fields and belong to one season. Episode keys stay strings.',
+        'Return a `defaultdict(Counter)`: character, then episode, then the number of words. Words are `len(line.split())`.'],
     10: ['Use the supplied BeautifulSoup interface. HTML is well formed. Dates use `YYYY-MM-DD`; the fourth cell contains the holiday name.'],
-    11: ['Aliases are nonempty and have word characters at both ends. Match whole words and count blank physical lines.'],
+    11: ['Aliases are nonempty and have word characters at both ends. Match whole words and count blank physical lines.',
+         'Return a plain `dict` from each mentioned character (the first alias) to its line numbers, starting at 1. Each line number appears once per character.'],
 }
 
 EXAMPLES = {

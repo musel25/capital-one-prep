@@ -637,3 +637,8 @@ def test_inputs_unchanged():
            "Supplied: _mentions(line, aliases) does the whole-word, case-insensitive regex match. aliases is a tuple.",
            'A name can be a str or a tuple: aliases = (character,) if isinstance(character, str) else character. The key is aliases[0].',
            'enumerate(text.splitlines(), 1) gives 1-based line numbers.'])
+
+# Guided starters and hints for the selected exercises (see guided.py).
+from cojudge.collections_path.guided import apply as _apply_guided  # noqa: E402
+
+_apply_guided(SPECS)

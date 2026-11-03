@@ -9,3 +9,4 @@ See an example output below and the tests that check for various values of `n`. 
 **Constraints:**
 
 - The maximum length is a nonnegative integer.
+- Return a new, empty `collections.deque` with `maxlen=n`.

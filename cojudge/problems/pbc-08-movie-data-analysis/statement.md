@@ -27,3 +27,4 @@ See the tests for more info. This could be tough one, but we really hope you lea
 **Constraints:**
 
 - Present CSV numbers are valid. Calculate means from nonempty movie lists.
+- `get_movies_by_director` returns a `defaultdict(list)` of `Movie(title, year, score)` for movies from 1960 on. `calc_mean_score` rounds to 1 decimal. `get_average_scores` lists `(director, mean)` for directors with at least 4 movies, highest mean first.

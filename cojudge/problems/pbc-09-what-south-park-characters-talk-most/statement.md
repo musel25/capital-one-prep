@@ -23,3 +23,4 @@ Why is this cool? This structure makes it easy to do lookups by character, for e
 **Constraints:**
 
 - CSV records contain all four fields and belong to one season. Episode keys stay strings.
+- Return a `defaultdict(Counter)`: character, then episode, then the number of words. Words are `len(line.split())`.

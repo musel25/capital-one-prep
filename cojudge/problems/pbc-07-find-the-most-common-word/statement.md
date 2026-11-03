@@ -9,3 +9,4 @@ Check the tests for more info - have fun!
 **Constraints:**
 
 - Split on whitespace, then remove non-alphanumeric characters. Ties keep first appearance order.
+- Compare words and stopwords in lowercase. Return `(word, count)`, or `(None, 0)` when no word is left.

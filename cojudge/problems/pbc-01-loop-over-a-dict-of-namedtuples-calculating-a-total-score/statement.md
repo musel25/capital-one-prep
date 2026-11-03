@@ -11,3 +11,4 @@ The function returns the total score `int`. You learn to write generic code beca
 **Constraints:**
 
 - Scores and owner counts are nonnegative integers.
+- Return the sum of `belt.score * belt.ninjas` over all belts in the argument. An empty dictionary returns `0`.

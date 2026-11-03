@@ -19,3 +19,4 @@ We hope this is a fun exercise that keeps your Python fresh. Now go crack this B
 **Constraints:**
 
 - Aliases are nonempty and have word characters at both ends. Match whole words and count blank physical lines.
+- Return a plain `dict` from each mentioned character (the first alias) to its line numbers, starting at 1. Each line number appears once per character.

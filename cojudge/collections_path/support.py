@@ -62,7 +62,10 @@ def course_info(specs):
 
 def present_problem(spec, test_ids):
     page = spec['page']
-    origin = ('This version keeps the original free template and tests, with added boundary tests.'
+    origin = ('This version keeps the original free tests, with added boundary tests. The template '
+              'is the original code task with added guidance comments.'
+              if spec.get('original') and spec.get('guided') else
+              'This version keeps the original free template and tests, with added boundary tests.'
               if spec.get('original') else
               'The template and tests are recreations based on the public description.')
     origin = spec.get('adapted', origin)
