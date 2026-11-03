@@ -4,7 +4,7 @@ The course now has 15 guided tickets in four stages (commit `e81d313`). Nine
 tickets are retired from the course index: 04, 09, 12, 14, 15, 17, 21, 22, 23.
 Their problem files stay on the server, so old URLs and saved code remain.
 
-- Local verify: all 15 references and Java markers match the 245 manually expected cases. Every prepared fault fails at least one case.
+- Local verify: all 15 references and Java markers match the 237 manually expected cases. Every prepared fault fails at least one case.
 - Each new starter fails at least one case. A learner simulation fills only the TODO lines of each starter; all 15 completed starters pass every case.
 - The simple dictionary solution for transfers passes all 17 cases. The SQLite reference stays the graded reference.
 - Repository tests pass: 208 in the full run, with the one updated course test fixed and rerun.
