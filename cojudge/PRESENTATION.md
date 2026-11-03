@@ -46,3 +46,28 @@ course, it also rejects every prepared fault.
 Private backup of the replaced problem folders:
 `/home/ubuntu/cojudge-backups/focus-helpers-20261101.vDcT7G/old/`.
 Learner progress and saved code were not changed.
+
+### Guided starters — November 3, 2026
+
+The 40 selected exercises now follow the bite 15 pattern (commit `be370c7`).
+Each starter has a "What you practise" block that explains the target concept,
+steps mapped to the tests, and TODO comments with exact input and output
+examples. Hints move from the concept to the details. Some statements also
+have extra constraints that give the exact formats.
+
+- OOP (`pybites/bites/bNN.py`): bites 1–7, 9, 10 and 12.
+- Collections, Data Formats, Decorators: `collections_path/guided.py`,
+  `data_formats/guided.py` and `decorators_path/guided.py` replace the starter
+  and hints when the specs load. Data and supplied helpers stay unchanged.
+- Pytest (`pytest_path/guided.py`): each starter explains the pytest feature
+  and the judge (baseline, 90% coverage, faults), lists the faults that each
+  step must catch, and gives test skeletons.
+
+Tests, references, faults and course indexes are unchanged. The local verify
+of every course passes. All 208 repository tests pass. The live judge accepts
+every reference and rejects every new starter. Saved learner code is not
+changed. To see a new starter for a problem you already started, use **+**
+beside the editor tabs.
+
+Private backups of the replaced problem folders are under
+`/home/ubuntu/cojudge-backups/guided-{oop,collections,decorators,data-formats,pytest}-20261103T*/`.
