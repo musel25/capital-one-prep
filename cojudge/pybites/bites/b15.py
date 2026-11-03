@@ -12,17 +12,95 @@ SPEC = {
                 "Other number, title, and PR container types are outside this exercise.",
     "template": '''from abc import ABC, abstractmethod
 
+# What you practise
+# -----------------
+# An abstract base class (ABC) describes an API: the methods and properties that
+# every subclass MUST provide. Mark a member with @abstractmethod and Python
+# refuses to create an object of a class that still has that member abstract:
+# calling the class raises TypeError. A subclass becomes usable only after it
+# overrides EVERY abstract member.
+#
+# Work in three steps. The tests run top to bottom, so finish each step before
+# the next one. Then Submit runs the edge-case tests too.
+#
+#   Step 1 (Challenge)      -> test_base_class_is_abstract,
+#                              test_subclass_must_implement_the_api
+#   Step 2 (BlogChallenge)  -> test_blog_challenge
+#   Step 3 (BiteChallenge)  -> test_bite_challenge
 
+
+# Step 1: the abstract base class.
+# Challenge(1, 'title') must raise TypeError after this step.
 class Challenge(ABC):
-    pass
+
+    def __init__(self, number, title):
+        # TODO: store number as self.number and title as self.title.
+        ...
+
+    # TODO: make verify abstract. Put @abstractmethod on the line above the def.
+    def verify(self, value):
+        """Return True if value passes this challenge. Each subclass decides how."""
+        ...
+
+    # TODO: make pretty_title an abstract PROPERTY. Use two decorators:
+    #           @property          <- on top
+    #           @abstractmethod    <- directly above the def
+    def pretty_title(self):
+        """Return the display title. Each subclass decides the format."""
+        ...
 
 
+# Step 2: a blog challenge. It is complete when a pull request number is merged.
+# The constructor first calls the parent constructor:
+#     super().__init__(number, title)
+# and then stores its own extra argument.
+#
+#     challenge = BlogChallenge(7, 'Classes', [12, 18])
+#     challenge.number        -> 7
+#     challenge.title         -> 'Classes'
+#     challenge.merged_prs    -> [12, 18]
+#     challenge.pretty_title  -> 'PCC7 - Classes'     (no parentheses: a property)
+#     challenge.verify(18)    -> True                 (18 is in merged_prs)
+#     challenge.verify(20)    -> False
 class BlogChallenge(Challenge):
-    pass
+
+    def __init__(self, number, title, merged_prs):
+        # TODO: call the parent constructor (see the comment above the class).
+        # TODO: store merged_prs as self.merged_prs.
+        ...
+
+    def verify(self, merged_pr):
+        """Return True if merged_pr is in self.merged_prs, else False."""
+        ...
+
+    @property
+    def pretty_title(self):
+        """Return 'PCC<number> - <title>', for example 'PCC7 - Classes'."""
+        ...
 
 
+# Step 3: a bite challenge. It is complete when an answer equals the expected
+# result. Same pattern as Step 2: call the parent constructor, then store result.
+#
+#     challenge = BiteChallenge(4, 'Add', 7)
+#     challenge.result        -> 7
+#     challenge.pretty_title  -> 'Bite 4. Add'
+#     challenge.verify(7)     -> True                 (7 == result)
+#     challenge.verify(8)     -> False
 class BiteChallenge(Challenge):
-    pass
+
+    def __init__(self, number, title, result):
+        # TODO: call the parent constructor, then store result as self.result.
+        ...
+
+    def verify(self, result):
+        """Return True if result == self.result, else False."""
+        ...
+
+    @property
+    def pretty_title(self):
+        """Return 'Bite <number>. <title>', for example 'Bite 4. Add'."""
+        ...
 ''',
     "tests": '''import inspect
 
@@ -172,4 +250,12 @@ class BiteChallenge(Challenge):
 ''',
 }
 
-SPEC["hints"] = ['Focus: abc.ABC with @abstractmethod. Put @property above @abstractmethod for pretty_title.', 'Each subclass calls super().__init__(number, title), then sets its own attribute.']
+SPEC["hints"] = [
+    'Concept: Python raises TypeError when you call a class that still has an @abstractmethod member. '
+    'Challenge has two abstract members, so a subclass must override both verify and pretty_title.',
+    'For an abstract property, stack the decorators in this order: @property on top, @abstractmethod '
+    'directly above the def. The body of an abstract member can be just `pass`.',
+    'In each subclass constructor, call super().__init__(number, title) first. It runs the Challenge '
+    'constructor, which stores number and title. Then store the extra argument, for example '
+    'self.merged_prs = merged_prs.',
+]

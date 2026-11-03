@@ -9,3 +9,9 @@ You define one or more methods and/or properties as abstract in the base class, 
 1. Implement the required methods and properties, refer to the tests what they need to return.
 
 Get coding, learn more about classes, and have fun!
+
+**Constraints:**
+
+- `BlogChallenge.pretty_title` returns `PCC<number> - <title>`. `BlogChallenge.verify(pr)` returns whether `pr` is in `merged_prs`.
+- `BiteChallenge.pretty_title` returns `Bite <number>. <title>`. `BiteChallenge.verify(value)` returns `value == result`.
+- Store the constructor arguments unchanged as `number`, `title`, `merged_prs`, and `result`. Zero, negative numbers, and empty titles are valid.
