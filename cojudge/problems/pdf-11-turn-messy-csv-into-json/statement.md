@@ -18,4 +18,5 @@ The tests will check if your output is indeed valid `json` and of course if it c
 **Constraints:**
 
 - Fields are unquoted and contain no delimiters; preserve string values and empty fields.
+- The header row is split on commas. Return a JSON string: a list with one object per data row.
 - Ignore blank lines; a row with the wrong field count raises `ValueError`.

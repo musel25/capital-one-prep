@@ -11,3 +11,4 @@ The supplied requests-compatible client returns local responses.
 **Constraints:**
 
 - Make one GET call and return the country unchanged; missing fields and client errors propagate.
+- The URL is `IPINFO_URL.format(ip=ip)`. Without a `client` argument, use the module-level `requests`.

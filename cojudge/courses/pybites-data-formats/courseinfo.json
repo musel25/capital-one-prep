@@ -1,6 +1,6 @@
 {
   "title": "Pybites Data Formats Path",
-  "description": "The 17 exercises from the Pybites Data Formats learning path, in their original order. Practice XML, JSON, CSV, pickle, APIs, and SQLite. Available free exercises retain original tests. Premium exercises use recreated templates and tests. Data is supplied offline. Select Python.",
+  "description": "The 17 exercises from the Pybites Data Formats learning path, in their original order. Practice XML, JSON, CSV, pickle, APIs, and SQLite. Available free exercises retain original tests. Premium exercises use recreated templates and tests. Selected templates include guidance comments. Data is supplied offline. Select Python.",
   "category-order": [
     "01-beginner",
     "02-intermediate",

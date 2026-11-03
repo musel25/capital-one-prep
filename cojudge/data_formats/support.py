@@ -7,6 +7,7 @@ from cojudge.pybites.runner import MARKER
 from cojudge.pybites.support import description, full_source, run_all
 from cojudge.presentation import course_help, statement_text, test_case_details
 from cojudge.data_formats.presentation import ADAPTATIONS, ASSUMPTIONS, EXAMPLES
+from cojudge.data_formats.guided import apply as apply_guided
 
 COURSE_ID = 'pybites-data-formats'
 HERE = Path(__file__).parent
@@ -27,7 +28,7 @@ def load_specs(numbers=None):
     pages = json.loads((HERE / 'source-pages.json').read_text())
     specs = sorted(basic + records + advanced + shared, key=lambda s: s['number'])
     assert [s['number'] for s in specs] == list(range(1, 18)), 'Expected all 17 exercises once'
-    return [{**spec, 'page': pages[spec['number'] - 1]} for spec in specs
+    return [apply_guided({**spec, 'page': pages[spec['number'] - 1]}) for spec in specs
             if not numbers or spec['number'] in numbers]
 
 
@@ -57,7 +58,8 @@ def course_info(specs):
         'description': 'The 17 exercises from the Pybites Data Formats learning path, '
                        'in their original order. Practice XML, JSON, CSV, pickle, APIs, and SQLite. '
                        'Available free exercises retain original tests. Premium exercises use '
-                       'recreated templates and tests. Data is supplied offline. Select Python.',
+                       'recreated templates and tests. Selected templates include guidance comments. '
+                       'Data is supplied offline. Select Python.',
         'category-order': [category for category, _, _ in LEVELS],
         'problems-of-category': {
             category: [problem_id(s) for s in specs if s['page']['level'] == level]
@@ -71,7 +73,10 @@ def present_problem(spec, test_ids):
     original = description(spec)
     if number in ADAPTATIONS:
         original += '\n\n' + ADAPTATIONS[number]
-    origin = ('The original free template and tests are retained, with added boundary tests.'
+    origin = ('The original free tests are retained, with added boundary tests. The template is '
+              'the original code task with added guidance comments.'
+              if spec.get('original') and spec.get('guided') else
+              'The original free template and tests are retained, with added boundary tests.'
               if spec.get('original') else
               'The template and tests are recreated from the public Pybites description.')
     notes = [origin, spec.get('adapted', ''), spec.get('notes', ''),
