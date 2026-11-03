@@ -1,20 +1,21 @@
-The resource endpoint must apply suspension and action checks before it grants access by role or ownership.
+**The ticket.** The resource endpoint decides if a user can `read`, `write`, or `delete` a resource.
 
-Implement `can_access(user, resource, action)`. Return a boolean using these checks in order:
+**Why it matters.** Authorization bugs let users see or change data that is not theirs. Rules are safest when you check them in a fixed order and deny when no rule allows.
 
-1. Deny unknown actions. Only the exact strings `read`, `write`, and `delete` are known.
-2. Deny suspended users, including admins.
-3. Allow admins to perform every known action.
-4. Allow any unsuspended user to read a public resource.
-5. Allow a member whose `id` equals `owner_id` to read, write, or delete that resource, including a private one.
-6. Deny every remaining request.
+### Your task
 
-Compare IDs and actions exactly. Do not change letter case or whitespace.
+Write `can_access(user, resource, action)`. Return `True` or `False`. Check these rules in order. The first rule that applies decides.
+
+1. If `action` is not exactly `read`, `write`, or `delete`, deny.
+2. If the user is suspended, deny. This is also true for admins.
+3. If the user is an `admin`, allow.
+4. If the action is `read` and the resource is public, allow.
+5. If the user is a `member` and their `id` equals the resource `owner_id`, allow.
+6. Otherwise, deny.
+
+`user` has `id`, `role` (`admin`, `member`, or `guest`), and `suspended`. `resource` has `owner_id` and `public`. Compare text exactly.
 
 **Constraints:**
 
-- role is exactly admin, member or guest; suspended and public are bool values.
-- IDs contain 1–100 ASCII characters, except guest IDs, which are null.
-- action is an ASCII string of 0–100 characters; unknown strings are valid inputs and are denied.
-- `user` has `id`, `role`, and `suspended`; `resource` has `owner_id` and `public`.
-- Do not change input objects or their nested values. Each call starts with fresh state.
+- `suspended` and `public` are booleans. A guest `id` is `None`.
+- `action` is any string with at most 100 characters.

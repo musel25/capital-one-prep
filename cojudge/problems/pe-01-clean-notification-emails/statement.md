@@ -1,11 +1,19 @@
-The notification service receives duplicate email addresses from an import.
+**The ticket.** An import gives the notification service a list of email addresses. Some addresses are duplicates with different spaces or letter case.
 
-Implement `clean_emails(emails)`. Return cleaned addresses in first-seen order.
+**Why it matters.** If you do not clean the list, one person gets the same email two or three times.
 
-Remove surrounding spaces, tabs, carriage returns, and newlines. Convert letters to lowercase. Skip empty results and duplicates. Keep internal characters unchanged. Do not validate email syntax.
+### Your task
+
+Write `clean_emails(emails)`. Return a list of clean addresses.
+
+1. Remove whitespace at the start and the end of each address.
+2. Change the letters to lowercase.
+3. Skip the address if it is now empty.
+4. Skip the address if you already have it.
+5. Keep the order in which the addresses first appear. Do not sort.
+
+Do not check if an address is valid. Keep the characters inside an address unchanged: `a.b@c` stays `a.b@c`.
 
 **Constraints:**
 
-- `0 <= len(emails) <= 1000`.
-- Each item is an ASCII string with at most 200 characters. Empty strings are allowed.
-- Do not change input objects or their nested values. Each call starts with fresh state.
+- `emails` has 0–1000 strings. Each string has at most 200 ASCII characters.

@@ -1,18 +1,20 @@
-The upload endpoint must reject paths that escape the upload root before it constructs a relative destination.
+**The ticket.** The upload endpoint gets a file path from the user and saves the file below the upload folder.
 
-Implement `resolve_upload_path(path)`. Return a normalized relative POSIX path, or `None` when rejected or no components remain.
+**Why it matters.** If a user sends `../../etc/passwd`, the server can write outside the upload folder. This attack is called path traversal. Clean the path as text, and reject any path that leaves the folder.
 
-Reject a leading slash, any backslash, or any NUL character. Split on `/` and process components in order:
+### Your task
 
-- Ignore empty components and exact `.` components.
-- For exact `..`, remove the previous normal component. Reject immediately if none exists; later components cannot repair the escape.
-- Keep every other component exactly as supplied.
+Write `resolve_upload_path(path)`. Return a clean relative path, or `None` when you reject the path.
 
-Join remaining components with `/`. Empty input returns `None`. Operate on the string only. Do not access the filesystem, resolve symlinks, expand variables, or interpret URL encoding.
+1. Reject the path if it starts with `/`, or if it contains a backslash (`\`) or the NUL character (`\x00`).
+2. Split the path on `/`. Process the parts in order:
+   - Skip empty parts and `.` parts.
+   - For `..`, remove the last kept part. If no part is kept, reject the path at once. Later parts cannot repair it.
+   - Keep every other part exactly as it is.
+3. Join the kept parts with `/`. If no part is kept, return `None`.
+
+Only exact `.` and `..` are special. `...` and `..hidden` are normal names. Do not use the file system.
 
 **Constraints:**
 
-- path is an ASCII string with 0–500 characters from the stated character set.
-- Only exact '.' and '..' components have special meaning.
-- Characters are ASCII letters, digits, `.`, `_`, `-`, `/`, backslash, or NUL.
-- Do not change input objects or their nested values. Each call starts with fresh state.
+- `path` has 0–500 ASCII characters.

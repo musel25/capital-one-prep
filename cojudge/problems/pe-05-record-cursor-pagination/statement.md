@@ -1,15 +1,17 @@
-The records endpoint must return stable pages when its source records arrive out of order.
+**The ticket.** The records endpoint returns records in pages. The client sends the last ID it saw, and the endpoint returns the next page.
 
-Implement `paginate_records(records, after_id, limit)`. Return `{'items': [...], 'next_cursor': ...}`.
+**Why it matters.** If the order is not stable, or the cursor is wrong, clients skip or repeat records. The bug is hard to see because each page looks correct.
 
-Sort records by numeric `id` in ascending order. If `after_id` is not `None`, keep only IDs strictly greater than it. The cursor need not match a record. Return at most `limit` eligible records and retain every field.
+### Your task
 
-Set `next_cursor` to the last returned ID only if more eligible records remain. Otherwise use `None`, including for empty results and exactly full final pages.
+Write `paginate_records(records, after_id, limit)`. Return `{'items': [...], 'next_cursor': ...}`.
+
+1. If `after_id` is not `None`, keep only the records with `id > after_id`. The cursor does not need to be an existing ID.
+2. Sort the records by `id`, smallest first.
+3. Take at most `limit` records. Keep all their fields.
+4. If more records remain after this page, `next_cursor` is the `id` of the last record on the page. Otherwise it is `None`.
 
 **Constraints:**
 
-- 0–200 records; limit is an integer from 1 through 50.
-- IDs are unique positive integers; after_id is null or a non-negative integer.
-- Floating-point values have at most six decimal places and an absolute value at most 1000000.
-- Records are unsorted JSON objects. Fields other than `id` can contain any JSON value.
-- Do not change input objects or their nested values. Each call starts with fresh state.
+- 0–200 records. `id` values are unique positive integers. Records can have other fields.
+- `after_id` is `None` or an integer of 0 or more. `limit` is 1–50.

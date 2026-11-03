@@ -1,14 +1,18 @@
-A balance service must apply each transfer without a partial debit or credit.
+**The ticket.** The balance service moves money between accounts. Each transfer changes two balances.
 
-Implement `apply_transfers(balances, transfers)`. `balances` maps account names to integer cents. Each transfer has `from`, `to`, and `amount`. Process transfers in input order.
+**Why it matters.** Money must never be lost or created. Either both changes happen, or neither happens. This is called an atomic change. Check everything first, then change.
 
-Accept only when both accounts exist and the source has at least `amount` cents. Debit the source and credit the target together. A self-transfer requires sufficient funds and leaves the balance unchanged. Reject other transfers without changing balances or creating accounts.
+### Your task
 
-Return `{'accepted': [...], 'balances': {...}}` with one boolean per transfer and every final account balance. Empty inputs are valid.
+Write `apply_transfers(balances, transfers)`. `balances` maps account names to integer cents. Each transfer has `from`, `to`, and `amount`. Process the transfers in order.
+
+1. Accept a transfer only if both accounts exist and the source has at least `amount` cents.
+2. If you accept it, subtract the amount from the source and add it to the target.
+3. If you reject it, change nothing and do not create accounts.
+4. A transfer to the same account needs enough money. It does not change the balance.
+
+Return `{'accepted': [...], 'balances': {...}}`, with one boolean for each transfer and the final balance of every account. Do not change the input.
 
 **Constraints:**
 
-- 0–300 accounts and 0–300 transfers. All required fields are present.
-- Account names are nonempty ASCII strings of at most 80 characters.
-- Initial balances are integers from 0 to 1000000000000 cents; amounts are integers from 1 to 1000000000000 cents.
-- Do not change input objects or their nested values. Each call starts with fresh state.
+- 0–300 accounts and 0–300 transfers. Balances and amounts are integers. Amounts are 1 or more.

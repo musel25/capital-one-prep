@@ -1,14 +1,17 @@
-The page renderer must escape inserted values while preserving the trusted HTML template.
+**The ticket.** The page renderer puts user values into a trusted HTML template with placeholders like `{{name}}`.
 
-Implement `render_html(template, values)`. Keep the trusted HTML template unchanged except for matching placeholders.
+**Why it matters.** If a value contains `<script>` and you insert it without escaping, the script runs in another user's browser. This attack is called cross-site scripting (XSS). Escape every inserted value.
 
-A placeholder is `{{name}}`, where `name` matches `[A-Za-z_][A-Za-z0-9_]*` with no spaces. If the name exists in `values`, insert its escaped string value. Escape `&`, `<`, `>`, double quotes, and single quotes as `&amp;`, `&lt;`, `&gt;`, `&quot;`, and `&#x27;`, respectively.
+### Your task
 
-Leave missing placeholders and other template text unchanged. Process the original template once; do not process inserted placeholders again. Compare names exactly. Empty strings are valid. Return the rendered string.
+Write `render_html(template, values)`. Return the rendered text.
+
+1. A placeholder is `{{name}}`. The name starts with a letter or `_`, then has letters, digits, or `_`. There are no spaces.
+2. If the name is in `values`, replace the placeholder with the escaped value. Escape `&`, `<`, `>`, `"`, and `'` as `&amp;`, `&lt;`, `&gt;`, `&quot;`, and `&#x27;`. `html.escape(text)` does exactly this.
+3. If the name is not in `values`, keep the placeholder unchanged.
+4. Do not change any other template text, also `&` or `<b>`.
+5. Replace in one pass. Do not process text that you inserted.
 
 **Constraints:**
 
-- The template is a Unicode string of at most 10000 characters.
-- values has at most 100 keys, each matching the stated identifier rule.
-- All values are Unicode strings, including empty strings; their combined length is at most 10000 characters.
-- Do not change input objects or their nested values. Each call starts with fresh state.
+- The template has at most 10000 characters. `values` has at most 100 string values.

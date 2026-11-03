@@ -2,33 +2,36 @@
 
 [Open the course](https://cojudge.musel.dev/?course=software-engineering).
 
-24 independent Python tickets use a short input/output contract. Each ticket has
-three examples, explicit input limits, submission tests, and an optional reference
-solution. There are no lessons or extra practice instructions in the statements.
+15 independent Python tickets from real services. Each ticket has four parts:
 
-| Tickets | Programming work |
+- **The ticket** and **Why it matters**: the situation and what goes wrong in production.
+- **Your task**: numbered rules, one rule per line, and short constraints.
+- A step-by-step starter with TODO comments, plus three hints (concept, then mechanics, then detail).
+- An explained solution: how it works, common mistakes, and the reference code.
+
+| Stage | Tickets |
 | --- | --- |
-| 01–06 | Email cleanup, configuration flags, request validation, service logs, cursor pagination, settings patches |
-| 07–10 | Log redaction, bounded retries, page collection, idempotent jobs |
-| 11–14 | Cache expiry, rate limits, versioned events, stock reservations |
-| 15–16 | Job visibility and atomic transfers |
-| 17–20 | CSV, UTC dates, access permissions, relative paths |
-| 21–24 | Semantic versions, build dependencies, record synchronization, HTML escaping |
+| 01 Clean input | Email cleanup, configuration flags, request validation |
+| 02 Data and APIs | Cursor pagination, settings patches, UTC dates, log redaction |
+| 03 Reliability | Bounded retries, idempotent jobs, cache expiry, versioned events |
+| 04 Security and money | Access rules, HTML escaping, upload paths, atomic transfers |
+
+Display numbers are 01–15. Problem IDs keep their original `pe-NN` numbers, so
+saved work and URLs stay valid. Nine tickets are retired from the course index
+because they repeat another ticket or a Pybites exercise, or are specialized:
+04, 09, 12, 14, 15, 17, 21, 22, 23. Their files stay in `tickets/` and `problems/`.
 
 Implement the named function at the top of the editor. The supplied adapter reads
 the judge input, calls the function, checks that input objects were not changed,
-and serializes the result. Each call starts with fresh state. Custom cases use the
-same JSON object as the examples in the `payload` field.
-
-The course tests programming behavior in a deterministic process. It does not run
-concurrent workers or deploy services. The transfer reference uses real in-memory
-SQLite transactions. The CSV and timestamp references use standard libraries.
-The output judge does not require a particular implementation technique.
+and serializes the result. Each call starts with fresh state.
 
 ## Authoring and verification
 
 `tickets/pNN.py` contains the contract, manually expected cases, named Python
-function, independent Java marker, and plausible faults. Each fault must compile
+function, independent Java marker, and plausible faults. `guide.py` holds the
+course order, the learner text, the starters, the hints, and the explanations.
+Verification also checks that each starter fails at least one case, and that the
+simple transfer solution passes every case. Each fault must compile
 and fail at least one case. Python checks also run cases in reverse order and
 check input preservation. Java checks reject incorrect output types and malformed
 JSON. Cases never derive their expected values from the implementation.

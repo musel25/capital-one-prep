@@ -1,9 +1,9 @@
 {
   "id": "pe-19-resource-access-policy",
-  "title": "19. Apply a resource access policy",
+  "title": "12. Apply a resource access policy",
   "difficulty": "Easy",
   "link": "",
-  "category": "05-files-time-and-boundaries",
+  "category": "04-security-and-money",
   "examples": [
     {
       "input": "can_access(\n    user={'id': 'root', 'role': 'admin', 'suspended': True},\n    resource={'owner_id': 'x', 'public': True},\n    action='read'\n)",
@@ -21,8 +21,13 @@
       "explanation": "member can write an owned private resource"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def can_access(user, resource, action):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement can_access above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = can_access(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "KNOWN_ACTIONS = {\"read\", \"write\", \"delete\"}\n\n\ndef can_access(user, resource, action):\n    \"\"\"Apply the access rules in order. The first rule that applies decides.\n\n    user = {'id': 'a', 'role': 'member', 'suspended': False}\n    can_access(user, {'owner_id': 'a', 'public': False}, 'write') -> True   (owner)\n    can_access(user, {'owner_id': 'b', 'public': False}, 'read')  -> False\n    \"\"\"\n    # Each rule returns at once. The order is important.\n\n    # Rule 1: unknown action -> deny.\n    # TODO\n\n    # Rule 2: suspended user -> deny. This is also true for admins.\n    # TODO\n\n    # Rule 3: admin -> allow.\n    # TODO\n\n    # Rule 4: anyone can read a public resource.\n    # TODO\n\n    # Rule 5: a member can do any known action on their own resource.\n    # TODO\n\n    # Rule 6: no rule allowed it -> deny.\n    return False\n\n\n# Supplied CoJudge adapter. Implement can_access above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = can_access(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "Write each rule as `if ...: return ...`. The first rule that matches decides.",
+    "Put the deny rules (unknown action, suspended) before the allow rules. Then no allow rule can skip them.",
+    "Rule 5 is `user[\"role\"] == \"member\" and user[\"id\"] == resource[\"owner_id\"]`. Rule 4 needs both `action == \"read\"` and `resource[\"public\"]`."
+  ]
 }

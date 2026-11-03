@@ -1,9 +1,9 @@
 {
   "id": "pe-20-relative-upload-path",
-  "title": "20. Resolve a relative upload path",
+  "title": "14. Resolve a relative upload path",
   "difficulty": "Medium",
   "link": "",
-  "category": "05-files-time-and-boundaries",
+  "category": "04-security-and-money",
   "examples": [
     {
       "input": "resolve_upload_path(\n    path='photos/./2026//image.png'\n)",
@@ -21,8 +21,13 @@
       "explanation": "reject an initial parent escape"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def resolve_upload_path(path):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement resolve_upload_path above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = resolve_upload_path(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "def resolve_upload_path(path):\n    \"\"\"Return a clean relative path, or None when the path is unsafe or empty.\n\n    resolve_upload_path('photos/./2026//image.png') -> 'photos/2026/image.png'\n    resolve_upload_path('a/b/../file.txt')          -> 'a/file.txt'\n    resolve_upload_path('../safe/file.txt')         -> None   (leaves the folder)\n    \"\"\"\n    # Step 1: reject absolute paths, backslashes, and NUL characters.\n    # TODO: return None if path starts with \"/\", or \"\\\\\" in path, or \"\\x00\" in path.\n\n    parts = []   # the kept parts, used like a stack\n    for component in path.split(\"/\"):\n        # Step 2: skip empty and \".\" parts.\n        # TODO\n        # Step 3: \"..\" removes the last kept part. With nothing to remove, return None.\n        # TODO\n        # Step 4: keep every other part.\n        parts.append(component)\n\n    # Step 5: join the parts, or return None when no part is kept.\n    return \"/\".join(parts)  # TODO: None when parts is empty\n\n\n# Supplied CoJudge adapter. Implement resolve_upload_path above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = resolve_upload_path(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "Use `parts` as a stack: `append` keeps a part, and `pop` removes the last part for `..`.",
+    "Check the stack before you `pop()`: `if not parts: return None`. A path that leaves the folder is always rejected.",
+    "Compare parts with `==`. Only exactly `\".\"` and `\"..\"` are special. Use `continue` to skip a part."
+  ]
 }

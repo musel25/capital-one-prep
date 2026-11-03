@@ -1,17 +1,17 @@
-The job queue must replay duplicate submissions and reject reuse of a key for a different task.
+**The ticket.** Clients send a job request again when they do not get an answer. Each request has an idempotency key. The same key means "this is the same request".
 
-Implement `enqueue_jobs(requests)`. Process requests in order and return one response per request.
+**Why it matters.** Without the key, a repeated request runs the job twice. For a payment, that charges the customer twice. With the key, the server returns the first result again.
 
-- New key: store its task and allocate the next ID, starting at 1. Return `{'status': 'created', 'id': ID}`.
-- Existing key, same task: return `{'status': 'replayed', 'id': ORIGINAL_ID}`.
-- Existing key, different task: return `{'status': 'conflict', 'id': None}`.
+### Your task
 
-Replays and conflicts consume no ID. Conflicts change no stored data. Compare strings exactly. Each call starts with an empty queue and ID 1. Empty input returns an empty list.
+Write `enqueue_jobs(requests)`. Process the requests in order. Return one response for each request. Each request has a `key` and a `task`.
+
+1. New key: save the key with its task and give it the next ID (1, 2, 3, …). Return `{'status': 'created', 'id': ID}`.
+2. Known key with the same task: return `{'status': 'replayed', 'id': ORIGINAL_ID}`.
+3. Known key with a different task: return `{'status': 'conflict', 'id': None}`. Keep the saved task unchanged.
+4. Only `created` uses a new ID.
+5. Compare keys and tasks exactly. Letter case and spaces count.
 
 **Constraints:**
 
-- All requests contain key and task with the stated string types.
-- Keys are nonempty ASCII strings; tasks can be empty.
-- Only a newly accepted key allocates an ID.
-- Tasks are ASCII strings and can be empty.
-- Do not change input objects or their nested values. Each call starts with fresh state.
+- 0–300 requests. Keys are nonempty strings. Tasks are strings and can be empty.

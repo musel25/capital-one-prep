@@ -1,18 +1,18 @@
-The settings endpoint must distinguish deletion from valid false, zero and empty replacement values.
+**The ticket.** A PATCH request changes only some user settings. A value of `null` (`None`) means "delete this setting".
 
-Implement `apply_settings_patch(settings, patch)`. Return a new settings object, even when the patch is empty.
+**Why it matters.** `False`, `0`, and `""` are real values. A common bug uses `if value:` and deletes them by mistake. Then a user cannot turn a setting off.
 
-Start with the existing entries. For each patch key:
+### Your task
 
-- A `None` value removes the key. Removing an absent key does nothing.
-- Any other value replaces the existing value or adds a new entry. Keep `False`, zero, and empty values.
+Write `apply_settings_patch(settings, patch)`. Return a new settings dictionary. Do not change the inputs.
 
-Apply the patch only at the top level. Nested objects and lists replace entire values; keep `None` inside them. Keep unpatched entries, including existing `None` values. Compare keys exactly; empty keys are valid.
+1. Start with a copy of `settings`.
+2. For each key in `patch`:
+   - If the value is `None`, remove the key. If the key is not there, do nothing.
+   - Otherwise, set the key to the value. This replaces an old value or adds a new key.
+3. Change only the top level. A dictionary in the patch replaces the whole old value. Do not merge it.
+4. Keep all other settings unchanged, also settings whose value is `None`.
 
 **Constraints:**
 
-- Each top-level object contains 0–200 keys.
-- All values are valid JSON values; objects are not merged recursively.
-- Floating-point values have at most six decimal places and an absolute value at most 1000000.
-- Both arguments are JSON objects with string keys and arbitrary JSON values.
-- Do not change input objects or their nested values. Each call starts with fresh state.
+- Both arguments are dictionaries with 0–200 string keys. Values can be any JSON value.

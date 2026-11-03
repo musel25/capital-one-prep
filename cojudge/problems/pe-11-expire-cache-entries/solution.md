@@ -1,4 +1,14 @@
-## Reference solution
+## How it works
+
+Save each value with its deadline. A get is a hit only before the deadline. The check uses the key, not the value, so falsy values are cached correctly.
+
+## Common mistakes
+
+- Keeping a value at the exact deadline (`<=`).
+- Treating a cached `None`, `False`, or `0` as a miss.
+- Using `ttl` as the deadline instead of `now + ttl`.
+
+## Solution
 
 ```python
 def run_cache(operations):

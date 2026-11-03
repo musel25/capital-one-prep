@@ -3,7 +3,7 @@
   "title": "03. Validate a create-user request",
   "difficulty": "Easy",
   "link": "",
-  "category": "01-data-and-api",
+  "category": "01-clean-input",
   "examples": [
     {
       "input": "validate_user(\n    payload={'name': 'Ada', 'email': 'a@b', 'age': 0}\n)",
@@ -21,8 +21,13 @@
       "explanation": "empty strings"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def validate_user(payload):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement validate_user above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = validate_user(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "def validate_user(payload):\n    \"\"\"Return the invalid field names, in the order name, email, age.\n\n    validate_user({'name': 'Ada', 'email': 'a@b', 'age': 0}) -> []\n    validate_user({})                                         -> ['name', 'email']\n    validate_user({'name': 'A', 'email': 'a@b', 'age': True}) -> ['age']\n    \"\"\"\n    errors = []\n\n    # Step 1: name. payload.get returns None when the key is missing.\n    name = payload.get(\"name\")\n    # TODO: append \"name\" if name is not a str, or name.strip() is empty.\n\n    # Step 2: email.\n    email = payload.get(\"email\")\n    # TODO: the email is valid only if ALL of these are true:\n    #       - it is a str\n    #       - email.count(\"@\") == 1\n    #       - both parts of email.split(\"@\") are nonempty\n    #       - no character of email is in \" \\t\\r\\n\"\n    #       If it is not valid, append \"email\".\n\n    # Step 3: age (optional). Check it only if \"age\" in payload.\n    # TODO: append \"age\" if the value is not an int, or it is below 0.\n    #       Booleans must fail. See hint 2.\n\n    return errors\n\n\n# Supplied CoJudge adapter. Implement validate_user above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = validate_user(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "`payload.get(\"name\")` returns `None` for a missing key. So one type check covers \"missing\" and \"wrong type\".",
+    "In Python, `bool` is a kind of `int`: `isinstance(True, int)` is `True`. Use `type(age) is int` to reject `True` and `False`.",
+    "For the email: check `isinstance(email, str) and email.count(\"@\") == 1` first. Then `local, domain = email.split(\"@\")` and require `local and domain and not any(c in \" \\t\\r\\n\" for c in email)`."
+  ]
 }

@@ -3,7 +3,7 @@
   "title": "07. Redact secrets from JSON logs",
   "difficulty": "Medium",
   "link": "",
-  "category": "02-clients-and-reliability",
+  "category": "02-data-and-apis",
   "examples": [
     {
       "input": "redact_secrets(\n    value={'user': 'sam', 'password': 'abc'}\n)",
@@ -21,8 +21,13 @@
       "explanation": "recurse through objects and arrays"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def redact_secrets(value):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement redact_secrets above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = redact_secrets(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "SECRET_KEYS = {\"password\", \"token\", \"secret\"}\n\n\ndef redact_secrets(value):\n    \"\"\"Return a copy of value with every secret value replaced by '[REDACTED]'.\n\n    redact_secrets({'user': 'sam', 'password': 'abc'})\n    -> {'user': 'sam', 'password': '[REDACTED]'}\n    redact_secrets({'events': [{'Token': 42}, 'ok']})\n    -> {'events': [{'Token': '[REDACTED]'}, 'ok']}\n    \"\"\"\n    # Step 1: a dictionary. Build a new dictionary.\n    if isinstance(value, dict):\n        result = {}\n        for key, item in value.items():\n            # TODO: if key.lower() is in SECRET_KEYS, store \"[REDACTED]\".\n            #       Otherwise store redact_secrets(item). The function calls itself.\n            result[key] = item\n        return result\n\n    # Step 2: a list. Process every item in the same way.\n    if isinstance(value, list):\n        return value  # TODO: a new list with redact_secrets(item) for each item\n\n    # Step 3: anything else (str, int, float, bool, None) stays unchanged.\n    return value\n\n\n# Supplied CoJudge adapter. Implement redact_secrets above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = redact_secrets(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "This is recursion: the function calls itself for each nested value. The stop case is a value that is not a dictionary or a list.",
+    "Compare `key.lower() in SECRET_KEYS`. Do not search inside the key: `\"token\" in \"access_token\"` is `True`.",
+    "Do not process the value of a secret key. Replace the whole value, also when it is a dictionary or a list."
+  ]
 }

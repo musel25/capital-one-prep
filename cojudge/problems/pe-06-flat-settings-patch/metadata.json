@@ -1,9 +1,9 @@
 {
   "id": "pe-06-flat-settings-patch",
-  "title": "06. Apply a settings patch",
+  "title": "05. Apply a settings patch",
   "difficulty": "Easy",
   "link": "",
-  "category": "01-data-and-api",
+  "category": "02-data-and-apis",
   "examples": [
     {
       "input": "apply_settings_patch(\n    settings={'theme': 'dark', 'lang': 'en'},\n    patch={'theme': 'light'}\n)",
@@ -21,8 +21,13 @@
       "explanation": "both objects empty"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def apply_settings_patch(settings, patch):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement apply_settings_patch above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = apply_settings_patch(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "def apply_settings_patch(settings, patch):\n    \"\"\"Return new settings with the patch applied. None in the patch deletes a key.\n\n    apply_settings_patch({'theme': 'dark', 'lang': 'en'}, {'theme': 'light'})\n    -> {'theme': 'light', 'lang': 'en'}\n    apply_settings_patch({'enabled': True}, {'enabled': False})\n    -> {'enabled': False}        (False is a real value, not a delete)\n    \"\"\"\n    # Step 1: copy, so the input does not change.\n    result = settings  # TODO: make a copy\n\n    for key, value in patch.items():\n        # Step 2: None means \"delete this key\".\n        #         Use `value is None`, not `not value`.\n        # TODO: remove the key. result.pop(key, None) does not fail for a missing key.\n\n        # Step 3: every other value replaces or adds the setting.\n        # TODO\n        pass\n\n    return result\n\n\n# Supplied CoJudge adapter. Implement apply_settings_patch above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = apply_settings_patch(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "`dict(settings)` or `settings.copy()` makes a new dictionary. A shallow copy is enough here, because you replace values and do not change them.",
+    "Use `if value is None:` and `else:`. Only `None` deletes.",
+    "`result.pop(key, None)` removes a key and does nothing when the key is missing. `result[key] = value` replaces or adds."
+  ]
 }

@@ -1,4 +1,14 @@
-## Reference solution
+## How it works
+
+Check each field on its own and append its name when it fails. Because you check the fields in a fixed order, the list is always in the order `name`, `email`, `age`.
+
+## Common mistakes
+
+- Using `isinstance(age, int)`, which accepts `True`.
+- Rejecting a valid age of `0` with `if not age`.
+- Stopping after the first error. The client needs all errors.
+
+## Solution
 
 ```python
 def validate_user(payload):

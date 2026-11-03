@@ -1,4 +1,14 @@
-## Reference solution
+## How it works
+
+First reject the characters that are never allowed. Then walk through the parts with a stack. `..` removes the last part, and a `..` with nothing to remove means the path leaves the folder.
+
+## Common mistakes
+
+- Accepting a path that starts with `/`.
+- Ignoring a `..` that goes above the folder instead of rejecting the path.
+- Treating every name that starts with `.` as special.
+
+## Solution
 
 ```python
 def resolve_upload_path(path):

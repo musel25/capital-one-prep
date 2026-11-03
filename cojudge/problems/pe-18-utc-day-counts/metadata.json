@@ -1,9 +1,9 @@
 {
   "id": "pe-18-utc-day-counts",
-  "title": "18. Count events by UTC day",
+  "title": "06. Count events by UTC day",
   "difficulty": "Medium",
   "link": "",
-  "category": "05-files-time-and-boundaries",
+  "category": "02-data-and-apis",
   "examples": [
     {
       "input": "count_utc_days(\n    timestamps=['2026-10-28T00:30:00+02:00', '2026-10-27T23:30:00Z']\n)",
@@ -21,8 +21,13 @@
       "explanation": "empty timestamp list"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def count_utc_days(timestamps):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement count_utc_days above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = count_utc_days(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "from datetime import datetime, timezone\n\n\ndef count_utc_days(timestamps):\n    \"\"\"Count events per UTC date.\n\n    count_utc_days(['2026-10-28T00:30:00+02:00', '2026-10-27T23:30:00Z'])\n    -> {'2026-10-27': 2}\n    \"\"\"\n    counts = {}\n    for timestamp in timestamps:\n        # Step 1: read the text. Python 3.11 understands the offset and \"Z\".\n        moment = datetime.fromisoformat(timestamp)\n\n        # Step 2: the UTC date as \"YYYY-MM-DD\".\n        day = timestamp[:10]  # TODO: this is the LOCAL date. Convert `moment` to UTC first.\n\n        # Step 3: add one to the count for that day.\n        counts[day] = counts.get(day, 0) + 1\n\n    return counts\n\n\n# Supplied CoJudge adapter. Implement count_utc_days above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = count_utc_days(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "`datetime.fromisoformat(text)` returns a time that knows its offset (an \"aware\" datetime).",
+    "`moment.astimezone(timezone.utc)` converts the time to UTC. Do not use `.replace(tzinfo=...)`: it changes the label, not the time.",
+    "`.date().isoformat()` gives the text `\"YYYY-MM-DD\"`."
+  ]
 }

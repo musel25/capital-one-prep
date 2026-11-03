@@ -1,14 +1,16 @@
-The request logger must remove secret values from nested payloads before it writes them.
+**The ticket.** The request logger writes request data to the logs. It must remove passwords, tokens, and secrets first, at every level of the data.
 
-Implement `redact_secrets(value)` for any JSON value.
+**Why it matters.** Many people can read logs, and logs are kept for a long time. A password in a log is a security incident. Request data is often nested, so a secret can be at any depth.
 
-For each object key, compare ASCII letters without regard to case. If the whole key is `password`, `token`, or `secret`, replace its entire value with `'[REDACTED]'`. Keep the original key spelling and do not inspect the replaced subtree. Do not trim keys or match substrings.
+### Your task
 
-Recursively process other object values and list elements. Keep scalars unchanged, including strings that contain secret words. Keep empty objects and lists empty. Redacting an already redacted result must leave its JSON value unchanged.
+Write `redact_secrets(value)`. The input is any JSON value: a dictionary, a list, a string, a number, a boolean, or `None`. Return a new value.
+
+1. In a dictionary, compare each key in lowercase. If it is exactly `password`, `token`, or `secret`, replace the whole value with `'[REDACTED]'`. Keep the key as it is written.
+2. Process all other dictionary values and all list items in the same way, at every depth.
+3. Return strings, numbers, booleans, and `None` unchanged. Only keys are checked: a string value `'password'` stays.
+4. Match whole keys only. `password_hint`, `access_token`, and `' token'` are not secret keys.
 
 **Constraints:**
 
-- The input is a valid JSON tree with ASCII object keys.
-- The maximum nesting depth is 10 and the tree has at most 1000 nodes.
-- Floating-point values have at most six decimal places and an absolute value at most 1000000.
-- Do not change input objects or their nested values. Each call starts with fresh state.
+- The data is at most 10 levels deep and has at most 1000 values. Keys are ASCII strings.

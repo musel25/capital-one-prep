@@ -1,9 +1,9 @@
 {
   "id": "pe-16-atomic-transfers",
-  "title": "16. Apply account transfers atomically",
-  "difficulty": "Hard",
+  "title": "15. Apply account transfers atomically",
+  "difficulty": "Medium",
   "link": "",
-  "category": "04-jobs-and-storage",
+  "category": "04-security-and-money",
   "examples": [
     {
       "input": "apply_transfers(\n    balances={'a': 50, 'b': 10},\n    transfers=[{'from': 'a', 'to': 'b', 'amount': 20}]\n)",
@@ -21,8 +21,13 @@
       "explanation": "missing target does not debit source"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def apply_transfers(balances, transfers):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement apply_transfers above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = apply_transfers(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "def apply_transfers(balances, transfers):\n    \"\"\"Apply each transfer completely or not at all.\n\n    apply_transfers({'a': 50, 'b': 10}, [{'from': 'a', 'to': 'b', 'amount': 20}])\n    -> {'accepted': [True], 'balances': {'a': 30, 'b': 30}}\n    \"\"\"\n    accounts = dict(balances)   # a copy: do not change the input\n    accepted = []\n\n    for transfer in transfers:\n        source, target, amount = transfer[\"from\"], transfer[\"to\"], transfer[\"amount\"]\n\n        # Step 1: check everything BEFORE you change anything.\n        #         ok = both accounts exist and the source has at least `amount`.\n        ok = False  # TODO\n\n        # Step 2: only when ok, subtract from the source and add to the target.\n        # TODO\n\n        accepted.append(ok)\n\n    return {\"accepted\": accepted, \"balances\": accounts}\n\n\n# Supplied CoJudge adapter. Implement apply_transfers above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = apply_transfers(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "Check first, then change. If you subtract before you know that the target exists, a failed transfer loses money.",
+    "`ok = source in accounts and target in accounts and accounts[source] >= amount`.",
+    "Use `>=`, because an exact balance is enough. For a transfer to the same account, subtract then add gives the same balance."
+  ]
 }

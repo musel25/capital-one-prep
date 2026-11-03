@@ -1,9 +1,9 @@
 {
   "id": "pe-24-render-escaped-html-values",
-  "title": "24. Render HTML placeholders safely",
+  "title": "13. Render HTML placeholders safely",
   "difficulty": "Medium",
   "link": "",
-  "category": "06-application-logic",
+  "category": "04-security-and-money",
   "examples": [
     {
       "input": "render_html(\n    template='<p>{{name}}</p>',\n    values={'name': '<&>\"\\''}\n)",
@@ -21,8 +21,13 @@
       "explanation": "inserted placeholders are not processed again"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def render_html(template, values):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement render_html above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = render_html(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "import html\nimport re\n\nPLACEHOLDER = re.compile(r\"\\{\\{([A-Za-z_][A-Za-z0-9_]*)\\}\\}\")\n\n\ndef render_html(template, values):\n    \"\"\"Replace each {{name}} with the escaped value.\n\n    render_html('<p>{{name}}</p>', {'name': '<b>'})  -> '<p>&lt;b&gt;</p>'\n    render_html('Hi {{missing}}', {})                -> 'Hi {{missing}}'\n    \"\"\"\n    def substitute(match):\n        name = match.group(1)   # the text between {{ and }}\n        # Step 1: unknown name -> return the placeholder unchanged: match.group(0)\n        # TODO\n        # Step 2: known name -> return the ESCAPED value.\n        return values[name]  # TODO: escape it\n\n    # Step 3: re.sub calls substitute once for each placeholder, in one pass.\n    return PLACEHOLDER.sub(substitute, template)\n\n\n# Supplied CoJudge adapter. Implement render_html above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = render_html(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "`html.escape(value)` escapes all five characters. It escapes quotes by default.",
+    "`match.group(0)` is the full placeholder text, such as `{{name}}`. `match.group(1)` is only the name.",
+    "Do not call `template.replace()` once for each name. A value that contains `{{b}}` would then be processed again. `re.sub` with a function makes one pass."
+  ]
 }

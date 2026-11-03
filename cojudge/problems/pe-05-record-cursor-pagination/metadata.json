@@ -1,9 +1,9 @@
 {
   "id": "pe-05-record-cursor-pagination",
-  "title": "05. Return the next record page",
+  "title": "04. Return the next record page",
   "difficulty": "Easy",
   "link": "",
-  "category": "01-data-and-api",
+  "category": "02-data-and-apis",
   "examples": [
     {
       "input": "paginate_records(\n    records=[{'id': 3}, {'id': 1}, {'id': 2}],\n    after_id=None,\n    limit=2\n)",
@@ -21,8 +21,13 @@
       "explanation": "empty collection"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def paginate_records(records, after_id, limit):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement paginate_records above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = paginate_records(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "def paginate_records(records, after_id, limit):\n    \"\"\"Return one page of records, sorted by id, and the cursor for the next page.\n\n    records = [{'id': 3}, {'id': 1}, {'id': 2}]\n    paginate_records(records, None, 2) -> {'items': [{'id': 1}, {'id': 2}], 'next_cursor': 2}\n    paginate_records(records, 1, 2)    -> {'items': [{'id': 2}, {'id': 3}], 'next_cursor': None}\n    \"\"\"\n    # Step 1: keep only the records after the cursor.\n    #         When after_id is None, keep all records.\n    eligible = list(records)  # TODO: keep only rows with row[\"id\"] > after_id\n\n    # Step 2: sort by id, smallest first.\n    # TODO\n\n    # Step 3: take one page.\n    items = eligible  # TODO: only the first `limit` records\n\n    # Step 4: is there another page?\n    # TODO: if eligible has more records than items, use the last id on the page.\n    next_cursor = None\n\n    return {\"items\": items, \"next_cursor\": next_cursor}\n\n\n# Supplied CoJudge adapter. Implement paginate_records above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = paginate_records(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "Filter first, then sort, then slice. A slice such as `eligible[:limit]` is safe when the list is shorter than `limit`.",
+    "Sort with `eligible.sort(key=lambda row: row[\"id\"])`. The IDs are numbers, so `10` comes after `2`.",
+    "More records remain when `len(eligible) > len(items)`. Then `next_cursor = items[-1][\"id\"]`. A full page that is also the last page has no cursor."
+  ]
 }

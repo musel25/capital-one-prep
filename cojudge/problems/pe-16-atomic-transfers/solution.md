@@ -1,4 +1,30 @@
-## Reference solution
+## How it works
+
+Check all conditions before you change a balance. Then make both changes together. In a real database you get the same guarantee from a transaction: both updates are saved, or neither is.
+
+## Common mistakes
+
+- Rejecting a transfer of the exact balance.
+- Subtracting from the source when the target does not exist.
+- Adding to the target without subtracting from the source.
+
+## Solution
+
+```python
+def apply_transfers(balances, transfers):
+    accounts = dict(balances)
+    accepted = []
+    for transfer in transfers:
+        source, target, amount = transfer["from"], transfer["to"], transfer["amount"]
+        ok = source in accounts and target in accounts and accounts[source] >= amount
+        if ok:
+            accounts[source] -= amount
+            accounts[target] += amount
+        accepted.append(ok)
+    return {"accepted": accepted, "balances": accounts}
+```
+
+The judge also accepts this version with a real SQLite transaction. `with db:` commits both updates together, or rolls both back on an error:
 
 ```python
 import sqlite3

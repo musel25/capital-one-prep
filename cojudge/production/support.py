@@ -6,22 +6,30 @@ import importlib.util
 from pathlib import Path
 
 from cojudge.authoring.support import ROOT, check_java, encode, java_source, json_equal, python_solver, write_json
-from cojudge.production.presentation import present
+from cojudge.production.guide import CATEGORIES, GUIDES, ORDER
+from cojudge.production.presentation import present, solution
 
 HERE = ROOT / 'cojudge/production'
 COURSE_ID = 'software-engineering'
-CATEGORIES = ['01-data-and-api', '02-clients-and-reliability', '03-stateful-services',
-              '04-jobs-and-storage', '05-files-time-and-boundaries', '06-application-logic']
+COURSE_NUMBERS = [number for number, _ in ORDER]
 
 
 def load_specs(numbers=None):
+    """Load the course tickets in course order, with their learner guides applied."""
     specs = []
-    for path in sorted((HERE / 'tickets').glob('p[0-9][0-9].py')):
-        if numbers and int(path.stem[1:]) not in numbers:
+    for position, (number, category) in enumerate(ORDER, 1):
+        if numbers and number not in numbers:
             continue
+        path = HERE / 'tickets' / f'p{number:02d}.py'
         module = importlib.util.module_from_spec(info := importlib.util.spec_from_file_location(f'production_{path.stem}', path))
         info.loader.exec_module(module)
-        specs.append(module.SPEC)
+        guide = GUIDES[number]
+        spec = {**module.SPEC, 'position': position, 'category': category,
+                'starter': guide['starter'], 'hints': guide['hints'],
+                'difficulty': guide.get('difficulty', module.SPEC['difficulty'])}
+        if 'simple_solution' in guide:
+            spec['simple_solution'] = guide['simple_solution']
+        specs.append(spec)
     return specs
 
 
@@ -62,13 +70,21 @@ def verify(spec, java_dir=None):
         actual = solve(data)
         assert json_equal(data, case['input']), f"Input mutated: {problem_id(spec)} {case['label']}"
         assert json_equal(actual, case['expected']), f"{problem_id(spec)} {case['label']}: {actual!r} != {case['expected']!r}"
-    starter = python_solver(spec['starter'] + f"\n\ndef solve(data):\n    return {spec['function']}(**data)\n")
-    try:
-        starter(copy.deepcopy(spec['cases'][0]['input']))
-    except NotImplementedError:
-        pass
-    else:
-        raise AssertionError('The template must not solve the ticket')
+    for name in ('starter', 'simple_solution'):
+        if name not in spec:
+            continue
+        solver = python_solver(spec[name] + f"\n\ndef solve(data):\n    return {spec['function']}(**data)\n")
+        failures = 0
+        for case in spec['cases']:
+            data = copy.deepcopy(case['input'])
+            try:
+                failures += not json_equal(solver(data), case['expected']) or not json_equal(data, case['input'])
+            except Exception:
+                failures += 1
+        if name == 'starter':
+            assert failures, f"The template must not solve {problem_id(spec)}"
+        else:
+            assert not failures, f"The explained solution fails {problem_id(spec)}"
     mutations = []
     for mutation in spec['mutations']:
         assert mutation['old'] in spec['reference'], f"Missing mutation target: {mutation['name']}"
@@ -101,7 +117,7 @@ def build_problem(spec, destination):
     folder.mkdir(parents=True, exist_ok=True)
     presentation = present_problem(spec, [])
     metadata = {
-        'id': problem_id(spec), 'title': f"{spec['number']:02d}. {spec['title']}",
+        'id': problem_id(spec), 'title': f"{spec['position']:02d}. {spec['title']}",
         'difficulty': spec['difficulty'], 'link': '', 'category': spec['category'],
         'examples': presentation['examples'],
         'testCaseDescriptions': presentation['testCaseDescriptions'],
@@ -115,12 +131,12 @@ def build_problem(spec, destination):
     write_json(folder / 'official-tests.json', [{'payload': encode(c['input'])} for c in spec['cases']])
     (folder / 'Marker.java').write_text(java_source(verification_spec(spec)))
     (folder / 'statement.md').write_text(presentation['statement'])
-    (folder / 'solution.md').write_text(f"## Reference solution\n\n```python\n{spec['reference'].strip()}\n```\n")
+    (folder / 'solution.md').write_text(solution(spec))
     return {**report, 'number': spec['number'], 'category': spec['category']}
 
 
 def course_info(records):
     return {'title': 'Software Engineering Tickets',
-            'description': '24 practical Python tickets with a clear input/output contract. Practice validation, APIs, retries, state, SQL, files, timestamps, permissions, version handling, dependencies, synchronization, and safe HTML output. Run checks examples. Submit checks edge cases. Each ticket is independent.',
+            'description': '15 short Python tickets from real services, in four stages: clean input, data and APIs, reliability, and security and money. Each ticket says why it matters and gives step-by-step starter code, three hints, and an explained solution. Each ticket is independent.',
             'category-order': CATEGORIES,
             'problems-of-category': {category: [r['id'] for r in records if r['category'] == category] for category in CATEGORIES}}

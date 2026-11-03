@@ -3,7 +3,7 @@
   "title": "01. Clean notification emails",
   "difficulty": "Easy",
   "link": "",
-  "category": "01-data-and-api",
+  "category": "01-clean-input",
   "examples": [
     {
       "input": "clean_emails(\n    emails=[' ADA@EXAMPLE.COM ', 'ada@example.com', 'bob@example.com']\n)",
@@ -21,8 +21,13 @@
       "explanation": "blank entries"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def clean_emails(emails):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement clean_emails above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = clean_emails(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "def clean_emails(emails):\n    \"\"\"Return clean addresses, without duplicates, in first-seen order.\n\n    clean_emails([' ADA@EXAMPLE.COM ', 'ada@example.com', 'bob@example.com'])\n    -> ['ada@example.com', 'bob@example.com']\n    \"\"\"\n    result = []    # the clean addresses, in order\n    seen = set()   # the addresses that are already in result (fast lookup)\n\n    for email in emails:\n        # Step 1: clean the address.\n        #         Remove whitespace at both ends, then make it lowercase.\n        cleaned = email  # TODO\n\n        # Step 2: skip it when it is empty or already in `seen`.\n        #         `continue` goes to the next email.\n        # TODO\n\n        # Step 3: keep it.\n        # TODO: add `cleaned` to `seen` and append it to `result`.\n\n    return result\n\n\n# Supplied CoJudge adapter. Implement clean_emails above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = clean_emails(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "Use two containers: a list keeps the order, and a set answers \"do I already have it?\" quickly.",
+    "`email.strip()` removes whitespace at both ends. `.lower()` changes the case. You can chain them: `email.strip().lower()`.",
+    "An empty string is falsy, so one check covers both skips: `if not cleaned or cleaned in seen: continue`."
+  ]
 }

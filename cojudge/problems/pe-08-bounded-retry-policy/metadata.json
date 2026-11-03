@@ -3,7 +3,7 @@
   "title": "08. Plan capped request retries",
   "difficulty": "Medium",
   "link": "",
-  "category": "02-clients-and-reliability",
+  "category": "03-reliability",
   "examples": [
     {
       "input": "retry_policy(\n    statuses=[503, 503, 200],\n    base_delay=2,\n    max_delay=3,\n    max_attempts=3\n)",
@@ -21,8 +21,13 @@
       "explanation": "empty status source"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def retry_policy(statuses, base_delay, max_delay, max_attempts):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement retry_policy above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = retry_policy(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "def retry_policy(statuses, base_delay, max_delay, max_attempts):\n    \"\"\"Plan the attempts and the waits between them.\n\n    retry_policy([503, 503, 200], base_delay=2, max_delay=3, max_attempts=3)\n    -> {'attempts': 3, 'delays': [2, 3], 'status': 200}\n    \"\"\"\n    attempts = 0\n    delays = []\n    status = None\n\n    while attempts < max_attempts and attempts < len(statuses):\n        # Step 1: make one attempt. Read the next status.\n        status = statuses[attempts]\n        attempts += 1\n\n        # Step 2: stop if this status is not retryable (retryable: 429, or 500 and higher).\n        # TODO\n\n        # Step 3: stop if no other attempt will run\n        #         (attempts reached max_attempts, or no statuses remain).\n        # TODO\n\n        # Step 4: a retry will happen. Add its wait:\n        #         min(max_delay, base_delay * 2 ** (attempts - 1))\n        # TODO\n\n    return {\"attempts\": attempts, \"delays\": delays, \"status\": status}\n\n\n# Supplied CoJudge adapter. Implement retry_policy above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = retry_policy(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "Check \"not retryable\" first: `if not (status == 429 or status >= 500): break`.",
+    "Add a wait only before a real retry. If `attempts == max_attempts` or `attempts == len(statuses)`, stop without a wait.",
+    "You already increased `attempts`, so the first wait is `base_delay * 2 ** 0`, which is `base_delay`."
+  ]
 }

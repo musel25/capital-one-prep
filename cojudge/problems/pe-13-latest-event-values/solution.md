@@ -1,4 +1,14 @@
-## Reference solution
+## How it works
+
+Save the version and the value for each entity. A new event wins only with a higher version. So late and repeated events do not overwrite newer data.
+
+## Common mistakes
+
+- Letting an equal version overwrite the first event.
+- Letting a stale event overwrite a newer one.
+- Returning the version instead of the value.
+
+## Solution
 
 ```python
 def latest_events(events):

@@ -1,18 +1,18 @@
-The cache must distinguish cached null values from misses and expire entries at the exact deadline.
+**The ticket.** The cache keeps each value for a fixed time (TTL, "time to live"). After that time, the value is old and must not be used.
 
-Implement `run_cache(operations)`. Process operations in order, starting with an empty cache. Return one result per operation.
+**Why it matters.** Old cache values show wrong prices or permissions. The tests give the time as a number. So the result does not depend on the real clock, and the tests are repeatable.
 
-- `put` has `key`, `value`, `now`, and `ttl`. Store the value with expiry `now + ttl`, replacing the prior value and deadline. Return `None`.
-- `get` has `key` and `now`. Before expiry (`now < expiry`), return `{'hit': True, 'value': STORED_VALUE}`. Otherwise return `{'hit': False, 'value': None}`.
+### Your task
 
-A stored `None` is a hit before expiry. Zero TTL expires immediately. Gets do not change expiry. Compare keys exactly. Use the supplied times; do not use the wall clock or impose a capacity.
+Write `run_cache(operations)`. Start with an empty cache. Process the operations in order. Return one result for each operation.
+
+1. `put` has `key`, `value`, `now`, and `ttl`. Save the value with the deadline `now + ttl`. Replace an old entry. The result is `None`.
+2. `get` has `key` and `now`. If the key is saved and `now < deadline`, return `{'hit': True, 'value': VALUE}`. Otherwise return `{'hit': False, 'value': None}`.
+3. A saved `None`, `False`, `0`, or `""` is still a hit.
+4. At `now == deadline`, the entry is expired. A `ttl` of `0` expires at once.
+5. A `get` does not change the deadline.
 
 **Constraints:**
 
-- Operations are put or get and contain all fields specified for that operation.
-- Values can be any JSON value, including null, false, zero, empty containers, and nested objects.
-- now and ttl are integers greater than or equal to zero; booleans are not times.
-- There is no fixed maximum integer time.
-- Floating-point values have at most six decimal places and an absolute value at most 1000000.
-- Keys are ASCII strings, including empty strings. Times arrive in nondecreasing order.
-- Do not change input objects or their nested values. Each call starts with fresh state.
+- Times and TTLs are integers of 0 or more. Times do not go backwards.
+- Keys are strings and can be empty. Values can be any JSON value.

@@ -1,9 +1,9 @@
 {
   "id": "pe-13-latest-event-values",
-  "title": "13. Keep the latest event values",
+  "title": "11. Keep the latest event values",
   "difficulty": "Medium",
   "link": "",
-  "category": "03-stateful-services",
+  "category": "03-reliability",
   "examples": [
     {
       "input": "latest_events(\n    events=[{'entity': 'a', 'version': 1, 'value': 'old'},\n     {'entity': 'a', 'version': 2, 'value': 'new'}]\n)",
@@ -21,8 +21,13 @@
       "explanation": "first equal version wins"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def latest_events(events):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement latest_events above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = latest_events(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "def latest_events(events):\n    \"\"\"Keep the value with the highest version for each entity.\n\n    latest_events([{'entity': 'a', 'version': 2, 'value': 'new'},\n                   {'entity': 'a', 'version': 1, 'value': 'old'}])\n    -> {'a': 'new'}     (the late old event is ignored)\n    \"\"\"\n    latest = {}   # entity -> (version, value)\n\n    for event in events:\n        entity, version, value = event[\"entity\"], event[\"version\"], event[\"value\"]\n\n        # Step 1: new entity -> save (version, value).\n        # Step 2: known entity -> replace only if version > saved version.\n        # TODO: put a condition around this line.\n        latest[entity] = (version, value)\n\n    # Step 3: return only the values.\n    return {entity: saved[1] for entity, saved in latest.items()}\n\n\n# Supplied CoJudge adapter. Implement latest_events above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = latest_events(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "Save the version with the value. You need the version to compare later events.",
+    "`if entity not in latest or version > latest[entity][0]:` covers both steps.",
+    "Use `>`, not `>=`. On a tie, the first event stays."
+  ]
 }

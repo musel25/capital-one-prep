@@ -8,19 +8,33 @@ import pytest
 def test_course_contracts_references_and_fault_checks(tmp_path):
     from cojudge.production.support import load_specs, verify, build_problem
 
+    from cojudge.production.guide import ORDER, RETIRED
+
     specs = load_specs()
-    assert [s['number'] for s in specs] == list(range(1, 25))
-    for spec in specs:
+    assert [s['number'] for s in specs] == [number for number, _ in ORDER]
+    assert sorted([s['number'] for s in specs] + RETIRED) == list(range(1, 25))
+    for position, spec in enumerate(specs, 1):
         report = verify(spec)
         assert report['cases'] >= 12
         assert len(report['mutations']) >= 3
         record = build_problem(spec, tmp_path)
         folder = tmp_path / 'problems' / record['id']
         metadata = json.loads((folder / 'metadata.json').read_text())
+        assert metadata['title'].startswith(f'{position:02d}. ')
+        assert len(metadata['hints']) == 3
+        assert '# Step 1' in metadata['starterCode']['python'] or '# Rule 1' in metadata['starterCode']['python']
+        statement = (folder / 'statement.md').read_text()
+        assert '**Why it matters.**' in statement and '### Your task' in statement
+        assert '## Common mistakes' in (folder / 'solution.md').read_text()
         namespace = {'__name__': 'learner'}
         exec(metadata['starterCode']['python'], namespace)
-        with pytest.raises(NotImplementedError):
-            namespace['Solution']().run(json.dumps(spec['cases'][0]['input']))
+        outputs = []
+        for case in spec['cases']:
+            try:
+                outputs.append(json.loads(namespace['Solution']().run(json.dumps(case['input']))) == case['expected'])
+            except Exception:
+                outputs.append(False)
+        assert not all(outputs), f"The starter solves {record['id']}"
 
 
 def test_equivalent_mutation_does_not_count_as_a_detected_fault():

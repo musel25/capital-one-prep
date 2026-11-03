@@ -1,9 +1,9 @@
 {
   "id": "pe-10-enqueue-idempotent-jobs",
-  "title": "10. Handle duplicate job submissions",
+  "title": "09. Handle duplicate job submissions",
   "difficulty": "Medium",
   "link": "",
-  "category": "02-clients-and-reliability",
+  "category": "03-reliability",
   "examples": [
     {
       "input": "enqueue_jobs(\n    requests=[{'key': 'a', 'task': 'send'}, {'key': 'b', 'task': 'index'}]\n)",
@@ -21,8 +21,13 @@
       "explanation": "changed task conflicts without replacing original"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def enqueue_jobs(requests):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement enqueue_jobs above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = enqueue_jobs(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "def enqueue_jobs(requests):\n    \"\"\"Create each job once. A repeated key replays the first result.\n\n    enqueue_jobs([{'key': 'a', 'task': 'send'}, {'key': 'a', 'task': 'send'}])\n    -> [{'status': 'created', 'id': 1}, {'status': 'replayed', 'id': 1}]\n    \"\"\"\n    jobs = {}      # key -> (task, id)\n    next_id = 1\n    responses = []\n\n    for request in requests:\n        key, task = request[\"key\"], request[\"task\"]\n\n        if key not in jobs:\n            # Step 1: a new key.\n            # TODO: save jobs[key] = (task, next_id), answer \"created\" with\n            #       next_id, then increase next_id by 1.\n            responses.append({\"status\": \"created\", \"id\": None})\n        else:\n            saved_task, saved_id = jobs[key]\n            # Step 2: same task      -> \"replayed\" with saved_id.\n            # Step 3: different task -> \"conflict\" with id None. Do not change jobs.\n            # TODO\n            responses.append({\"status\": \"TODO\", \"id\": None})\n\n    return responses\n\n\n# Supplied CoJudge adapter. Implement enqueue_jobs above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = enqueue_jobs(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "Save two values for each key: the task (to compare later) and the ID (to return later).",
+    "Increase `next_id` only in the `created` branch. Replays and conflicts do not use an ID.",
+    "Use `if task == saved_task:` for a replay and `else:` for a conflict. Do not overwrite `jobs[key]` on a conflict."
+  ]
 }

@@ -7,7 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from cojudge.authoring.support import ROOT, write_json
-from cojudge.production.support import COURSE_ID, build_problem, course_info, full_source, load_specs, problem_id, verify
+from cojudge.production.support import COURSE_ID, COURSE_NUMBERS, build_problem, course_info, full_source, load_specs, problem_id, verify
 from scripts.pybites_course import submit
 
 
@@ -30,8 +30,8 @@ def main():
     parser.add_argument('--user', default='musel')
     args = parser.parse_args()
     specs = load_specs(args.only)
-    if not args.only and [s['number'] for s in specs] != list(range(1, 25)):
-        parser.error('The complete course must contain tickets 01–24')
+    if not args.only and [s['number'] for s in specs] != COURSE_NUMBERS:
+        parser.error('The complete course must contain every ticket in guide.ORDER')
     records = []
     with tempfile.TemporaryDirectory(prefix='production-java-') as work:
         for spec in specs:

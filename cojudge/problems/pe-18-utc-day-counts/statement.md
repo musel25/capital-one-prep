@@ -1,13 +1,18 @@
-The daily event report must group offset timestamps by UTC date instead of their displayed local date.
+**The ticket.** Servers in different time zones send event times with an offset, for example `2026-10-28T00:30:00+02:00`. The daily report must count events per UTC day.
 
-Implement `count_utc_days(timestamps)`. Convert each timestamp to UTC before taking its calendar date. Return a dictionary from `YYYY-MM-DD` dates to counts.
+**Why it matters.** If you take the date from the text, an event at 00:30 in Berlin counts for the wrong day. Daily totals then do not match other reports.
 
-Count duplicate timestamps separately. Input order and dictionary key order do not matter. Empty input returns an empty dictionary. UTC conversion may produce dates in 1999 or 2100.
+### Your task
+
+Write `count_utc_days(timestamps)`. Return a dictionary from dates (`YYYY-MM-DD`) to counts.
+
+1. Read each timestamp. `Z` means UTC. `+02:00` means two hours ahead of UTC.
+2. Convert the time to UTC. Then take its date.
+3. Count the events for each UTC date. Count duplicates separately.
+
+Example: `2026-10-28T00:30:00+02:00` is `2026-10-27T22:30:00` in UTC, so it counts for `2026-10-27`.
 
 **Constraints:**
 
-- 0–200 timestamps; input years are 2000 through 2099 with valid calendar dates.
-- Hours are 00–23, minutes and seconds are 00–59; leap seconds are excluded.
-- Offsets have absolute value at most 14:00; offset minutes are 00–59, and hour 14 requires minute 00.
-- Timestamps use exactly `YYYY-MM-DDTHH:MM:SSZ`, `YYYY-MM-DDTHH:MM:SS+HH:MM`, or `YYYY-MM-DDTHH:MM:SS-HH:MM`. Fractional seconds are excluded.
-- Do not change input objects or their nested values. Each call starts with fresh state.
+- 0–200 timestamps in the form `YYYY-MM-DDTHH:MM:SS` followed by `Z`, `+HH:MM`, or `-HH:MM`.
+- Input years are 2000–2099. The UTC date can be in 1999 or 2100.

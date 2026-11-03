@@ -3,7 +3,7 @@
   "title": "02. Parse an environment flag",
   "difficulty": "Easy",
   "link": "",
-  "category": "01-data-and-api",
+  "category": "01-clean-input",
   "examples": [
     {
       "input": "parse_flag(\n    value=' true ',\n    default=False\n)",
@@ -21,8 +21,13 @@
       "explanation": "missing uses true default"
     }
   ],
+  "testCaseDescriptions": {},
+  "courseHelp": {
+    "title": "Course help",
+    "body": "Write your code in the function at the top of the editor. Follow the numbered steps and replace each TODO. Run checks the three examples. Submit checks all cases, including edge cases. Open the hints one at a time if you are stuck.\n\nKeep the adapter class at the bottom unchanged. It reads the input, calls your function, and rejects changes to the input. Python 3.11 and the standard library."
+  },
   "starterCode": {
-    "python": "def parse_flag(value, default):\n    raise NotImplementedError\n\n\n# Supplied CoJudge adapter. Implement parse_flag above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = parse_flag(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
+    "python": "TRUE_WORDS = {\"true\", \"1\", \"yes\", \"on\"}\nFALSE_WORDS = {\"false\", \"0\", \"no\", \"off\"}\n\n\ndef parse_flag(value, default):\n    \"\"\"Turn environment-variable text into True, False, or None.\n\n    parse_flag(' true ', False) -> True\n    parse_flag('OFF', True)     -> False\n    parse_flag(None, True)      -> True      (not set: use the default)\n    parse_flag('enabled', True) -> None      (invalid)\n    \"\"\"\n    # Step 1: the variable is not set.\n    # TODO: if value is None, return default.\n\n    # Step 2: clean the text: whitespace at both ends, then lowercase.\n    text = value  # TODO\n\n    # Step 3: look up the clean text.\n    # TODO: return True if text is in TRUE_WORDS.\n    # TODO: return False if text is in FALSE_WORDS.\n\n    # Step 4: every other text is invalid.\n    return None\n\n\n# Supplied CoJudge adapter. Implement parse_flag above.\nclass Solution:\n    def run(self, payload: str) -> str:\n        import json\n        data = json.loads(payload)\n        before = json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False)\n        result = parse_flag(**data)\n        if json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False) != before:\n            raise ValueError(\"Do not modify the input objects\")\n        return json.dumps(result, ensure_ascii=True, allow_nan=False)\n"
   },
   "testCases": [
     {
@@ -43,10 +48,9 @@
     }
   ],
   "outputType": "string",
-  "hints": [],
-  "testCaseDescriptions": {},
-  "courseHelp": {
-    "title": "Course help",
-    "body": "Implement the named function above the supplied adapter. Run checks the example inputs. Submit checks all supplied cases. You can edit each sample input as a JSON object. The adapter passes its fields as named arguments and rejects input changes. Keep the adapter unchanged.\n\nPython 3.11. Use the standard library."
-  }
+  "hints": [
+    "Never use `bool(value)` on text. Compare the text with known words.",
+    "Check `value is None` first. Call string methods only after that check, because `None` has no `.strip()`.",
+    "`text = value.strip().lower()`, then `if text in TRUE_WORDS: return True`."
+  ]
 }
