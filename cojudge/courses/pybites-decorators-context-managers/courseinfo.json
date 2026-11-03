@@ -1,6 +1,6 @@
 {
   "title": "Pybites Decorators and Context Managers Path",
-  "description": "The 12 exercises from the Pybites Decorators and Context Managers learning path, in their original order. Practice decorators, context managers, singledispatch, caching, and retries. The Account exercise keeps its original free template and tests. Other templates and tests are recreated from public descriptions. Select Python.",
+  "description": "The 12 exercises from the Pybites Decorators and Context Managers learning path, in their original order. Practice decorators, context managers, singledispatch, caching, and retries. The Account exercise keeps its original free tests. Other templates and tests are recreated from public descriptions. Templates include guidance comments. Select Python.",
   "category-order": [
     "01-beginner",
     "02-intermediate",

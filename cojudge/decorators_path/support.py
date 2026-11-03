@@ -17,6 +17,8 @@ LEVELS = {'Beginner': ('01-beginner', 'Easy'),
           'Advanced': ('03-advanced', 'Hard')}
 
 
+from cojudge.decorators_path.guided import apply as apply_guided  # noqa: E402
+
 def load_specs(numbers=None):
     pages = json.loads((HERE / 'source-pages.json').read_text())
     specs = []
@@ -30,7 +32,7 @@ def load_specs(numbers=None):
         spec = {**module.SPEC, 'number': page['n'], 'page': page}
         for field in ('template', 'tests', 'reference'):
             spec[field] = spec[field].replace('\r\n', '\n')
-        specs.append(spec)
+        specs.append(apply_guided(spec))
     return specs
 
 
@@ -63,8 +65,9 @@ def course_info(specs):
         'title': 'Pybites Decorators and Context Managers Path',
         'description': 'The 12 exercises from the Pybites Decorators and Context Managers learning path, '
                        'in their original order. Practice decorators, context managers, singledispatch, '
-                       'caching, and retries. The Account exercise keeps its original free template '
-                       'and tests. Other templates and tests are recreated from public descriptions. Select Python.',
+                       'caching, and retries. The Account exercise keeps its original free tests. Other '
+                       'templates and tests are recreated from public descriptions. Templates include '
+                       'guidance comments. Select Python.',
         'category-order': [category for category, _ in LEVELS.values()],
         'problems-of-category': {
             category: [problem_id(spec) for spec in specs if spec['page']['level'] == level]
@@ -79,7 +82,10 @@ def build_problem(spec, destination=ROOT / 'cojudge'):
     folder.mkdir(parents=True, exist_ok=True)
     category, difficulty = LEVELS[spec['page']['level']]
     payloads = [{'payload': json.dumps({'test': name})} for name in result['tests']]
-    origin = ('The original free Account template and tests are retained, with added boundary tests.'
+    origin = ('The original free Account tests are retained, with added boundary tests. The template '
+              'is the original code task with added guidance comments.'
+              if spec.get('original') and spec.get('guided') else
+              'The original free Account template and tests are retained, with added boundary tests.'
               if spec.get('original') else
               'This template and these tests are recreated from the public description. '
               'The local API and extra input guarantees are stated in the problem.')
